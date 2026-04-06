@@ -2,48 +2,41 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wirtualny System RP | Primerp</title>
-    <link rel="stylesheet" href="style.css">
+    <title>TEST POŁĄCZENIA - Wirtualny System RP</title>
+    <style>
+        body {
+            background-color: #ff0055; /* Bardzo jaskrawy różowy - nie da się go przegapić! */
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .box {
+            background: rgba(0,0,0,0.8);
+            padding: 40px;
+            border: 5px solid white;
+            border-radius: 20px;
+        }
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        p { font-size: 1.5rem; }
+        .status { color: #00ff00; font-weight: bold; }
+    </style>
 </head>
 <body>
 
-    <div class="app-wrapper">
-        <header>
-            <div class="logo">WIRTUALNY SYSTEM<span>RP</span></div>
-            <div class="status-badge" id="domainStatus">Połączono: wirtualnysystemrp.pl</div>
-        </header>
-
-        <section class="game-card">
-            <div class="stats-container">
-                <span class="label">Twoje Punkty Systemowe</span>
-                <h1 id="pointsDisplay">0</h1>
-            </div>
-            <button id="clickBtn" class="glow-button">GENERUJ DANE</button>
-        </section>
-
-        <section class="report-card">
-            <h3>📂 PANEL ZGŁOSZEŃ BŁĘDÓW</h3>
-            <p>Napotkałeś problem w systemie? Opisz go poniżej.</p>
-            
-            <div class="input-group">
-                <select id="issueType">
-                    <option value="bug">Błąd Systemu (Bug)</option>
-                    <option value="exploit">Luka / Exploit</option>
-                    <option value="idea">Propozycja ulepszenia</option>
-                </select>
-                <textarea id="reportText" placeholder="Opisz błąd (minimum 10 znaków)..."></textarea>
-            </div>
-
-            <button id="sendReportBtn">WYŚLIJ RAPORT</button>
-            <div id="feedbackMsg" class="feedback"></div>
-        </section>
-
-        <footer>
-            <p>&copy; 2026 Wirtualny System RP - Napędzane przez Primerp Engine</p>
-        </footer>
+    <div class="box">
+        <h1>STATUS: <span class="status">AKTYWNY</span></h1>
+        <p>Jeśli widzisz ten jaskrawy ekran na domenie:</p>
+        <h2>wirtualnysystemrp.pl</h2>
+        <p>...to znaczy, że <b>Cloudflare działa poprawnie!</b></p>
+        <hr>
+        <p>Możesz teraz wgrać docelowe kody (HTML/CSS/JS).</p>
     </div>
 
-    <script src="app.js"></script>
 </body>
 </html>
