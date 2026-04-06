@@ -3,134 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | Panel Obywatela</title>
+    <title>PrimeRP | Logowanie</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="PrimeRP Logo" class="side-logo">
-            <h2 class="brand">PRIME<span>RP</span></h2>
+    <div class="login-wrapper">
+        <div class="background-image"></div>
+        <div class="overlay"></div>
+
+        <div class="login-container">
+            <div class="login-box">
+                <div class="logo-section">
+                    <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="Logo" class="login-logo">
+                    <h1>PRIME<span>RP</span></h1>
+                    <p class="season-tag">SEZON 2</p>
+                </div>
+
+                <form id="loginForm">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Login" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Hasło" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-login">ZALOGUJ SIĘ</button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Nie masz konta? <a href="#">Zarejestruj się</a></p>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <nav class="side-nav">
-            <a href="#" class="nav-item active" data-target="dashboard">
-                <i class="fas fa-columns"></i> <span>Panel Główny</span>
-            </a>
-            <a href="#" class="nav-item" data-target="urzad">
-                <i class="fas fa-landmark"></i> <span>Urząd Miasta</span>
-            </a>
-            <a href="#" class="nav-item" data-target="coming-soon">
-                <i class="fas fa-car"></i> <span>Garaż</span>
-            </a>
-            <a href="#" class="nav-item" data-target="coming-soon">
-                <i class="fas fa-gavel"></i> <span>Regulamin</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <p>Założyciel: !Kuba</p>
-            <p>Sezon 2 • 2026</p>
-        </div>
-    </aside>
-
-    <main class="main-content">
-        
-        <section id="dashboard" class="tab-page active">
-            <header class="content-header">
-                <div class="header-text">
-                    <h1>Dashboard</h1>
-                    <p>Witaj w systemie zarządzania postacią PrimeRP.</p>
-                </div>
-                <div class="server-status">
-                    <div class="pulse-dot"></div>
-                    <span>SERWER ONLINE</span>
-                </div>
-            </header>
-
-            <div class="stats-container">
-                <div class="stat-card">
-                    <span class="label">Obywateli w Mieście</span>
-                    <span class="value">142 / 250</span>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Twój Portfel</span>
-                    <span class="value money">$54,200</span>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="glass-card promo-section">
-                    <h3><i class="fas fa-gift"></i> Nagroda Startowa</h3>
-                    <p>Skopiuj kod i użyj go w grze (F8 -> kod):</p>
-                    <div class="copy-box">
-                        <span id="promoCode">10cap1up</span>
-                        <button onclick="copyCode()"><i class="fas fa-copy"></i></button>
-                    </div>
-                </div>
-
-                <div class="glass-card">
-                    <h3><i class="fas fa-newspaper"></i> Ostatnie Ogłoszenia</h3>
-                    <div class="news-item">
-                        <span class="news-date">06.04</span>
-                        <p>Otwarcie rekrutacji do frakcji porządkowych.</p>
-                    </div>
-                    <div class="news-item">
-                        <span class="news-date">05.04</span>
-                        <p>Nowe modele ubrań w butikach.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="urzad" class="tab-page">
-            <header class="content-header">
-                <div class="header-text">
-                    <h1>Urząd Miasta</h1>
-                    <p>Zarządzaj swoimi dokumentami i sprawami urzędowymi.</p>
-                </div>
-            </header>
-
-            <div class="urzad-container">
-                <div class="glass-card urzad-card">
-                    <h3><i class="fas fa-id-card"></i> Dokumentacja</h3>
-                    <div class="list-row">
-                        <span>Dowód Osobisty</span>
-                        <span class="tag tag-ok">POSIADASZ</span>
-                    </div>
-                    <div class="list-row">
-                        <span>Prawo Jazdy Kat. B</span>
-                        <span class="tag tag-ok">POSIADASZ</span>
-                    </div>
-                    <div class="list-row">
-                        <span>Licencja na Broń</span>
-                        <span class="tag tag-none">BRAK</span>
-                    </div>
-                    <button class="action-btn">WYRÓB DOKUMENTY</button>
-                </div>
-
-                <div class="glass-card urzad-card">
-                    <h3><i class="fas fa-wallet"></i> Rozliczenia</h3>
-                    <p>Należne podatki (Mieszkanie/Firma):</p>
-                    <div class="tax-amount">$0</div>
-                    <p class="tax-status">Wszystkie opłaty są uregulowane.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="coming-soon" class="tab-page">
-            <div class="coming-soon-content">
-                <div class="loader"></div>
-                <h1>WKRÓTCE...</h1>
-                <p>Ta funkcjonalność zostanie odblokowana wkrótce.</p>
-            </div>
-        </section>
-
-    </main>
-
-    <script src="app.js"></script>
 </body>
 </html>
