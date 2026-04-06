@@ -1,30 +1,13 @@
-// Obsługa menu bocznego
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-page').forEach(page => page.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+    
+    document.getElementById(tabId).classList.add('active');
+    document.querySelector(`[data-target="${tabId}"]`).classList.add('active');
+}
+
 document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = this.getAttribute('data-target');
-        switchTab(target);
+    item.addEventListener('click', function() {
+        switchTab(this.getAttribute('data-target'));
     });
 });
-
-// Uniwersalna funkcja zmiany zakładek (używana też przez kafelki)
-function switchTab(tabId) {
-    // Ukryj wszystkie strony
-    document.querySelectorAll('.tab-page').forEach(page => {
-        page.classList.remove('active');
-    });
-
-    // Usuń klasę active z menu
-    document.querySelectorAll('.nav-item').forEach(nav => {
-        nav.classList.remove('active');
-        if(nav.getAttribute('data-target') === tabId) {
-            nav.classList.add('active');
-        }
-    });
-
-    // Pokaż wybraną stronę
-    const activePage = document.getElementById(tabId);
-    if(activePage) {
-        activePage.classList.add('active');
-    }
-}
