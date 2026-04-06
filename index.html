@@ -3,55 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | Autoryzacja</title>
+    <title>PrimeRP | Wybór Portalu</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="main-container">
-        <div class="bg-visual">
-            <div class="blob"></div>
-            <div class="blob2"></div>
+    <div class="split-container">
+        <div class="split left">
+            <div class="glow-effect"></div>
+            <div class="content">
+                <div class="icon-circle"><i class="fas fa-users"></i></div>
+                <h1>OBYWATEL</h1>
+                <p>System zarządzania postacią, statystyki oraz majątek gracza.</p>
+                <button class="btn btn-citizen" onclick="loginAction('Obywatel')">WEJDŹ DO PANELU</button>
+            </div>
         </div>
 
-        <div class="login-card">
-            <div class="login-left">
-                <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="PrimeRP" class="hero-img">
+        <div class="split right">
+            <div class="glow-effect"></div>
+            <div class="content">
+                <div class="icon-circle admin-icon"><i class="fas fa-user-shield"></i></div>
+                <h1>ADMIN</h1>
+                <p>Narzędzia administracyjne, logi systemowe oraz zarządzanie serwerem.</p>
+                <button class="btn btn-admin" onclick="loginAction('Admin')">PANEL ZARZĄDZANIA</button>
             </div>
+        </div>
 
-            <div class="login-right">
-                <div class="header">
-                    <h1>PRIME<span>RP</span></h1>
-                    <p class="badge">SEZON 2</p>
-                </div>
-
-                <form id="authForm">
-                    <div class="input-field">
-                        <i class="fas fa-user-circle"></i>
-                        <input type="text" id="username" placeholder="Nazwa użytkownika" required>
-                    </div>
-
-                    <div class="input-field">
-                        <i class="fas fa-fingerprint"></i>
-                        <input type="password" id="password" placeholder="Hasło dostępu" required>
-                    </div>
-
-                    <div class="options">
-                        <label><input type="checkbox"> Zapamiętaj mnie</label>
-                        <a href="#">Zapomniałeś hasła?</a>
-                    </div>
-
-                    <button type="submit" class="glow-button">ZALOGUJ SIĘ</button>
-                    
-                    <div class="divider"><span>LUB</span></div>
-                    
-                    <button type="button" class="btn-register">UTWÓRZ NOWE KONTO</button>
-                </form>
-
-                <p class="footer-text">Zaloguj się do systemu, aby zarządzać swoją postacią.</p>
+        <div class="center-brand">
+            <div class="logo-wrapper">
+                <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="PrimeRP Logo">
             </div>
+            <div class="brand-text">PRIME<span>RP</span></div>
+            <div class="season-label">SEZON 2</div>
         </div>
     </div>
 
