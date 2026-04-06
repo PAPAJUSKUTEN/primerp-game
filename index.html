@@ -3,53 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP Sezon 2 | Oficjalna Strona</title>
+    <title>PrimeRP Sezon 2 | Oficjalny Portal</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="overlay"></div>
-    
-    <nav>
-        <div class="nav-container">
-            <div class="logo">Prime<span>RP</span></div>
-            <ul class="tabs">
-                <li class="tab-link active" onclick="openTab(event, 'home')">Start</li>
-                <li class="tab-link" onclick="openTab(event, 'sezon2')">Sezon 2</li>
-                <li class="tab-link" onclick="openTab(event, 'info')">Informacje</li>
-            </ul>
-        </div>
-    </nav>
+    <div class="background-animation"></div>
+    <div class="scanlines"></div>
 
-    <div class="container">
-        <div id="home" class="tab-content active">
-            <h1 class="glitch">PRIME RP SEZON 2</h1>
-            <p class="subtitle">Nowa definicja roleplayingu tekstowego.</p>
-            <div class="founder-box">
-                Założyciel strony: <span>!Kuba</span>
+    <header>
+        <nav>
+            <div class="nav-inner">
+                <div class="logo">
+                    <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="PrimeRP Logo" class="logo-img">
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" data-target="home">Strona Główna</a></li>
+                    <li><a href="#" class="nav-link" data-target="season">Sezon 2</a></li>
+                    <li><a href="#" class="nav-link" data-target="rules">Regulamin</a></li>
+                    <li><a href="#" class="nav-link" data-target="founder">Założyciel</a></li>
+                </ul>
             </div>
-            <div class="code-section">
-                <p>Twój kod do gry:</p>
-                <div class="promo-code">10cap1up</div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="home" class="content-section active">
+            <div class="hero">
+                <h2 class="top-label">Witamy w nowej rzeczywistości</h2>
+                <h1 class="main-title">SEZON 2: POWRÓT</h1>
+                <p class="desc">Dołącz do najbardziej zaawansowanego systemu Roleplay w Polsce. Twoja historia zaczyna się tutaj.</p>
+                
+                <div class="code-card">
+                    <span class="card-label">KOD PROMOCYJNY DO GRY</span>
+                    <div class="code-wrapper">
+                        <span id="promoCode">10cap1up</span>
+                        <button onclick="copyCode()" title="Kopiuj kod"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+
+                <div class="cta-group">
+                    <button class="btn btn-primary">Zagraj Teraz</button>
+                    <button class="btn btn-outline"><i class="fab fa-discord"></i> Discord</button>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <div id="sezon2" class="tab-content">
-            <h2>Co nowego w Sezonie 2?</h2>
-            <ul class="features">
-                <li>Nowa, rozbudowana gospodarka</li>
-                <li>Ulepszony system frakcji</li>
-                <li>Unikalne skrypty i interakcje</li>
-                <li>Większy nacisk na realizm postaci</li>
-            </ul>
-        </div>
+        <section id="season" class="content-section">
+            <div class="card grid">
+                <div class="card-text">
+                    <h2>Nowości w Sezonie 2</h2>
+                    <p>Wprowadziliśmy ponad 50 nowych skryptów, odświeżoną gospodarkę oraz całkowicie nowy system frakcji porządkowych.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Nowy System Narkotyków</li>
+                        <li><i class="fas fa-check"></i> Ulepszona Optymalizacja</li>
+                        <li><i class="fas fa-check"></i> Dynamiczna Pogoda</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-        <div id="info" class="tab-content">
-            <h2>O Projekcie</h2>
-            <p>PrimeRP to społeczność tworzona z pasją. Dołącz do nas i twórz własną historię w świecie pełnym możliwości.</p>
-            <button class="btn-discord">DOŁĄCZ DO DISCORDA</button>
-        </div>
-    </div>
+        <section id="founder" class="content-section">
+            <div class="founder-card">
+                <div class="founder-info">
+                    <i class="fas fa-crown fa-3x crown-icon"></i>
+                    <h2>Założyciel Projektu</h2>
+                    <div class="founder-name">!Kuba</div>
+                    <p>Wizjoner i twórca techniczny platformy PrimeRP. Odpowiada za rozwój silnika gry oraz stabilność infrastruktury.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PrimeRP Sezon 2. Projekt i Realizacja: <strong>!Kuba</strong></p>
+    </footer>
 
     <script src="app.js"></script>
 </body>
