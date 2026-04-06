@@ -1,19 +1,29 @@
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
+// Przełączanie zakładek po lewej stronie
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function(e) {
+        e.preventDefault();
 
-    // Ukryj wszystkie zakładki
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].classList.remove("active");
-    }
+        // 1. Usuń aktywną klasę z linków
+        document.querySelectorAll('.nav-item').forEach(link => {
+            link.classList.remove('active');
+        });
 
-    // Usuń klasę active z przycisków
-    tablinks = document.getElementsByClassName("tab-link");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].classList.remove("active");
-    }
+        // 2. Ukryj wszystkie sekcje treści
+        document.querySelectorAll('.tab-page').forEach(page => {
+            page.classList.remove('active');
+        });
 
-    // Pokaż obecną zakładkę i dodaj klasę active do przycisku
-    document.getElementById(tabName).classList.add("active");
-    evt.currentTarget.classList.add("active");
+        // 3. Aktywuj kliknięty link i odpowiednią sekcję
+        this.classList.add('active');
+        const targetId = this.getAttribute('data-target');
+        document.getElementById(targetId).classList.add('active');
+    });
+});
+
+// Funkcja kopiowania kodu
+function copyCode() {
+    const code = "10cap1up";
+    navigator.clipboard.writeText(code).then(() => {
+        alert("Kod skopiowany: " + code);
+    });
 }
