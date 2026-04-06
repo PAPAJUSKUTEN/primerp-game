@@ -1,1 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wirtualny System RP | Primerp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <div class="app-wrapper">
+        <header>
+            <div class="logo">WIRTUALNY SYSTEM<span>RP</span></div>
+            <div class="status-badge" id="domainStatus">Połączono: wirtualnysystemrp.pl</div>
+        </header>
+
+        <section class="game-card">
+            <div class="stats-container">
+                <span class="label">Twoje Punkty Systemowe</span>
+                <h1 id="pointsDisplay">0</h1>
+            </div>
+            <button id="clickBtn" class="glow-button">GENERUJ DANE</button>
+        </section>
+
+        <section class="report-card">
+            <h3>📂 PANEL ZGŁOSZEŃ BŁĘDÓW</h3>
+            <p>Napotkałeś problem w systemie? Opisz go poniżej.</p>
+            
+            <div class="input-group">
+                <select id="issueType">
+                    <option value="bug">Błąd Systemu (Bug)</option>
+                    <option value="exploit">Luka / Exploit</option>
+                    <option value="idea">Propozycja ulepszenia</option>
+                </select>
+                <textarea id="reportText" placeholder="Opisz błąd (minimum 10 znaków)..."></textarea>
+            </div>
+
+            <button id="sendReportBtn">WYŚLIJ RAPORT</button>
+            <div id="feedbackMsg" class="feedback"></div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Wirtualny System RP - Napędzane przez Primerp Engine</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
