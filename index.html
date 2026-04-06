@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | System Zarządzania</title>
+    <title>PrimeRP | Panel</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -20,19 +20,19 @@
             <a href="#" class="nav-item active" data-target="dashboard">
                 <i class="fas fa-th-large"></i> <span>Dashboard</span>
             </a>
-            <a href="#" class="nav-item" data-target="season2">
+            <a href="#" class="nav-item" data-target="coming-soon">
                 <i class="fas fa-rocket"></i> <span>Sezon 2</span>
             </a>
-            <a href="#" class="nav-item" data-target="rules">
+            <a href="#" class="nav-item" data-target="coming-soon">
                 <i class="fas fa-file-invoice"></i> <span>Regulamin</span>
             </a>
-            <a href="#" class="nav-item" data-target="founder">
+            <a href="#" class="nav-item" data-target="coming-soon">
                 <i class="fas fa-user-shield"></i> <span>Założyciel</span>
             </a>
         </nav>
 
         <div class="sidebar-footer">
-            <p>Wersja 2.0.1</p>
+            <p>Założyciel: !Kuba</p>
         </div>
     </aside>
 
@@ -40,40 +40,25 @@
         
         <section id="dashboard" class="tab-page active">
             <header class="content-header">
-                <h1>Witaj w Systemie PrimeRP</h1>
-                <p>Status serwera: <span class="status-online">ONLINE</span></p>
+                <h1>Panel Główny</h1>
+                <p>Status: <span class="status-online">ONLINE</span></p>
             </header>
 
             <div class="info-grid">
                 <div class="info-card">
-                    <h3>KOD PROMOCYJNY</h3>
+                    <h3>KOD DO GRY</h3>
                     <p class="promo-val">10cap1up</p>
-                    <button class="btn-copy" onclick="copyCode()">KOPIUJ</button>
-                </div>
-                <div class="info-card">
-                    <h3>AKTYWNI GRACZE</h3>
-                    <p class="promo-val">142</p>
+                    <button class="btn-copy" onclick="copyCode()">KOPIUJ KOD</button>
                 </div>
             </div>
         </section>
 
-        <section id="season2" class="tab-page">
-            <h1>Sezon 2: Nowości</h1>
-            <div class="glass-box">
-                <ul>
-                    <li>Całkowicie nowa mapa interaktywna.</li>
-                    <li>Ulepszony system ekonomii.</li>
-                    <li>Nowe pojazdy i tuning.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="founder" class="tab-page">
-            <h1>Administracja</h1>
-            <div class="founder-profile">
-                <div class="avatar-circle">!K</div>
-                <h2>Założyciel: !Kuba</h2>
-                <p>Główny deweloper i twórca wizji Sezonu 2.</p>
+        <section id="coming-soon" class="tab-page">
+            <div class="coming-soon-container">
+                <i class="fas fa-clock fa-4x"></i>
+                <h1>WKRÓTCE...</h1>
+                <p>Ta sekcja zostanie odblokowana wraz ze startem Sezonu 2 PrimeRP.</p>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
             </div>
         </section>
 
