@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | Dashboard</title>
+    <title>PrimeRP | Panel Obywatela</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -12,7 +12,7 @@
 
     <aside class="sidebar">
         <div class="sidebar-header">
-            <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="Logo" class="side-logo">
+            <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="PrimeRP Logo" class="side-logo">
             <h2 class="brand">PRIME<span>RP</span></h2>
         </div>
 
@@ -20,19 +20,20 @@
             <a href="#" class="nav-item active" data-target="dashboard">
                 <i class="fas fa-columns"></i> <span>Panel Główny</span>
             </a>
+            <a href="#" class="nav-item" data-target="urzad">
+                <i class="fas fa-landmark"></i> <span>Urząd Miasta</span>
+            </a>
             <a href="#" class="nav-item" data-target="coming-soon">
-                <i class="fas fa-map-marked-alt"></i> <span>Mapa Sezon 2</span>
+                <i class="fas fa-car"></i> <span>Garaż</span>
             </a>
             <a href="#" class="nav-item" data-target="coming-soon">
                 <i class="fas fa-gavel"></i> <span>Regulamin</span>
             </a>
-            <a href="#" class="nav-item" data-target="coming-soon">
-                <i class="fas fa-users"></i> <span>Frakcje</span>
-            </a>
         </nav>
 
         <div class="sidebar-footer">
-            <p>System v2.5 by !Kuba</p>
+            <p>Założyciel: !Kuba</p>
+            <p>Sezon 2 • 2026</p>
         </div>
     </aside>
 
@@ -40,68 +41,91 @@
         
         <section id="dashboard" class="tab-page active">
             <header class="content-header">
-                <div class="welcome">
-                    <h1>Witaj w PrimeRP</h1>
-                    <p>Zarządzaj swoją rozgrywką z poziomu jednego panelu.</p>
+                <div class="header-text">
+                    <h1>Dashboard</h1>
+                    <p>Witaj w systemie zarządzania postacią PrimeRP.</p>
                 </div>
-                <div class="server-badge">
-                    <div class="dot"></div>
-                    <span>Serwer Aktywny</span>
+                <div class="server-status">
+                    <div class="pulse-dot"></div>
+                    <span>SERWER ONLINE</span>
                 </div>
             </header>
 
-            <div class="stats-grid">
+            <div class="stats-container">
                 <div class="stat-card">
-                    <i class="fas fa-users-viewfinder"></i>
-                    <div class="stat-info">
-                        <span class="stat-label">Graczy Online</span>
-                        <span class="stat-value">124/250</span>
-                    </div>
+                    <span class="label">Obywateli w Mieście</span>
+                    <span class="value">142 / 250</span>
                 </div>
                 <div class="stat-card">
-                    <i class="fas fa-stopwatch"></i>
-                    <div class="stat-info">
-                        <span class="stat-label">Uptime</span>
-                        <span class="stat-value">99.8%</span>
-                    </div>
+                    <span class="label">Twój Portfel</span>
+                    <span class="value money">$54,200</span>
                 </div>
             </div>
 
             <div class="dashboard-grid">
-                <div class="main-card promo-card">
-                    <h3>🎁 Bonus Startowy</h3>
-                    <p>Użyj kodu przy pierwszym logowaniu do Sezonu 2:</p>
-                    <div class="promo-box">
+                <div class="glass-card promo-section">
+                    <h3><i class="fas fa-gift"></i> Nagroda Startowa</h3>
+                    <p>Skopiuj kod i użyj go w grze (F8 -> kod):</p>
+                    <div class="copy-box">
                         <span id="promoCode">10cap1up</span>
                         <button onclick="copyCode()"><i class="fas fa-copy"></i></button>
                     </div>
                 </div>
 
-                <div class="main-card feed-card">
-                    <h3><i class="fas fa-rss"></i> Ostatnie Zmiany</h3>
-                    <ul class="feed-list">
-                        <li>
-                            <span class="date">Dziś</span>
-                            <p>Aktualizacja anty-cheata (v4.2)</p>
-                        </li>
-                        <li>
-                            <span class="date">Wczoraj</span>
-                            <p>Nowe modele aut w salonie Premium</p>
-                        </li>
-                        <li>
-                            <span class="date">02.04</span>
-                            <p>Otwarcie rekrutacji do LSPD</p>
-                        </li>
-                    </ul>
+                <div class="glass-card">
+                    <h3><i class="fas fa-newspaper"></i> Ostatnie Ogłoszenia</h3>
+                    <div class="news-item">
+                        <span class="news-date">06.04</span>
+                        <p>Otwarcie rekrutacji do frakcji porządkowych.</p>
+                    </div>
+                    <div class="news-item">
+                        <span class="news-date">05.04</span>
+                        <p>Nowe modele ubrań w butikach.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="urzad" class="tab-page">
+            <header class="content-header">
+                <div class="header-text">
+                    <h1>Urząd Miasta</h1>
+                    <p>Zarządzaj swoimi dokumentami i sprawami urzędowymi.</p>
+                </div>
+            </header>
+
+            <div class="urzad-container">
+                <div class="glass-card urzad-card">
+                    <h3><i class="fas fa-id-card"></i> Dokumentacja</h3>
+                    <div class="list-row">
+                        <span>Dowód Osobisty</span>
+                        <span class="tag tag-ok">POSIADASZ</span>
+                    </div>
+                    <div class="list-row">
+                        <span>Prawo Jazdy Kat. B</span>
+                        <span class="tag tag-ok">POSIADASZ</span>
+                    </div>
+                    <div class="list-row">
+                        <span>Licencja na Broń</span>
+                        <span class="tag tag-none">BRAK</span>
+                    </div>
+                    <button class="action-btn">WYRÓB DOKUMENTY</button>
+                </div>
+
+                <div class="glass-card urzad-card">
+                    <h3><i class="fas fa-wallet"></i> Rozliczenia</h3>
+                    <p>Należne podatki (Mieszkanie/Firma):</p>
+                    <div class="tax-amount">$0</div>
+                    <p class="tax-status">Wszystkie opłaty są uregulowane.</p>
                 </div>
             </div>
         </section>
 
         <section id="coming-soon" class="tab-page">
-            <div class="coming-soon-wrapper">
-                <div class="loader-circle"></div>
-                <h1>WKRÓTCE</h1>
-                <p>Przygotowujemy tę sekcję specjalnie pod Sezon 2.</p>
+            <div class="coming-soon-content">
+                <div class="loader"></div>
+                <h1>WKRÓTCE...</h1>
+                <p>Ta funkcjonalność zostanie odblokowana wkrótce.</p>
             </div>
         </section>
 
