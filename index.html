@@ -2,41 +2,46 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>TEST POŁĄCZENIA - Wirtualny System RP</title>
-    <style>
-        body {
-            background-color: #ff0055; /* Bardzo jaskrawy różowy - nie da się go przegapić! */
-            color: white;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        .box {
-            background: rgba(0,0,0,0.8);
-            padding: 40px;
-            border: 5px solid white;
-            border-radius: 20px;
-        }
-        h1 { font-size: 3rem; margin-bottom: 10px; }
-        p { font-size: 1.5rem; }
-        .status { color: #00ff00; font-weight: bold; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wirtualny System RP</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="video-background">
+        </div>
+    
+    <div class="overlay"></div>
 
-    <div class="box">
-        <h1>STATUS: <span class="status">AKTYWNY</span></h1>
-        <p>Jeśli widzisz ten jaskrawy ekran na domenie:</p>
-        <h2>wirtualnysystemrp.pl</h2>
-        <p>...to znaczy, że <b>Cloudflare działa poprawnie!</b></p>
-        <hr>
-        <p>Możesz teraz wgrać docelowe kody (HTML/CSS/JS).</p>
+    <div class="container">
+        <header>
+            <h1 class="logo">WIRTUALNY<span>SYSTEM</span>RP</h1>
+            <p class="slogan">Nowa era rozgrywki tekstowej</p>
+        </header>
+
+        <main class="main-content">
+            <div class="status-box">
+                <div class="status-item">
+                    <span class="label">SERWER:</span>
+                    <span class="value online">ONLINE</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">GRACZY:</span>
+                    <span class="value">128 / 250</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="startApp()">URUCHOM SYSTEM</button>
+                <button class="btn btn-secondary">DOŁĄCZ DO DISCORDA</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Wirtualny System RP. Wszystkie prawa zastrzeżone.</p>
+        </footer>
     </div>
 
+    <script src="app.js"></script>
 </body>
 </html>
