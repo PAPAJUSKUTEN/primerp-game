@@ -1,18 +1,16 @@
 :root {
-    --primary: #00d4ff;
-    --secondary: #0055ff;
-    --bg: #050505;
-    --text: #ffffff;
+    --accent: #00d4ff;
+    --bg-dark: #0a0a0a;
+    --glass: rgba(255, 255, 255, 0.05);
 }
 
-body, html {
+body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    overflow: hidden;
+    font-family: 'Rajdhani', sans-serif;
+    background-color: var(--bg-dark);
+    color: white;
+    overflow-x: hidden;
 }
 
 .overlay {
@@ -21,73 +19,108 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(0,85,255,0.15) 0%, rgba(0,0,0,0.9) 100%);
-    z-index: 1;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.1) 0%, rgba(0, 0, 0, 1) 100%);
+    z-index: -1;
 }
 
-.container {
-    position: relative;
-    z-index: 2;
+nav {
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom: 2px solid var(--accent);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
+    padding: 0 20px;
 }
 
 .logo {
     font-family: 'Orbitron', sans-serif;
-    font-size: 3.5rem;
-    letter-spacing: 5px;
-    margin: 0;
-    text-shadow: 0 0 20px var(--primary);
-}
-
-.logo span {
-    color: var(--primary);
-}
-
-.slogan {
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0.8;
-}
-
-.status-box {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 20px 40px;
-    border-radius: 10px;
-    border-left: 4px solid var(--primary);
-    margin: 30px 0;
-}
-
-.status-item { margin: 10px 0; font-size: 1.1rem; }
-.online { color: #00ff88; font-weight: bold; }
-
-.btn {
-    padding: 15px 35px;
-    border: none;
-    border-radius: 5px;
-    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
     font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.logo span { color: var(--accent); }
+
+.tabs {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+}
+
+.tab-link {
     cursor: pointer;
-    transition: 0.3s;
-    margin: 10px;
     text-transform: uppercase;
+    font-weight: bold;
+    transition: 0.3s;
+    letter-spacing: 1px;
 }
 
-.btn-primary {
-    background: var(--primary);
-    color: black;
-    box-shadow: 0 0 15px var(--primary);
+.tab-link:hover, .tab-link.active {
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent);
 }
 
-.btn-secondary {
-    background: transparent;
+.container {
+    max-width: 1000px;
+    margin: 80px auto;
+    text-align: center;
+}
+
+.tab-content { display: none; animation: fadeIn 0.5s ease; }
+.tab-content.active { display: block; }
+
+h1 { font-family: 'Orbitron', sans-serif; font-size: 4rem; margin: 0; }
+.glitch { text-shadow: 2px 2px var(--accent); }
+
+.subtitle { font-size: 1.4rem; opacity: 0.7; }
+
+.founder-box {
+    margin-top: 40px;
+    font-size: 1.2rem;
+    background: var(--glass);
+    display: inline-block;
+    padding: 10px 30px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.founder-box span { color: var(--accent); font-weight: bold; }
+
+.code-section {
+    margin-top: 50px;
+    padding: 30px;
+    background: rgba(0, 212, 255, 0.05);
+    border: 1px dashed var(--accent);
+    border-radius: 15px;
+}
+
+.promo-code {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    letter-spacing: 5px;
+}
+
+.features { text-align: left; display: inline-block; font-size: 1.2rem; line-height: 2; }
+.btn-discord {
+    background: #5865F2;
     color: white;
-    border: 1px solid white;
+    border: none;
+    padding: 15px 40px;
+    font-family: 'Orbitron', sans-serif;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
-.btn:hover { transform: scale(1.05); opacity: 0.9; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
