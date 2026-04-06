@@ -1,16 +1,11 @@
-document.getElementById('authForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+function loginAction(type) {
+    console.log("Wybrano dostęp: " + type);
     
-    const user = document.getElementById('username').value;
-    const btn = document.querySelector('.glow-button');
-    
-    // Prosta animacja ładowania
-    btn.innerText = "ŁĄCZENIE...";
-    btn.style.opacity = "0.7";
+    // Efekt przejścia
+    document.body.style.opacity = "0.4";
     
     setTimeout(() => {
-        alert("Witaj " + user + "! System autoryzacji Sezonu 2 zostanie włączony w dniu premiery.");
-        btn.innerText = "ZALOGUJ SIĘ";
-        btn.style.opacity = "1";
-    }, 1500);
-});
+        alert("System PrimeRP Sezon 2: Autoryzacja dla " + type);
+        document.body.style.opacity = "1";
+    }, 400);
+}
