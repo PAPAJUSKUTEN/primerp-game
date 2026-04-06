@@ -3,82 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP Sezon 2 | Oficjalny Portal</title>
+    <title>PrimeRP | System Zarządzania</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="background-animation"></div>
-    <div class="scanlines"></div>
 
-    <header>
-        <nav>
-            <div class="nav-inner">
-                <div class="logo">
-                    <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="PrimeRP Logo" class="logo-img">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="Logo" class="side-logo">
+            <h2 class="brand">PRIME<span>RP</span></h2>
+        </div>
+
+        <nav class="side-nav">
+            <a href="#" class="nav-item active" data-target="dashboard">
+                <i class="fas fa-th-large"></i> <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-target="season2">
+                <i class="fas fa-rocket"></i> <span>Sezon 2</span>
+            </a>
+            <a href="#" class="nav-item" data-target="rules">
+                <i class="fas fa-file-invoice"></i> <span>Regulamin</span>
+            </a>
+            <a href="#" class="nav-item" data-target="founder">
+                <i class="fas fa-user-shield"></i> <span>Założyciel</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Wersja 2.0.1</p>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        
+        <section id="dashboard" class="tab-page active">
+            <header class="content-header">
+                <h1>Witaj w Systemie PrimeRP</h1>
+                <p>Status serwera: <span class="status-online">ONLINE</span></p>
+            </header>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>KOD PROMOCYJNY</h3>
+                    <p class="promo-val">10cap1up</p>
+                    <button class="btn-copy" onclick="copyCode()">KOPIUJ</button>
                 </div>
-                <ul class="nav-menu">
-                    <li><a href="#" class="nav-link active" data-target="home">Strona Główna</a></li>
-                    <li><a href="#" class="nav-link" data-target="season">Sezon 2</a></li>
-                    <li><a href="#" class="nav-link" data-target="rules">Regulamin</a></li>
-                    <li><a href="#" class="nav-link" data-target="founder">Założyciel</a></li>
+                <div class="info-card">
+                    <h3>AKTYWNI GRACZE</h3>
+                    <p class="promo-val">142</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="season2" class="tab-page">
+            <h1>Sezon 2: Nowości</h1>
+            <div class="glass-box">
+                <ul>
+                    <li>Całkowicie nowa mapa interaktywna.</li>
+                    <li>Ulepszony system ekonomii.</li>
+                    <li>Nowe pojazdy i tuning.</li>
                 </ul>
             </div>
-        </nav>
-    </header>
+        </section>
 
-    <main class="container">
-        <section id="home" class="content-section active">
-            <div class="hero">
-                <h2 class="top-label">Witamy w nowej rzeczywistości</h2>
-                <h1 class="main-title">SEZON 2: POWRÓT</h1>
-                <p class="desc">Dołącz do najbardziej zaawansowanego systemu Roleplay w Polsce. Twoja historia zaczyna się tutaj.</p>
-                
-                <div class="code-card">
-                    <span class="card-label">KOD PROMOCYJNY DO GRY</span>
-                    <div class="code-wrapper">
-                        <span id="promoCode">10cap1up</span>
-                        <button onclick="copyCode()" title="Kopiuj kod"><i class="fas fa-copy"></i></button>
-                    </div>
-                </div>
-
-                <div class="cta-group">
-                    <button class="btn btn-primary">Zagraj Teraz</button>
-                    <button class="btn btn-outline"><i class="fab fa-discord"></i> Discord</button>
-                </div>
+        <section id="founder" class="tab-page">
+            <h1>Administracja</h1>
+            <div class="founder-profile">
+                <div class="avatar-circle">!K</div>
+                <h2>Założyciel: !Kuba</h2>
+                <p>Główny deweloper i twórca wizji Sezonu 2.</p>
             </div>
         </section>
 
-        <section id="season" class="content-section">
-            <div class="card grid">
-                <div class="card-text">
-                    <h2>Nowości w Sezonie 2</h2>
-                    <p>Wprowadziliśmy ponad 50 nowych skryptów, odświeżoną gospodarkę oraz całkowicie nowy system frakcji porządkowych.</p>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check"></i> Nowy System Narkotyków</li>
-                        <li><i class="fas fa-check"></i> Ulepszona Optymalizacja</li>
-                        <li><i class="fas fa-check"></i> Dynamiczna Pogoda</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="founder" class="content-section">
-            <div class="founder-card">
-                <div class="founder-info">
-                    <i class="fas fa-crown fa-3x crown-icon"></i>
-                    <h2>Założyciel Projektu</h2>
-                    <div class="founder-name">!Kuba</div>
-                    <p>Wizjoner i twórca techniczny platformy PrimeRP. Odpowiada za rozwój silnika gry oraz stabilność infrastruktury.</p>
-                </div>
-            </div>
-        </section>
     </main>
-
-    <footer>
-        <p>&copy; 2026 PrimeRP Sezon 2. Projekt i Realizacja: <strong>!Kuba</strong></p>
-    </footer>
 
     <script src="app.js"></script>
 </body>
