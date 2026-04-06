@@ -3,44 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | Logowanie</title>
+    <title>PrimeRP | Autoryzacja</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="login-wrapper">
-        <div class="background-image"></div>
-        <div class="overlay"></div>
+    <div class="main-container">
+        <div class="bg-visual">
+            <div class="blob"></div>
+            <div class="blob2"></div>
+        </div>
 
-        <div class="login-container">
-            <div class="login-box">
-                <div class="logo-section">
-                    <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="Logo" class="login-logo">
+        <div class="login-card">
+            <div class="login-left">
+                <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="PrimeRP" class="hero-img">
+            </div>
+
+            <div class="login-right">
+                <div class="header">
                     <h1>PRIME<span>RP</span></h1>
-                    <p class="season-tag">SEZON 2</p>
+                    <p class="badge">SEZON 2</p>
                 </div>
 
-                <form id="loginForm">
-                    <div class="input-group">
-                        <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Login" required>
+                <form id="authForm">
+                    <div class="input-field">
+                        <i class="fas fa-user-circle"></i>
+                        <input type="text" id="username" placeholder="Nazwa użytkownika" required>
                     </div>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Hasło" required>
+
+                    <div class="input-field">
+                        <i class="fas fa-fingerprint"></i>
+                        <input type="password" id="password" placeholder="Hasło dostępu" required>
                     </div>
+
+                    <div class="options">
+                        <label><input type="checkbox"> Zapamiętaj mnie</label>
+                        <a href="#">Zapomniałeś hasła?</a>
+                    </div>
+
+                    <button type="submit" class="glow-button">ZALOGUJ SIĘ</button>
                     
-                    <button type="submit" class="btn-login">ZALOGUJ SIĘ</button>
+                    <div class="divider"><span>LUB</span></div>
+                    
+                    <button type="button" class="btn-register">UTWÓRZ NOWE KONTO</button>
                 </form>
 
-                <div class="login-footer">
-                    <p>Nie masz konta? <a href="#">Zarejestruj się</a></p>
-                </div>
+                <p class="footer-text">Zaloguj się do systemu, aby zarządzać swoją postacią.</p>
             </div>
         </div>
     </div>
 
+    <script src="app.js"></script>
 </body>
 </html>
