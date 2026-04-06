@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | Panel</title>
+    <title>PrimeRP | Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -18,21 +18,21 @@
 
         <nav class="side-nav">
             <a href="#" class="nav-item active" data-target="dashboard">
-                <i class="fas fa-th-large"></i> <span>Dashboard</span>
+                <i class="fas fa-columns"></i> <span>Panel Główny</span>
             </a>
             <a href="#" class="nav-item" data-target="coming-soon">
-                <i class="fas fa-rocket"></i> <span>Sezon 2</span>
+                <i class="fas fa-map-marked-alt"></i> <span>Mapa Sezon 2</span>
             </a>
             <a href="#" class="nav-item" data-target="coming-soon">
-                <i class="fas fa-file-invoice"></i> <span>Regulamin</span>
+                <i class="fas fa-gavel"></i> <span>Regulamin</span>
             </a>
             <a href="#" class="nav-item" data-target="coming-soon">
-                <i class="fas fa-user-shield"></i> <span>Założyciel</span>
+                <i class="fas fa-users"></i> <span>Frakcje</span>
             </a>
         </nav>
 
         <div class="sidebar-footer">
-            <p>Założyciel: !Kuba</p>
+            <p>System v2.5 by !Kuba</p>
         </div>
     </aside>
 
@@ -40,25 +40,68 @@
         
         <section id="dashboard" class="tab-page active">
             <header class="content-header">
-                <h1>Panel Główny</h1>
-                <p>Status: <span class="status-online">ONLINE</span></p>
+                <div class="welcome">
+                    <h1>Witaj w PrimeRP</h1>
+                    <p>Zarządzaj swoją rozgrywką z poziomu jednego panelu.</p>
+                </div>
+                <div class="server-badge">
+                    <div class="dot"></div>
+                    <span>Serwer Aktywny</span>
+                </div>
             </header>
 
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>KOD DO GRY</h3>
-                    <p class="promo-val">10cap1up</p>
-                    <button class="btn-copy" onclick="copyCode()">KOPIUJ KOD</button>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-users-viewfinder"></i>
+                    <div class="stat-info">
+                        <span class="stat-label">Graczy Online</span>
+                        <span class="stat-value">124/250</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-stopwatch"></i>
+                    <div class="stat-info">
+                        <span class="stat-label">Uptime</span>
+                        <span class="stat-value">99.8%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="main-card promo-card">
+                    <h3>🎁 Bonus Startowy</h3>
+                    <p>Użyj kodu przy pierwszym logowaniu do Sezonu 2:</p>
+                    <div class="promo-box">
+                        <span id="promoCode">10cap1up</span>
+                        <button onclick="copyCode()"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+
+                <div class="main-card feed-card">
+                    <h3><i class="fas fa-rss"></i> Ostatnie Zmiany</h3>
+                    <ul class="feed-list">
+                        <li>
+                            <span class="date">Dziś</span>
+                            <p>Aktualizacja anty-cheata (v4.2)</p>
+                        </li>
+                        <li>
+                            <span class="date">Wczoraj</span>
+                            <p>Nowe modele aut w salonie Premium</p>
+                        </li>
+                        <li>
+                            <span class="date">02.04</span>
+                            <p>Otwarcie rekrutacji do LSPD</p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <section id="coming-soon" class="tab-page">
-            <div class="coming-soon-container">
-                <i class="fas fa-clock fa-4x"></i>
-                <h1>WKRÓTCE...</h1>
-                <p>Ta sekcja zostanie odblokowana wraz ze startem Sezonu 2 PrimeRP.</p>
-                <div class="progress-bar"><div class="progress-fill"></div></div>
+            <div class="coming-soon-wrapper">
+                <div class="loader-circle"></div>
+                <h1>WKRÓTCE</h1>
+                <p>Przygotowujemy tę sekcję specjalnie pod Sezon 2.</p>
             </div>
         </section>
 
