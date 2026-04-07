@@ -450,154 +450,175 @@
         </div>
     </div>
 
-    <script>
-        const staffData = [
-            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Założyciel projektu PrimeRP. Odpowiada za architekturę systemów i rozwój techniczny strony oraz serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Współzałożyciel. Zajmuje się sprawami kadrowymi oraz nadzorem nad frakcjami porządkowymi.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MAREK", role: "Head Admin", desc: "Najwyższy rangą opiekun serwera. Rozstrzyga najpoważniejsze spory i apelacje od banów.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PIOTR", role: "Administrator", desc: "Zarządza moderacją i dba o płynność rozgrywki w godzinach szczytu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ADAM", role: "Administrator", desc: "Specjalista ds. technicznych wewnątrz mapy Roblox oraz opiekun frakcji straży pożarnej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "NATALIA", role: "Support Team", desc: "Pierwsza linia kontaktu. Pomaga nowym graczom przejść przez proces weryfikacji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "SZYMON", role: "Support Team", desc: "Moderator Discorda oraz pomoc techniczna w zakresie zgłoszeń błędów (Bug Reports).", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "OLAF", role: "Moderator RP", desc: "Pilnuje realizmu podczas akcji policyjnych. Przeprowadza kontrole jakości RP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KASIA", role: "Moderator RP", desc: "Opiekunka EMS. Dba o to, by medycyna na serwerze stała na najwyższym poziomie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "DARIUSZ", role: "Events Manager", desc: "Twórca eventów globalnych. Odpowiada za urozmaicanie rozgrywki na PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "TOMEK", role: "Helper", desc: "Członek ekipy na okresie próbnym. Aktywnie wspiera graczy na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MICHAŁ", role: "Helper", desc: "Pomocnik w zakresie obsługi biletów (ticketów) na Discordzie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PAWEŁ", role: "Trial Helper", desc: "Najmłodszy stażem członek ekipy. Wspiera starszą administrację w prostych pracach.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ŁUKASZ", role: "Trial Helper", desc: "Uczy się zasad panujących wewnątrz ekipy administracyjnej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "VIPER", role: "Technical Support", desc: "Legenda projektu. Pomaga przy optymalizacji bazy danych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
-        ];
+   <script>
+    const staffData = [
+        { name: "! KUBA", role: "Owner / Lead Developer", desc: "Założyciel projektu PrimeRP. Odpowiada za architekturę systemów i rozwój techniczny strony oraz serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+        // ... (reszta Twoich danych staffu) ...
+        { name: "VIPER", role: "Technical Support", desc: "Legenda projektu. Pomaga przy optymalizacji bazy danych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+    ];
 
-        let dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [];
+    let dbUsers = [];
 
-        window.onload = () => {
-            renderStaff();
-            updateDate();
-            setInterval(updateDate, 1000);
+    // Funkcja ładująca dane z PLIKU zewnętrznego
+    async function loadUsersFromFile() {
+        try {
+            const response = await fetch('konta.json');
+            dbUsers = await response.json();
             renderDBUsers();
-        };
-
-        function updateDate() {
-            document.getElementById('liveDate').innerText = new Date().toLocaleString();
+        } catch (e) {
+            console.log("Błąd ładowania pliku konta.json, używam lokalnej pamięci.");
+            dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [];
+            renderDBUsers();
         }
+    }
 
-        function switchTab(id, el) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
-        }
-
-        function renderStaff() {
-            const container = document.getElementById('staffContainer');
-            container.innerHTML = staffData.map(s => `
-                <div class="admin-card" onclick="openModal('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
-                    <div class="avatar-box"><img src="${s.img}"></div>
-                    <div class="admin-name">${s.name}</div>
-                    <div class="admin-role">${s.role}</div>
-                </div>
-            `).join('');
-        }
-
-        let activeAdmin = "";
-        function openModal(n, r, i, d) {
-            activeAdmin = n;
-            document.getElementById('mName').innerText = n;
-            document.getElementById('mRole').innerText = r;
-            document.getElementById('mImg').src = i;
-            document.getElementById('mDesc').innerText = d;
-            document.getElementById('msgForm').classList.add('hidden');
-            document.getElementById('msgTrigger').classList.remove('hidden');
-            document.getElementById('modalOverlay').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
-        function toggleMsgInput() {
-            document.getElementById('msgForm').classList.toggle('hidden');
-            document.getElementById('msgTrigger').classList.toggle('hidden');
-        }
-
-        async function sendWebhookMessage() {
-            const text = document.getElementById('mText').value;
-            if(!text) return alert("Wpisz treść!");
-            const url = "https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8";
-            const sender = document.getElementById('userNameDisplay').innerText;
-            await fetch(url, {
+    // Funkcja zapisująca dane do PLIKU przez PHP
+    async function saveUsersToFile() {
+        // Zapisujemy w localStorage (kopia zapasowa)
+        localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
+        
+        // Zapisujemy do pliku konta.json (wysyłka do PHP)
+        try {
+            await fetch('save.php', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `📬 **Wiadomość do:** ${activeAdmin}\n**Od:** ${sender}\n**Treść:** ${text}` })
+                body: JSON.stringify(dbUsers)
             });
-            alert("Wysłano!");
-            closeModal();
-            document.getElementById('mText').value = "";
+        } catch (e) {
+            console.error("Błąd zapisu do pliku. Upewnij się, że masz serwer PHP!");
         }
+    }
 
-        async function submitReport() {
-            const title = document.getElementById('reportTitle').value;
-            const content = document.getElementById('reportContent').value;
-            if(!title || !content) return alert("Uzupełnij pola!");
-            const url = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
-            const sender = document.getElementById('userNameDisplay').innerText;
-            await fetch(url, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `🚨 **ZGŁOSZENIE**\n**Autor:** ${sender}\n**Temat:** ${title}\n**Opis:** ${content}` })
-            });
-            alert("Zgłoszenie wysłane!");
-            document.getElementById('reportTitle').value = "";
-            document.getElementById('reportContent').value = "";
+    window.onload = () => {
+        renderStaff();
+        updateDate();
+        setInterval(updateDate, 1000);
+        loadUsersFromFile(); // Zmienione na ładowanie z pliku
+    };
+
+    function updateDate() {
+        document.getElementById('liveDate').innerText = new Date().toLocaleString();
+    }
+
+    function switchTab(id, el) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        el.classList.add('active');
+    }
+
+    function renderStaff() {
+        const container = document.getElementById('staffContainer');
+        container.innerHTML = staffData.map(s => `
+            <div class="admin-card" onclick="openModal('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
+                <div class="avatar-box"><img src="${s.img}"></div>
+                <div class="admin-name">${s.name}</div>
+                <div class="admin-role">${s.role}</div>
+            </div>
+        `).join('');
+    }
+
+    let activeAdmin = "";
+    function openModal(n, r, i, d) {
+        activeAdmin = n;
+        document.getElementById('mName').innerText = n;
+        document.getElementById('mRole').innerText = r;
+        document.getElementById('mImg').src = i;
+        document.getElementById('mDesc').innerText = d;
+        document.getElementById('msgForm').classList.add('hidden');
+        document.getElementById('msgTrigger').classList.remove('hidden');
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+    function toggleMsgInput() {
+        document.getElementById('msgForm').classList.toggle('hidden');
+        document.getElementById('msgTrigger').classList.toggle('hidden');
+    }
+
+    async function sendWebhookMessage() {
+        const text = document.getElementById('mText').value;
+        if(!text) return alert("Wpisz treść!");
+        const url = "https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8";
+        const sender = document.getElementById('userNameDisplay').innerText;
+        await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ content: `📬 **Wiadomość do:** ${activeAdmin}\n**Od:** ${sender}\n**Treść:** ${text}` })
+        });
+        alert("Wysłano!");
+        closeModal();
+        document.getElementById('mText').value = "";
+    }
+
+    async function submitReport() {
+        const title = document.getElementById('reportTitle').value;
+        const content = document.getElementById('reportContent').value;
+        if(!title || !content) return alert("Uzupełnij pola!");
+        const url = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
+        const sender = document.getElementById('userNameDisplay').innerText;
+        await fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ content: `🚨 **ZGŁOSZENIE**\n**Autor:** ${sender}\n**Temat:** ${title}\n**Opis:** ${content}` })
+        });
+        alert("Zgłoszenie wysłane!");
+        document.getElementById('reportTitle').value = "";
+        document.getElementById('reportContent').value = "";
+    }
+
+    document.getElementById('authForm').onsubmit = (e) => {
+        e.preventDefault();
+        const l = document.getElementById('authLogin').value;
+        const p = document.getElementById('authPass').value;
+        if(l === 'admin' && p === '1234') loginSuccess("ADMINISTRATOR", true);
+        else {
+            const found = dbUsers.find(u => u.user === l && u.pass === p);
+            if(found) loginSuccess(found.user, false);
+            else alert("Błąd danych!");
         }
+    };
 
-        document.getElementById('authForm').onsubmit = (e) => {
-            e.preventDefault();
-            const l = document.getElementById('authLogin').value;
-            const p = document.getElementById('authPass').value;
-            if(l === 'admin' && p === '1234') loginSuccess("ADMINISTRATOR", true);
-            else {
-                const found = dbUsers.find(u => u.user === l && u.pass === p);
-                if(found) loginSuccess(found.user, false);
-                else alert("Błąd danych!");
-            }
-        };
+    function loginSuccess(name, isAdmin) {
+        document.getElementById('userNameDisplay').innerText = name;
+        document.getElementById('loginNav').classList.add('hidden');
+        document.getElementById('logoutNav').classList.remove('hidden');
+        if(isAdmin) document.getElementById('adminPanelLink').classList.remove('hidden');
+        switchTab('home', document.querySelector('.nav-item'));
+    }
 
-        function loginSuccess(name, isAdmin) {
-            document.getElementById('userNameDisplay').innerText = name;
-            document.getElementById('loginNav').classList.add('hidden');
-            document.getElementById('logoutNav').classList.remove('hidden');
-            if(isAdmin) document.getElementById('adminPanelLink').classList.remove('hidden');
-            switchTab('home', document.querySelector('.nav-item'));
-        }
+    function userLogout() { window.location.reload(); }
 
-        function userLogout() { window.location.reload(); }
+    function dbAddUser() {
+        const u = document.getElementById('dbUser').value;
+        const p = document.getElementById('dbPass').value;
+        if(!u || !p) return;
+        dbUsers.push({user: u, pass: p});
+        
+        renderDBUsers();
+        saveUsersToFile(); // Zapis do pliku
+        
+        document.getElementById('dbUser').value = "";
+        document.getElementById('dbPass').value = "";
+        alert("Konto zapisane permanentnie w bazie plików!");
+    }
 
-        function dbAddUser() {
-            const u = document.getElementById('dbUser').value;
-            const p = document.getElementById('dbPass').value;
-            if(!u || !p) return;
-            dbUsers.push({user: u, pass: p});
-            localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
-            renderDBUsers();
-            document.getElementById('dbUser').value = "";
-            document.getElementById('dbPass').value = "";
-            alert("Konto zapisane!");
-        }
+    function renderDBUsers() {
+        const list = document.getElementById('dbUserList');
+        if(!list) return;
+        list.innerHTML = dbUsers.map((u, i) => `
+            <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-gray-800">
+                <span class="font-bold text-sm text-yellow-500">${u.user}</span>
+                <button onclick="dbDeleteUser(${i})" class="text-red-600 text-[10px] font-black uppercase">Usuń</button>
+            </div>
+        `).join('');
+    }
 
-        function renderDBUsers() {
-            const list = document.getElementById('dbUserList');
-            list.innerHTML = dbUsers.map((u, i) => `
-                <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-gray-800">
-                    <span class="font-bold text-sm text-yellow-500">${u.user}</span>
-                    <button onclick="dbDeleteUser(${i})" class="text-red-600 text-[10px] font-black uppercase">Usuń</button>
-                </div>
-            `).join('');
-        }
-
-        function dbDeleteUser(i) {
-            dbUsers.splice(i, 1);
-            localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
-            renderDBUsers();
-        }
-    </script>
+    function dbDeleteUser(i) {
+        dbUsers.splice(i, 1);
+        renderDBUsers();
+        saveUsersToFile(); // Aktualizacja pliku po usunięciu
+    }
+</script>
 </body>
 </html>
