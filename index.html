@@ -36,31 +36,11 @@
             z-index: 100;
         }
 
-        .logo-container {
-            text-align: center;
-            margin-bottom: 50px;
-        }
+        .logo-container { text-align: center; margin-bottom: 50px; }
+        .logo-main { font-size: 2.5rem; font-weight: 900; line-height: 0.8; letter-spacing: -2px; }
+        .logo-sub { color: var(--accent); letter-spacing: 10px; font-size: 1rem; margin-left: 10px; }
 
-        .logo-main {
-            font-size: 2.5rem;
-            font-weight: 900;
-            line-height: 0.8;
-            letter-spacing: -2px;
-        }
-
-        .logo-sub {
-            color: var(--accent);
-            letter-spacing: 10px;
-            font-size: 1rem;
-            margin-left: 10px;
-        }
-
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        .nav-menu { display: flex; flex-direction: column; gap: 10px; }
         .nav-item {
             padding: 16px 20px;
             border-radius: 14px;
@@ -69,50 +49,27 @@
             font-weight: 700;
             font-size: 0.8rem;
             text-align: left;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 12px;
             color: #888;
         }
-
-        .nav-item:hover {
-            background: #161616;
-            transform: translateX(10px);
-            color: white;
-            border-color: var(--accent);
-        }
-
-        .nav-item.active {
-            background: var(--accent);
-            color: black;
-            border-color: var(--accent);
-        }
+        .nav-item:hover { transform: translateX(10px); color: white; border-color: var(--accent); }
+        .nav-item.active { background: var(--accent); color: black; border-color: var(--accent); }
 
         /* --- MAIN CONTENT --- */
         .main-wrapper {
             flex: 1;
             padding: 40px;
             overflow-y: auto;
-            position: relative;
             background: radial-gradient(circle at top right, #111 0%, #050505 100%);
         }
 
-        .section-header {
-            margin-bottom: 40px;
-            border-bottom: 1px solid #111;
-            padding-bottom: 20px;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
+        .section-header { margin-bottom: 40px; border-bottom: 1px solid #111; padding-bottom: 20px; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+        .tab-content.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -132,80 +89,74 @@
             padding: 40px;
         }
 
-        /* --- UTILS --- */
-        .custom-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 20px;
-        }
-
-        .input-style {
-            width: 100%;
-            background: #070707;
-            border: 1px solid #222;
-            padding: 15px;
-            border-radius: 12px;
-            color: white;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        .btn-action {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            background: var(--accent);
-            color: black;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
-        .hidden { display: none; }
-
-        /* --- STAFF GRID --- */
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .admin-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 30px 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
+        /* --- MODAL --- */
+        #modalOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px);
+            z-index: 3000;
+            display: none;
             align-items: center;
             justify-content: center;
+            padding: 20px;
+        }
+        .modal-body {
+            background: #0f0f0f;
+            border: 1px solid var(--accent);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 30px;
+            padding: 40px;
             position: relative;
-            overflow: hidden;
+            text-align: center;
         }
 
+        /* --- UI ELEMENTS --- */
+        .custom-card { background: var(--card-bg); border: 1px solid var(--border); padding: 30px; border-radius: 20px; }
+        .input-style {
+            width: 100%; background: #070707; border: 1px solid #222; padding: 15px;
+            border-radius: 12px; color: white; margin-bottom: 15px; outline: none;
+        }
+        .btn-action {
+            width: 100%; padding: 15px; border-radius: 12px; background: var(--accent);
+            color: black; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+        }
+        .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
+
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .admin-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px;
+            padding: 30px 20px; text-align: center; transition: 0.3s; cursor: pointer;
+        }
+        .admin-card:hover { border-color: var(--accent); transform: translateY(-5px); }
         .avatar-box {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--accent);
-            margin-bottom: 15px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #222;
+            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent);
+            margin: 0 auto 15px; overflow: hidden; background: #222;
         }
-
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
+
+    <div id="modalOverlay">
+        <div class="modal-body">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-500 text-2xl hover:text-white transition">✕</button>
+            <div class="avatar-box" style="width: 120px; height: 120px;">
+                <img id="mImg" src="" alt="Admin">
+            </div>
+            <h2 id="mName" class="text-3xl font-black uppercase italic mb-1"></h2>
+            <p id="mRole" class="text-yellow-400 font-bold tracking-widest text-xs uppercase mb-6"></p>
+            <p id="mDesc" class="text-gray-400 text-sm italic mb-8 px-4"></p>
+            
+            <div id="msgForm" class="hidden">
+                <textarea id="mText" placeholder="Treść wiadomości do administratora..." class="input-style h-32 resize-none"></textarea>
+                <button onclick="sendWebhookMessage()" class="btn-action">Wyślij Wiadomość</button>
+            </div>
+            <button id="msgTrigger" onclick="toggleMsgInput()" class="btn-action bg-blue-600/20 border border-blue-500 text-blue-400">Napisz Wiadomość</button>
+        </div>
+    </div>
 
     <div id="fullscreenProfile">
         <div class="max-w-4xl w-full">
@@ -214,52 +165,25 @@
                     <h4 class="text-yellow-400 font-black tracking-[0.4em] text-xs mb-2">DOKUMENT TOŻSAMOŚCI</h4>
                     <h1 id="fsProfileName" class="text-6xl font-black uppercase italic tracking-tighter text-white">Nazwa Obywatela</h1>
                 </div>
-                <button onclick="userLogout()" class="px-6 py-3 bg-red-600/10 border border-red-600 text-red-600 font-black rounded-xl hover:bg-red-600 hover:text-white transition uppercase text-xs">Wyloguj Systemowo</button>
+                <button onclick="userLogout()" class="px-6 py-3 bg-red-600/10 border border-red-600 text-red-600 font-black rounded-xl hover:bg-red-600 hover:text-white transition uppercase text-xs">Wyloguj</button>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="md:col-span-1">
-                    <div class="custom-card flex flex-col items-center text-center border-yellow-400">
-                        <div class="w-48 h-48 rounded-2xl bg-black border-2 border-yellow-400 overflow-hidden mb-6">
-                            <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" class="w-full h-full object-cover opacity-80" alt="Avatar">
-                        </div>
-                        <div class="px-4 py-1 bg-yellow-400 text-black text-[10px] font-black rounded-full mb-4 uppercase">Status: Aktywny</div>
-                        <p class="text-gray-500 text-sm italic">"Służąc miastu Hamburg"</p>
+                <div class="custom-card flex flex-col items-center border-yellow-400">
+                    <div class="w-48 h-48 rounded-2xl bg-black border-2 border-yellow-400 overflow-hidden mb-6">
+                        <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" class="w-full h-full object-cover">
                     </div>
+                    <div class="px-4 py-1 bg-yellow-400 text-black text-[10px] font-black rounded-full uppercase">Status: Aktywny</div>
                 </div>
-
-                <div class="md:col-span-2 space-y-6">
-                    <div class="custom-card grid grid-cols-2 gap-8 text-left">
-                        <div>
-                            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Obywatelstwo</p>
-                            <p class="text-xl font-black">NIEMIECKIE</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Numer PESEL</p>
-                            <p class="text-xl font-black text-yellow-400">PR-88129-001</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Data Urodzenia</p>
-                            <p class="text-xl font-black">12.05.1995</p>
-                        </div>
-                        <div>
-                            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Przynależność</p>
-                            <p class="text-xl font-black uppercase">Cywilny</p>
-                        </div>
+                <div class="md:col-span-2 space-y-6 text-left">
+                    <div class="custom-card grid grid-cols-2 gap-8">
+                        <div><p class="text-gray-500 text-[10px] font-bold uppercase">Obywatelstwo</p><p class="text-xl font-black">NIEMIECKIE</p></div>
+                        <div><p class="text-gray-500 text-[10px] font-bold uppercase">PESEL</p><p class="text-xl font-black text-yellow-400">PR-88129-001</p></div>
+                        <div><p class="text-gray-500 text-[10px] font-bold uppercase">Wiek</p><p class="text-xl font-black">29 LAT</p></div>
+                        <div><p class="text-gray-500 text-[10px] font-bold uppercase">Grupa</p><p class="text-xl font-black uppercase">Obywatel</p></div>
                     </div>
-
-                    <div class="bg-yellow-400/5 border border-yellow-400/20 rounded-2xl p-6">
-                        <h3 class="text-white font-black text-sm mb-4 uppercase">Historia Ostatnich Akcji</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between text-xs border-b border-white/5 pb-2">
-                                <span class="text-gray-400">Wjazd do miasta</span>
-                                <span class="text-green-500 font-bold">ZATWIERDZONO</span>
-                            </div>
-                            <div class="flex justify-between text-xs border-b border-white/5 pb-2">
-                                <span class="text-gray-400">Weryfikacja Konta</span>
-                                <span class="text-green-500 font-bold">SUKCES</span>
-                            </div>
-                        </div>
+                    <div class="bg-yellow-400/5 p-6 rounded-2xl border border-yellow-400/10">
+                        <p class="text-white font-bold text-sm uppercase mb-2">Notatka Służbowa</p>
+                        <p class="text-gray-400 text-xs italic">Brak odnotowanych wykroczeń w bazie PrimeRP.</p>
                     </div>
                 </div>
             </div>
@@ -280,9 +204,9 @@
             <div class="nav-item" onclick="switchTab('report', this)">🐞 ZGŁOŚ BŁĄD</div>
             
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #1a1a1a;">
-                <div id="loginNav" class="nav-item" style="color: var(--accent); border-color: #fbbf2433;" onclick="switchTab('login', this)">🔐 ZALOGUJ SIĘ</div>
-                <div id="adminPanelLink" class="nav-item hidden" style="color: #ff4444; border-color: #ff444433;" onclick="switchTab('adminPanel', this)">⚡ PANEL BAZY</div>
-                <div id="logoutNav" class="nav-item hidden" style="color: #ff4444; border-color: #ff444433;" onclick="userLogout()">🚪 WYLOGUJ</div>
+                <div id="loginNav" class="nav-item text-yellow-400 border-yellow-400/20" onclick="switchTab('login', this)">🔐 ZALOGUJ SIĘ</div>
+                <div id="adminPanelLink" class="nav-item hidden text-red-500 border-red-500/20" onclick="switchTab('adminPanel', this)">⚡ PANEL BAZY</div>
+                <div id="logoutNav" class="nav-item hidden text-red-500 border-red-500/20" onclick="userLogout()">🚪 WYLOGUJ</div>
             </div>
         </nav>
     </aside>
@@ -290,130 +214,120 @@
     <main class="main-wrapper" id="mainWrapper">
         <header class="section-header flex justify-between items-end">
             <div>
-                <h4 class="text-gray-500 text-[10px] uppercase font-bold tracking-[0.3em]">System Zarządzania v2.5</h4>
+                <h4 class="text-gray-500 text-[10px] uppercase font-bold tracking-[0.3em]">System v2.5</h4>
                 <h2 class="text-4xl font-black uppercase tracking-tighter italic">Prime <span class="text-yellow-400">Hub</span></h2>
             </div>
-            <div id="liveDate" class="text-gray-600 font-mono text-xs uppercase"></div>
+            <div id="liveDate" class="text-gray-600 font-mono text-xs"></div>
         </header>
 
         <section id="home" class="tab-content active">
             <div class="custom-card border-l-4 border-yellow-400">
-                <h2 class="text-2xl font-black mb-4 uppercase italic">Aktualności Projektu</h2>
-                <div class="space-y-4 text-gray-400 leading-relaxed text-sm">
-                    <p>Witamy w oficjalnym panelu PrimeRP. Systemy logowania są w pełni operacyjne.</p>
-                    <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
-                        <p class="text-white font-bold text-xs">Status Serwera: <span class="text-green-500 uppercase">Online</span></p>
-                    </div>
+                <h2 class="text-2xl font-black mb-4 uppercase italic">Komunikat Systemowy</h2>
+                <p class="text-gray-400 text-sm leading-relaxed mb-4">Wszystkie moduły bazy danych są aktywne. Możesz teraz zarządzać kontami obywateli bezpośrednio z poziomu panelu administratora.</p>
+                <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
+                    <p class="text-white font-bold text-xs">Status Systemu: <span class="text-green-500 uppercase">Synchronizacja OK</span></p>
                 </div>
             </div>
         </section>
 
         <section id="about" class="tab-content">
             <div class="custom-card">
-                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">O Projekcie PrimeRP</h2>
-                <div class="space-y-6 text-gray-300">
+                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">O Projekcie</h2>
+                <div class="space-y-4 text-gray-300">
+                    <p>PrimeRP to serwer zorientowany na maksymalny realizm. Korzystamy z platformy Emergency Hamburg.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-6 bg-yellow-400/10 border border-yellow-400/20 rounded-2xl text-center">
-                            <h4 class="text-yellow-400 font-black text-xs uppercase tracking-widest mb-2">Kod Gry</h4>
-                            <p class="text-4xl font-black text-white tracking-widest">10cap1up</p>
+                        <div class="p-4 bg-black/50 border border-white/5 rounded-xl text-center">
+                            <span class="block text-[10px] text-gray-500 uppercase">Kod Serwera</span>
+                            <span class="text-2xl font-black text-white">10cap1up</span>
                         </div>
-                        <div class="p-6 bg-blue-600/10 border border-blue-600/20 rounded-2xl text-center">
-                            <h4 class="text-blue-400 font-black text-xs uppercase tracking-widest mb-2">Discord</h4>
-                            <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-xl font-bold underline">DOŁĄCZ TERAZ</a>
+                        <div class="p-4 bg-black/50 border border-white/5 rounded-xl text-center">
+                            <span class="block text-[10px] text-gray-500 uppercase">Społeczność</span>
+                            <a href="https://discord.gg/GVfmsESq9k" class="text-xl font-bold text-blue-400 underline">DISCORD</a>
                         </div>
                     </div>
-                    <p>Jesteśmy społecznością pasjonatów realizmu w grze Emergency Hamburg. Od samego początku stawiamy na profesjonalizm i sprawiedliwość.</p>
                 </div>
             </div>
         </section>
 
         <section id="staff" class="tab-content">
-            <h2 class="text-2xl font-black text-yellow-400 mb-8 uppercase italic tracking-widest">Zespół Zarządzający</h2>
+            <h2 class="text-2xl font-black text-yellow-400 mb-8 uppercase italic tracking-widest">Zarząd Serwera</h2>
             <div id="staffContainer" class="admin-grid"></div>
         </section>
 
         <section id="rules" class="tab-content">
             <div class="custom-card">
-                <h2 class="text-3xl font-black text-yellow-400 mb-8 uppercase italic">Regulamin Serwera</h2>
-                <div class="space-y-6 max-h-[500px] overflow-y-auto pr-4 text-gray-400 text-sm">
-                    <div>
-                        <h3 class="text-white font-bold mb-2 uppercase">§1 Postanowienia Ogólne</h3>
-                        <p>Każdy gracz wchodzący na serwer akceptuje zasady PrimeRP.</p>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-bold mb-2 uppercase">§2 Rozgrywka</h3>
-                        <p>Zabrania się RDM, VDM oraz Metagamingu.</p>
-                    </div>
+                <h2 class="text-2xl font-black text-yellow-400 mb-6 uppercase">Zasady Ogólne</h2>
+                <div class="space-y-4 h-96 overflow-y-auto pr-4 text-gray-400 text-sm">
+                    <p class="p-4 bg-black/40 rounded-lg"><strong>§1.</strong> Zakaz odwalania, psucia rozgrywki innym oraz niszczenia mienia bez powodu RP.</p>
+                    <p class="p-4 bg-black/40 rounded-lg"><strong>§2.</strong> Każdy gracz musi posiadać mikrofon i sprawnie się nim posługiwać.</p>
+                    <p class="p-4 bg-black/40 rounded-lg"><strong>§3.</strong> Administracja ma zawsze ostateczne zdanie w sporach.</p>
                 </div>
             </div>
         </section>
 
-        <section id="map" class="tab-content">
-            <div class="custom-card h-[400px] flex items-center justify-center border-dashed border-2 border-gray-800 text-center">
-                <div>
-                    <div class="text-5xl mb-4">📍</div>
-                    <h2 class="text-xl font-black text-gray-500 uppercase tracking-widest">Mapa Interaktywna w Przygotowaniu</h2>
-                </div>
-            </div>
+        <section id="map" class="tab-content text-center py-20">
+            <div class="text-5xl mb-4">🗺️</div>
+            <h2 class="text-2xl font-black text-gray-500 uppercase">Moduł GPS w budowie</h2>
         </section>
 
         <section id="report" class="tab-content">
             <div class="custom-card max-w-2xl mx-auto border-t-4 border-red-600">
-                <h2 class="text-2xl font-black mb-6 uppercase italic text-center">Zgłoś Naruszenie</h2>
-                <div class="space-y-4">
-                    <input id="reportTitle" type="text" placeholder="Temat (np. Błąd mapy)" class="input-style">
-                    <textarea id="reportContent" placeholder="Opisz sytuację..." class="input-style h-48 resize-none"></textarea>
-                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Wyślij Zgłoszenie</button>
-                </div>
+                <h2 class="text-2xl font-black mb-6 uppercase italic text-center">Centrum Zgłoszeń</h2>
+                <input id="reportTitle" type="text" placeholder="Temat incydentu" class="input-style">
+                <textarea id="reportContent" placeholder="Opis sytuacji..." class="input-style h-48 resize-none"></textarea>
+                <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Wyślij do Centrali</button>
             </div>
         </section>
 
         <section id="login" class="tab-content">
             <div class="max-w-md mx-auto custom-card mt-10">
-                <h2 class="text-2xl font-black text-center mb-4 italic uppercase">Autoryzacja</h2>
-                <p class="text-center text-[10px] text-gray-600 mb-8 tracking-widest">KONTO TESTOWE: obywatel1 / test123</p>
+                <h2 class="text-2xl font-black text-center mb-4 uppercase">Logowanie</h2>
+                <p class="text-center text-[10px] text-gray-600 mb-8 tracking-widest italic">TEST: obywatel1 / test123</p>
                 <form id="authForm" class="space-y-4">
                     <input id="authLogin" type="text" placeholder="LOGIN" class="input-style" required>
                     <input id="authPass" type="password" placeholder="HASŁO" class="input-style" required>
-                    <button type="submit" class="btn-action">Zaloguj się</button>
+                    <button type="submit" class="btn-action">Autoryzuj</button>
                 </form>
             </div>
         </section>
 
         <section id="adminPanel" class="tab-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="custom-card border-t-4 border-green-500">
-                    <h3 class="text-xl font-bold mb-6 uppercase italic">Dodaj Obywatela</h3>
-                    <div class="space-y-4">
-                        <input id="dbUser" type="text" placeholder="Login" class="input-style">
-                        <input id="dbPass" type="password" placeholder="Hasło" class="input-style">
-                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Zapisz Permanentnie</button>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                <div class="custom-card border-green-500">
+                    <h3 class="font-bold mb-4 uppercase italic">Nowy Użytkownik</h3>
+                    <input id="dbUser" type="text" placeholder="Login" class="input-style">
+                    <input id="dbPass" type="password" placeholder="Hasło" class="input-style">
+                    <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Dodaj do Bazy</button>
                 </div>
                 <div class="custom-card">
-                    <h3 class="text-xl font-bold mb-6 uppercase italic">Lista Kont</h3>
-                    <div id="dbUserList" class="space-y-2 max-h-[300px] overflow-y-auto"></div>
+                    <h3 class="font-bold mb-4 uppercase italic">Zarejestrowani Obywatele</h3>
+                    <div id="dbUserList" class="space-y-2 max-h-64 overflow-y-auto"></div>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        // DANE SYSTEMOWE
         const staffData = [
-            { name: "! KUBA", role: "Owner", desc: "Główny deweloper.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Zarządzanie frakcjami.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+            { name: "! KUBA", role: "Owner / Developer", desc: "Twórca systemów PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KAMIL", role: "Co-Owner", desc: "Zarządzanie strukturami serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
         ];
 
         let dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [
             { user: "obywatel1", pass: "test123" }
         ];
 
+        let activeAdminTarget = "";
+
+        // INICJALIZACJA
         window.onload = () => {
             renderStaff();
             renderDBUsers();
             setInterval(() => document.getElementById('liveDate').innerText = new Date().toLocaleString(), 1000);
         };
 
+        // SYSTEM TABÓW
         function switchTab(id, el) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -421,6 +335,48 @@
             if(el) el.classList.add('active');
         }
 
+        // SYSTEM MODALI (ADMIN INFO)
+        function renderStaff() {
+            document.getElementById('staffContainer').innerHTML = staffData.map(s => `
+                <div class="admin-card" onclick="openModal('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
+                    <div class="avatar-box"><img src="${s.img}"></div>
+                    <div class="font-black">${s.name}</div>
+                    <div class="text-[10px] text-yellow-400 font-bold uppercase tracking-widest">${s.role}</div>
+                </div>
+            `).join('');
+        }
+
+        function openModal(n, r, i, d) {
+            activeAdminTarget = n;
+            document.getElementById('mName').innerText = n;
+            document.getElementById('mRole').innerText = r;
+            document.getElementById('mImg').src = i;
+            document.getElementById('mDesc').innerText = d;
+            document.getElementById('msgForm').classList.add('hidden');
+            document.getElementById('msgTrigger').classList.remove('hidden');
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+        function toggleMsgInput() {
+            document.getElementById('msgForm').classList.toggle('hidden');
+            document.getElementById('msgTrigger').classList.toggle('hidden');
+        }
+
+        async function sendWebhookMessage() {
+            const text = document.getElementById('mText').value;
+            if(!text) return alert("Wiadomość jest pusta!");
+            await fetch("https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ content: `📬 **NOWA WIADOMOŚĆ**\n**Do:** ${activeAdminTarget}\n**Treść:** ${text}` })
+            });
+            alert("Wysłano pomyślnie!");
+            closeModal();
+            document.getElementById('mText').value = "";
+        }
+
+        // SYSTEM LOGOWANIA
         document.getElementById('authForm').onsubmit = (e) => {
             e.preventDefault();
             const l = document.getElementById('authLogin').value;
@@ -431,7 +387,7 @@
             } else {
                 const found = dbUsers.find(u => u.user === l && u.pass === p);
                 if(found) loginSuccess(found.user, false);
-                else alert("Niepoprawne dane!");
+                else alert("Błąd autoryzacji - sprawdź dane!");
             }
         };
 
@@ -441,9 +397,7 @@
                 document.getElementById('logoutNav').classList.remove('hidden');
                 document.getElementById('adminPanelLink').classList.remove('hidden');
                 switchTab('home', document.querySelector('.nav-item'));
-                alert("Witaj w panelu Zarządzania!");
             } else {
-                // Pełnoekranowy profil dla Obywatela
                 document.getElementById('mainSidebar').style.display = 'none';
                 document.getElementById('mainWrapper').style.display = 'none';
                 document.getElementById('fullscreenProfile').style.display = 'flex';
@@ -453,33 +407,7 @@
 
         function userLogout() { window.location.reload(); }
 
-        function renderStaff() {
-            const container = document.getElementById('staffContainer');
-            if(!container) return;
-            container.innerHTML = staffData.map(s => `
-                <div class="admin-card">
-                    <div class="avatar-box"><img src="${s.img}"></div>
-                    <div class="admin-name">${s.name}</div>
-                    <div class="admin-role">${s.role}</div>
-                </div>
-            `).join('');
-        }
-
-        async function submitReport() {
-            const t = document.getElementById('reportTitle').value;
-            const c = document.getElementById('reportContent').value;
-            if(!t || !c) return alert("Uzupełnij pola!");
-            // Używam Twojego webhooka
-            await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `🚨 **ZGŁOSZENIE BŁĘDU**\nTemat: ${t}\nOpis: ${c}` })
-            });
-            alert("Wysłano do bazy!");
-            document.getElementById('reportTitle').value = "";
-            document.getElementById('reportContent').value = "";
-        }
-
+        // BAZA DANYCH
         function dbAddUser() {
             const u = document.getElementById('dbUser').value;
             const p = document.getElementById('dbPass').value;
@@ -489,16 +417,16 @@
             renderDBUsers();
             document.getElementById('dbUser').value = "";
             document.getElementById('dbPass').value = "";
-            alert("Dodano obywatela!");
+            alert("Użytkownik dodany!");
         }
 
         function renderDBUsers() {
             const list = document.getElementById('dbUserList');
             if(!list) return;
             list.innerHTML = dbUsers.map((u, i) => `
-                <div class="flex justify-between bg-black/50 p-3 rounded-lg border border-white/5 text-xs mb-1">
-                    <span class="text-yellow-500 font-bold uppercase italic">${u.user}</span>
-                    <button onclick="dbDeleteUser(${i})" class="text-red-600 font-black">USUŃ</button>
+                <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-white/5 text-xs">
+                    <span class="text-yellow-500 font-black uppercase italic">${u.user}</span>
+                    <button onclick="dbDeleteUser(${i})" class="text-red-500 font-black hover:text-white transition">USUŃ</button>
                 </div>
             `).join('');
         }
@@ -507,6 +435,21 @@
             dbUsers.splice(i, 1);
             localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
             renderDBUsers();
+        }
+
+        // SYSTEM ZGŁOSZEŃ
+        async function submitReport() {
+            const t = document.getElementById('reportTitle').value;
+            const c = document.getElementById('reportContent').value;
+            if(!t || !c) return alert("Uzupełnij wszystkie pola!");
+            await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ content: `🚨 **NOWY RAPORT OBYWATELA**\n**Temat:** ${t}\n**Opis:** ${c}` })
+            });
+            alert("Zgłoszenie trafiło do administracji.");
+            document.getElementById('reportTitle').value = "";
+            document.getElementById('reportContent').value = "";
         }
     </script>
 </body>
