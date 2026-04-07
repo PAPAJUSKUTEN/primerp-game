@@ -22,6 +22,10 @@
       <button onclick="showTab('map')" class="nav-btn">🗺️ MAPA</button>
       <button onclick="showTab('report')" class="nav-btn">🐞 ZGŁOŚ BŁĄD</button>
       <button onclick="showTab('rules')" class="nav-btn">📜 REGULAMIN</button>
+      <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="nav-btn flex items-center justify-between border-blue-900/50 hover:bg-blue-900/20">
+        <span>💬 DISCORD</span>
+        <span class="text-xs bg-blue-600 px-2 py-0.5 rounded text-white">LINK</span>
+      </a>
       <button id="loginBtnNav" onclick="showTab('login')" class="nav-btn">🔐 ZALOGUJ</button>
       <button id="logoutBtnNav" onclick="logout()" class="nav-btn hidden bg-red-900/20 border-red-800 text-red-500">🚪 WYLOGUJ</button>
     </nav>
@@ -59,7 +63,7 @@
 
         <div class="bg-black/50 p-6 rounded-xl border border-gray-800 space-y-4">
           <p class="text-lg">🎮 Kod do gry: <span class="font-mono text-yellow-400 font-bold bg-gray-900 px-3 py-1 rounded">10cap1up</span></p>
-          <p class="text-lg">🌐 Dołącz do serwera: <a href="#" class="text-blue-400 hover:underline font-bold italic">Kliknij tutaj</a></p>
+          <p class="text-lg">🌐 Dołącz do serwera: <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-blue-400 hover:text-blue-300 underline font-bold italic transition">Kliknij tutaj</a></p>
         </div>
         
         <p class="mt-8 text-center text-yellow-400 font-bold animate-pulse">Nie przegap okazji – Twoja przygoda w PrimeRP czeka!</p>
@@ -161,6 +165,8 @@
       background:#111;
       border:1px solid #1f1f1f;
       transition:0.2s;
+      text-decoration: none;
+      color: inherit;
     }
     .nav-btn:hover {
       background:#1a1a1a;
