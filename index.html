@@ -67,17 +67,23 @@
     </nav>
   </aside>
 
-  <main class="flex-1 p-6 overflow-y-auto h-screen relative"> <div id="mainHeader" class="mb-6 flex justify-between items-end border-b border-gray-900 pb-4"> <div>
+  <main class="flex-1 p-6 overflow-y-auto h-screen relative">
+
+    <div id="mainHeader" class="mb-6 flex justify-between items-end border-b border-gray-900 pb-4">
+      <div>
         <p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-1">Panel Użytkownika</p>
-        <h2 class="text-3xl font-black uppercase tracking-tight">Witaj, <span id="playerNameTop" class="text-yellow-400">Gość</span></h2> </div>
+        <h2 class="text-3xl font-black uppercase tracking-tight">Witaj, <span id="playerNameTop" class="text-yellow-400">Gość</span></h2>
+      </div>
       <div class="text-gray-600 text-sm font-mono uppercase" id="currentDate"></div>
     </div>
 
     <section id="home" class="tab">
       <div class="card bg-gradient-to-br from-[#0f0f0f] to-[#141414]">
-        <h2 class="text-2xl font-bold text-yellow-400 mb-4 uppercase italic">Aktualności Serwerowe</h2> <div class="space-y-4 text-gray-400 leading-relaxed text-base"> <p>Witamy na oficjalnej witrynie serwera **PrimeRP**. Jesteśmy dumni, że tworzysz z nami społeczność w Emergency Hamburg.</p>
+        <h2 class="text-2xl font-bold text-yellow-400 mb-4 uppercase italic">Aktualności Serwerowe</h2>
+        <div class="space-y-4 text-gray-400 leading-relaxed text-base">
+          <p>Witamy na oficjalnej witrynie serwera **PrimeRP**. Jesteśmy dumni, że tworzysz z nami społeczność w Emergency Hamburg.</p>
           <div class="p-4 bg-yellow-400/5 border-l-4 border-yellow-400 rounded-lg text-white font-medium text-sm">
-            🔥 Nowość: Zoptymalizowaliśmy widok administracji, aby zmieścić wszystkich na jednym ekranie!
+            🔥 Nowość: Zoptymalizowaliśmy widok administracji, zachowując wyśrodkowane zdjęcia profili!
           </div>
         </div>
       </div>
@@ -108,7 +114,8 @@
       </div>
     </section>
 
-    <section id="staff" class="tab hidden p-2"> <h2 class="text-2xl font-bold text-yellow-400 mb-6 uppercase tracking-widest italic text-center md:text-left">🛡️ Zespół Zarządzający</h2>
+    <section id="staff" class="tab hidden p-2">
+      <h2 class="text-2xl font-bold text-yellow-400 mb-6 uppercase tracking-widest italic text-center md:text-left">🛡️ Zespół Zarządzający</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         
         <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
@@ -260,7 +267,7 @@
         <h2 class="text-2xl font-bold text-white mb-2 uppercase">Centrum Zgłoszeń</h2>
         <p class="text-gray-500 mb-6 italic text-sm">Znalazłeś błąd? Daj nam znać!</p>
         <textarea id="bugText" placeholder="Opisz problem dokładnie..." class="input h-48 resize-none mb-4 focus:border-red-600"></textarea>
-        <button onclick="sendReport()" class="btn-big bg-gradient-to-r from-red-600 to-red-800 text-white border-none shadow-red-900/40">WYŚLIJ RAPORT DO SYSTEMU</button>
+        <button onclick="sendReport()" class="btn-big bg-gradient-to-r from-red-600 to-red-800 text-white border-none shadow-red-900/40">WYŚLIj RAPORT DO SYSTEMU</button>
       </div>
     </section>
 
@@ -326,17 +333,18 @@
     /* NOWE: Style dla kompaktowych kart adminów w ADMINISTRACJI */
     .card-admin-compact {
       background:#0f0f0f; 
-      padding: 1.5rem; /* Zmniejszony p-30px na p-6 (1.5rem) */
-      border-radius:20px; /* Nieco mniejszy radius */
-      border:1px solid #1a1a1a; border-top: 3px solid #fbbf24; /* Cieńszy top border */
+      padding: 1.5rem; 
+      border-radius:20px; 
+      border:1px solid #1a1a1a; border-top: 3px solid #fbbf24; 
       display: flex; flex-direction: column; items: center; text-align: center;
-      cursor: pointer; transition: all 0.2s ease-out; /* Szybsza animacja */
+      cursor: pointer; transition: all 0.2s ease-out; 
       position: relative; overflow: hidden;
     }
+    /* FIX: card-admin-compact:hover nie nadpisuje juz domyslnych stylow flex i align-items */
     .card-admin-compact:hover { transform: scale(1.03) translateY(-3px); background: #111; border-top-width: 4px; }
     
     .admin-avatar-container-compact {
-      width: 64px; height: 64px; /* Zmniejszone z 96px */
+      width: 64px; height: 64px; 
       background: #222; border-radius: 50%;
       margin-bottom: 0.75rem; border: 2px solid #fbbf24; overflow: hidden;
     }
@@ -351,7 +359,7 @@
     .admin-full-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #050505; z-index: 9999; padding: 50px; overflow-y: auto; }
     .nav-btn { display:block; width:100%; text-align:left; padding:16px; border-radius:15px; background:#111; border:1px solid #1f1f1f; transition:0.3s; font-weight: 700; font-size: 0.7rem;}
     .nav-btn:hover { background:#1a1a1a; transform:translateX(8px); color: #fbbf24; }
-    .card { background:#0f0f0f; padding: 2rem; border-radius:25px; border:1px solid #1a1a1a; box-shadow:0 10px 40px rgba(0,0,0,0.7); } /* Zmniejszony padding i cień ogólny */
+    .card { background:#0f0f0f; padding: 2rem; border-radius:25px; border:1px solid #1a1a1a; box-shadow:0 10px 40px rgba(0,0,0,0.7); } 
     .input { width:100%; padding:12px; border-radius:12px; background:#070707; border:1px solid #222; color: white; font-size: 0.8rem; }
     .input:focus { outline: none; border-color: #fbbf24; background: #000; }
     .btn { width:100%; padding:12px; border-radius:12px; font-weight:900; transition: 0.3s; font-size: 0.7rem; }
@@ -425,7 +433,8 @@
     // SYSTEM TABÓW
     function showTab(id){
       document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
+      const target = document.getElementById(id);
+      if(target) target.classList.remove('hidden');
     }
 
     // WEBHOOK BŁĘDÓW
@@ -436,7 +445,7 @@
       fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: "🚨 **NOWY RAPORT O BŁĘDZIE**\n" + text })
+        body: JSON.stringify({ content: "📢 **NOWY RAPORT O BŁĘDZIE**\n" + text })
       }).then(() => { alert('Raport wysłany!'); document.getElementById('bugText').value = ''; });
     }
 
