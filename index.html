@@ -166,6 +166,7 @@
         .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
         .hidden { display: none; }
 
+        /* --- STAFF GRID --- */
         .admin-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -228,7 +229,7 @@
                 </div>
 
                 <div class="md:col-span-2 space-y-6">
-                    <div class="custom-card grid grid-cols-2 gap-8">
+                    <div class="custom-card grid grid-cols-2 gap-8 text-left">
                         <div>
                             <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">Obywatelstwo</p>
                             <p class="text-xl font-black">NIEMIECKIE</p>
@@ -301,8 +302,68 @@
                 <div class="space-y-4 text-gray-400 leading-relaxed text-sm">
                     <p>Witamy w oficjalnym panelu PrimeRP. Systemy logowania są w pełni operacyjne.</p>
                     <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
-                        <p class="text-white font-bold text-xs">Status: <span class="text-green-500 uppercase">Online</span></p>
+                        <p class="text-white font-bold text-xs">Status Serwera: <span class="text-green-500 uppercase">Online</span></p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="tab-content">
+            <div class="custom-card">
+                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">O Projekcie PrimeRP</h2>
+                <div class="space-y-6 text-gray-300">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-6 bg-yellow-400/10 border border-yellow-400/20 rounded-2xl text-center">
+                            <h4 class="text-yellow-400 font-black text-xs uppercase tracking-widest mb-2">Kod Gry</h4>
+                            <p class="text-4xl font-black text-white tracking-widest">10cap1up</p>
+                        </div>
+                        <div class="p-6 bg-blue-600/10 border border-blue-600/20 rounded-2xl text-center">
+                            <h4 class="text-blue-400 font-black text-xs uppercase tracking-widest mb-2">Discord</h4>
+                            <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-xl font-bold underline">DOŁĄCZ TERAZ</a>
+                        </div>
+                    </div>
+                    <p>Jesteśmy społecznością pasjonatów realizmu w grze Emergency Hamburg. Od samego początku stawiamy na profesjonalizm i sprawiedliwość.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="staff" class="tab-content">
+            <h2 class="text-2xl font-black text-yellow-400 mb-8 uppercase italic tracking-widest">Zespół Zarządzający</h2>
+            <div id="staffContainer" class="admin-grid"></div>
+        </section>
+
+        <section id="rules" class="tab-content">
+            <div class="custom-card">
+                <h2 class="text-3xl font-black text-yellow-400 mb-8 uppercase italic">Regulamin Serwera</h2>
+                <div class="space-y-6 max-h-[500px] overflow-y-auto pr-4 text-gray-400 text-sm">
+                    <div>
+                        <h3 class="text-white font-bold mb-2 uppercase">§1 Postanowienia Ogólne</h3>
+                        <p>Każdy gracz wchodzący na serwer akceptuje zasady PrimeRP.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold mb-2 uppercase">§2 Rozgrywka</h3>
+                        <p>Zabrania się RDM, VDM oraz Metagamingu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="map" class="tab-content">
+            <div class="custom-card h-[400px] flex items-center justify-center border-dashed border-2 border-gray-800 text-center">
+                <div>
+                    <div class="text-5xl mb-4">📍</div>
+                    <h2 class="text-xl font-black text-gray-500 uppercase tracking-widest">Mapa Interaktywna w Przygotowaniu</h2>
+                </div>
+            </div>
+        </section>
+
+        <section id="report" class="tab-content">
+            <div class="custom-card max-w-2xl mx-auto border-t-4 border-red-600">
+                <h2 class="text-2xl font-black mb-6 uppercase italic text-center">Zgłoś Naruszenie</h2>
+                <div class="space-y-4">
+                    <input id="reportTitle" type="text" placeholder="Temat (np. Błąd mapy)" class="input-style">
+                    <textarea id="reportContent" placeholder="Opisz sytuację..." class="input-style h-48 resize-none"></textarea>
+                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Wyślij Zgłoszenie</button>
                 </div>
             </div>
         </section>
@@ -319,12 +380,6 @@
             </div>
         </section>
 
-        <section id="staff" class="tab-content"><div id="staffContainer" class="admin-grid"></div></section>
-        <section id="about" class="tab-content"><div class="custom-card">O projekcie PrimeRP...</div></section>
-        <section id="rules" class="tab-content"><div class="custom-card">Regulamin...</div></section>
-        <section id="map" class="tab-content"><div class="custom-card">Mapa...</div></section>
-        <section id="report" class="tab-content"><div class="custom-card">Zgłoszenia...</div></section>
-        
         <section id="adminPanel" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="custom-card border-t-4 border-green-500">
@@ -332,11 +387,12 @@
                     <div class="space-y-4">
                         <input id="dbUser" type="text" placeholder="Login" class="input-style">
                         <input id="dbPass" type="password" placeholder="Hasło" class="input-style">
-                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Zapisz</button>
+                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Zapisz Permanentnie</button>
                     </div>
                 </div>
                 <div class="custom-card">
-                    <div id="dbUserList" class="space-y-2"></div>
+                    <h3 class="text-xl font-bold mb-6 uppercase italic">Lista Kont</h3>
+                    <div id="dbUserList" class="space-y-2 max-h-[300px] overflow-y-auto"></div>
                 </div>
             </div>
         </section>
@@ -344,8 +400,8 @@
 
     <script>
         const staffData = [
-            { name: "! KUBA", role: "Owner", desc: "Założyciel PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Współzałożyciel.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+            { name: "! KUBA", role: "Owner", desc: "Główny deweloper.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KAMIL", role: "Co-Owner", desc: "Zarządzanie frakcjami.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
         ];
 
         let dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [
@@ -375,19 +431,19 @@
             } else {
                 const found = dbUsers.find(u => u.user === l && u.pass === p);
                 if(found) loginSuccess(found.user, false);
-                else alert("Błąd autoryzacji!");
+                else alert("Niepoprawne dane!");
             }
         };
 
         function loginSuccess(name, isAdmin) {
             if(isAdmin) {
-                // Admin zostaje w standardowym widoku z Panelem Bazy
                 document.getElementById('loginNav').classList.add('hidden');
                 document.getElementById('logoutNav').classList.remove('hidden');
                 document.getElementById('adminPanelLink').classList.remove('hidden');
                 switchTab('home', document.querySelector('.nav-item'));
+                alert("Witaj w panelu Zarządzania!");
             } else {
-                // Obywatel widzi profil na cały ekran
+                // Pełnoekranowy profil dla Obywatela
                 document.getElementById('mainSidebar').style.display = 'none';
                 document.getElementById('mainWrapper').style.display = 'none';
                 document.getElementById('fullscreenProfile').style.display = 'flex';
@@ -409,6 +465,21 @@
             `).join('');
         }
 
+        async function submitReport() {
+            const t = document.getElementById('reportTitle').value;
+            const c = document.getElementById('reportContent').value;
+            if(!t || !c) return alert("Uzupełnij pola!");
+            // Używam Twojego webhooka
+            await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ content: `🚨 **ZGŁOSZENIE BŁĘDU**\nTemat: ${t}\nOpis: ${c}` })
+            });
+            alert("Wysłano do bazy!");
+            document.getElementById('reportTitle').value = "";
+            document.getElementById('reportContent').value = "";
+        }
+
         function dbAddUser() {
             const u = document.getElementById('dbUser').value;
             const p = document.getElementById('dbPass').value;
@@ -418,15 +489,16 @@
             renderDBUsers();
             document.getElementById('dbUser').value = "";
             document.getElementById('dbPass').value = "";
+            alert("Dodano obywatela!");
         }
 
         function renderDBUsers() {
             const list = document.getElementById('dbUserList');
             if(!list) return;
             list.innerHTML = dbUsers.map((u, i) => `
-                <div class="flex justify-between bg-black/50 p-2 rounded-lg border border-white/5 text-xs">
-                    <span class="text-yellow-500 font-bold">${u.user}</span>
-                    <button onclick="dbDeleteUser(${i})" class="text-red-600 font-black">X</button>
+                <div class="flex justify-between bg-black/50 p-3 rounded-lg border border-white/5 text-xs mb-1">
+                    <span class="text-yellow-500 font-bold uppercase italic">${u.user}</span>
+                    <button onclick="dbDeleteUser(${i})" class="text-red-600 font-black">USUŃ</button>
                 </div>
             `).join('');
         }
