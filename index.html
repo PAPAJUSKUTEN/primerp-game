@@ -122,7 +122,7 @@
         /* --- KARTY ADMINISTRACJI --- */
         .admin-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 20px;
         }
 
@@ -199,19 +199,12 @@
             margin-bottom: 15px;
         }
 
-        .click-hint {
-            font-size: 0.55rem;
-            font-weight: 700;
-            color: #333;
-            text-transform: uppercase;
-        }
-
         /* --- MODAL --- */
         #modalOverlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px);
             z-index: 1000;
             display: none;
             align-items: center;
@@ -265,6 +258,11 @@
 
         .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
         .hidden { display: none; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
     </style>
 </head>
 <body>
@@ -285,7 +283,7 @@
             
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #1a1a1a;">
                 <div id="loginNav" class="nav-item" style="color: var(--accent); border-color: #fbbf2433;" onclick="switchTab('login', this)">🔐 ZALOGUJ SIĘ</div>
-                <div id="adminLink" class="nav-item hidden" style="color: #ff4444; border-color: #ff444433;" onclick="switchTab('adminPanel', this)">⚡ PANEL BAZY</div>
+                <div id="adminPanelLink" class="nav-item hidden" style="color: #ff4444; border-color: #ff444433;" onclick="switchTab('adminPanel', this)">⚡ PANEL BAZY</div>
                 <div id="logoutNav" class="nav-item hidden" style="color: #ff4444; border-color: #ff444433;" onclick="userLogout()">🚪 WYLOGUJ</div>
             </div>
         </nav>
@@ -294,7 +292,7 @@
     <main class="main-wrapper">
         <header class="section-header flex justify-between items-end">
             <div>
-                <h4 class="text-gray-500 text-[10px] uppercase font-bold tracking-[0.3em]">System Zarządzania</h4>
+                <h4 class="text-gray-500 text-[10px] uppercase font-bold tracking-[0.3em]">System Zarządzania v2.5</h4>
                 <h2 class="text-4xl font-black uppercase tracking-tighter">Witaj, <span id="userNameDisplay" class="text-yellow-400">Gość</span></h2>
             </div>
             <div id="liveDate" class="text-gray-600 font-mono text-xs uppercase"></div>
@@ -302,12 +300,12 @@
 
         <section id="home" class="tab-content active">
             <div class="custom-card border-l-4 border-yellow-400">
-                <h2 class="text-2xl font-black mb-4 uppercase italic">Aktualności Projektu</h2>
+                <h2 class="text-2xl font-black mb-4 uppercase italic">Komunikat Systemowy</h2>
                 <div class="space-y-4 text-gray-400 leading-relaxed">
-                    <p>Witamy w oficjalnym panelu PrimeRP. Jesteśmy w fazie intensywnego rozwoju technicznego. Wszystkie systemy logowania, zgłoszeń błędów oraz komunikacji z administracją są w pełni operacyjne.</p>
+                    <p>Witaj w oficjalnym panelu zarządczym PrimeRP. System pozwala na szybki kontakt z kadrą oraz zgłaszanie naruszeń regulaminu bezpośrednio na kanały Discord.</p>
                     <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
-                        <h4 class="text-white font-bold text-sm mb-1">Status Serwera: <span class="text-green-500">ONLINE</span></h4>
-                        <p class="text-xs">Wersja Systemu: v2.4.0-Stable | Ostatnia aktualizacja: Dzisiaj</p>
+                        <h4 class="text-white font-bold text-sm mb-1">Status Systemu: <span class="text-green-500">ZSYNCHRONIZOWANO</span></h4>
+                        <p class="text-xs">Baza danych: Aktywna | Webhooki: Online</p>
                     </div>
                 </div>
             </div>
@@ -315,72 +313,81 @@
 
         <section id="about" class="tab-content">
             <div class="custom-card">
-                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">O Projekcie PrimeRP</h2>
+                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">Informacje o Projekcie</h2>
                 <div class="space-y-6 text-gray-300">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         <div class="p-6 bg-yellow-400/10 border border-yellow-400/20 rounded-2xl text-center">
-                            <h4 class="text-yellow-400 font-black text-xs uppercase tracking-widest mb-2">Kod Gry (EH)</h4>
-                            <p class="text-3xl font-black text-white tracking-widest">10cap1up</p>
+                            <h4 class="text-yellow-400 font-black text-xs uppercase tracking-widest mb-2">Kod Gry (Emergency Hamburg)</h4>
+                            <p class="text-4xl font-black text-white tracking-widest">10cap1up</p>
                         </div>
                         <div class="p-6 bg-blue-600/10 border border-blue-600/20 rounded-2xl text-center">
                             <h4 class="text-blue-400 font-black text-xs uppercase tracking-widest mb-2">Oficjalny Discord</h4>
-                            <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-xl font-bold text-white hover:underline">DOŁĄCZ DO NAS</a>
+                            <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-xl font-bold text-white hover:text-blue-400 transition underline underline-offset-8">discord.gg/GVfmsESq9k</a>
                         </div>
                     </div>
-                    <p>PrimeRP to nie tylko serwer, to społeczność pasjonatów realizmu w grze Emergency Hamburg. Od samego początku stawiamy na profesjonalizm, sprawiedliwość i innowacyjne rozwiązania techniczne.</p>
+                    <p>PrimeRP to najbardziej zaawansowany projekt Roleplay na polskiej scenie Emergency Hamburg. Stawiamy na realizm, profesjonalizm i wysoką jakość rozgrywki.</p>
                 </div>
             </div>
         </section>
 
         <section id="staff" class="tab-content">
             <h2 class="text-2xl font-black text-yellow-400 mb-8 uppercase italic tracking-widest">Zespół Zarządzający</h2>
-            <div id="staffContainer" class="admin-grid"></div>
+            <div id="staffContainer" class="admin-grid">
+                </div>
         </section>
 
         <section id="rules" class="tab-content">
             <div class="custom-card">
                 <h2 class="text-3xl font-black text-yellow-400 mb-8 uppercase italic">Regulamin Serwera</h2>
-                <div class="space-y-8 h-[500px] overflow-y-auto pr-4">
-                    <div><h3 class="text-lg font-bold text-white mb-2">§1 Postanowienia Ogólne</h3><p class="text-sm text-gray-400">Wchodząc na serwer PrimeRP, akceptujesz zasady.</p></div>
-                    <div><h3 class="text-lg font-bold text-white mb-2">§2 Definicje</h3><p class="text-sm text-gray-400">RDM, VDM, Combat Log są surowo zabronione.</p></div>
+                <div class="space-y-6 h-[500px] overflow-y-auto pr-4 text-gray-400">
+                    <p><strong>§1.</strong> Zakaz robienia RDM, VDM oraz Combat Log.</p>
+                    <p><strong>§2.</strong> Każdy gracz musi posiadać sprawny mikrofon.</p>
+                    <p><strong>§3.</strong> Zakaz Metagamingu i Powergamingu.</p>
+                    <p><strong>§4.</strong> Szanuj każdego członka społeczności PrimeRP.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="map" class="tab-content">
+            <div class="custom-card h-[400px] flex items-center justify-center border-dashed border-2 border-gray-800">
+                <div class="text-center">
+                    <div class="text-5xl mb-4">📍</div>
+                    <h2 class="text-xl font-black text-gray-500 uppercase">Mapa Interaktywna w przygotowaniu</h2>
                 </div>
             </div>
         </section>
 
         <section id="report" class="tab-content">
             <div class="custom-card max-w-2xl mx-auto border-t-4 border-red-600">
-                <h2 class="text-2xl font-black mb-2 uppercase">Zgłoś Naruszenie</h2>
-                <input id="reportTitle" type="text" placeholder="Temat" class="input-style">
-                <textarea id="reportContent" placeholder="Opisz sytuację..." class="input-style h-48 resize-none"></textarea>
-                <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Prześlij Zgłoszenie</button>
+                <h2 class="text-2xl font-black mb-2 uppercase">Panel Zgłoszeń</h2>
+                <p class="text-gray-500 text-sm mb-6">Wiadomość trafi bezpośrednio do Zarządu przez Webhook Discord.</p>
+                <div class="space-y-4">
+                    <input id="reportTitle" type="text" placeholder="Temat zgłoszenia" class="input-style">
+                    <textarea id="reportContent" placeholder="Szczegółowy opis..." class="input-style h-48 resize-none"></textarea>
+                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Wyślij do Administracji</button>
+                </div>
             </div>
         </section>
 
         <section id="login" class="tab-content">
             <div class="max-w-md mx-auto custom-card mt-10">
-                <h2 class="text-2xl font-black text-center mb-8 italic uppercase">Autoryzacja Systemu</h2>
+                <h2 class="text-2xl font-black text-center mb-8 italic uppercase">Autoryzacja</h2>
                 <form id="authForm" class="space-y-4">
                     <input id="authLogin" type="text" placeholder="LOGIN" class="input-style" required>
                     <input id="authPass" type="password" placeholder="HASŁO" class="input-style" required>
-                    <button type="submit" class="btn-action">Zaloguj</button>
+                    <button type="submit" class="btn-action">Zaloguj się</button>
                 </form>
-            </div>
-        </section>
-
-        <section id="map" class="tab-content">
-            <div class="custom-card h-[400px] flex items-center justify-center border-dashed border-2 border-gray-800">
-                <h2 class="text-gray-600 uppercase font-black">Mapa niedostępna w tej wersji</h2>
             </div>
         </section>
 
         <section id="adminPanel" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="custom-card border-t-4 border-green-500">
-                    <h3 class="text-xl font-bold mb-6 uppercase">Dodaj Obywatela (Stałe konto)</h3>
+                    <h3 class="text-xl font-bold mb-6 uppercase">Dodaj Obywatela (Zapis Stały)</h3>
                     <div class="space-y-4">
-                        <input id="dbUser" type="text" placeholder="Login" class="input-style">
-                        <input id="dbPass" type="password" placeholder="Hasło" class="input-style">
-                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Zapisz Permanentnie</button>
+                        <input id="dbUser" type="text" placeholder="Login użytkownika" class="input-style">
+                        <input id="dbPass" type="password" placeholder="Hasło użytkownika" class="input-style">
+                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Zapisz w bazie permanentnej</button>
                     </div>
                 </div>
                 <div class="custom-card">
@@ -393,30 +400,44 @@
 
     <div id="modalOverlay">
         <div class="modal-body">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-500 text-2xl">✕</button>
-            <div class="avatar-box mx-auto" style="width: 120px; height: 120px;"><img id="mImg" src="" alt="Admin"></div>
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-500 text-2xl hover:text-white transition">✕</button>
+            <div class="avatar-box mx-auto" style="width: 120px; height: 120px;">
+                <img id="mImg" src="" alt="Admin">
+            </div>
             <h2 id="mName" class="text-3xl font-black uppercase italic mb-1"></h2>
-            <p id="mRole" class="text-yellow-400 font-bold text-xs uppercase mb-6"></p>
-            <p id="mDesc" class="text-gray-400 text-sm mb-8 px-4"></p>
+            <p id="mRole" class="text-yellow-400 font-bold tracking-widest text-xs uppercase mb-6"></p>
+            <p id="mDesc" class="text-gray-400 text-sm italic mb-8 px-4"></p>
+            
             <div id="msgForm" class="hidden">
-                <textarea id="mText" placeholder="Twoja wiadomość..." class="input-style h-32"></textarea>
-                <button onclick="sendWebhookMessage()" class="btn-action">Wyślij do Admina</button>
+                <textarea id="mText" placeholder="Treść Twojej wiadomości do admina..." class="input-style h-32"></textarea>
+                <button onclick="sendWebhookMessage()" class="btn-action">Wyślij Wiadomość</button>
             </div>
             <button id="msgTrigger" onclick="toggleMsgInput()" class="btn-action bg-blue-600/20 border border-blue-500 text-blue-400">Napisz Wiadomość</button>
         </div>
     </div>
 
     <script>
-        // Dane administracji
+        // PEŁNA LISTA ADMINISTRACJI (15 OSÓB)
         const staffData = [
-            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Twórca systemów PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Zarządzanie frakcjami i kadrami.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Główny założyciel i programista projektu PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KAMIL", role: "Co-Owner", desc: "Zarządza kadrą i strukturami frakcji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
             { name: "MAREK", role: "Head Admin", desc: "Opiekun serwera i spraw trudnych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "VIPER", role: "Technical Support", desc: "Legenda projektu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+            { name: "PIOTR", role: "Administrator", desc: "Zajmuje się porządkiem i kulturą na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "ADAM", role: "Administrator", desc: "Opiekun frakcji LSPD i szkoleniowiec.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "NATALIA", role: "Support Team", desc: "Pomoc graczom w sprawach technicznych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "SZYMON", role: "Support Team", desc: "Zarządzanie biletami (ticketami) na Discordzie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "OLAF", role: "Moderator RP", desc: "Nadzór nad realizmem akcji RP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KASIA", role: "Moderator RP", desc: "Opiekunka frakcji Medycznej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "DARIUSZ", role: "Events Manager", desc: "Organizator wydarzeń globalnych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "TOMEK", role: "Helper", desc: "Pomocnik serwerowy na okresie próbnym.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "MICHAŁ", role: "Helper", desc: "Młodszy moderator czatu i gry.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "PAWEŁ", role: "Trial Helper", desc: "W trakcie szkolenia administracyjnego.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "ŁUKASZ", role: "Trial Helper", desc: "W trakcie szkolenia administracyjnego.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "VIPER", role: "Technical Support", desc: "Wsparcie w zakresie baz danych i optymalizacji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
         ];
 
-        // --- BAZA DANYCH (PERMANENTNA) ---
-        let dbUsers = JSON.parse(localStorage.getItem('prime_db_accounts')) || [];
+        // --- SYSTEM PERMANENTNEJ BAZY ---
+        let dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [];
 
         window.onload = () => {
             renderStaff();
@@ -426,7 +447,8 @@
         };
 
         function updateDate() {
-            document.getElementById('liveDate').innerText = new Date().toLocaleString();
+            const d = new Date();
+            document.getElementById('liveDate').innerText = d.toLocaleString();
         }
 
         function switchTab(id, el) {
@@ -443,65 +465,73 @@
                     <div class="avatar-box"><img src="${s.img}"></div>
                     <div class="admin-name">${s.name}</div>
                     <div class="admin-role">${s.role}</div>
+                    <div class="text-[8px] font-bold text-gray-700 mt-2 tracking-widest uppercase">Kliknij po kontakt</div>
                 </div>
             `).join('');
         }
 
-        // Modal i Webhook
-        let activeAdmin = "";
+        // --- WEBHOOKI I MODALE ---
+        let activeTarget = "";
         function openModal(n, r, i, d) {
-            activeAdmin = n;
+            activeTarget = n;
             document.getElementById('mName').innerText = n;
             document.getElementById('mRole').innerText = r;
             document.getElementById('mImg').src = i;
             document.getElementById('mDesc').innerText = d;
+            document.getElementById('msgForm').classList.add('hidden');
+            document.getElementById('msgTrigger').classList.remove('hidden');
             document.getElementById('modalOverlay').style.display = 'flex';
         }
+
         function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
         function toggleMsgInput() {
             document.getElementById('msgForm').classList.toggle('hidden');
-            document.getElementById('msgTrigger').classList.add('hidden');
+            document.getElementById('msgTrigger').classList.toggle('hidden');
         }
 
         async function sendWebhookMessage() {
             const text = document.getElementById('mText').value;
-            if(!text) return alert("Treść pusta!");
+            if(!text) return alert("Wpisz wiadomość!");
             const url = "https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8";
+            const sender = document.getElementById('userNameDisplay').innerText;
             await fetch(url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `📬 Wiadomość do **${activeAdmin}**: ${text}` })
+                body: JSON.stringify({ content: `📬 **Wiadomość Prywatna**\n**Do:** ${activeTarget}\n**Od:** ${sender}\n**Treść:** ${text}` })
             });
-            alert("Wysłano!");
+            alert("Wysłano pomyślnie!");
             closeModal();
+            document.getElementById('mText').value = "";
         }
 
         async function submitReport() {
             const title = document.getElementById('reportTitle').value;
             const content = document.getElementById('reportContent').value;
+            if(!title || !content) return alert("Uzupełnij zgłoszenie!");
             const url = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
+            const sender = document.getElementById('userNameDisplay').innerText;
             await fetch(url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `🚨 **ZGŁOSZENIE**: ${title}\nOpis: ${content}` })
+                body: JSON.stringify({ content: `🚨 **NOWE ZGŁOSZENIE**\n**Autor:** ${sender}\n**Temat:** ${title}\n**Opis:** ${content}` })
             });
-            alert("Zgłoszenie wysłane!");
+            alert("Zgłoszenie trafiło do administracji!");
+            document.getElementById('reportTitle').value = "";
+            document.getElementById('reportContent').value = "";
         }
 
-        // LOGOWANIE I PERMANENTNE KONTA
+        // --- LOGOWANIE I ZARZĄDZANIE KONTAMI ---
         document.getElementById('authForm').onsubmit = (e) => {
             e.preventDefault();
             const l = document.getElementById('authLogin').value;
             const p = document.getElementById('authPass').value;
 
-            // Logowanie Admina
             if(l === 'admin' && p === '1234') {
                 loginSuccess("ADMINISTRATOR", true);
             } else {
-                // Sprawdzanie w permanentnej bazie
-                const user = dbUsers.find(u => u.user === l && u.pass === p);
-                if(user) loginSuccess(user.user, false);
-                else alert("Błędne dane lub konto nie istnieje!");
+                const found = dbUsers.find(u => u.user === l && u.pass === p);
+                if(found) loginSuccess(found.user, false);
+                else alert("Błąd logowania!");
             }
         };
 
@@ -509,41 +539,38 @@
             document.getElementById('userNameDisplay').innerText = name;
             document.getElementById('loginNav').classList.add('hidden');
             document.getElementById('logoutNav').classList.remove('hidden');
-            if(isAdmin) document.getElementById('adminLink').classList.remove('hidden');
+            if(isAdmin) document.getElementById('adminPanelLink').classList.remove('hidden');
             switchTab('home', document.querySelector('.nav-item'));
         }
 
         function userLogout() { window.location.reload(); }
 
-        // Zarządzanie permanentną bazą
         function dbAddUser() {
             const u = document.getElementById('dbUser').value;
             const p = document.getElementById('dbPass').value;
-            if(!u || !p) return alert("Podaj login i hasło!");
-            
+            if(!u || !p) return alert("Podaj dane!");
             dbUsers.push({user: u, pass: p});
-            localStorage.setItem('prime_db_accounts', JSON.stringify(dbUsers)); // Zapis do pamięci przeglądarki
+            localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
             renderDBUsers();
-            
             document.getElementById('dbUser').value = "";
             document.getElementById('dbPass').value = "";
-            alert("Konto zostało utworzone na stałe!");
+            alert("Konto zapisane na stałe!");
         }
 
         function renderDBUsers() {
             const list = document.getElementById('dbUserList');
             list.innerHTML = dbUsers.map((u, i) => `
                 <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-gray-800">
-                    <span class="font-bold text-sm">${u.user}</span>
-                    <button onclick="dbDeleteUser(${i})" class="text-red-500 text-xs font-bold">USUŃ</button>
+                    <span class="font-bold text-sm text-yellow-500">${u.user}</span>
+                    <button onclick="dbDeleteUser(${i})" class="text-red-600 text-[10px] font-black uppercase">Usuń</button>
                 </div>
             `).join('');
         }
 
         function dbDeleteUser(i) {
-            if(confirm("Usunąć to konto na stałe?")) {
+            if(confirm("Usunąć konto trwale?")) {
                 dbUsers.splice(i, 1);
-                localStorage.setItem('prime_db_accounts', JSON.stringify(dbUsers));
+                localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
                 renderDBUsers();
             }
         }
