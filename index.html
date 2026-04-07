@@ -13,7 +13,6 @@
             --bg-dark: #050505;
             --card-bg: #0f0f0f;
             --border: #1a1a1a;
-            --discord: #5865F2;
         }
 
         body {
@@ -200,6 +199,37 @@
             margin-bottom: 15px;
         }
 
+        .click-hint {
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        /* --- MODAL --- */
+        #modalOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-body {
+            background: #0f0f0f;
+            border: 1px solid var(--accent);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            text-align: center;
+        }
+
         /* --- UTILS --- */
         .custom-card {
             background: var(--card-bg);
@@ -219,6 +249,8 @@
             outline: none;
         }
 
+        .input-style:focus { border-color: var(--accent); }
+
         .btn-action {
             width: 100%;
             padding: 15px;
@@ -231,14 +263,7 @@
             transition: 0.3s;
         }
 
-        /* INFO BOX */
-        .info-box {
-            background: #111;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid #222;
-            margin-bottom: 10px;
-        }
+        .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -257,15 +282,7 @@
             <div class="nav-item" onclick="switchTab('map', this)">🗺️ MAPA</div>
             <div class="nav-item" onclick="switchTab('report', this)">🐞 ZGŁOŚ BŁĄD</div>
             
-            <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid #1a1a1a;">
-                <div class="info-box">
-                    <p class="text-[9px] text-gray-500 uppercase font-black">Kod Gry EH:</p>
-                    <p class="text-white font-mono font-bold text-sm tracking-widest">10cap1up</p>
-                </div>
-                <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="nav-item mb-2" style="color: var(--discord); border-color: #5865f233;">
-                    <span>🔵</span> DISCORD SERWERA
-                </a>
-
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #1a1a1a;">
                 <div id="loginNav" class="nav-item" style="color: var(--accent); border-color: #fbbf2433;" onclick="switchTab('login', this)">🔐 ZALOGUJ SIĘ</div>
                 <div id="logoutNav" class="nav-item hidden" style="color: #ff4444; border-color: #ff444433;" onclick="userLogout()">🚪 WYLOGUJ</div>
             </div>
@@ -285,16 +302,10 @@
             <div class="custom-card border-l-4 border-yellow-400">
                 <h2 class="text-2xl font-black mb-4 uppercase italic">Aktualności Projektu</h2>
                 <div class="space-y-4 text-gray-400 leading-relaxed">
-                    <p>Witamy w panelu PrimeRP. System został zaktualizowany o brakujące dane kontaktowe i techniczne.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
-                            <h4 class="text-white font-bold text-sm mb-1 uppercase">Kod dołączenia:</h4>
-                            <p class="text-2xl font-black tracking-widest text-white">10cap1up</p>
-                        </div>
-                        <div class="p-4 bg-blue-600/5 rounded-xl border border-blue-600/10">
-                            <h4 class="text-white font-bold text-sm mb-1 uppercase">Link Discord:</h4>
-                            <p class="text-sm font-bold text-blue-400">discord.gg/GVfmsESq9k</p>
-                        </div>
+                    <p>Witamy w oficjalnym panelu PrimeRP. Jesteśmy w fazie intensywnego rozwoju technicznego. Wszystkie systemy logowania, zgłoszeń błędów oraz komunikacji z administracją są w pełni operacyjne.</p>
+                    <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
+                        <h4 class="text-white font-bold text-sm mb-1">Status Serwera: <span class="text-green-500">ONLINE</span></h4>
+                        <p class="text-xs">Wersja Systemu: v2.4.0-Stable | Ostatnia aktualizacja: Dzisiaj 04:20</p>
                     </div>
                 </div>
             </div>
@@ -304,21 +315,37 @@
             <div class="custom-card">
                 <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">O Projekcie PrimeRP</h2>
                 <div class="space-y-6 text-gray-300">
-                    <p>PrimeRP to profesjonalny serwer na platformie Emergency Hamburg, tworzony przez pasjonatów dla pasjonatów.</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="p-5 bg-black/40 rounded-2xl border border-gray-800">
-                            <h4 class="font-bold text-yellow-400 mb-2 uppercase text-xs tracking-widest">Informacje Techniczne</h4>
-                            <ul class="text-sm space-y-2">
-                                <li>• Platforma: <strong>Roblox</strong></li>
-                                <li>• Gra: <strong>Emergency Hamburg</strong></li>
-                                <li>• Kod Gry: <strong class="text-white font-mono">10cap1up</strong></li>
-                            </ul>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="p-6 bg-yellow-400/10 border border-yellow-400/20 rounded-2xl">
+                            <h4 class="text-yellow-400 font-black text-xs uppercase tracking-widest mb-2">Kod Gry (EH)</h4>
+                            <p class="text-3xl font-black text-white tracking-widest">10cap1up</p>
                         </div>
-                        <div class="p-5 bg-black/40 rounded-2xl border border-gray-800">
-                            <h4 class="font-bold text-blue-400 mb-2 uppercase text-xs tracking-widest">Social Media</h4>
-                            <p class="text-sm mb-3">Dołącz do nas na Discordzie, aby brać udział w rekrutacjach i eventach.</p>
-                            <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-xs bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-bold transition">OTWÓRZ DISCORD</a>
+                        <div class="p-6 bg-blue-600/10 border border-blue-600/20 rounded-2xl">
+                            <h4 class="text-blue-400 font-black text-xs uppercase tracking-widest mb-2">Oficjalny Discord</h4>
+                            <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-xl font-bold text-white hover:underline">discord.gg/GVfmsESq9k</a>
+                        </div>
+                    </div>
+
+                    <p>PrimeRP to nie tylko serwer, to społeczność pasjonatów realizmu w grze Emergency Hamburg. Od samego początku stawiamy na profesjonalizm, sprawiedliwość i innowacyjne rozwiązania techniczne.</p>
+                    
+                    <h3 class="text-xl font-bold text-white uppercase border-b border-gray-800 pb-2">Nasza Misja</h3>
+                    <p>Chcemy stworzyć miejsce, gdzie każdy gracz, niezależnie od stażu, poczuje się częścią profesjonalnego świata RP. Nasze frakcje są szkolone według realnych procedur, a kadra administracyjna przechodzi rygorystyczną selekcję.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
+                            <div class="text-2xl mb-2">⚖️</div>
+                            <h4 class="font-bold mb-2">Sprawiedliwość</h4>
+                            <p class="text-xs text-gray-500">Każdy gracz jest traktowany równo, bez względu na znajomości.</p>
+                        </div>
+                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
+                            <div class="text-2xl mb-2">🛠️</div>
+                            <h4 class="font-bold mb-2">Technologia</h4>
+                            <p class="text-xs text-gray-500">Własne systemy webhooków i zarządzania bazą danych.</p>
+                        </div>
+                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
+                            <div class="text-2xl mb-2">🌍</div>
+                            <h4 class="font-bold mb-2">Społeczność</h4>
+                            <p class="text-xs text-gray-500">Aktywne forum, Discord i wsparcie gracza 24/7.</p>
                         </div>
                     </div>
                 </div>
@@ -333,11 +360,23 @@
         <section id="rules" class="tab-content">
             <div class="custom-card">
                 <h2 class="text-3xl font-black text-yellow-400 mb-8 uppercase italic">Regulamin Serwera</h2>
-                <p class="text-gray-400 italic mb-4 text-sm">Pełny regulamin dostępny również na naszym Discordzie.</p>
-                <div class="space-y-4 h-[400px] overflow-y-auto pr-2">
-                    <div class="p-4 bg-black/20 rounded-xl border border-gray-800">
-                        <h3 class="font-bold text-white mb-1 uppercase text-sm">§1. Zasady Ogólne</h3>
-                        <p class="text-xs text-gray-500">Zakaz RDM, VDM oraz Combat Logowania. Szanuj każdego gracza i administratora.</p>
+                <div class="space-y-8 h-[500px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-yellow-400">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">§1 Postanowienia Ogólne</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">Wchodząc na serwer PrimeRP, każdy użytkownik automatycznie akceptuje poniższe zasady. Nieznajomość regulaminu nie zwalnia z odpowiedzialności za jego łamanie.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">§2 Definicje i Skróty</h3>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li><strong>RDM (Random Deathmatch):</strong> Zabijanie bez powodu RP.</li>
+                            <li><strong>VDM (Vehicle Deathmatch):</strong> Rozjeżdżanie graczy pojazdem.</li>
+                            <li><strong>Combat Log:</strong> Wyjście z gry podczas akcji.</li>
+                            <li><strong>Metagaming:</strong> Wykorzystywanie informacji OOC w grze.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">§3 Zasady Rozgrywki</h3>
+                        <p class="text-sm text-gray-400 leading-relaxed">Każdy gracz zobowiązany jest do posiadania sprawnego mikrofonu. Podczas interakcji z frakcjami porządkowymi (LSPD/EMS/Fire) należy zachować najwyższy poziom kultury i realizmu.</p>
                     </div>
                 </div>
             </div>
@@ -346,9 +385,10 @@
         <section id="report" class="tab-content">
             <div class="custom-card max-w-2xl mx-auto border-t-4 border-red-600">
                 <h2 class="text-2xl font-black mb-2 uppercase">Zgłoś Naruszenie / Błąd</h2>
+                <p class="text-gray-500 text-sm mb-6">Wszystkie zgłoszenia są analizowane przez Zarząd. Fałszywe zgłoszenia będą karane.</p>
                 <div class="space-y-4">
-                    <input id="reportTitle" type="text" placeholder="Temat zgłoszenia" class="input-style">
-                    <textarea id="reportContent" placeholder="Opisz sytuację..." class="input-style h-48 resize-none"></textarea>
+                    <input id="reportTitle" type="text" placeholder="Temat zgłoszenia (np. Błąd mapy / Skarga)" class="input-style">
+                    <textarea id="reportContent" placeholder="Opisz sytuację szczegółowo..." class="input-style h-48 resize-none"></textarea>
                     <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Prześlij do Administracji</button>
                 </div>
             </div>
@@ -356,41 +396,76 @@
 
         <section id="login" class="tab-content">
             <div class="max-w-md mx-auto custom-card mt-10">
-                <h2 class="text-2xl font-black text-center mb-8 uppercase">Autoryzacja</h2>
+                <h2 class="text-2xl font-black text-center mb-8">AUTORYZACJA</h2>
                 <form id="authForm" class="space-y-4">
                     <input id="authLogin" type="text" placeholder="LOGIN" class="input-style" required>
                     <input id="authPass" type="password" placeholder="HASŁO" class="input-style" required>
-                    <button type="submit" class="btn-action">Zaloguj</button>
+                    <button type="submit" class="btn-action">Zaloguj do Panelu</button>
                 </form>
             </div>
         </section>
 
         <section id="map" class="tab-content">
-            <div class="custom-card h-[400px] flex flex-col items-center justify-center border-dashed border-2 border-gray-800">
-                <h2 class="text-xl font-bold text-gray-700">MAPA W TRAKCIE BUDOWY</h2>
+            <div class="custom-card h-[600px] flex flex-col items-center justify-center border-dashed border-2 border-gray-800">
+                <div class="text-6xl mb-4">🗺️</div>
+                <h2 class="text-2xl font-bold text-gray-600 uppercase tracking-widest">Interaktywna Mapa</h2>
+                <p class="text-gray-700 italic">Moduł w fazie implementacji. Oczekuje na dane z API Roblox.</p>
             </div>
         </section>
 
         <section id="adminPanel" class="tab-content">
-            <div class="custom-card border-t-4 border-green-500">
-                <h3 class="text-xl font-bold mb-6 uppercase">Panel Zarządzania Kontami</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                   <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="custom-card border-t-4 border-green-500">
+                    <h3 class="text-xl font-bold mb-6 uppercase">Dodaj Obywatela</h3>
+                    <div class="space-y-4">
                         <input id="dbUser" type="text" placeholder="Login" class="input-style">
                         <input id="dbPass" type="password" placeholder="Hasło" class="input-style">
-                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Dodaj Użytkownika</button>
-                   </div>
-                   <div id="dbUserList" class="space-y-2 max-h-[300px] overflow-y-auto bg-black/40 p-4 rounded-xl"></div>
+                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Zapisz w bazie</button>
+                    </div>
+                </div>
+                <div class="custom-card">
+                    <h3 class="text-xl font-bold mb-6 uppercase">Lista Kont Użytkowników</h3>
+                    <div id="dbUserList" class="space-y-2 max-h-[400px] overflow-y-auto"></div>
                 </div>
             </div>
         </section>
     </main>
 
+    <div id="modalOverlay">
+        <div class="modal-body">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-500 text-2xl hover:text-white transition">✕</button>
+            <div class="avatar-box mx-auto" style="width: 120px; height: 120px;">
+                <img id="mImg" src="" alt="Admin">
+            </div>
+            <h2 id="mName" class="text-3xl font-black uppercase italic mb-1"></h2>
+            <p id="mRole" class="text-yellow-400 font-bold tracking-widest text-xs uppercase mb-6"></p>
+            <p id="mDesc" class="text-gray-400 text-sm italic mb-8 px-4"></p>
+            
+            <div id="msgForm" class="hidden">
+                <textarea id="mText" placeholder="Treść wiadomości..." class="input-style h-32"></textarea>
+                <button onclick="sendWebhookMessage()" class="btn-action">Wyślij przez Webhook</button>
+            </div>
+            <button id="msgTrigger" onclick="toggleMsgInput()" class="btn-action bg-blue-600/20 border border-blue-500 text-blue-400">Napisz Wiadomość</button>
+        </div>
+    </div>
+
     <script>
         const staffData = [
-            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Założyciel projektu PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Zajmuje się sprawami kadrowymi.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
-            // Możesz dopisać resztę z Twojej listy tutaj...
+            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Założyciel projektu PrimeRP. Odpowiada za architekturę systemów i rozwój techniczny strony oraz serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KAMIL", role: "Co-Owner", desc: "Współzałożyciel. Zajmuje się sprawami kadrowymi oraz nadzorem nad frakcjami porządkowymi.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "MAREK", role: "Head Admin", desc: "Najwyższy rangą opiekun serwera. Rozstrzyga najpoważniejsze spory i apelacje od banów.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "PIOTR", role: "Administrator", desc: "Zarządza moderacją i dba o płynność rozgrywki w godzinach szczytu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "ADAM", role: "Administrator", desc: "Specjalista ds. technicznych wewnątrz mapy Roblox oraz opiekun frakcji straży pożarnej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "NATALIA", role: "Support Team", desc: "Pierwsza linia kontaktu. Pomaga nowym graczom przejść przez proces weryfikacji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "SZYMON", role: "Support Team", desc: "Moderator Discorda oraz pomoc techniczna w zakresie zgłoszeń błędów (Bug Reports).", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "OLAF", role: "Moderator RP", desc: "Pilnuje realizmu podczas akcji policyjnych. Przeprowadza kontrole jakości RP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KASIA", role: "Moderator RP", desc: "Opiekunka EMS. Dba o to, by medycyna na serwerze stała na najwyższym poziomie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "DARIUSZ", role: "Events Manager", desc: "Twórca eventów globalnych. Odpowiada za urozmaicanie rozgrywki na PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "TOMEK", role: "Helper", desc: "Członek ekipy na okresie próbnym. Aktywnie wspiera graczy na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "MICHAŁ", role: "Helper", desc: "Pomocnik w zakresie obsługi biletów (ticketów) na Discordzie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "PAWEŁ", role: "Trial Helper", desc: "Najmłodszy stażem członek ekipy. Wspiera starszą administrację w prostych pracach.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "ŁUKASZ", role: "Trial Helper", desc: "Uczy się zasad panujących wewnątrz ekipy administracyjnej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "VIPER", role: "Technical Support", desc: "Legenda projektu. Pomaga przy optymalizacji bazy danych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
         ];
 
         window.onload = () => {
@@ -402,7 +477,9 @@
 
         function updateDate() {
             const d = new Date();
-            document.getElementById('liveDate').innerText = d.toLocaleString('pl-PL');
+            document.getElementById('liveDate').innerText = d.toLocaleDateString('pl-PL', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
+            });
         }
 
         function switchTab(id, el) {
@@ -415,26 +492,76 @@
         function renderStaff() {
             const container = document.getElementById('staffContainer');
             container.innerHTML = staffData.map(s => `
-                <div class="admin-card">
-                    <div class="avatar-box"><img src="${s.img}"></div>
+                <div class="admin-card" onclick="openModal('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
+                    <div class="avatar-box">
+                        <img src="${s.img}" alt="Avatar">
+                    </div>
                     <div class="admin-name">${s.name}</div>
                     <div class="admin-role">${s.role}</div>
+                    <div class="click-hint">SZCZEGÓŁY PROFILU</div>
                 </div>
             `).join('');
         }
 
+        let activeAdminName = "";
+        function openModal(n, r, i, d) {
+            activeAdminName = n;
+            document.getElementById('mName').innerText = n;
+            document.getElementById('mRole').innerText = r;
+            document.getElementById('mImg').src = i;
+            document.getElementById('mDesc').innerText = d;
+            document.getElementById('msgForm').classList.add('hidden');
+            document.getElementById('msgTrigger').classList.remove('hidden');
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+        function toggleMsgInput() {
+            document.getElementById('msgForm').classList.toggle('hidden');
+            document.getElementById('msgTrigger').classList.toggle('hidden');
+        }
+
+        async function sendWebhookMessage() {
+            const text = document.getElementById('mText').value;
+            if(!text) return alert("Wpisz treść wiadomości!");
+            const url = "https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8";
+            const sender = document.getElementById('userNameDisplay').innerText;
+            await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    content: `📩 **Nowa wiadomość do Admina**\n**Do:** ${activeAdminName}\n**Od:** ${sender}\n**Treść:** ${text}`
+                })
+            });
+            alert("Wysłano pomyślnie!");
+            closeModal();
+            document.getElementById('mText').value = "";
+        }
+
         async function submitReport() {
-            const t = document.getElementById('reportTitle').value;
-            const c = document.getElementById('reportContent').value;
-            if(!t || !c) return alert("Wypełnij pola!");
+            const title = document.getElementById('reportTitle').value;
+            const content = document.getElementById('reportContent').value;
+            if(!title || !content) return alert("Wypełnij wszystkie pola!");
             const url = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
             await fetch(url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `🚨 **ZGŁOSZENIE PrimeRP**\n**Temat:** ${t}\n**Treść:** ${c}` })
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "🚨 NOWE ZGŁOSZENIE / BŁĄD",
+                        color: 15548997,
+                        fields: [
+                            { name: "Temat", value: title },
+                            { name: "Treść", value: content },
+                            { name: "Zgłaszający", value: document.getElementById('userNameDisplay').innerText }
+                        ],
+                        timestamp: new Date()
+                    }]
+                })
             });
-            alert("Wysłano zgłoszenie!");
-            document.getElementById('reportTitle').value = ""; document.getElementById('reportContent').value = "";
+            alert("Zgłoszenie zostało wysłane!");
+            document.getElementById('reportTitle').value = "";
+            document.getElementById('reportContent').value = "";
         }
 
         let dbUsers = JSON.parse(localStorage.getItem('prime_users') || '[]');
@@ -442,30 +569,31 @@
             e.preventDefault();
             const l = document.getElementById('authLogin').value;
             const p = document.getElementById('authPass').value;
-            if(l === 'admin' && p === '1234') {
-                document.getElementById('userNameDisplay').innerText = "ADMINISTRATOR";
-                document.getElementById('loginNav').classList.add('hidden');
-                document.getElementById('logoutNav').classList.remove('hidden');
-                // Dodanie panelu admina
-                const nav = document.querySelector('.nav-menu');
-                const btn = document.createElement('div');
-                btn.className = "nav-item text-green-500";
-                btn.innerHTML = "🛠️ ADMIN PANEL";
-                btn.onclick = () => switchTab('adminPanel', btn);
-                nav.appendChild(btn);
-                switchTab('home', document.querySelector('.nav-item'));
-            } else {
+            if(l === 'admin' && p === '1234') loginSuccess("ADMINISTRATOR", true);
+            else {
                 const user = dbUsers.find(u => u.user === l && u.pass === p);
-                if(user) {
-                    document.getElementById('userNameDisplay').innerText = user.user;
-                    document.getElementById('loginNav').classList.add('hidden');
-                    document.getElementById('logoutNav').classList.remove('hidden');
-                    switchTab('home', document.querySelector('.nav-item'));
-                } else alert("Błąd!");
+                if(user) loginSuccess(user.user, false);
+                else alert("Błędne dane!");
             }
         };
 
+        function loginSuccess(name, isAdmin) {
+            document.getElementById('userNameDisplay').innerText = name;
+            document.getElementById('loginNav').classList.add('hidden');
+            document.getElementById('logoutNav').classList.remove('hidden');
+            if(isAdmin) {
+                const adminBtn = document.createElement('div');
+                adminBtn.className = "nav-item";
+                adminBtn.innerHTML = "⚡ ADMIN PANEL";
+                adminBtn.style.color = "#ff4444";
+                adminBtn.onclick = function() { switchTab('adminPanel', this); };
+                document.querySelector('.nav-menu').appendChild(adminBtn);
+            }
+            switchTab('home', document.querySelector('.nav-item'));
+        }
+
         function userLogout() { window.location.reload(); }
+
         function dbAddUser() {
             const u = document.getElementById('dbUser').value;
             const p = document.getElementById('dbPass').value;
@@ -473,12 +601,23 @@
             dbUsers.push({user: u, pass: p});
             localStorage.setItem('prime_users', JSON.stringify(dbUsers));
             renderDBUsers();
-            document.getElementById('dbUser').value = ""; document.getElementById('dbPass').value = "";
+            document.getElementById('dbUser').value = "";
+            document.getElementById('dbPass').value = "";
         }
+
         function renderDBUsers() {
             const list = document.getElementById('dbUserList');
-            list.innerHTML = dbUsers.map((u, i) => `<div class="text-xs bg-black/60 p-2 mb-1 flex justify-between border border-gray-800 rounded"><span>${u.user}</span> <button onclick="dbDeleteUser(${i})" class="text-red-500">USUŃ</button></div>`).join('');
+            list.innerHTML = dbUsers.map((u, i) => `
+                <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-gray-800">
+                    <div>
+                        <span class="text-xs text-gray-500 uppercase">Login:</span>
+                        <span class="font-bold ml-2">${u.user}</span>
+                    </div>
+                    <button onclick="dbDeleteUser(${i})" class="text-red-500 hover:text-white transition">USUŃ</button>
+                </div>
+            `).join('');
         }
+
         function dbDeleteUser(i) {
             dbUsers.splice(i, 1);
             localStorage.setItem('prime_users', JSON.stringify(dbUsers));
