@@ -3,12 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PrimeRP</title>
+  <title>PrimeRP - Oficjalna Strona</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black text-white flex">
 
-  <aside id="sidebar" class="w-72 bg-[#0b0b0b] min-h-screen p-6 border-r border-gray-800">
+  <div id="adminModal" class="fixed inset-0 bg-black/90 backdrop-blur-md hidden z-[10000] flex items-center justify-center p-4">
+    <div class="bg-[#0f0f0f] border border-yellow-400/50 w-full max-w-md rounded-3xl p-8 relative shadow-2xl">
+      <button onclick="closeModal()" class="absolute top-4 right-6 text-3xl text-gray-500 hover:text-white transition">&times;</button>
+      
+      <div class="flex flex-col items-center text-center">
+        <div class="w-32 h-32 bg-gray-800 rounded-full mb-6 border-4 border-yellow-400 overflow-hidden shadow-lg shadow-yellow-400/20">
+          <img id="modalImg" src="" alt="Avatar" class="w-full h-full object-cover">
+        </div>
+        <h3 id="modalName" class="text-3xl font-extrabold text-white mb-2"></h3>
+        <p id="modalRole" class="text-yellow-400 font-bold uppercase tracking-widest mb-6 border-b border-gray-800 pb-4 w-full"></p>
+        
+        <div class="text-gray-300 space-y-4 text-left w-full">
+          <p class="text-sm italic text-gray-400">"Członek zespołu administracyjnego serwera PrimeRP. Dbający o porządek, sprawiedliwość i najwyższą jakość rozgrywki Roleplay na serwerze."</p>
+          <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+            <p class="text-xs uppercase text-gray-500 font-bold mb-1">Status na stronie</p>
+            <p class="text-green-400 flex items-center gap-2">
+              <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> Aktywny
+            </p>
+          </div>
+        </div>
+        <button onclick="closeModal()" class="mt-8 w-full py-3 bg-yellow-400 text-black font-bold rounded-xl hover:bg-yellow-500 transition">ZAMKNIJ</button>
+      </div>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="w-72 bg-[#0b0b0b] min-h-screen p-6 border-r border-gray-800 flex-shrink-0">
     <div class="mb-10">
       <h1 class="text-3xl font-extrabold leading-none">
         <span class="text-white">PRIME</span><br>
@@ -23,242 +48,323 @@
       <button onclick="showTab('map')" class="nav-btn">🗺️ MAPA</button>
       <button onclick="showTab('report')" class="nav-btn">🐞 ZGŁOŚ BŁĄD</button>
       <button onclick="showTab('rules')" class="nav-btn">📜 REGULAMIN</button>
-      <button id="loginBtnNav" onclick="showTab('login')" class="nav-btn">🔐 ZALOGUJ</button>
-      <button id="logoutBtnNav" onclick="logout()" class="nav-btn hidden bg-red-900/20 border-red-800 text-red-500">🚪 WYLOGUJ</button>
+      <div class="pt-10">
+        <button id="loginBtnNav" onclick="showTab('login')" class="nav-btn border-yellow-400/30 text-yellow-400">🔐 ZALOGUJ</button>
+        <button id="logoutBtnNav" onclick="logout()" class="nav-btn hidden bg-red-900/20 border-red-800 text-red-500">🚪 WYLOGUJ</button>
+      </div>
     </nav>
   </aside>
 
-  <main class="flex-1 p-10">
+  <main class="flex-1 p-10 overflow-y-auto h-screen">
 
-    <div id="mainHeader" class="mb-10">
-      <h2 class="text-4xl font-bold">WITAJ, <span id="playerNameTop">GOŚĆ</span></h2>
+    <div id="mainHeader" class="mb-10 flex justify-between items-center">
+      <h2 class="text-4xl font-bold uppercase tracking-tight">Witaj, <span id="playerNameTop" class="text-yellow-400">Gość</span></h2>
+      <div class="text-gray-500 text-sm font-mono" id="currentDate"></div>
     </div>
 
     <section id="home" class="tab">
-      <div class="card">
-        <h2 class="text-3xl font-bold text-yellow-400 mb-3">Nowości</h2>
-        <p class="text-gray-400">Witaj na stronie PrimeRP. Sprawdź najnowsze informacje o serwerze.</p>
+      <div class="card bg-gradient-to-br from-[#0f0f0f] to-[#161616]">
+        <h2 class="text-3xl font-bold text-yellow-400 mb-4">Najnowsze wieści</h2>
+        <div class="space-y-4 text-gray-400 leading-relaxed">
+          <p>Witaj na oficjalnym panelu serwera **PrimeRP**. Nasz serwer w Emergency Hamburg oferuje unikalne doświadczenia Roleplay.</p>
+          <div class="p-4 bg-yellow-400/5 border-l-2 border-yellow-400 rounded-r-lg text-white">
+            📢 Startujemy z nowym systemem zgłaszania błędów! Sprawdź zakładkę w menu.
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="about" class="tab hidden">
       <div class="card border-l-4 border-yellow-400">
-        <h2 class="text-3xl font-bold text-yellow-400 mb-6">🚨 PrimeRP – Serwer Roblox w Emergency Hamburg! 🚨</h2>
+        <h2 class="text-3xl font-bold text-yellow-400 mb-6">🚨 PrimeRP – Emergency Hamburg 🚨</h2>
         <div class="space-y-6 text-gray-300 text-lg">
           <p>Chcesz poczuć prawdziwe emocje w świecie RP? Dołącz do PrimeRP w grze Emergency Hamburg!</p>
-          <ul class="space-y-2">
-            <li>• Twórz swoją postać i rozwijaj ją w realistycznym świecie</li>
-            <li>• Współpracuj z innymi graczami w akcjach ratunkowych</li>
-            <li>• Weź udział w eventach i codziennych przygodach</li>
+          
+          <ul class="space-y-3">
+            <li class="flex items-center gap-3"><span class="text-yellow-400">✔</span> Twórz swoją postać i rozwijaj ją w realistycznym świecie</li>
+            <li class="flex items-center gap-3"><span class="text-yellow-400">✔</span> Współpracuj z innymi graczami w akcjach ratunkowych</li>
+            <li class="flex items-center gap-3"><span class="text-yellow-400">✔</span> Weź udział w eventach i codziennych przygodach</li>
           </ul>
-          <div class="bg-black/50 p-6 rounded-xl border border-gray-800">
-            <p class="mb-2">🎮 Kod do gry: <span class="text-yellow-400 font-mono font-bold tracking-wider">10cap1up</span></p>
-            <p>🌐 Dołącz do serwera: <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-blue-400 hover:text-blue-300 underline font-bold transition">Kliknij tutaj</a></p>
+
+          <div class="bg-black/50 p-6 rounded-2xl border border-gray-800 mt-8">
+            <div class="mb-4 flex items-center gap-4">
+              <div class="bg-yellow-400 text-black p-2 rounded-lg font-bold">🎮</div>
+              <div>
+                <p class="text-xs uppercase text-gray-500 font-bold">Kod do gry (EH)</p>
+                <p class="text-xl font-mono font-bold tracking-widest text-white">10cap1up</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="bg-blue-600 text-white p-2 rounded-lg font-bold">🌐</div>
+              <div>
+                <p class="text-xs uppercase text-gray-500 font-bold">Oficjalny Discord</p>
+                <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-blue-400 hover:text-blue-300 underline font-bold transition">Dołącz do społeczności</a>
+              </div>
+            </div>
           </div>
-          <p class="text-yellow-400 font-bold italic">Nie przegap okazji – Twoja przygoda w PrimeRP czeka!</p>
         </div>
       </div>
     </section>
 
     <section id="staff" class="tab hidden">
       <h2 class="text-3xl font-bold text-yellow-400 mb-8 uppercase tracking-widest">🛡️ Zespół Administracyjny</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
-        <div class="card flex flex-col items-center text-center group border-t-4 border-yellow-400">
-          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-yellow-400 overflow-hidden">
-            <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Kuba Avatar" class="w-full h-full object-cover">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card flex flex-col items-center text-center group border-t-4 border-yellow-400 cursor-pointer hover:bg-[#1a1a1a] transition-all transform hover:-translate-y-2 shadow-lg">
+          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-yellow-400 overflow-hidden shadow-yellow-400/10 shadow-xl">
+            <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
           </div>
-          <h3 class="text-xl font-bold text-white">! Kuba</h3>
-          <p class="text-yellow-400 font-bold uppercase text-sm tracking-tighter">Test</p>
+          <h3 class="text-xl font-bold text-white uppercase italic">! Kuba</h3>
+          <p class="text-yellow-400 font-bold uppercase text-xs tracking-[0.2em]">Test</p>
+          <div class="mt-4 px-4 py-1 bg-white/5 rounded-full text-[10px] text-gray-500 uppercase font-bold group-hover:text-yellow-400 transition">Kliknij po więcej info</div>
         </div>
 
-        <div class="card flex flex-col items-center text-center group border-t-4 border-yellow-400">
-          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-yellow-400 overflow-hidden">
-            <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Kuba Avatar" class="w-full h-full object-cover">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card flex flex-col items-center text-center group border-t-4 border-yellow-400 cursor-pointer hover:bg-[#1a1a1a] transition-all transform hover:-translate-y-2 shadow-lg">
+          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-yellow-400 overflow-hidden shadow-yellow-400/10 shadow-xl">
+            <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
           </div>
-          <h3 class="text-xl font-bold text-white">! Kuba</h3>
-          <p class="text-yellow-400 font-bold uppercase text-sm tracking-tighter">Test</p>
+          <h3 class="text-xl font-bold text-white uppercase italic">! Kuba</h3>
+          <p class="text-yellow-400 font-bold uppercase text-xs tracking-[0.2em]">Test</p>
+          <div class="mt-4 px-4 py-1 bg-white/5 rounded-full text-[10px] text-gray-500 uppercase font-bold group-hover:text-yellow-400 transition">Kliknij po więcej info</div>
         </div>
 
-        <div class="card flex flex-col items-center text-center group border-t-4 border-yellow-400">
-          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-yellow-400 overflow-hidden">
-            <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Kuba Avatar" class="w-full h-full object-cover">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card flex flex-col items-center text-center group border-t-4 border-yellow-400 cursor-pointer hover:bg-[#1a1a1a] transition-all transform hover:-translate-y-2 shadow-lg">
+          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-yellow-400 overflow-hidden shadow-yellow-400/10 shadow-xl">
+            <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
           </div>
-          <h3 class="text-xl font-bold text-white">! Kuba</h3>
-          <p class="text-yellow-400 font-bold uppercase text-sm tracking-tighter">Test</p>
+          <h3 class="text-xl font-bold text-white uppercase italic">! Kuba</h3>
+          <p class="text-yellow-400 font-bold uppercase text-xs tracking-[0.2em]">Test</p>
+          <div class="mt-4 px-4 py-1 bg-white/5 rounded-full text-[10px] text-gray-500 uppercase font-bold group-hover:text-yellow-400 transition">Kliknij po więcej info</div>
         </div>
 
       </div>
     </section>
 
     <section id="map" class="tab hidden">
-      <div class="card">
-        <h2 class="title">Mapa</h2>
-        <p>Mapa serwera (wkrótce)</p>
+      <div class="card h-96 flex flex-col items-center justify-center border-dashed border-2 border-gray-800">
+        <div class="text-5xl mb-4">🗺️</div>
+        <h2 class="text-2xl font-bold mb-2">Interaktywna Mapa</h2>
+        <p class="text-gray-500 italic">Zdjęcie satelitarne i oznaczenia lokacji wkrótce...</p>
       </div>
     </section>
 
     <section id="report" class="tab hidden">
-      <div class="card">
-        <h2 class="text-3xl font-bold text-yellow-400 mb-3">Zgłoś Błąd</h2>
-        <p class="text-gray-400 mb-4">Opisz problem poniżej i wyślij zgłoszenie.</p>
-        <textarea id="bugText" placeholder="Opisz błąd..." class="input h-32 mb-4 text-white"></textarea>
-        <button onclick="sendReport()" class="btn-big">PRZEŚLIJ</button>
+      <div class="card max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold text-yellow-400 mb-2">System Zgłoszeń</h2>
+        <p class="text-gray-400 mb-6">Znalazłeś błąd? Opisz go dokładnie, a nasza administracja go sprawdzi.</p>
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs uppercase text-gray-500 font-bold mb-2 block">Opis błędu</label>
+            <textarea id="bugText" placeholder="Napisz co nie działa..." class="input h-48 resize-none"></textarea>
+          </div>
+          <button onclick="sendReport()" class="btn-big">WYŚLIJ ZGŁOSZENIE PRZEZ WEBHOOK</button>
+        </div>
       </div>
     </section>
 
     <section id="rules" class="tab hidden">
-      <div class="card">
-        <h2 class="title">Regulamin</h2>
-        <ul class="list-disc ml-5 text-gray-300">
-          <li>Szanuj innych</li>
-          <li>Zakaz cheatów</li>
-          <li>RP ponad wszystko</li>
-        </ul>
+      <div class="card max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold text-yellow-400 mb-6 border-b border-gray-800 pb-4">Zasady Serwera</h2>
+        <div class="space-y-6 text-gray-300">
+          <div>
+            <h3 class="font-bold text-white mb-2">1. Zachowanie i Kultura</h3>
+            <p>Szanuj każdego gracza. Wyzwiska poza RP są surowo karane.</p>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-2">2. Rozgrywka (RP)</h3>
+            <p>Zakaz uciekania od akcji RP poprzez wylogowanie się (Combat Log).</p>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-2">3. Oprogramowanie</h3>
+            <p>Używanie exploitów lub wspomagaczy kończy się permanentnym banem.</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="login" class="tab hidden">
-      <div class="max-w-md mx-auto card">
-        <h2 class="title">Logowanie</h2>
+      <div class="max-w-md mx-auto card mt-20">
+        <h2 class="text-2xl font-bold text-center mb-6 uppercase tracking-widest">Dostęp do Panelu</h2>
         <form id="loginForm" class="space-y-4">
-          <input id="loginUser" type="text" placeholder="Login" class="input">
-          <input id="loginPass" type="password" placeholder="Hasło" class="input">
-          <button class="btn">Zaloguj</button>
+          <input id="loginUser" type="text" placeholder="Użytkownik" class="input" required>
+          <input id="loginPass" type="password" placeholder="Hasło" class="input" required>
+          <button type="submit" class="btn bg-yellow-400 text-black hover:bg-yellow-500">ZALOGUJ SIĘ</button>
         </form>
       </div>
     </section>
 
     <section id="admin" class="tab hidden admin-full-screen">
-      <div class="max-w-4xl mx-auto">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-4xl font-bold text-red-500">PANEL ADMINISTRATORA</h2>
-            <button onclick="logout()" class="bg-red-600 px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition">WYLOGUJ</button>
+      <div class="max-w-5xl mx-auto">
+        <div class="flex justify-between items-center mb-10 bg-red-600/10 p-6 rounded-2xl border border-red-600/20">
+            <div>
+              <h2 class="text-4xl font-black text-red-500 uppercase italic">ZARZĄDZANIE SYSTEMEM</h2>
+              <p class="text-red-400/60 text-sm tracking-widest uppercase">Admin Security Access</p>
+            </div>
+            <button onclick="logout()" class="bg-red-600 px-8 py-3 rounded-xl font-bold hover:bg-red-700 transition shadow-lg shadow-red-600/20">WYLOGUJ</button>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="card">
-                <h3 class="text-xl mb-4 border-b border-gray-800 pb-2">Dodaj nowe konto</h3>
-                <form id="createUserForm" class="space-y-3">
-                  <input id="newUser" type="text" placeholder="Login użytkownika" class="input">
-                  <input id="newPass" type="password" placeholder="Hasło" class="input">
-                  <button class="btn bg-green-600 hover:bg-green-700">STWÓRZ KONTO</button>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="card border border-gray-800">
+                <h3 class="text-xl font-bold mb-6 text-white border-b border-gray-800 pb-2">Dodaj Obywatela</h3>
+                <form id="createUserForm" class="space-y-4">
+                  <input id="newUser" type="text" placeholder="Nowy login" class="input bg-black border-gray-800">
+                  <input id="newPass" type="password" placeholder="Nowe hasło" class="input bg-black border-gray-800">
+                  <button type="submit" class="btn bg-green-600 hover:bg-green-700 text-white">AUTORYZUJ NOWE KONTO</button>
                 </form>
             </div>
-            <div class="card">
-                <h3 class="text-xl mb-4 border-b border-gray-800 pb-2">Zarejestrowani obywatele</h3>
-                <ul id="userList" class="space-y-2 max-h-64 overflow-y-auto"></ul>
+            <div class="card border border-gray-800">
+                <h3 class="text-xl font-bold mb-6 text-white border-b border-gray-800 pb-2">Lista Mieszkańców</h3>
+                <ul id="userList" class="space-y-3 max-h-80 overflow-y-auto pr-2 custom-scroll"></ul>
             </div>
         </div>
       </div>
     </section>
 
     <section id="player" class="tab hidden">
-      <div class="card">
-        <div class="flex justify-between items-center">
-            <h2 class="title">Panel Obywatela</h2>
-            <button onclick="logout()" class="text-sm bg-gray-800 px-4 py-1 rounded">Wyloguj</button>
+      <div class="card border-l-4 border-blue-500">
+        <h2 class="text-3xl font-bold text-white mb-4">Profil Obywatela</h2>
+        <div class="p-6 bg-black/40 rounded-xl">
+          <p class="text-gray-400">Jesteś zalogowany jako: <span id="playerName" class="text-blue-400 font-bold text-xl"></span></p>
+          <div class="mt-6 flex gap-4">
+            <div class="bg-blue-500/10 p-4 rounded-lg flex-1 text-center border border-blue-500/20">
+              <p class="text-xs text-gray-500 uppercase">Status konta</p>
+              <p class="font-bold text-green-400">Zweryfikowany</p>
+            </div>
+            <div class="bg-blue-500/10 p-4 rounded-lg flex-1 text-center border border-blue-500/20">
+              <p class="text-xs text-gray-500 uppercase">Poziom Dostępu</p>
+              <p class="font-bold text-white">Gracz</p>
+            </div>
+          </div>
         </div>
-        <p class="mt-4">Zalogowano pomyślnie jako: <span id="playerName" class="text-yellow-400 font-bold"></span></p>
       </div>
     </section>
 
   </main>
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    
+    body { font-family: 'Inter', sans-serif; overflow: hidden; }
+
     .admin-full-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #050505;
-      z-index: 9999;
-      padding: 50px;
-      overflow-y: auto;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #050505; z-index: 9999; padding: 50px; overflow-y: auto;
     }
+
     .nav-btn {
-      display:block;
-      width:100%;
-      text-align:left;
-      padding:14px;
-      border-radius:12px;
-      background:#111;
-      border:1px solid #1f1f1f;
-      transition:0.2s;
+      display:block; width:100%; text-align:left; padding:16px;
+      border-radius:15px; background:#111; border:1px solid #1f1f1f;
+      transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em;
     }
-    .nav-btn:hover {
-      background:#1a1a1a;
-      transform:translateX(5px);
-    }
+    .nav-btn:hover { background:#1a1a1a; transform:translateX(8px); border-color: #333; color: #fbbf24; }
+
     .card {
-      background:#0f0f0f;
-      padding:30px;
-      border-radius:25px;
-      border:1px solid #1f1f1f;
-      box-shadow:0 0 40px rgba(0,0,0,0.6);
+      background:#0f0f0f; padding:40px; border-radius:30px;
+      border:1px solid #1f1f1f; box-shadow:0 10px 50px rgba(0,0,0,0.8);
     }
-    .title { font-size:26px; margin-bottom:10px; }
+
     .input {
-      width:100%;
-      padding:12px;
-      border-radius:10px;
-      background:#0a0a0a;
-      border:1px solid #222;
-      color: white;
+      width:100%; padding:14px; border-radius:12px;
+      background:#070707; border:1px solid #222; color: white;
+      transition: 0.2s;
     }
+    .input:focus { outline: none; border-color: #fbbf24; background: #0a0a0a; }
+
     .btn {
-      width:100%;
-      padding:12px;
-      background:#3b82f6;
-      border-radius:10px;
-      font-weight:bold;
+      width:100%; padding:14px; border-radius:12px;
+      font-weight:900; transition: 0.3s; letter-spacing: 0.1em;
     }
+
     .btn-big {
-      width:100%;
-      padding:16px;
-      border-radius:15px;
-      background:linear-gradient(90deg,#6366f1,#4f46e5);
-      font-weight:bold;
-      box-shadow:0 0 20px rgba(99,102,241,0.6);
+      width:100%; padding:18px; border-radius:18px;
+      background:linear-gradient(90deg,#fbbf24,#f59e0b); color: black;
+      font-weight:900; text-transform: uppercase;
+      box-shadow:0 5px 25px rgba(251,191,36,0.3);
+      transition: 0.3s;
     }
-    .hidden { display: none; }
+    .btn-big:hover { transform: translateY(-3px); box-shadow:0 8px 30px rgba(251,191,36,0.5); }
+
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+    .hidden { display: none !important; }
   </style>
 
   <script>
-    function sendReport() {
-      const text = document.getElementById('bugText').value;
-      if (!text) return alert('Napisz treść zgłoszenia');
-      fetch('https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: "📢 **Nowe zgłoszenie błędu:**\n" + text })
-      })
-      .then(() => {
-        alert('Wysłano zgłoszenie!');
-        document.getElementById('bugText').value = '';
-      })
-      .catch(() => alert('Błąd wysyłania'));
+    // DZIEŃ I CZAS
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('currentDate').innerText = new Date().toLocaleDateString('pl-PL', options);
+
+    // SYSTEM MODALA (ADMINISTRACJA)
+    function openModal(name, role, img) {
+      document.getElementById('modalName').innerText = name;
+      document.getElementById('modalRole').innerText = role;
+      document.getElementById('modalImg').src = img;
+      document.getElementById('adminModal').classList.remove('hidden');
     }
 
+    function closeModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+    }
+
+    // ZAMYKANIE MODALA PO KLIKNIĘCIU POZA NIM
+    window.onclick = function(event) {
+      const modal = document.getElementById('adminModal');
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+
+    // SYSTEM TABÓW
     function showTab(id){
       document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
       const target = document.getElementById(id);
       if(target) target.classList.remove('hidden');
     }
 
-    function logout() {
-        window.location.reload();
+    // DISCORD WEBHOOK (ZGŁASZANIE BŁĘDÓW)
+    function sendReport() {
+      const text = document.getElementById('bugText').value;
+      if (!text) return alert('Wpisz treść błędu przed wysłaniem.');
+
+      const webhookUrl = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
+      
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          embeds: [{
+            title: "📢 NOWE ZGŁOSZENIE BŁĘDU",
+            description: text,
+            color: 16711680,
+            timestamp: new Date()
+          }]
+        })
+      })
+      .then(() => {
+        alert('Dziękujemy! Zgłoszenie zostało wysłane na nasz Discord.');
+        document.getElementById('bugText').value = '';
+      })
+      .catch(() => alert('Wystąpił błąd podczas wysyłania zgłoszenia.'));
     }
 
+    // SYSTEM LOGOWANIA I UŻYTKOWNIKÓW
     let users = JSON.parse(localStorage.getItem('users') || '[]');
     const ADMIN_LOGIN = 'admin';
     const ADMIN_PASSWORD = '1234';
+
+    function logout() {
+        window.location.reload();
+    }
 
     document.getElementById('loginForm').addEventListener('submit', e=>{
       e.preventDefault();
       const login = document.getElementById('loginUser').value;
       const pass = document.getElementById('loginPass').value;
 
+      // Logowanie Admina
       if(login === ADMIN_LOGIN && pass === ADMIN_PASSWORD){
         showTab('admin');
         document.getElementById('playerNameTop').innerText = 'ADMIN';
@@ -268,6 +374,7 @@
         return;
       }
 
+      // Logowanie Użytkownika
       const user = users.find(u=>u.login===login && u.pass===pass);
       if(user){
         document.getElementById('playerName').innerText = user.login;
@@ -276,32 +383,48 @@
         document.getElementById('logoutBtnNav').classList.remove('hidden');
         showTab('player');
       } else {
-        alert('Błędne dane');
+        alert('Błędny login lub hasło.');
       }
     });
 
+    // TWORZENIE KONT PRZEZ ADMINA
     document.getElementById('createUserForm').addEventListener('submit', e=>{
       e.preventDefault();
       const login = document.getElementById('newUser').value;
       const pass = document.getElementById('newPass').value;
-      if(!login || !pass) return alert('Wypełnij oba pola');
+      if(!login || !pass) return alert('Wypełnij wszystkie pola.');
 
       users.push({login, pass});
       localStorage.setItem('users', JSON.stringify(users));
       document.getElementById('newUser').value='';
       document.getElementById('newPass').value='';
       renderUsers();
+      alert('Konto obywatela utworzone pomyślnie.');
     });
 
     function renderUsers(){
       const userList = document.getElementById('userList');
       userList.innerHTML='';
-      users.forEach(u=>{
+      users.forEach((u, index)=>{
         const li = document.createElement('li');
-        li.className = "bg-black/40 p-3 rounded-xl border border-gray-800 flex justify-between";
-        li.innerHTML = `<span>👤 ${u.login}</span><span class="text-gray-600 text-xs">Użytkownik</span>`;
+        li.className = "bg-white/5 p-4 rounded-xl border border-gray-800 flex justify-between items-center";
+        li.innerHTML = `
+          <div>
+            <span class="text-white font-bold tracking-wide">${u.login}</span>
+            <p class="text-[10px] text-gray-500 uppercase">Zarejestrowany Obywatel</p>
+          </div>
+          <button onclick="deleteUser(${index})" class="text-red-500 hover:text-red-400 text-xs font-bold uppercase">Usuń</button>
+        `;
         userList.appendChild(li);
       });
+    }
+
+    function deleteUser(index) {
+        if(confirm('Czy na pewno chcesz usunąć to konto?')) {
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            renderUsers();
+        }
     }
   </script>
 
