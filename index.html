@@ -4,293 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrimeRP | Oficjalny System Zarządzania</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
     
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-
-        :root {
-            --accent: #fbbf24;
-            --bg-dark: #050505;
-            --card-bg: #0f0f0f;
-            --border: #1a1a1a;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: white;
-            margin: 0;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            width: 300px;
-            background: #0b0b0b;
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            padding: 40px 20px;
-            z-index: 100;
-        }
-
-        .logo-container {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .logo-main {
-            font-size: 2.5rem;
-            font-weight: 900;
-            line-height: 0.8;
-            letter-spacing: -2px;
-        }
-
-        .logo-sub {
-            color: var(--accent);
-            letter-spacing: 10px;
-            font-size: 1rem;
-            margin-left: 10px;
-        }
-
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .nav-item {
-            padding: 16px 20px;
-            border-radius: 14px;
-            background: #111;
-            border: 1px solid #1a1a1a;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-align: left;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #888;
-        }
-
-        .nav-item:hover {
-            background: #161616;
-            transform: translateX(10px);
-            color: white;
-            border-color: var(--accent);
-        }
-
-        .nav-item.active {
-            background: var(--accent);
-            color: black;
-            border-color: var(--accent);
-        }
-
-        /* --- MAIN CONTENT --- */
-        .main-wrapper {
-            flex: 1;
-            padding: 40px;
-            overflow-y: auto;
-            position: relative;
-            background: radial-gradient(circle at top right, #111 0%, #050505 100%);
-        }
-
-        .section-header {
-            margin-bottom: 40px;
-            border-bottom: 1px solid #111;
-            padding-bottom: 20px;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- MAP SECTION --- */
-        .map-wrapper {
-            width: 100%;
-            height: 650px;
-            background: #000;
-            border-radius: 30px;
-            border: 2px solid var(--border);
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        .map-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: zoom-in;
-        }
-
-        .map-wrapper:hover .map-img {
-            transform: scale(1.4);
-        }
-
-        .map-overlay-info {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.8);
-            padding: 10px 20px;
-            border-radius: 10px;
-            border-left: 4px solid var(--accent);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 800;
-        }
-
-        /* --- STAFF CARDS --- */
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .admin-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 30px 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .admin-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: var(--accent);
-            opacity: 0.7;
-        }
-
-        .admin-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-
-        .avatar-box {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--accent);
-            margin: 0 auto 15px;
-            overflow: hidden;
-            background: #222;
-        }
-
-        .avatar-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%);
-            transition: 0.4s;
-        }
-
-        .admin-card:hover .avatar-box img {
-            filter: grayscale(0%);
-            transform: scale(1.1);
-        }
-
-        .admin-name {
-            font-weight: 900;
-            text-transform: uppercase;
-            font-style: italic;
-            font-size: 1.1rem;
-        }
-
-        .admin-role {
-            color: var(--accent);
-            font-size: 0.65rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* --- MODAL --- */
-        #modalOverlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(15px);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-body {
-            background: #0f0f0f;
-            border: 1px solid var(--accent);
-            width: 100%;
-            max-width: 500px;
-            border-radius: 30px;
-            padding: 40px;
-            position: relative;
-            text-align: center;
-        }
-
-        /* --- FORMS & BUTTONS --- */
-        .custom-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 20px;
-        }
-
-        .input-style {
-            width: 100%;
-            background: #070707;
-            border: 1px solid #222;
-            padding: 15px;
-            border-radius: 12px;
-            color: white;
-            margin-bottom: 15px;
-            outline: none;
-        }
-
-        .input-style:focus { border-color: var(--accent); }
-
-        .btn-action {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            background: var(--accent);
-            color: black;
-            font-weight: 900;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
-        .hidden { display: none; }
-    </style>
 </head>
 <body>
 
@@ -308,10 +27,10 @@
             <div class="nav-item" onclick="switchTab('rules', this)">📜 REGULAMIN</div>
             <div class="nav-item" onclick="switchTab('report', this)">🐞 ZGŁOŚ BŁĄD</div>
             
-            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #1a1a1a;">
-                <div id="loginNav" class="nav-item" style="color: var(--accent); border-color: #fbbf2433;" onclick="switchTab('login', this)">🔐 ZALOGUJ SIĘ</div>
-                <div id="adminPanelLink" class="nav-item hidden" style="color: #ff4444; border-color: #ff444433;" onclick="switchTab('adminPanel', this)">⚡ PANEL BAZY</div>
-                <div id="logoutNav" class="nav-item hidden" style="color: #ff4444; border-color: #ff444433;" onclick="userLogout()">🚪 WYLOGUJ</div>
+            <div class="nav-separator">
+                <div id="loginNav" class="nav-item nav-login" onclick="switchTab('login', this)">🔐 ZALOGUJ SIĘ</div>
+                <div id="adminPanelLink" class="nav-item nav-admin hidden" onclick="switchTab('adminPanel', this)">⚡ PANEL BAZY</div>
+                <div id="logoutNav" class="nav-item nav-logout hidden" onclick="userLogout()">🚪 WYLOGUJ</div>
             </div>
         </nav>
     </aside>
@@ -319,19 +38,19 @@
     <main class="main-wrapper">
         <header class="section-header flex justify-between items-end">
             <div>
-                <h4 class="text-gray-500 text-[10px] uppercase font-bold tracking-[0.3em]">System Operacyjny v2.9.2 (Global Build)</h4>
-                <h2 class="text-4xl font-black uppercase tracking-tighter">Witaj, <span id="userNameDisplay" class="text-yellow-400">Gość</span></h2>
+                <h4 class="header-tag">System Operacyjny v2.9.2 (Global Build)</h4>
+                <h2 class="header-title">Witaj, <span id="userNameDisplay">Gość</span></h2>
             </div>
-            <div id="liveDate" class="text-gray-600 font-mono text-xs uppercase"></div>
+            <div id="liveDate" class="live-date"></div>
         </header>
 
         <section id="home" class="tab-content active">
-            <div class="custom-card border-l-4 border-yellow-400">
-                <h2 class="text-2xl font-black mb-4 uppercase italic">Komunikat Systemowy</h2>
-                <div class="space-y-4 text-gray-400 leading-relaxed">
+            <div class="custom-card border-accent-l">
+                <h2 class="section-title">Komunikat Systemowy</h2>
+                <div class="content-text">
                     <p>Witamy w wersji 2.9. Skonfigurowano pełną synchronizację z Firebase Realtime Database. Wszystkie dane są teraz permanentne i dostępne globalnie.</p>
-                    <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
-                        <h4 class="text-white font-bold text-sm mb-1">Status: <span class="text-green-500">POŁĄCZONO Z CHMURĄ</span></h4>
+                    <div class="status-box">
+                        <h4 class="status-title">Status: <span class="text-green-500">POŁĄCZONO Z CHMURĄ</span></h4>
                         <p class="text-xs">Moduł mapy oraz moduł administratora zostały pomyślnie zintegrowane.</p>
                     </div>
                 </div>
@@ -340,41 +59,37 @@
 
         <section id="about" class="tab-content">
             <div class="custom-card">
-                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">PrimeRP: Emergency Hamburg</h2>
-                <div class="space-y-6 text-gray-300">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-6 bg-yellow-400/10 border border-yellow-400/20 rounded-2xl text-center">
-                            <h4 class="text-yellow-400 font-black text-xs uppercase mb-2">Kod Serwera</h4>
-                            <p class="text-4xl font-black text-white">10cap1up</p>
-                        </div>
-                        <div class="p-6 bg-blue-600/10 border border-blue-600/20 rounded-2xl text-center">
-                            <h4 class="text-blue-400 font-black text-xs uppercase mb-2">Discord</h4>
-                            <p class="text-xl font-bold italic">Wkrótce...</p>
-                        </div>
+                <h2 class="section-title-yellow">PrimeRP: Emergency Hamburg</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="info-box-yellow">
+                        <h4 class="info-tag">Kod Serwera</h4>
+                        <p class="info-val">10cap1up</p>
                     </div>
-                    <p>Nasz serwer stawia na bezkompromisowy realizm i najwyższą kulturę gry Roleplay.</p>
+                    <div class="info-box-blue">
+                        <h4 class="info-tag">Discord</h4>
+                        <p class="info-val-sm">Wkrótce...</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="map" class="tab-content">
-            <h2 class="text-2xl font-black text-yellow-400 mb-6 uppercase italic">Topografia Miasta Hamburg</h2>
+            <h2 class="section-title-yellow italic">Topografia Miasta Hamburg</h2>
             <div class="map-wrapper">
                 <img src="https://i.postimg.cc/85M0L1Gf/mapa-hamburg.jpg" class="map-img" alt="Mapa">
                 <div class="map-overlay-info">Tryb taktyczny: aktywny</div>
             </div>
-            <p class="text-gray-500 text-[10px] mt-4 uppercase font-bold tracking-widest text-center">Użyj kursora, aby przybliżyć wybrany sektor</p>
         </section>
 
         <section id="staff" class="tab-content">
-            <h2 class="text-2xl font-black text-yellow-400 mb-8 uppercase italic tracking-widest">Zespół Administracyjny</h2>
+            <h2 class="section-title-yellow italic tracking-widest">Zespół Administracyjny</h2>
             <div id="staffContainer" class="admin-grid"></div>
         </section>
 
         <section id="rules" class="tab-content">
             <div class="custom-card">
-                <h2 class="text-3xl font-black text-yellow-400 mb-8 uppercase italic">Zasady Ogólne</h2>
-                <div class="space-y-4 text-gray-400 h-[400px] overflow-y-auto pr-4">
+                <h2 class="section-title-yellow italic">Zasady Ogólne</h2>
+                <div class="rules-container">
                     <p><b>§1.</b> Każdy gracz musi posiadać sprawny mikrofon.</p>
                     <p><b>§2.</b> Zakaz opuszczania gry podczas akcji (Combat Log).</p>
                     <p><b>§3.</b> Szacunek do innych graczy jest priorytetem.</p>
@@ -383,17 +98,17 @@
         </section>
 
         <section id="report" class="tab-content">
-            <div class="custom-card max-w-2xl mx-auto border-t-4 border-red-600">
-                <h2 class="text-2xl font-black mb-6 uppercase">Centrum Zgłoszeń</h2>
+            <div class="custom-card-report">
+                <h2 class="section-title uppercase">Centrum Zgłoszeń</h2>
                 <input id="reportTitle" type="text" placeholder="Temat (np. Błąd mapy)" class="input-style">
                 <textarea id="reportContent" placeholder="Dokładny opis zdarzenia..." class="input-style h-48 resize-none"></textarea>
-                <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Prześlij do Administracji</button>
+                <button onclick="submitReport()" class="btn-action btn-red">Prześlij do Administracji</button>
             </div>
         </section>
 
         <section id="login" class="tab-content">
-            <div class="max-w-md mx-auto custom-card mt-10">
-                <h2 class="text-2xl font-black text-center mb-8 italic uppercase">System Autoryzacji</h2>
+            <div class="login-container">
+                <h2 class="login-title">System Autoryzacji</h2>
                 <input id="authLogin" type="text" placeholder="LOGIN" class="input-style">
                 <input id="authPass" type="password" placeholder="HASŁO" class="input-style">
                 <button onclick="handleLogin()" class="btn-action">Zaloguj się</button>
@@ -402,15 +117,15 @@
 
         <section id="adminPanel" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="custom-card border-t-4 border-green-500">
-                    <h3 class="text-xl font-bold mb-6 uppercase">Rejestracja Obywatela</h3>
+                <div class="custom-card border-green">
+                    <h3 class="panel-subtitle">Rejestracja Obywatela</h3>
                     <input id="dbUser" type="text" placeholder="Nowy login" class="input-style">
                     <input id="dbPass" type="password" placeholder="Nowe hasło" class="input-style">
-                    <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Dodaj do Bazy Chmurowej</button>
+                    <button onclick="dbAddUser()" class="btn-action btn-green">Dodaj do Bazy Chmurowej</button>
                 </div>
                 <div class="custom-card">
-                    <h3 class="text-xl font-bold mb-6 uppercase">Aktywne Konta (Live)</h3>
-                    <div id="dbUserList" class="space-y-2 max-h-[400px] overflow-y-auto"></div>
+                    <h3 class="panel-subtitle">Aktywne Konta (Live)</h3>
+                    <div id="dbUserList" class="user-list-scroll"></div>
                 </div>
             </div>
         </section>
@@ -418,161 +133,16 @@
 
     <div id="modalOverlay">
         <div class="modal-body">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-500 text-2xl hover:text-white transition">✕</button>
-            <div class="avatar-box" style="width: 120px; height: 120px;"><img id="mImg" src=""></div>
-            <h2 id="mName" class="text-3xl font-black uppercase italic mb-1"></h2>
-            <p id="mRole" class="text-yellow-400 font-bold tracking-widest text-xs uppercase mb-6"></p>
-            <p id="mDesc" class="text-gray-400 text-sm italic mb-8 px-4"></p>
-            <button onclick="alert('Funkcja kontaktu będzie dostępna w v3.0')" class="btn-action">Profil Discord</button>
+            <button onclick="closeModal()" class="modal-close">✕</button>
+            <div class="modal-avatar"><img id="mImg" src=""></div>
+            <h2 id="mName" class="modal-name"></h2>
+            <p id="mRole" class="modal-role"></p>
+            <p id="mDesc" class="modal-desc"></p>
+            <button onclick="alert('Profil Discord wkrótce')" class="btn-action">Profil Discord</button>
         </div>
     </div>
 
-    <script>
-        // --- TWOJA KONFIGURACJA FIREBASE ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyBlB9Wsg8lcJ5f0DrMe25106wtVjTCNsSc",
-            authDomain: "primerp-system.firebaseapp.com",
-            databaseURL: "https://primerp-system-default-rtdb.firebaseio.com",
-            projectId: "primerp-system",
-            storageBucket: "primerp-system.firebasestorage.app",
-            messagingSenderId: "996732664209",
-            appId: "1:996732664209:web:0eb1921ecf18faa1c0c230",
-            measurementId: "G-KSL5KFHHCZ"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        // Pełny Staff (15 osób)
-        const staffData = [
-            { name: "! KUBA", role: "Owner / Lead Dev", desc: "Twórca systemów PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Zarządzanie projektem.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MAREK", role: "Head Admin", desc: "Opiekun serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PIOTR", role: "Admin", desc: "Moderacja serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ADAM", role: "Admin", desc: "Technik.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "NATALIA", role: "Support", desc: "Pomoc graczom.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "SZYMON", role: "Support", desc: "Moderator Discord.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "OLAF", role: "Moderator RP", desc: "Strażnik realizmu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KASIA", role: "Moderator RP", desc: "Opiekun Frakcji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "DARIUSZ", role: "Events", desc: "Organizator akcji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "TOMEK", role: "Helper", desc: "Pomoc techniczna.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MICHAŁ", role: "Helper", desc: "Wsparcie ticketów.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PAWEŁ", role: "Trial Helper", desc: "Rekrut.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ŁUKASZ", role: "Trial Helper", desc: "Rekrut.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "VIPER", role: "Dev Support", desc: "Wsparcie bazy danych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
-        ];
-
-        let usersInDatabase = {};
-
-        // Słuchacz bazy Firebase (Live)
-        db.ref('users').on('value', (snapshot) => {
-            usersInDatabase = snapshot.val() || {};
-            renderDBUsers();
-        });
-
-        function renderDBUsers() {
-            const list = document.getElementById('dbUserList');
-            list.innerHTML = Object.keys(usersInDatabase).map(id => `
-                <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-gray-800">
-                    <span class="font-bold text-sm text-yellow-500">${usersInDatabase[id].user}</span>
-                    <button onclick="dbDeleteUser('${id}')" class="text-red-600 text-[10px] font-black uppercase hover:scale-125 transition">Usuń</button>
-                </div>
-            `).join('');
-        }
-
-        function dbAddUser() {
-            const u = document.getElementById('dbUser').value;
-            const p = document.getElementById('dbPass').value;
-            if(!u || !p) return alert("Uzupełnij pola!");
-            db.ref('users').push({ user: u, pass: p });
-            document.getElementById('dbUser').value = "";
-            document.getElementById('dbPass').value = "";
-            alert("Dodano pomyślnie!");
-        }
-
-        function dbDeleteUser(id) {
-            if(confirm("Czy na pewno chcesz usunąć to konto na stałe?")) {
-                db.ref('users/' + id).remove();
-            }
-        }
-
-        function handleLogin() {
-            const l = document.getElementById('authLogin').value;
-            const p = document.getElementById('authPass').value;
-            
-            if(l === 'admin' && p === '1234') return loginSuccess("ADMINISTRATOR", true);
-            
-            const usersArray = Object.values(usersInDatabase);
-            const found = usersArray.find(u => u.user === l && u.pass === p);
-            
-            if(found) loginSuccess(found.user, false);
-            else alert("Błędny login lub hasło!");
-        }
-
-        function loginSuccess(name, isAdmin) {
-            document.getElementById('userNameDisplay').innerText = name;
-            document.getElementById('loginNav').classList.add('hidden');
-            document.getElementById('logoutNav').classList.remove('hidden');
-            if(isAdmin) document.getElementById('adminPanelLink').classList.remove('hidden');
-            switchTab('home', document.querySelector('.nav-item'));
-        }
-
-        function switchTab(id, el) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(el) el.classList.add('active');
-        }
-
-        function renderStaff() {
-            const container = document.getElementById('staffContainer');
-            container.innerHTML = staffData.map(s => `
-                <div class="admin-card" onclick="openModal('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
-                    <div class="avatar-box"><img src="${s.img}"></div>
-                    <div class="admin-name">${s.name}</div>
-                    <div class="admin-role">${s.role}</div>
-                </div>
-            `).join('');
-        }
-
-        function openModal(n, r, i, d) {
-            document.getElementById('mName').innerText = n;
-            document.getElementById('mRole').innerText = r;
-            document.getElementById('mImg').src = i;
-            document.getElementById('mDesc').innerText = d;
-            document.getElementById('modalOverlay').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
-
-        async function submitReport() {
-            const title = document.getElementById('reportTitle').value;
-            const content = document.getElementById('reportContent').value;
-            if(!title || !content) return alert("Wypełnij pola!");
-            
-            const url = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
-            const sender = document.getElementById('userNameDisplay').innerText;
-            
-            await fetch(url, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    content: `🚨 **ZGŁOSZENIE SYSTEMOWE**\n**Od:** ${sender}\n**Temat:** ${title}\n**Opis:** ${content}`
-                })
-            });
-            alert("Zgłoszenie wysłane!");
-            document.getElementById('reportTitle').value = "";
-            document.getElementById('reportContent').value = "";
-        }
-
-        function updateDate() { document.getElementById('liveDate').innerText = new Date().toLocaleString(); }
-        function userLogout() { window.location.reload(); }
-
-        window.onload = () => {
-            renderStaff();
-            updateDate();
-            setInterval(updateDate, 1000);
-        };
-    </script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
