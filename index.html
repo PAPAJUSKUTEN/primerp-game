@@ -3,421 +3,547 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | Panel Zarządzania v2.9</title>
+    <title>PrimeRP | Oficjalny System Zarządzania Projektami v2.9.4-FULL</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;800;900&display=swap');
 
         :root {
             --accent: #fbbf24;
+            --accent-hover: #f59e0b;
             --bg-dark: #050505;
+            --sidebar-bg: #0b0b0b;
             --card-bg: #0f0f0f;
-            --border: #1a1a1a;
-            --sidebar-width: 320px;
+            --border-color: #1a1a1a;
+            --text-main: #ffffff;
+            --text-dim: #666666;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) #111;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
-            color: white;
-            margin: 0;
+            color: var(--text-main);
             display: flex;
             height: 100vh;
             overflow: hidden;
-            letter-spacing: -0.02em;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- SIDEBAR FULL --- */
+        /* --- SIDEBAR DESIGN --- */
         .sidebar {
-            width: var(--sidebar-width);
-            background: #0b0b0b;
-            border-right: 1px solid var(--border);
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            padding: 45px 25px;
-            z-index: 100;
+            padding: 50px 30px;
+            z-index: 1000;
             flex-shrink: 0;
         }
 
-        .logo-container { text-align: center; margin-bottom: 60px; position: relative; }
-        .logo-main { font-size: 3rem; font-weight: 900; line-height: 0.7; letter-spacing: -4px; color: white; }
-        .logo-sub { color: var(--accent); letter-spacing: 12px; font-size: 1.1rem; margin-top: 10px; font-weight: 800; display: block; padding-left: 12px; }
+        .logo-section {
+            margin-bottom: 70px;
+            text-align: center;
+        }
 
-        .nav-menu { display: flex; flex-direction: column; gap: 12px; }
-        .nav-item {
-            padding: 18px 22px;
-            border-radius: 16px;
-            background: #111;
-            border: 1px solid #1a1a1a;
+        .logo-text-top {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 0.7;
+            letter-spacing: -5px;
+            display: block;
+        }
+
+        .logo-text-bottom {
+            color: var(--accent);
+            font-size: 1.2rem;
             font-weight: 800;
-            font-size: 0.75rem;
-            text-align: left;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 15px;
+            margin-left: 15px;
+            text-transform: uppercase;
+        }
+
+        .nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .nav-link {
+            padding: 18px 24px;
+            background: #111;
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 15px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .nav-item:hover {
+        .nav-link:hover {
             background: #161616;
-            transform: translateX(12px);
             color: white;
+            transform: translateX(12px);
             border-color: var(--accent);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
-        .nav-item.active {
+        .nav-link.active {
             background: var(--accent);
             color: black;
             border-color: var(--accent);
-            box-shadow: 0 0 25px rgba(251, 191, 36, 0.2);
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
         }
 
-        /* --- MAIN AREA --- */
-        .main-wrapper {
+        .nav-footer {
+            margin-top: auto;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .viewport {
             flex: 1;
-            padding: 50px;
             overflow-y: auto;
             position: relative;
-            background: radial-gradient(circle at 90% 10%, #1a1a1a 0%, #050505 60%);
+            background: radial-gradient(circle at 80% 20%, #151515 0%, #050505 50%);
+            padding: 60px;
         }
 
-        .section-header { 
-            margin-bottom: 50px; 
-            border-bottom: 1px solid #1a1a1a; 
-            padding-bottom: 30px;
+        .content-header {
+            margin-bottom: 60px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 40px;
         }
 
-        .tab-content { display: none; animation: slideUp 0.5s ease-out forwards; }
-        .tab-content.active { display: block; }
+        .page-title-group h4 {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
+        .page-title-group h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -3px;
+            line-height: 1;
+        }
+
+        /* --- SECTIONS --- */
+        .tab-panel {
+            display: none;
+            animation: contentFadeUp 0.6s ease-out forwards;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes contentFadeUp {
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- STAFF GRID (15 ITEMS) --- */
-        .admin-grid {
+        /* --- STAFF SYSTEM (15 MEMBERS) --- */
+        .staff-matrix {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 25px;
-            padding-bottom: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            padding-bottom: 100px;
         }
 
-        .admin-card {
-            background: linear-gradient(145deg, #0f0f0f, #151515);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 35px 25px;
+        .staff-member-card {
+            background: #0f0f0f;
+            border: 1px solid var(--border-color);
+            border-radius: 35px;
+            padding: 45px 30px;
             text-align: center;
-            transition: all 0.4s ease;
-            cursor: pointer;
+            transition: var(--transition);
             position: relative;
+            cursor: pointer;
             overflow: hidden;
         }
 
-        .admin-card::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to bottom, transparent, var(--accent));
-            opacity: 0; transition: 0.4s;
-        }
-
-        .admin-card:hover {
-            transform: translateY(-12px);
+        .staff-member-card:hover {
+            transform: translateY(-15px);
             border-color: var(--accent);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
-        .admin-card:hover::after { opacity: 0.05; }
+        .staff-member-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: var(--accent);
+            opacity: 0; transition: var(--transition);
+        }
 
-        .avatar-box {
-            width: 100px; height: 100px;
+        .staff-member-card:hover::before { opacity: 1; }
+
+        .staff-avatar-wrapper {
+            width: 110px; height: 110px;
             border-radius: 50%;
             border: 4px solid var(--accent);
-            margin: 0 auto 20px auto;
+            margin: 0 auto 25px auto;
             overflow: hidden;
             background: #222;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            position: relative; z-index: 2;
+            transition: var(--transition);
         }
 
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .admin-card:hover .avatar-box img { transform: scale(1.15); }
+        .staff-avatar-wrapper img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: 0.6s;
+        }
 
-        .admin-name { font-weight: 900; text-transform: uppercase; font-style: italic; font-size: 1.2rem; margin-bottom: 6px; letter-spacing: -0.5px; }
-        .admin-role { color: var(--accent); font-size: 0.7rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; }
+        .staff-member-card:hover .staff-avatar-wrapper img {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
 
-        /* --- MODAL SYSTEM --- */
-        #modalOverlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.98);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
+        .staff-name {
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        .staff-rank {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- UI ELEMENTS --- */
+        .glass-card {
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            padding: 50px;
+            border-radius: 40px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: #070707;
+            border: 1px solid #222;
+            padding: 22px 28px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 20px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
+        }
+
+        .action-button {
+            width: 100%;
+            padding: 22px;
+            border-radius: 20px;
+            background: var(--accent);
+            color: black;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-button:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.97);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
             display: none;
-            align-items: center; justify-content: center;
-            padding: 30px;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
         }
 
-        .modal-body {
+        .modal-content {
             background: #0f0f0f;
             border: 1px solid var(--accent);
-            width: 100%; max-width: 600px;
-            border-radius: 40px; padding: 60px;
-            position: relative; text-align: center;
-            box-shadow: 0 0 100px rgba(251, 191, 36, 0.1);
+            width: 100%;
+            max-width: 650px;
+            border-radius: 50px;
+            padding: 70px;
+            position: relative;
+            text-align: center;
         }
 
-        /* --- UI COMPONENTS --- */
-        .custom-card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            padding: 40px; 
-            border-radius: 30px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-
-        .input-style {
-            width: 100%; background: #070707; border: 1px solid #222;
-            padding: 18px 25px; border-radius: 18px; color: white; margin-bottom: 20px; 
-            outline: none; font-weight: 600; transition: 0.3s;
-        }
-
-        .input-style:focus { border-color: var(--accent); background: #0c0c0c; }
-
-        .btn-action {
-            width: 100%; padding: 20px; border-radius: 18px; background: var(--accent);
-            color: black; font-weight: 900; text-transform: uppercase; cursor: pointer; 
-            transition: all 0.3s; border: none; letter-spacing: 2px;
-        }
-
-        .btn-action:hover { transform: scale(1.02); filter: brightness(1.1); box-shadow: 0 10px 25px rgba(251, 191, 36, 0.3); }
-
-        .status-badge {
-            padding: 5px 15px; border-radius: 20px; font-size: 0.6rem; font-weight: 900; text-transform: uppercase;
-        }
-
+        /* --- UTILS --- */
         .hidden { display: none !important; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+        .text-accent { color: var(--accent); }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #050505; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <div class="logo-container">
-            <span class="logo-main">PRIME</span>
-            <span class="logo-sub">RP</span>
+        <div class="logo-section">
+            <span class="logo-text-top">PRIME</span>
+            <span class="logo-text-bottom">RP</span>
         </div>
-        
-        <nav class="nav-menu">
-            <div class="nav-item active" onclick="switchTab('home', this)"><span>📰</span> Nowości Serwerowe</div>
-            <div class="nav-item" onclick="switchTab('about', this)"><span>👥</span> Poznaj Nasz Zespół</div>
-            <div class="nav-item" onclick="switchTab('staff', this)"><span>🛡️</span> Zarząd Projektu</div>
-            <div class="nav-item" onclick="switchTab('rules', this)"><span>📜</span> Kodeks i Regulamin</div>
-            <div class="nav-item" onclick="switchTab('map', this)"><span>🗺️</span> Interaktywna Mapa</div>
-            <div class="nav-item" onclick="switchTab('report', this)"><span>🐞</span> Centrum Zgłoszeń</div>
-            
-            <div style="margin-top: auto; padding-top: 30px; border-top: 1px solid #1a1a1a;">
-                <div id="loginNav" class="nav-item" style="color: var(--accent); border-color: #fbbf2444;" onclick="switchTab('login', this)"><span>🔐</span> Autoryzacja</div>
-                <div id="adminPanelLink" class="nav-item hidden" style="color: #ff4444; border-color: #ff444444;" onclick="switchTab('adminPanel', this)"><span>⚡</span> Panel Cloud</div>
-                <div id="logoutNav" class="nav-item hidden" style="color: #ff4444; border-color: #ff444444;" onclick="userLogout()"><span>🚪</span> Wyloguj System</div>
+
+        <nav class="nav-container">
+            <div class="nav-link active" onclick="showTab('home', this)">
+                <span class="icon">📰</span> Aktualności
+            </div>
+            <div class="nav-link" onclick="showTab('about', this)">
+                <span class="icon">👥</span> Informacje
+            </div>
+            <div class="nav-link" onclick="showTab('staff', this)">
+                <span class="icon">🛡️</span> Administracja
+            </div>
+            <div class="nav-link" onclick="showTab('rules', this)">
+                <span class="icon">📜</span> Regulamin
+            </div>
+            <div class="nav-link" onclick="showTab('map', this)">
+                <span class="icon">🗺️</span> Mapa Serwera
+            </div>
+            <div class="nav-link" onclick="showTab('report', this)">
+                <span class="icon">🐞</span> Zgłoś Problem
+            </div>
+
+            <div class="nav-footer">
+                <div id="btn-login-view" class="nav-link" style="color: var(--accent); border-color: #fbbf2433;" onclick="showTab('login', this)">
+                    <span class="icon">🔐</span> System Logowania
+                </div>
+                <div id="btn-admin-view" class="nav-link hidden" style="color: #ff4444; border-color: #ff444433;" onclick="showTab('db-panel', this)">
+                    <span class="icon">⚡</span> Zarządzanie Bazą
+                </div>
+                <div id="btn-logout" class="nav-link hidden" style="color: #ff4444; border-color: #ff444433;" onclick="appLogout()">
+                    <span class="icon">🚪</span> Wyloguj się
+                </div>
             </div>
         </nav>
     </aside>
 
-    <main class="main-wrapper">
-        <header class="section-header">
-            <div>
-                <h4 class="text-gray-600 text-[11px] uppercase font-black tracking-[0.4em] mb-1">PrimeRP Management Environment v2.9.4</h4>
-                <h2 class="text-5xl font-black uppercase tracking-tighter">Witaj, <span id="userNameDisplay" class="text-yellow-400">Użytkowniku</span></h2>
+    <main class="viewport custom-scrollbar">
+        <header class="content-header">
+            <div class="page-title-group">
+                <h4 id="sub-header-text">Prime Management Cloud v2.9.4</h4>
+                <h1 id="main-header-text">System <span class="text-accent">Operacyjny</span></h1>
             </div>
             <div class="text-right">
-                <div id="liveDate" class="text-white font-black text-lg mb-1"></div>
-                <div class="status-badge bg-green-500/10 text-green-500 border border-green-500/20">System Online</div>
+                <div id="clock-display" class="font-black text-2xl tracking-tighter">00:00:00</div>
+                <div class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Połączenie Szyfrowane SSL</div>
             </div>
         </header>
 
-        <section id="home" class="tab-content active">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 custom-card border-l-8 border-yellow-400">
-                    <h2 class="text-3xl font-black mb-6 uppercase italic tracking-tighter">Komunikat Zarządu Projektu</h2>
-                    <div class="space-y-6 text-gray-400 leading-relaxed text-lg">
-                        <p>Witaj w zunifikowanym systemie PrimeRP. Ten panel służy do pełnej komunikacji między graczami a administracją. Został on zaprojektowany z myślą o maksymalnej wydajności i bezpieczeństwie Twoich danych.</p>
-                        <p>Obecnie wdrażamy system **Firebase Cloud Messaging**, który pozwoli na powiadomienia o zaakceptowanych ticketach w czasie rzeczywistym. Prosimy o regularne sprawdzanie zakładki "Nowości" w celu monitorowania postępów prac technicznych.</p>
-                        <div class="grid grid-cols-2 gap-4 mt-10">
-                            <div class="p-5 bg-black/40 rounded-2xl border border-gray-800">
-                                <span class="text-yellow-400 font-bold block text-2xl">2.9.4</span>
-                                <span class="text-[10px] uppercase text-gray-500">Wersja Stabilna</span>
-                            </div>
-                            <div class="p-5 bg-black/40 rounded-2xl border border-gray-800">
-                                <span class="text-yellow-400 font-bold block text-2xl">100%</span>
-                                <span class="text-[10px] uppercase text-gray-500">Uptime Bazy</span>
-                            </div>
+        <section id="home" class="tab-panel active">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-8 glass-card border-l-[12px] border-yellow-400">
+                    <h2 class="text-4xl font-black mb-8 uppercase italic tracking-tighter">Wiadomość Dnia</h2>
+                    <div class="space-y-6 text-gray-400 text-lg leading-relaxed">
+                        <p>Witamy w zaawansowanym panelu sterowania PrimeRP. System ten został zaprojektowany, aby umożliwić płynną interakcję między zarządem a społecznością graczy.</p>
+                        <p>W dzisiejszej aktualizacji (v2.9.4) wprowadziliśmy pełną synchronizację z bazą **Firebase Realtime Database**, co pozwala na błyskawiczne aktualizowanie uprawnień oraz statusów zgłoszeń bez konieczności odświeżania strony.</p>
+                        <div class="p-6 bg-yellow-400/5 rounded-3xl border border-yellow-400/20 mt-10">
+                            <h4 class="text-white font-bold mb-2">Status Usług:</h4>
+                            <ul class="text-sm space-y-2">
+                                <li class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Baza Kont: Online</li>
+                                <li class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Webhook Discord: Połączono</li>
+                                <li class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Mapa Live: W budowie</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="custom-card flex flex-col justify-center items-center text-center">
-                    <div class="w-24 h-24 bg-yellow-400 rounded-full flex items-center justify-center text-black text-4xl mb-6 shadow-[0_0_50px_rgba(251,191,36,0.4)]">
-                        📢
+                <div class="lg:col-span-4 flex flex-col gap-8">
+                    <div class="glass-card text-center p-10 bg-blue-600/10 border-blue-600/20">
+                        <div class="text-5xl mb-4">💬</div>
+                        <h3 class="text-xl font-black uppercase">Discord</h3>
+                        <p class="text-gray-500 text-sm mb-6">Dołącz do oficjalnej komunikacji projektu.</p>
+                        <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="action-button bg-blue-600 text-white block no-underline">Wejdź</a>
                     </div>
-                    <h3 class="text-xl font-black uppercase mb-2">Discord</h3>
-                    <p class="text-gray-500 text-sm mb-6">Dołącz do ponad 1000 graczy na naszym oficjalnym kanale.</p>
-                    <a href="#" class="btn-action bg-blue-600 text-white text-center no-underline">Dołącz Teraz</a>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="tab-content">
-            <div class="custom-card mb-8">
-                <h2 class="text-4xl font-black text-yellow-400 mb-8 uppercase italic">Misja PrimeRP</h2>
-                <div class="space-y-6 text-gray-300 text-lg">
-                    <p>PrimeRP powstało z wizji stworzenia najbardziej realistycznego serwera Emergency Hamburg w Polsce. Nasz zespół składa się z programistów, grafików oraz profesjonalnych ratowników i policjantów, którzy dbają o merytorykę rozgrywki.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-10">
-                        <div class="p-8 bg-black/60 rounded-3xl border border-gray-800">
-                            <h4 class="text-yellow-400 font-black mb-4 uppercase tracking-widest">Technologia</h4>
-                            <p class="text-sm text-gray-500">Korzystamy z autorskich skryptów i zewnętrznych baz danych Firebase, co zapewnia nam stabilność, której nie znajdziesz na innych serwerach.</p>
+        <section id="about" class="tab-panel">
+            <div class="glass-card mb-10">
+                <h2 class="text-5xl font-black text-yellow-400 mb-10 uppercase italic">O Projekcie PrimeRP</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-gray-300">
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-white border-b border-gray-800 pb-4 uppercase">Nasza Wizja</h3>
+                        <p>PrimeRP to nie jest kolejny zwykły serwer. To zaawansowana symulacja życia w środowisku Emergency Hamburg. Stawiamy na realizm, profesjonalizm frakcji oraz sprawiedliwość.</p>
+                        <p>Każdy element naszego systemu, od kodowania po regulaminy, został przemyślany przez osoby z wieloletnim doświadczeniem w świecie RolePlay.</p>
+                    </div>
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-white border-b border-gray-800 pb-4 uppercase">Dane Techniczne</h3>
+                        <div class="bg-black/40 p-6 rounded-3xl border border-gray-800">
+                            <p class="text-sm text-gray-500 uppercase tracking-widest mb-2 font-bold">Kod Gry (Hamburg)</p>
+                            <p class="text-4xl font-black text-white select-all">10cap1up</p>
                         </div>
-                        <div class="p-8 bg-black/60 rounded-3xl border border-gray-800">
-                            <h4 class="text-yellow-400 font-black mb-4 uppercase tracking-widest">Społeczność</h4>
-                            <p class="text-sm text-gray-500">Dla nas gracz nie jest tylko liczbą. Każda propozycja zmiany jest analizowana przez zarząd i poddawana pod głosowanie społeczności.</p>
+                        <div class="bg-black/40 p-6 rounded-3xl border border-gray-800">
+                            <p class="text-sm text-gray-500 uppercase tracking-widest mb-2 font-bold">Wersja Silnika</p>
+                            <p class="text-4xl font-black text-yellow-400">v2.9.4-PRO</p>
                         </div>
                     </div>
-                    <div class="p-10 bg-yellow-400/5 rounded-3xl border-2 border-dashed border-yellow-400/20 text-center">
-                        <h3 class="text-2xl font-black mb-2">Kod Serwera: <span class="text-white select-all">10cap1up</span></h3>
-                        <p class="text-gray-500 text-xs uppercase tracking-widest">Wpisz w grze Emergency Hamburg, aby dołączyć</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="staff" class="tab-panel">
+            <div class="flex justify-between items-center mb-12">
+                <h2 class="text-4xl font-black text-yellow-400 uppercase italic">Zarząd i Administracja</h2>
+                <div class="bg-white/5 px-6 py-2 rounded-full border border-white/10 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                    Aktywnych: 15 Członków
+                </div>
+            </div>
+            <div id="staff-grid-render" class="staff-matrix">
+                </div>
+        </section>
+
+        <section id="rules" class="tab-panel">
+            <div class="glass-card max-w-5xl mx-auto">
+                <h2 class="text-4xl font-black text-center mb-12 uppercase italic tracking-tighter">Kodeks Cywilny PrimeRP</h2>
+                <div class="space-y-10 h-[600px] overflow-y-auto pr-8 custom-scrollbar">
+                    <div class="p-8 bg-black/40 rounded-3xl border border-gray-800">
+                        <h3 class="text-xl font-black text-yellow-400 mb-4 uppercase">§1. Postanowienia Ogólne</h3>
+                        <p class="text-gray-400 leading-relaxed">Każdy gracz decydujący się na wejście na serwer PrimeRP automatycznie akceptuje niniejszy regulamin. Nieznajomość zasad nie zwalnia z odpowiedzialności dyscyplinarnej.</p>
+                    </div>
+                    <div class="p-8 bg-black/40 rounded-3xl border border-gray-800">
+                        <h3 class="text-xl font-black text-yellow-400 mb-4 uppercase">§2. Zasady Rozgrywki</h3>
+                        <ul class="text-gray-400 space-y-4 list-disc pl-5">
+                            <li><strong>RDM (Random Deathmatch):</strong> Absolutny zakaz atakowania bez ważnego powodu In-Character.</li>
+                            <li><strong>VDM (Vehicle Deathmatch):</strong> Zakaz używania pojazdów jako narzędzi mordu.</li>
+                            <li><strong>Combat Log:</strong> Wyjście z gry podczas akcji RolePlay karane jest banem permanentnym.</li>
+                            <li><strong>Meta Gaming:</strong> Zakaz wykorzystywania informacji zdobytych poza światem gry (np. z Discorda).</li>
+                        </ul>
+                    </div>
+                    <div class="p-8 bg-black/40 rounded-3xl border border-gray-800">
+                        <h3 class="text-xl font-black text-yellow-400 mb-4 uppercase">§3. Frakcje Mundurowe</h3>
+                        <p class="text-gray-400 leading-relaxed">Członkowie frakcji są zobowiązani do zachowania najwyższego poziomu kultury i przestrzegania procedur operacyjnych ustalonych przez Zarząd.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="staff" class="tab-content">
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-3xl font-black text-yellow-400 uppercase italic">Struktura Zarządu</h2>
-                <span class="text-gray-600 text-xs font-bold uppercase tracking-widest">15 Aktywnych Członków</span>
-            </div>
-            <div id="staffContainer" class="admin-grid">
+        <section id="map" class="tab-panel">
+            <div class="glass-card h-[600px] flex flex-col items-center justify-center border-dashed border-2 border-gray-800">
+                <div class="w-32 h-32 bg-yellow-400/10 rounded-full flex items-center justify-center mb-6 animate-pulse border border-yellow-400/20">
+                    <span class="text-5xl">📡</span>
                 </div>
-        </section>
-
-        <section id="rules" class="tab-content">
-            <div class="custom-card max-w-4xl mx-auto">
-                <h2 class="text-4xl font-black text-yellow-400 mb-10 uppercase italic text-center">Regulamin Świata PrimeRP</h2>
-                <div class="space-y-8 h-[600px] overflow-y-auto pr-6 custom-scroll text-gray-400">
-                    <div class="border-b border-gray-800 pb-6">
-                        <h3 class="text-xl font-black text-white mb-4 uppercase">§1. Zasady Ogólne</h3>
-                        <p class="mb-4">1.1. Każdy gracz zobowiązany jest do przestrzegania netykiety i kultury osobistej.</p>
-                        <p>1.2. Serwer PrimeRP jest miejscem symulacji życia - wymagamy powagi w sytuacjach RolePlay.</p>
-                    </div>
-                    <div class="border-b border-gray-800 pb-6">
-                        <h3 class="text-xl font-black text-white mb-4 uppercase">§2. Rozgrywka (In-Game)</h3>
-                        <p class="mb-2"><strong>Random Deathmatch (RDM):</strong> Zabrania się atakowania graczy bez uzasadnionego powodu fabularnego.</p>
-                        <p class="mb-2"><strong>Vehicle Deathmatch (VDM):</strong> Używanie pojazdu jako broni jest surowo wzbronione.</p>
-                        <p><strong>Combat Log:</strong> Wyjście z gry podczas akcji RP skutkuje permanentną blokadą konta.</p>
-                    </div>
-                    <div class="border-b border-gray-800 pb-6">
-                        <h3 class="text-xl font-black text-white mb-4 uppercase">§3. Frakcje i Hierarchia</h3>
-                        <p>3.1. Rozkazy wydawane przez wyższych stopniem funkcjonariuszy (LSPD/EMS) są wiążące w świecie gry.</p>
-                    </div>
-                    <p class="text-xs italic text-gray-600 pt-10">Ostatnia aktualizacja regulaminu: 05.04.2026</p>
-                </div>
+                <h2 class="text-3xl font-black uppercase mb-4">Skanowanie Sektora...</h2>
+                <p class="text-gray-500 text-center max-w-lg italic">Moduł mapy satelitarnej live jest w trakcie synchronizacji z silnikiem Emergency Hamburg. Wkrótce dostępny będzie podgląd jednostek w czasie rzeczywistym.</p>
             </div>
         </section>
 
-        <section id="map" class="tab-content">
-            <div class="custom-card h-[600px] flex flex-col items-center justify-center border-dashed border-2 border-gray-800">
-                <div class="w-32 h-32 bg-gray-900 rounded-full flex items-center justify-center mb-6 animate-pulse">
-                    <span class="text-5xl">📍</span>
+        <section id="report" class="tab-panel">
+            <div class="max-w-3xl mx-auto glass-card border-t-8 border-red-600">
+                <h2 class="text-3xl font-black mb-10 uppercase italic">Centrum Zgłoszeń (Secure)</h2>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <input id="rep-nick" type="text" placeholder="Twój Nick In-Game" class="form-input">
+                    <select id="rep-type" class="form-input">
+                        <option>Błąd Techniczny</option>
+                        <option>Skarga na gracza</option>
+                        <option>Pytanie do Administracji</option>
+                    </select>
                 </div>
-                <h2 class="text-3xl font-black text-white uppercase mb-2">Skanowanie Terenu...</h2>
-                <p class="text-gray-500 max-w-md text-center italic">Mapa interaktywna jest obecnie synchronizowana z API gry. Funkcja ta pozwoli na podgląd zgłoszeń 911 w czasie rzeczywistym bezpośrednio z przeglądarki.</p>
+                <input id="rep-title" type="text" placeholder="Temat zgłoszenia" class="form-input">
+                <textarea id="rep-body" placeholder="Opisz sytuację szczegółowo..." class="form-input h-48 resize-none"></textarea>
+                <button onclick="sendReport()" class="action-button bg-red-600 text-white font-black">Prześlij Zgłoszenie</button>
             </div>
         </section>
 
-        <section id="report" class="tab-content">
-            <div class="max-w-3xl mx-auto">
-                <div class="custom-card border-t-8 border-red-600">
-                    <h2 class="text-3xl font-black mb-8 uppercase italic">Centrum Pomocy Technicznej</h2>
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <select id="reportType" class="input-style">
-                            <option>Błąd Skryptu</option>
-                            <option>Skarga na Gracza</option>
-                            <option>Skarga na Admina</option>
-                            <option>Propozycja</option>
-                        </select>
-                        <input id="reportNick" type="text" placeholder="Twój Nick w Grze" class="input-style">
-                    </div>
-                    <input id="reportTitle" type="text" placeholder="Krótki temat zgłoszenia" class="input-style">
-                    <textarea id="reportContent" placeholder="Opisz dokładnie sytuację (data, godzina, świadkowie)..." class="input-style h-48 resize-none"></textarea>
-                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Wyślij Zgłoszenie do Bazy</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="login" class="tab-content">
-            <div class="max-w-md mx-auto custom-card mt-20 text-center">
+        <section id="login" class="tab-panel">
+            <div class="max-w-md mx-auto glass-card mt-20 text-center">
                 <div class="mb-10">
-                    <div class="text-6xl mb-4">🛡️</div>
-                    <h2 class="text-3xl font-black italic uppercase">Baza Danych</h2>
-                    <p class="text-gray-500 text-xs tracking-widest uppercase">Dostęp Autoryzowany</p>
+                    <div class="text-6xl mb-6">🔑</div>
+                    <h2 class="text-3xl font-black uppercase italic tracking-tighter">Baza Danych</h2>
+                    <p class="text-gray-500 text-[10px] font-bold uppercase tracking-[0.3em]">Autoryzowany Dostęp PrimeRP</p>
                 </div>
-                <input id="authLogin" type="text" placeholder="IDENTYFIKATOR" class="input-style text-center">
-                <input id="authPass" type="password" placeholder="HASŁO DOSTĘPU" class="input-style text-center">
-                <button onclick="handleLogin()" class="btn-action">Rozpocznij Sesję</button>
+                <input id="auth-user" type="text" placeholder="LOGIN" class="form-input text-center uppercase tracking-widest">
+                <input id="auth-pass" type="password" placeholder="HASŁO" class="form-input text-center uppercase tracking-widest">
+                <button onclick="handleAuth()" class="action-button">Inicjuj Sesję</button>
             </div>
         </section>
 
-        <section id="adminPanel" class="tab-content">
+        <section id="db-panel" class="tab-panel">
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-10">
-                <div class="custom-card border-t-8 border-green-500">
-                    <h3 class="text-2xl font-black mb-8 uppercase tracking-tighter">Zarządzanie Kontami (Cloud)</h3>
-                    <div class="space-y-4">
-                        <input id="dbUser" type="text" placeholder="Nowy Login" class="input-style">
-                        <input id="dbPass" type="password" placeholder="Nowe Hasło" class="input-style">
-                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white font-black">Utwórz Konto w Chmurze</button>
-                    </div>
+                <div class="glass-card border-t-8 border-green-500">
+                    <h3 class="text-2xl font-black mb-8 uppercase italic">Utwórz Nowe Konto</h3>
+                    <input id="new-user" type="text" placeholder="Login użytkownika" class="form-input">
+                    <input id="new-pass" type="password" placeholder="Hasło użytkownika" class="form-input">
+                    <button onclick="cloudAddUser()" class="action-button bg-green-600 text-white">Dodaj do Firebase</button>
                 </div>
-                <div class="custom-card bg-black/40">
-                    <h3 class="text-2xl font-black mb-8 uppercase tracking-tighter">Lista Użytkowników</h3>
-                    <div id="dbUserList" class="space-y-3 max-h-[500px] overflow-y-auto pr-4">
+                <div class="glass-card">
+                    <h3 class="text-2xl font-black mb-8 uppercase italic">Zarejestrowane Konta</h3>
+                    <div id="render-db-list" class="space-y-4 max-h-[450px] overflow-y-auto pr-4 custom-scrollbar">
                         </div>
                 </div>
             </div>
         </section>
+
     </main>
 
-    <div id="modalOverlay">
-        <div class="modal-body">
-            <button onclick="closeModal()" class="absolute top-8 right-8 text-gray-600 text-3xl hover:text-white transition">✕</button>
-            <div class="avatar-box" style="width: 150px; height: 150px;"><img id="mImg" src=""></div>
-            <h2 id="mName" class="text-4xl font-black uppercase italic mb-2 tracking-tighter"></h2>
-            <p id="mRole" class="text-yellow-400 font-black tracking-[0.3em] text-sm uppercase mb-8"></p>
-            <div class="bg-black/40 p-8 rounded-3xl border border-gray-800 mb-8">
-                <p id="mDesc" class="text-gray-400 leading-relaxed italic"></p>
+    <div id="modal-system" class="modal-overlay" onclick="closeAppModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button onclick="closeAppModal(null)" class="absolute top-10 right-10 text-gray-500 hover:text-white transition text-3xl">✕</button>
+            <div class="staff-avatar-wrapper" style="width: 160px; height: 160px;">
+                <img id="mod-img" src="">
             </div>
-            
-            <div id="msgForm" class="hidden animate-fadeIn">
-                <textarea id="mText" placeholder="Napisz prywatną wiadomość..." class="input-style h-40"></textarea>
-                <button onclick="sendWebhookMessage()" class="btn-action">Wyślij przez SecureLink</button>
+            <h2 id="mod-name" class="text-4xl font-black uppercase italic mb-2 tracking-tighter"></h2>
+            <p id="mod-rank" class="text-yellow-400 font-black tracking-[0.4em] text-sm uppercase mb-10"></p>
+            <div class="bg-black/50 p-8 rounded-3xl border border-gray-800 mb-10">
+                <p id="mod-desc" class="text-gray-400 leading-relaxed italic text-lg"></p>
             </div>
-            <button id="msgTrigger" onclick="toggleMsgInput()" class="btn-action bg-white/5 border border-white/10 text-white">Wyślij Wiadomość</button>
+            <div id="mod-msg-box" class="hidden">
+                <textarea id="mod-msg-input" placeholder="Wpisz treść wiadomości..." class="form-input h-32"></textarea>
+                <button onclick="sendPrivateWebhook()" class="action-button">Wyślij Wiadomość</button>
+            </div>
+            <button id="mod-msg-btn" onclick="toggleMsgInput()" class="action-button bg-white/5 border border-white/10 text-white">Napisz Wiadomość</button>
         </div>
     </div>
 
     <script>
-        // PEŁNA KONFIGURACJA FIREBASE
+        // --- 1. FIREBASE INITIALIZATION ---
         const firebaseConfig = {
             apiKey: "AIzaSyBlB9Wsg8lcJ5f0DrMe25106wtVjTCNsSc",
             authDomain: "primerp-system.firebaseapp.com",
@@ -428,154 +554,185 @@
             appId: "1:996732664209:web:0eb1921ecf18faa1c0c230"
         };
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        const cloudDb = firebase.database();
 
-        // LISTA 15 OSOB Z PEŁNYMI OPISAMI
-        const staffData = [
-            { name: "! KUBA", role: "Owner / Lead Dev", desc: "Główny wizjoner projektu PrimeRP. Odpowiada za architekturę bazy danych i systemy backendowe.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Zarządza finansami i relacjami zewnętrznymi. Najważniejszy głos w sprawach partnerstw.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MAREK", role: "Head Admin", desc: "Nadzoruje pracę całej ekipy. Decyduje o awansach i karach dla moderatorów.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PIOTR", role: "Administrator", desc: "Specjalista od regulaminu. Rozstrzyga najtrudniejsze spory między graczami.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ADAM", role: "Administrator", desc: "Zajmuje się optymalizacją mapy i balansem ekonomii na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "NATALIA", role: "Support Team", desc: "Opiekunka społeczności. Organizuje rekrutacje i szkoli nowych helperów.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "SZYMON", role: "Support Team", desc: "Moderator platformy Discord i ticketów technicznych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "OLAF", role: "Moderator RP", desc: "Czuwa nad poziomem RolePlay we frakcjach mundurowych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KASIA", role: "Moderator RP", desc: "Zajmuje się nadzorem nad frakcją medyczną i zdarzeniami losowymi.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "DARIUSZ", role: "Events Manager", desc: "Twórca scenariuszy do eventów globalnych i napadów.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "TOMEK", role: "Helper", desc: "Członek ekipy wspierający graczy bezpośrednio na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MICHAŁ", role: "Helper", desc: "Odpowiada za sprawdzanie czystości rozgrywki i zgłoszeń o cheaterach.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PAWEŁ", role: "Trial Helper", desc: "Członek ekipy na okresie próbnym, wykazujący się dużą aktywnością.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ŁUKASZ", role: "Trial Helper", desc: "Wspiera administrację w codziennych obowiązkach technicznych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "VIPER", role: "Technical Staff", desc: "Legenda projektu. Pomaga przy najbardziej skomplikowanych błędach kodu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+        // --- 2. STAFF DATA (15 MEMBERS) ---
+        const fullStaffList = [
+            { name: "! KUBA", rank: "Founder / Lead Developer", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Założyciel PrimeRP. Główny architekt systemów technicznych i właściciel projektu." },
+            { name: "KAMIL", rank: "Co-Founder", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Współwłaściciel projektu. Odpowiada za relacje ze społecznością i sprawy biznesowe." },
+            { name: "MAREK", rank: "Head Admin", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Szef kadry administracyjnej. Nadzoruje pracę wszystkich moderatorów i administratorów." },
+            { name: "PIOTR", rank: "Administrator", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Zarządza sprawami bieżącymi serwera i rozstrzyga najtrudniejsze spory RP." },
+            { name: "ADAM", rank: "Administrator", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Zajmuje się optymalizacją serwera i balansem frakcji mundurowych." },
+            { name: "NATALIA", rank: "Support Lead", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Kierownik działu wsparcia. Opiekuje się nowymi członkami ekipy i rekrutacją." },
+            { name: "SZYMON", rank: "Senior Support", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Doświadczony członek supportu, specjalista od spraw trudnych na Discordzie." },
+            { name: "OLAF", rank: "Moderator", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Pilnuje porządku bezpośrednio na serwerze i weryfikuje zgłoszenia graczy." },
+            { name: "KASIA", rank: "Moderator", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Opiekunka frakcji medycznej i wydarzeń fabularnych na serwerze." },
+            { name: "DARIUSZ", rank: "Moderator", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Moderator globalny, zajmuje się czystością rozgrywki i banowaniem cheaterów." },
+            { name: "TOMEK", rank: "Helper", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Pomocnik serwerowy. Zawsze chętny do wyjaśnienia zasad nowym graczom." },
+            { name: "MICHAŁ", rank: "Helper", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Wspiera administrację w codziennych obowiązkach i testowaniu nowych funkcji." },
+            { name: "PAWEŁ", rank: "Helper", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Członek ekipy na okresie próbnym, dbający o kulturę na serwerze." },
+            { name: "ŁUKASZ", rank: "Trial Helper", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Uczy się procedur administracyjnych i pomaga przy prostych ticketach." },
+            { name: "VIPER", rank: "Dev Ops", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Legenda techniczna projektu. Wspiera Ownera przy najbardziej zawiłych błędach." }
         ];
 
-        let cloudUsers = {};
-        db.ref('users').on('value', snap => {
-            cloudUsers = snap.val() || {};
-            renderDBUsers();
-        });
+        // --- 3. STATE MANAGEMENT ---
+        let currentUsersData = {};
+        let activeAdminName = "";
 
-        function updateDate() { 
+        // --- 4. CORE FUNCTIONS ---
+
+        function updateClock() {
             const now = new Date();
-            document.getElementById('liveDate').innerText = now.toLocaleDateString() + ' | ' + now.toLocaleTimeString(); 
+            document.getElementById('clock-display').innerText = now.toLocaleTimeString('pl-PL', { hour12: false });
         }
-        setInterval(updateDate, 1000);
+        setInterval(updateClock, 1000);
 
-        function switchTab(id, el) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
+        function showTab(tabId, element) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+            
+            // Auto scroll to top
+            document.querySelector('.viewport').scrollTop = 0;
         }
 
         function renderStaff() {
-            document.getElementById('staffContainer').innerHTML = staffData.map(s => `
-                <div class="admin-card" onclick="openModal('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
-                    <div class="avatar-box"><img src="${s.img}"></div>
-                    <div class="admin-name">${s.name}</div>
-                    <div class="admin-role">${s.role}</div>
+            const container = document.getElementById('staff-grid-render');
+            container.innerHTML = fullStaffList.map(s => `
+                <div class="staff-member-card" onclick="openAppModal('${s.name}', '${s.rank}', '${s.img}', '${s.desc}')">
+                    <div class="staff-avatar-wrapper">
+                        <img src="${s.img}" alt="${s.name}">
+                    </div>
+                    <div class="staff-name">${s.name}</div>
+                    <div class="staff-rank">${s.rank}</div>
                 </div>
             `).join('');
         }
 
-        function openModal(n, r, i, d) {
-            document.getElementById('mName').innerText = n;
-            document.getElementById('mRole').innerText = r;
-            document.getElementById('mImg').src = i;
-            document.getElementById('mDesc').innerText = d;
-            document.getElementById('msgForm').classList.add('hidden');
-            document.getElementById('msgTrigger').classList.remove('hidden');
-            document.getElementById('modalOverlay').style.display = 'flex';
+        function openAppModal(name, rank, img, desc) {
+            activeAdminName = name;
+            document.getElementById('mod-name').innerText = name;
+            document.getElementById('mod-rank').innerText = rank;
+            document.getElementById('mod-img').src = img;
+            document.getElementById('mod-desc').innerText = desc;
+            
+            document.getElementById('mod-msg-box').classList.add('hidden');
+            document.getElementById('mod-msg-btn').classList.remove('hidden');
+            document.getElementById('modal-system').style.display = 'flex';
         }
 
-        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+        function closeAppModal(e) {
+            document.getElementById('modal-system').style.display = 'none';
+        }
+
         function toggleMsgInput() {
-            document.getElementById('msgForm').classList.toggle('hidden');
-            document.getElementById('msgTrigger').classList.toggle('hidden');
+            document.getElementById('mod-msg-box').classList.toggle('hidden');
+            document.getElementById('mod-msg-btn').classList.toggle('hidden');
         }
 
-        async function handleLogin() {
-            const l = document.getElementById('authLogin').value;
-            const p = document.getElementById('authPass').value;
-            if(l === 'admin' && p === '1234') loginSuccess("ROOT_ADMIN", true);
-            else {
-                const found = Object.values(cloudUsers).find(u => u.user === l && u.pass === p);
-                if(found) loginSuccess(found.user, false);
-                else alert("DOSTĘP ZABRONIONY: Błędne poświadczenia!");
+        // --- 5. CLOUD & AUTH LOGIC ---
+
+        cloudDb.ref('users').on('value', snapshot => {
+            currentUsersData = snapshot.val() || {};
+            renderCloudUsersList();
+        });
+
+        async function handleAuth() {
+            const u = document.getElementById('auth-user').value;
+            const p = document.getElementById('auth-pass').value;
+
+            if (u === 'admin' && p === '1234') {
+                finalizeLogin("Zarządca_Root", true);
+            } else {
+                const userMatch = Object.values(currentUsersData).find(entry => entry.user === u && entry.pass === p);
+                if (userMatch) {
+                    finalizeLogin(userMatch.user, false);
+                } else {
+                    alert("ODMOWA DOSTĘPU: Błędne poświadczenia w bazie danych.");
+                }
             }
         }
 
-        function loginSuccess(name, isAdmin) {
-            document.getElementById('userNameDisplay').innerText = name;
-            document.getElementById('loginNav').classList.add('hidden');
-            document.getElementById('logoutNav').classList.remove('hidden');
-            if(isAdmin) document.getElementById('adminPanelLink').classList.remove('hidden');
-            switchTab('home', document.querySelector('.nav-item'));
+        function finalizeLogin(name, isRoot) {
+            document.getElementById('main-header-text').innerHTML = `Witaj, <span class="text-accent">${name}</span>`;
+            document.getElementById('btn-login-view').classList.add('hidden');
+            document.getElementById('btn-logout').classList.remove('hidden');
+            
+            if (isRoot) {
+                document.getElementById('btn-admin-view').classList.remove('hidden');
+            }
+            
+            showTab('home', document.querySelector('.nav-link'));
         }
 
-        function dbAddUser() {
-            const u = document.getElementById('dbUser').value;
-            const p = document.getElementById('dbPass').value;
-            if(!u || !p) return;
-            db.ref('users').push({user: u, pass: p});
-            document.getElementById('dbUser').value = "";
-            document.getElementById('dbPass').value = "";
-            alert("KONTO ZSYNCHRONIZOWANE Z CHMURĄ");
+        function cloudAddUser() {
+            const user = document.getElementById('new-user').value;
+            const pass = document.getElementById('new-pass').value;
+            if(!user || !pass) return alert("Wypełnij oba pola!");
+
+            cloudDb.ref('users').push({ user, pass });
+            document.getElementById('new-user').value = "";
+            document.getElementById('new-pass').value = "";
+            alert("Konto zostało dodane pomyślnie!");
         }
 
-        function renderDBUsers() {
-            const list = document.getElementById('dbUserList');
-            if(!list) return;
-            list.innerHTML = Object.keys(cloudUsers).map(id => `
-                <div class="flex justify-between items-center bg-black/60 p-5 rounded-2xl border border-gray-800 hover:border-yellow-500/50 transition">
+        function renderCloudUsersList() {
+            const listContainer = document.getElementById('render-db-list');
+            if(!listContainer) return;
+
+            listContainer.innerHTML = Object.keys(currentUsersData).map(id => `
+                <div class="flex justify-between items-center bg-black/50 p-6 rounded-2xl border border-gray-800">
                     <div>
-                        <span class="font-black text-yellow-500 block">${cloudUsers[id].user}</span>
-                        <span class="text-[10px] text-gray-600 uppercase tracking-widest">ID: ${id.substring(1,8)}</span>
+                        <span class="block font-black text-yellow-500 uppercase">${currentUsersData[id].user}</span>
+                        <span class="text-[9px] text-gray-600 uppercase font-bold">UID: ${id}</span>
                     </div>
-                    <button onclick="dbDeleteUser('${id}')" class="bg-red-600/10 text-red-600 px-4 py-2 rounded-lg font-black text-[10px] hover:bg-red-600 hover:text-white transition">USUŃ</button>
+                    <button onclick="cloudDeleteUser('${id}')" class="bg-red-600/10 text-red-600 px-4 py-2 rounded-lg font-black text-[10px] hover:bg-red-600 hover:text-white transition">Usuń</button>
                 </div>
             `).join('');
         }
 
-        function dbDeleteUser(id) {
-            if(confirm("Potwierdzasz usunięcie użytkownika z bazy danych?")) db.ref('users/' + id).remove();
+        function cloudDeleteUser(id) {
+            if(confirm("Czy na pewno chcesz usunąć tego użytkownika?")) {
+                cloudDb.ref('users/' + id).remove();
+            }
         }
 
-        async function submitReport() {
-            const t = document.getElementById('reportTitle').value;
-            const c = document.getElementById('reportContent').value;
-            const n = document.getElementById('reportNick').value;
-            const type = document.getElementById('reportType').value;
-            
+        async function sendReport() {
+            const n = document.getElementById('rep-nick').value;
+            const t = document.getElementById('rep-title').value;
+            const b = document.getElementById('rep-body').value;
+            const type = document.getElementById('rep-type').value;
+
             const hook = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
             
-            await fetch(hook, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    embeds: [{
-                        title: `🚨 NOWE ZGŁOSZENIE: ${type}`,
-                        color: 16711680,
-                        fields: [
-                            { name: "👤 Autor (RP)", value: n, inline: true },
-                            { name: "📌 Temat", value: t, inline: true },
-                            { name: "📝 Treść", value: c }
-                        ],
-                        footer: { text: "System PrimeRP | Panel Zarządzania" },
-                        timestamp: new Date()
-                    }]
-                })
-            });
-            alert("ZGŁOSZENIE ZOSTAŁO PRZESŁANE DO SYSTEMU DISCORD");
+            const payload = {
+                embeds: [{
+                    title: `🛡️ NOWE ZGŁOSZENIE: ${type}`,
+                    color: 16766720,
+                    fields: [
+                        { name: "👤 Gracz", value: n || "Nie podano", inline: true },
+                        { name: "📌 Temat", value: t || "Brak", inline: true },
+                        { name: "📝 Treść", value: b || "Brak treści" }
+                    ],
+                    timestamp: new Date()
+                }]
+            };
+
+            await fetch(hook, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+            alert("Zgłoszenie wysłane!");
         }
 
-        function userLogout() { window.location.reload(); }
+        function appLogout() {
+            window.location.reload();
+        }
 
-        window.onload = () => { 
-            renderStaff(); 
-            updateDate();
-            console.log("System PrimeRP v2.9 initialized.");
+        // --- INIT ---
+        window.onload = () => {
+            renderStaff();
+            updateClock();
         };
+
     </script>
 </body>
 </html>
