@@ -397,7 +397,7 @@
                         PrimeRP to innowacyjny serwer roleplay osadzony w fikcyjnej, mrocznej wersji Hamburg City. Naszą misją jest zapewnienie najwyższej jakości immersji poprzez zaawansowane systemy skryptowe, unikalną mapę oraz dojrzałą społeczność.
                     </p>
                     <p class="text-gray-500 leading-relaxed">
-                        Stawiamy na realizm, sprawiedliwość i ciągły rozwój. Każdy sektor mapy, każda frakcja i każdy skrypt został zaprojektowany z myślą o unikalnych historiach naszych graczy.
+                        Stawiamy na realizm, sprawiedliwość i ciągły rozwój. Każdy sektor mapy, każda frakcja i każdy skrypt został zaprojektowany z myślą o unikalnych historiach naszych graczy. Serwer oferuje unikalny system gospodarczy i frakcyjny.
                     </p>
                 </div>
                 <div class="space-y-6">
@@ -585,7 +585,10 @@
             { name: "Itzz_Stysiu", role: "Senior Mod", desc: "Doświadczony moderator polowy.", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp" },
             { name: "VGSxVexu💛", role: "Support", desc: "Pomoc graczom w sprawach technicznych.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
             { name: "Kokos", role: "Support", desc: "Nadzór nad porządkiem na Discordzie.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
-            { name: "Artur", role: "Technik", desc: "Specjalista od map i skryptów.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" }
+            { name: "Artur", role: "Technik", desc: "Specjalista od map i skryptów.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" },
+            /* NOWE PROFILE */
+            { name: "Kamil", role: "Admin", desc: "Zarządzanie eventami i wsparcie deweloperskie.", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp" },
+            { name: "Marta", role: "Support", desc: "Opieka nad nowymi graczami i WhiteList.", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" }
         ];
 
         let localAccounts = JSON.parse(localStorage.getItem('prime_sys_accounts_v29')) || [];
@@ -645,7 +648,7 @@
             await fetch("https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8", {
                 method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
             });
-            alert("Wysłano!");
+            alert("Wysłano wiadomość!");
             document.getElementById('modal-staff').style.display = 'none';
         }
 
@@ -653,11 +656,13 @@
             const s = document.getElementById('rep-subject').value;
             const b = document.getElementById('rep-body').value;
             if(!s || !b) return alert("Uzupełnij pola!");
-            const payload = { content: `🚨 **TICKET**\n**Temat:** ${s}\n**Zgłaszający:** ${document.getElementById('user-header').innerText}\n**Opis:** ${b}` };
+            const payload = { content: `🚨 **NOWE ZGŁOSZENIE**\n**Temat:** ${s}\n**Zgłaszający:** ${document.getElementById('user-header').innerText}\n**Opis:** ${b}` };
             await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
                 method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
             });
-            alert("Zgłoszono!");
+            alert("Zgłoszenie wysłane!");
+            document.getElementById('rep-subject').value = "";
+            document.getElementById('rep-body').value = "";
         }
 
         function tryLogin() {
@@ -666,7 +671,7 @@
             if(u === 'admin' && p === '1234') { loginAs("ADMINISTRATOR", true); }
             else {
                 const account = localAccounts.find(acc => acc.user === u && acc.pass === p);
-                if(account) { loginAs(u, false); } else { alert("Błąd!"); }
+                if(account) { loginAs(u, false); } else { alert("Dane nieprawidłowe!"); }
             }
         }
 
@@ -681,10 +686,12 @@
         function addUserToDB() {
             const u = document.getElementById('db-new-user').value;
             const p = document.getElementById('db-new-pass').value;
-            if(!u || !p) return;
+            if(!u || !p) return alert("Wpisz dane!");
             localAccounts.push({user: u, pass: p});
             localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
             renderDBList();
+            document.getElementById('db-new-user').value = "";
+            document.getElementById('db-new-pass').value = "";
         }
 
         function renderDBList() {
@@ -692,7 +699,7 @@
             container.innerHTML = localAccounts.map((acc, index) => `
                 <div class="flex justify-between items-center bg-black/60 p-4 rounded-xl border border-white/5">
                     <span class="text-yellow-400 font-bold">${acc.user}</span>
-                    <button onclick="removeUser(${index})" class="text-red-500 font-black text-xs">USUŃ</button>
+                    <button onclick="removeUser(${index})" class="text-red-500 font-black text-xs hover:underline">USUŃ</button>
                 </div>
             `).join('');
         }
