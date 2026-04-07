@@ -1,74 +1,248 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PrimeRP | System</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrimeRP</title>
+  <script src="https://cdn.tailwindcss.com">
+    function sendReport(){
+      const text = document.getElementById('bugText').value;
+      if(!text) return alert('Napisz treść zgłoszenia');
+
+      fetch('https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: "📢 Nowe zgłoszenie błędu:
+" + text
+        })
+      })
+      .then(()=>{
+        alert('Wysłano zgłoszenie!');
+        document.getElementById('bugText').value='';
+      })
+      .catch(()=>alert('Błąd wysyłania'));
+    }
+  </script>
 </head>
-<body>
+<body class="bg-black text-white flex">
 
-    <aside class="sidebar">
-        <div class="sidebar-brand">
-            <img src="https://i.postimg.cc/KvFkh5QV/a4324af6-1492-4782-b7b6-db9eeb0833bf-(1).webp" alt="Logo">
-            <h2>PRIME<span>RP</span></h2>
-        </div>
-        <nav class="side-nav">
-            <a href="#" class="nav-item active" data-target="dashboard"><i class="fas fa-home"></i> Start</a>
-            <a href="#" class="nav-item" data-target="urzad"><i class="fas fa-landmark"></i> Urząd</a>
-            <a href="#" class="nav-item" data-target="coming-soon"><i class="fas fa-shield-halved"></i> Admin</a>
-        </nav>
-        <div class="sidebar-footer">Sezon 2</div>
-    </aside>
+  <!-- Sidebar -->
+  <aside class="w-72 bg-[#0b0b0b] min-h-screen p-6 border-r border-gray-800">
+    <div class="mb-10">
+      <h1 class="text-3xl font-extrabold leading-none">
+        <span class="text-white">PRIME</span><br>
+        <span class="text-yellow-400">RP</span>
+      </h1>
+    </div>
 
-    <main class="main-content">
-        <section id="dashboard" class="tab-page active">
-            <div class="hero-section">
-                <h1>WITAJ W SYSTEMIE</h1>
-                <p>Zarządzaj swoją postacią i sprawdzaj aktualności serwerowe.</p>
-            </div>
+    <nav class="space-y-4">
+      <button onclick="showTab('home')" class="nav-btn">📰 NOWOŚCI</button>
+      <button onclick="showTab('about')" class="nav-btn">👥 O NAS</button>
+      <button onclick="showTab('map')" class="nav-btn">🗺️ MAPA</button>
+      <button onclick="showTab('report')" class="nav-btn">🐞 ZGŁOŚ BŁĄD</button>
+      <button onclick="showTab('rules')" class="nav-btn">📜 REGULAMIN</button>
+      <button onclick="showTab('login')" class="nav-btn">🔐 ZALOGUJ</button>
+    </nav>
+  </aside>
 
-            <div class="grid-container">
-                <div class="card" onclick="window.open('fivem://connect/TWOJE_IP', '_blank')">
-                    <i class="fas fa-play icon-yellow"></i>
-                    <h3>GRAJ</h3>
-                    <p>Połącz z serwerem FiveM</p>
-                </div>
-                <div class="card" onclick="switchTab('urzad')">
-                    <i class="fas fa-user-shield icon-yellow"></i>
-                    <h3>POSTAĆ</h3>
-                    <p>Statystyki obywatela</p>
-                </div>
-                <div class="card" onclick="window.open('https://discord.gg/TWOJE_ZAPROSZENIE', '_blank')">
-                    <i class="fab fa-discord icon-yellow"></i>
-                    <h3>DISCORD</h3>
-                    <p>Dołącz do społeczności</p>
-                </div>
-                <div class="card" onclick="switchTab('coming-soon')">
-                    <i class="fas fa-file-lines icon-yellow"></i>
-                    <h3>REGULAMIN</h3>
-                    <p>Zasady wyspy</p>
-                </div>
-            </div>
-        </section>
+  <!-- Content -->
+  <main class="flex-1 p-10">
 
-        <section id="urzad" class="tab-page">
-            <div class="hero-section">
-                <h1>URZĄD MIASTA</h1>
-                <p>Twoje dokumenty i uprawnienia.</p>
-            </div>
-        </section>
+    <!-- HEADER -->
+    <div class="mb-10">
+      <h2 class="text-4xl font-bold">WITAJ, <span id="playerNameTop">GOŚĆ</span></h2>
+    </div>
 
-        <section id="coming-soon" class="tab-page">
-            <div class="hero-section">
-                <h1>WKRÓTCE</h1>
-                <p>Sekcja dostępna niedługo.</p>
-            </div>
-        </section>
-    </main>
+    <!-- HOME -->
+    <section id="home" class="tab">
+      <div class="card">
+        <h2 class="text-3xl font-bold text-yellow-400 mb-3">Nowości</h2>
+        <p class="text-gray-400">Witaj na stronie PrimeRP. Sprawdź najnowsze informacje o serwerze.</p>
+      </div>
+    </section>
 
-    <script src="app.js"></script>
+    <!-- ABOUT -->
+    <section id="about" class="tab hidden">
+      <div class="card">
+        <h2 class="title">O serwerze</h2>
+        <p>PrimeRP to realistyczny serwer roleplay.</p>
+      </div>
+    </section>
+
+    <!-- MAP -->
+    <section id="map" class="tab hidden">
+      <div class="card">
+        <h2 class="title">Mapa</h2>
+        <p>Mapa serwera (wkrótce)</p>
+      </div>
+    </section>
+
+    <!-- REPORT -->
+    <section id="report" class="tab hidden">
+      <div class="card">
+        <h2 class="text-3xl font-bold text-yellow-400 mb-3">Zgłoś Błąd</h2>
+        <p class="text-gray-400 mb-4">Opisz problem poniżej i wyślij zgłoszenie.</p>
+        
+        <textarea id="bugText" placeholder="Opisz błąd..." class="input h-32 mb-4"></textarea>
+        <button onclick="sendReport()" class="btn-big">PRZEŚLIJ</button>
+      </div>
+    </section>
+
+    <!-- RULES -->
+    <section id="rules" class="tab hidden">
+      <div class="card">
+        <h2 class="title">Regulamin</h2>
+        <ul class="list-disc ml-5">
+          <li>Szanuj innych</li>
+          <li>Zakaz cheatów</li>
+          <li>RP ponad wszystko</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- LOGIN -->
+    <section id="login" class="tab hidden">
+      <div class="max-w-md mx-auto card">
+        <h2 class="title">Logowanie</h2>
+        <form id="loginForm" class="space-y-4">
+          <input id="loginUser" type="text" placeholder="Login" class="input">
+          <input id="loginPass" type="password" placeholder="Hasło" class="input">
+          <button class="btn">Zaloguj</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ADMIN PANEL -->
+    <section id="admin" class="tab hidden">
+      <div class="card">
+        <h2 class="title">Panel Admina</h2>
+
+        <h3 class="mt-4 mb-2">Dodaj konto</h3>
+        <form id="createUserForm" class="space-y-3">
+          <input id="newUser" type="text" placeholder="Login" class="input">
+          <input id="newPass" type="password" placeholder="Hasło" class="input">
+          <button class="btn">Dodaj konto</button>
+        </form>
+
+        <h3 class="mt-6 mb-2">Lista kont</h3>
+        <ul id="userList" class="space-y-2"></ul>
+      </div>
+    </section>
+
+    <!-- PLAYER PANEL -->
+    <section id="player" class="tab hidden">
+      <div class="card">
+        <h2 class="title">Panel Obywatela</h2>
+        <p>Zalogowano jako: <span id="playerName"></span></p>
+      </div>
+    </section>
+
+  </main>
+
+  <style>
+    .nav-btn {
+      display:block;
+      width:100%;
+      text-align:left;
+      padding:14px;
+      border-radius:12px;
+      background:#111;
+      border:1px solid #1f1f1f;
+      transition:0.2s;
+    }
+    .nav-btn:hover {
+      background:#1a1a1a;
+      transform:translateX(5px);
+    }
+    .card {
+      background:#0f0f0f;
+      padding:30px;
+      border-radius:25px;
+      border:1px solid #1f1f1f;
+      box-shadow:0 0 40px rgba(0,0,0,0.6);
+    }
+    .title { font-size:26px; margin-bottom:10px; }
+    .input {
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      background:#0a0a0a;
+      border:1px solid #222;
+    }
+    .btn {
+      width:100%;
+      padding:12px;
+      background:#3b82f6;
+      border-radius:10px;
+      font-weight:bold;
+    }
+    .btn-big {
+      width:100%;
+      padding:16px;
+      border-radius:15px;
+      background:linear-gradient(90deg,#6366f1,#4f46e5);
+      font-weight:bold;
+      box-shadow:0 0 20px rgba(99,102,241,0.6);
+    }
+  </style>
+
+  <script>
+    function showTab(id){
+      document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+
+    const ADMIN_LOGIN = 'admin';
+    const ADMIN_PASSWORD = '1234';
+
+    document.getElementById('loginForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const login = loginUser.value;
+      const pass = loginPass.value;
+
+      if(login === ADMIN_LOGIN && pass === ADMIN_PASSWORD){
+        showTab('admin');
+        playerNameTop.innerText = 'ADMIN';
+        renderUsers();
+        return;
+      }
+
+      const user = users.find(u=>u.login===login && u.pass===pass);
+      if(user){
+        playerName.innerText = user.login;
+        playerNameTop.innerText = user.login;
+        showTab('player');
+      } else {
+        alert('Błędne dane');
+      }
+    });
+
+    document.getElementById('createUserForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const login = newUser.value;
+      const pass = newPass.value;
+
+      users.push({login, pass});
+      localStorage.setItem('users', JSON.stringify(users));
+
+      newUser.value='';
+      newPass.value='';
+
+      renderUsers();
+    });
+
+    function renderUsers(){
+      userList.innerHTML='';
+      users.forEach(u=>{
+        const li = document.createElement('li');
+        li.innerText = u.login;
+        userList.appendChild(li);
+      });
+    }
+  </script>
+
 </body>
 </html>
