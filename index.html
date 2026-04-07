@@ -41,9 +41,28 @@
     </section>
 
     <section id="about" class="tab hidden">
-      <div class="card">
-        <h2 class="title">O serwerze</h2>
-        <p>PrimeRP to realistyczny serwer roleplay.</p>
+      <div class="card border-l-4 border-yellow-400">
+        <h2 class="text-3xl font-bold text-yellow-400 mb-6">🚨 PrimeRP – Serwer Roblox w Emergency Hamburg! 🚨</h2>
+        <p class="text-xl mb-6">Chcesz poczuć prawdziwe emocje w świecie RP? Dołącz do PrimeRP w grze Emergency Hamburg!</p>
+        
+        <ul class="space-y-4 mb-8 text-gray-300">
+          <li class="flex items-center gap-3">
+            <span class="text-yellow-400">✔</span> Twórz swoją postać i rozwijaj ją w realistycznym świecie
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-yellow-400">✔</span> Współpracuj z innymi graczami w akcjach ratunkowych i wydarzeniach
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="text-yellow-400">✔</span> Weź udział w eventach, zadaniach i codziennych przygodach
+          </li>
+        </ul>
+
+        <div class="bg-black/50 p-6 rounded-xl border border-gray-800 space-y-4">
+          <p class="text-lg">🎮 Kod do gry: <span class="font-mono text-yellow-400 font-bold bg-gray-900 px-3 py-1 rounded">10cap1up</span></p>
+          <p class="text-lg">🌐 Dołącz do serwera: <a href="#" class="text-blue-400 hover:underline font-bold italic">Kliknij tutaj</a></p>
+        </div>
+        
+        <p class="mt-8 text-center text-yellow-400 font-bold animate-pulse">Nie przegap okazji – Twoja przygoda w PrimeRP czeka!</p>
       </div>
     </section>
 
@@ -101,7 +120,6 @@
                   <button class="btn bg-green-600 hover:bg-green-700">STWÓRZ KONTO</button>
                 </form>
             </div>
-
             <div class="card">
                 <h3 class="text-xl mb-4 border-b border-gray-800 pb-2">Zarejestrowani obywatele</h3>
                 <ul id="userList" class="space-y-2 max-h-64 overflow-y-auto"></ul>
@@ -123,7 +141,6 @@
   </main>
 
   <style>
-    /* Klasa zakrywająca cały ekran dla Admina */
     .admin-full-screen {
       position: fixed;
       top: 0;
@@ -135,7 +152,6 @@
       padding: 50px;
       overflow-y: auto;
     }
-
     .nav-btn {
       display:block;
       width:100%;
@@ -207,7 +223,7 @@
     }
 
     function logout() {
-        window.location.reload(); // Najszybszy sposób na wylogowanie i powrót do stanu początkowego
+        window.location.reload();
     }
 
     let users = JSON.parse(localStorage.getItem('users') || '[]');
