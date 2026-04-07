@@ -8,7 +8,7 @@
 </head>
 <body class="bg-black text-white flex">
 
-  <aside class="w-72 bg-[#0b0b0b] min-h-screen p-6 border-r border-gray-800">
+  <aside id="sidebar" class="w-72 bg-[#0b0b0b] min-h-screen p-6 border-r border-gray-800">
     <div class="mb-10">
       <h1 class="text-3xl font-extrabold leading-none">
         <span class="text-white">PRIME</span><br>
@@ -22,13 +22,14 @@
       <button onclick="showTab('map')" class="nav-btn">🗺️ MAPA</button>
       <button onclick="showTab('report')" class="nav-btn">🐞 ZGŁOŚ BŁĄD</button>
       <button onclick="showTab('rules')" class="nav-btn">📜 REGULAMIN</button>
-      <button onclick="showTab('login')" class="nav-btn">🔐 ZALOGUJ</button>
+      <button id="loginBtnNav" onclick="showTab('login')" class="nav-btn">🔐 ZALOGUJ</button>
+      <button id="logoutBtnNav" onclick="logout()" class="nav-btn hidden bg-red-900/20 border-red-800 text-red-500">🚪 WYLOGUJ</button>
     </nav>
   </aside>
 
   <main class="flex-1 p-10">
 
-    <div class="mb-10">
+    <div id="mainHeader" class="mb-10">
       <h2 class="text-4xl font-bold">WITAJ, <span id="playerNameTop">GOŚĆ</span></h2>
     </div>
 
@@ -57,7 +58,6 @@
       <div class="card">
         <h2 class="text-3xl font-bold text-yellow-400 mb-3">Zgłoś Błąd</h2>
         <p class="text-gray-400 mb-4">Opisz problem poniżej i wyślij zgłoszenie.</p>
-        
         <textarea id="bugText" placeholder="Opisz błąd..." class="input h-32 mb-4 text-white"></textarea>
         <button onclick="sendReport()" class="btn-big">PRZEŚLIJ</button>
       </div>
@@ -85,32 +85,57 @@
       </div>
     </section>
 
-    <section id="admin" class="tab hidden">
-      <div class="card">
-        <h2 class="title">Panel Admina</h2>
+    <section id="admin" class="tab hidden admin-full-screen">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-4xl font-bold text-red-500">PANEL ADMINISTRATORA</h2>
+            <button onclick="logout()" class="bg-red-600 px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition">WYLOGUJ</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="card">
+                <h3 class="text-xl mb-4 border-b border-gray-800 pb-2">Dodaj nowe konto</h3>
+                <form id="createUserForm" class="space-y-3">
+                  <input id="newUser" type="text" placeholder="Login użytkownika" class="input">
+                  <input id="newPass" type="password" placeholder="Hasło" class="input">
+                  <button class="btn bg-green-600 hover:bg-green-700">STWÓRZ KONTO</button>
+                </form>
+            </div>
 
-        <h3 class="mt-4 mb-2">Dodaj konto</h3>
-        <form id="createUserForm" class="space-y-3">
-          <input id="newUser" type="text" placeholder="Login" class="input">
-          <input id="newPass" type="password" placeholder="Hasło" class="input">
-          <button class="btn">Dodaj konto</button>
-        </form>
-
-        <h3 class="mt-6 mb-2">Lista kont</h3>
-        <ul id="userList" class="space-y-2"></ul>
+            <div class="card">
+                <h3 class="text-xl mb-4 border-b border-gray-800 pb-2">Zarejestrowani obywatele</h3>
+                <ul id="userList" class="space-y-2 max-h-64 overflow-y-auto"></ul>
+            </div>
+        </div>
       </div>
     </section>
 
     <section id="player" class="tab hidden">
       <div class="card">
-        <h2 class="title">Panel Obywatela</h2>
-        <p>Zalogowano jako: <span id="playerName"></span></p>
+        <div class="flex justify-between items-center">
+            <h2 class="title">Panel Obywatela</h2>
+            <button onclick="logout()" class="text-sm bg-gray-800 px-4 py-1 rounded">Wyloguj</button>
+        </div>
+        <p class="mt-4">Zalogowano pomyślnie jako: <span id="playerName" class="text-yellow-400 font-bold"></span></p>
       </div>
     </section>
 
   </main>
 
   <style>
+    /* Klasa zakrywająca cały ekran dla Admina */
+    .admin-full-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #050505;
+      z-index: 9999;
+      padding: 50px;
+      overflow-y: auto;
+    }
+
     .nav-btn {
       display:block;
       width:100%;
@@ -156,20 +181,17 @@
       font-weight:bold;
       box-shadow:0 0 20px rgba(99,102,241,0.6);
     }
+    .hidden { display: none; }
   </style>
 
   <script>
-    // FUNKCJA WEBHOOKA (Przeniesiona tutaj i naprawiona)
     function sendReport() {
       const text = document.getElementById('bugText').value;
       if (!text) return alert('Napisz treść zgłoszenia');
-
       fetch('https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: "📢 **Nowe zgłoszenie błędu:**\n" + text
-        })
+        body: JSON.stringify({ content: "📢 **Nowe zgłoszenie błędu:**\n" + text })
       })
       .then(() => {
         alert('Wysłano zgłoszenie!');
@@ -180,11 +202,15 @@
 
     function showTab(id){
       document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
+      const target = document.getElementById(id);
+      if(target) target.classList.remove('hidden');
+    }
+
+    function logout() {
+        window.location.reload(); // Najszybszy sposób na wylogowanie i powrót do stanu początkowego
     }
 
     let users = JSON.parse(localStorage.getItem('users') || '[]');
-
     const ADMIN_LOGIN = 'admin';
     const ADMIN_PASSWORD = '1234';
 
@@ -196,6 +222,8 @@
       if(login === ADMIN_LOGIN && pass === ADMIN_PASSWORD){
         showTab('admin');
         document.getElementById('playerNameTop').innerText = 'ADMIN';
+        document.getElementById('loginBtnNav').classList.add('hidden');
+        document.getElementById('logoutBtnNav').classList.remove('hidden');
         renderUsers();
         return;
       }
@@ -204,6 +232,8 @@
       if(user){
         document.getElementById('playerName').innerText = user.login;
         document.getElementById('playerNameTop').innerText = user.login;
+        document.getElementById('loginBtnNav').classList.add('hidden');
+        document.getElementById('logoutBtnNav').classList.remove('hidden');
         showTab('player');
       } else {
         alert('Błędne dane');
@@ -214,13 +244,12 @@
       e.preventDefault();
       const login = document.getElementById('newUser').value;
       const pass = document.getElementById('newPass').value;
+      if(!login || !pass) return alert('Wypełnij oba pola');
 
       users.push({login, pass});
       localStorage.setItem('users', JSON.stringify(users));
-
       document.getElementById('newUser').value='';
       document.getElementById('newPass').value='';
-
       renderUsers();
     });
 
@@ -229,8 +258,8 @@
       userList.innerHTML='';
       users.forEach(u=>{
         const li = document.createElement('li');
-        li.className = "bg-gray-900 p-2 rounded border border-gray-800";
-        li.innerText = u.login;
+        li.className = "bg-black/40 p-3 rounded-xl border border-gray-800 flex justify-between";
+        li.innerHTML = `<span>👤 ${u.login}</span><span class="text-gray-600 text-xs">Użytkownik</span>`;
         userList.appendChild(li);
       });
     }
