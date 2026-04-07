@@ -19,6 +19,7 @@
     <nav class="space-y-4">
       <button onclick="showTab('home')" class="nav-btn">📰 NOWOŚCI</button>
       <button onclick="showTab('about')" class="nav-btn">👥 O NAS</button>
+      <button onclick="showTab('staff')" class="nav-btn">🛡️ ADMINISTRACJA</button>
       <button onclick="showTab('map')" class="nav-btn">🗺️ MAPA</button>
       <button onclick="showTab('report')" class="nav-btn">🐞 ZGŁOŚ BŁĄD</button>
       <button onclick="showTab('rules')" class="nav-btn">📜 REGULAMIN</button>
@@ -45,20 +46,48 @@
         <h2 class="text-3xl font-bold text-yellow-400 mb-6">🚨 PrimeRP – Serwer Roblox w Emergency Hamburg! 🚨</h2>
         <div class="space-y-6 text-gray-300 text-lg">
           <p>Chcesz poczuć prawdziwe emocje w świecie RP? Dołącz do PrimeRP w grze Emergency Hamburg!</p>
-          
           <ul class="space-y-2">
             <li>• Twórz swoją postać i rozwijaj ją w realistycznym świecie</li>
             <li>• Współpracuj z innymi graczami w akcjach ratunkowych</li>
             <li>• Weź udział w eventach i codziennych przygodach</li>
           </ul>
-
           <div class="bg-black/50 p-6 rounded-xl border border-gray-800">
             <p class="mb-2">🎮 Kod do gry: <span class="text-yellow-400 font-mono font-bold tracking-wider">10cap1up</span></p>
             <p>🌐 Dołącz do serwera: <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-blue-400 hover:text-blue-300 underline font-bold transition">Kliknij tutaj</a></p>
           </div>
-          
           <p class="text-yellow-400 font-bold italic">Nie przegap okazji – Twoja przygoda w PrimeRP czeka!</p>
         </div>
+      </div>
+    </section>
+
+    <section id="staff" class="tab hidden">
+      <h2 class="text-3xl font-bold text-yellow-400 mb-8 uppercase tracking-widest">🛡️ Zespół Administracyjny</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="card flex flex-col items-center text-center group border-t-4 border-red-500">
+          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-red-500 overflow-hidden">
+            <img src="https://via.placeholder.com/150" alt="Avatar" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-xl font-bold text-white">Nazwa_Admina_1</h3>
+          <p class="text-red-500 font-bold uppercase text-sm tracking-tighter">Właściciel</p>
+        </div>
+
+        <div class="card flex flex-col items-center text-center group border-t-4 border-blue-500">
+          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-blue-500 overflow-hidden">
+            <img src="https://via.placeholder.com/150" alt="Avatar" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-xl font-bold text-white">Nazwa_Admina_2</h3>
+          <p class="text-blue-500 font-bold uppercase text-sm tracking-tighter">Zarząd</p>
+        </div>
+
+        <div class="card flex flex-col items-center text-center group border-t-4 border-green-500">
+          <div class="w-24 h-24 bg-gray-800 rounded-full mb-4 border-2 border-green-500 overflow-hidden">
+            <img src="https://via.placeholder.com/150" alt="Avatar" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-xl font-bold text-white">Nazwa_Admina_3</h3>
+          <p class="text-green-500 font-bold uppercase text-sm tracking-tighter">Moderator</p>
+        </div>
+
       </div>
     </section>
 
@@ -81,7 +110,7 @@
     <section id="rules" class="tab hidden">
       <div class="card">
         <h2 class="title">Regulamin</h2>
-        <ul class="list-disc ml-5">
+        <ul class="list-disc ml-5 text-gray-300">
           <li>Szanuj innych</li>
           <li>Zakaz cheatów</li>
           <li>RP ponad wszystko</li>
@@ -106,7 +135,6 @@
             <h2 class="text-4xl font-bold text-red-500">PANEL ADMINISTRATORA</h2>
             <button onclick="logout()" class="bg-red-600 px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition">WYLOGUJ</button>
         </div>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="card">
                 <h3 class="text-xl mb-4 border-b border-gray-800 pb-2">Dodaj nowe konto</h3>
