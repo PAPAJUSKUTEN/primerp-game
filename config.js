@@ -9,6 +9,6 @@ const firebaseConfig = {
     measurementId: "G-KSL5KFHHCZ"
 };
 
-// Inicjalizacja
+// Inicjalizacja usług globalnych
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
