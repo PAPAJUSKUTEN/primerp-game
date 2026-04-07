@@ -18,97 +18,38 @@
       margin: 0;
     }
 
-    /* BOCZNY PASEK */
+    /* MENU BOCZNE */
     .nav-btn { 
-      display:block; 
-      width:100%; 
-      text-align:left; 
-      padding:14px; 
-      border-radius:12px; 
-      background:#111; 
-      border:1px solid #1f1f1f; 
-      transition:0.3s; 
-      font-weight: 700; 
-      font-size: 0.75rem;
-      color: white;
-      margin-bottom: 8px;
+      display:block; width:100%; text-align:left; padding:14px; border-radius:12px; 
+      background:#111; border:1px solid #1f1f1f; transition:0.3s; 
+      font-weight: 700; font-size: 0.75rem; color: white; margin-bottom: 8px; cursor: pointer;
     }
     .nav-btn:hover { background:#1a1a1a; transform:translateX(8px); color: #fbbf24; }
-    .nav-btn.active { border-color: #fbbf24; color: #fbbf24; background: #1a1a1a; }
 
-    /* KARTY ADMINÓW - KOMPAKTOWE I WYŚRODKOWANE */
+    /* KARTY ADMINÓW - IDEALNE WYŚRODKOWANIE */
     .card-admin-compact {
-      background: #0f0f0f;
-      padding: 1.25rem;
-      border-radius: 20px;
-      border: 1px solid #1a1a1a;
-      border-top: 3px solid #fbbf24;
-      display: flex;
-      flex-direction: column;
-      align-items: center; 
-      justify-content: center; 
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.25s ease-out;
+      background: #0f0f0f; padding: 1.25rem; border-radius: 20px; 
+      border: 1px solid #1a1a1a; border-top: 3px solid #fbbf24;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; 
+      text-align: center; cursor: pointer; transition: all 0.25s ease-out; min-height: 200px;
     }
-    
-    .card-admin-compact:hover { 
-      transform: scale(1.03) translateY(-3px); 
-      background: #111; 
-      border-top-width: 5px; 
-    }
+    .card-admin-compact:hover { transform: scale(1.03) translateY(-3px); background: #111; border-top-width: 5px; }
 
     .admin-avatar-container-compact {
-      width: 64px;
-      height: 64px;
-      background: #222;
-      border-radius: 50%;
-      margin-bottom: 0.75rem;
-      border: 2px solid #fbbf24;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      width: 70px; height: 70px; background: #222; border-radius: 50%; margin-bottom: 0.75rem;
+      border: 2px solid #fbbf24; overflow: hidden; display: flex; align-items: center; justify-content: center;
     }
+    .admin-img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .admin-name-compact { font-size: 0.95rem; font-weight: 900; color: white; text-transform: uppercase; font-style: italic; margin-bottom: 2px; }
+    .admin-role-compact { font-size: 0.55rem; font-weight: 900; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.1rem; margin-bottom: 8px; }
+    .admin-click-compact { font-size: 0.5rem; font-weight: 800; color: #444; text-transform: uppercase; }
 
-    .admin-img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-    }
-
-    .admin-name-compact { 
-      font-size: 0.9rem; 
-      font-weight: 900; 
-      color: white; 
-      text-transform: uppercase; 
-      font-style: italic; 
-      margin-bottom: 2px;
-    }
-
-    .admin-role-compact { 
-      font-size: 0.55rem; 
-      font-weight: 900; 
-      color: #fbbf24; 
-      text-transform: uppercase; 
-      letter-spacing: 0.1rem; 
-      margin-bottom: 8px;
-    }
-
-    .admin-click-compact { 
-      font-size: 0.5rem; 
-      font-weight: 800; 
-      color: #444; 
-      text-transform: uppercase; 
-    }
-    .card-admin-compact:hover .admin-click-compact { color: #3b82f6; }
-
-    /* UI ELEMENTS */
-    .card { background:#0f0f0f; padding: 2rem; border-radius:25px; border:1px solid #1a1a1a; }
+    /* UI */
+    .card { background:#0f0f0f; padding: 2rem; border-radius:25px; border:1px solid #1a1a1a; box-shadow:0 10px 40px rgba(0,0,0,0.5); }
     .input { width:100%; padding:12px; border-radius:12px; background:#070707; border:1px solid #222; color: white; font-size: 0.85rem; }
     .input:focus { outline: none; border-color: #fbbf24; }
-    .btn-big { width:100%; padding:1rem; border-radius:1rem; background:linear-gradient(90deg,#fbbf24,#f59e0b); color: black; font-weight:900; transition: 0.3s; }
+    .btn-big { width:100%; padding:1rem; border-radius:1rem; background:linear-gradient(90deg,#fbbf24,#f59e0b); color: black; font-weight:900; transition: 0.3s; cursor: pointer; border:none; }
     .hidden { display: none !important; }
     
     main { flex: 1; padding: 24px; overflow-y: auto; height: 100vh; position: relative; }
@@ -118,25 +59,24 @@
 <body>
 
   <div id="adminModal" class="fixed inset-0 bg-black/95 backdrop-blur-md hidden z-[10000] flex items-center justify-center p-4">
-    <div class="bg-[#0f0f0f] border border-yellow-400/50 w-full max-w-md rounded-3xl p-8 relative shadow-2xl">
+    <div class="bg-[#0f0f0f] border border-yellow-400/50 w-full max-w-md rounded-3xl p-8 relative shadow-2xl text-center">
       <button onclick="closeModal()" class="absolute top-4 right-6 text-3xl text-gray-500 hover:text-white">&times;</button>
-      <div class="flex flex-col items-center text-center">
-        <div class="w-32 h-32 bg-gray-800 rounded-full mb-6 border-4 border-yellow-400 overflow-hidden shadow-lg shadow-yellow-400/20">
-          <img id="modalImg" src="" alt="Avatar" class="w-full h-full object-cover">
-        </div>
-        <h3 id="modalName" class="text-3xl font-extrabold text-white mb-2 uppercase italic tracking-tighter"></h3>
-        <p id="modalRole" class="text-yellow-400 font-bold uppercase tracking-widest mb-6 border-b border-gray-800 pb-4 w-full"></p>
-        
-        <div id="messageForm" class="hidden space-y-3 pt-2 w-full">
-          <textarea id="adminMessageText" placeholder="Wpisz treść wiadomości..." class="input h-28 resize-none"></textarea>
-          <button onclick="sendAdminMessage()" class="w-full py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 uppercase text-xs tracking-widest">Wyślij na Discord</button>
-        </div>
-        
-        <button id="msgBtn" onclick="toggleMessageForm()" class="w-full py-3 bg-blue-600/20 border border-blue-500 text-blue-400 font-bold rounded-xl hover:bg-blue-600 hover:text-white uppercase text-xs tracking-widest">
-          ✉️ Napisz do Administratora
-        </button>
-        <button onclick="closeModal()" class="mt-6 text-gray-600 uppercase text-[10px] font-bold hover:text-gray-400 tracking-widest">Zamknij profil</button>
+      <div class="w-32 h-32 bg-gray-800 rounded-full mx-auto mb-6 border-4 border-yellow-400 overflow-hidden shadow-lg shadow-yellow-400/20">
+        <img id="modalImg" src="" alt="Avatar" class="w-full h-full object-cover">
       </div>
+      <h3 id="modalName" class="text-3xl font-extrabold text-white mb-2 uppercase italic"></h3>
+      <p id="modalRole" class="text-yellow-400 font-bold uppercase tracking-widest mb-4 border-b border-gray-800 pb-4"></p>
+      <p id="modalDesc" class="text-gray-400 text-sm italic mb-6 leading-relaxed"></p>
+      
+      <div id="messageForm" class="hidden space-y-3 pt-2 w-full">
+        <textarea id="adminMessageText" placeholder="Wpisz wiadomość..." class="input h-28 resize-none"></textarea>
+        <button onclick="sendAdminMessage()" class="w-full py-3 bg-green-600 text-white font-bold rounded-xl uppercase text-xs tracking-widest">Wyślij na Discord</button>
+      </div>
+      
+      <button id="msgBtn" onclick="toggleMessageForm()" class="w-full py-3 bg-blue-600/20 border border-blue-500 text-blue-400 font-bold rounded-xl uppercase text-xs tracking-widest">
+        ✉️ Wyślij wiadomość do Admina
+      </button>
+      <button onclick="closeModal()" class="mt-6 text-gray-600 uppercase text-[10px] font-bold hover:text-gray-400">Zamknij</button>
     </div>
   </div>
 
@@ -154,7 +94,7 @@
       
       <div class="mt-10 pt-6 border-t border-gray-900 space-y-4">
         <button id="loginBtnNav" onclick="showTab('login')" class="nav-btn border-yellow-400/20 text-yellow-400">🔐 ZALOGUJ SIĘ</button>
-        <button id="logoutBtnNav" onclick="logout()" class="nav-btn hidden text-red-500 border-red-900/20 bg-red-900/5 hover:bg-red-600 hover:text-white">🚪 WYLOGUJ</button>
+        <button id="logoutBtnNav" onclick="logout()" class="nav-btn hidden text-red-500 border-red-900/20 bg-red-900/5 hover:bg-red-600">🚪 WYLOGUJ</button>
       </div>
     </nav>
   </aside>
@@ -162,74 +102,70 @@
   <main>
     <div id="mainHeader" class="mb-6 flex justify-between items-end border-b border-gray-900 pb-4">
       <div>
-        <p class="text-gray-500 text-[10px] uppercase font-bold tracking-[0.2em] mb-1">Strefa Użytkownika</p>
+        <p class="text-gray-500 text-[10px] uppercase font-bold tracking-[0.2em] mb-1">Panel PrimeRP</p>
         <h2 class="text-3xl font-black uppercase tracking-tight">Witaj, <span id="playerNameTop" class="text-yellow-400">Gość</span></h2>
       </div>
       <div class="text-gray-600 text-xs font-mono uppercase" id="currentDate"></div>
     </div>
 
     <section id="home" class="tab">
-      <div class="card bg-gradient-to-br from-[#0f0f0f] to-[#141414] border-l-4 border-yellow-400">
-        <h2 class="text-2xl font-black text-yellow-400 mb-4 uppercase italic">Aktualności Serwerowe</h2>
-        <div class="space-y-4 text-gray-400 text-sm leading-relaxed">
-          <p>Witamy na PrimeRP. Nasza strona została zaktualizowana o nowy, kompaktowy widok administracji.</p>
-          <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/20 text-white italic">
-            Wszystkie funkcje systemu są aktywne. Miłej gry!
-          </div>
+      <div class="card border-l-4 border-yellow-400">
+        <h2 class="text-2xl font-black text-yellow-400 mb-4 uppercase italic">Aktualności</h2>
+        <p class="text-gray-400 text-sm">Witamy na oficjalnej witrynie serwera PrimeRP. Wszystkie systemy są online.</p>
+        <div class="mt-4 p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10 text-white italic text-sm">
+          🔥 Aktualizacja: Nowy wygląd kart administracji jest już dostępny!
         </div>
-      </div>
-    </section>
-
-    <section id="staff" class="tab hidden">
-      <h2 class="text-2xl font-bold text-yellow-400 mb-6 uppercase tracking-widest italic">🛡️ Zespół Zarządzający</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <script>
-          const adminInfo = { name: '! KUBA', role: 'TEST', img: 'https://i.postimg.cc/KjvhBywK/image-14.jpg' };
-          for(let i=0; i<15; i++) {
-            document.write(`
-              <div onclick="openModal('${adminInfo.name}', '${adminInfo.role}', '${adminInfo.img}')" class="card-admin-compact">
-                <div class="admin-avatar-container-compact">
-                  <img src="${adminInfo.img}" alt="Avatar" class="admin-img grayscale hover:grayscale-0 transition-all">
-                </div>
-                <h3 class="admin-name-compact">${adminInfo.name}</h3>
-                <p class="admin-role-compact">${adminInfo.role}</p>
-                <p class="admin-click-compact">KLIKNIJ BY NAPISAĆ</p>
-              </div>
-            `);
-          }
-        </script>
       </div>
     </section>
 
     <section id="about" class="tab hidden">
       <div class="card">
-        <h2 class="text-2xl font-black text-yellow-400 mb-4 uppercase">O PrimeRP</h2>
-        <p class="text-gray-400">Najlepszy serwer Roleplay w Emergency Hamburg.</p>
+        <h2 class="text-2xl font-black text-yellow-400 mb-6 uppercase italic">Poznaj PrimeRP</h2>
+        <div class="space-y-6 text-gray-300 text-sm">
+          <p>PrimeRP to projekt stworzony przez pasjonatów dla pasjonatów. Działamy na platformie Emergency Hamburg, oferując najwyższy poziom Roleplay w Polsce.</p>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-black/50 p-4 rounded-xl border border-gray-800 text-center">
+              <span class="block text-gray-500 text-[10px] mb-1">KOD SERWERA</span>
+              <span class="text-xl font-bold tracking-widest text-white">10cap1up</span>
+            </div>
+            <div class="bg-black/50 p-4 rounded-xl border border-gray-800 text-center">
+              <span class="block text-gray-500 text-[10px] mb-1">DISCORD</span>
+              <a href="https://discord.gg/GVfmsESq9k" class="text-blue-400 font-bold underline italic">DOŁĄCZ TERAZ</a>
+            </div>
+          </div>
+          <p class="italic text-gray-500">Nasza ekipa dba o realizm, porządek i uczciwą zabawę każdego dnia.</p>
+        </div>
       </div>
     </section>
 
+    <section id="staff" class="tab hidden">
+      <h2 class="text-2xl font-bold text-yellow-400 mb-6 uppercase italic tracking-widest">🛡️ Zespół Zarządzający</h2>
+      <div id="adminGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        </div>
+    </section>
+
     <section id="map" class="tab hidden">
-      <div class="card h-80 flex flex-col items-center justify-center border-2 border-dashed border-gray-800 opacity-40">
-        <h2 class="text-xl font-bold text-gray-500 uppercase tracking-widest">Mapa Lokalizacji wkrótce</h2>
+      <div class="card h-80 flex items-center justify-center border-dashed border-2 border-gray-800 opacity-40">
+        <span class="text-gray-500 font-bold uppercase tracking-widest">Mapa Lokalizacji wkrótce</span>
       </div>
     </section>
 
     <section id="report" class="tab hidden">
       <div class="card max-w-2xl mx-auto border-t-4 border-red-600">
-        <h2 class="text-2xl font-bold mb-2 uppercase">Centrum Zgłoszeń</h2>
-        <p class="text-gray-500 mb-6 text-sm italic">Opisz błąd, który napotkałeś na serwerze.</p>
-        <textarea id="bugText" placeholder="Treść zgłoszenia..." class="input h-48 resize-none mb-4"></textarea>
-        <button onclick="sendReport()" class="btn-big">WYŚLIJ RAPORT</button>
+        <h2 class="text-2xl font-bold mb-2 uppercase">Centrum Błędów</h2>
+        <p class="text-gray-500 mb-6 text-sm italic">Pomóż nam ulepszać serwer.</p>
+        <textarea id="bugText" placeholder="Opisz błąd dokładnie..." class="input h-48 resize-none mb-4"></textarea>
+        <button onclick="sendReport()" class="btn-big">WYŚLIJ ZGŁOSZENIE</button>
       </div>
     </section>
 
     <section id="rules" class="tab hidden">
       <div class="card max-w-3xl mx-auto">
-        <h2 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-gray-800 pb-2 uppercase italic">Regulamin PrimeRP</h2>
-        <div class="space-y-4 text-sm text-gray-300">
-          <p>1. Zakaz RDM/VDM.</p>
-          <p>2. Wymagany sprawny mikrofon.</p>
-          <p>3. Szanuj innych graczy.</p>
+        <h2 class="text-xl font-bold text-yellow-400 mb-4 border-b border-gray-800 pb-2 uppercase italic">Regulamin Serwera</h2>
+        <div class="space-y-3 text-sm text-gray-400">
+          <p>1. Zakaz RDM/VDM i toksycznych zachowań.</p>
+          <p>2. Obowiązkowy sprawny mikrofon i kultura osobista.</p>
+          <p>3. Zakaz wychodzenia z gry podczas akcji RP.</p>
         </div>
       </div>
     </section>
@@ -238,159 +174,150 @@
       <div class="max-w-md mx-auto card mt-12 border-t-4 border-yellow-400">
         <h2 class="text-2xl font-black text-center mb-8 uppercase tracking-widest">LOGOWANIE</h2>
         <form id="loginForm" class="space-y-5">
-          <input id="loginUser" type="text" placeholder="NAZWA UŻYTKOWNIKA" class="input font-bold" required>
+          <input id="loginUser" type="text" placeholder="LOGIN" class="input font-bold" required>
           <input id="loginPass" type="password" placeholder="HASŁO" class="input font-bold" required>
-          <button type="submit" class="btn-big">AUTORYZACJA</button>
+          <button type="submit" class="btn-big">ZALOGUJ</button>
         </form>
       </div>
     </section>
 
     <section id="player" class="tab hidden">
       <div class="card border-l-8 border-blue-500">
-        <h2 class="text-3xl font-black mb-2 uppercase italic tracking-tighter">Panel Obywatela</h2>
-        <p class="text-gray-400">Status: <span class="text-green-500 font-bold uppercase">Zalogowano</span></p>
-        <div class="mt-6 p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
-          Użytkownik: <span id="playerName" class="text-blue-400 font-black"></span>
-        </div>
+        <h2 class="text-3xl font-black mb-2 uppercase italic">Panel Obywatela</h2>
+        <p class="text-gray-400">Obywatel: <span id="playerName" class="text-blue-400 font-bold uppercase"></span></p>
       </div>
     </section>
 
     <section id="admin" class="tab hidden admin-full-screen">
       <div class="max-w-5xl mx-auto">
         <div class="flex justify-between items-center mb-10 bg-red-600/10 p-8 rounded-3xl border border-red-600/30">
-            <h2 class="text-4xl font-black text-red-500 italic">SYSTEM ADMINISTRACYJNY</h2>
+            <h2 class="text-4xl font-black text-red-500 italic uppercase">ADMIN SYSTEM</h2>
             <button onclick="logout()" class="bg-red-600 px-10 py-4 rounded-2xl font-black hover:bg-white hover:text-red-600 transition">WYLOGUJ</button>
         </div>
         <div class="grid grid-cols-2 gap-8">
             <div class="card">
-                <h3 class="text-lg font-bold mb-6 text-white border-b border-gray-800 pb-2 uppercase">Dodaj Konto</h3>
+                <h3 class="font-bold mb-4 uppercase text-white border-b border-gray-800 pb-2">Stwórz konto</h3>
                 <form id="createUserForm" class="space-y-4">
-                  <input id="newUser" type="text" placeholder="Nowy Login" class="input">
-                  <input id="newPass" type="password" placeholder="Nowe Hasło" class="input">
-                  <button type="submit" class="w-full py-3 bg-green-600 rounded-xl font-bold uppercase">Zapisz w bazie</button>
+                  <input id="newUser" type="text" placeholder="Login" class="input">
+                  <input id="newPass" type="password" placeholder="Hasło" class="input">
+                  <button type="submit" class="w-full py-3 bg-green-600 rounded-xl font-bold uppercase">Dodaj Obywatela</button>
                 </form>
             </div>
             <div class="card">
-                <h3 class="text-lg font-bold mb-6 text-white border-b border-gray-800 pb-2 uppercase">Lista Użytkowników</h3>
+                <h3 class="font-bold mb-4 uppercase text-white border-b border-gray-800 pb-2">Lista Bazy Danych</h3>
                 <ul id="userList" class="space-y-3"></ul>
             </div>
         </div>
       </div>
     </section>
+
   </main>
 
   <script>
-    // DATA W NAGŁÓWKU
-    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('currentDate').innerText = new Date().toLocaleDateString('pl-PL', dateOptions);
+    // DATA
+    document.getElementById('currentDate').innerText = new Date().toLocaleDateString('pl-PL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-    // SYSTEM TABÓW
-    function showTab(id) {
-      document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
-    }
+    // ADMINI
+    const admins = [
+      { name: "! Kuba", role: "Owner / Developer", desc: "Twórca systemów i właściciel serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Kamil", role: "Co-Owner", desc: "Współwłaściciel projektu PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Marek", role: "Head Admin", desc: "Zarządca administracji serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Piotrek", role: "Administrator", desc: "Opiekun graczy i spraw technicznych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Ania", role: "Support", desc: "Pomoc techniczna i moderacja czatu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Wojtek", role: "Moderator", desc: "Prowadzi akcje i pilnuje porządku.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Seba", role: "Moderator", desc: "Moderator akcji Roleplay.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Darek", role: "Moderator", desc: "Moderator społeczności Discord.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Łukasz", role: "Helper", desc: "Pomocnik nowych graczy.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Tomek", role: "Helper", desc: "Wsparcie techniczne drugiego stopnia.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Olek", role: "Trial Helper", desc: "Młodszy pomocnik w zespole.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Kasia", role: "Media Team", desc: "Zarządca social mediów serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Michał", role: "Events", desc: "Organizator wydarzeń specjalnych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Adam", role: "Verificator", desc: "Weryfikacja podań do frakcji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+      { name: "Zygmunt", role: "Legenda", desc: "Zasłużony członek starej ekipy.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+    ];
 
-    // MODAL ADMINA
-    let currentTarget = "";
-    function openModal(name, role, img) {
-      currentTarget = name;
+    const grid = document.getElementById('adminGrid');
+    admins.forEach(a => {
+      grid.innerHTML += `
+        <div onclick="openModal('${a.name}', '${a.role}', '${a.img}', '${a.desc}')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact"><img src="${a.img}" class="admin-img grayscale"></div>
+          <h3 class="admin-name-compact">${a.name}</h3>
+          <p class="admin-role-compact">${a.role}</p>
+          <p class="admin-click-compact">KLIKNIJ BY OTWORZYĆ</p>
+        </div>
+      `;
+    });
+
+    // FUNKCJE MODALA
+    let currentAdmin = "";
+    function openModal(name, role, img, desc) {
+      currentAdmin = name;
       document.getElementById('modalName').innerText = name;
       document.getElementById('modalRole').innerText = role;
       document.getElementById('modalImg').src = img;
+      document.getElementById('modalDesc').innerText = desc;
       document.getElementById('messageForm').classList.add('hidden');
       document.getElementById('msgBtn').classList.remove('hidden');
       document.getElementById('adminModal').classList.remove('hidden');
     }
     function closeModal() { document.getElementById('adminModal').classList.add('hidden'); }
-    function toggleMessageForm() {
-      document.getElementById('messageForm').classList.toggle('hidden');
-      document.getElementById('msgBtn').classList.toggle('hidden');
-    }
+    function toggleMessageForm() { document.getElementById('messageForm').classList.toggle('hidden'); document.getElementById('msgBtn').classList.toggle('hidden'); }
 
-    // WEBHOOKI DISCORD
+    // WEBHOOKI
     function sendAdminMessage() {
       const msg = document.getElementById('adminMessageText').value;
-      if (!msg) return alert('Wpisz treść.');
+      if (!msg) return alert('Wpisz wiadomość!');
       const url = "https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8";
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          content: `💼 **Wiadomość do:** \`${currentTarget}\`\n**Od:** \`${document.getElementById('playerNameTop').innerText}\`\n**Treść:** ${msg}` 
-        })
-      }).then(() => { alert('Wiadomość wysłana!'); closeModal(); });
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: `💼 Wiadomość do: **${currentAdmin}** od: **${document.getElementById('playerNameTop').innerText}**\n${msg}` }) });
+      alert('Wysłano!'); closeModal();
     }
 
     function sendReport() {
       const text = document.getElementById('bugText').value;
-      if (!text) return alert('Opisz błąd.');
+      if (!text) return alert('Opisz błąd!');
       const url = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: "🚨 **Zgłoszenie błędu:** " + text })
-      }).then(() => { alert('Zgłoszono!'); document.getElementById('bugText').value = ''; });
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: "🚨 **Zgłoszono błąd:** " + text }) });
+      alert('Dziękujemy!'); document.getElementById('bugText').value = '';
     }
 
-    // LOGOWANIE I ZARZĄDZANIE KONTYMI
+    // SYSTEM LOGOWANIA I KONT
     let users = JSON.parse(localStorage.getItem('users') || '[]');
+    function showTab(id) { document.querySelectorAll('.tab').forEach(t => t.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); }
     function logout() { window.location.reload(); }
 
-    document.getElementById('loginForm').addEventListener('submit', e => {
+    document.getElementById('loginForm').onsubmit = (e) => {
       e.preventDefault();
-      const login = document.getElementById('loginUser').value;
-      const pass = document.getElementById('loginPass').value;
-
-      if(login === 'admin' && pass === '1234') {
-        showTab('admin');
-        document.getElementById('playerNameTop').innerText = 'GŁÓWNY ADMIN';
-        document.getElementById('loginBtnNav').classList.add('hidden');
-        document.getElementById('logoutBtnNav').classList.remove('hidden');
-        renderUsers();
+      const l = document.getElementById('loginUser').value;
+      const p = document.getElementById('loginPass').value;
+      if(l === 'admin' && p === '1234') {
+        showTab('admin'); document.getElementById('playerNameTop').innerText = "GŁÓWNY ADMIN"; renderUsers();
+        document.getElementById('loginBtnNav').classList.add('hidden'); document.getElementById('logoutBtnNav').classList.remove('hidden');
       } else {
-        const found = users.find(u => u.login === login && u.pass === pass);
-        if(found) {
-          document.getElementById('playerName').innerText = found.login;
-          document.getElementById('playerNameTop').innerText = found.login;
-          showTab('player');
-          document.getElementById('loginBtnNav').classList.add('hidden');
-          document.getElementById('logoutBtnNav').classList.remove('hidden');
-        } else {
-          alert('Błędne dane logowania.');
-        }
+        const u = users.find(x => x.login === l && x.pass === p);
+        if(u) {
+          document.getElementById('playerName').innerText = u.login; document.getElementById('playerNameTop').innerText = u.login;
+          showTab('player'); document.getElementById('loginBtnNav').classList.add('hidden'); document.getElementById('logoutBtnNav').classList.remove('hidden');
+        } else alert('Błędny login lub hasło.');
       }
-    });
+    };
 
-    document.getElementById('createUserForm').addEventListener('submit', e => {
+    document.getElementById('createUserForm').onsubmit = (e) => {
       e.preventDefault();
-      const login = document.getElementById('newUser').value;
-      const pass = document.getElementById('newPass').value;
-      if(!login || !pass) return alert('Wpisz dane.');
-      users.push({login, pass});
-      localStorage.setItem('users', JSON.stringify(users));
-      renderUsers();
-      document.getElementById('newUser').value = '';
-      document.getElementById('newPass').value = '';
-    });
+      users.push({ login: document.getElementById('newUser').value, pass: document.getElementById('newPass').value });
+      localStorage.setItem('users', JSON.stringify(users)); renderUsers();
+      document.getElementById('newUser').value = ''; document.getElementById('newPass').value = '';
+    };
 
     function renderUsers() {
-      const list = document.getElementById('userList');
-      list.innerHTML = '';
+      const list = document.getElementById('userList'); list.innerHTML = '';
       users.forEach((u, i) => {
-        list.innerHTML += `<li class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-gray-800">
-          <span class="font-bold text-sm tracking-widest uppercase">${u.login}</span>
-          <button onclick="removeUser(${i})" class="text-red-600 font-black text-xs hover:text-white transition">USUŃ</button>
+        list.innerHTML += `<li class="flex justify-between bg-black p-3 rounded-xl border border-gray-800">
+          <span class="font-bold">${u.login}</span><button onclick="users.splice(${i},1);localStorage.setItem('users',JSON.stringify(users));renderUsers()" class="text-red-500 font-black">X</button>
         </li>`;
       });
     }
 
-    function removeUser(i) {
-      users.splice(i, 1);
-      localStorage.setItem('users', JSON.stringify(users));
-      renderUsers();
-    }
-
-    window.onclick = function(e) { if (e.target == document.getElementById('adminModal')) closeModal(); }
+    window.onclick = e => { if (e.target == document.getElementById('adminModal')) closeModal(); }
   </script>
 </body>
 </html>
