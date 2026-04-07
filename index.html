@@ -273,6 +273,7 @@
             <div class="nav-item" onclick="switchTab('about', this)">👥 O NAS</div>
             <div class="nav-item" onclick="switchTab('staff', this)">🛡️ ADMINISTRACJA</div>
             <div class="nav-item" onclick="switchTab('rules', this)">📜 REGULAMIN</div>
+            <div id="userProfileBtn" class="nav-item hidden" onclick="switchTab('userProfile', this)">🆔 TWÓJ PROFIL</div>
             <div class="nav-item" onclick="switchTab('map', this)">🗺️ MAPA</div>
             <div class="nav-item" onclick="switchTab('report', this)">🐞 ZGŁOŚ BŁĄD</div>
             
@@ -306,6 +307,32 @@
             </div>
         </section>
 
+        <section id="userProfile" class="tab-content">
+            <div class="custom-card border-t-4 border-yellow-400">
+                <div class="flex items-center gap-6 mb-8">
+                    <div class="w-24 h-24 rounded-full bg-yellow-400/10 border-2 border-yellow-400 flex items-center justify-center text-4xl">👤</div>
+                    <div>
+                        <h2 id="profileName" class="text-3xl font-black uppercase italic">Nazwa Obywatela</h2>
+                        <p class="text-yellow-400 font-bold text-xs tracking-widest uppercase">Zweryfikowany Mieszkaniec</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">Status Obywatelstwa</p>
+                        <p class="text-green-500 font-bold uppercase">Aktywne</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">Numer ID</p>
+                        <p class="font-bold">#10293</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">Przynależność</p>
+                        <p class="font-bold uppercase text-gray-300">Cywil</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="about" class="tab-content">
             <div class="custom-card">
                 <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">O Projekcie PrimeRP</h2>
@@ -320,29 +347,7 @@
                             <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-xl font-bold text-white hover:text-blue-400 transition underline underline-offset-8">discord.gg/GVfmsESq9k</a>
                         </div>
                     </div>
-
-                    <p>PrimeRP to nie tylko serwer, to społeczność pasjonatów realizmu w grze Emergency Hamburg. Od samego początku stawiamy na profesjonalizm, sprawiedliwość i innowacyjne rozwiązania techniczne. Nasz system zarządczy został stworzony, aby ułatwić komunikację między graczami a kadrą zarządzającą.</p>
-                    
-                    <h3 class="text-xl font-bold text-white uppercase border-b border-gray-800 pb-2">Nasza Misja</h3>
-                    <p>Chcemy stworzyć miejsce, gdzie każdy gracz, niezależnie od stażu, poczuje się częścią profesjonalnego świata RP. Nasze frakcje są szkolone według realnych procedur, a kadra administracyjna przechodzi rygorystyczną selekcję, aby zapewnić najwyższy poziom rozgrywki.</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
-                            <div class="text-2xl mb-2">⚖️</div>
-                            <h4 class="font-bold mb-2">Sprawiedliwość</h4>
-                            <p class="text-xs text-gray-500">Każdy gracz jest traktowany równo, bez względu na staż czy znajomości.</p>
-                        </div>
-                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
-                            <div class="text-2xl mb-2">🛠️</div>
-                            <h4 class="font-bold mb-2">Technologia</h4>
-                            <p class="text-xs text-gray-500">Własne systemy webhooków, permanentne bazy danych i interaktywne panele.</p>
-                        </div>
-                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
-                            <div class="text-2xl mb-2">🌍</div>
-                            <h4 class="font-bold mb-2">Społeczność</h4>
-                            <p class="text-xs text-gray-500">Aktywny Discord, szybkie wsparcie techniczne i pomocna atmosfera.</p>
-                        </div>
-                    </div>
+                    <p>PrimeRP to nie tylko serwer, to społeczność pasjonatów realizmu w grze Emergency Hamburg. Nasz system zarządczy został stworzony, aby ułatwić komunikację między graczami a kadrą zarządzającą.</p>
                 </div>
             </div>
         </section>
@@ -358,24 +363,14 @@
                 <div class="space-y-8 h-[500px] overflow-y-auto pr-4 text-gray-400">
                     <div>
                         <h3 class="text-lg font-bold text-white mb-2">§1 Postanowienia Ogólne</h3>
-                        <p class="text-sm leading-relaxed">Wchodząc na serwer PrimeRP, każdy użytkownik automatycznie akceptuje poniższe zasady. Nieznajomość regulaminu nie zwalnia z odpowiedzialności za jego łamanie.</p>
+                        <p class="text-sm leading-relaxed">Wchodząc na serwer PrimeRP, każdy użytkownik automatycznie akceptuje poniższe zasady.</p>
                     </div>
                     <div>
                         <h3 class="text-lg font-bold text-white mb-2">§2 Definicje i Skróty</h3>
                         <ul class="text-sm space-y-2">
-                            <li><strong>RDM (Random Deathmatch):</strong> Zabijanie bez powodu RP.</li>
-                            <li><strong>VDM (Vehicle Deathmatch):</strong> Rozjeżdżanie graczy pojazdem.</li>
-                            <li><strong>Combat Log:</strong> Wyjście z gry podczas akcji.</li>
-                            <li><strong>Metagaming:</strong> Wykorzystywanie informacji OOC w grze.</li>
+                            <li><strong>RDM:</strong> Zabijanie bez powodu RP.</li>
+                            <li><strong>VDM:</strong> Rozjeżdżanie graczy pojazdem.</li>
                         </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white mb-2">§3 Zasady Rozgrywki</h3>
-                        <p class="text-sm leading-relaxed">Każdy gracz zobowiązany jest do posiadania sprawnego mikrofonu. Podczas interakcji z frakcjami porządkowymi należy zachować najwyższy poziom kultury i realizmu.</p>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white mb-2">§4 Kary</h3>
-                        <p class="text-sm leading-relaxed">O karze decyduje administrator na podstawie dowodów. Możliwe kary to: Ostrzeżenie, Kick, Ban czasowy lub permanentny.</p>
                     </div>
                 </div>
             </div>
@@ -386,7 +381,6 @@
                 <div class="text-center">
                     <div class="text-5xl mb-4">📍</div>
                     <h2 class="text-xl font-black text-gray-500 uppercase">Mapa Interaktywna w przygotowaniu</h2>
-                    <p class="text-xs text-gray-700 mt-2 italic">Oczekuje na API Emergency Hamburg...</p>
                 </div>
             </div>
         </section>
@@ -394,9 +388,8 @@
         <section id="report" class="tab-content">
             <div class="custom-card max-w-2xl mx-auto border-t-4 border-red-600">
                 <h2 class="text-2xl font-black mb-2 uppercase">Zgłoś Naruszenie / Błąd</h2>
-                <p class="text-gray-500 text-sm mb-6">Wszystkie zgłoszenia są analizowane przez Zarząd. Fałszywe zgłoszenia będą karane.</p>
                 <div class="space-y-4">
-                    <input id="reportTitle" type="text" placeholder="Temat zgłoszenia (np. Błąd mapy / Skarga)" class="input-style">
+                    <input id="reportTitle" type="text" placeholder="Temat zgłoszenia" class="input-style">
                     <textarea id="reportContent" placeholder="Opisz sytuację szczegółowo..." class="input-style h-48 resize-none"></textarea>
                     <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Prześlij do Administracji</button>
                 </div>
@@ -405,7 +398,8 @@
 
         <section id="login" class="tab-content">
             <div class="max-w-md mx-auto custom-card mt-10">
-                <h2 class="text-2xl font-black text-center mb-8 italic uppercase">Autoryzacja</h2>
+                <h2 class="text-2xl font-black text-center mb-4 italic uppercase">Autoryzacja</h2>
+                <p class="text-center text-xs text-gray-500 mb-8">TEST: obywatel1 / test123</p>
                 <form id="authForm" class="space-y-4">
                     <input id="authLogin" type="text" placeholder="LOGIN" class="input-style" required>
                     <input id="authPass" type="password" placeholder="HASŁO" class="input-style" required>
@@ -417,11 +411,11 @@
         <section id="adminPanel" class="tab-content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="custom-card border-t-4 border-green-500">
-                    <h3 class="text-xl font-bold mb-6 uppercase">Dodaj Obywatela (Zapis Stały)</h3>
+                    <h3 class="text-xl font-bold mb-6 uppercase">Dodaj Obywatela</h3>
                     <div class="space-y-4">
                         <input id="dbUser" type="text" placeholder="Login użytkownika" class="input-style">
                         <input id="dbPass" type="password" placeholder="Hasło użytkownika" class="input-style">
-                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Zapisz w bazie permanentnej</button>
+                        <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Zapisz w bazie</button>
                     </div>
                 </div>
                 <div class="custom-card">
@@ -441,7 +435,6 @@
             <h2 id="mName" class="text-3xl font-black uppercase italic mb-1"></h2>
             <p id="mRole" class="text-yellow-400 font-bold tracking-widest text-xs uppercase mb-6"></p>
             <p id="mDesc" class="text-gray-400 text-sm italic mb-8 px-4"></p>
-            
             <div id="msgForm" class="hidden">
                 <textarea id="mText" placeholder="Treść wiadomości..." class="input-style h-32"></textarea>
                 <button onclick="sendWebhookMessage()" class="btn-action">Wyślij przez Webhook</button>
@@ -452,24 +445,14 @@
 
     <script>
         const staffData = [
-            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Założyciel projektu PrimeRP. Odpowiada za architekturę systemów i rozwój techniczny strony oraz serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Współzałożyciel. Zajmuje się sprawami kadrowymi oraz nadzorem nad frakcjami porządkowymi.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MAREK", role: "Head Admin", desc: "Najwyższy rangą opiekun serwera. Rozstrzyga najpoważniejsze spory i apelacje od banów.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PIOTR", role: "Administrator", desc: "Zarządza moderacją i dba o płynność rozgrywki w godzinach szczytu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ADAM", role: "Administrator", desc: "Specjalista ds. technicznych wewnątrz mapy Roblox oraz opiekun frakcji straży pożarnej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "NATALIA", role: "Support Team", desc: "Pierwsza linia kontaktu. Pomaga nowym graczom przejść przez proces weryfikacji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "SZYMON", role: "Support Team", desc: "Moderator Discorda oraz pomoc techniczna w zakresie zgłoszeń błędów (Bug Reports).", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "OLAF", role: "Moderator RP", desc: "Pilnuje realizmu podczas akcji policyjnych. Przeprowadza kontrole jakości RP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KASIA", role: "Moderator RP", desc: "Opiekunka EMS. Dba o to, by medycyna na serwerze stała na najwyższym poziomie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "DARIUSZ", role: "Events Manager", desc: "Twórca eventów globalnych. Odpowiada za urozmaicanie rozgrywki na PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "TOMEK", role: "Helper", desc: "Członek ekipy na okresie próbnym. Aktywnie wspiera graczy na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MICHAŁ", role: "Helper", desc: "Pomocnik w zakresie obsługi biletów (ticketów) na Discordzie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PAWEŁ", role: "Trial Helper", desc: "Najmłodszy stażem członek ekipy. Wspiera starszą administrację w prostych pracach.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ŁUKASZ", role: "Trial Helper", desc: "Uczy się zasad panujących wewnątrz ekipy administracyjnej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "VIPER", role: "Technical Support", desc: "Legenda projektu. Pomaga przy optymalizacji bazy danych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Założyciel projektu PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KAMIL", role: "Co-Owner", desc: "Współzałożyciel.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
         ];
 
-        let dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [];
+        // DODANO TESTOWE KONTO
+        let dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [
+            { user: "obywatel1", pass: "test123" }
+        ];
 
         window.onload = () => {
             renderStaff();
@@ -486,7 +469,7 @@
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-            el.classList.add('active');
+            if(el) el.classList.add('active');
         }
 
         function renderStaff() {
@@ -565,7 +548,15 @@
             document.getElementById('userNameDisplay').innerText = name;
             document.getElementById('loginNav').classList.add('hidden');
             document.getElementById('logoutNav').classList.remove('hidden');
-            if(isAdmin) document.getElementById('adminPanelLink').classList.remove('hidden');
+            
+            if(isAdmin) {
+                document.getElementById('adminPanelLink').classList.remove('hidden');
+            } else {
+                // Pokaż profil i przycisk w menu dla Obywatela
+                document.getElementById('userProfileBtn').classList.remove('hidden');
+                document.getElementById('profileName').innerText = name;
+            }
+            
             switchTab('home', document.querySelector('.nav-item'));
         }
 
@@ -585,6 +576,7 @@
 
         function renderDBUsers() {
             const list = document.getElementById('dbUserList');
+            if(!list) return;
             list.innerHTML = dbUsers.map((u, i) => `
                 <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-gray-800">
                     <span class="font-bold text-sm text-yellow-500">${u.user}</span>
