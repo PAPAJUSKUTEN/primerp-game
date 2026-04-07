@@ -4,30 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PrimeRP</title>
-  <script src="https://cdn.tailwindcss.com">
-    function sendReport(){
-      const text = document.getElementById('bugText').value;
-      if(!text) return alert('Napisz treść zgłoszenia');
-
-      fetch('https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: "📢 Nowe zgłoszenie błędu:
-" + text
-        })
-      })
-      .then(()=>{
-        alert('Wysłano zgłoszenie!');
-        document.getElementById('bugText').value='';
-      })
-      .catch(()=>alert('Błąd wysyłania'));
-    }
-  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black text-white flex">
 
-  <!-- Sidebar -->
   <aside class="w-72 bg-[#0b0b0b] min-h-screen p-6 border-r border-gray-800">
     <div class="mb-10">
       <h1 class="text-3xl font-extrabold leading-none">
@@ -46,15 +26,12 @@
     </nav>
   </aside>
 
-  <!-- Content -->
   <main class="flex-1 p-10">
 
-    <!-- HEADER -->
     <div class="mb-10">
       <h2 class="text-4xl font-bold">WITAJ, <span id="playerNameTop">GOŚĆ</span></h2>
     </div>
 
-    <!-- HOME -->
     <section id="home" class="tab">
       <div class="card">
         <h2 class="text-3xl font-bold text-yellow-400 mb-3">Nowości</h2>
@@ -62,7 +39,6 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" class="tab hidden">
       <div class="card">
         <h2 class="title">O serwerze</h2>
@@ -70,7 +46,6 @@
       </div>
     </section>
 
-    <!-- MAP -->
     <section id="map" class="tab hidden">
       <div class="card">
         <h2 class="title">Mapa</h2>
@@ -78,18 +53,16 @@
       </div>
     </section>
 
-    <!-- REPORT -->
     <section id="report" class="tab hidden">
       <div class="card">
         <h2 class="text-3xl font-bold text-yellow-400 mb-3">Zgłoś Błąd</h2>
         <p class="text-gray-400 mb-4">Opisz problem poniżej i wyślij zgłoszenie.</p>
         
-        <textarea id="bugText" placeholder="Opisz błąd..." class="input h-32 mb-4"></textarea>
+        <textarea id="bugText" placeholder="Opisz błąd..." class="input h-32 mb-4 text-white"></textarea>
         <button onclick="sendReport()" class="btn-big">PRZEŚLIJ</button>
       </div>
     </section>
 
-    <!-- RULES -->
     <section id="rules" class="tab hidden">
       <div class="card">
         <h2 class="title">Regulamin</h2>
@@ -101,7 +74,6 @@
       </div>
     </section>
 
-    <!-- LOGIN -->
     <section id="login" class="tab hidden">
       <div class="max-w-md mx-auto card">
         <h2 class="title">Logowanie</h2>
@@ -113,7 +85,6 @@
       </div>
     </section>
 
-    <!-- ADMIN PANEL -->
     <section id="admin" class="tab hidden">
       <div class="card">
         <h2 class="title">Panel Admina</h2>
@@ -130,7 +101,6 @@
       </div>
     </section>
 
-    <!-- PLAYER PANEL -->
     <section id="player" class="tab hidden">
       <div class="card">
         <h2 class="title">Panel Obywatela</h2>
@@ -169,6 +139,7 @@
       border-radius:10px;
       background:#0a0a0a;
       border:1px solid #222;
+      color: white;
     }
     .btn {
       width:100%;
@@ -188,6 +159,25 @@
   </style>
 
   <script>
+    // FUNKCJA WEBHOOKA (Przeniesiona tutaj i naprawiona)
+    function sendReport() {
+      const text = document.getElementById('bugText').value;
+      if (!text) return alert('Napisz treść zgłoszenia');
+
+      fetch('https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: "📢 **Nowe zgłoszenie błędu:**\n" + text
+        })
+      })
+      .then(() => {
+        alert('Wysłano zgłoszenie!');
+        document.getElementById('bugText').value = '';
+      })
+      .catch(() => alert('Błąd wysyłania'));
+    }
+
     function showTab(id){
       document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
       document.getElementById(id).classList.remove('hidden');
@@ -200,20 +190,20 @@
 
     document.getElementById('loginForm').addEventListener('submit', e=>{
       e.preventDefault();
-      const login = loginUser.value;
-      const pass = loginPass.value;
+      const login = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
 
       if(login === ADMIN_LOGIN && pass === ADMIN_PASSWORD){
         showTab('admin');
-        playerNameTop.innerText = 'ADMIN';
+        document.getElementById('playerNameTop').innerText = 'ADMIN';
         renderUsers();
         return;
       }
 
       const user = users.find(u=>u.login===login && u.pass===pass);
       if(user){
-        playerName.innerText = user.login;
-        playerNameTop.innerText = user.login;
+        document.getElementById('playerName').innerText = user.login;
+        document.getElementById('playerNameTop').innerText = user.login;
         showTab('player');
       } else {
         alert('Błędne dane');
@@ -222,22 +212,24 @@
 
     document.getElementById('createUserForm').addEventListener('submit', e=>{
       e.preventDefault();
-      const login = newUser.value;
-      const pass = newPass.value;
+      const login = document.getElementById('newUser').value;
+      const pass = document.getElementById('newPass').value;
 
       users.push({login, pass});
       localStorage.setItem('users', JSON.stringify(users));
 
-      newUser.value='';
-      newPass.value='';
+      document.getElementById('newUser').value='';
+      document.getElementById('newPass').value='';
 
       renderUsers();
     });
 
     function renderUsers(){
+      const userList = document.getElementById('userList');
       userList.innerHTML='';
       users.forEach(u=>{
         const li = document.createElement('li');
+        li.className = "bg-gray-900 p-2 rounded border border-gray-800";
         li.innerText = u.login;
         userList.appendChild(li);
       });
