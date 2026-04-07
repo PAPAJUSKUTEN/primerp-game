@@ -38,76 +38,100 @@
     <main class="main-wrapper">
         <header class="section-header flex justify-between items-end">
             <div>
-                <h4 class="text-gray-600 text-[10px] uppercase font-black tracking-widest">System v2.9.2</h4>
-                <h2 class="text-3xl font-black uppercase">Witaj, <span id="userNameDisplay" class="text-yellow-400">Gość</span></h2>
+                <h4 class="text-gray-500 text-[10px] uppercase font-bold tracking-[0.3em]">System Operacyjny v2.9.2</h4>
+                <h2 class="text-4xl font-black uppercase tracking-tighter">Witaj, <span id="userNameDisplay" class="text-yellow-400">Gość</span></h2>
             </div>
-            <div id="liveDate" class="text-gray-600 font-mono text-xs"></div>
+            <div id="liveDate" class="text-gray-600 font-mono text-xs uppercase"></div>
         </header>
 
         <section id="home" class="tab-content active">
             <div class="custom-card border-l-4 border-yellow-400">
-                <h2 class="text-xl font-black mb-4 uppercase">Aktualności</h2>
-                <p class="text-gray-400">System został zaktualizowany. Jeśli widzisz błędy, odśwież stronę (CTRL+F5).</p>
+                <h2 class="text-2xl font-black mb-4 uppercase italic">Komunikat Systemowy</h2>
+                <div class="space-y-4 text-gray-400 leading-relaxed">
+                    <p>Witamy w wersji 2.9. Skonfigurowano pełną synchronizację z Firebase Realtime Database.</p>
+                    <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
+                        <h4 class="text-white font-bold text-sm mb-1">Status: <span class="text-green-500">POŁĄCZONO Z CHMURĄ</span></h4>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="about" class="tab-content">
-            <div class="custom-card text-center">
-                <h2 class="text-2xl font-black text-yellow-400 mb-4 uppercase">O Projekcie</h2>
-                <p class="text-gray-300">Kod gry Emergency Hamburg: <b class="text-white">10cap1up</b></p>
+            <div class="custom-card">
+                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">PrimeRP: Emergency Hamburg</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-6 bg-yellow-400/10 border border-yellow-400/20 rounded-2xl text-center">
+                        <h4 class="text-yellow-400 font-black text-xs uppercase mb-2">Kod Serwera</h4>
+                        <p class="text-4xl font-black text-white">10cap1up</p>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="map" class="tab-content">
+            <h2 class="text-2xl font-black text-yellow-400 mb-6 uppercase italic">Topografia Miasta Hamburg</h2>
             <div class="map-wrapper">
-                <img src="https://i.postimg.cc/85M0L1Gf/mapa-hamburg.jpg" class="map-img">
+                <img src="https://i.postimg.cc/85M0L1Gf/mapa-hamburg.jpg" class="map-img" alt="Mapa">
             </div>
         </section>
 
         <section id="staff" class="tab-content">
+            <h2 class="text-2xl font-black text-yellow-400 mb-8 uppercase italic tracking-widest">Zespół Administracyjny</h2>
             <div id="staffContainer" class="admin-grid"></div>
         </section>
 
+        <section id="rules" class="tab-content">
+            <div class="custom-card">
+                <h2 class="text-3xl font-black text-yellow-400 mb-8 uppercase italic">Zasady Ogólne</h2>
+                <div class="space-y-4 text-gray-400">
+                    <p><b>§1.</b> Każdy gracz musi posiadać sprawny mikrofon.</p>
+                    <p><b>§2.</b> Zakaz opuszczania gry podczas akcji (Combat Log).</p>
+                    <p><b>§3.</b> Szacunek do innych graczy jest priorytetem.</p>
+                </div>
+            </div>
+        </section>
+
         <section id="report" class="tab-content">
-            <div class="custom-card max-w-xl mx-auto">
-                <h2 class="text-xl font-bold mb-4 uppercase">Zgłoś błąd</h2>
-                <input id="reportTitle" type="text" placeholder="Temat" class="input-style">
-                <textarea id="reportContent" placeholder="Opis..." class="input-style h-32"></textarea>
-                <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Wyślij</button>
+            <div class="custom-card max-w-2xl mx-auto border-t-4 border-red-600">
+                <h2 class="text-2xl font-black mb-6 uppercase">Centrum Zgłoszeń</h2>
+                <input id="reportTitle" type="text" placeholder="Temat (np. Błąd mapy)" class="input-style">
+                <textarea id="reportContent" placeholder="Dokładny opis zdarzenia..." class="input-style h-48 resize-none"></textarea>
+                <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Wyślij Zgłoszenie</button>
             </div>
         </section>
 
         <section id="login" class="tab-content">
-            <div class="custom-card max-w-sm mx-auto mt-10">
-                <h2 class="text-center font-bold mb-6">LOGOWANIE</h2>
-                <input id="authLogin" type="text" placeholder="Login" class="input-style">
-                <input id="authPass" type="password" placeholder="Hasło" class="input-style">
-                <button onclick="handleLogin()" class="btn-action">Wejdź</button>
+            <div class="max-w-md mx-auto custom-card mt-10">
+                <h2 class="text-2xl font-black text-center mb-8 italic uppercase">System Autoryzacji</h2>
+                <input id="authLogin" type="text" placeholder="LOGIN" class="input-style">
+                <input id="authPass" type="password" placeholder="HASŁO" class="input-style">
+                <button onclick="handleLogin()" class="btn-action">Zaloguj się</button>
             </div>
         </section>
 
         <section id="adminPanel" class="tab-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="custom-card">
-                    <h3 class="font-bold mb-4">DODAJ KONTO</h3>
-                    <input id="dbUser" type="text" placeholder="Login" class="input-style">
-                    <input id="dbPass" type="password" placeholder="Hasło" class="input-style">
-                    <button onclick="dbAddUser()" class="btn-action bg-green-600">Zapisz</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="custom-card border-t-4 border-green-500">
+                    <h3 class="text-xl font-bold mb-6 uppercase">Rejestracja Obywatela</h3>
+                    <input id="dbUser" type="text" placeholder="Nowy login" class="input-style">
+                    <input id="dbPass" type="password" placeholder="Nowe hasło" class="input-style">
+                    <button onclick="dbAddUser()" class="btn-action bg-green-600 text-white">Dodaj</button>
                 </div>
                 <div class="custom-card">
-                    <h3 class="font-bold mb-4">LISTA KONT</h3>
-                    <div id="dbUserList" class="space-y-2"></div>
+                    <h3 class="text-xl font-bold mb-6 uppercase">Aktywne Konta</h3>
+                    <div id="dbUserList" class="space-y-2 max-h-[400px] overflow-y-auto"></div>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="modalOverlay" onclick="closeModal()">
-        <div class="modal-body" onclick="event.stopPropagation()">
-            <div class="avatar-box mx-auto" style="width:100px; height:100px;"><img id="mImg" src=""></div>
-            <h2 id="mName" class="text-2xl font-black uppercase mt-4"></h2>
-            <p id="mRole" class="text-yellow-400 font-bold text-xs mb-4"></p>
-            <p id="mDesc" class="text-gray-400 text-sm italic mb-6"></p>
+    <div id="modalOverlay">
+        <div class="modal-body">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-500 text-2xl hover:text-white transition">✕</button>
+            <div class="avatar-box" style="width: 120px; height: 120px;"><img id="mImg" src=""></div>
+            <h2 id="mName" class="text-3xl font-black uppercase italic mb-1"></h2>
+            <p id="mRole" class="text-yellow-400 font-bold tracking-widest text-xs uppercase mb-6"></p>
+            <p id="mDesc" class="text-gray-400 text-sm italic mb-8 px-4"></p>
             <button onclick="closeModal()" class="btn-action">Zamknij</button>
         </div>
     </div>
