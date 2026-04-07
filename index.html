@@ -258,11 +258,6 @@
 
         .btn-action:hover { opacity: 0.9; transform: scale(0.98); }
         .hidden { display: none; }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
     </style>
 </head>
 <body>
@@ -300,12 +295,12 @@
 
         <section id="home" class="tab-content active">
             <div class="custom-card border-l-4 border-yellow-400">
-                <h2 class="text-2xl font-black mb-4 uppercase italic">Komunikat Systemowy</h2>
+                <h2 class="text-2xl font-black mb-4 uppercase italic">Aktualności Projektu</h2>
                 <div class="space-y-4 text-gray-400 leading-relaxed">
-                    <p>Witaj w oficjalnym panelu zarządczym PrimeRP. System pozwala na szybki kontakt z kadrą oraz zgłaszanie naruszeń regulaminu bezpośrednio na kanały Discord.</p>
+                    <p>Witamy w oficjalnym panelu PrimeRP. Jesteśmy w fazie intensywnego rozwoju technicznego. Wszystkie systemy logowania, zgłoszeń błędów oraz komunikacji z administracją są w pełni operacyjne.</p>
                     <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
-                        <h4 class="text-white font-bold text-sm mb-1">Status Systemu: <span class="text-green-500">ZSYNCHRONIZOWANO</span></h4>
-                        <p class="text-xs">Baza danych: Aktywna | Webhooki: Online</p>
+                        <h4 class="text-white font-bold text-sm mb-1">Status Serwera: <span class="text-green-500">ONLINE</span></h4>
+                        <p class="text-xs">Wersja Systemu: v2.4.0-Stable | Ostatnia aktualizacja: Dzisiaj</p>
                     </div>
                 </div>
             </div>
@@ -313,7 +308,7 @@
 
         <section id="about" class="tab-content">
             <div class="custom-card">
-                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">Informacje o Projekcie</h2>
+                <h2 class="text-3xl font-black text-yellow-400 mb-6 uppercase">O Projekcie PrimeRP</h2>
                 <div class="space-y-6 text-gray-300">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                         <div class="p-6 bg-yellow-400/10 border border-yellow-400/20 rounded-2xl text-center">
@@ -325,25 +320,63 @@
                             <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-xl font-bold text-white hover:text-blue-400 transition underline underline-offset-8">discord.gg/GVfmsESq9k</a>
                         </div>
                     </div>
-                    <p>PrimeRP to najbardziej zaawansowany projekt Roleplay na polskiej scenie Emergency Hamburg. Stawiamy na realizm, profesjonalizm i wysoką jakość rozgrywki.</p>
+
+                    <p>PrimeRP to nie tylko serwer, to społeczność pasjonatów realizmu w grze Emergency Hamburg. Od samego początku stawiamy na profesjonalizm, sprawiedliwość i innowacyjne rozwiązania techniczne. Nasz system zarządczy został stworzony, aby ułatwić komunikację między graczami a kadrą zarządzającą.</p>
+                    
+                    <h3 class="text-xl font-bold text-white uppercase border-b border-gray-800 pb-2">Nasza Misja</h3>
+                    <p>Chcemy stworzyć miejsce, gdzie każdy gracz, niezależnie od stażu, poczuje się częścią profesjonalnego świata RP. Nasze frakcje są szkolone według realnych procedur, a kadra administracyjna przechodzi rygorystyczną selekcję, aby zapewnić najwyższy poziom rozgrywki.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
+                            <div class="text-2xl mb-2">⚖️</div>
+                            <h4 class="font-bold mb-2">Sprawiedliwość</h4>
+                            <p class="text-xs text-gray-500">Każdy gracz jest traktowany równo, bez względu na staż czy znajomości.</p>
+                        </div>
+                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
+                            <div class="text-2xl mb-2">🛠️</div>
+                            <h4 class="font-bold mb-2">Technologia</h4>
+                            <p class="text-xs text-gray-500">Własne systemy webhooków, permanentne bazy danych i interaktywne panele.</p>
+                        </div>
+                        <div class="p-6 bg-black/40 rounded-2xl border border-gray-800">
+                            <div class="text-2xl mb-2">🌍</div>
+                            <h4 class="font-bold mb-2">Społeczność</h4>
+                            <p class="text-xs text-gray-500">Aktywny Discord, szybkie wsparcie techniczne i pomocna atmosfera.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="staff" class="tab-content">
             <h2 class="text-2xl font-black text-yellow-400 mb-8 uppercase italic tracking-widest">Zespół Zarządzający</h2>
-            <div id="staffContainer" class="admin-grid">
-                </div>
+            <div id="staffContainer" class="admin-grid"></div>
         </section>
 
         <section id="rules" class="tab-content">
             <div class="custom-card">
                 <h2 class="text-3xl font-black text-yellow-400 mb-8 uppercase italic">Regulamin Serwera</h2>
-                <div class="space-y-6 h-[500px] overflow-y-auto pr-4 text-gray-400">
-                    <p><strong>§1.</strong> Zakaz robienia RDM, VDM oraz Combat Log.</p>
-                    <p><strong>§2.</strong> Każdy gracz musi posiadać sprawny mikrofon.</p>
-                    <p><strong>§3.</strong> Zakaz Metagamingu i Powergamingu.</p>
-                    <p><strong>§4.</strong> Szanuj każdego członka społeczności PrimeRP.</p>
+                <div class="space-y-8 h-[500px] overflow-y-auto pr-4 text-gray-400">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">§1 Postanowienia Ogólne</h3>
+                        <p class="text-sm leading-relaxed">Wchodząc na serwer PrimeRP, każdy użytkownik automatycznie akceptuje poniższe zasady. Nieznajomość regulaminu nie zwalnia z odpowiedzialności za jego łamanie.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">§2 Definicje i Skróty</h3>
+                        <ul class="text-sm space-y-2">
+                            <li><strong>RDM (Random Deathmatch):</strong> Zabijanie bez powodu RP.</li>
+                            <li><strong>VDM (Vehicle Deathmatch):</strong> Rozjeżdżanie graczy pojazdem.</li>
+                            <li><strong>Combat Log:</strong> Wyjście z gry podczas akcji.</li>
+                            <li><strong>Metagaming:</strong> Wykorzystywanie informacji OOC w grze.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">§3 Zasady Rozgrywki</h3>
+                        <p class="text-sm leading-relaxed">Każdy gracz zobowiązany jest do posiadania sprawnego mikrofonu. Podczas interakcji z frakcjami porządkowymi należy zachować najwyższy poziom kultury i realizmu.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">§4 Kary</h3>
+                        <p class="text-sm leading-relaxed">O karze decyduje administrator na podstawie dowodów. Możliwe kary to: Ostrzeżenie, Kick, Ban czasowy lub permanentny.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -353,18 +386,19 @@
                 <div class="text-center">
                     <div class="text-5xl mb-4">📍</div>
                     <h2 class="text-xl font-black text-gray-500 uppercase">Mapa Interaktywna w przygotowaniu</h2>
+                    <p class="text-xs text-gray-700 mt-2 italic">Oczekuje na API Emergency Hamburg...</p>
                 </div>
             </div>
         </section>
 
         <section id="report" class="tab-content">
             <div class="custom-card max-w-2xl mx-auto border-t-4 border-red-600">
-                <h2 class="text-2xl font-black mb-2 uppercase">Panel Zgłoszeń</h2>
-                <p class="text-gray-500 text-sm mb-6">Wiadomość trafi bezpośrednio do Zarządu przez Webhook Discord.</p>
+                <h2 class="text-2xl font-black mb-2 uppercase">Zgłoś Naruszenie / Błąd</h2>
+                <p class="text-gray-500 text-sm mb-6">Wszystkie zgłoszenia są analizowane przez Zarząd. Fałszywe zgłoszenia będą karane.</p>
                 <div class="space-y-4">
-                    <input id="reportTitle" type="text" placeholder="Temat zgłoszenia" class="input-style">
-                    <textarea id="reportContent" placeholder="Szczegółowy opis..." class="input-style h-48 resize-none"></textarea>
-                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Wyślij do Administracji</button>
+                    <input id="reportTitle" type="text" placeholder="Temat zgłoszenia (np. Błąd mapy / Skarga)" class="input-style">
+                    <textarea id="reportContent" placeholder="Opisz sytuację szczegółowo..." class="input-style h-48 resize-none"></textarea>
+                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Prześlij do Administracji</button>
                 </div>
             </div>
         </section>
@@ -409,34 +443,32 @@
             <p id="mDesc" class="text-gray-400 text-sm italic mb-8 px-4"></p>
             
             <div id="msgForm" class="hidden">
-                <textarea id="mText" placeholder="Treść Twojej wiadomości do admina..." class="input-style h-32"></textarea>
-                <button onclick="sendWebhookMessage()" class="btn-action">Wyślij Wiadomość</button>
+                <textarea id="mText" placeholder="Treść wiadomości..." class="input-style h-32"></textarea>
+                <button onclick="sendWebhookMessage()" class="btn-action">Wyślij przez Webhook</button>
             </div>
             <button id="msgTrigger" onclick="toggleMsgInput()" class="btn-action bg-blue-600/20 border border-blue-500 text-blue-400">Napisz Wiadomość</button>
         </div>
     </div>
 
     <script>
-        // PEŁNA LISTA ADMINISTRACJI (15 OSÓB)
         const staffData = [
-            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Główny założyciel i programista projektu PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KAMIL", role: "Co-Owner", desc: "Zarządza kadrą i strukturami frakcji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MAREK", role: "Head Admin", desc: "Opiekun serwera i spraw trudnych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PIOTR", role: "Administrator", desc: "Zajmuje się porządkiem i kulturą na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ADAM", role: "Administrator", desc: "Opiekun frakcji LSPD i szkoleniowiec.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "NATALIA", role: "Support Team", desc: "Pomoc graczom w sprawach technicznych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "SZYMON", role: "Support Team", desc: "Zarządzanie biletami (ticketami) na Discordzie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "OLAF", role: "Moderator RP", desc: "Nadzór nad realizmem akcji RP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "KASIA", role: "Moderator RP", desc: "Opiekunka frakcji Medycznej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "DARIUSZ", role: "Events Manager", desc: "Organizator wydarzeń globalnych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "TOMEK", role: "Helper", desc: "Pomocnik serwerowy na okresie próbnym.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "MICHAŁ", role: "Helper", desc: "Młodszy moderator czatu i gry.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PAWEŁ", role: "Trial Helper", desc: "W trakcie szkolenia administracyjnego.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "ŁUKASZ", role: "Trial Helper", desc: "W trakcie szkolenia administracyjnego.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "VIPER", role: "Technical Support", desc: "Wsparcie w zakresie baz danych i optymalizacji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+            { name: "! KUBA", role: "Owner / Lead Developer", desc: "Założyciel projektu PrimeRP. Odpowiada za architekturę systemów i rozwój techniczny strony oraz serwera.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KAMIL", role: "Co-Owner", desc: "Współzałożyciel. Zajmuje się sprawami kadrowymi oraz nadzorem nad frakcjami porządkowymi.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "MAREK", role: "Head Admin", desc: "Najwyższy rangą opiekun serwera. Rozstrzyga najpoważniejsze spory i apelacje od banów.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "PIOTR", role: "Administrator", desc: "Zarządza moderacją i dba o płynność rozgrywki w godzinach szczytu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "ADAM", role: "Administrator", desc: "Specjalista ds. technicznych wewnątrz mapy Roblox oraz opiekun frakcji straży pożarnej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "NATALIA", role: "Support Team", desc: "Pierwsza linia kontaktu. Pomaga nowym graczom przejść przez proces weryfikacji.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "SZYMON", role: "Support Team", desc: "Moderator Discorda oraz pomoc techniczna w zakresie zgłoszeń błędów (Bug Reports).", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "OLAF", role: "Moderator RP", desc: "Pilnuje realizmu podczas akcji policyjnych. Przeprowadza kontrole jakości RP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "KASIA", role: "Moderator RP", desc: "Opiekunka EMS. Dba o to, by medycyna na serwerze stała na najwyższym poziomie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "DARIUSZ", role: "Events Manager", desc: "Twórca eventów globalnych. Odpowiada za urozmaicanie rozgrywki na PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "TOMEK", role: "Helper", desc: "Członek ekipy na okresie próbnym. Aktywnie wspiera graczy na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "MICHAŁ", role: "Helper", desc: "Pomocnik w zakresie obsługi biletów (ticketów) na Discordzie.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "PAWEŁ", role: "Trial Helper", desc: "Najmłodszy stażem członek ekipy. Wspiera starszą administrację w prostych pracach.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "ŁUKASZ", role: "Trial Helper", desc: "Uczy się zasad panujących wewnątrz ekipy administracyjnej.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "VIPER", role: "Technical Support", desc: "Legenda projektu. Pomaga przy optymalizacji bazy danych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
         ];
 
-        // --- SYSTEM PERMANENTNEJ BAZY ---
         let dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [];
 
         window.onload = () => {
@@ -447,8 +479,7 @@
         };
 
         function updateDate() {
-            const d = new Date();
-            document.getElementById('liveDate').innerText = d.toLocaleString();
+            document.getElementById('liveDate').innerText = new Date().toLocaleString();
         }
 
         function switchTab(id, el) {
@@ -465,15 +496,13 @@
                     <div class="avatar-box"><img src="${s.img}"></div>
                     <div class="admin-name">${s.name}</div>
                     <div class="admin-role">${s.role}</div>
-                    <div class="text-[8px] font-bold text-gray-700 mt-2 tracking-widest uppercase">Kliknij po kontakt</div>
                 </div>
             `).join('');
         }
 
-        // --- WEBHOOKI I MODALE ---
-        let activeTarget = "";
+        let activeAdmin = "";
         function openModal(n, r, i, d) {
-            activeTarget = n;
+            activeAdmin = n;
             document.getElementById('mName').innerText = n;
             document.getElementById('mRole').innerText = r;
             document.getElementById('mImg').src = i;
@@ -491,15 +520,15 @@
 
         async function sendWebhookMessage() {
             const text = document.getElementById('mText').value;
-            if(!text) return alert("Wpisz wiadomość!");
+            if(!text) return alert("Wpisz treść!");
             const url = "https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8";
             const sender = document.getElementById('userNameDisplay').innerText;
             await fetch(url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `📬 **Wiadomość Prywatna**\n**Do:** ${activeTarget}\n**Od:** ${sender}\n**Treść:** ${text}` })
+                body: JSON.stringify({ content: `📬 **Wiadomość do:** ${activeAdmin}\n**Od:** ${sender}\n**Treść:** ${text}` })
             });
-            alert("Wysłano pomyślnie!");
+            alert("Wysłano!");
             closeModal();
             document.getElementById('mText').value = "";
         }
@@ -507,31 +536,28 @@
         async function submitReport() {
             const title = document.getElementById('reportTitle').value;
             const content = document.getElementById('reportContent').value;
-            if(!title || !content) return alert("Uzupełnij zgłoszenie!");
+            if(!title || !content) return alert("Uzupełnij pola!");
             const url = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
             const sender = document.getElementById('userNameDisplay').innerText;
             await fetch(url, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `🚨 **NOWE ZGŁOSZENIE**\n**Autor:** ${sender}\n**Temat:** ${title}\n**Opis:** ${content}` })
+                body: JSON.stringify({ content: `🚨 **ZGŁOSZENIE**\n**Autor:** ${sender}\n**Temat:** ${title}\n**Opis:** ${content}` })
             });
-            alert("Zgłoszenie trafiło do administracji!");
+            alert("Zgłoszenie wysłane!");
             document.getElementById('reportTitle').value = "";
             document.getElementById('reportContent').value = "";
         }
 
-        // --- LOGOWANIE I ZARZĄDZANIE KONTAMI ---
         document.getElementById('authForm').onsubmit = (e) => {
             e.preventDefault();
             const l = document.getElementById('authLogin').value;
             const p = document.getElementById('authPass').value;
-
-            if(l === 'admin' && p === '1234') {
-                loginSuccess("ADMINISTRATOR", true);
-            } else {
+            if(l === 'admin' && p === '1234') loginSuccess("ADMINISTRATOR", true);
+            else {
                 const found = dbUsers.find(u => u.user === l && u.pass === p);
                 if(found) loginSuccess(found.user, false);
-                else alert("Błąd logowania!");
+                else alert("Błąd danych!");
             }
         };
 
@@ -548,13 +574,13 @@
         function dbAddUser() {
             const u = document.getElementById('dbUser').value;
             const p = document.getElementById('dbPass').value;
-            if(!u || !p) return alert("Podaj dane!");
+            if(!u || !p) return;
             dbUsers.push({user: u, pass: p});
             localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
             renderDBUsers();
             document.getElementById('dbUser').value = "";
             document.getElementById('dbPass').value = "";
-            alert("Konto zapisane na stałe!");
+            alert("Konto zapisane!");
         }
 
         function renderDBUsers() {
@@ -568,11 +594,9 @@
         }
 
         function dbDeleteUser(i) {
-            if(confirm("Usunąć konto trwale?")) {
-                dbUsers.splice(i, 1);
-                localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
-                renderDBUsers();
-            }
+            dbUsers.splice(i, 1);
+            localStorage.setItem('prime_accounts_perm', JSON.stringify(dbUsers));
+            renderDBUsers();
         }
     </script>
 </body>
