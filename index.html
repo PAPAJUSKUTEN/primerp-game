@@ -325,7 +325,12 @@
 
         .close-modal:hover { color: #fff; }
 
-        /* Klasy pomocnicze */
+        /* Scrollbar Customization */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-ultra-dark); }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
         .text-glow { text-shadow: 0 0 15px var(--accent-glow); }
         .hidden { display: none; }
 
@@ -375,7 +380,7 @@
         <header class="flex justify-between items-center mb-16">
             <div>
                 <p class="text-xs font-black text-dim uppercase tracking-[0.5em] mb-2">Internal Management Platform</p>
-                <h2 class="text-5xl font-black uppercase italic italic tracking-tighter">
+                <h2 class="text-5xl font-black uppercase italic tracking-tighter">
                     Status: <span id="user-header" class="text-yellow-400 text-glow">Nieznany</span>
                 </h2>
             </div>
@@ -389,7 +394,7 @@
                 <h3 class="text-3xl font-black uppercase mb-4 italic">Komunikat Systemowy</h3>
                 <p class="text-gray-400 text-lg leading-relaxed">
                     Witaj w scentralizowanym systemie PrimeRP. Zaimplementowano interaktywną mapę sektorów w wersji 3.0 Final. 
-                    Wszystkie jednostki proszone są o zapoznanie się z nowym podziałem terytorialnym Hamburg City.
+                    Wszystkie jednostki proszone są o zapoznanie się z nowym podziałem terytorialnym Hamburg City. System Webhooków został w pełni zsynchronizowany z głównym serwerem Discord.
                 </p>
             </div>
             
@@ -397,14 +402,19 @@
                 <div class="glass-card text-center">
                     <p class="text-xs font-bold text-dim uppercase mb-2">Serwer Gry</p>
                     <p class="text-4xl font-black text-green-500">ONLINE</p>
+                    <div class="w-full bg-white/5 h-1 mt-6 rounded-full overflow-hidden">
+                        <div class="bg-green-500 w-[94%] h-full"></div>
+                    </div>
                 </div>
                 <div class="glass-card text-center">
                     <p class="text-xs font-bold text-dim uppercase mb-2">Aktywne Połączenia</p>
                     <p class="text-4xl font-black text-white">48 / 64</p>
+                    <p class="text-[10px] text-dim mt-4 uppercase">Średni czas sesji: 2.4h</p>
                 </div>
                 <div class="glass-card text-center">
                     <p class="text-xs font-bold text-dim uppercase mb-2">Kod Dostępu</p>
                     <p class="text-4xl font-black text-yellow-400 italic">PRIME2026</p>
+                    <p class="text-[10px] text-dim mt-4 uppercase">Wymagana weryfikacja</p>
                 </div>
             </div>
         </section>
@@ -412,24 +422,24 @@
         <section id="map" class="tab-pane active">
             <div class="mb-8">
                 <h3 class="text-3xl font-black uppercase italic">Mapa Operacyjna V3 Final</h3>
-                <p class="text-dim uppercase text-[10px] tracking-widest mt-2">Naciśnij na punkt orientacyjny, aby wywołać dane wywiadowcze</p>
+                <p class="text-dim uppercase text-[10px] tracking-widest mt-2">Naciśnij na punkt orientacyjny, aby wywołać dane wywiadowcze sektora</p>
             </div>
 
             <div class="tactical-map-wrapper">
                 <img src="https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp" class="map-render" alt="PrimeRP Map V3">
 
-                <div class="tactical-pin" style="top: 70.3%; left: 5.1%;" onclick="openMapData('Sektor Rolniczy', 'Obszar farm i nieużytków. Brak stałego monitoringu miejskiego. Punkt spotkań grup zorganizowanych.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="tactical-pin" style="top: 31.5%; left: 32.2%;" onclick="openMapData('Węzeł Północny', 'Punkt przesiadkowy przy magistrali kolejowej. Kluczowy sektor logistyczny.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="tactical-pin" style="top: 64.2%; left: 30.1%;" onclick="openMapData('Dzielnica Garażowa', 'Strefa o podwyższonym ryzyku. Liczne zgłoszenia kradzieży pojazdów.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 70.3%; left: 5.1%;" onclick="openMapData('Sektor Rolniczy', 'Główny obszar farm i hodowli. Strefa o niskim natężeniu ruchu policji, idealna do spotkań organizacyjnych.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 31.5%; left: 32.2%;" onclick="openMapData('Węzeł Północny', 'Skrzyżowanie przy torach kolejowych. Kluczowy punkt przerzutowy towarów wielkogabarytowych.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 64.2%; left: 30.1%;" onclick="openMapData('Osiedle Południowe', 'Strefa mieszkalna z dużą ilością garaży. Częste patrole jednostek prewencji w godzinach nocnych.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
 
-                <div class="tactical-pin" style="top: 45.1%; left: 54.3%;" onclick="openMapData('Główne Skrzyżowanie', 'Serce Hamburg City. Monitoring 24/7. Wysoka obecność jednostek LSPD.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="tactical-pin" style="top: 69.5%; left: 45.4%;" onclick="openMapData('Sektor Magazynowy', 'Hale rozładunkowe. Główne miejsce pracy fizycznej mieszkańców.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="tactical-pin" style="top: 77.8%; left: 40.2%;" onclick="openMapData('Parking Podziemny', 'Strefa spotkań tunerów. Częste akcje prewencyjne policji.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 45.1%; left: 54.3%;" onclick="openMapData('Główny Punkt Kontrolny', 'Centrum dowodzenia siłami porządkowymi w środkowej części mapy. Monitoring miejski 24/7.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 69.5%; left: 45.4%;" onclick="openMapData('Sektor Magazynowy', 'Obszar składowania kontenerów. Wysokie ryzyko kradzieży przemysłowej i nielegalnego handlu.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 77.8%; left: 40.2%;" onclick="openMapData('Podziemny Parking', 'Miejsce spotkań nielegalnych wyścigów oraz czarny rynek części samochodowych.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
 
-                <div class="tactical-pin" style="top: 49.2%; left: 93.1%;" onclick="openMapData('Strefa Zielona', 'Park miejski i obrzeża wschodnie. Teren neutralny.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="tactical-pin" style="top: 68.1%; left: 77.2%;" onclick="openMapData('Most Wschodni', 'Strategicze połączenie sektorów. Blokady drogowe są tu najskuteczniejsze.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="tactical-pin" style="top: 74.5%; left: 86.3%;" onclick="openMapData('Centrum Handlowe', 'Główne skupisko sklepów i bankomatów.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="tactical-pin" style="top: 85.3%; left: 83.1%;" onclick="openMapData('Doki Portowe', 'Najdalszy punkt wschodni. Przemyt i ciężki przemysł.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 49.2%; left: 93.1%;" onclick="openMapData('Park Wschodni', 'Strefa rekreacyjna. Miejsce publiczne, monitorowane przez system miejski. Teren o niskiej przestępczości.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 68.1%; left: 77.2%;" onclick="openMapData('Węzeł Mostowy', 'Połączenie wschodu z zachodem. Najbardziej ruchliwy punkt na mapie. Częste blokady drogowe.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 74.5%; left: 86.3%;" onclick="openMapData('Dzielnica Handlowa', 'Sklepy, banki i salony samochodowe. Strefa chroniona przez prywatne firmy ochroniarskie.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 85.3%; left: 83.1%;" onclick="openMapData('Nabrzeże Portowe', 'Strefa rozładunkowa. Import i eksport towarów. Teren kontrolowany przez silne wpływy dokerów.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
             </div>
         </section>
 
@@ -441,19 +451,23 @@
 
         <section id="rules" class="tab-pane">
             <div class="max-w-4xl mx-auto glass-card">
-                <h3 class="text-3xl font-black uppercase italic mb-10 text-center text-yellow-400">Regulamin Hamburg RP</h3>
+                <h3 class="text-3xl font-black uppercase italic mb-10 text-center text-yellow-400">Kodeks Rozgrywki PrimeRP</h3>
                 <div class="space-y-8 h-[600px] overflow-y-auto pr-6 custom-scroll">
                     <div class="border-b border-white/5 pb-6">
-                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§1. Zasady Ogólne</h4>
-                        <p class="text-gray-500">Każdy gracz zobowiązany jest do posiadania sprawnego mikrofonu i przestrzegania zasad netykiety.</p>
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§1. Zasady Ogólne i Kultura</h4>
+                        <p class="text-gray-500">Każdy gracz zobowiązany jest do posiadania sprawnego mikrofonu i przestrzegania netykiety. Obrażanie graczy poza rolą jest surowo karane.</p>
                     </div>
                     <div class="border-b border-white/5 pb-6">
-                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§2. Rozgrywka (RP)</h4>
-                        <p class="text-gray-500">Zabrania się wychodzenia z roli (OOC w IC). RDM, VDM oraz Combat Log są karane banem permanentnym.</p>
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§2. In-Character (IC) vs Out-of-Character (OOC)</h4>
+                        <p class="text-gray-500">Zabrania się wychodzenia z roli. Informacje zdobyte poza grą (MetaGaming) nie mogą być wykorzystane w rozgrywce fabularnej.</p>
                     </div>
                     <div class="border-b border-white/5 pb-6">
-                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§3. Frakcje i Organizacje</h4>
-                        <p class="text-gray-500">Wszelkie akcje agresywne wymagają podłoża fabularnego. Napady muszą być zgłaszane przez system w grze.</p>
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§3. RDM, VDM oraz FailRP</h4>
+                        <p class="text-gray-500">Zabijanie bez powodu (RDM) oraz używanie pojazdów jako broni (VDM) skutkuje natychmiastowym banem permanentnym bez możliwości apelacji.</p>
+                    </div>
+                    <div class="border-b border-white/5 pb-6">
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§4. Akcje Agresywne i Napady</h4>
+                        <p class="text-gray-500">Wszelkie napady na banki lub sklepy wymagają obecności minimalnej liczby funkcjonariuszy LSPD na służbie.</p>
                     </div>
                 </div>
             </div>
@@ -461,28 +475,30 @@
 
         <section id="report" class="tab-pane">
             <div class="max-w-2xl mx-auto glass-card border-t-4 border-red-600">
-                <h3 class="text-3xl font-black uppercase italic mb-8 text-center">Zgłoś Incydent</h3>
+                <h3 class="text-3xl font-black uppercase italic mb-8 text-center">Centrum Zgłoszeń</h3>
+                <p class="text-gray-500 text-center mb-8 uppercase text-[10px] tracking-widest">Wiadomość zostanie przesłana na kanał #tickets administracji</p>
                 <div class="space-y-4">
-                    <input type="text" id="rep-subject" placeholder="Temat (np. Bug, Skarga na gracza)" class="form-input">
-                    <textarea id="rep-body" placeholder="Opisz dokładnie całe zajście..." class="form-input h-48 resize-none"></textarea>
-                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Prześlij do administracji</button>
+                    <input type="text" id="rep-subject" placeholder="Temat (np. Bug, Skarga na gracza ID)" class="form-input">
+                    <textarea id="rep-body" placeholder="Opisz dokładnie całe zajście, podaj datę i godzinę..." class="form-input h-48 resize-none"></textarea>
+                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Prześlij Ticket</button>
                 </div>
             </div>
         </section>
 
         <section id="login" class="tab-pane">
             <div class="max-w-md mx-auto glass-card">
-                <h3 class="text-2xl font-black uppercase italic mb-8 text-center">Logowanie Terminalowe</h3>
+                <h3 class="text-2xl font-black uppercase italic mb-8 text-center">Autoryzacja Systemowa</h3>
                 <div class="space-y-4">
                     <div class="input-group">
                         <label class="text-[10px] font-bold text-dim uppercase mb-2 block">Identyfikator</label>
-                        <input type="text" id="auth-user" class="form-input" placeholder="Wpisz login...">
+                        <input type="text" id="auth-user" class="form-input" placeholder="Login użytkownika">
                     </div>
                     <div class="input-group">
                         <label class="text-[10px] font-bold text-dim uppercase mb-2 block">Klucz Dostępu</label>
                         <input type="password" id="auth-pass" class="form-input" placeholder="••••••••">
                     </div>
-                    <button onclick="tryLogin()" class="btn-action">Zaloguj</button>
+                    <button onclick="tryLogin()" class="btn-action">Rozpocznij Sesję</button>
+                    <p class="text-center text-[10px] text-dim uppercase mt-4">Wymagane poświadczenia poziomu 2</p>
                 </div>
             </div>
         </section>
@@ -490,15 +506,15 @@
         <section id="admin-db" class="tab-pane">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 <div class="glass-card">
-                    <h3 class="text-xl font-black uppercase italic mb-6">Rejestracja Nowego Konta</h3>
+                    <h3 class="text-xl font-black uppercase italic mb-6">Zarejestruj Obywatela</h3>
                     <div class="space-y-4">
-                        <input type="text" id="db-new-user" placeholder="Nazwa użytkownika" class="form-input">
-                        <input type="text" id="db-new-pass" placeholder="Hasło" class="form-input">
-                        <button onclick="addUserToDB()" class="btn-action bg-green-600 text-white">Dodaj Rekord</button>
+                        <input type="text" id="db-new-user" placeholder="Nowa nazwa użytkownika" class="form-input">
+                        <input type="text" id="db-new-pass" placeholder="Nowe hasło" class="form-input">
+                        <button onclick="addUserToDB()" class="btn-action bg-green-600 text-white">Dodaj Rekord Do Bazy</button>
                     </div>
                 </div>
                 <div class="glass-card">
-                    <h3 class="text-xl font-black uppercase italic mb-6">Baza Danych Kont</h3>
+                    <h3 class="text-xl font-black uppercase italic mb-6">Aktywne Konta</h3>
                     <div id="db-user-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-4">
                         </div>
                 </div>
@@ -526,9 +542,9 @@
             <p id="s-info-desc" class="text-gray-500 italic mb-10 px-6"></p>
             
             <div class="text-left space-y-4">
-                <label class="text-[10px] font-bold text-dim uppercase">Szybka wiadomość (Discord)</label>
-                <textarea id="s-msg-content" class="form-input h-32 resize-none" placeholder="Twoja wiadomość..."></textarea>
-                <button onclick="sendStaffMessage()" class="btn-action">Wyślij przez bramkę</button>
+                <label class="text-[10px] font-bold text-dim uppercase">Wyślij wiadomość bezpośrednią</label>
+                <textarea id="s-msg-content" class="form-input h-32 resize-none" placeholder="Twoja wiadomość do tego członka administracji..."></textarea>
+                <button onclick="sendStaffMessage()" class="btn-action">Wyślij przez Webhook</button>
             </div>
         </div>
     </div>
@@ -536,19 +552,19 @@
     <script>
         // --- KONFIGURACJA DANYCH ---
         const staffDatabase = [
-            { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Owner", desc: "Główny deweloper i fundator PrimeRP. Zarządza całością infrastruktury.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "! KUBA", role: "CO-Owner", desc: "Współzałożyciel. Odpowiada za integracje systemowe i kadrę.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "Czesio", role: "2ND CO-Owner", desc: "Zarządzanie frakcjami porządkowymi i balansem rozgrywki.", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" },
-            { name: "Posel", role: "Zarząd", desc: "Opiekun administracji. Rozstrzyga spory i nadzoruje kulturę gry.", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp" },
-            { name: "klaudiaa<3", role: "Trial Admin", desc: "Młodsza administratorka. Pomoc w ticketach i sprawach bieżących.", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" },
-            { name: "_X4Miki", role: "Trial Admin", desc: "Wsparcie techniczne w terenie i nadzór nad nowymi graczami.", img: "https://i.postimg.cc/sDfw1Wvs/1991785604-tojabetter-jpg-0d3cc87805663cc513833a3e9d19796c.webp" },
-            { name: "Itzz_Stysiu", role: "Senior Mod", desc: "Bardzo doświadczony moderator. Ekspert od spraw trudnych.", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp" },
-            { name: "VGSxVexu💛", role: "Support", desc: "Pierwsza linia kontaktu. Pomaga w problemach technicznych.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
-            { name: "Kokos", role: "Support", desc: "Specjalista od weryfikacji graczy i onboardingu.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
-            { name: "Artur", role: "Technik", desc: "Budowniczy map i systemów bazodanowych.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" }
+            { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Owner", desc: "Najwyższy ranga w projekcie PrimeRP. Deweloper i założyciel.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "! KUBA", role: "CO-Owner", desc: "Zarządzanie sprawami technicznymi i personelem.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "Czesio", role: "2ND CO-Owner", desc: "Nadzór nad frakcjami państwowymi i balansem gry.", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" },
+            { name: "Posel", role: "Zarząd", desc: "Opiekun administracji i główny moderator systemu.", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp" },
+            { name: "klaudiaa<3", role: "Trial Admin", desc: "Wsparcie techniczne i opieka nad nowymi zgłoszeniami.", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" },
+            { name: "_X4Miki", role: "Trial Admin", desc: "Kontrola realizmu rozgrywki oraz weryfikacja podań.", img: "https://i.postimg.cc/sDfw1Wvs/1991785604-tojabetter-jpg-0d3cc87805663cc513833a3e9d19796c.webp" },
+            { name: "Itzz_Stysiu", role: "Senior Mod", desc: "Doświadczony moderator polowy. Nadzór nad eventami.", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp" },
+            { name: "VGSxVexu💛", role: "Support", desc: "Pomoc graczom w sprawach technicznych i weryfikacja.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
+            { name: "Kokos", role: "Support", desc: "Nadzór nad porządkiem na serwerze Discord i ticketami.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
+            { name: "Artur", role: "Technik", desc: "Specjalista od map, skryptów oraz optymalizacji bazy.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" }
         ];
 
-        let localAccounts = JSON.parse(localStorage.getItem('prime_sys_accounts')) || [];
+        let localAccounts = JSON.parse(localStorage.getItem('prime_sys_accounts_v29')) || [];
         let activeStaffTarget = "";
 
         // --- FUNKCJE STARTOWE ---
@@ -556,13 +572,13 @@
             renderStaffList();
             renderDBList();
             startDigitalClock();
-            document.getElementById('user-header').innerText = "Obywatel";
+            document.getElementById('user-header').innerText = "GOŚĆ";
         };
 
         function startDigitalClock() {
             setInterval(() => {
                 const now = new Date();
-                document.getElementById('digital-clock').innerText = now.toLocaleTimeString('pl-PL');
+                document.getElementById('digital-clock').innerText = now.toLocaleString('pl-PL');
             }, 1000);
         }
 
@@ -572,7 +588,7 @@
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
-            element.classList.add('active');
+            if(element) element.classList.add('active');
         }
 
         // --- MAPA ---
@@ -606,10 +622,10 @@
 
         async function sendStaffMessage() {
             const text = document.getElementById('s-msg-content').value;
-            if(!text) return alert("Wiadomość jest pusta!");
+            if(!text) return alert("Treść wiadomości nie może być pusta!");
             
             const payload = {
-                content: `📩 **WIADOMOŚĆ DO ADMINISTRACJI**\n**Do:** ${activeStaffTarget}\n**Od:** ${document.getElementById('user-header').innerText}\n**Treść:** ${text}`
+                content: `📩 **NOWA WIADOMOŚĆ PRYWATNA**\n**Do:** ${activeStaffTarget}\n**Od:** ${document.getElementById('user-header').innerText}\n**Treść:** ${text}`
             };
 
             await fetch("https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8", {
@@ -618,15 +634,16 @@
                 body: JSON.stringify(payload)
             });
 
-            alert("Wiadomość została przekazana.");
+            alert("Wiadomość została wysłana do " + activeStaffTarget);
             document.getElementById('modal-staff').style.display = 'none';
+            document.getElementById('s-msg-content').value = "";
         }
 
         // --- ZGŁOSZENIA ---
         async function submitReport() {
             const s = document.getElementById('rep-subject').value;
             const b = document.getElementById('rep-body').value;
-            if(!s || !b) return alert("Uzupełnij zgłoszenie!");
+            if(!s || !b) return alert("Wypełnij temat i treść zgłoszenia!");
 
             const payload = {
                 content: `🚨 **NOWY TICKET PRIME-RP**\n**Temat:** ${s}\n**Zgłaszający:** ${document.getElementById('user-header').innerText}\n**Opis:** ${b}`
@@ -638,7 +655,7 @@
                 body: JSON.stringify(payload)
             });
 
-            alert("Zgłoszenie wysłane pomyślnie.");
+            alert("Zgłoszenie zostało zarejestrowane w systemie.");
             document.getElementById('rep-subject').value = "";
             document.getElementById('rep-body').value = "";
         }
@@ -655,7 +672,7 @@
                 if(account) {
                     loginAs(u, false);
                 } else {
-                    alert("Dane nieprawidłowe!");
+                    alert("Dane autoryzacyjne są niepoprawne!");
                 }
             }
         }
@@ -672,30 +689,36 @@
         function addUserToDB() {
             const u = document.getElementById('db-new-user').value;
             const p = document.getElementById('db-new-pass').value;
-            if(!u || !p) return alert("Wpisz dane!");
+            if(!u || !p) return alert("Podaj nazwę i hasło!");
 
             localAccounts.push({user: u, pass: p});
-            localStorage.setItem('prime_sys_accounts', JSON.stringify(localAccounts));
+            localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
             
             renderDBList();
             document.getElementById('db-new-user').value = "";
             document.getElementById('db-new-pass').value = "";
+            alert("Użytkownik dodany do bazy danych.");
         }
 
         function renderDBList() {
             const container = document.getElementById('db-user-list');
             container.innerHTML = localAccounts.map((acc, index) => `
                 <div class="flex justify-between items-center bg-black/60 p-4 rounded-xl border border-white/5">
-                    <span class="text-yellow-400 font-bold">${acc.user}</span>
-                    <button onclick="removeUser(${index})" class="text-red-500 font-black text-xs hover:underline">USUŃ</button>
+                    <div class="flex flex-col">
+                        <span class="text-yellow-400 font-bold">${acc.user}</span>
+                        <span class="text-[10px] text-dim uppercase">Poziom: Obywatel</span>
+                    </div>
+                    <button onclick="removeUser(${index})" class="text-red-500 font-black text-xs hover:text-red-300">USUŃ REKORD</button>
                 </div>
             `).join('');
         }
 
         function removeUser(i) {
-            localAccounts.splice(i, 1);
-            localStorage.setItem('prime_sys_accounts', JSON.stringify(localAccounts));
-            renderDBList();
+            if(confirm("Czy na pewno chcesz usunąć to konto z bazy?")) {
+                localAccounts.splice(i, 1);
+                localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
+                renderDBList();
+            }
         }
 
     </script>
