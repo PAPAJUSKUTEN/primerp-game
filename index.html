@@ -245,7 +245,7 @@
         <section id="home" class="tab-content active">
             <div class="custom-card border-l-4 border-yellow-400">
                 <h2 class="text-2xl font-black mb-4 uppercase italic text-yellow-400">Aktualności Projektu</h2>
-                <p class="text-gray-400 leading-relaxed mb-4">Witaj w oficjalnym systemie PrimeRP. Panel został zaktualizowany o nową hierarchię Zarządu oraz pełną mapę taktyczną serwera.</p>
+                <p class="text-gray-400 leading-relaxed mb-4">Witaj w oficjalnym systemie PrimeRP. Panel został zaktualizowany o nową hierarchię Zarządu. Wszystkie funkcje komunikacji z Ovnerem i CO-Ovnerami są aktywne.</p>
                 <div class="p-4 bg-yellow-400/5 rounded-xl border border-yellow-400/10">
                     <p class="text-xs text-white">Status Systemu: <span class="text-green-500">STABILNY</span> | Wersja: v2.6.0</p>
                 </div>
@@ -288,11 +288,10 @@
 
         <section id="map" class="tab-content">
             <div class="custom-card">
-                <h2 class="text-2xl font-black text-yellow-400 mb-6 uppercase italic">Mapa Taktyczna</h2>
-                <div class="rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
-                    <img src="https://i.postimg.cc/66vj4ZVw/Bez-tytuu.webp" alt="Mapa PrimeRP" class="w-full h-auto block transform transition-transform duration-700 hover:scale-105">
+                <h2 class="text-2xl font-black text-yellow-400 mb-6 uppercase">Mapa Taktyczna</h2>
+                <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+                    <img src="https://i.postimg.cc/66vj4ZVw/Bez-tytuu.webp" alt="Mapa PrimeRP" class="w-full h-auto block">
                 </div>
-                <p class="mt-4 text-xs text-gray-600 text-center uppercase tracking-widest">Podgląd operacyjny sektorów Hamburg</p>
             </div>
         </section>
 
@@ -352,21 +351,21 @@
 
     <script>
         const staffData = [
-            { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Ovner", desc: "Najwyższa ranga w projekcie PrimeRP. Odpowiada za całość infrastruktury.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Ovner", desc: "Najwyższy ranga w projekcie PrimeRP. Odpowiada za całość infrastruktury.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
             { name: "! KUBA", role: "CO-Ovner", desc: "Współwłaściciel projektu. Zarządzanie techniczne i kadrowe.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "Czesio", role: "2ND CO-Ovner", desc: "Zastępca współwłaściciela. Nadzór nad frakcjami i porządkiem.", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" },
-            { name: "Posel", role: "Zarząd", desc: "Członek zarządu PrimeRP. Odpowiedzialny za administrację serwera.", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp" },
+            { name: "Czesio", role: "2ND CO-Ovner", desc: "Zastępca współwłaściciela. Nadzór nad frakcjami.", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" },
+            { name: "Posel", role: "Zarząd", desc: "Członek zarządu PrimeRP. Odpowiedzialny za porządek na serwerze.", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp" },
             { name: "klaudiaa<3", role: "Trial Admin", desc: "Opiekun serwera i rozjemca sporów.", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" },
             { name: "_X4Miki", role: "Trial Admin", desc: "Dba o kulturę i realizm rozgrywki.", img: "https://i.postimg.cc/sDfw1Wvs/1991785604-tojabetter-jpg-0d3cc87805663cc513833a3e9d19796c.webp" },
             { name: "Itzz_Stysiu", role: "Senior Mod", desc: "Wsparcie techniczne wewnątrz gry.", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp" },
-            { name: "VGSxVexu💛", role: "Support", desc: "Pomoc nowym graczom i wyjaśnianie zasad.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
-            { name: "Kokos", role: "Support", desc: "Obsługa ticketów na Discordzie.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
-            { name: "Artur", role: "Technik", desc: "Osoba odpowiedzialna za skrypty i mapę.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" },
-            { name: "KASIA", role: "Moderator RP", desc: "Opiekunka frakcji EMS.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "DARIUSZ", role: "Event Manager", desc: "Twórca eventów globalnych na serwerze.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "VGSxVexu💛", role: "Support", desc: "Pomoc nowym graczom.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
+            { name: "Kokos", role: "Support", desc: "Obsługa ticketów Discord.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
+            { name: "Artur", role: "Technik", desc: "Nadzór nad akcjami policyjnymi.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" },
+            { name: "KASIA", role: "Moderator RP", desc: "Opiekunka EMS.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "DARIUSZ", role: "Event Manager", desc: "Twórca eventów globalnych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
             { name: "TOMEK", role: "Helper", desc: "Młodsza pomoc serwerowa.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
             { name: "MICHAŁ", role: "Helper", desc: "Pomocnik weryfikacyjny.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-            { name: "PAWEŁ", role: "Trial Helper", desc: "Wsparcie w prostych pracach porządkowych.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
+            { name: "PAWEŁ", role: "Trial Helper", desc: "Wsparcie w prostych pracach.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" }
         ];
 
         let dbUsers = JSON.parse(localStorage.getItem('prime_accounts_perm')) || [];
@@ -428,13 +427,13 @@
         async function submitReport() {
             const t = document.getElementById('reportTitle').value;
             const c = document.getElementById('reportContent').value;
-            if(!t || !c) return alert("Wypełnij wszystkie pola!");
+            if(!t || !c) return alert("Wypelnij pola!");
             const sender = document.getElementById('userNameDisplay').innerText;
             await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
                 method: 'POST', headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ content: `🚨 **NOWE ZGŁOSZENIE**\n**Autor:** ${sender}\n**Temat:** ${t}\n**Treść:** ${c}` })
+                body: JSON.stringify({ content: `🚨 **RAPORT SYSTEMOWY**\n**Autor:** ${sender}\n**Temat:** ${t}\n**Treść:** ${c}` })
             });
-            alert("Zgłoszenie zostało wysłane!");
+            alert("Raport został wysłany!");
             document.getElementById('reportTitle').value = "";
             document.getElementById('reportContent').value = "";
         }
@@ -470,7 +469,7 @@
             renderDBUsers();
             document.getElementById('dbUser').value = "";
             document.getElementById('dbPass').value = "";
-            alert("Użytkownik dodany!");
+            alert("Użytkownik zapisany pomyślnie!");
         }
 
         function renderDBUsers() {
@@ -478,7 +477,7 @@
             list.innerHTML = dbUsers.map((u, i) => `
                 <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl border border-gray-800">
                     <span class="font-bold text-yellow-500">${u.user}</span>
-                    <button onclick="dbDeleteUser(${i})" class="text-red-600 text-[10px] font-black">USUŃ</button>
+                    <button onclick="dbDeleteUser(${i})" class="text-red-600 text-[10px] font-black uppercase">Usuń</button>
                 </div>
             `).join('');
         }
