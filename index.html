@@ -44,7 +44,7 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="w-72 bg-[#0b0b0b] min-h-screen p-6 border-r border-gray-800 flex-shrink-0">
+  <aside id="sidebar" class="w-72 bg-[#0b0b0b] min-h-screen p-6 border-r border-gray-800 flex-shrink-0 relative z-50">
     <div class="mb-10 text-center">
       <h1 class="text-3xl font-extrabold leading-none">
         <span class="text-white">PRIME</span><br>
@@ -67,23 +67,17 @@
     </nav>
   </aside>
 
-  <main class="flex-1 p-10 overflow-y-auto h-screen relative">
-
-    <div id="mainHeader" class="mb-10 flex justify-between items-end border-b border-gray-900 pb-6">
-      <div>
+  <main class="flex-1 p-6 overflow-y-auto h-screen relative"> <div id="mainHeader" class="mb-6 flex justify-between items-end border-b border-gray-900 pb-4"> <div>
         <p class="text-gray-500 text-xs uppercase font-bold tracking-widest mb-1">Panel Użytkownika</p>
-        <h2 class="text-4xl font-black uppercase tracking-tight">Witaj, <span id="playerNameTop" class="text-yellow-400">Gość</span></h2>
-      </div>
+        <h2 class="text-3xl font-black uppercase tracking-tight">Witaj, <span id="playerNameTop" class="text-yellow-400">Gość</span></h2> </div>
       <div class="text-gray-600 text-sm font-mono uppercase" id="currentDate"></div>
     </div>
 
     <section id="home" class="tab">
       <div class="card bg-gradient-to-br from-[#0f0f0f] to-[#141414]">
-        <h2 class="text-3xl font-bold text-yellow-400 mb-4 uppercase italic">Aktualności Serwerowe</h2>
-        <div class="space-y-4 text-gray-400 leading-relaxed text-lg">
-          <p>Witamy na oficjalnej witrynie serwera **PrimeRP**. Jesteśmy dumni, że tworzysz z nami społeczność w Emergency Hamburg.</p>
-          <div class="p-5 bg-yellow-400/5 border-l-4 border-yellow-400 rounded-lg text-white font-medium">
-            🔥 Nowość: Zwiększyliśmy przejrzystość listy administracji. Możesz teraz pisać do każdego członka zespołu!
+        <h2 class="text-2xl font-bold text-yellow-400 mb-4 uppercase italic">Aktualności Serwerowe</h2> <div class="space-y-4 text-gray-400 leading-relaxed text-base"> <p>Witamy na oficjalnej witrynie serwera **PrimeRP**. Jesteśmy dumni, że tworzysz z nami społeczność w Emergency Hamburg.</p>
+          <div class="p-4 bg-yellow-400/5 border-l-4 border-yellow-400 rounded-lg text-white font-medium text-sm">
+            🔥 Nowość: Zoptymalizowaliśmy widok administracji, aby zmieścić wszystkich na jednym ekranie!
           </div>
         </div>
       </div>
@@ -91,19 +85,19 @@
 
     <section id="about" class="tab hidden">
       <div class="card border-l-4 border-yellow-400">
-        <h2 class="text-3xl font-bold text-yellow-400 mb-6 uppercase tracking-tight">🚨 Poznaj PrimeRP 🚨</h2>
-        <div class="space-y-6 text-gray-300 text-lg">
+        <h2 class="text-2xl font-bold text-yellow-400 mb-6 uppercase tracking-tight">🚨 Poznaj PrimeRP 🚨</h2>
+        <div class="space-y-6 text-gray-300 text-base">
           <p>Tworzymy najbardziej realistyczny serwer RP w świecie Emergency Hamburg na platformie Roblox.</p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
             <div class="bg-black/50 p-6 rounded-2xl border border-gray-800 flex items-center gap-5">
-              <div class="text-4xl bg-yellow-400/10 p-3 rounded-xl">🎮</div>
+              <div class="text-3xl bg-yellow-400/10 p-3 rounded-xl">🎮</div>
               <div>
                 <p class="text-[10px] uppercase text-gray-500 font-bold">KOD SERWERA EH</p>
-                <p class="text-xl font-mono font-bold tracking-[0.2em] text-white">10cap1up</p>
+                <p class="text-lg font-mono font-bold tracking-[0.2em] text-white">10cap1up</p>
               </div>
             </div>
             <div class="bg-black/50 p-6 rounded-2xl border border-gray-800 flex items-center gap-5">
-              <div class="text-4xl bg-blue-600/10 p-3 rounded-xl">🌐</div>
+              <div class="text-3xl bg-blue-600/10 p-3 rounded-xl">🌐</div>
               <div>
                 <p class="text-[10px] uppercase text-gray-500 font-bold">DISCORD</p>
                 <a href="https://discord.gg/GVfmsESq9k" target="_blank" class="text-blue-400 hover:text-blue-300 underline font-bold transition italic">DOŁĄCZ TERAZ</a>
@@ -114,143 +108,142 @@
       </div>
     </section>
 
-    <section id="staff" class="tab hidden">
-      <h2 class="text-3xl font-bold text-yellow-400 mb-8 uppercase tracking-widest italic text-center md:text-left">🛡️ Zespół Zarządzający</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section id="staff" class="tab hidden p-2"> <h2 class="text-2xl font-bold text-yellow-400 mb-6 uppercase tracking-widest italic text-center md:text-left">🛡️ Zespół Zarządzający</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
-        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin">
-          <div class="admin-avatar-container shadow-2xl">
+        <div onclick="openModal('! Kuba', 'Test', 'https://i.postimg.cc/KjvhBywK/image-14.jpg')" class="card-admin-compact">
+          <div class="admin-avatar-container-compact">
             <img src="https://i.postimg.cc/KjvhBywK/image-14.jpg" alt="Avatar" class="admin-img grayscale group-hover:grayscale-0">
           </div>
-          <h3 class="admin-name">! Kuba</h3>
-          <p class="admin-role">Test</p>
-          <p class="admin-click">Kliknij by napisać</p>
+          <h3 class="admin-name-compact">! Kuba</h3>
+          <p class="admin-role-compact">Test</p>
+          <p class="admin-click-compact">Kliknij by napisać</p>
         </div>
 
       </div>
@@ -264,7 +257,7 @@
 
     <section id="report" class="tab hidden">
       <div class="card max-w-2xl mx-auto border-t-4 border-red-600">
-        <h2 class="text-3xl font-bold text-white mb-2 uppercase">Centrum Zgłoszeń</h2>
+        <h2 class="text-2xl font-bold text-white mb-2 uppercase">Centrum Zgłoszeń</h2>
         <p class="text-gray-500 mb-6 italic text-sm">Znalazłeś błąd? Daj nam znać!</p>
         <textarea id="bugText" placeholder="Opisz problem dokładnie..." class="input h-48 resize-none mb-4 focus:border-red-600"></textarea>
         <button onclick="sendReport()" class="btn-big bg-gradient-to-r from-red-600 to-red-800 text-white border-none shadow-red-900/40">WYŚLIJ RAPORT DO SYSTEMU</button>
@@ -273,8 +266,8 @@
 
     <section id="rules" class="tab hidden">
       <div class="card max-w-3xl mx-auto">
-        <h2 class="text-3xl font-bold text-yellow-400 mb-6 border-b border-gray-800 pb-4 italic uppercase">REGULAMIN PRIME RP</h2>
-        <div class="space-y-4 text-gray-300">
+        <h2 class="text-2xl font-bold text-yellow-400 mb-6 border-b border-gray-800 pb-4 italic uppercase">REGULAMIN PRIME RP</h2>
+        <div class="space-y-4 text-gray-300 text-sm">
           <p class="bg-white/5 p-3 rounded-lg border-l-2 border-yellow-400">1. Szanuj każdego członka społeczności.</p>
           <p class="bg-white/5 p-3 rounded-lg border-l-2 border-yellow-400">2. Zakaz RDM (Random Deathmatch) i VDM (Vehicle Deathmatch).</p>
           <p class="bg-white/5 p-3 rounded-lg border-l-2 border-yellow-400">3. Zakaz ucieczki od akcji RP (Combat Log).</p>
@@ -297,41 +290,30 @@
     <section id="admin" class="tab hidden admin-full-screen">
       <div class="max-w-5xl mx-auto">
         <div class="flex justify-between items-center mb-10 bg-red-600/10 p-8 rounded-3xl border border-red-600/30">
-            <div>
-                <h2 class="text-5xl font-black text-red-500 italic uppercase">SYSTEM CORE</h2>
-                <p class="text-red-300/40 text-xs tracking-[0.5em] font-bold">PRIME ROLEPLAY ADMINISTRATION</p>
-            </div>
+            <h2 class="text-4xl font-black text-red-500 italic uppercase">ADMIN PANEL</h2>
             <button onclick="logout()" class="bg-red-600 px-10 py-4 rounded-2xl font-black hover:bg-white hover:text-red-600 transition shadow-xl">WYLOGUJ SIĘ</button>
         </div>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="card bg-black border-gray-800">
-                <h3 class="text-xl font-bold mb-6 text-white border-b border-gray-900 pb-4 uppercase">Stwórz Obywatela</h3>
+            <div class="card bg-black border-gray-800 p-8">
+                <h3 class="text-lg font-bold mb-6 text-white border-b border-gray-800 pb-4 uppercase">Dodaj Obywatela</h3>
                 <form id="createUserForm" class="space-y-4">
-                  <input id="newUser" type="text" placeholder="LOGIN" class="input bg-neutral-900">
-                  <input id="newPass" type="password" placeholder="HASŁO" class="input bg-neutral-900">
-                  <button type="submit" class="btn bg-green-600 hover:bg-green-500">UTWÓRZ KONTO W BAZIE</button>
+                  <input id="newUser" type="text" placeholder="Login" class="input bg-neutral-900">
+                  <input id="newPass" type="password" placeholder="Hasło" class="input bg-neutral-900">
+                  <button type="submit" class="btn bg-green-600">STWÓRZ KONTO</button>
                 </form>
             </div>
-            <div class="card bg-black border-gray-800">
-                <h3 class="text-xl font-bold mb-6 text-white border-b border-gray-900 pb-4 uppercase">Rejestr Kont</h3>
-                <ul id="userList" class="space-y-3 max-h-80 overflow-y-auto pr-3 custom-scroll"></ul>
+            <div class="card bg-black border-gray-800 p-8">
+                <h3 class="text-lg font-bold mb-6 text-white border-b border-gray-800 pb-4 uppercase">Zarejestrowani</h3>
+                <ul id="userList" class="space-y-3 text-sm"></ul>
             </div>
         </div>
       </div>
     </section>
 
     <section id="player" class="tab hidden">
-      <div class="card border-l-8 border-blue-600">
-        <h2 class="text-4xl font-black text-white mb-4 uppercase italic">Karta Obywatela</h2>
-        <div class="bg-white/5 p-8 rounded-2xl">
-          <p class="text-gray-500 uppercase text-xs font-bold tracking-widest mb-2">Zalogowany Profil</p>
-          <p id="playerName" class="text-blue-500 font-black text-3xl uppercase tracking-tighter"></p>
-          <div class="mt-10 pt-6 border-t border-gray-800 flex gap-10">
-            <div><p class="text-[10px] text-gray-600 font-bold uppercase">Status</p><p class="text-green-400 font-bold">AKTYWNY</p></div>
-            <div><p class="text-[10px] text-gray-600 font-bold uppercase">Ranga</p><p class="text-white font-bold">GRACZ</p></div>
-          </div>
-        </div>
+      <div class="card border-l-8 border-blue-500">
+        <h2 class="text-3xl font-black text-white mb-4 uppercase italic">Karta Obywatela</h2>
+        <p class="text-gray-400 text-base">Zalogowano jako: <span id="playerName" class="text-blue-400 font-bold uppercase"></span></p>
       </div>
     </section>
 
@@ -339,80 +321,51 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-    
     body { font-family: 'Inter', sans-serif; overflow: hidden; letter-spacing: -0.02em; }
-
-    /* Nowe style dla kart adminów */
-    .card-admin {
-      background:#0f0f0f; padding:30px; border-radius:30px;
-      border:1px solid #1a1a1a; border-top: 4px solid #fbbf24;
+    
+    /* NOWE: Style dla kompaktowych kart adminów w ADMINISTRACJI */
+    .card-admin-compact {
+      background:#0f0f0f; 
+      padding: 1.5rem; /* Zmniejszony p-30px na p-6 (1.5rem) */
+      border-radius:20px; /* Nieco mniejszy radius */
+      border:1px solid #1a1a1a; border-top: 3px solid #fbbf24; /* Cieńszy top border */
       display: flex; flex-direction: column; items: center; text-align: center;
-      cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer; transition: all 0.2s ease-out; /* Szybsza animacja */
       position: relative; overflow: hidden;
     }
-    .card-admin:hover { transform: scale(1.05) translateY(-5px); background: #111; }
+    .card-admin-compact:hover { transform: scale(1.03) translateY(-3px); background: #111; border-top-width: 4px; }
     
-    .admin-avatar-container {
-      width: 96px; height: 96px; background: #222; border-radius: 50%;
-      margin-bottom: 1rem; border: 2px solid #fbbf24; overflow: hidden;
+    .admin-avatar-container-compact {
+      width: 64px; height: 64px; /* Zmniejszone z 96px */
+      background: #222; border-radius: 50%;
+      margin-bottom: 0.75rem; border: 2px solid #fbbf24; overflow: hidden;
     }
-    .admin-img { width: 100%; height: 100%; object-cover: cover; transition: 0.5s; }
+    .admin-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
     
-    .admin-name { font-size: 1.25rem; font-weight: 800; color: white; text-transform: uppercase; font-style: italic; }
-    .admin-role { font-size: 0.65rem; font-weight: 900; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 1rem; }
-    .admin-click { font-size: 0.55rem; font-weight: 900; color: #333; text-transform: uppercase; transition: 0.3s; }
-    .card-admin:hover .admin-click { color: #3b82f6; }
+    .admin-name-compact { font-size: 1rem; font-weight: 800; color: white; text-transform: uppercase; font-style: italic; margin-bottom: 0.1rem;}
+    .admin-role-compact { font-size: 0.55rem; font-weight: 900; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.2rem; margin-bottom: 0.75rem; }
+    .admin-click-compact { font-size: 0.5rem; font-weight: 900; color: #222; text-transform: uppercase; transition: 0.3s; }
+    .card-admin-compact:hover .admin-click-compact { color: #3b82f6; }
 
-    .admin-full-screen {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #040404; z-index: 9999; padding: 60px; overflow-y: auto;
-    }
-
-    .nav-btn {
-      display:block; width:100%; text-align:left; padding:18px;
-      border-radius:18px; background:#111; border:1px solid #1f1f1f;
-      transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
-    }
-    .nav-btn:hover { background:#1a1a1a; transform: scale(1.02) translateX(10px); color: #fbbf24; border-color: #fbbf24; }
-
-    .card {
-      background:#0f0f0f; padding:45px; border-radius:35px;
-      border:1px solid #1a1a1a; box-shadow:0 15px 60px rgba(0,0,0,0.9);
-    }
-
-    .input {
-      width:100%; padding:16px; border-radius:15px;
-      background:#090909; border:1px solid #222; color: white;
-      transition: all 0.2s;
-    }
+    /* Oryginalne style */
+    .admin-full-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #050505; z-index: 9999; padding: 50px; overflow-y: auto; }
+    .nav-btn { display:block; width:100%; text-align:left; padding:16px; border-radius:15px; background:#111; border:1px solid #1f1f1f; transition:0.3s; font-weight: 700; font-size: 0.7rem;}
+    .nav-btn:hover { background:#1a1a1a; transform:translateX(8px); color: #fbbf24; }
+    .card { background:#0f0f0f; padding: 2rem; border-radius:25px; border:1px solid #1a1a1a; box-shadow:0 10px 40px rgba(0,0,0,0.7); } /* Zmniejszony padding i cień ogólny */
+    .input { width:100%; padding:12px; border-radius:12px; background:#070707; border:1px solid #222; color: white; font-size: 0.8rem; }
     .input:focus { outline: none; border-color: #fbbf24; background: #000; }
-
-    .btn {
-      width:100%; padding:16px; border-radius:15px;
-      font-weight:900; transition: 0.3s; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.7rem;
-    }
-
-    .btn-big {
-      width:100%; padding:22px; border-radius:22px;
-      background:linear-gradient(135deg,#fbbf24,#f59e0b); color: black;
-      font-weight:900; text-transform: uppercase; letter-spacing: 0.2em;
-      box-shadow:0 10px 40px rgba(251,191,36,0.2); transition: 0.4s;
-    }
-
-    .custom-scroll::-webkit-scrollbar { width: 4px; }
-    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-
+    .btn { width:100%; padding:12px; border-radius:12px; font-weight:900; transition: 0.3s; font-size: 0.7rem; }
+    .btn-big { width:100%; padding:1rem; border-radius:1rem; background:linear-gradient(90deg,#fbbf24,#f59e0b); color: black; font-weight:900; box-shadow:0 5px 20px rgba(251,191,36,0.3); transition: 0.3s; font-size: 0.8rem;}
+    .btn-big:hover { transform: translateY(-3px); }
     .hidden { display: none !important; }
   </style>
 
   <script>
-    // AKTUALNA DATA
+    // DZIEŃ
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     document.getElementById('currentDate').innerText = new Date().toLocaleDateString('pl-PL', options);
 
-    // SYSTEM MODALA
+    // SYSTEM MODALA ADMINA
     let currentAdminTarget = "";
 
     function openModal(name, role, img) {
@@ -420,20 +373,31 @@
       document.getElementById('modalName').innerText = name;
       document.getElementById('modalRole').innerText = role;
       document.getElementById('modalImg').src = img;
+      
+      // Resetuj widok modala
       document.getElementById('messageForm').classList.add('hidden');
       document.getElementById('msgBtn').classList.remove('hidden');
       document.getElementById('adminMessageText').value = "";
+      
       document.getElementById('adminModal').classList.remove('hidden');
     }
 
-    function closeModal() { document.getElementById('adminModal').classList.add('hidden'); }
-    function toggleMessageForm() { document.getElementById('messageForm').classList.toggle('hidden'); document.getElementById('msgBtn').classList.toggle('hidden'); }
+    function closeModal() {
+      document.getElementById('adminModal').classList.add('hidden');
+    }
 
-    // WEBHOOK WIADOMOŚCI
+    function toggleMessageForm() {
+      document.getElementById('messageForm').classList.toggle('hidden');
+      document.getElementById('msgBtn').classList.toggle('hidden');
+    }
+
+    // WYSYŁANIE WIADOMOŚCI DO ADMINA (NOWY WEBHOOK)
     function sendAdminMessage() {
       const msg = document.getElementById('adminMessageText').value;
-      if (!msg) return alert('Wiadomość nie może być pusta!');
+      if (!msg) return alert('Wpisz treść wiadomości.');
+
       const webhookUrl = "https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8";
+      
       fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -450,20 +414,24 @@
             timestamp: new Date()
           }]
         })
-      }).then(() => { alert('Wysłano do administratora!'); closeModal(); });
+      })
+      .then(() => {
+        alert('Wysłano do administratora!');
+        closeModal();
+      })
+      .catch(() => alert('Błąd połączenia z Discord.'));
     }
 
     // SYSTEM TABÓW
     function showTab(id){
       document.querySelectorAll('.tab').forEach(t=>t.classList.add('hidden'));
-      const target = document.getElementById(id);
-      if(target) target.classList.remove('hidden');
+      document.getElementById(id).classList.remove('hidden');
     }
 
     // WEBHOOK BŁĘDÓW
     function sendReport() {
       const text = document.getElementById('bugText').value;
-      if (!text) return alert('Opisz błąd.');
+      if (!text) return alert('Wpisz treść błędu.');
       const webhookUrl = "https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx";
       fetch(webhookUrl, {
         method: 'POST',
@@ -472,7 +440,7 @@
       }).then(() => { alert('Raport wysłany!'); document.getElementById('bugText').value = ''; });
     }
 
-    // LOGOWANIE
+    // LOGOWANIE I USERS
     let users = JSON.parse(localStorage.getItem('users') || '[]');
     function logout() { window.location.reload(); }
 
@@ -491,10 +459,10 @@
         if(user){
           document.getElementById('playerName').innerText = user.login;
           document.getElementById('playerNameTop').innerText = user.login;
+          showTab('player');
           document.getElementById('loginBtnNav').classList.add('hidden');
           document.getElementById('logoutBtnNav').classList.remove('hidden');
-          showTab('player');
-        } else { alert('Błąd logowania.'); }
+        } else { alert('Błędne dane.'); }
       }
     });
 
@@ -502,22 +470,30 @@
       e.preventDefault();
       const login = document.getElementById('newUser').value;
       const pass = document.getElementById('newPass').value;
+      if (!login || !pass) return alert('Wypełnij pola.');
       users.push({login, pass});
       localStorage.setItem('users', JSON.stringify(users));
       renderUsers();
       alert('Dodano użytkownika.');
+      document.getElementById('newUser').value='';
+      document.getElementById('newPass').value='';
     });
 
     function renderUsers(){
       const list = document.getElementById('userList');
       list.innerHTML='';
       users.forEach((u, i)=>{
-        list.innerHTML += `<li class="bg-neutral-900 p-4 rounded-2xl border border-gray-800 flex justify-between items-center"><span class="font-bold">${u.login}</span><button onclick="deleteUser(${i})" class="text-red-500 text-xs font-black">USUŃ</button></li>`;
+        list.innerHTML += `<li class="bg-neutral-900 p-3 rounded-lg border border-gray-800 flex justify-between tracking-tight"><span class="font-bold">${u.login}</span><button onclick="deleteUser(${i})" class="text-red-500 text-xs font-black">USUŃ</button></li>`;
       });
     }
 
     function deleteUser(i) { users.splice(i, 1); localStorage.setItem('users', JSON.stringify(users)); renderUsers(); }
-    window.onclick = function(e) { if (e.target == document.getElementById('adminModal')) closeModal(); }
+    
+    // Zamknij modal po kliknięciu tła (rozszerzone o poprawną weryfikację targetu)
+    window.onclick = function(e) { 
+        const modal = document.getElementById('adminModal');
+        if (e.target == modal) closeModal(); 
+    }
   </script>
 </body>
 </html>
