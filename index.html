@@ -334,51 +334,9 @@
 
         .text-glow { text-shadow: 0 0 15px var(--accent-glow); }
         .hidden { display: none; }
-
-        /* NOWY STYL DLA PROFILU FULLSCREEN */
-        .fullscreen-profile-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: #050505;
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 50px;
-            animation: paneEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
     </style>
 </head>
 <body>
-
-    <div id="fs-profile-layer" class="fullscreen-profile-overlay">
-        <div class="glass-card border-[10px] border-yellow-400 max-w-7xl w-full p-20 relative">
-            <button onclick="document.getElementById('fs-profile-layer').style.display='none'" class="absolute top-10 right-10 text-dim hover:text-white font-black text-xl uppercase tracking-tighter">Wyjdź z terminala ×</button>
-            <div class="flex flex-col md:flex-row items-center gap-20">
-                <img id="fs-p-avatar" src="" class="w-96 h-96 rounded-[60px] border-8 border-yellow-400 shadow-[0_0_50px_rgba(251,191,36,0.3)] object-cover">
-                <div class="flex-1 text-center md:text-left">
-                    <p class="text-yellow-400 font-black uppercase tracking-[0.5em] text-sm mb-4">Centralny Rejestr Obywateli PRIME RP</p>
-                    <h1 id="fs-p-name" class="text-9xl font-black italic uppercase mb-6 tracking-tighter"></h1>
-                    <div class="flex gap-6 mb-12">
-                        <span id="fs-p-job" class="bg-white/5 px-8 py-4 rounded-2xl border border-white/10 text-2xl font-bold uppercase italic"></span>
-                        <span class="bg-yellow-400 px-8 py-4 rounded-2xl text-black text-2xl font-black uppercase italic shadow-xl">Status: Aktywny</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-10">
-                        <div class="bg-black/60 p-10 rounded-[40px] border border-white/5">
-                            <p class="text-dim text-xs font-bold uppercase mb-2">Środki Płatnicze</p>
-                            <p id="fs-p-balance" class="text-6xl font-mono font-bold text-white"></p>
-                        </div>
-                        <div class="bg-black/60 p-10 rounded-[40px] border border-white/5">
-                            <p class="text-dim text-xs font-bold uppercase mb-2">Identyfikator Bankowy</p>
-                            <p id="fs-p-bankAcc" class="text-6xl font-mono font-bold text-white"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <aside class="sidebar">
         <div class="brand-section">
@@ -649,12 +607,7 @@
             document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            if(element) {
-                element.classList.add('active');
-            } else {
-                const btn = document.getElementById('btn-' + tabId);
-                if(btn) btn.classList.add('active');
-            }
+            if(element) element.classList.add('active');
         }
 
         function openMapData(title, desc, img) {
@@ -708,49 +661,145 @@
             document.getElementById('rep-body').value = "";
         }
 
+        /* --- LOGIKA LOGOWANIA I OTWIERANIA NOWEGO OKNA --- */
+
         function tryLogin() {
             const u = document.getElementById('auth-user').value;
             const p = document.getElementById('auth-pass').value;
 
             if(u === 'admin' && p === '1234') { 
-                loginAs("ADMINISTRATOR", true, null); 
+                loginAs("ADMINISTRATOR", true); 
                 return;
             }
 
             const citizen = citizenDatabase.find(c => c.user === u && c.pass === p);
             if(citizen) {
-                // LOGIKA FULLSCREEN DLA OBYWATELA
-                document.getElementById('fs-p-avatar').src = citizen.profile.avatar;
-                document.getElementById('fs-p-name').innerText = citizen.profile.fullName;
-                document.getElementById('fs-p-job').innerText = citizen.profile.job;
-                document.getElementById('fs-p-balance').innerText = citizen.profile.balance;
-                document.getElementById('fs-p-bankAcc').innerText = citizen.profile.bankAcc;
-                
-                document.getElementById('fs-profile-layer').style.display = 'flex';
-                
-                loginAs(citizen.user, false, null);
+                openProfileWindow(citizen); // Otwórz nowe okno dla obywatela
+                loginAs(citizen.user, false);
                 return;
             }
 
             const account = localAccounts.find(acc => acc.user === u && acc.pass === p);
             if(account) { 
-                loginAs(u, false, null); 
+                loginAs(u, false); 
             } else { 
-                alert("Identyfikacja nieudana. Sprawdź dane!"); 
+                alert("Identyfikacja nieudana!"); 
             }
         }
 
-        function loginAs(name, isAdmin, profile) {
+        function loginAs(name, isAdmin) {
             document.getElementById('user-header').innerText = name;
             document.getElementById('nav-login').classList.add('hidden');
             document.getElementById('nav-logout').classList.remove('hidden');
-
-            if(isAdmin) {
-                document.getElementById('nav-admin-panel').classList.remove('hidden');
-            }
+            if(isAdmin) document.getElementById('nav-admin-panel').classList.remove('hidden');
             navigateTo('home');
         }
 
+        function openProfileWindow(citizen) {
+            // Otwiera nowe okno przeglądarki o wymiarach ekranu
+            const w = window.open("", "_blank", `width=${screen.width},height=${screen.height},menubar=no,toolbar=no,location=no,status=no`);
+            
+            const profileHTML = `
+            <!DOCTYPE html>
+            <html lang="pl">
+            <head>
+                <meta charset="UTF-8">
+                <title>PRIME RP | Terminal Obywatela: ${citizen.profile.fullName}</title>
+                <script src="https://cdn.tailwindcss.com"><\/script>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=JetBrains+Mono:wght@700&display=swap');
+                    body { background: #050505; color: white; font-family: 'Inter', sans-serif; margin: 0; overflow: hidden; }
+                    .sidebar-p { width: 300px; background: #080808; border-right: 1px solid #1a1a1a; height: 100vh; padding: 40px 20px; flex-shrink: 0; }
+                    .viewport-p { flex: 1; height: 100vh; overflow-y: auto; padding: 60px; background: radial-gradient(circle at top right, #111 0%, #000 100%); }
+                    .nav-btn { width: 100%; padding: 15px; margin-bottom: 10px; background: #0f0f0f; border-radius: 12px; font-weight: 800; font-size: 12px; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: 0.3s; color: #666; }
+                    .nav-btn:hover { border-color: #fbbf24; color: white; }
+                    .nav-btn.active { background: #fbbf24; color: black; }
+                    .tab-content { display: none; animation: fadeIn 0.5s ease; }
+                    .tab-content.active { display: block; }
+                    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+                <\/style>
+            </head>
+            <body class="flex">
+                <aside class="sidebar-p">
+                    <div class="mb-10 text-center">
+                        <h2 class="text-2xl font-black italic tracking-tighter text-yellow-400">PRIME TERMINAL</h2>
+                        <p class="text-[8px] text-dim tracking-[5px] uppercase">Citizen ID: ${Math.floor(Math.random() * 9999)}<\/p>
+                    </div>
+                    <nav>
+                        <button class="nav-btn active" onclick="switchT('t-profile', this)">👤 Mój Profil<\/button>
+                        <button class="nav-btn" onclick="switchT('t-bank', this)">💳 Finanse<\/button>
+                        <button class="nav-btn" onclick="switchT('t-docs', this)">📄 Dokumenty<\/button>
+                        <button class="nav-btn" onclick="switchT('t-records', this)">⚖️ Kartoteka<\/button>
+                        <button class="nav-btn mt-20 border-red-900/30 text-red-500" onclick="window.close()">🚪 Wyloguj<\/button>
+                    </nav>
+                <\/aside>
+
+                <main class="viewport-p">
+                    <div id="t-profile" class="tab-content active">
+                        <div class="flex items-center gap-10 mb-12">
+                            <img src="${citizen.profile.avatar}" class="w-48 h-48 rounded-3xl border-4 border-yellow-400 shadow-2xl object-cover">
+                            <div>
+                                <h1 class="text-6xl font-black italic uppercase">${citizen.profile.fullName}<\/h1>
+                                <p class="text-yellow-400 text-xl font-bold uppercase tracking-widest mt-2">${citizen.profile.job}<\/p>
+                                <div class="mt-4 flex gap-4">
+                                    <span class="bg-green-600/20 text-green-500 px-4 py-1 rounded-full text-xs font-bold border border-green-500/30">STATUS: ${citizen.profile.status}<\/span>
+                                <\/div>
+                            </div>
+                        <\/div>
+                    <\/div>
+
+                    <div id="t-bank" class="tab-content">
+                        <h3 class="text-3xl font-black italic uppercase mb-8">System Bankowości<\/h3>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-white/5 p-8 rounded-3xl border border-white/10">
+                                <p class="text-gray-500 text-xs uppercase font-bold mb-2">Dostępny Balans<\/p>
+                                <p class="text-5xl font-mono text-yellow-400 font-bold">${citizen.profile.balance}<\/p>
+                            <\/div>
+                            <div class="bg-white/5 p-8 rounded-3xl border border-white/10">
+                                <p class="text-gray-500 text-xs uppercase font-bold mb-2">IBAN Konta<\/p>
+                                <p class="text-3xl font-mono text-white">${citizen.profile.bankAcc}<\/p>
+                            <\/div>
+                        <\/div>
+                    <\/div>
+
+                    <div id="t-docs" class="tab-content">
+                        <h3 class="text-3xl font-black italic uppercase mb-8">Zasoby Dokumentacji<\/h3>
+                        <div class="space-y-4">
+                            <div class="bg-white/5 p-6 rounded-2xl flex justify-between items-center border border-white/10">
+                                <div><p class="font-bold">Wiza Pobytowa<\/p><p class="text-xs text-gray-500">${citizen.profile.visaType}<\/p><\/div>
+                                <span class="text-green-500 font-black">✓ AKTYWNA<\/span>
+                            <\/div>
+                            <div class="bg-white/5 p-6 rounded-2xl flex justify-between items-center border border-white/10">
+                                <div><p class="font-bold">Ubezpieczenie Medyczne<\/p><p class="text-xs text-gray-500">${citizen.profile.insurance}<\/p><\/div>
+                                <span class="text-yellow-500 font-black">WAŻNE<\/span>
+                            <\/div>
+                        <\/div>
+                    <\/div>
+
+                    <div id="t-records" class="tab-content">
+                        <h3 class="text-3xl font-black italic uppercase mb-8">Rejestr Karny<\/h3>
+                        <div class="bg-red-600/10 border border-red-600/30 p-10 rounded-3xl text-center">
+                            <p class="text-red-500 font-black text-2xl mb-2">WYNIK: ${citizen.profile.criminalRecord}<\/p>
+                            <p class="text-gray-500">Brak aktywnych wpisów w Departamencie Sprawiedliwości.<\/p>
+                        <\/div>
+                    <\/div>
+                <\/main>
+
+                <script>
+                    function switchT(tabId, btn) {
+                        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                        document.getElementById(tabId).classList.add('active');
+                        btn.classList.add('active');
+                    }
+                <\/script>
+            </body>
+            </html>
+            `;
+            w.document.write(profileHTML);
+        }
+
+        // Pozostałe funkcje administracyjne bez zmian
         function renderDBList() {
             const list = document.getElementById('db-user-list');
             list.innerHTML = localAccounts.map((acc, idx) => `
