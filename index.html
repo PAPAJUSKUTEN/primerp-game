@@ -3,131 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME RP | Advanced Management System v5.0 FINAL</title>
+    <title>PRIME RP | Oficjalna Strona PrimeRP</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/g0cRLPHz/a4324af6-1492-4782-b7b6-db9eeb0833bf-2-removebg-preview.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+        /* Import czcionek premium */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
 
-        /* --- PRIME RP GLOBAL VARIABLES ---
-           Definicja kolorystyki i parametrów systemowych
-        */
         :root {
-            --prime-yellow: #fbbf24;
-            --prime-yellow-glow: rgba(251, 191, 36, 0.3);
-            --bg-deep: #030303;
-            --bg-panel: #080808;
-            --bg-card: #0c0c0c;
-            --bg-card-hover: #121212;
-            --border-dim: #1a1a1a;
-            --border-bright: #2a2a2a;
+            --accent-color: #fbbf24;
+            --accent-glow: rgba(251, 191, 36, 0.4);
+            --bg-ultra-dark: #050505;
+            --bg-card: #0b0b0b;
+            --bg-sidebar: #080808;
+            --border-color: #1a1a1a;
             --text-main: #ffffff;
-            --text-muted: #6b7280;
-            --status-online: #10b981;
-            --status-offline: #ef4444;
-            --sidebar-width: 320px;
-            --transition-fast: 0.2s;
-            --transition-slow: 0.5s;
+            --text-dim: #666666;
+            --danger: #dc2626;
+            --success: #16a34a;
         }
 
-        /* --- CORE RESET --- */
+        /* Reset i bazy stylów */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            outline: none;
             -webkit-font-smoothing: antialiased;
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--prime-yellow); }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-deep);
+            background-color: var(--bg-ultra-dark);
             color: var(--text-main);
             height: 100vh;
-            width: 100vw;
             display: flex;
             overflow: hidden;
         }
 
-        /* --- ANIMATION ENGINE --- */
-        @keyframes pageFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes sidebarSlide {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(0); }
-        }
-
-        @keyframes pulseYellow {
-            0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(251, 191, 36, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        @keyframes glitch {
-            0% { clip: rect(44px, 450px, 56px, 0); }
-            20% { clip: rect(12px, 450px, 20px, 0); }
-            40% { clip: rect(80px, 450px, 90px, 0); }
-            60% { clip: rect(2px, 450px, 5px, 0); }
-            80% { clip: rect(60px, 450px, 70px, 0); }
-            100% { clip: rect(30px, 450px, 40px, 0); }
-        }
-
-        /* --- SIDEBAR ARCHITECTURE --- */
-        .app-sidebar {
-            width: var(--sidebar-width);
-            background-color: var(--bg-panel);
-            border-right: 1px solid var(--border-dim);
+        /* --- SIDEBAR (PANEL BOCZNY) --- */
+        .sidebar {
+            width: 320px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            padding: 40px 24px;
-            position: relative;
-            z-index: 1000;
-            animation: sidebarSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 45px 25px;
+            z-index: 100;
+            flex-shrink: 0;
         }
 
-        .brand-container {
-            margin-bottom: 60px;
-            padding: 0 10px;
+        .brand-section {
             text-align: center;
+            margin-bottom: 60px;
         }
 
-        .brand-main {
-            font-size: 3.5rem;
+        .brand-logo {
+            font-size: 3rem;
             font-weight: 900;
-            letter-spacing: -4px;
-            line-height: 0.85;
-            background: linear-gradient(180deg, #fff 20%, #444 100%);
+            letter-spacing: -3px;
+            line-height: 0.8;
+            background: linear-gradient(to bottom, #fff 0%, #666 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .brand-tagline {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 10px;
+            margin-top: 10px;
             text-transform: uppercase;
         }
 
-        .brand-sub {
-            color: var(--prime-yellow);
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 12px;
-            margin-top: 15px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px var(--prime-yellow-glow);
-        }
-
-        .nav-group {
+        .navigation-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -137,674 +88,715 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            padding: 20px 25px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border-dim);
-            border-radius: 20px;
-            color: var(--text-muted);
+            padding: 18px 22px;
+            background-color: #0f0f0f;
+            border: 1px solid #141414;
+            border-radius: 16px;
+            color: var(--text-dim);
             font-size: 0.8rem;
             font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .nav-link:hover {
-            border-color: var(--prime-yellow);
             color: #fff;
-            transform: translateX(12px);
-            background: rgba(251, 191, 36, 0.05);
+            background-color: #121212;
+            border-color: var(--accent-color);
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         .nav-link.active {
-            background: var(--prime-yellow);
+            background-color: var(--accent-color);
             color: #000;
-            border-color: var(--prime-yellow);
-            box-shadow: 0 15px 30px var(--prime-yellow-glow);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 30px var(--accent-glow);
         }
 
-        /* --- VIEWPORT ARCHITECTURE --- */
-        .app-main {
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* --- GŁÓWNY OBSZAR ROBOCZY --- */
+        .viewport {
             flex: 1;
-            padding: 60px 100px;
+            padding: 60px;
             overflow-y: auto;
-            background: radial-gradient(circle at top right, #0d0d0d 0%, #030303 100%);
             position: relative;
+            background: radial-gradient(circle at top right, #111111 0%, #050505 100%);
         }
 
-        .section-pane {
+        .tab-pane {
             display: none;
-            animation: pageFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: paneEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .section-pane.active {
+        .tab-pane.active {
             display: block;
         }
 
-        /* --- UI COMPONENTS --- */
-        .prime-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dim);
-            border-radius: 40px;
-            padding: 45px;
-            transition: all 0.4s ease;
+        @keyframes paneEnter {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* --- INTERAKTYWNA MAPA V3 --- */
+        .tactical-map-wrapper {
             position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #000;
+            border-radius: 40px;
+            border: 4px solid #1a1a1a;
             overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
         }
 
-        .prime-card:hover {
-            border-color: var(--prime-yellow);
-            background: var(--bg-card-hover);
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        .map-render {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.8;
+            transition: opacity 0.8s ease;
         }
 
-        .prime-card::after {
+        .tactical-map-wrapper:hover .map-render {
+            opacity: 1;
+        }
+
+        /* Pinezki */
+        .tactical-pin {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background-color: var(--accent-color);
+            border: 5px solid #ffffff;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .tactical-pin:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: #fff;
+            border-color: var(--accent-color);
+            z-index: 20;
+        }
+
+        .tactical-pin::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(251, 191, 36, 0.02) 100%);
-            pointer-events: none;
+            inset: -8px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            animation: pinRipple 2s infinite;
         }
 
-        .stat-badge {
-            background: rgba(255,255,255,0.03);
-            padding: 15px 30px;
-            border-radius: 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            border: 1px solid var(--border-dim);
-            color: var(--text-muted);
+        @keyframes pinRipple {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
         }
 
-        .btn-prime {
+        /* --- KARTY I GRID --- */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .glass-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 28px;
+            transition: all 0.4s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-8px);
+            background-color: #0e0e0e;
+        }
+
+        .staff-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 3px solid var(--accent-color);
+            padding: 4px;
+            object-fit: cover;
+            background-color: #000;
+        }
+
+        /* --- SYSTEM FORMULARZY --- */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            background-color: #050505;
+            border: 1px solid #1a1a1a;
+            padding: 20px;
+            border-radius: 18px;
+            color: #fff;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-color);
+            background-color: #080808;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
+        }
+
+        .btn-action {
             width: 100%;
             padding: 22px;
-            background: var(--prime-yellow);
+            background-color: var(--accent-color);
             color: #000;
             font-weight: 900;
-            font-size: 0.9rem;
-            border-radius: 20px;
+            border: none;
+            border-radius: 18px;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
             transition: 0.3s;
-            border: none;
         }
 
-        .btn-prime:hover {
+        .btn-action:hover {
             opacity: 0.9;
             transform: scale(0.98);
-            box-shadow: 0 10px 30px var(--prime-yellow-glow);
         }
 
-        /* --- TACTICAL MAP ENGINE --- */
-        .tactical-map-container {
-            position: relative;
-            width: 100%;
-            max-width: 1300px;
-            margin: 0 auto;
-            border-radius: 50px;
-            border: 4px solid var(--border-bright);
-            overflow: hidden;
-            box-shadow: 0 60px 120px rgba(0,0,0,0.8);
-        }
-
-        .map-image {
-            width: 100%;
-            height: auto;
-            opacity: 0.7;
-            transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: brightness(0.6) contrast(1.2) saturate(0.5);
-        }
-
-        .tactical-map-container:hover .map-image {
-            opacity: 1;
-            filter: brightness(1) contrast(1) saturate(1);
-            transform: scale(1.02);
-        }
-
-        .map-pin {
-            position: absolute;
-            width: 34px;
-            height: 34px;
-            background: var(--prime-yellow);
-            border: 6px solid #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 50;
-            transform: translate(-50%, -50%);
-            animation: pulseYellow 2.5s infinite;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .map-pin:hover {
-            transform: translate(-50%, -50%) scale(1.8);
-            background: #fff;
-            border-color: var(--prime-yellow);
-        }
-
-        /* --- STAFF GRID SYSTEM --- */
-        .staff-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .staff-card {
-            background: #090909;
-            border: 1px solid var(--border-dim);
-            border-radius: 35px;
-            padding: 40px;
-            text-align: center;
-            transition: 0.4s;
-        }
-
-        .staff-card:hover {
-            border-color: var(--prime-yellow);
-            background: #111;
-        }
-
-        .staff-avatar {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            margin: 0 auto 25px;
-            border: 4px solid var(--prime-yellow);
-            padding: 6px;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-
-        .staff-card:hover .staff-avatar {
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        /* --- MODAL SYSTEM --- */
-        .modal-overlay {
+        /* --- MODALE --- */
+        .modal-background {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.96);
-            backdrop-filter: blur(25px);
+            background-color: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 10000;
+            z-index: 1000;
             padding: 40px;
         }
 
         .modal-content {
-            background: #070707;
-            border: 1px solid var(--prime-yellow);
+            background-color: #0a0a0a;
+            border: 1px solid var(--accent-color);
             width: 100%;
-            max-width: 750px;
-            border-radius: 50px;
-            padding: 60px;
+            max-width: 600px;
+            border-radius: 45px;
+            padding: 50px;
+            text-align: center;
             position: relative;
-            box-shadow: 0 0 100px rgba(251, 191, 36, 0.1);
+            animation: modalScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* --- TERMINAL (PANEL OBYWATELA) --- */
-        .citizen-portal {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            z-index: 11000;
-            display: flex;
-            animation: pageFadeIn 0.8s ease;
+        @keyframes modalScale {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .portal-sidebar {
-            width: 380px;
-            background: #080808;
-            border-right: 1px solid #1a1a1a;
-            padding: 60px 45px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .portal-main {
-            flex: 1;
-            padding: 100px;
-            overflow-y: auto;
-            background: radial-gradient(circle at center, #111, #000);
-        }
-
-        /* --- KODEKS KARNY STYLES --- */
-        .law-section {
-            background: rgba(255,255,255,0.01);
-            padding: 30px;
-            border-radius: 25px;
-            border: 1px solid var(--border-dim);
+        .close-modal {
+            position: absolute;
+            top: 30px;
+            right: 35px;
+            font-size: 2rem;
+            color: #444;
+            cursor: pointer;
             transition: 0.3s;
         }
 
-        .law-section:hover {
-            background: rgba(255,255,255,0.03);
-            border-color: rgba(255,255,255,0.1);
-        }
+        .close-modal:hover { color: #fff; }
 
-        .law-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 8px;
-            font-size: 0.65rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+        .text-glow { text-shadow: 0 0 15px var(--accent-glow); }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <aside class="app-sidebar">
-        <div class="brand-container">
-            <h1 class="brand-main">PRIME</h1>
-            <p class="brand-sub">PROJECT</p>
+    <aside class="sidebar">
+        <div class="brand-section">
+            <h1 class="brand-logo">PRIME</h1>
+            <p class="brand-tagline">PROJECT</p>
         </div>
-
-        <nav class="nav-group">
-            <div class="nav-link active" onclick="navTo('home', this)">
-                <span>🏠</span> Terminal Główny
+        
+        <nav class="navigation-list">
+            <div class="nav-link active" id="btn-home" onclick="navigateTo('home', this)">
+                <span>🏠</span> O Nas / Nowości
             </div>
-            <div class="nav-link" onclick="navTo('map', this)">
-                <span>🗺️</span> Mapa Taktyczna
+            <div class="nav-link" id="btn-map" onclick="navigateTo('map', this)">
+                <span>🗺️</span> Mapa Sektorów
             </div>
-            <div class="nav-link" onclick="navTo('staff', this)">
-                <span>🛡️</span> Zarząd Projektu
+            <div class="nav-link" id="btn-staff" onclick="navigateTo('staff', this)">
+                <span>🛡️</span> Administracja
             </div>
-            <div class="nav-link" onclick="navTo('rules', this)">
-                <span>📜</span> Kodeks Karny
+            <div class="nav-link" id="btn-rules" onclick="navigateTo('rules', this)">
+                <span>📜</span> Regulamin Serwera
             </div>
-            <div class="nav-link" onclick="navTo('fractions', this)">
-                <span>🏢</span> Struktury Miasta
-            </div>
-            <div class="nav-link" onclick="navTo('support', this)">
-                <span>🐞</span> Centrum Raportowania
+            <div class="nav-link" id="btn-report" onclick="navigateTo('report', this)">
+                <span>🐞</span> Centrum Zgłoszeń
             </div>
         </nav>
 
-        <div class="mt-auto space-y-4">
-            <div id="btn-login-main" class="nav-link" style="color: var(--prime-yellow); border-color: var(--prime-yellow-glow);" onclick="navTo('auth', this)">
-                <span>🔐</span> System Autoryzacji
+        <div class="sidebar-footer">
+            <div id="nav-login" class="nav-link" style="color: var(--accent-color); border-color: rgba(251, 191, 36, 0.2);" onclick="navigateTo('login', this)">
+                <span>🔐</span> Autoryzacja
             </div>
-            <div id="btn-admin-db" class="nav-link hidden" style="color: #4ade80;" onclick="navTo('admin', this)">
-                <span>⚙️</span> Baza Lokalna
+            <div id="nav-admin-panel" class="nav-link hidden" style="color: #4ade80; border-color: rgba(74, 222, 128, 0.2);" onclick="navigateTo('admin-db', this)">
+                <span>⚙️</span> Zarządzanie Bazą
             </div>
-            <div id="btn-logout-main" class="nav-link hidden" style="color: var(--status-offline);" onclick="location.reload()">
-                <span>🚪</span> Zamknij Sesję
+            <div id="nav-logout" class="nav-link hidden" style="color: var(--danger); border-color: rgba(220, 38, 38, 0.2);" onclick="location.reload()">
+                <span>🚪</span> Wyloguj System
             </div>
         </div>
     </aside>
 
-    <main class="app-main">
+    <main class="viewport">
         
-        <header class="flex justify-between items-end mb-24">
+        <header class="flex justify-between items-center mb-16">
             <div>
-                <p class="text-[11px] font-black uppercase tracking-[0.7em] text-muted mb-4">Prime OS v5.0 // Advanced Network Management</p>
-                <h2 class="text-7xl font-black italic uppercase tracking-tighter">
-                    Status: <span id="display-user" class="text-yellow-400">UNAUTHORIZED</span>
+                <p class="text-xs font-black text-dim uppercase tracking-[0.5em] mb-2">Internal Management Platform</p>
+                <h2 class="text-5xl font-black uppercase italic tracking-tighter">
+                    Witaj, <span id="user-header" class="text-yellow-400 text-glow">Osobnik</span>
                 </h2>
             </div>
-            <div id="clock-display" class="font-mono text-3xl font-bold bg-white/5 px-12 py-6 rounded-[30px] border border-white/5 shadow-2xl">
+            <div id="digital-clock" class="font-mono text-xl text-dim bg-black/50 px-8 py-4 rounded-3xl border border-white/5 shadow-2xl">
                 00:00:00
             </div>
         </header>
 
-        <section id="home" class="section-pane active">
-            <div class="grid grid-cols-12 gap-10 mb-12">
-                <div class="col-span-8 prime-card border-l-[15px] border-yellow-400">
-                    <h3 class="text-4xl font-black uppercase italic mb-8">Witaj w Hamburg City</h3>
-                    <p class="text-muted text-xl leading-relaxed mb-10">
-                        Wkraczasz do najbardziej zaawansowanego symulatora Roleplay w Polsce. Nasza platforma v5.0 została zbudowana od podstaw, aby zapewnić najwyższą jakość interakcji, unikalne skrypty i stabilność, której nie znajdziesz nigdzie indziej.
+        <section id="home" class="tab-pane active">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
+                <div class="glass-card border-l-[6px] border-yellow-400">
+                    <h3 class="text-3xl font-black uppercase mb-6 italic">O Projekcie PrimeRP</h3>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-6">
+                        PrimeRP to innowacyjny serwer roleplay osadzony w fikcyjnej, mrocznej wersji Hamburg City. Naszą misją jest zapewnienie najwyższej jakości immersji poprzez zaawansowane systemy skryptowe, unikalną mapę oraz dojrzałą społeczność.
                     </p>
-                    <div class="flex gap-6">
-                        <div class="stat-badge">PROTOCOL: <span class="text-white">ENCRYPTED</span></div>
-                        <div class="stat-badge">SERVER: <span class="text-green-500">OPTIMIZED</span></div>
-                    </div>
-                </div>
-                <div class="col-span-4 space-y-8">
-                    <div class="prime-card text-center py-10">
-                        <p class="text-[10px] font-bold text-muted uppercase mb-3">Status Sieci</p>
-                        <p class="text-6xl font-black text-green-500">LIVE</p>
-                    </div>
-                    <div class="prime-card text-center py-10">
-                        <p class="text-[10px] font-bold text-muted uppercase mb-3">Populacja</p>
-                        <p class="text-6xl font-black text-white">54<span class="text-2xl text-muted">/64</span></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-8">
-                <div class="prime-card">
-                    <div class="text-4xl mb-6">🛰️</div>
-                    <h4 class="text-xl font-black uppercase mb-4 italic">Globalny Sync</h4>
-                    <p class="text-sm text-muted leading-relaxed">System synchronizacji OneSync Infinity zapewniający brak lagów przy dużej liczbie graczy.</p>
-                </div>
-                <div class="prime-card">
-                    <div class="text-4xl mb-6">💼</div>
-                    <h4 class="text-xl font-black uppercase mb-4 italic">Ekonomia v2</h4>
-                    <p class="text-sm text-muted leading-relaxed">Dynamiczny rynek, w którym ceny towarów zależą od działań legalnych i nielegalnych graczy.</p>
-                </div>
-                <div class="prime-card">
-                    <div class="text-4xl mb-6">🎧</div>
-                    <h4 class="text-xl font-black uppercase mb-4 italic">Audio 3D</h4>
-                    <p class="text-sm text-muted leading-relaxed">Wsparcie dla PMA-Voice z zaawansowanym systemem radia i efektami przestrzennymi.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="map" class="section-pane">
-            <div class="mb-12">
-                <h3 class="text-4xl font-black uppercase italic">Render Operacyjny Sektorów</h3>
-                <p class="text-muted text-sm tracking-widest mt-3 uppercase">Interaktywny podgląd lokalizacji strategicznych.</p>
-            </div>
-
-            <div class="tactical-map-container">
-                <img src="https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp" class="map-image">
-                <div class="map-pin" style="top: 70.3%; left: 5.1%;" onclick="showMapDetail('Sektor: Kryjówka Mafii', 'Główny punkt przerzutowy kontrabandy. Strefa o najwyższym stopniu ryzyka.', 'https://i.postimg.cc/pLfVFVQ1/Zrzut-ekranu-2026-04-07-201432.webp')"></div>
-                <div class="map-pin" style="top: 31.5%; left: 32.2%;" onclick="showMapDetail('Sektor: Północna Granica', 'Punkt kontrolny LSPD. Każdy pojazd wjeżdżający do miasta musi zostać zweryfikowany.', 'https://i.postimg.cc/C1zzkTxm/Zrzut-ekranu-2026-04-07-200736.webp')"></div>
-                <div class="map-pin" style="top: 64.2%; left: 30.1%;" onclick="showMapDetail('Sektor: Magazyny', 'Obszar wynajmu przestrzeni magazynowej. Idealne miejsce na legalny i nielegalny biznes.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="map-pin" style="top: 45.1%; left: 54.3%;" onclick="showMapDetail('Sektor: Centrum Medyczne', 'Główny szpital Hamburg City. Obszar chroniony przez systemy EMS.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="map-pin" style="top: 69.5%; left: 45.4%;" onclick="showMapDetail('Sektor: Rondo Logistyczne', 'Serce komunikacyjne miasta. Stąd ruszają wszystkie konwoje towarowe.', 'https://i.postimg.cc/ZnjbMwRM/Zrzut-ekranu-2026-04-07-200903.webp')"></div>
-                <div class="map-pin" style="top: 77.8%; left: 40.2%;" onclick="showMapDetail('Sektor: Central Hub', 'Największe skupisko obywateli. Miejsce licznych eventów i czarnego rynku.', 'https://i.postimg.cc/CM7Qd3fB/Zrzut-ekranu-2026-04-07-201750.webp')"></div>
-                <div class="map-pin" style="top: 49.2%; left: 93.1%;" onclick="showMapDetail('Sektor: Dystrykt Handlowy', 'Luksusowe sklepy i biura. Strefa monitorowana 24/7 przez AI.', 'https://i.postimg.cc/sDZHKvN8/Zrzut-ekranu-2026-04-07-201314.webp')"></div>
-                <div class="map-pin" style="top: 68.1%; left: 77.2%;" onclick="showMapDetail('Sektor: Węzeł Wschód', 'Połączenie z autostradą międzystanową. Częste patrole drogowe LSPD.', 'https://i.postimg.cc/ZnjbMwRM/Zrzut-ekranu-2026-04-07-200903.webp')"></div>
-                <div class="map-pin" style="top: 74.5%; left: 86.3%;" onclick="showMapDetail('Sektor: Biurowce', 'Finansowe centrum miasta. Siedziba banku centralnego.', 'https://i.postimg.cc/28pMsQhf/Zrzut-ekranu-2026-04-07-201211.webp')"></div>
-                <div class="map-pin" style="top: 85.3%; left: 83.1%;" onclick="showMapDetail('Sektor: Port Hamburg', 'Rozładunek statków i nielegalne wyścigi nocne.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-            </div>
-        </section>
-
-        <section id="staff" class="section-pane">
-            <h3 class="text-4xl font-black uppercase italic mb-16">Kadra Zarządzająca Projektu</h3>
-            <div id="staff-container" class="staff-grid">
-                </div>
-        </section>
-
-        <section id="rules" class="section-pane">
-            <h3 class="text-4xl font-black uppercase italic mb-12">Kodeks Karny Hamburg City</h3>
-            <div class="grid grid-cols-2 gap-10">
-                <div class="space-y-6">
-                    <div class="law-section">
-                        <span class="law-badge bg-yellow-400 text-black">Wykroczenia Lekkie</span>
-                        <h5 class="text-white font-black mb-2">Art. 1 - Przekroczenie prędkości</h5>
-                        <p class="text-xs text-muted">Mandat w wysokości $5,000 oraz odholowanie pojazdu na parking policyjny.</p>
-                    </div>
-                    <div class="law-section">
-                        <span class="law-badge bg-yellow-400 text-black">Wykroczenia Lekkie</span>
-                        <h5 class="text-white font-black mb-2">Art. 2 - Zakłócanie ciszy nocnej</h5>
-                        <p class="text-xs text-muted">Mandat $10,000 i pouczenie funkcjonariusza.</p>
-                    </div>
-                    <div class="law-section">
-                        <span class="law-badge bg-red-600 text-white">Przestępstwa</span>
-                        <h5 class="text-white font-black mb-2">Art. 12 - Posiadanie broni bez licencji</h5>
-                        <p class="text-xs text-muted">Konfiskata mienia, $50,000 grzywny oraz 30 minut prac społecznych.</p>
-                    </div>
+                    <p class="text-gray-500 leading-relaxed">
+                        Stawiamy na realizm, sprawiedliwość i ciągły rozwój. Każdy sektor mapy, każda frakcja i każdy skrypt został zaprojektowany z myślą o unikalnych historiach naszych graczy. Serwer oferuje unikalny system gospodarczy i frakcyjny.
+                    </p>
                 </div>
                 <div class="space-y-6">
-                    <div class="law-section">
-                        <span class="law-badge bg-red-600 text-white">Zbrodnie Ciężkie</span>
-                        <h5 class="text-white font-black mb-2">Art. 45 - Napad na Placówkę Bankową</h5>
-                        <p class="text-xs text-muted">60 minut kary więzienia, grzywna $150,000 oraz dożywotni wpis do kartoteki.</p>
-                    </div>
-                    <div class="law-section">
-                        <span class="law-badge bg-red-600 text-white">Zbrodnie Ciężkie</span>
-                        <h5 class="text-white font-black mb-2">Art. 50 - Handel Substancjami Zakazanymi</h5>
-                        <p class="text-xs text-muted">Konfiskata nielegalnego towaru, grzywna $100,000 i 45 minut pozbawienia wolności.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="fractions" class="section-pane">
-            <div class="grid grid-cols-3 gap-10">
-                <div class="prime-card text-center group">
-                    <img src="https://i.postimg.cc/9F40fK17/image.png" class="w-40 h-40 mx-auto mb-8 object-contain transition-all duration-500 group-hover:scale-110">
-                    <h4 class="text-3xl font-black italic uppercase">LSPD</h4>
-                    <p class="text-muted text-xs mt-6 italic">"To Protect and to Serve" - Jednostka dbająca o ład i porządek w Hamburg City.</p>
-                </div>
-                <div class="prime-card text-center group">
-                    <img src="https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" class="w-40 h-40 mx-auto mb-8 object-contain transition-all duration-500 group-hover:scale-110">
-                    <h4 class="text-3xl font-black italic uppercase text-red-500">EMS</h4>
-                    <p class="text-muted text-xs mt-6 italic">Służby medyczne gotowe ratować życie 24 godziny na dobę.</p>
-                </div>
-                <div class="prime-card text-center group">
-                    <img src="https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" class="w-40 h-40 mx-auto mb-8 object-contain transition-all duration-500 group-hover:scale-110 opacity-60">
-                    <h4 class="text-3xl font-black italic uppercase text-yellow-500">LSC</h4>
-                    <p class="text-muted text-xs mt-6 italic">Specjaliści od tuningu i napraw mechanicznych.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="auth" class="section-pane">
-            <div class="max-w-md mx-auto">
-                <div class="prime-card">
-                    <h3 class="text-3xl font-black uppercase italic text-center mb-12">Login Terminal</h3>
-                    <div class="space-y-6">
+                    <div class="glass-card flex items-center gap-6">
+                        <div class="text-4xl">🚀</div>
                         <div>
-                            <label class="text-[10px] font-black text-muted uppercase tracking-widest mb-3 block">User Identifier</label>
-                            <input type="text" id="login-u" class="w-full bg-black border border-white/5 p-5 rounded-2xl text-white focus:border-yellow-400 transition" placeholder="Login">
+                            <h4 class="font-black uppercase italic">Wersja v3.0 Final</h4>
+                            <p class="text-dim text-sm">Zaktualizowano silnik renderowania mapy i system sektorów.</p>
                         </div>
+                    </div>
+                    <div class="glass-card flex items-center gap-6">
+                        <div class="text-4xl">💎</div>
                         <div>
-                            <label class="text-[10px] font-black text-muted uppercase tracking-widest mb-3 block">Access Key</label>
-                            <input type="password" id="login-p" class="w-full bg-black border border-white/5 p-5 rounded-2xl text-white focus:border-yellow-400 transition" placeholder="Password">
+                            <h4 class="font-black uppercase italic">Ekonomia 2.0</h4>
+                            <p class="text-dim text-sm">Nowy balans zarobków i cen nieruchomości w Hamburgu.</p>
                         </div>
-                        <button onclick="handleLogin()" class="btn-prime mt-6">INICJUJ SESJĘ</button>
+                    </div>
+                    <div class="glass-card flex items-center gap-6">
+                        <div class="text-4xl">🛡️</div>
+                        <div>
+                            <h4 class="font-black uppercase italic">Nowy Anty-Cheat</h4>
+                            <p class="text-dim text-sm">Zwiększona ochrona przed modyfikacjami wizualnymi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card text-center">
+                    <p class="text-xs font-bold text-dim uppercase mb-2">Serwer Gry</p>
+                    <p class="text-4xl font-black text-green-500">ONLINE</p>
+                    <div class="w-full bg-white/5 h-1 mt-6 rounded-full overflow-hidden">
+                        <div class="bg-green-500 w-[94%] h-full"></div>
+                    </div>
+                </div>
+                <div class="glass-card text-center">
+                    <p class="text-xs font-bold text-dim uppercase mb-2">Aktywne Połączenia</p>
+                    <p class="text-4xl font-black text-white">48 / 64</p>
+                    <p class="text-[10px] text-dim mt-4 uppercase">Aktualne obciążenie: Stabilne</p>
+                </div>
+                <div class="glass-card text-center">
+                    <p class="text-xs font-bold text-dim uppercase mb-2">Kod Dostępu</p>
+                    <p class="text-4xl font-black text-yellow-400 italic">PRIME2026</p>
+                    <p class="text-[10px] text-dim mt-4 uppercase">Wymagana weryfikacja WL</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="map" class="tab-pane">
+            <div class="mb-8">
+                <h3 class="text-3xl font-black uppercase italic">Mapa Operacyjna V3 Final</h3>
+                <p class="text-dim uppercase text-[10px] tracking-widest mt-2">Poniżej znajduje się najnowszy render mapy z zachowaniem wszystkich sektorów.</p>
+            </div>
+
+            <div class="tactical-map-wrapper">
+                <img src="https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp" class="map-render" alt="PrimeRP Map V3">
+
+                <div class="tactical-pin" style="top: 70.3%; left: 5.1%;" onclick="openMapData('Teren Mafii', 'Główny obszar farm i hodowli. Strefa o niskim natężeniu ruchu policji.', 'https://i.postimg.cc/pLfVFVQ1/Zrzut-ekranu-2026-04-07-201432.webp')"></div>
+                <div class="tactical-pin" style="top: 31.5%; left: 32.2%;" onclick="openMapData('Granica Państwa', 'Skrzyżowanie przy torach kolejowych. Kluczowy punkt przerzutowy.', 'https://i.postimg.cc/C1zzkTxm/Zrzut-ekranu-2026-04-07-200736.webp')"></div>
+                <div class="tactical-pin" style="top: 64.2%; left: 30.1%;" onclick="openMapData('Tereny Rolnicze', 'Strefa mieszkalna z dużą ilością garaży. Częste patrole jednostek.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 45.1%; left: 54.3%;" onclick="openMapData('Szpital', 'Centrum dowodzenia siłami porządkowymi w środkowej części mapy.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="tactical-pin" style="top: 69.5%; left: 45.4%;" onclick="openMapData('Rondo Za Miastem', 'Obszar składowania kontenerów. Wysokie ryzyko kradzieży.', 'https://i.postimg.cc/ZnjbMwRM/Zrzut-ekranu-2026-04-07-200903.webp')"></div>
+                <div class="tactical-pin" style="top: 77.8%; left: 40.2%;" onclick="openMapData('Teren Administracyjny', 'Miejsce spotkań nielegalnych wyścigów oraz czarny rynek.', 'https://i.postimg.cc/CM7Qd3fB/Zrzut-ekranu-2026-04-07-201750.webp')"></div>
+                <div class="tactical-pin" style="top: 49.2%; left: 93.1%;" onclick="openMapData('Jubiler', 'Strefa rekreacyjna. Miejsce publiczne, monitorowane.', 'https://i.postimg.cc/sDZHKvN8/Zrzut-ekranu-2026-04-07-201314.webp')"></div>
+                <div class="tactical-pin" style="top: 68.1%; left: 77.2%;" onclick="openMapData('Rondo Wypończynkowe', 'Połączenie wschodu z zachodem. Najbardziej ruchliwy punkt.', 'https://i.postimg.cc/ZnjbMwRM/Zrzut-ekranu-2026-04-07-200903.webp')"></div>
+                <div class="tactical-pin" style="top: 74.5%; left: 86.3%;" onclick="openMapData('Kladka nad ulicą', 'Sklepy, banki i salony samochodowe.', 'https://i.postimg.cc/28pMsQhf/Zrzut-ekranu-2026-04-07-201211.webp')"></div>
+                <div class="tactical-pin" style="top: 85.3%; left: 83.1%;" onclick="openMapData('Nabrzeże Portowe', 'Strefa rozładunkowa portu.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+            </div>
+        </section>
+
+        <section id="staff" class="tab-pane">
+            <h3 class="text-3xl font-black uppercase italic mb-10">Struktura Zarządzająca</h3>
+            <div id="staff-render-list" class="info-grid"></div>
+        </section>
+
+        <section id="rules" class="tab-pane">
+            <div class="max-w-4xl mx-auto glass-card">
+                <h3 class="text-3xl font-black uppercase italic mb-10 text-center text-yellow-400">Kodeks Rozgrywki PrimeRP</h3>
+                <div class="space-y-8 h-[600px] overflow-y-auto pr-6 custom-scroll">
+                    <div class="border-b border-white/5 pb-6">
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§1. Zasady Ogólne</h4>
+                        <p class="text-gray-500">Każdy gracz zobowiązany jest do posiadania sprawnego mikrofonu i przestrzegania netykiety. Obrażanie graczy poza rolą jest surowo karane.</p>
+                    </div>
+                    <div class="border-b border-white/5 pb-6">
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§2. In-Character (IC)</h4>
+                        <p class="text-gray-500">Zabrania się wychodzenia z roli. Informacje zdobyte poza grą (MetaGaming) nie mogą być wykorzystane w rozgrywce fabularnej.</p>
+                    </div>
+                    <div class="border-b border-white/5 pb-6">
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§3. Przestępstwa (RDM/VDM)</h4>
+                        <p class="text-gray-500">Zabijanie bez powodu (RDM) oraz używanie pojazdów jako broni (VDM) skutkuje natychmiastowym banem permanentnym.</p>
+                    </div>
+                    <div class="border-b border-white/5 pb-6">
+                        <h4 class="font-bold text-white mb-2 uppercase tracking-widest">§4. Akcje Agresywne</h4>
+                        <p class="text-gray-500">Wszelkie napady na banki lub sklepy wymagają obecności minimalnej liczby funkcjonariuszy LSPD na służbie.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="support" class="section-pane">
-            <div class="max-w-4xl mx-auto prime-card border-t-8 border-red-600">
-                <h3 class="text-4xl font-black uppercase italic mb-10 text-center">Ticket Management System</h3>
-                <div class="grid grid-cols-2 gap-8 mb-8">
-                    <input type="text" class="w-full bg-black border border-white/5 p-5 rounded-2xl" placeholder="Imię i Nazwisko IC">
-                    <select class="w-full bg-black border border-white/5 p-5 rounded-2xl text-muted">
-                        <option>Błąd skryptu</option>
-                        <option>Oszustwo / Cheat</option>
-                        <option>Problem z dotacją</option>
-                        <option>Inny problem</option>
-                    </select>
+        <section id="report" class="tab-pane">
+            <div class="max-w-2xl mx-auto glass-card border-t-4 border-red-600">
+                <h3 class="text-3xl font-black uppercase italic mb-8 text-center">Centrum Zgłoszeń</h3>
+                <div class="space-y-4">
+                    <input type="text" id="rep-subject" placeholder="Temat (np. Bug, Skarga na gracza ID)" class="form-input">
+                    <textarea id="rep-body" placeholder="Opisz dokładnie całe zajście, podaj datę i godzinę..." class="form-input h-48 resize-none"></textarea>
+                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white">Prześlij Ticket</button>
                 </div>
-                <textarea class="w-full bg-black border border-white/5 p-5 rounded-2xl h-48 mb-8" placeholder="Opisz szczegółowo sytuację (załącz dowody w postaci linków do nagrań)..."></textarea>
-                <button onclick="alert('Twoje zgłoszenie zostało wysłane do bazy danych administratorów!')" class="btn-prime bg-red-600 text-white">WYŚLIJ ZGŁOSZENIE</button>
             </div>
         </section>
 
-        <section id="admin" class="section-pane">
-            <div class="grid grid-cols-12 gap-10">
-                <div class="col-span-7 prime-card">
-                    <h4 class="text-2xl font-black uppercase italic mb-8">Lokalny Rejestr Kont</h4>
-                    <div id="db-user-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-4">
-                        </div>
-                </div>
-                <div class="col-span-5 prime-card">
-                    <h4 class="text-2xl font-black uppercase italic mb-8">Zarządzanie Danymi</h4>
-                    <div class="space-y-6">
-                        <input type="text" id="db-new-user" class="w-full bg-black border border-white/5 p-5 rounded-2xl" placeholder="Nowy Login">
-                        <input type="text" id="db-new-pass" class="w-full bg-black border border-white/5 p-5 rounded-2xl" placeholder="Nowe Hasło">
-                        <button onclick="addUserToDB()" class="btn-prime">DODAJ REKORD</button>
+        <section id="login" class="tab-pane">
+            <div class="max-w-md mx-auto glass-card">
+                <h3 class="text-2xl font-black uppercase italic mb-8 text-center">Autoryzacja Systemowa</h3>
+                <div class="space-y-4">
+                    <div class="input-group">
+                        <label class="text-[10px] font-bold text-dim uppercase mb-2 block">Identyfikator</label>
+                        <input type="text" id="auth-user" class="form-input" placeholder="Login użytkownika">
                     </div>
+                    <div class="input-group">
+                        <label class="text-[10px] font-bold text-dim uppercase mb-2 block">Klucz Dostępu</label>
+                        <input type="password" id="auth-pass" class="form-input" placeholder="••••••••">
+                    </div>
+                    <button onclick="tryLogin()" class="btn-action">Zaloguj</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="admin-db" class="tab-pane">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div class="glass-card">
+                    <h3 class="text-xl font-black uppercase italic mb-6">Dodaj Konto</h3>
+                    <div class="space-y-4">
+                        <input type="text" id="db-new-user" placeholder="Nazwa użytkownika" class="form-input">
+                        <input type="text" id="db-new-pass" placeholder="Hasło" class="form-input">
+                        <button onclick="addUserToDB()" class="btn-action bg-green-600 text-white">Dodaj Rekord</button>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3 class="text-xl font-black uppercase italic mb-6">Lista Kont</h3>
+                    <div id="db-user-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-4"></div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <div id="map-modal" class="modal-overlay" onclick="if(event.target==this) this.style.display='none'">
+    <div id="modal-map" class="modal-background" onclick="if(event.target == this) this.style.display='none'">
         <div class="modal-content">
-            <span class="absolute top-10 right-10 text-3xl text-muted cursor-pointer hover:text-white" onclick="document.getElementById('map-modal').style.display='none'">&times;</span>
-            <img id="modal-img" src="" class="w-full h-80 object-cover rounded-[40px] mb-10 border border-white/10">
-            <h2 id="modal-title" class="text-5xl font-black uppercase italic text-yellow-400 mb-6"></h2>
-            <p id="modal-desc" class="text-muted text-xl leading-relaxed"></p>
+            <span class="close-modal" onclick="document.getElementById('modal-map').style.display='none'">×</span>
+            <img id="m-info-img" src="" class="w-full h-64 object-cover rounded-[30px] mb-8 border border-white/10 shadow-2xl">
+            <h2 id="m-info-title" class="text-4xl font-black uppercase italic mb-4 text-yellow-400"></h2>
+            <p id="m-info-desc" class="text-gray-400 text-lg leading-relaxed mb-10"></p>
+            <button class="btn-action" onclick="document.getElementById('modal-map').style.display='none'">Powrót do mapy</button>
+        </div>
+    </div>
+
+    <div id="modal-staff" class="modal-background" onclick="if(event.target == this) this.style.display='none'">
+        <div class="modal-content">
+            <span class="close-modal" onclick="document.getElementById('modal-staff').style.display='none'">×</span>
+            <img id="s-info-img" src="" class="staff-avatar w-32 h-32 mb-6">
+            <h2 id="s-info-name" class="text-3xl font-black uppercase italic mb-1"></h2>
+            <p id="s-info-role" class="text-yellow-400 font-bold uppercase tracking-widest text-xs mb-8"></p>
+            <p id="s-info-desc" class="text-gray-500 italic mb-10 px-6"></p>
+            <div class="text-left space-y-4">
+                <label class="text-[10px] font-bold text-dim uppercase">Wiadomość Discord</label>
+                <textarea id="s-msg-content" class="form-input h-32 resize-none" placeholder="Twoja wiadomość..."></textarea>
+                <button onclick="sendStaffMessage()" class="btn-action">Wyślij przez Webhook</button>
+            </div>
         </div>
     </div>
 
     <script src="users.js"></script>
+
     <script>
-        /* --- GLOBAL SYSTEM DATA ---
-           Baza 12 administratorów projektu
-        */
         const staffDatabase = [
-            { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Owner / Head Dev", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", bio: "Główny architekt systemów Hamburg City." },
-            { name: "! KUBA", role: "CO-Owner", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", bio: "Zarządzanie infrastrukturą serwerową." },
-            { name: "Czesio", role: "2ND CO-Owner", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp", bio: "Opiekun struktur frakcyjnych." },
-            { name: "Posel", role: "Prezes", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp", bio: "Koordynator pracy całego sztabu." },
-            { name: "klaudiaa<3", role: "Trial Admin", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp", bio: "Wsparcie techniczne i moderacja RP." },
-            { name: "_X4Miki", role: "Trial Admin", img: "https://i.postimg.cc/sDfw1Wvs/1991785604-tojabetter-jpg-0d3cc87805663cc513833a3e9d19796c.webp", bio: "Zarządzanie systemem WhiteList." },
-            { name: "Itzz_Stysiu", role: "Senior Mod", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp", bio: "Opiekun moderatorów polowych." },
-            { name: "VGSxVexu💛", role: "Support", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp", bio: "Pomoc nowym graczom na serwerze." },
-            { name: "Kokos", role: "Support", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp", bio: "Moderacja ticketów discordowych." },
-            { name: "! laczekk", role: "Support", img: "https://i.postimg.cc/TPxMMrb8/0b921f0878a6e549b4c31efc29383d1b.webp", bio: "Pomoc techniczna ds. instalacji." },
-            { name: "tymi1_3", role: "Support", img: "https://i.postimg.cc/prb1zvBx/Playboi-Carti-604x900.webp", bio: "Nadzór nad wydarzeniami medialnymi." },
-            { name: "Artur", role: "Technik", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp", bio: "Logistyka i optymalizacja skryptów." }
+            { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Owner", desc: "Najwyższy ranga w projekcie. Założyciel.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "! KUBA", role: "CO-Owner", desc: "Zarządzanie sprawami technicznymi.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+            { name: "Czesio", role: "2ND CO-Owner", desc: "Nadzór nad frakcjami państwowymi.", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" },
+            { name: "Posel", role: "Prezes", desc: "Opiekun administracji.", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp" },
+            { name: "klaudiaa<3", role: "Trial Admin", desc: "Wsparcie techniczne i opieka nad zgłoszeniami.", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" },
+            { name: "_X4Miki", role: "Trial Admin", desc: "Kontrola realizmu rozgrywki.", img: "https://i.postimg.cc/sDfw1Wvs/1991785604-tojabetter-jpg-0d3cc87805663cc513833a3e9d19796c.webp" },
+            { name: "Itzz_Stysiu", role: "Senior Mod", desc: "Doświadczony moderator polowy.", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp" },
+            { name: "VGSxVexu💛", role: "Support", desc: "Pomoc graczom w sprawach technicznych.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
+            { name: "Kokos", role: "Support", desc: "Nadzór nad porządkiem na Discordzie.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
+            { name: "! laczekk", role: "Support", desc: "Specjalista od map i skryptów.", img: "https://i.postimg.cc/TPxMMrb8/0b921f0878a6e549b4c31efc29383d1b.webp" },
+            { name: "tymi1_3", role: "Support", desc: "Zarządzanie eventami i wsparcie deweloperskie.", img: "https://i.postimg.cc/prb1zvBx/Playboi-Carti-604x900.webp" },
+            { name: "Artur", role: "Technik", desc: "Opieka nad nowymi graczami i WhiteList.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" }
         ];
 
-        let localAccounts = JSON.parse(localStorage.getItem('prime_sys_db_v5')) || [];
+        let localAccounts = JSON.parse(localStorage.getItem('prime_sys_accounts_v29')) || [];
+        let activeStaffTarget = "";
 
-        /* --- SYSTEM INITIALIZATION --- */
         window.onload = () => {
-            renderStaffGrid();
+            renderStaffList();
             renderDBList();
-            initClock();
-            console.log("PRIME OS: SYSTEM READY");
+            startDigitalClock();
         };
 
-        function initClock() {
+        function startDigitalClock() {
             setInterval(() => {
                 const now = new Date();
-                document.getElementById('clock-display').innerText = now.toLocaleTimeString('pl-PL');
+                document.getElementById('digital-clock').innerText = now.toLocaleString('pl-PL');
             }, 1000);
         }
 
-        function navTo(paneId, element) {
-            document.querySelectorAll('.section-pane').forEach(p => p.classList.remove('active'));
+        function navigateTo(tabId, element) {
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            document.getElementById(paneId).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
             if(element) element.classList.add('active');
         }
 
-        function renderStaffGrid() {
-            const target = document.getElementById('staff-container');
-            target.innerHTML = staffDatabase.map(s => `
-                <div class="staff-card">
+        function openMapData(title, desc, img) {
+            document.getElementById('m-info-title').innerText = title;
+            document.getElementById('m-info-desc').innerText = desc;
+            document.getElementById('m-info-img').src = img;
+            document.getElementById('modal-map').style.display = 'flex';
+        }
+
+        function renderStaffList() {
+            const list = document.getElementById('staff-render-list');
+            list.innerHTML = staffDatabase.map(s => `
+                <div class="glass-card text-center cursor-pointer" onclick="openStaffProfile('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
                     <img src="${s.img}" class="staff-avatar">
-                    <h4 class="text-white font-black uppercase italic text-sm tracking-tighter">${s.name}</h4>
-                    <p class="text-yellow-400 text-[10px] font-bold uppercase tracking-widest mt-2">${s.role}</p>
-                    <p class="text-[10px] text-muted mt-5 italic leading-relaxed">${s.bio}</p>
+                    <h4 class="font-black text-sm uppercase italic">${s.name}</h4>
+                    <p class="text-yellow-400 text-[10px] font-bold tracking-widest mt-1 uppercase">${s.role}</p>
                 </div>
             `).join('');
         }
 
-        function showMapDetail(title, desc, img) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerText = desc;
-            document.getElementById('modal-img').src = img;
-            document.getElementById('map-modal').style.display = 'flex';
+        function openStaffProfile(n, r, i, d) {
+            activeStaffTarget = n;
+            document.getElementById('s-info-name').innerText = n;
+            document.getElementById('s-info-role').innerText = r;
+            document.getElementById('s-info-img').src = i;
+            document.getElementById('s-info-desc').innerText = d;
+            document.getElementById('modal-staff').style.display = 'flex';
         }
 
-        /* --- AUTHENTICATION LOGIC --- */
-        function handleLogin() {
-            const u = document.getElementById('login-u').value;
-            const p = document.getElementById('login-p').value;
+        async function sendStaffMessage() {
+            const text = document.getElementById('s-msg-content').value;
+            if(!text) return alert("Pusta wiadomość!");
+            const payload = { content: `📩 **WIADOMOŚĆ**\n**Do:** ${activeStaffTarget}\n**Od:** ${document.getElementById('user-header').innerText}\n**Treść:** ${text}` };
+            await fetch("https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8", {
+                method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
+            });
+            alert("Wysłano wiadomość!");
+            document.getElementById('modal-staff').style.display = 'none';
+        }
 
-            // Admin Override
-            if(u === 'admin' && p === 'prime2024') {
-                document.getElementById('display-user').innerText = "SYSTEM ADMINISTRATOR";
-                document.getElementById('btn-login-main').classList.add('hidden');
-                document.getElementById('btn-admin-db').classList.remove('hidden');
-                document.getElementById('btn-logout-main').classList.remove('hidden');
-                navTo('home');
+        async function submitReport() {
+            const s = document.getElementById('rep-subject').value;
+            const b = document.getElementById('rep-body').value;
+            if(!s || !b) return alert("Uzupełnij pola!");
+            const payload = { content: `🚨 **NOWE ZGŁOSZENIE**\n**Temat:** ${s}\n**Zgłaszający:** ${document.getElementById('user-header').innerText}\n**Opis:** ${b}` };
+            await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
+                method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
+            });
+            alert("Zgłoszenie wysłane!");
+            document.getElementById('rep-subject').value = "";
+            document.getElementById('rep-body').value = "";
+        }
+
+        /* --- LOGIKA LOGOWANIA I WYŚWIETLANIA PROFILU W TEJ SAMEJ KARCIE --- */
+
+        function tryLogin() {
+            const u = document.getElementById('auth-user').value;
+            const p = document.getElementById('auth-pass').value;
+
+            if(u === 'admin' && p === '1234') { 
+                loginAs("ADMINISTRATOR", true); 
                 return;
             }
 
-            // Database Search
-            if(typeof citizenDatabase !== 'undefined') {
-                const citizen = citizenDatabase.find(c => c.user === u && c.pass === p);
-                if(citizen) {
-                    renderCitizenPortal(citizen);
-                } else {
-                    alert("ACCESS DENIED: Niepoprawne poświadczenia.");
-                }
+            const citizen = citizenDatabase.find(c => c.user === u && c.pass === p);
+            if(citizen) {
+                renderProfileInSameTab(citizen); // Zmiana: Otwórz profil w tej samej karcie
+                return;
+            }
+
+            const account = localAccounts.find(acc => acc.user === u && acc.pass === p);
+            if(account) { 
+                loginAs(u, false); 
+            } else { 
+                alert("Identyfikacja nieudana!"); 
             }
         }
 
-        function renderCitizenPortal(data) {
-            const portal = document.createElement('div');
-            portal.className = 'citizen-portal';
-            portal.innerHTML = `
-                <aside class="portal-sidebar">
-                    <div class="mb-20 text-center">
-                        <h2 class="text-3xl font-black italic text-yellow-400">PRIME_ROOT</h2>
-                        <p class="text-muted text-[10px] uppercase mt-2">Active Session: ${data.user}</p>
+        function loginAs(name, isAdmin) {
+            document.getElementById('user-header').innerText = name;
+            document.getElementById('nav-login').classList.add('hidden');
+            document.getElementById('nav-logout').classList.remove('hidden');
+            if(isAdmin) document.getElementById('nav-admin-panel').classList.remove('hidden');
+            navigateTo('home');
+        }
+
+        function renderProfileInSameTab(citizen) {
+            const profileHTML = `
+            <!DOCTYPE html>
+            <div id="citizen-terminal-root" class="flex" style="background: #050505; color: white; font-family: 'Inter', sans-serif; height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: 9999; overflow: hidden;">
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=JetBrains+Mono:wght@700&display=swap');
+                    .sidebar-p { width: 300px; background: #080808; border-right: 1px solid #1a1a1a; height: 100vh; padding: 40px 20px; flex-shrink: 0; }
+                    .viewport-p { flex: 1; height: 100vh; overflow-y: auto; padding: 60px; background: radial-gradient(circle at top right, #111 0%, #000 100%); }
+                    .nav-btn { width: 100%; padding: 15px; margin-bottom: 10px; background: #0f0f0f; border-radius: 12px; font-weight: 800; font-size: 12px; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: 0.3s; color: #666; }
+                    .nav-btn:hover { border-color: #fbbf24; color: white; }
+                    .nav-btn.active { background: #fbbf24; color: black; }
+                    .tab-content { display: none; animation: fadeIn 0.5s ease; }
+                    .tab-content.active { display: block; }
+                    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+                </style>
+                
+                <aside class="sidebar-p">
+                    <div class="mb-10 text-center">
+                        <h2 class="text-2xl font-black italic tracking-tighter text-yellow-400">PRIME TERMINAL</h2>
+                        <p class="text-[8px] text-dim tracking-[5px] uppercase">Citizen ID: ${Math.floor(Math.random() * 9999)}</p>
                     </div>
-                    <div class="space-y-4">
-                        <button onclick="switchTab('p-core', this)" class="btn-prime">Moje Dane</button>
-                        <button onclick="switchTab('p-bank', this)" class="btn-prime !bg-white/5 !text-white">System Bankowy</button>
-                        <button onclick="switchTab('p-law', this)" class="btn-prime !bg-white/5 !text-red-500">Kartoteka</button>
-                        <button onclick="location.reload()" class="btn-prime !bg-red-800 !text-white mt-20">WYLOGUJ</button>
-                    </div>
+                    <nav>
+                        <button class="nav-btn active" onclick="switchT('t-profile', this)">👤 Mój Profil</button>
+                        <button class="nav-btn" onclick="switchT('t-bank', this)">💳 Finanse</button>
+                        <button class="nav-btn" onclick="switchT('t-docs', this)">📄 Dokumenty</button>
+                        <button class="nav-btn" onclick="switchT('t-records', this)">⚖️ Kartoteka</button>
+                        <button class="nav-btn mt-20 border-red-900/30 text-red-500" onclick="location.reload()">🚪 Wyloguj</button>
+                    </nav>
                 </aside>
-                <main class="portal-main">
-                    <div id="p-core" class="p-pane">
-                        <div class="flex items-center gap-16 mb-20">
-                            <img src="${data.profile.avatar}" class="w-72 h-72 rounded-[50px] border-8 border-yellow-400 object-cover shadow-2xl">
+
+                <main class="viewport-p">
+                    <div id="t-profile" class="tab-content active">
+                        <div class="flex items-center gap-10 mb-12">
+                            <img src="${citizen.profile.avatar}" class="w-48 h-48 rounded-3xl border-4 border-yellow-400 shadow-2xl object-cover">
                             <div>
-                                <h1 class="text-8xl font-black italic uppercase tracking-tighter">${data.profile.fullName}</h1>
-                                <p class="text-yellow-400 text-3xl font-bold uppercase mt-4">${data.profile.job}</p>
-                                <span class="inline-block mt-8 px-8 py-3 bg-green-500 text-black font-black rounded-xl uppercase text-sm">Status: ${data.profile.status}</span>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-3 gap-10">
-                            <div class="prime-card">
-                                <p class="text-xs font-black text-muted uppercase">Typ Wizy</p>
-                                <h3 class="text-3xl font-black mt-4">${data.profile.visaType}</h3>
-                            </div>
-                            <div class="prime-card">
-                                <p class="text-xs font-black text-muted uppercase">Ubezpieczenie</p>
-                                <h3 class="text-3xl font-black mt-4">${data.profile.insurance}</h3>
-                            </div>
-                            <div class="prime-card">
-                                <p class="text-xs font-black text-muted uppercase">Numer Konta</p>
-                                <h3 class="text-2xl font-black mt-4 font-mono">${data.profile.bankAcc}</h3>
+                                <h1 class="text-6xl font-black italic uppercase">${citizen.profile.fullName}</h1>
+                                <p class="text-yellow-400 text-xl font-bold uppercase tracking-widest mt-2">${citizen.profile.job}</p>
+                                <div class="mt-4 flex gap-4">
+                                    <span class="bg-green-600/20 text-green-500 px-4 py-1 rounded-full text-xs font-bold border border-green-500/30">STATUS: ${citizen.profile.status}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div id="p-bank" class="p-pane hidden">
-                        <h2 class="text-6xl font-black italic mb-12 uppercase">Centralny System Bankowy</h2>
-                        <div class="bg-yellow-400 p-20 rounded-[60px] text-black shadow-2xl">
-                            <p class="text-2xl font-bold opacity-60">DOSTĘPNE ŚRODKI (USD)</p>
-                            <h3 class="text-[12rem] font-black font-mono leading-none mt-10">${data.profile.balance}</h3>
+
+                    <div id="t-bank" class="tab-content">
+                        <h3 class="text-3xl font-black italic uppercase mb-8">System Bankowości</h3>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-white/5 p-8 rounded-3xl border border-white/10">
+                                <p class="text-gray-500 text-xs uppercase font-bold mb-2">Dostępny Balans</p>
+                                <p class="text-5xl font-mono text-yellow-400 font-bold">${citizen.profile.balance}</p>
+                            </div>
+                            <div class="bg-white/5 p-8 rounded-3xl border border-white/10">
+                                <p class="text-gray-500 text-xs uppercase font-bold mb-2">IBAN Konta</p>
+                                <p class="text-3xl font-mono text-white">${citizen.profile.bankAcc}</p>
+                            </div>
                         </div>
                     </div>
-                    <div id="p-law" class="p-pane hidden">
-                        <h2 class="text-6xl font-black italic mb-12 uppercase text-red-600">Rejestr Kryminalny</h2>
-                        <div class="bg-red-600/10 border-4 border-red-600 p-20 rounded-[60px]">
-                            <p class="text-2xl font-bold text-red-600 uppercase">Wynik Wyszukiwania</p>
-                            <h3 class="text-7xl font-black mt-10">${data.profile.criminalRecord}</h3>
-                            <p class="text-muted mt-10 text-xl">Wszystkie dane są synchronizowane w czasie rzeczywistym z bazą LSPD MDT.</p>
+
+                    <div id="t-docs" class="tab-content">
+                        <h3 class="text-3xl font-black italic uppercase mb-8">Zasoby Dokumentacji</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white/5 p-6 rounded-2xl flex justify-between items-center border border-white/10">
+                                <div><p class="font-bold">Wiza Pobytowa</p><p class="text-xs text-gray-500">${citizen.profile.visaType}</p></div>
+                                <span class="text-green-500 font-black">✓ AKTYWNA</span>
+                            </div>
+                            <div class="bg-white/5 p-6 rounded-2xl flex justify-between items-center border border-white/10">
+                                <div><p class="font-bold">Ubezpieczenie Medyczne</p><p class="text-xs text-gray-500">${citizen.profile.insurance}</p></div>
+                                <span class="text-yellow-500 font-black">WAŻNE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="t-records" class="tab-content">
+                        <h3 class="text-3xl font-black italic uppercase mb-8">Rejestr Karny</h3>
+                        <div class="bg-red-600/10 border border-red-600/30 p-10 rounded-3xl text-center">
+                            <p class="text-red-500 font-black text-2xl mb-2">WYNIK: ${citizen.profile.criminalRecord}</p>
+                            <p class="text-gray-500">Brak aktywnych wpisów w Departamencie Sprawiedliwości.</p>
                         </div>
                     </div>
                 </main>
+            </div>
             `;
-            document.body.appendChild(portal);
-            window.switchTab = function(id, btn) {
-                document.querySelectorAll('.p-pane').forEach(p => p.classList.add('hidden'));
-                document.getElementById(id).classList.remove('hidden');
+            
+            document.body.innerHTML = profileHTML;
+
+            window.switchT = function(tabId, btn) {
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                btn.classList.add('active');
             };
         }
 
-        /* --- ADMIN DATABASE FUNCTIONS --- */
+        // Pozostałe funkcje administracyjne bez zmian
         function renderDBList() {
             const list = document.getElementById('db-user-list');
             list.innerHTML = localAccounts.map((acc, idx) => `
-                <div class="flex justify-between items-center bg-black/40 p-6 rounded-2xl border border-white/5 hover:border-yellow-400 transition">
+                <div class="flex justify-between items-center bg-black/30 p-4 rounded-xl border border-white/5">
                     <div>
-                        <p class="text-white font-black text-lg">${acc.user}</p>
-                        <p class="text-muted font-mono text-xs tracking-widest">${acc.pass}</p>
+                        <p class="text-white font-bold text-sm">${acc.user}</p>
+                        <p class="text-dim text-[10px] tracking-widest">${acc.pass}</p>
                     </div>
-                    <button onclick="removeUserFromDB(${idx})" class="bg-red-600/20 text-red-500 px-6 py-3 rounded-xl font-black hover:bg-red-600 hover:text-white transition">USUŃ</button>
+                    <button onclick="removeUser(${idx})" class="text-red-500 hover:text-white transition">USUŃ</button>
                 </div>
             `).join('');
         }
@@ -812,20 +804,17 @@
         function addUserToDB() {
             const u = document.getElementById('db-new-user').value;
             const p = document.getElementById('db-new-pass').value;
-            if(!u || !p) return alert("BŁĄD: Uzupełnij wszystkie pola!");
+            if(!u || !p) return alert("Uzupełnij dane!");
             localAccounts.push({user: u, pass: p});
-            localStorage.setItem('prime_sys_db_v5', JSON.stringify(localAccounts));
+            localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
             renderDBList();
-            document.getElementById('db-new-user').value = '';
-            document.getElementById('db-new-pass').value = '';
+            alert("Konto dodane do bazy lokalnej!");
         }
 
-        function removeUserFromDB(idx) {
-            if(confirm("Czy na pewno chcesz usunąć ten rekord?")) {
-                localAccounts.splice(idx, 1);
-                localStorage.setItem('prime_sys_db_v5', JSON.stringify(localAccounts));
-                renderDBList();
-            }
+        function removeUser(idx) {
+            localAccounts.splice(idx, 1);
+            localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
+            renderDBList();
         }
     </script>
 </body>
