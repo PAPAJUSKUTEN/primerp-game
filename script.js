@@ -1,36 +1,22 @@
 /**
  * Główny skrypt obsługujący logikę platformy PRIME RP
- * Poprawiona wersja z pełnym profilem administratora.
+ * Skupiony na informacyjnych profilach administracji i systemie autoryzacji.
  */
 
 const staffDatabase = [
-    { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Owner", desc: "Najwyższy ranga w projekcie. Założyciel.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-    { name: "! KUBA", role: "CO-Owner", desc: "Zarządzanie sprawami technicznymi.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
-    { name: "Czesio", role: "2ND CO-Owner", desc: "Nadzór nad frakcjami państwowymi.", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" },
-    { name: "Posel", role: "Prezes", desc: "Opiekun administracji.", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp" },
-    { name: "klaudiaa<3", role: "Trial Admin", desc: "Wsparcie techniczne i opieka nad zgłoszeniami.", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" },
-    { name: "_X4Miki", role: "Trial Admin", desc: "Kontrola realizmu rozgrywki.", img: "https://i.postimg.cc/sDfw1Wvs/1991785604-tojabetter-jpg-0d3cc87805663cc513833a3e9d19796c.webp" },
-    { name: "Itzz_Stysiu", role: "Senior Mod", desc: "Doświadczony moderator polowy.", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp" },
-    { name: "VGSxVexu💛", role: "Support", desc: "Pomoc graczom w sprawach technicznych.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
-    { name: "Kokos", role: "Support", desc: "Nadzór nad porządkiem na Discordzie.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
-    { name: "! laczekk", role: "Support", desc: "Specjalista od map i skryptów.", img: "https://i.postimg.cc/TPxMMrb8/0b921f0878a6e549b4c31efc29383d1b.webp" },
-    { name: "tymi1_3", role: "Support", desc: "Zarządzanie eventami i wsparcie deweloperskie.", img: "https://i.postimg.cc/prb1zvBx/Playboi-Carti-604x900.webp" },
-    { name: "Artur", role: "Technik", desc: "Opieka nad nowymi graczami i WhiteList.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" }
+    { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Owner", desc: "Najwyższy ranga w projekcie. Założyciel i główny deweloper PrimeRP.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+    { name: "! KUBA", role: "CO-Owner", desc: "Zarządzanie sprawami technicznymi oraz koordynacja działań zarządu.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
+    { name: "Czesio", role: "2ND CO-Owner", desc: "Nadzór nad frakcjami państwowymi oraz dbanie o porządek w strukturach LSPD/EMS.", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" },
+    { name: "Posel", role: "Prezes", desc: "Opiekun administracji, odpowiedzialny za rekrutację i dyscyplinę wewnątrz ekipy.", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp" },
+    { name: "klaudiaa<3", role: "Trial Admin", desc: "Wsparcie techniczne i opieka nad zgłoszeniami graczy (Tickety).", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" },
+    { name: "_X4Miki", role: "Trial Admin", desc: "Kontrola realizmu rozgrywki oraz nadzór nad akcjami RP.", img: "https://i.postimg.cc/sDfw1Wvs/1991785604-tojabetter-jpg-0d3cc87805663cc513833a3e9d19796c.webp" },
+    { name: "Itzz_Stysiu", role: "Senior Mod", desc: "Doświadczony moderator polowy, specjalista od spornych sytuacji.", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp" },
+    { name: "VGSxVexu💛", role: "Support", desc: "Pomoc nowym graczom w stawianiu pierwszych kroków na serwerze.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
+    { name: "Kokos", role: "Support", desc: "Nadzór nad porządkiem na Discordzie oraz forum serwerowym.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
+    { name: "! laczekk", role: "Support", desc: "Specjalista od map i skryptów wspomagający deweloperów.", img: "https://i.postimg.cc/TPxMMrb8/0b921f0878a6e549b4c31efc29383d1b.webp" },
+    { name: "tymi1_3", role: "Support", desc: "Zarządzanie eventami serwerowymi i wsparcie techniczne.", img: "https://i.postimg.cc/prb1zvBx/Playboi-Carti-604x900.webp" },
+    { name: "Artur", role: "Technik", desc: "Opieka nad nowymi graczami oraz procesami WhiteList.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" }
 ];
-
-// Dane konta Administratora (Ownera)
-const adminProfile = {
-    user: "admin",
-    pass: "1234",
-    profile: {
-        fullName: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴",
-        avatar: "https://i.postimg.cc/KjvhBywK/image-14.jpg",
-        job: "Właściciel Projektu",
-        status: "ADMINISTRATOR",
-        balance: "999,999,999 $",
-        bankAcc: "PRIME-0001-OWNER"
-    }
-};
 
 let localAccounts = JSON.parse(localStorage.getItem('prime_sys_accounts_v29')) || [];
 let activeStaffTarget = "";
@@ -41,6 +27,9 @@ window.onload = function() {
     startDigitalClock();
 };
 
+/**
+ * Zegar cyfrowy w nagłówku
+ */
 function startDigitalClock() {
     setInterval(() => {
         const now = new Date();
@@ -49,6 +38,9 @@ function startDigitalClock() {
     }, 1000);
 }
 
+/**
+ * Nawigacja między zakładkami
+ */
 function navigateTo(tabId, element) {
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -64,25 +56,24 @@ function navigateTo(tabId, element) {
     }
 }
 
-function openMapData(title, desc, img) {
-    document.getElementById('m-info-title').innerText = title;
-    document.getElementById('m-info-desc').innerText = desc;
-    document.getElementById('m-info-img').src = img;
-    document.getElementById('modal-map').style.display = 'flex';
-}
-
+/**
+ * Renderowanie listy administracji w zakładce "Administracja"
+ */
 function renderStaffList() {
     const list = document.getElementById('staff-render-list');
     if(!list) return;
     list.innerHTML = staffDatabase.map(s => `
-        <div class="glass-card text-center cursor-pointer" onclick="openStaffProfile('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
-            <img src="${s.img}" class="staff-avatar">
+        <div class="glass-card text-center cursor-pointer transform hover:scale-105 transition-all" onclick="openStaffProfile('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
+            <img src="${s.img}" class="staff-avatar mb-4">
             <h4 class="font-black text-sm uppercase italic">${s.name}</h4>
             <p class="text-yellow-400 text-[10px] font-bold tracking-widest mt-1 uppercase">${s.role}</p>
         </div>
     `).join('');
 }
 
+/**
+ * Otwieranie modalnego "Profilu Informacyjnego" członka ekipy
+ */
 function openStaffProfile(n, r, i, d) {
     activeStaffTarget = n;
     document.getElementById('s-info-name').innerText = n;
@@ -92,91 +83,80 @@ function openStaffProfile(n, r, i, d) {
     document.getElementById('modal-staff').style.display = 'flex';
 }
 
+/**
+ * Wysyłanie wiadomości do członka administracji przez Discord Webhook
+ */
 async function sendStaffMessage() {
     const text = document.getElementById('s-msg-content').value;
     if(!text) return alert("Pusta wiadomość!");
     const sender = document.getElementById('user-header').innerText;
-    const payload = { content: `📩 **WIADOMOŚĆ**\n**Do:** ${activeStaffTarget}\n**Od:** ${sender}\n**Treść:** ${text}` };
+    
+    const payload = { 
+        content: `📩 **NOWA WIADOMOŚĆ DO EKIPY**\n**Do:** ${activeStaffTarget}\n**Od:** ${sender}\n**Treść:** ${text}` 
+    };
     
     try {
         await fetch("https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8", {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify(payload)
         });
-        alert("Wysłano wiadomość!");
+        alert("Wiadomość została przesłana!");
         document.getElementById('modal-staff').style.display = 'none';
         document.getElementById('s-msg-content').value = "";
-    } catch(e) { alert("Błąd Webhooka."); }
+    } catch(e) {
+        alert("Wystąpił błąd przy wysyłaniu wiadomości.");
+    }
 }
 
-async function submitReport() {
-    const s = document.getElementById('rep-subject').value;
-    const b = document.getElementById('rep-body').value;
-    if(!s || !b) return alert("Uzupełnij pola!");
-    const sender = document.getElementById('user-header').innerText;
-    const payload = { content: `🚨 **ZGŁOSZENIE**\n**Temat:** ${s}\n**Od:** ${sender}\n**Opis:** ${b}` };
-    
-    try {
-        await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
-            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
-        });
-        alert("Zgłoszenie wysłane!");
-        document.getElementById('rep-subject').value = "";
-        document.getElementById('rep-body').value = "";
-    } catch(e) { alert("Błąd zgłoszenia."); }
-}
-
+/**
+ * Logika Systemu Autoryzacji
+ */
 function tryLogin() {
     const u = document.getElementById('auth-user').value;
     const p = document.getElementById('auth-pass').value;
 
-    // Logowanie Admina (Głównego)
-    if(u === adminProfile.user && p === adminProfile.pass) { 
-        loginAs(adminProfile.profile.fullName, true, adminProfile.profile); 
+    // Specjalne konto Admina
+    if(u === "admin" && p === "1234") { 
+        loginAs("Administrator Systemu", true); 
         return;
     }
 
-    // Sprawdzanie citizenDatabase (z users.js)
+    // Sprawdzanie citizenDatabase (jeśli istnieje w users.js)
     if (typeof citizenDatabase !== 'undefined') {
         const citizen = citizenDatabase.find(c => c.user === u && c.pass === p);
         if(citizen) {
-            loginAs(citizen.profile.fullName, false, citizen.profile);
+            loginAs(citizen.profile.fullName, false);
             return;
         }
     }
 
-    // Sprawdzanie lokalnej bazy
+    // Sprawdzanie bazy lokalnej
     const account = localAccounts.find(acc => acc.user === u && acc.pass === p);
     if(account) { 
-        loginAs(u, false, null); 
+        loginAs(u, false); 
     } else { 
-        alert("Niepoprawne dane!"); 
+        alert("Niepoprawny identyfikator lub klucz dostępu!"); 
     }
 }
 
-function loginAs(displayName, isAdmin, profile) {
-    document.getElementById('user-header').innerText = displayName;
+function loginAs(name, isAdmin) {
+    document.getElementById('user-header').innerText = name;
     document.getElementById('nav-login').classList.add('hidden');
     document.getElementById('nav-logout').classList.remove('hidden');
 
     if(isAdmin) {
         document.getElementById('nav-admin-panel').classList.remove('hidden');
     }
-
-    if(profile) {
-        document.getElementById('btn-profile').classList.remove('hidden');
-        document.getElementById('p-avatar').src = profile.avatar;
-        document.getElementById('p-name').innerText = profile.fullName;
-        document.getElementById('p-job').innerText = profile.job;
-        document.getElementById('p-status').innerText = profile.status;
-        document.getElementById('p-balance').innerText = profile.balance;
-        document.getElementById('p-bankAcc').innerText = profile.bankAcc;
-        navigateTo('profile');
-    } else {
-        document.getElementById('btn-profile').classList.add('hidden');
-        navigateTo('home');
-    }
+    
+    // Po zalogowaniu zostajemy na stronie głównej (Home)
+    navigateTo('home');
+    alert("Zalogowano pomyślnie jako: " + name);
 }
 
+/**
+ * Panel Zarządzania Bazą (Lokalną)
+ */
 function renderDBList() {
     const list = document.getElementById('db-user-list');
     if(!list) return;
@@ -186,7 +166,7 @@ function renderDBList() {
                 <p class="text-white font-bold text-sm">${acc.user}</p>
                 <p class="text-dim text-[10px] tracking-widest">${acc.pass}</p>
             </div>
-            <button onclick="removeUser(${idx})" class="text-red-500 hover:text-white transition">USUŃ</button>
+            <button onclick="removeUser(${idx})" class="text-red-500 hover:text-white transition text-xs font-black uppercase">Usuń</button>
         </div>
     `).join('');
 }
@@ -194,7 +174,7 @@ function renderDBList() {
 function addUserToDB() {
     const u = document.getElementById('db-new-user').value;
     const p = document.getElementById('db-new-pass').value;
-    if(!u || !p) return alert("Pola są puste!");
+    if(!u || !p) return alert("Uzupełnij pola logowania!");
     localAccounts.push({user: u, pass: p});
     localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
     renderDBList();
