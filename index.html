@@ -349,6 +349,9 @@
             <div class="nav-link active" id="btn-home" onclick="navigateTo('home', this)">
                 <span>🏠</span> O Nas / Nowości
             </div>
+            <div class="nav-link hidden" id="btn-profile" onclick="navigateTo('profile', this)">
+                <span>👤</span> Mój Profil
+            </div>
             <div class="nav-link" id="btn-map" onclick="navigateTo('map', this)">
                 <span>🗺️</span> Mapa Sektorów
             </div>
@@ -389,6 +392,35 @@
                 00:00:00
             </div>
         </header>
+
+        <section id="profile" class="tab-pane">
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-card border-t-[6px] border-yellow-400">
+                    <div class="flex flex-col md:flex-row items-center gap-12">
+                        <img id="p-avatar" src="" class="w-48 h-48 rounded-[40px] border-4 border-yellow-400 shadow-2xl object-cover">
+                        <div class="text-center md:text-left flex-1">
+                            <p class="text-yellow-400 font-black uppercase tracking-[0.3em] text-xs mb-2">Oficjalna Karta Obywatela</p>
+                            <h3 id="p-name" class="text-5xl font-black italic uppercase mb-4"></h3>
+                            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                                <span class="bg-white/5 px-4 py-2 rounded-xl border border-white/10 text-dim text-xs font-bold uppercase" id="p-job"></span>
+                                <span class="bg-green-500/10 px-4 py-2 rounded-xl border border-green-500/20 text-green-500 text-xs font-bold uppercase" id="p-status">OBYWATEL</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                        <div class="bg-black/40 p-6 rounded-[24px] border border-white/5">
+                            <p class="text-dim text-[10px] font-bold uppercase mb-1">Stan Konta Bankowego</p>
+                            <p id="p-balance" class="text-3xl font-mono font-bold text-white"></p>
+                        </div>
+                        <div class="bg-black/40 p-6 rounded-[24px] border border-white/5">
+                            <p class="text-dim text-[10px] font-bold uppercase mb-1">Numer Konta</p>
+                            <p id="p-bankAcc" class="text-3xl font-mono font-bold text-white"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section id="home" class="tab-pane active">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
@@ -575,6 +607,8 @@
         </div>
     </div>
 
+    <script src="users.js"></script>
+
     <script>
         const staffDatabase = [
             { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Owner", desc: "Najwyższy ranga w projekcie. Założyciel.", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg" },
@@ -587,7 +621,6 @@
             { name: "VGSxVexu💛", role: "Support", desc: "Pomoc graczom w sprawach technicznych.", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp" },
             { name: "Kokos", role: "Support", desc: "Nadzór nad porządkiem na Discordzie.", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp" },
             { name: "! laczekk", role: "Support", desc: "Specjalista od map i skryptów.", img: "https://i.postimg.cc/TPxMMrb8/0b921f0878a6e549b4c31efc29383d1b.webp" },
-            /* NOWE PROFILE */
             { name: "tymi1_3", role: "Support", desc: "Zarządzanie eventami i wsparcie deweloperskie.", img: "https://i.postimg.cc/prb1zvBx/Playboi-Carti-604x900.webp" },
             { name: "Artur", role: "Technik", desc: "Opieka nad nowymi graczami i WhiteList.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" }
         ];
@@ -612,7 +645,14 @@
             document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            if(element) element.classList.add('active');
+            
+            // Podświetlenie odpowiedniego przycisku w menu
+            if(element) {
+                element.classList.add('active');
+            } else {
+                const btn = document.getElementById('btn-' + tabId);
+                if(btn) btn.classList.add('active');
+            }
         }
 
         function openMapData(title, desc, img) {
@@ -666,50 +706,88 @@
             document.getElementById('rep-body').value = "";
         }
 
+        // --- ZMODYFIKOWANA LOGIKA LOGOWANIA ---
         function tryLogin() {
             const u = document.getElementById('auth-user').value;
             const p = document.getElementById('auth-pass').value;
-            if(u === 'admin' && p === '1234') { loginAs("ADMINISTRATOR", true); }
-            else {
-                const account = localAccounts.find(acc => acc.user === u && acc.pass === p);
-                if(account) { loginAs(u, false); } else { alert("Dane nieprawidłowe!"); }
+
+            // 1. Sprawdź czy to Admin
+            if(u === 'admin' && p === '1234') { 
+                loginAs("ADMINISTRATOR", true, null); 
+                return;
+            }
+
+            // 2. Sprawdź w zewnętrznej bazie Obywateli (z pliku users.js)
+            const citizen = citizenDatabase.find(c => c.user === u && c.pass === p);
+            if(citizen) {
+                loginAs(citizen.user, false, citizen.profile);
+                return;
+            }
+
+            // 3. Sprawdź w lokalnej bazie (localStorage)
+            const account = localAccounts.find(acc => acc.user === u && acc.pass === p);
+            if(account) { 
+                loginAs(u, false, null); 
+            } else { 
+                alert("Identyfikacja nieudana. Sprawdź dane!"); 
             }
         }
 
-        function loginAs(name, isAdmin) {
-            document.getElementById('user-header').innerText = name.toUpperCase();
+        function loginAs(name, isAdmin, profile) {
+            document.getElementById('user-header').innerText = name;
             document.getElementById('nav-login').classList.add('hidden');
             document.getElementById('nav-logout').classList.remove('hidden');
-            if(isAdmin) document.getElementById('nav-admin-panel').classList.remove('hidden');
-            navigateTo('home', document.getElementById('btn-home'));
+
+            if(isAdmin) {
+                document.getElementById('nav-admin-panel').classList.remove('hidden');
+            }
+
+            // Jeśli zalogowano jako Obywatel z profilem
+            if(profile) {
+                document.getElementById('btn-profile').classList.remove('hidden');
+                document.getElementById('p-avatar').src = profile.avatar;
+                document.getElementById('p-name').innerText = profile.fullName;
+                document.getElementById('p-job').innerText = profile.job;
+                document.getElementById('p-status').innerText = profile.status;
+                document.getElementById('p-balance').innerText = profile.balance;
+                document.getElementById('p-bankAcc').innerText = profile.bankAcc;
+                
+                navigateTo('profile');
+            } else {
+                navigateTo('home');
+            }
+        }
+
+        // Administracja lokalną bazą (bez zmian)
+        function renderDBList() {
+            const list = document.getElementById('db-user-list');
+            list.innerHTML = localAccounts.map((acc, idx) => `
+                <div class="flex justify-between items-center bg-black/30 p-4 rounded-xl border border-white/5">
+                    <div>
+                        <p class="text-white font-bold text-sm">${acc.user}</p>
+                        <p class="text-dim text-[10px] tracking-widest">${acc.pass}</p>
+                    </div>
+                    <button onclick="removeUser(${idx})" class="text-red-500 hover:text-white transition">USUŃ</button>
+                </div>
+            `).join('');
         }
 
         function addUserToDB() {
             const u = document.getElementById('db-new-user').value;
             const p = document.getElementById('db-new-pass').value;
-            if(!u || !p) return alert("Wpisz dane!");
+            if(!u || !p) return alert("Uzupełnij dane!");
             localAccounts.push({user: u, pass: p});
             localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
             renderDBList();
-            document.getElementById('db-new-user').value = "";
-            document.getElementById('db-new-pass').value = "";
+            alert("Konto dodane do bazy lokalnej!");
         }
 
-        function renderDBList() {
-            const container = document.getElementById('db-user-list');
-            container.innerHTML = localAccounts.map((acc, index) => `
-                <div class="flex justify-between items-center bg-black/60 p-4 rounded-xl border border-white/5">
-                    <span class="text-yellow-400 font-bold">${acc.user}</span>
-                    <button onclick="removeUser(${index})" class="text-red-500 font-black text-xs hover:underline">USUŃ</button>
-                </div>
-            `).join('');
-        }
-
-        function removeUser(i) {
-            localAccounts.splice(i, 1);
+        function removeUser(idx) {
+            localAccounts.splice(idx, 1);
             localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
             renderDBList();
         }
+
     </script>
 </body>
 </html>
