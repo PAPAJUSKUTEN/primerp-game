@@ -1,122 +1,92 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIME RP | Oficjalna Strona PrimeRP</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/g0cRLPHz/a4324af6-1492-4782-b7b6-db9eeb0833bf-2-removebg-preview.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-:root {
-    --accent-color: #fbbf24;
-    --accent-glow: rgba(251, 191, 36, 0.4);
-    --bg-ultra-dark: #050505;
-    --bg-card: #0b0b0b;
-    --bg-sidebar: #080808;
-    --border-color: #1a1a1a;
-    --text-main: #ffffff;
-    --text-dim: #666666;
-    --danger: #dc2626;
-    --success: #16a34a;
-}
+    <aside class="sidebar">
+        <div class="brand-section">
+            <h1 class="brand-logo">PRIME</h1>
+            <p class="brand-tagline">PROJECT</p>
+        </div>
+        
+        <nav class="navigation-list">
+            <div class="nav-link active" id="btn-home" onclick="navigateTo('home', this)">
+                <span>🏠</span> O Nas / Nowości
+            </div>
+            <div class="nav-link hidden" id="btn-profile" onclick="navigateTo('profile', this)">
+                <span>👤</span> Mój Profil
+            </div>
+            <div class="nav-link" id="btn-map" onclick="navigateTo('map', this)">
+                <span>🗺️</span> Mapa Sektorów
+            </div>
+            <div class="nav-link" id="btn-staff" onclick="navigateTo('staff', this)">
+                <span>🛡️</span> Administracja
+            </div>
+            <div class="nav-link" id="btn-rules" onclick="navigateTo('rules', this)">
+                <span>📜</span> Regulamin Serwera
+            </div>
+            <div class="nav-link" id="btn-report" onclick="navigateTo('report', this)">
+                <span>🐞</span> Centrum Zgłoszeń
+            </div>
+        </nav>
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+        <div class="sidebar-footer">
+            <div id="nav-login" class="nav-link" style="color: var(--accent-color); border-color: rgba(251, 191, 36, 0.2);" onclick="navigateTo('login', this)">
+                <span>🔐</span> Autoryzacja
+            </div>
+            <div id="nav-logout" class="nav-link hidden" style="color: var(--danger); border-color: rgba(220, 38, 38, 0.2);" onclick="location.reload()">
+                <span>🚪</span> Wyloguj System
+            </div>
+        </div>
+    </aside>
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-ultra-dark);
-    color: var(--text-main);
-    height: 100vh;
-    display: flex;
-    overflow: hidden;
-}
+    <main class="viewport">
+        <header class="flex justify-between items-center mb-16">
+            <div>
+                <p class="text-xs font-black text-dim uppercase tracking-[0.5em] mb-2">Internal Management Platform</p>
+                <h2 class="text-5xl font-black uppercase italic tracking-tighter">
+                    Witaj, <span id="user-header" class="text-yellow-400 text-glow">Osobnik</span>
+                </h2>
+            </div>
+            <div id="digital-clock" class="font-mono text-xl text-dim bg-black/50 px-8 py-4 rounded-3xl border border-white/5 shadow-2xl">
+                00:00:00
+            </div>
+        </header>
 
-.sidebar {
-    width: 320px;
-    background-color: var(--bg-sidebar);
-    border-right: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    padding: 45px 25px;
-}
+        <section id="home" class="tab-pane active">
+            <div class="glass-card">
+                <h3 class="text-3xl font-black uppercase mb-6 italic">O Projekcie PrimeRP</h3>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Witaj na oficjalnej platformie PrimeRP. Zarządzaj swoim profilem, sprawdzaj mapę sektorów i bądź na bieżąco z nowościami.
+                </p>
+            </div>
+        </section>
 
-.brand-logo {
-    font-size: 3rem;
-    font-weight: 900;
-    background: linear-gradient(to bottom, #fff 0%, #666 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+        <section id="map" class="tab-pane">
+            <div class="tactical-map-wrapper">
+                <img src="https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp" class="w-full h-auto opacity-80" alt="Mapa">
+                <div class="tactical-pin" style="top: 70.3%; left: 5.1%;"></div>
+                <div class="tactical-pin" style="top: 45.1%; left: 54.3%;"></div>
+            </div>
+        </section>
 
-.nav-link {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    padding: 18px 22px;
-    background-color: #0f0f0f;
-    border-radius: 16px;
-    color: var(--text-dim);
-    cursor: pointer;
-    transition: 0.4s;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    font-weight: 800;
-}
+        <section id="staff" class="tab-pane">
+            <div id="staff-render-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                </div>
+        </section>
 
-.nav-link.active {
-    background-color: var(--accent-color);
-    color: #000;
-}
+    </main>
 
-.viewport {
-    flex: 1;
-    padding: 60px;
-    overflow-y: auto;
-    background: radial-gradient(circle at top right, #111111 0%, #050505 100%);
-}
-
-.tab-pane { display: none; }
-.tab-pane.active { display: block; animation: paneEnter 0.6s ease; }
-
-@keyframes paneEnter {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.glass-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 30px;
-    border-radius: 28px;
-}
-
-.tactical-map-wrapper {
-    position: relative;
-    border-radius: 40px;
-    border: 4px solid #1a1a1a;
-    overflow: hidden;
-}
-
-.tactical-pin {
-    position: absolute;
-    width: 20px; height: 20px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    box-shadow: 0 0 15px var(--accent-color);
-}
-
-.form-input {
-    width: 100%; background: #050505; border: 1px solid #1a1a1a;
-    padding: 15px; border-radius: 12px; color: #fff;
-}
-
-.btn-action {
-    width: 100%; padding: 15px; background: var(--accent-color);
-    font-weight: 900; border-radius: 12px; cursor: pointer;
-}
-
-.modal-background {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-    display: none; align-items: center; justify-content: center; z-index: 1000;
-}
-
-.modal-content { background: #0a0a0a; padding: 40px; border-radius: 30px; border: 1px solid var(--accent-color); }
-
-.staff-avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-color); margin: 0 auto 15px; }
-
-.hidden { display: none; }
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
