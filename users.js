@@ -1,27 +1,43 @@
-// Baza danych Obywateli
+/**
+ * PRIME RP - Baza Danych Obywateli
+ * Tutaj przechowuj dane wszystkich graczy, którzy mają mieć dostęp do profilu.
+ */
+
 const citizenDatabase = [
     {
-        user: "obywatel1",
+        user: "citizen1",
         pass: "start123",
         profile: {
-            fullName: "Marek Kowalski",
-            job: "Mechanik Bennys",
-            avatar: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp",
-            balance: "15,500$",
-            bankAcc: "PL 0012 4432",
-            status: "OBYWATEL-01"
+            fullName: "John Doe",
+            avatar: "https://i.postimg.cc/KjvhBywK/image-14.jpg", // Przykładowy avatar
+            job: "Bezrobotny",
+            status: "OBYWATEL",
+            balance: "$15,250",
+            bankAcc: "PR-9921-0012"
         }
     },
     {
-        user: "karol_v3",
-        pass: "hamburg2026",
+        user: "mechanik_marek",
+        pass: "klucz13",
         profile: {
-            fullName: "Karol Wiśniewski",
-            job: "LSPD - Kadet",
+            fullName: "Marek Imadło",
+            avatar: "https://i.postimg.cc/TPxMMrb8/0b921f0878a6e549b4c31efc29383d1b.webp",
+            job: "Szef LSCM",
+            status: "ZAUFANY",
+            balance: "$120,000",
+            bankAcc: "PR-4412-8892"
+        }
+    },
+    {
+        user: "lspd_smith",
+        pass: "odznaka55",
+        profile: {
+            fullName: "Tom Smith",
             avatar: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp",
-            balance: "2,100$",
-            bankAcc: "PL 0099 1122",
-            status: "OBYWATEL-02"
+            job: "Oficer LSPD",
+            status: "FUNKCJONARIUSZ",
+            balance: "$42,500",
+            bankAcc: "PR-1102-5561"
         }
     }
 ];
