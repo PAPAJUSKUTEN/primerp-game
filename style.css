@@ -13,7 +13,11 @@
     --success: #16a34a;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Inter', sans-serif;
@@ -31,11 +35,14 @@ body {
     display: flex;
     flex-direction: column;
     padding: 45px 25px;
+    flex-shrink: 0;
 }
 
 .brand-logo {
     font-size: 3rem;
     font-weight: 900;
+    text-align: center;
+    margin-bottom: 40px;
     background: linear-gradient(to bottom, #fff 0%, #666 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -54,6 +61,13 @@ body {
     text-transform: uppercase;
     font-size: 0.8rem;
     font-weight: 800;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+}
+
+.nav-link:hover {
+    border-color: var(--accent-color);
+    color: #fff;
 }
 
 .nav-link.active {
@@ -68,8 +82,14 @@ body {
     background: radial-gradient(circle at top right, #111111 0%, #050505 100%);
 }
 
-.tab-pane { display: none; }
-.tab-pane.active { display: block; animation: paneEnter 0.6s ease; }
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+    animation: paneEnter 0.6s ease;
+}
 
 @keyframes paneEnter {
     from { opacity: 0; transform: translateY(20px); }
@@ -92,31 +112,25 @@ body {
 
 .tactical-pin {
     position: absolute;
-    width: 20px; height: 20px;
+    width: 20px;
+    height: 20px;
     background: var(--accent-color);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
     box-shadow: 0 0 15px var(--accent-color);
+    z-index: 10;
 }
 
-.form-input {
-    width: 100%; background: #050505; border: 1px solid #1a1a1a;
-    padding: 15px; border-radius: 12px; color: #fff;
+.staff-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-color);
+    margin: 0 auto 15px;
+    object-fit: cover;
 }
 
-.btn-action {
-    width: 100%; padding: 15px; background: var(--accent-color);
-    font-weight: 900; border-radius: 12px; cursor: pointer;
+.hidden {
+    display: none;
 }
-
-.modal-background {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-    display: none; align-items: center; justify-content: center; z-index: 1000;
-}
-
-.modal-content { background: #0a0a0a; padding: 40px; border-radius: 30px; border: 1px solid var(--accent-color); }
-
-.staff-avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent-color); margin: 0 auto 15px; }
-
-.hidden { display: none; }
