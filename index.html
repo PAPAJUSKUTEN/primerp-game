@@ -335,9 +335,50 @@
         .text-glow { text-shadow: 0 0 15px var(--accent-glow); }
         .hidden { display: none; }
 
+        /* NOWY STYL DLA PROFILU FULLSCREEN */
+        .fullscreen-profile-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: #050505;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+            animation: paneEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
     </style>
 </head>
 <body>
+
+    <div id="fs-profile-layer" class="fullscreen-profile-overlay">
+        <div class="glass-card border-[10px] border-yellow-400 max-w-7xl w-full p-20 relative">
+            <button onclick="document.getElementById('fs-profile-layer').style.display='none'" class="absolute top-10 right-10 text-dim hover:text-white font-black text-xl uppercase tracking-tighter">Wyjdź z terminala ×</button>
+            <div class="flex flex-col md:flex-row items-center gap-20">
+                <img id="fs-p-avatar" src="" class="w-96 h-96 rounded-[60px] border-8 border-yellow-400 shadow-[0_0_50px_rgba(251,191,36,0.3)] object-cover">
+                <div class="flex-1 text-center md:text-left">
+                    <p class="text-yellow-400 font-black uppercase tracking-[0.5em] text-sm mb-4">Centralny Rejestr Obywateli PRIME RP</p>
+                    <h1 id="fs-p-name" class="text-9xl font-black italic uppercase mb-6 tracking-tighter"></h1>
+                    <div class="flex gap-6 mb-12">
+                        <span id="fs-p-job" class="bg-white/5 px-8 py-4 rounded-2xl border border-white/10 text-2xl font-bold uppercase italic"></span>
+                        <span class="bg-yellow-400 px-8 py-4 rounded-2xl text-black text-2xl font-black uppercase italic shadow-xl">Status: Aktywny</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-10">
+                        <div class="bg-black/60 p-10 rounded-[40px] border border-white/5">
+                            <p class="text-dim text-xs font-bold uppercase mb-2">Środki Płatnicze</p>
+                            <p id="fs-p-balance" class="text-6xl font-mono font-bold text-white"></p>
+                        </div>
+                        <div class="bg-black/60 p-10 rounded-[40px] border border-white/5">
+                            <p class="text-dim text-xs font-bold uppercase mb-2">Identyfikator Bankowy</p>
+                            <p id="fs-p-bankAcc" class="text-6xl font-mono font-bold text-white"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <aside class="sidebar">
         <div class="brand-section">
@@ -348,9 +389,6 @@
         <nav class="navigation-list">
             <div class="nav-link active" id="btn-home" onclick="navigateTo('home', this)">
                 <span>🏠</span> O Nas / Nowości
-            </div>
-            <div class="nav-link hidden" id="btn-profile" onclick="navigateTo('profile', this)">
-                <span>👤</span> Mój Profil
             </div>
             <div class="nav-link" id="btn-map" onclick="navigateTo('map', this)">
                 <span>🗺️</span> Mapa Sektorów
@@ -392,35 +430,6 @@
                 00:00:00
             </div>
         </header>
-
-        <section id="profile" class="tab-pane">
-            <div class="max-w-4xl mx-auto">
-                <div class="glass-card border-t-[6px] border-yellow-400">
-                    <div class="flex flex-col md:flex-row items-center gap-12">
-                        <img id="p-avatar" src="" class="w-48 h-48 rounded-[40px] border-4 border-yellow-400 shadow-2xl object-cover">
-                        <div class="text-center md:text-left flex-1">
-                            <p class="text-yellow-400 font-black uppercase tracking-[0.3em] text-xs mb-2">Oficjalna Karta Obywatela</p>
-                            <h3 id="p-name" class="text-5xl font-black italic uppercase mb-4"></h3>
-                            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                                <span class="bg-white/5 px-4 py-2 rounded-xl border border-white/10 text-dim text-xs font-bold uppercase" id="p-job"></span>
-                                <span class="bg-green-500/10 px-4 py-2 rounded-xl border border-green-500/20 text-green-500 text-xs font-bold uppercase" id="p-status">OBYWATEL</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-                        <div class="bg-black/40 p-6 rounded-[24px] border border-white/5">
-                            <p class="text-dim text-[10px] font-bold uppercase mb-1">Stan Konta Bankowego</p>
-                            <p id="p-balance" class="text-3xl font-mono font-bold text-white"></p>
-                        </div>
-                        <div class="bg-black/40 p-6 rounded-[24px] border border-white/5">
-                            <p class="text-dim text-[10px] font-bold uppercase mb-1">Numer Konta</p>
-                            <p id="p-bankAcc" class="text-3xl font-mono font-bold text-white"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <section id="home" class="tab-pane active">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
@@ -491,11 +500,9 @@
                 <div class="tactical-pin" style="top: 70.3%; left: 5.1%;" onclick="openMapData('Teren Mafii', 'Główny obszar farm i hodowli. Strefa o niskim natężeniu ruchu policji.', 'https://i.postimg.cc/pLfVFVQ1/Zrzut-ekranu-2026-04-07-201432.webp')"></div>
                 <div class="tactical-pin" style="top: 31.5%; left: 32.2%;" onclick="openMapData('Granica Państwa', 'Skrzyżowanie przy torach kolejowych. Kluczowy punkt przerzutowy.', 'https://i.postimg.cc/C1zzkTxm/Zrzut-ekranu-2026-04-07-200736.webp')"></div>
                 <div class="tactical-pin" style="top: 64.2%; left: 30.1%;" onclick="openMapData('Tereny Rolnicze', 'Strefa mieszkalna z dużą ilością garaży. Częste patrole jednostek.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-
                 <div class="tactical-pin" style="top: 45.1%; left: 54.3%;" onclick="openMapData('Szpital', 'Centrum dowodzenia siłami porządkowymi w środkowej części mapy.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
                 <div class="tactical-pin" style="top: 69.5%; left: 45.4%;" onclick="openMapData('Rondo Za Miastem', 'Obszar składowania kontenerów. Wysokie ryzyko kradzieży.', 'https://i.postimg.cc/ZnjbMwRM/Zrzut-ekranu-2026-04-07-200903.webp')"></div>
                 <div class="tactical-pin" style="top: 77.8%; left: 40.2%;" onclick="openMapData('Teren Administracyjny', 'Miejsce spotkań nielegalnych wyścigów oraz czarny rynek.', 'https://i.postimg.cc/CM7Qd3fB/Zrzut-ekranu-2026-04-07-201750.webp')"></div>
-
                 <div class="tactical-pin" style="top: 49.2%; left: 93.1%;" onclick="openMapData('Jubiler', 'Strefa rekreacyjna. Miejsce publiczne, monitorowane.', 'https://i.postimg.cc/sDZHKvN8/Zrzut-ekranu-2026-04-07-201314.webp')"></div>
                 <div class="tactical-pin" style="top: 68.1%; left: 77.2%;" onclick="openMapData('Rondo Wypończynkowe', 'Połączenie wschodu z zachodem. Najbardziej ruchliwy punkt.', 'https://i.postimg.cc/ZnjbMwRM/Zrzut-ekranu-2026-04-07-200903.webp')"></div>
                 <div class="tactical-pin" style="top: 74.5%; left: 86.3%;" onclick="openMapData('Kladka nad ulicą', 'Sklepy, banki i salony samochodowe.', 'https://i.postimg.cc/28pMsQhf/Zrzut-ekranu-2026-04-07-201211.webp')"></div>
@@ -505,8 +512,7 @@
 
         <section id="staff" class="tab-pane">
             <h3 class="text-3xl font-black uppercase italic mb-10">Struktura Zarządzająca</h3>
-            <div id="staff-render-list" class="info-grid">
-                </div>
+            <div id="staff-render-list" class="info-grid"></div>
         </section>
 
         <section id="rules" class="tab-pane">
@@ -573,8 +579,7 @@
                 </div>
                 <div class="glass-card">
                     <h3 class="text-xl font-black uppercase italic mb-6">Lista Kont</h3>
-                    <div id="db-user-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-4">
-                        </div>
+                    <div id="db-user-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-4"></div>
                 </div>
             </div>
         </section>
@@ -598,7 +603,6 @@
             <h2 id="s-info-name" class="text-3xl font-black uppercase italic mb-1"></h2>
             <p id="s-info-role" class="text-yellow-400 font-bold uppercase tracking-widest text-xs mb-8"></p>
             <p id="s-info-desc" class="text-gray-500 italic mb-10 px-6"></p>
-            
             <div class="text-left space-y-4">
                 <label class="text-[10px] font-bold text-dim uppercase">Wiadomość Discord</label>
                 <textarea id="s-msg-content" class="form-input h-32 resize-none" placeholder="Twoja wiadomość..."></textarea>
@@ -645,8 +649,6 @@
             document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            
-            // Podświetlenie odpowiedniego przycisku w menu
             if(element) {
                 element.classList.add('active');
             } else {
@@ -706,25 +708,30 @@
             document.getElementById('rep-body').value = "";
         }
 
-        // --- ZMODYFIKOWANA LOGIKA LOGOWANIA ---
         function tryLogin() {
             const u = document.getElementById('auth-user').value;
             const p = document.getElementById('auth-pass').value;
 
-            // 1. Sprawdź czy to Admin
             if(u === 'admin' && p === '1234') { 
                 loginAs("ADMINISTRATOR", true, null); 
                 return;
             }
 
-            // 2. Sprawdź w zewnętrznej bazie Obywateli (z pliku users.js)
             const citizen = citizenDatabase.find(c => c.user === u && c.pass === p);
             if(citizen) {
-                loginAs(citizen.user, false, citizen.profile);
+                // LOGIKA FULLSCREEN DLA OBYWATELA
+                document.getElementById('fs-p-avatar').src = citizen.profile.avatar;
+                document.getElementById('fs-p-name').innerText = citizen.profile.fullName;
+                document.getElementById('fs-p-job').innerText = citizen.profile.job;
+                document.getElementById('fs-p-balance').innerText = citizen.profile.balance;
+                document.getElementById('fs-p-bankAcc').innerText = citizen.profile.bankAcc;
+                
+                document.getElementById('fs-profile-layer').style.display = 'flex';
+                
+                loginAs(citizen.user, false, null);
                 return;
             }
 
-            // 3. Sprawdź w lokalnej bazie (localStorage)
             const account = localAccounts.find(acc => acc.user === u && acc.pass === p);
             if(account) { 
                 loginAs(u, false, null); 
@@ -741,24 +748,9 @@
             if(isAdmin) {
                 document.getElementById('nav-admin-panel').classList.remove('hidden');
             }
-
-            // Jeśli zalogowano jako Obywatel z profilem
-            if(profile) {
-                document.getElementById('btn-profile').classList.remove('hidden');
-                document.getElementById('p-avatar').src = profile.avatar;
-                document.getElementById('p-name').innerText = profile.fullName;
-                document.getElementById('p-job').innerText = profile.job;
-                document.getElementById('p-status').innerText = profile.status;
-                document.getElementById('p-balance').innerText = profile.balance;
-                document.getElementById('p-bankAcc').innerText = profile.bankAcc;
-                
-                navigateTo('profile');
-            } else {
-                navigateTo('home');
-            }
+            navigateTo('home');
         }
 
-        // Administracja lokalną bazą (bez zmian)
         function renderDBList() {
             const list = document.getElementById('db-user-list');
             list.innerHTML = localAccounts.map((acc, idx) => `
@@ -787,7 +779,6 @@
             localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
             renderDBList();
         }
-
     </script>
 </body>
 </html>
