@@ -1,6 +1,8 @@
 /**
- * PRIME RP - Baza Danych Obywateli
- * Tutaj przechowuj dane wszystkich graczy, którzy mają mieć dostęp do profilu.
+ * PRIME RP - Baza Danych Obywateli (users.js)
+ * * INSTRUKCJA:
+ * Aby dodać gracza, skopiuj jeden blok { ... } i wklej go po przecinku.
+ * 'user' i 'pass' to dane do logowania na stronie.
  */
 
 const citizenDatabase = [
@@ -9,7 +11,7 @@ const citizenDatabase = [
         pass: "start123",
         profile: {
             fullName: "John Doe",
-            avatar: "https://i.postimg.cc/KjvhBywK/image-14.jpg", // Przykładowy avatar
+            avatar: "https://i.postimg.cc/KjvhBywK/image-14.jpg",
             job: "Bezrobotny",
             status: "OBYWATEL",
             balance: "$15,250",
@@ -39,5 +41,20 @@ const citizenDatabase = [
             balance: "$42,500",
             bankAcc: "PR-1102-5561"
         }
+    },
+    {
+        user: "szef_kartelu",
+        pass: "mrok2026",
+        profile: {
+            fullName: "Pablo Esco",
+            avatar: "https://i.postimg.cc/prb1zvBx/Playboi-Carti-604x900.webp",
+            job: "Nieznany",
+            status: "POSZUKIWANY",
+            balance: "$1,500,000",
+            bankAcc: "UKRYTE"
+        }
     }
 ];
+
+// Nie usuwaj tej linii, pozwala ona na logowanie przez konsolę w razie problemów
+console.log("System PRIME RP: Baza obywateli załadowana poprawnie.");
