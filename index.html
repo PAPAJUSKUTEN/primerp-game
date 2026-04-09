@@ -3,82 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME RP | Oficjalna Strona PrimeRP</title>
+    <title>PRIME RP | Advanced Management System v5.0</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/g0cRLPHz/a4324af6-1492-4782-b7b6-db9eeb0833bf-2-removebg-preview.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-        /* Import czcionek premium */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
 
+        /* --- ZAAWANSOWANE ZMIENNE SYSTEMOWE --- */
         :root {
-            --accent-color: #fbbf24;
-            --accent-glow: rgba(251, 191, 36, 0.4);
-            --bg-ultra-dark: #050505;
-            --bg-card: #0b0b0b;
-            --bg-sidebar: #080808;
-            --border-color: #1a1a1a;
+            --prime-yellow: #fbbf24;
+            --prime-yellow-glow: rgba(251, 191, 36, 0.3);
+            --bg-deep: #030303;
+            --bg-panel: #080808;
+            --bg-card: #0c0c0c;
+            --bg-card-hover: #121212;
+            --border-dim: #1a1a1a;
+            --border-bright: #2a2a2a;
             --text-main: #ffffff;
-            --text-dim: #666666;
-            --danger: #dc2626;
-            --success: #16a34a;
+            --text-muted: #6b7280;
+            --status-online: #10b981;
+            --status-offline: #ef4444;
+            --sidebar-width: 320px;
+            --transition-speed: 0.4s;
         }
 
-        /* Reset i bazy stylów */
+        /* --- PODSTAWOWY RESET I KONFIGURACJA --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            outline: none;
             -webkit-font-smoothing: antialiased;
         }
 
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--prime-yellow); }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-ultra-dark);
+            background-color: var(--bg-deep);
             color: var(--text-main);
             height: 100vh;
+            width: 100vw;
             display: flex;
             overflow: hidden;
         }
 
+        /* --- SYSTEM ANIMACJI --- */
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes sidebarSlide {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes pulseYellow {
+            0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(251, 191, 36, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
         /* --- SIDEBAR (PANEL BOCZNY) --- */
-        .sidebar {
-            width: 320px;
-            background-color: var(--bg-sidebar);
-            border-right: 1px solid var(--border-color);
+        .app-sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--bg-panel);
+            border-right: 1px solid var(--border-dim);
             display: flex;
             flex-direction: column;
-            padding: 45px 25px;
+            padding: 40px 24px;
+            position: relative;
             z-index: 100;
-            flex-shrink: 0;
+            animation: sidebarSlide 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .brand-section {
-            text-align: center;
+        .brand-container {
             margin-bottom: 60px;
+            padding: 0 10px;
         }
 
-        .brand-logo {
-            font-size: 3rem;
+        .brand-main {
+            font-size: 3.2rem;
             font-weight: 900;
             letter-spacing: -3px;
-            line-height: 0.8;
-            background: linear-gradient(to bottom, #fff 0%, #666 100%);
+            line-height: 0.85;
+            background: linear-gradient(180deg, #fff 0%, #555 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        .brand-tagline {
-            color: var(--accent-color);
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 10px;
-            margin-top: 10px;
             text-transform: uppercase;
         }
 
-        .navigation-list {
+        .brand-sub {
+            color: var(--prime-yellow);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 11px;
+            margin-top: 12px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .nav-group {
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -87,657 +123,569 @@
         .nav-link {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 16px;
             padding: 18px 22px;
-            background-color: #0f0f0f;
-            border: 1px solid #141414;
-            border-radius: 16px;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            font-weight: 800;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-dim);
+            border-radius: 18px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all var(--transition-speed) ease;
         }
 
         .nav-link:hover {
+            border-color: var(--prime-yellow);
             color: #fff;
-            background-color: #121212;
-            border-color: var(--accent-color);
             transform: translateX(10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            background: rgba(251, 191, 36, 0.05);
         }
 
         .nav-link.active {
-            background-color: var(--accent-color);
+            background: var(--prime-yellow);
             color: #000;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 30px var(--accent-glow);
+            border-color: var(--prime-yellow);
+            box-shadow: 0 10px 25px var(--prime-yellow-glow);
         }
 
-        .sidebar-footer {
-            margin-top: auto;
-            border-top: 1px solid var(--border-color);
-            padding-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* --- GŁÓWNY OBSZAR ROBOCZY --- */
-        .viewport {
+        /* --- VIEWPORT (GŁÓWNY OBSZAR) --- */
+        .app-main {
             flex: 1;
-            padding: 60px;
+            padding: 60px 80px;
             overflow-y: auto;
+            background: radial-gradient(circle at top right, #0a0a0a 0%, #030303 100%);
             position: relative;
-            background: radial-gradient(circle at top right, #111111 0%, #050505 100%);
         }
 
-        .tab-pane {
+        .section-pane {
             display: none;
-            animation: paneEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: pageFadeIn 0.6s ease forwards;
         }
 
-        .tab-pane.active {
+        .section-pane.active {
             display: block;
         }
 
-        @keyframes paneEnter {
-            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        /* --- KOMPONENTY UI --- */
+        .prime-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            border-radius: 32px;
+            padding: 40px;
+            transition: all var(--transition-speed);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* --- INTERAKTYWNA MAPA V3 --- */
-        .tactical-map-wrapper {
+        .prime-card:hover {
+            border-color: var(--prime-yellow);
+            background: var(--bg-card-hover);
+            transform: translateY(-8px);
+        }
+
+        .prime-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--prime-yellow), transparent);
+            opacity: 0; transition: 0.4s;
+        }
+
+        .prime-card:hover::before { opacity: 1; }
+
+        .stat-badge {
+            background: rgba(255,255,255,0.05);
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            border: 1px solid var(--border-dim);
+        }
+
+        /* --- SYSTEM MAPY --- */
+        .tactical-map {
             position: relative;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            background-color: #000;
             border-radius: 40px;
-            border: 4px solid #1a1a1a;
+            border: 2px solid var(--border-bright);
             overflow: hidden;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.7);
         }
 
         .map-render {
             width: 100%;
             height: auto;
-            display: block;
             opacity: 0.8;
-            transition: opacity 0.8s ease;
+            transition: 1s filter;
+            filter: brightness(0.7) contrast(1.1);
         }
 
-        .tactical-map-wrapper:hover .map-render {
-            opacity: 1;
+        .tactical-map:hover .map-render {
+            filter: brightness(1) contrast(1);
         }
 
-        /* Pinezki */
-        .tactical-pin {
+        .map-pin {
             position: absolute;
             width: 28px;
             height: 28px;
-            background-color: var(--accent-color);
-            border: 5px solid #ffffff;
+            background: var(--prime-yellow);
+            border: 5px solid #fff;
             border-radius: 50%;
             cursor: pointer;
             z-index: 10;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: pulseYellow 2s infinite;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .tactical-pin:hover {
-            transform: translate(-50%, -50%) scale(1.5);
-            background-color: #fff;
-            border-color: var(--accent-color);
-            z-index: 20;
+        .map-pin:hover {
+            transform: translate(-50%, -50%) scale(1.6);
+            background: #fff;
+            border-color: var(--prime-yellow);
         }
 
-        .tactical-pin::before {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-color);
-            animation: pinRipple 2s infinite;
-        }
-
-        @keyframes pinRipple {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(2.5); opacity: 0; }
-        }
-
-        /* --- KARTY I GRID --- */
-        .info-grid {
+        /* --- ADMINISTRACJA STYLES --- */
+        .staff-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
         }
 
-        .glass-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 30px;
+        .staff-card {
+            background: #0a0a0a;
+            border: 1px solid var(--border-dim);
             border-radius: 28px;
-            transition: all 0.4s ease;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s;
         }
 
-        .glass-card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-8px);
-            background-color: #0e0e0e;
+        .staff-card:hover {
+            border-color: var(--prime-yellow);
+            background: #111;
         }
 
         .staff-avatar {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             margin: 0 auto 20px;
-            border: 3px solid var(--accent-color);
+            border: 3px solid var(--prime-yellow);
             padding: 4px;
             object-fit: cover;
-            background-color: #000;
+            filter: grayscale(0.5);
+            transition: 0.3s;
         }
 
-        /* --- SYSTEM FORMULARZY --- */
-        .input-group {
-            margin-bottom: 20px;
+        .staff-card:hover .staff-avatar {
+            filter: grayscale(0);
+            transform: rotate(5deg);
         }
 
-        .form-input {
-            width: 100%;
-            background-color: #050505;
-            border: 1px solid #1a1a1a;
+        /* --- SYSTEM KODEKSU KARNEGO --- */
+        .law-item {
+            background: rgba(255,255,255,0.02);
             padding: 20px;
             border-radius: 18px;
-            color: #fff;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-            transition: 0.3s;
-        }
-
-        .form-input:focus {
-            border-color: var(--accent-color);
-            background-color: #080808;
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.1);
-        }
-
-        .btn-action {
-            width: 100%;
-            padding: 22px;
-            background-color: var(--accent-color);
-            color: #000;
-            font-weight: 900;
-            border: none;
-            border-radius: 18px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-action:hover {
-            opacity: 0.9;
-            transform: scale(0.98);
+            border-left: 4px solid var(--prime-yellow);
+            margin-bottom: 12px;
         }
 
         /* --- MODALE --- */
         .modal-background {
             position: fixed;
             inset: 0;
-            background-color: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.92);
             backdrop-filter: blur(15px);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            padding: 40px;
+            z-index: 9999;
+            padding: 20px;
         }
 
-        .modal-content {
-            background-color: #0a0a0a;
-            border: 1px solid var(--accent-color);
+        .modal-window {
+            background: #0a0a0a;
+            border: 1px solid var(--prime-yellow);
             width: 100%;
-            max-width: 600px;
-            border-radius: 45px;
+            max-width: 650px;
+            border-radius: 40px;
             padding: 50px;
-            text-align: center;
             position: relative;
-            animation: modalScale 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: pageFadeIn 0.3s ease;
         }
 
-        @keyframes modalScale {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .close-modal {
+        .close-btn {
             position: absolute;
-            top: 30px;
-            right: 35px;
+            top: 25px;
+            right: 30px;
             font-size: 2rem;
             color: #444;
             cursor: pointer;
             transition: 0.3s;
         }
 
-        .close-modal:hover { color: #fff; }
+        .close-btn:hover { color: var(--prime-yellow); }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #1a1a1a; border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+        /* --- TERMINAL STYLES --- */
+        .terminal-container {
+            font-family: 'JetBrains Mono', monospace;
+            background: #050505;
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #1a1a1a;
+            color: #4ade80;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
 
-        .text-glow { text-shadow: 0 0 15px var(--accent-glow); }
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="brand-section">
-            <h1 class="brand-logo">PRIME</h1>
-            <p class="brand-tagline">PROJECT</p>
+    <aside class="app-sidebar">
+        <div class="brand-container">
+            <h1 class="brand-main">PRIME</h1>
+            <p class="brand-sub">PROJECT</p>
         </div>
-        
-        <nav class="navigation-list">
-            <div class="nav-link active" id="btn-home" onclick="navigateTo('home', this)">
-                <span>🏠</span> O Nas / Nowości
+
+        <nav class="nav-group">
+            <div class="nav-link active" onclick="navigate('home', this)">
+                <span>🏠</span> Terminal Główny
             </div>
-            <div class="nav-link" id="btn-map" onclick="navigateTo('map', this)">
+            <div class="nav-link" onclick="navigate('map', this)">
                 <span>🗺️</span> Mapa Sektorów
             </div>
-            <div class="nav-link" id="btn-staff" onclick="navigateTo('staff', this)">
+            <div class="nav-link" onclick="navigate('staff', this)">
                 <span>🛡️</span> Administracja
             </div>
-            <div class="nav-link" id="btn-rules" onclick="navigateTo('rules', this)">
-                <span>📜</span> Regulamin Serwera
+            <div class="nav-link" onclick="navigate('law', this)">
+                <span>📜</span> Kodeks Karny
             </div>
-            <div class="nav-link" id="btn-report" onclick="navigateTo('report', this)">
-                <span>🐞</span> Centrum Zgłoszeń
+            <div class="nav-link" onclick="navigate('fractions', this)">
+                <span>🏢</span> Frakcje & Grupy
+            </div>
+            <div class="nav-link" onclick="navigate('support', this)">
+                <span>🐞</span> Pomoc Techniczna
             </div>
         </nav>
 
-        <div class="sidebar-footer">
-            <div id="nav-login" class="nav-link" style="color: var(--accent-color); border-color: rgba(251, 191, 36, 0.2);" onclick="navigateTo('login', this)">
+        <div class="mt-auto pt-10 border-t border-white/5 space-y-3">
+            <div id="nav-login" class="nav-link" style="color: var(--prime-yellow);" onclick="navigate('auth', this)">
                 <span>🔐</span> Autoryzacja
             </div>
-            <div id="nav-logout" class="nav-link hidden" style="color: var(--danger); border-color: rgba(220, 38, 38, 0.2);" onclick="location.reload()">
-                <span>🚪</span> Wyloguj System
+            <div id="nav-logout" class="nav-link hidden" style="color: #ef4444;" onclick="location.reload()">
+                <span>🚪</span> Zamknij Sesję
             </div>
         </div>
     </aside>
 
-    <main class="viewport">
+    <main class="app-main">
         
-        <header class="flex justify-between items-center mb-16">
-            <div>
-                <p class="text-xs font-black text-dim uppercase tracking-[0.5em] mb-2">Internal Management Platform</p>
-                <h2 class="text-5xl font-black uppercase italic tracking-tighter">
-                    Witaj, <span id="user-header" class="text-yellow-400 text-glow">Osobnik</span>
-                </h2>
+        <div class="flex justify-between items-center mb-16">
+            <div class="flex gap-4">
+                <div class="stat-badge">SYSTEM: <span class="text-white">v5.0.2</span></div>
+                <div class="stat-badge">ENCRYPTION: <span class="text-white">AES-256</span></div>
             </div>
-            <div id="digital-clock" class="font-mono text-xl text-dim bg-black/50 px-8 py-4 rounded-3xl border border-white/5 shadow-2xl">
+            <div id="digital-clock" class="font-mono text-xl font-bold text-muted bg-white/5 px-8 py-4 rounded-2xl border border-white/5">
                 00:00:00
             </div>
-        </header>
+        </div>
 
-        <section id="home" class="tab-pane active">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
-                <div class="glass-card border-l-[6px] border-yellow-400">
-                    <h3 class="text-3xl font-black uppercase mb-6 italic">O Projekcie PrimeRP</h3>
-                    <p class="text-gray-400 text-lg leading-relaxed mb-6">
-                        PrimeRP to innowacyjny serwer roleplay osadzony w fikcyjnej, mrocznej wersji Hamburg City. Naszą misją jest zapewnienie najwyższej jakości immersji poprzez zaawansowane systemy skryptowe, unikalną mapę oraz dojrzałą społeczność.
-                    </p>
-                    <p class="text-gray-500 leading-relaxed">
-                        Stawiamy na realizm, sprawiedliwość i ciągły rozwój. Każdy sektor mapy, każda frakcja i każdy skrypt został zaprojektowany z myślą o unikalnych historiach naszych graczy. Serwer oferuje unikalny system gospodarczy i frakcyjny.
-                    </p>
-                </div>
-                <div class="space-y-6">
-                    <div class="glass-card flex items-center gap-6">
-                        <div class="text-4xl">🚀</div>
-                        <div>
-                            <h4 class="font-black uppercase italic">Wersja v3.0 Final</h4>
-                            <p class="text-dim text-sm">Zaktualizowano silnik renderowania mapy i system sektorów.</p>
-                        </div>
-                    </div>
-                    <div class="glass-card flex items-center gap-6">
-                        <div class="text-4xl">💎</div>
-                        <div>
-                            <h4 class="font-black uppercase italic">Ekonomia 2.0</h4>
-                            <p class="text-dim text-sm">Nowy balans zarobków i cen nieruchomości w Hamburgu.</p>
-                        </div>
-                    </div>
-                    <div class="glass-card flex items-center gap-6">
-                        <div class="text-4xl">🛡️</div>
-                        <div>
-                            <h4 class="font-black uppercase italic">Nowy Anty-Cheat</h4>
-                            <p class="text-dim text-sm">Zwiększona ochrona przed modyfikacjami wizualnymi.</p>
+        <section id="home" class="section-pane active">
+            <div class="mb-12">
+                <h2 class="text-xs font-black text-muted uppercase tracking-[0.6em] mb-4">Prime Roleplay Experience</h2>
+                <h1 class="text-7xl font-black italic uppercase tracking-tighter">
+                    Witaj w <span class="text-yellow-400">Prime RP</span>
+                </h1>
+            </div>
+
+            <div class="grid grid-cols-12 gap-8">
+                <div class="col-span-8">
+                    <div class="prime-card h-full">
+                        <h3 class="text-3xl font-black uppercase mb-6 italic">Manifest Projektu</h3>
+                        <p class="text-muted text-lg leading-relaxed mb-8">
+                            PrimeRP to nie jest kolejny zwykły serwer. To zaawansowany symulator życia społecznego osadzony w Hamburg City. Stawiamy na realizm, profesjonalne frakcje i unikalną ekonomię opartą na podaży i popycie. Dołącz do elity graczy i twórz własną historię.
+                        </p>
+                        <div class="terminal-container">
+                            > Inicjalizacja systemów Hamburg City... OK<br>
+                            > Ładowanie bazy danych frakcji... OK<br>
+                            > Synchronizacja z głównym węzłem... POŁĄCZONO
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card text-center">
-                    <p class="text-xs font-bold text-dim uppercase mb-2">Serwer Gry</p>
-                    <p class="text-4xl font-black text-green-500">ONLINE</p>
-                    <div class="w-full bg-white/5 h-1 mt-6 rounded-full overflow-hidden">
-                        <div class="bg-green-500 w-[94%] h-full"></div>
+                <div class="col-span-4 space-y-6">
+                    <div class="prime-card text-center">
+                        <p class="text-xs font-bold text-muted uppercase mb-2">Serwer Fizyczny</p>
+                        <p class="text-5xl font-black text-green-500">ONLINE</p>
                     </div>
-                </div>
-                <div class="glass-card text-center">
-                    <p class="text-xs font-bold text-dim uppercase mb-2">Aktywne Połączenia</p>
-                    <p class="text-4xl font-black text-white">48 / 64</p>
-                    <p class="text-[10px] text-dim mt-4 uppercase">Aktualne obciążenie: Stabilne</p>
-                </div>
-                <div class="glass-card text-center">
-                    <p class="text-xs font-bold text-dim uppercase mb-2">Kod Dostępu</p>
-                    <p class="text-4xl font-black text-yellow-400 italic">PRIME2026</p>
-                    <p class="text-[10px] text-dim mt-4 uppercase">Wymagana weryfikacja WL</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="map" class="tab-pane">
-            <div class="mb-8 text-center">
-                <h3 class="text-3xl font-black uppercase italic">Mapa Operacyjna V3 Final</h3>
-                <p class="text-dim uppercase text-[10px] tracking-widest mt-2">Nawigacja satelitarna sektorów Hamburg City</p>
-            </div>
-            <div class="tactical-map-wrapper">
-                <img src="https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp" class="map-render" alt="PrimeRP Map">
-
-                <div class="tactical-pin" style="top: 70.3%; left: 5.1%;" onclick="openMapData('Teren Mafii', 'Główny obszar operacyjny organizacji przestępczych. Sektor o podwyższonym ryzyku.', 'https://i.postimg.cc/pLfVFVQ1/Zrzut-ekranu-2026-04-07-201432.webp')"></div>
-                <div class="tactical-pin" style="top: 45.1%; left: 54.3%;" onclick="openMapData('Szpital Miejski', 'Główny punkt medyczny Hamburg City. Strefa całkowicie bezpieczna (Greenzone).', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
-                <div class="tactical-pin" style="top: 49.2%; left: 93.1%;" onclick="openMapData('Jubiler & Plaza', 'Luksusowa dzielnica handlowa. Miejsce częstych interakcji społecznych.', 'https://i.postimg.cc/sDZHKvN8/Zrzut-ekranu-2026-04-07-201314.webp')"></div>
-            </div>
-        </section>
-
-        <section id="staff" class="tab-pane">
-            <h3 class="text-3xl font-black uppercase italic mb-10">Zarząd Projektu</h3>
-            <div id="staff-render-list" class="info-grid"></div>
-        </section>
-
-        <section id="rules" class="tab-pane">
-            <div class="max-w-4xl mx-auto glass-card">
-                <h3 class="text-3xl font-black uppercase italic mb-10 text-center text-yellow-400">Kodeks Rozgrywki PrimeRP</h3>
-                <div class="space-y-8 text-gray-300">
-                    <div class="p-6 bg-white/5 rounded-2xl border-l-4 border-yellow-400">
-                        <h4 class="font-bold text-white mb-2">§1. Zasady Ogólne</h4>
-                        <p class="text-sm">Każdy gracz zobowiązany jest do posiadania sprawnego mikrofonu i przestrzegania zasad RolePlay.</p>
+                    <div class="prime-card text-center">
+                        <p class="text-xs font-bold text-muted uppercase mb-2">Populacja</p>
+                        <p class="text-5xl font-black text-white">42 / 64</p>
                     </div>
-                    <div class="p-6 bg-white/5 rounded-2xl border-l-4 border-yellow-400">
-                        <h4 class="font-bold text-white mb-2">§2. RDM & VDM</h4>
-                        <p class="text-sm">Zabijanie graczy bez uzasadnionego powodu IC (RDM) oraz używanie pojazdów jako broni (VDM) jest surowo karane.</p>
-                    </div>
-                    <div class="p-6 bg-white/5 rounded-2xl border-l-4 border-yellow-400">
-                        <h4 class="font-bold text-white mb-2">§3. MetaGaming & PowerGaming</h4>
-                        <p class="text-sm">Wykorzystywanie informacji OOC w świecie gry oraz wymuszanie akcji na innych graczach jest zabronione.</p>
+                    <div class="prime-card text-center">
+                        <p class="text-xs font-bold text-muted uppercase mb-2">Średni Ping</p>
+                        <p class="text-5xl font-black text-yellow-400">24ms</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="report" class="tab-pane">
-            <div class="max-w-2xl mx-auto glass-card border-t-4 border-red-600">
-                <h3 class="text-3xl font-black uppercase italic mb-8 text-center">Centrum Zgłoszeń (Tickety)</h3>
+        <section id="map" class="section-pane">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black uppercase italic">Mapa Sektorów Operacyjnych</h2>
+                    <p class="text-muted mt-2 tracking-widest text-sm uppercase">Satelitarny podgląd Hamburg City v5.0</p>
+                </div>
+                <div class="stat-badge text-yellow-400">STATUS: LIVE RENDER</div>
+            </div>
+
+            <div class="tactical-map">
+                <img src="https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp" class="map-render">
+                
+                <div class="map-pin" style="top: 70.3%; left: 5.1%;" onclick="openMapInfo('Kryjówka Mafii', 'Główny bastion organizacji przestępczych. Sektor o podwyższonym ryzyku.', 'https://i.postimg.cc/pLfVFVQ1/Zrzut-ekranu-2026-04-07-201432.webp')"></div>
+                <div class="map-pin" style="top: 31.5%; left: 32.2%;" onclick="openMapInfo('Posterunek Graniczny', 'Punkt kontroli wjazdu na tereny przemysłowe. Wymagana przepustka.', 'https://i.postimg.cc/C1zzkTxm/Zrzut-ekranu-2026-04-07-200736.webp')"></div>
+                <div class="map-pin" style="top: 64.2%; left: 30.1%;" onclick="openMapInfo('Sektor Garażowy', 'Kompleks garaży dla obywateli i warsztatów tuningowych.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="map-pin" style="top: 45.1%; left: 54.3%;" onclick="openMapInfo('Szpital Miejski', 'Główna placówka medyczna Hamburg City. Strefa chroniona.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+                <div class="map-pin" style="top: 69.5%; left: 45.4%;" onclick="openMapInfo('Rondo Przemysłowe', 'Centrum logistyczne miasta. Największy węzeł transportowy.', 'https://i.postimg.cc/ZnjbMwRM/Zrzut-ekranu-2026-04-07-200903.webp')"></div>
+                <div class="map-pin" style="top: 77.8%; left: 40.2%;" onclick="openMapInfo('Central Point', 'Miejsce spotkań, handel uliczny i czarny rynek.', 'https://i.postimg.cc/CM7Qd3fB/Zrzut-ekranu-2026-04-07-201750.webp')"></div>
+                <div class="map-pin" style="top: 49.2%; left: 93.1%;" onclick="openMapInfo('Ekskluzywny Jubiler', 'Strefa luksusowych butików. Monitoring 24/7.', 'https://i.postimg.cc/sDZHKvN8/Zrzut-ekranu-2026-04-07-201314.webp')"></div>
+                <div class="map-pin" style="top: 68.1%; left: 77.2%;" onclick="openMapInfo('Węzeł Wschodni', 'Główny łącznik autostradowy wschód-zachód.', 'https://i.postimg.cc/ZnjbMwRM/Zrzut-ekranu-2026-04-07-200903.webp')"></div>
+                <div class="map-pin" style="top: 74.5%; left: 86.3%;" onclick="openMapInfo('Business District', 'Siedziba banków, salonów samochodowych i biur.', 'https://i.postimg.cc/28pMsQhf/Zrzut-ekranu-2026-04-07-201211.webp')"></div>
+                <div class="map-pin" style="top: 85.3%; left: 83.1%;" onclick="openMapInfo('Strefa Portowa', 'Dok rozładunkowy. Miejsce pracy rybaków i dokerów.', 'https://i.postimg.cc/fySqCt00/Maprender-v3-final.webp')"></div>
+            </div>
+        </section>
+
+        <section id="staff" class="section-pane">
+            <div class="mb-12">
+                <h2 class="text-4xl font-black uppercase italic">Zarząd i Administracja</h2>
+                <p class="text-muted mt-2 tracking-widest text-sm uppercase">Ludzie tworzący przyszłość PrimeRP</p>
+            </div>
+            <div id="staff-render-target" class="staff-grid">
+                </div>
+        </section>
+
+        <section id="law" class="section-pane">
+            <h2 class="text-4xl font-black uppercase italic mb-10">Oficjalny Kodeks Karny</h2>
+            <div class="grid grid-cols-2 gap-10">
+                <div class="prime-card">
+                    <h4 class="text-xl font-black uppercase text-yellow-400 mb-6 italic">§ Wykroczenia Drogowe</h4>
+                    <div class="space-y-4 text-sm text-muted">
+                        <div class="law-item"><b>Przekroczenie prędkości:</b> Mandat $5,000 + 2 pkt.</div>
+                        <div class="law-item"><b>Niewłaściwe parkowanie:</b> Mandat $2,500 + odholowanie.</div>
+                        <div class="law-item"><b>Jazda bez licencji:</b> Grzywna $20,000 + konfiskata pojazdu.</div>
+                        <div class="law-item"><b>Ucieczka przed policją:</b> Grzywna $50,000 + 20m więzienia.</div>
+                    </div>
+                </div>
+                <div class="prime-card">
+                    <h4 class="text-xl font-black uppercase text-red-500 mb-6 italic">§ Przestępstwa Ciężkie</h4>
+                    <div class="space-y-4 text-sm text-muted">
+                        <div class="law-item"><b>Napad na sklep:</b> 30m więzienia + grzywna $40,000.</div>
+                        <div class="law-item"><b>Napad na bank:</b> 60m więzienia + grzywna $100,000.</div>
+                        <div class="law-item"><b>Handel narkotykami:</b> 45m więzienia + grzywna $80,000.</div>
+                        <div class="law-item"><b>Zabójstwo funkcjonariusza:</b> 120m więzienia + grzywna $250,000.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fractions" class="section-pane">
+            <h2 class="text-4xl font-black uppercase italic mb-10">Główne Struktury</h2>
+            <div class="grid grid-cols-3 gap-8">
+                <div class="prime-card text-center">
+                    <img src="https://i.postimg.cc/9F40fK17/image.png" class="w-32 h-32 mx-auto mb-6 object-contain">
+                    <h4 class="text-2xl font-black uppercase italic">LSPD</h4>
+                    <p class="text-muted text-xs mt-4">Służba porządkowa Hamburg City.</p>
+                </div>
+                <div class="prime-card text-center">
+                    <img src="https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp" class="w-32 h-32 mx-auto mb-6 object-contain">
+                    <h4 class="text-2xl font-black uppercase italic">SAMD</h4>
+                    <p class="text-muted text-xs mt-4">Ratownictwo i wsparcie medyczne.</p>
+                </div>
+                <div class="prime-card text-center">
+                    <img src="https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp" class="w-32 h-32 mx-auto mb-6 object-contain opacity-40 grayscale">
+                    <h4 class="text-2xl font-black uppercase italic">LSC</h4>
+                    <p class="text-muted text-xs mt-4">Centralny warsztat i tuning.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="auth" class="section-pane">
+            <div class="max-w-md mx-auto">
+                <div class="prime-card">
+                    <h3 class="text-3xl font-black uppercase italic text-center mb-10">Autoryzacja</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="text-[10px] font-bold text-muted uppercase tracking-widest mb-2 block">Login Użytkownika</label>
+                            <input type="text" id="auth-u" class="w-full bg-black border border-white/10 p-4 rounded-xl text-white focus:border-yellow-400 transition">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-muted uppercase tracking-widest mb-2 block">Hasło Dostępu</label>
+                            <input type="password" id="auth-p" class="w-full bg-black border border-white/10 p-4 rounded-xl text-white focus:border-yellow-400 transition">
+                        </div>
+                        <button onclick="tryLogin()" class="w-full py-5 bg-yellow-400 text-black font-black uppercase rounded-xl hover:opacity-80 transition">
+                            Inicjuj Logowanie
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="support" class="section-pane">
+            <div class="max-w-3xl mx-auto prime-card">
+                <h3 class="text-3xl font-black uppercase italic mb-8">Zgłoś błąd / Ticket</h3>
                 <div class="space-y-4">
-                    <div class="input-group">
-                        <label class="text-[10px] uppercase font-bold text-dim ml-4 mb-2 block">Temat Problemtyki</label>
-                        <input type="text" id="rep-subject" placeholder="np. Skarga na gracza / Błąd systemu" class="form-input">
-                    </div>
-                    <div class="input-group">
-                        <label class="text-[10px] uppercase font-bold text-dim ml-4 mb-2 block">Szczegółowy Opis</label>
-                        <textarea id="rep-body" placeholder="Opisz sytuację jak najdokładniej..." class="form-input h-48 resize-none"></textarea>
-                    </div>
-                    <button onclick="submitReport()" class="btn-action bg-red-600 text-white hover:bg-red-700">Prześlij Ticket do Administracji</button>
+                    <input type="text" class="w-full bg-black border border-white/10 p-4 rounded-xl" placeholder="Temat zgłoszenia">
+                    <select class="w-full bg-black border border-white/10 p-4 rounded-xl text-muted">
+                        <option>Błąd skryptu</option>
+                        <option>Skarga na gracza</option>
+                        <option>Problem z płatnością</option>
+                        <option>Inne</option>
+                    </select>
+                    <textarea class="w-full bg-black border border-white/10 p-4 rounded-xl h-40" placeholder="Opis problemu..."></textarea>
+                    <button class="w-full py-5 bg-red-600 text-white font-black uppercase rounded-xl">Wyślij do Administracji</button>
                 </div>
-            </div>
-        </section>
-
-        <section id="login" class="tab-pane">
-            <div class="max-w-md mx-auto glass-card">
-                <div class="text-center mb-10">
-                    <div class="inline-block p-4 bg-yellow-400/10 rounded-full mb-4">
-                        <span class="text-4xl">🔐</span>
-                    </div>
-                    <h3 class="text-2xl font-black uppercase italic">System Autoryzacji</h3>
-                    <p class="text-dim text-xs mt-2 uppercase tracking-widest">Wprowadź dane dostępowe Obywatela</p>
-                </div>
-                <div class="space-y-4">
-                    <input type="text" id="auth-user" class="form-input" placeholder="Nazwa użytkownika">
-                    <input type="password" id="auth-pass" class="form-input" placeholder="Klucz dostępu (Hasło)">
-                    <button onclick="tryLogin()" class="btn-action">Rozpocznij Sesję</button>
-                </div>
-                <p class="text-[9px] text-center text-dim mt-8 uppercase leading-relaxed">
-                    Dostęp do terminala jest monitorowany.<br>Logując się akceptujesz politykę prywatności PrimeRP.
-                </p>
             </div>
         </section>
 
     </main>
 
-    <div id="modal-map" class="modal-background" onclick="if(event.target == this) this.style.display='none'">
-        <div class="modal-content">
-            <span class="close-modal" onclick="document.getElementById('modal-map').style.display='none'">×</span>
-            <img id="m-info-img" src="" class="w-full h-64 object-cover rounded-[30px] mb-8 border border-white/10 shadow-2xl">
-            <h2 id="m-info-title" class="text-4xl font-black uppercase italic mb-4 text-yellow-400"></h2>
-            <p id="m-info-desc" class="text-gray-400 text-lg leading-relaxed mb-10"></p>
-            <button class="btn-action" onclick="document.getElementById('modal-map').style.display='none'">Zamknij Podgląd</button>
+    <div id="map-modal" class="modal-background" onclick="if(event.target == this) this.style.display='none'">
+        <div class="modal-window">
+            <span class="close-btn" onclick="document.getElementById('map-modal').style.display='none'">&times;</span>
+            <img id="modal-img" src="" class="w-full h-64 object-cover rounded-[30px] mb-8 border border-white/10 shadow-2xl">
+            <h2 id="modal-title" class="text-4xl font-black uppercase italic text-yellow-400 mb-4"></h2>
+            <p id="modal-desc" class="text-muted text-lg leading-relaxed"></p>
         </div>
     </div>
 
     <script src="users.js"></script>
-
     <script>
-        // Baza administracji
-        const staffDatabase = [
-            { name: "Owner", role: "Właściciel Projektu", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", desc: "Główny wizjoner i deweloper PrimeRP." },
-            { name: "Admin 1", role: "Administrator", img: "https://i.postimg.cc/g0cRLPHz/a4324af6-1492-4782-b7b6-db9eeb0833bf-2-removebg-preview.png", desc: "Zarządzanie ticketami i porządkiem." }
+        /* --- BAZA ADMINISTRACJI (PEŁNE 12 OSÓB) --- */
+        const staffList = [
+            { name: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴", role: "Owner", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", d: "Główny wizjoner projektu." },
+            { name: "! KUBA", role: "CO-Owner", img: "https://i.postimg.cc/KjvhBywK/image-14.jpg", d: "Zarządzanie infrastrukturą." },
+            { name: "Czesio", role: "2ND CO-Owner", img: "https://i.postimg.cc/mrxG4kRy/55c4629fb275e-o-large.webp", d: "Opieka nad frakcjami." },
+            { name: "Posel", role: "Prezes", img: "https://i.postimg.cc/8519krYf/270aac72-dcb0-4b08-bca6-44c6da70ee5f-profile-image-300x300.webp", d: "Wsparcie administracyjne." },
+            { name: "klaudiaa<3", role: "Trial Admin", img: "https://i.postimg.cc/0Nz4jwXJ/Zrzut-ekranu-2024-03-08-195813.webp", d: "Moderacja rozgrywki." },
+            { name: "_X4Miki", role: "Trial Admin", img: "https://i.postimg.cc/sDfw1Wvs/1991785604-tojabetter-jpg-0d3cc87805663cc513833a3e9d19796c.webp", d: "Zarządzanie WhiteList." },
+            { name: "Itzz_Stysiu", role: "Senior Mod", img: "https://i.postimg.cc/Cx1Pr8g4/IMG-2398.webp", d: "Opiekun moderatorów." },
+            { name: "VGSxVexu💛", role: "Support", img: "https://i.postimg.cc/VvK9X75Z/IMG-3268.webp", d: "Pomoc nowym graczom." },
+            { name: "Kokos", role: "Support", img: "https://i.postimg.cc/jdCPG4DT/1496b848796a7f6e8928a841500df90c.webp", d: "Moderacja ticketów." },
+            { name: "! laczekk", role: "Support", img: "https://i.postimg.cc/TPxMMrb8/0b921f0878a6e549b4c31efc29383d1b.webp", d: "Wsparcie techniczne." },
+            { name: "tymi1_3", role: "Support", img: "https://i.postimg.cc/prb1zvBx/Playboi-Carti-604x900.webp", d: "Pomoc w eventach." },
+            { name: "Artur", role: "Technik", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp", d: "Skrypty i logistyka." }
         ];
 
-        // Inicjalizacja strony
+        /* --- INICJALIZACJA --- */
         window.onload = () => {
-            renderStaffList();
+            renderStaffItems();
             startClock();
+            console.log("PRIME RP SYSTEM: INITIALIZED");
         };
+
+        function navigate(target, el) {
+            document.querySelectorAll('.section-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(target).classList.add('active');
+            if(el) el.classList.add('active');
+        }
 
         function startClock() {
             setInterval(() => {
                 const now = new Date();
-                document.getElementById('digital-clock').innerText = now.toLocaleString('pl-PL');
+                document.getElementById('digital-clock').innerText = now.toLocaleTimeString('pl-PL');
             }, 1000);
         }
 
-        function navigateTo(tabId, element) {
-            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            if(element) element.classList.add('active');
-        }
-
-        function openMapData(title, desc, img) {
-            document.getElementById('m-info-title').innerText = title;
-            document.getElementById('m-info-desc').innerText = desc;
-            document.getElementById('m-info-img').src = img;
-            document.getElementById('modal-map').style.display = 'flex';
-        }
-
-        function renderStaffList() {
-            const list = document.getElementById('staff-render-list');
-            list.innerHTML = staffDatabase.map(s => `
-                <div class="glass-card text-center">
-                    <img src="${s.img}" class="staff-avatar" alt="${s.name}">
-                    <h4 class="font-black text-sm uppercase italic">${s.name}</h4>
-                    <p class="text-yellow-400 text-[10px] font-bold tracking-widest mt-1 uppercase">${s.role}</p>
+        function renderStaffItems() {
+            const container = document.getElementById('staff-render-target');
+            container.innerHTML = staffList.map(s => `
+                <div class="staff-card">
+                    <img src="${s.img}" class="staff-avatar">
+                    <h4 class="text-white font-black uppercase italic text-sm tracking-tighter">${s.name}</h4>
+                    <p class="text-yellow-400 text-[10px] font-bold uppercase tracking-widest mt-1">${s.role}</p>
+                    <p class="text-[9px] text-muted mt-4 italic leading-relaxed">${s.d}</p>
                 </div>
             `).join('');
         }
 
-        function submitReport() {
-            const subject = document.getElementById('rep-subject').value;
-            const body = document.getElementById('rep-body').value;
-            if(!subject || !body) return alert("Błąd: Formularz niekompletny!");
-            alert("Sukces: Zgłoszenie zostało wysłane do bazy danych Administracji.");
-            document.getElementById('rep-subject').value = "";
-            document.getElementById('rep-body').value = "";
+        function openMapInfo(title, desc, img) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-img').src = img;
+            document.getElementById('map-modal').style.display = 'flex';
         }
 
-        /* --- LOGIKA LOGOWANIA GLOBALNEGO --- */
         function tryLogin() {
-            const u = document.getElementById('auth-user').value;
-            const p = document.getElementById('auth-pass').value;
+            const u = document.getElementById('auth-u').value;
+            const p = document.getElementById('auth-p').value;
 
-            // Admin systemowy
-            if(u === 'admin' && p === '1234') { 
-                loginAs("ADMINISTRATOR"); 
+            // Admin Fast Path
+            if(u === 'admin' && p === '1234') {
+                alert("Witaj, Szefie!");
+                document.getElementById('nav-login').classList.add('hidden');
+                document.getElementById('nav-logout').classList.remove('hidden');
+                navigate('home');
                 return;
             }
 
-            // Sprawdzanie w pliku users.js ( citizenDatabase )
-            if (typeof citizenDatabase !== 'undefined') {
+            // Citizen Database Path
+            if(typeof citizenDatabase !== 'undefined') {
                 const citizen = citizenDatabase.find(c => c.user === u && c.pass === p);
                 if(citizen) {
-                    renderProfileInSameTab(citizen);
-                    return;
+                    renderCitizenPortal(citizen);
+                } else {
+                    alert("Niepoprawne dane logowania!");
                 }
             }
-
-            alert("Identyfikacja odrzucona: Nieprawidłowy login lub hasło. Upewnij się, że dane są wpisane w pliku users.js.");
         }
 
-        function loginAs(name) {
-            document.getElementById('user-header').innerText = name;
-            document.getElementById('nav-login').classList.add('hidden');
-            document.getElementById('nav-logout').classList.remove('hidden');
-            navigateTo('home');
-        }
-
-        /* --- GENEROWANIE TERMINALA OBYWATELA --- */
-        function renderProfileInSameTab(citizen) {
-            const profileHTML = `
-            <div id="citizen-terminal-root" class="flex" style="background: #050505; color: white; font-family: 'Inter', sans-serif; height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: 9999; overflow: hidden;">
-                <style>
-                    .sidebar-p { width: 300px; background: #080808; border-right: 1px solid #1a1a1a; height: 100vh; padding: 40px 20px; flex-shrink: 0; }
-                    .viewport-p { flex: 1; height: 100vh; overflow-y: auto; padding: 60px; background: radial-gradient(circle at top right, #111 0%, #000 100%); }
-                    .nav-btn { width: 100%; padding: 18px; margin-bottom: 12px; background: #0f0f0f; border-radius: 14px; font-weight: 800; font-size: 11px; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: 0.3s; color: #666; text-align: left; display: flex; align-items: center; gap: 15px; }
-                    .nav-btn:hover { border-color: #fbbf24; color: white; background: #121212; }
-                    .nav-btn.active { background: #fbbf24; color: black; border-color: #fbbf24; }
-                    .tab-content { display: none; animation: fadeIn 0.5s ease; }
-                    .tab-content.active { display: block; }
-                    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-                    .stat-box { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); }
-                </style>
-                
-                <aside class="sidebar-p">
-                    <div class="mb-12 text-center">
-                        <h2 class="text-2xl font-black italic tracking-tighter text-yellow-400">PRIME TERMINAL</h2>
-                        <p class="text-[8px] text-dim uppercase mt-1">Szyfrowanie: AES-256-GCM</p>
-                    </div>
-                    <nav>
-                        <button class="nav-btn active" onclick="switchT('t-profile', this)"><span>👤</span> Mój Profil</button>
-                        <button class="nav-btn" onclick="switchT('t-bank', this)"><span>💳</span> Finanse & Bank</button>
-                        <button class="nav-btn" onclick="switchT('t-records', this)"><span>⚖️</span> Rejestr Karny</button>
-                        <button class="nav-btn" onclick="switchT('t-docs', this)"><span>📄</span> Dokumenty</button>
-                        
-                        <div class="mt-20 pt-10 border-t border-white/5">
-                            <button class="nav-btn border-red-900/30 text-red-500" onclick="location.reload()"><span>🚪</span> Zamknij Sesję</button>
-                        </div>
+        function renderCitizenPortal(data) {
+            const root = document.createElement('div');
+            root.style.cssText = "position:fixed; inset:0; background:#050505; z-index:10000; display:flex; font-family:'Inter', sans-serif;";
+            root.innerHTML = `
+                <div style="width:350px; border-right:1px solid #1a1a1a; background:#080808; padding:50px;">
+                    <h2 style="color:#fbbf24; font-weight:900; italic; font-size:2rem;">PRIME_ROOT</h2>
+                    <p style="color:#444; font-size:0.7rem; margin-top:10px;">AUTHORIZED: ${data.profile.fullName}</p>
+                    <nav style="margin-top:50px; display:flex; flex-direction:column; gap:15px;">
+                        <button style="background:#fbbf24; color:black; padding:18px; border-radius:15px; font-weight:900; border:none; cursor:pointer; text-transform:uppercase;">Dane Profilowe</button>
+                        <button style="background:#111; color:white; padding:18px; border-radius:15px; font-weight:900; border:none; cursor:pointer; text-transform:uppercase;">Konto Bankowe</button>
+                        <button style="background:#111; color:white; padding:18px; border-radius:15px; font-weight:900; border:none; cursor:pointer; text-transform:uppercase;">Pojazdy</button>
+                        <button onclick="location.reload()" style="margin-top:50px; background:red; color:white; padding:18px; border-radius:15px; font-weight:900; border:none; cursor:pointer; text-transform:uppercase;">Wyloguj</button>
                     </nav>
-                </aside>
-
-                <main class="viewport-p">
-                    <div id="t-profile" class="tab-content active">
-                        <div class="flex items-center gap-10 mb-12">
-                            <img src="${citizen.profile.avatar}" class="w-56 h-56 rounded-[40px] border-4 border-yellow-400 shadow-[0_0_50px_rgba(251,191,36,0.2)] object-cover">
-                            <div>
-                                <h1 class="text-7xl font-black italic uppercase tracking-tighter">${citizen.profile.fullName}</h1>
-                                <p class="text-yellow-400 text-2xl font-bold uppercase mt-2">${citizen.profile.job}</p>
-                                <div class="flex gap-4 mt-6">
-                                    <span class="bg-green-600/20 text-green-500 px-6 py-2 rounded-full text-xs font-black border border-green-500/30">STATUS: ${citizen.profile.status}</span>
-                                    <span class="bg-blue-600/20 text-blue-500 px-6 py-2 rounded-full text-xs font-black border border-blue-500/30">VISA: ${citizen.profile.visaType}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-3 gap-6">
-                            <div class="stat-box">
-                                <p class="text-dim text-[10px] uppercase font-bold mb-1">Ubezpieczenie</p>
-                                <p class="text-xl font-bold text-white">${citizen.profile.insurance}</p>
-                            </div>
-                            <div class="stat-box">
-                                <p class="text-dim text-[10px] uppercase font-bold mb-1">Numer Obywatela</p>
-                                <p class="text-xl font-bold text-white">#ID-${Math.floor(Math.random() * 9000 + 1000)}</p>
-                            </div>
-                            <div class="stat-box">
-                                <p class="text-dim text-[10px] uppercase font-bold mb-1">Ostatnia Lokalizacja</p>
-                                <p class="text-xl font-bold text-white">Hamburg City</p>
-                            </div>
+                </div>
+                <div style="flex:1; padding:80px; background:radial-gradient(circle at center, #111, #000); overflow-y:auto;">
+                    <div style="display:flex; align-items:center; gap:50px; margin-bottom:60px;">
+                        <img src="${data.profile.avatar}" style="width:250px; height:250px; border-radius:40px; border:6px solid #fbbf24; object-fit:cover;">
+                        <div>
+                            <h1 style="font-size:5rem; font-weight:900; italic; text-transform:uppercase; line-height:1;">${data.profile.fullName}</h1>
+                            <p style="font-size:1.8rem; color:#fbbf24; font-weight:700; margin-top:15px;">${data.profile.job}</p>
+                            <span style="display:inline-block; margin-top:20px; padding:10px 20px; background:#10b981; border-radius:10px; font-weight:900; font-size:0.8rem;">STATUS: ${data.profile.status}</span>
                         </div>
                     </div>
-
-                    <div id="t-bank" class="tab-content">
-                        <h3 class="text-4xl font-black italic uppercase mb-10">Zasoby Finansowe</h3>
-                        <div class="grid grid-cols-2 gap-10">
-                            <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 p-10 rounded-[40px] text-black">
-                                <p class="uppercase font-black text-xs opacity-70 mb-2">Dostępny Balans</p>
-                                <p class="text-6xl font-black tracking-tighter">${citizen.profile.balance}</p>
-                                <p class="mt-10 font-mono font-bold text-sm">NR KONTA: ${citizen.profile.bankAcc}</p>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="stat-box flex justify-between items-center">
-                                    <span>Ostatni Przelew</span>
-                                    <span class="text-green-500 font-bold">+ 1,200 $</span>
-                                </div>
-                                <div class="stat-box flex justify-between items-center">
-                                    <span>Podatek Miejski</span>
-                                    <span class="text-red-500 font-bold">- 450 $</span>
-                                </div>
-                            </div>
+                    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:30px;">
+                        <div style="background:#0a0a0a; border:1px solid #1a1a1a; padding:40px; border-radius:30px;">
+                            <p style="color:#444; font-weight:900; font-size:0.7rem; uppercase;">Saldo Finansowe</p>
+                            <h3 style="font-size:3rem; font-weight:900; margin-top:10px; color:#fbbf24;">${data.profile.balance}</h3>
+                        </div>
+                        <div style="background:#0a0a0a; border:1px solid #1a1a1a; padding:40px; border-radius:30px;">
+                            <p style="color:#444; font-weight:900; font-size:0.7rem; uppercase;">Typ Wizy</p>
+                            <h3 style="font-size:2rem; font-weight:900; margin-top:10px;">${data.profile.visaType}</h3>
+                        </div>
+                        <div style="background:#0a0a0a; border:1px solid #1a1a1a; padding:40px; border-radius:30px;">
+                            <p style="color:#444; font-weight:900; font-size:0.7rem; uppercase;">Kartoteka</p>
+                            <h3 style="font-size:2rem; font-weight:900; margin-top:10px; color:${data.profile.criminalRecord === 'Czysta' ? '#10b981' : '#ef4444'}">${data.profile.criminalRecord}</h3>
                         </div>
                     </div>
-
-                    <div id="t-records" class="tab-content">
-                        <h3 class="text-4xl font-black italic uppercase mb-10">Rejestr Karny (KMP)</h3>
-                        <div class="bg-red-600/5 border border-red-600/20 p-12 rounded-[40px]">
-                            <p class="text-red-500 font-black text-xs uppercase mb-4 tracking-widest">Oficjalny Raport Policji</p>
-                            <p class="text-5xl font-black uppercase italic">${citizen.profile.criminalRecord}</p>
-                            <p class="text-gray-500 mt-6 text-sm leading-relaxed">
-                                Dane pobrane z centralnej bazy danych policji w Hamburg City. Każdy wpis w kartotece wpływa na możliwość uzyskania licencji na broń oraz pracę w frakcjach państwowych.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div id="t-docs" class="tab-content">
-                        <h3 class="text-4xl font-black italic uppercase mb-10">Cyfrowe Dokumenty</h3>
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="stat-box border-dashed border-2">
-                                <h4 class="font-black mb-2">Dowód Osobisty</h4>
-                                <p class="text-xs text-dim">STATUS: AKTUALNY</p>
-                            </div>
-                            <div class="stat-box border-dashed border-2">
-                                <h4 class="font-black mb-2">Prawo Jazdy Kat. B</h4>
-                                <p class="text-xs text-dim">STATUS: AKTUALNY</p>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
+                </div>
             `;
-            
-            document.body.innerHTML = profileHTML;
-
-            // Funkcja przełączania pod-zakładek terminala
-            window.switchT = function(tabId, btn) {
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                document.getElementById(tabId).classList.add('active');
-                btn.classList.add('active');
-            };
+            document.body.appendChild(root);
         }
     </script>
 </body>
