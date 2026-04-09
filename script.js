@@ -1,6 +1,6 @@
 /**
  * Główny skrypt obsługujący logikę platformy PRIME RP
- * Zawiera system nawigacji, autoryzacji oraz integrację z Discord Webhook.
+ * Poprawiona wersja z pełnym profilem administratora.
  */
 
 const staffDatabase = [
@@ -18,10 +18,24 @@ const staffDatabase = [
     { name: "Artur", role: "Technik", desc: "Opieka nad nowymi graczami i WhiteList.", img: "https://i.postimg.cc/V6c2hN4P/c6f621103d57b4573bb765c7b42ebb03.webp" }
 ];
 
+// Dane konta Administratora (Ownera)
+const adminProfile = {
+    user: "admin",
+    pass: "1234",
+    profile: {
+        fullName: "IⱽI₭Ɇ₱₳₦₵₳₭Ɇ₴",
+        avatar: "https://i.postimg.cc/KjvhBywK/image-14.jpg",
+        job: "Właściciel Projektu",
+        status: "ADMINISTRATOR",
+        balance: "999,999,999 $",
+        bankAcc: "PRIME-0001-OWNER"
+    }
+};
+
 let localAccounts = JSON.parse(localStorage.getItem('prime_sys_accounts_v29')) || [];
 let activeStaffTarget = "";
 
-window.onload = () => {
+window.onload = function() {
     renderStaffList();
     renderDBList();
     startDigitalClock();
@@ -30,16 +44,18 @@ window.onload = () => {
 function startDigitalClock() {
     setInterval(() => {
         const now = new Date();
-        document.getElementById('digital-clock').innerText = now.toLocaleString('pl-PL');
+        const clockEl = document.getElementById('digital-clock');
+        if(clockEl) clockEl.innerText = now.toLocaleString('pl-PL');
     }, 1000);
 }
 
 function navigateTo(tabId, element) {
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
     
-    // Podświetlenie odpowiedniego przycisku w menu
+    const targetTab = document.getElementById(tabId);
+    if(targetTab) targetTab.classList.add('active');
+    
     if(element) {
         element.classList.add('active');
     } else {
@@ -57,6 +73,7 @@ function openMapData(title, desc, img) {
 
 function renderStaffList() {
     const list = document.getElementById('staff-render-list');
+    if(!list) return;
     list.innerHTML = staffDatabase.map(s => `
         <div class="glass-card text-center cursor-pointer" onclick="openStaffProfile('${s.name}', '${s.role}', '${s.img}', '${s.desc}')">
             <img src="${s.img}" class="staff-avatar">
@@ -78,58 +95,66 @@ function openStaffProfile(n, r, i, d) {
 async function sendStaffMessage() {
     const text = document.getElementById('s-msg-content').value;
     if(!text) return alert("Pusta wiadomość!");
-    const payload = { content: `📩 **WIADOMOŚĆ**\n**Do:** ${activeStaffTarget}\n**Od:** ${document.getElementById('user-header').innerText}\n**Treść:** ${text}` };
-    await fetch("https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8", {
-        method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
-    });
-    alert("Wysłano wiadomość!");
-    document.getElementById('modal-staff').style.display = 'none';
+    const sender = document.getElementById('user-header').innerText;
+    const payload = { content: `📩 **WIADOMOŚĆ**\n**Do:** ${activeStaffTarget}\n**Od:** ${sender}\n**Treść:** ${text}` };
+    
+    try {
+        await fetch("https://discord.com/api/webhooks/1490902802837274664/OmoHB4CdSWIR4xhVowSCB-ZOakiUI83_ofFk8oJOl0R9iy5JAjrBGGcy8zNg4zWwz-x8", {
+            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
+        });
+        alert("Wysłano wiadomość!");
+        document.getElementById('modal-staff').style.display = 'none';
+        document.getElementById('s-msg-content').value = "";
+    } catch(e) { alert("Błąd Webhooka."); }
 }
 
 async function submitReport() {
     const s = document.getElementById('rep-subject').value;
     const b = document.getElementById('rep-body').value;
     if(!s || !b) return alert("Uzupełnij pola!");
-    const payload = { content: `🚨 **NOWE ZGŁOSZENIE**\n**Temat:** ${s}\n**Zgłaszający:** ${document.getElementById('user-header').innerText}\n**Opis:** ${b}` };
-    await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
-        method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
-    });
-    alert("Zgłoszenie wysłane!");
-    document.getElementById('rep-subject').value = "";
-    document.getElementById('rep-body').value = "";
+    const sender = document.getElementById('user-header').innerText;
+    const payload = { content: `🚨 **ZGŁOSZENIE**\n**Temat:** ${s}\n**Od:** ${sender}\n**Opis:** ${b}` };
+    
+    try {
+        await fetch("https://discord.com/api/webhooks/1490516856711155815/Chia9TI7kopiEG7Vnbm2l77iWIEA38lG6zcFmB-IBSl0KXlo3uBIoW6FtkmgLX3BFzzx", {
+            method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)
+        });
+        alert("Zgłoszenie wysłane!");
+        document.getElementById('rep-subject').value = "";
+        document.getElementById('rep-body').value = "";
+    } catch(e) { alert("Błąd zgłoszenia."); }
 }
 
-// --- LOGIKA LOGOWANIA ---
 function tryLogin() {
     const u = document.getElementById('auth-user').value;
     const p = document.getElementById('auth-pass').value;
 
-    // 1. Sprawdź czy to Admin
-    if(u === 'admin' && p === '1234') { 
-        loginAs("ADMINISTRATOR", true, null); 
+    // Logowanie Admina (Głównego)
+    if(u === adminProfile.user && p === adminProfile.pass) { 
+        loginAs(adminProfile.profile.fullName, true, adminProfile.profile); 
         return;
     }
 
-    // 2. Sprawdź w zewnętrznej bazie Obywateli (z pliku users.js)
+    // Sprawdzanie citizenDatabase (z users.js)
     if (typeof citizenDatabase !== 'undefined') {
         const citizen = citizenDatabase.find(c => c.user === u && c.pass === p);
         if(citizen) {
-            loginAs(citizen.user, false, citizen.profile);
+            loginAs(citizen.profile.fullName, false, citizen.profile);
             return;
         }
     }
 
-    // 3. Sprawdź w lokalnej bazie (localStorage)
+    // Sprawdzanie lokalnej bazy
     const account = localAccounts.find(acc => acc.user === u && acc.pass === p);
     if(account) { 
         loginAs(u, false, null); 
     } else { 
-        alert("Identyfikacja nieudana. Sprawdź dane!"); 
+        alert("Niepoprawne dane!"); 
     }
 }
 
-function loginAs(name, isAdmin, profile) {
-    document.getElementById('user-header').innerText = name;
+function loginAs(displayName, isAdmin, profile) {
+    document.getElementById('user-header').innerText = displayName;
     document.getElementById('nav-login').classList.add('hidden');
     document.getElementById('nav-logout').classList.remove('hidden');
 
@@ -137,7 +162,6 @@ function loginAs(name, isAdmin, profile) {
         document.getElementById('nav-admin-panel').classList.remove('hidden');
     }
 
-    // Jeśli zalogowano jako Obywatel z profilem
     if(profile) {
         document.getElementById('btn-profile').classList.remove('hidden');
         document.getElementById('p-avatar').src = profile.avatar;
@@ -146,14 +170,13 @@ function loginAs(name, isAdmin, profile) {
         document.getElementById('p-status').innerText = profile.status;
         document.getElementById('p-balance').innerText = profile.balance;
         document.getElementById('p-bankAcc').innerText = profile.bankAcc;
-        
         navigateTo('profile');
     } else {
+        document.getElementById('btn-profile').classList.add('hidden');
         navigateTo('home');
     }
 }
 
-// Administracja lokalną bazą
 function renderDBList() {
     const list = document.getElementById('db-user-list');
     if(!list) return;
@@ -171,11 +194,12 @@ function renderDBList() {
 function addUserToDB() {
     const u = document.getElementById('db-new-user').value;
     const p = document.getElementById('db-new-pass').value;
-    if(!u || !p) return alert("Uzupełnij dane!");
+    if(!u || !p) return alert("Pola są puste!");
     localAccounts.push({user: u, pass: p});
     localStorage.setItem('prime_sys_accounts_v29', JSON.stringify(localAccounts));
     renderDBList();
-    alert("Konto dodane do bazy lokalnej!");
+    document.getElementById('db-new-user').value = "";
+    document.getElementById('db-new-pass').value = "";
 }
 
 function removeUser(idx) {
