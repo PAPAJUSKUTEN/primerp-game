@@ -2,89 +2,70 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel z zakładkami</title>
+    <title>Panel Główny</title>
     <style>
-        body { margin: 0; display: flex; font-family: sans-serif; height: 100vh; background: #ecf0f1; }
+        * { box-sizing: border-box; }
+        body { margin: 0; display: flex; font-family: sans-serif; height: 100vh; }
         
-        /* Menu po lewej */
+        /* Menu boczne */
         nav { width: 250px; background: #2c3e50; color: white; display: flex; flex-direction: column; }
-        .logo { padding: 25px; font-size: 1.5rem; font-weight: bold; background: #1a252f; text-align: center; }
+        .logo { padding: 20px; background: #1a252f; text-align: center; font-weight: bold; }
         
-        .menu-item {
-            padding: 15px 25px;
-            color: #bdc3c7;
-            text-decoration: none;
-            cursor: pointer;
-            border-left: 5px solid transparent;
-            transition: 0.3s;
-        }
-        .menu-item:hover { background: #34495e; color: white; }
-        .menu-item.active { background: #3e5871; color: white; border-left: 5px solid #e94560; }
+        .tab-link { padding: 15px 25px; color: #bdc3c7; cursor: pointer; border-left: 4px solid transparent; }
+        .tab-link:hover { background: #34495e; color: white; }
+        .tab-link.active { background: #3e5871; color: white; border-left: 4px solid #e94560; }
 
         /* Treść po prawej */
-        main { flex-grow: 1; padding: 40px; }
-        .tab-content { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .tab-content.active { display: block; }
+        main { flex-grow: 1; padding: 40px; background: #f4f7f6; }
+        .content-box { display: none; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .content-box.active { display: block; }
         
-        .btn-wyloguj { margin: auto 20px 20px; padding: 10px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .logout { margin-top: auto; padding: 15px; background: #e74c3c; border: none; color: white; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <script>
-        // Jeśli ktoś wejdzie bez logowania - cofnij do index.html
-        if (sessionStorage.getItem("zalogowany") !== "tak") {
+        // Strażnik: jeśli nie było logowania, wróć do index.html
+        if (sessionStorage.getItem("isLogged") !== "true") {
             window.location.href = "index.html";
         }
     </script>
 
     <nav>
-        <div class="logo">MOJA STRONA</div>
-        <div class="menu-item active" onclick="pokazTab(event, 'home')">🏠 Strona Główna</div>
-        <div class="menu-item" onclick="pokazTab(event, 'dane')">📁 Moje Dane</div>
-        <div class="menu-item" onclick="pokazTab(event, 'ustawienia')">⚙️ Ustawienia</div>
-        <div class="menu-item" onclick="pokazTab(event, 'pomoc')">❓ Pomoc</div>
-        <button class="btn-wyloguj" onclick="sessionStorage.clear(); window.location.href='index.html';">Wyloguj</button>
+        <div class="logo">PANEL ZAKŁADEK</div>
+        <div class="tab-link active" onclick="openTab(event, 't1')">🏠 Start</div>
+        <div class="tab-link" onclick="openTab(event, 't2')">📂 Dokumenty</div>
+        <div class="tab-link" onclick="openTab(event, 't3')">⚙️ Ustawienia</div>
+        <button class="logout" onclick="sessionStorage.clear(); window.location.href='index.html';">Wyloguj</button>
     </nav>
 
     <main>
-        <div id="home" class="tab-content active">
-            <h1>Witamy w panelu</h1>
-            <p>To jest pierwsza zakładka. Wybierz inne opcje z menu po lewej.</p>
+        <div id="t1" class="content-box active">
+            <h1>Strona Główna</h1>
+            <p>Witaj! Logowanie zniknęło, a Ty widzisz panel z zakładkami po lewej.</p>
         </div>
-
-        <div id="dane" class="tab-content">
-            <h1>Twoje Dane</h1>
-            <p>Tutaj mogą znajdować się tabele lub pliki do pobrania.</p>
+        <div id="t2" class="content-box">
+            <h1>Twoje Dokumenty</h1>
+            <p>Lista plików dostępna tylko dla zalogowanych.</p>
         </div>
-
-        <div id="ustawienia" class="tab-content">
-            <h1>Ustawienia konta</h1>
-            <p>Zmień swój profil, kolorystykę i powiadomienia.</p>
-        </div>
-
-        <div id="pomoc" class="tab-content">
-            <h1>Pomoc</h1>
-            <p>Potrzebujesz wsparcia? Skontaktuj się z administratorem.</p>
+        <div id="t3" class="content-box">
+            <h1>Ustawienia systemowe</h1>
+            <p>Tutaj możesz zmienić parametry panelu.</p>
         </div>
     </main>
 
     <script>
-        function pokazTab(e, idTabu) {
+        function openTab(evt, tabId) {
             // Ukryj wszystkie treści
-            let treści = document.querySelectorAll('.tab-content');
-            treści.forEach(t => t.classList.remove('active'));
-
-            // Usuń kolor z przycisków
-            let przyciski = document.querySelectorAll('.menu-item');
-            przyciski.forEach(p => p.classList.remove('active'));
-
-            // Pokaż wybraną treść i zaznacz przycisk
-            document.getElementById(idTabu).classList.add('active');
-            e.currentTarget.classList.add('active');
+            document.querySelectorAll('.content-box').forEach(c => c.classList.remove('active'));
+            // Odznacz linki
+            document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+            
+            // Pokaż wybraną treść
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
         }
     </script>
-
 </body>
 </html>
