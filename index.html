@@ -3,138 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM ALARMOWY</title>
+    <title>System Powiadamiania Ratunkowego - Portal Gov.pl</title>
     <style>
+        /* Stylistyka wzorowana na systemach GOV */
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #000;
-            color: #ff0000;
-            overflow: hidden;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
         }
 
-        /* Stylizacja ramki alarmowej */
-        .alarm-container {
-            text-align: center;
-            padding: 60px;
-            border: 10px double #ff0000;
-            background: linear-gradient(0deg, #1a0000 0%, #000 100%);
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+        /* Górny pasek z flagą */
+        .gov-header {
+            background-color: #fff;
+            border-bottom: 2px solid #e1e1e1;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .flag-accent {
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(to bottom, #fff 50%, #dc2c2c 50%);
+            border: 1px solid #ccc;
+            margin-right: 15px;
+        }
+
+        .gov-title {
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Główny kontener */
+        .main-content {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+
+        .alert-heading {
+            border-left: 5px solid #d43533;
+            padding-left: 20px;
+            margin-bottom: 30px;
         }
 
         h1 {
-            font-size: 3rem;
-            margin: 0 0 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            animation: blink 1s infinite;
+            font-size: 24px;
+            margin: 0;
+            color: #d43533;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
+        .info-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 1.6;
         }
 
-        /* Stylizacja przycisku */
+        /* Przycisk w stylu urzędowym */
+        .btn-container {
+            text-align: center;
+            padding: 20px;
+        }
+
         #controlBtn {
-            background: #ff0000;
-            color: #000;
+            background-color: #003366; /* Granat rządowy */
+            color: #fff;
             border: none;
-            padding: 25px 70px;
-            font-size: 1.8rem;
+            padding: 15px 40px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            border-radius: 3px;
             text-transform: uppercase;
-            transition: all 0.3s;
-            box-shadow: 0 0 15px #ff0000;
+            transition: background 0.2s;
         }
 
         #controlBtn:hover {
-            background: #fff;
-            box-shadow: 0 0 30px #fff;
-            transform: scale(1.05);
+            background-color: #002244;
         }
 
         #controlBtn:disabled {
-            background: #333;
-            color: #555;
-            box-shadow: none;
+            background-color: #ccc;
             cursor: wait;
         }
 
-        /* Ukryty odtwarzacz YouTube */
-        #yt-audio-element {
+        /* Aktywny alarm */
+        .alarm-active {
+            animation: bg-flash 1s infinite;
+        }
+
+        @keyframes bg-flash {
+            0% { background-color: #fff; }
+            50% { background-color: #ffeaea; }
+            100% { background-color: #fff; }
+        }
+
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-top: 50px;
+            padding-bottom: 20px;
+        }
+
+        #yt-audio {
             position: absolute;
-            top: -9999px;
             left: -9999px;
         }
     </style>
 </head>
-<body>
+<body id="pageBody">
 
-    <div class="alarm-container">
-        <h1>ALARM</h1>
-        <p style="color: #fff; margin-bottom: 30px;">UWAGA! SYGNAŁ OSTRZEGAWCZY</p>
-        <button id="controlBtn" onclick="toggleSiren()" disabled>Ładowanie...</button>
+    <div class="gov-header">
+        <div class="flag-accent"></div>
+        <div class="gov-title">Portal Rzeczypospolitej Polskiej</div>
     </div>
 
-    <div id="yt-audio-element"></div>
+    <div class="main-content">
+        <div class="alert-heading">
+            <h1>Krajowy System Wykrywania Skażeń i Alarmowania</h1>
+        </div>
+
+        <div class="info-box">
+            <strong>Komunikat techniczny:</strong> Niniejszy panel służy do zdalnej weryfikacji sprawności syren alarmowych w regionie. Przed uruchomieniem sygnału upewnij się, że procedury bezpieczeństwa zostały zachowane. Dźwięk zostanie wyemitowany bezpośrednio przez odbiornik stacji bazowej.
+        </div>
+
+        <div class="btn-container">
+            <button id="controlBtn" onclick="toggleSiren()" disabled>Ładowanie systemu...</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Ministerstwo Cyfryzacji | Główny Inspektorat Ochrony Ludności
+    </footer>
+
+    <div id="yt-audio"></div>
 
     <script>
         var player;
         var isSirenPlaying = false;
-        
-        // Twoje nowe ID filmu: L_qp8FOB_pE
-        var videoId = 'L_qp8FOB_pE';
+        var videoId = 'L_qp8FOB_pE'; // Twoje ID syreny
 
-        // Załadowanie API YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('yt-audio-element', {
+            player = new YT.Player('yt-audio', {
                 height: '1',
                 width: '1',
                 videoId: videoId,
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
+                events: { 'onReady': onPlayerReady }
             });
         }
 
         function onPlayerReady(event) {
             var btn = document.getElementById("controlBtn");
-            btn.innerHTML = "WŁĄCZ SYRENĘ ⚠️";
+            btn.innerHTML = "TESTUJ SYGNAŁ ALARMOWY";
             btn.disabled = false;
         }
 
         function toggleSiren() {
             var btn = document.getElementById("controlBtn");
+            var body = document.getElementById("pageBody");
+            
             if (!isSirenPlaying) {
                 player.playVideo();
-                btn.innerHTML = "WYŁĄCZ SYRENĘ 🛑";
-                btn.style.background = "#fff";
-                btn.style.color = "#ff0000";
+                btn.innerHTML = "ZATRZYMAJ PROCEDURĘ";
+                btn.style.backgroundColor = "#d43533"; // Czerwony po włączeniu
+                body.classList.add("alarm-active");
                 isSirenPlaying = true;
             } else {
                 player.pauseVideo();
-                btn.innerHTML = "WŁĄCZ SYRENĘ ⚠️";
-                btn.style.background = "#ff0000";
-                btn.style.color = "#000";
+                btn.innerHTML = "TESTUJ SYGNAŁ ALARMOWY";
+                btn.style.backgroundColor = "#003366";
+                body.classList.remove("alarm-active");
                 isSirenPlaying = false;
             }
         }
     </script>
+
 </body>
 </html>
