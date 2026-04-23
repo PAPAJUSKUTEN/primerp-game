@@ -5,23 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logowanie</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .login-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 320px; }
-        h2 { text-align: center; color: #333; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background: #2980b9; }
-        #error-msg { color: #e74c3c; font-size: 14px; text-align: center; display: none; margin-bottom: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
+        .login-box { background: #16213e; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; max-width: 320px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 5px; background: #0f3460; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; margin-top: 15px; background: #e94560; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; }
+        button:hover { background: #ff2e63; }
+        #error-msg { color: #ff4d4d; font-size: 14px; display: none; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="login-box">
-        <h2>Panel Dostępu</h2>
-        <p id="error-msg">Nieprawidłowy login lub hasło</p>
-        <input type="text" id="username" placeholder="Użytkownik">
+        <h2>Zaloguj się</h2>
+        <div id="error-msg">Błędne dane!</div>
+        <input type="text" id="username" placeholder="Login">
         <input type="password" id="password" placeholder="Hasło">
-        <button onclick="checkLogin()">Zaloguj się</button>
+        <button onclick="checkLogin()">WEJDŹ</button>
     </div>
 
     <script src="auth.js"></script>
