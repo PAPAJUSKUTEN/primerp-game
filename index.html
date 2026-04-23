@@ -5,88 +5,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PrimeRP – Panel</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background: #0a0f2c;
-      color: #e0e0e0;
-      display: flex;
-      min-height: 100vh;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
     }
-    /* Zakładki po lewej */
+    body {
+      background: radial-gradient(ellipse at top, #1a0b33 0%, #0d1330 60%, #0a0f2c 100%);
+      color: #e0e0e5;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar – nowoczesny, z cieniem */
     .sidebar {
-      width: 200px;
-      background: #0d1b3d;
-      border-right: 2px solid #ffeb3b;
+      width: 240px;
+      background: #0a0f2c;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       padding: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
     }
     .sidebar a {
       display: block;
-      padding: 0.8rem 1.5rem;
+      padding: 0.9rem 1.4rem;
       text-decoration: none;
-      color: #cccccc;
+      color: #b0b0c5;
       margin-bottom: 0.2rem;
-      border-left: 3px solid transparent;
-      transition: 0.3s;
+      border-radius: 8px;
+      border-left: 4px solid transparent;
+      margin: 0 0.8rem 0.3rem 0.8rem;
+      transition: 0.3s cubic-bezier(0.2, 0, 0.2, 1);
     }
-    .sidebar a:hover,
+    .sidebar a:hover {
+      background: rgba(100, 80, 180, 0.15);
+      color: #f0e6ff;
+      border-left: 4px solid #9d7cf5;
+    }
     .sidebar a.active {
-      background: #1a237e;
-      color: #ffeb3b;
-      border-left: 3px solid #ffeb3b;
+      background: rgba(100, 80, 180, 0.25);
+      color: #f0e6ff;
+      border-left: 4px solid #9d7cf5;
     }
-    /* Treść kart */
+
+    /* Główna treść */
     .content {
       flex: 1;
-      padding: 2rem 1.5rem;
+      padding: 1.8rem 2rem;
+      margin-top: 1rem;
     }
+
+    /* NAGŁÓWEK TYLKO NAJPIERW ZAKŁADKI */
     .tab-content {
       display: none;
-      padding: 1rem;
-      background: #121b40;
-      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      padding: 1.6rem 1.8rem;
+      background: rgba(16, 20, 40, 0.85);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .tab-content.active {
       display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
+
     h2 {
-      color: #ffeb3b;
+      color: #bb9aff;
+      font-size: 1.4rem;
       margin-bottom: 1rem;
+      font-weight: 600;
     }
     p {
       margin-bottom: 0.8rem;
+      line-height: 1.6;
     }
+    ul, ol {
+      margin-bottom: 1rem;
+    }
+    ul li, ol li {
+      margin-bottom: 0.4rem;
+    }
+
     .btn {
       display: inline-block;
-      background: #ffeb3b;
-      color: #000;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
+      background: linear-gradient(90deg, #7b52f5, #9d7cf5);
+      color: #ffffff;
+      padding: 0.65rem 1.3rem;
+      border-radius: 10px;
       text-decoration: none;
       font-weight: 600;
       margin-top: 0.5rem;
+      margin-right: 0.5rem;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 12px rgba(123, 82, 245, 0.25);
     }
     .btn:hover {
-      background: #fdd835;
       transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(123, 82, 245, 0.4);
     }
+
     footer {
       text-align: center;
-      padding: 1rem 0;
-      background: #0d1b3d;
-      color: #aaa;
+      padding: 1.2rem 0 1rem;
+      color: #8a8a9c;
       font-size: 0.9rem;
+    }
+    footer a {
+      color: #bb9aff;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <!-- Zakładki po lewej -->
   <div class="sidebar">
-    <a href="#news"    onclick="openTab(event, 'news')">1. Nowości</a>
-    <a href="#about"   onclick="openTab(event, 'about')">2. O Nas</a>
-    <a href="#market"  onclick="openTab(event, 'market')">3. Rynek</a>
-    <a href="#admin"   onclick="openTab(event, 'admin')">4. Administracja</a>
-    <a href="#login"   onclick="openTab(event, 'login')">5. Zaloguj</a>
+    <a href="#news" onclick="openTab(event, 'news')" class="active">1. Nowości</a>
+    <a href="#about" onclick="openTab(event, 'about')">2. O Nas</a>
+    <a href="#market" onclick="openTab(event, 'market')">3. Rynek</a>
+    <a href="#admin" onclick="openTab(event, 'admin')">4. Administracja</a>
+    <a href="#login" onclick="openTab(event, 'login')">5. Zaloguj</a>
   </div>
 
   <!-- Treść kart -->
@@ -96,21 +143,21 @@
       <h2>🔥 Nowości</h2>
       <p>
         <strong>20.04.2026 – Duża aktualizacja RP</strong><br />
-        Dodano nowe prace, ulepszenia systemu policji oraz zmiany w regulaminie.
+        Dodano nowe prace, ulepszenia systemu policji oraz rozszerzono regulamin RP.
       </p>
-      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Dowiedz się więcej na Discordzie</a>
+      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Sprawdź na Discordzie</a>
     </div>
 
     <!-- O Nas -->
     <div id="about" class="tab-content">
       <h2>ℹ️ O Nas</h2>
       <p>
-        PrimeRP to polski serwer Role Play w GTA V (FiveM) dla graczy, którzy lubią realistyczną rozgrywkę.
+        PrimeRP to polski serwer <strong>Role Play</strong> w GTA V (FiveM) stworzony dla osadzonej w realnym świecie rozgrywki.
       </p>
       <ul>
-        <li>Stabilna platforma FiveM</li>
-        <li>Profesjonalny zespół administracyjny</li>
-        <li>Własne modyfikacje pod RP</li>
+        >Stabilna platforma oparta na FiveM.</li>
+        >Profesjonalny zespół administracyjny.</li>
+        >Własne modyfikacje pod RP (prace, prawa jazdy, firmy).</li>
       </ul>
     </div>
 
@@ -121,22 +168,25 @@
         Informacje o sprzedaży pojazdów, nieruchomości i firm na serwerze.
       </p>
       <ol>
-        <li>Pojazdy – handel prywatny i aukcje.</li>
-        <li>Nieruchomości – domy, mieszkania, biura.</li>
-        <li>Firmy – zakup i sprzedaż firm.</li>
+        ><strong>Pojazdy</strong> – prywatne handele oraz aukcje.</li>
+        ><strong>Nieruchomości</strong> – domy, mieszkania, biura.</li>
+        ><strong>Firmy</strong> – zakup i sprzedaż firm.</li>
       </ol>
+      <p>
+        Wszelkie oferty muszą być zgodne z regulaminem serwera i zatwierdzone przez administrację.
+      </p>
     </div>
 
     <!-- Administracja -->
     <div id="admin" class="tab-content">
       <h2>👥 Administracja</h2>
       <p>
-        Nasz zespół administracyjny pilnuje prawidłowego działania serwera i regulaminu.
+        Nasz zespół pilnuje poprawnego działania serwera, regulaminu i dobrego klimatu rp.
       </p>
       <ul>
-        <li>Head‑Admin</li>
-        <li>Admini</li>
-        <li>Support</li>
+        >Head‑Admin – kierowanie serwerem.</li>
+        >Admini – wsparcie graczy i egzekwowanie regulaminu.</li>
+        >Support – pomoc na codzień i zgłoszenia.</li>
       </ul>
     </div>
 
@@ -144,12 +194,12 @@
     <div id="login" class="tab-content">
       <h2>🔐 Zaloguj</h2>
       <p>
-        <strong>Panel logowania</strong> jest dostępny tylko dla administratorów:
+        <strong>Panel logowania</strong> służy wyłącznie administratorom i moderatorom serwera.
       </p>
       <ol>
-        <li>Wejdź na <code>panel.primerp.pl</code> (lub Twój adres).</li>
-        <li>Wpisz login i hasło.</li>
-        <li>Uzyskaj dostęp do panelu.</li>
+        >Wejdź na de>panel.primerp.pl</code> (lub podaj swój adres).</li>
+        >Wpisz swoje <strong>login</strong> i <strong>hasło</strong>.</li>
+        >Uzyskaj dostęp do panelu administracyjnego.</li>
       </ol>
       <a href="https://panel.primerp.pl" class="btn" target="_blank">Panel administracyjny</a>
     </div>
@@ -162,15 +212,14 @@
   <!-- JavaScript do tabów -->
   <script>
     function openTab(evt, tabId) {
-      // ukryj wszystkie karty
       const contents = document.querySelectorAll(".tab-content");
-      contents.forEach(el => el.classList.remove("active"));
+      contents.forEach(el => {
+        el.classList.remove("active");
+      });
 
-      // usunięcie klasy "active" z linków
       const links = document.querySelectorAll(".sidebar a");
       links.forEach(el => el.classList.remove("active"));
 
-      // pokazanie wybranej karty i aktywacja zakładki
       document.getElementById(tabId).classList.add("active");
       evt.currentTarget.classList.add("active");
     }
