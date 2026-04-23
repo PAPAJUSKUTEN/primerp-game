@@ -3,148 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM ALERTU RCB - Czuwanie</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Logowanie</title>
     <style>
-        :root {
-            --rcb-bg: #000000;
-            --rcb-accent: #ff0000;
-            --rcb-text: #ffffff;
-            --rcb-ui: #222222;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Roboto', sans-serif; 
-            background-color: var(--rcb-bg); 
-            color: var(--rcb-text); 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        /* Ekran STARTOWY */
-        #ekran-czuwania { text-align: center; }
-        .rcb-logo-big { font-size: 3rem; font-weight: 900; color: var(--rcb-accent); margin-bottom: 20px; }
-        .status-badge { display: inline-block; background: var(--rcb-ui); padding: 10px 20px; border-radius: 50px; font-size: 0.9rem; margin-bottom: 40px; }
-        .status-badge.active { color: #00ff00; border: 1px solid #00ff00; }
-        .btn-aktywacja { background: var(--rcb-accent); color: white; border: none; padding: 20px 50px; font-size: 1.2rem; font-weight: 700; cursor: pointer; border-radius: 5px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
-
-        /* Pełnoekranowy ALERT */
-        #alert-rcb {
-            display: none; 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--rcb-bg); 
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .alert-content {
-            background: white; color: black; width: 100%; max-width: 800px;
-            border: 20px solid var(--rcb-accent); padding: 50px; text-align: center;
-            animation: pulse-border 1.5s infinite;
-        }
-
-        .alert-title { font-size: 3rem; font-weight: 900; margin-bottom: 30px; color: black; }
-        .btn-zamknij { background: #000; color: white; border: none; padding: 15px 40px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-
-        /* Ukryty odtwarzacz YouTube */
-        #youtube-player { position: absolute; top: -9999px; left: -9999px; }
-
-        @keyframes pulse-border {
-            0% { border-color: var(--rcb-accent); }
-            50% { border-color: #550000; }
-            100% { border-color: var(--rcb-accent); }
-        }
+        body { font-family: 'Segoe UI', sans-serif; background: #2c3e50; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); width: 320px; }
+        h2 { text-align: center; color: #333; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #2980b9; }
+        #error-msg { color: #e74c3c; font-size: 14px; text-align: center; display: none; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="ekran-czuwania">
-        <div class="rcb-logo-big">ALERT RCB</div>
-        <div id="status" class="status-badge">System oczekuje na aktywację</div>
-        <br>
-        <button id="btn-start" class="btn-aktywacja" onclick="aktywujSystem()">Aktywuj Syrenę</button>
+    <div class="login-box">
+        <h2>Panel Dostępu</h2>
+        <p id="error-msg">Nieprawidłowy login lub hasło</p>
+        <input type="text" id="username" placeholder="Użytkownik">
+        <input type="password" id="password" placeholder="Hasło">
+        <button onclick="checkLogin()">Zaloguj się</button>
     </div>
 
-    <div id="alert-rcb">
-        <div class="alert-content">
-            <div style="color:red; font-weight: bold; letter-spacing: 2px;">RZĄDOWE CENTRUM BEZPIECZEŃSTWA</div>
-            <h1 class="alert-title">ALARM!</h1>
-            <p style="font-size: 1.5rem;">Sygnał alarmowy: Ogłoszenie alarmu. <br>Prosimy o postępowanie zgodnie z procedurami.</p>
-            <button class="btn-zamknij" onclick="zamknijAlert()">Wyłącz Syrenę</button>
-        </div>
-    </div>
-
-    <div id="youtube-player"></div>
-
-    <script>
-        // --- KONFIGURACJA ---
-        const GODZINA = 15;  // Godzina
-        const MINUTA = 00;   // Minuta
-        const VIDEO_ID = 'L_qp8FOB_pE'; // Twoja syrena
-        // --------------------
-
-        let player;
-        let systemAktywny = false;
-
-        // Ładowanie API YouTube
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0', width: '0',
-                videoId: VIDEO_ID,
-                playerVars: { 'autoplay': 0, 'controls': 0 },
-                events: { 'onReady': onPlayerReady }
-            });
-        }
-
-        function onPlayerReady(event) {
-            console.log("YouTube gotowy");
-        }
-
-        function aktywujSystem() {
-            systemAktywny = true;
-            document.getElementById('status').innerText = "CZUWANIE AKTYWNE";
-            document.getElementById('status').classList.add('active');
-            document.getElementById('btn-start').innerText = "W GOTOWOŚCI...";
-            document.getElementById('btn-start').disabled = true;
-            
-            // Ważne: musimy "rozgrzać" odtwarzacz kliknięciem
-            player.playVideo();
-            setTimeout(() => { player.pauseVideo(); }, 500); 
-
-            setInterval(sprawdzCzas, 1000);
-        }
-
-        function sprawdzCzas() {
-            const teraz = new Date();
-            if (teraz.getHours() === GODZINA && teraz.getMinutes() === MINUTA) {
-                odpalAlert();
-            }
-        }
-
-        function odpalAlert() {
-            document.getElementById('ekran-czuwania').style.display = 'none';
-            document.getElementById('alert-rcb').style.display = 'flex';
-            player.playVideo(); // Włącza dźwięk syreny z YT
-        }
-
-        function zamknijAlert() {
-            document.getElementById('alert-rcb').style.display = 'none';
-            document.getElementById('ekran-czuwania').style.display = 'block';
-            player.pauseVideo();
-        }
-    </script>
+    <script src="auth.js"></script>
 </body>
 </html>
