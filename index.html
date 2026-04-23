@@ -3,51 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Gracza</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ProGamers Hub - Dla Profesjonalnych Graczy</title>
+    <style>
+        /* Dark theme dla pro graczy - neon accents [web:1] */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #1a1a1a, #000);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,255,0,0.1);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .hero {
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDYwMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iNjAwIiBmaWxsPSIjMDAxMTAwIi8+CjxwYXRoIGQ9Ik0wIDYwMEw0MDAgMzAwTDgwMCAxMDBMMjAwIDUwMEw2MDAgMTAwTDExMjAgNTAwTDEyMDAgNjAwSDB6IiBmaWxsPSIjMDAxMTAwIiBvcGFjaXR5PSIwLjciLz4KPC9zdmc+') center/cover no-repeat; /* Prosty gaming background */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff00, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #00ff00; }
+            to { text-shadow: 0 0 30px #ff00ff; }
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .cta {
+            background: #00ff00;
+            color: #000;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,255,0,0.4);
+        }
+        .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,255,0,0.6);
+        }
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #00ff00;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .feature {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid rgba(0,255,0,0.2);
+        }
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+        .players {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .player-card {
+            background: rgba(0,255,0,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .player-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            background: #333;
+        }
+        footer {
+            background: #000;
+            text-align: center;
+            padding: 2rem;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Portal Gracza</h1>
+        <nav>
+            <div class="logo">ProGamers Hub</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#players">Pro Players</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav>
-        <ul>
-            <li><a href="#login">Zaloguj się</a></li>
-            <li><a href="#register">Zarejestruj się</a></li>
-            <li><a href="#dashboard">Panel kontrolny</a></li>
-        </ul>
-    </nav>
-    <section id="login">
-        <h2>Zaloguj się</h2>
-        <form action="/login" method="post">
-            <label for="username">Nazwa użytkownika:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Hasło:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Zaloguj</button>
-        </form>
+
+    <section id="home" class="hero">
+        <h1>ProGamers Hub</h1>
+        <p>Platforma dla profesjonalnych graczy. Turnieje, newsy i community dla elite.</p>
+        <a href="#features" class="cta">Dołącz do Elity</a>
     </section>
-    <section id="register">
-        <h2>Zarejestruj się</h2>
-        <form action="/register" method="post">
-            <label for="username">Nazwa użytkownika:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="email">Adres e-mail:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Hasło:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Zarejestruj</button>
-        </form>
+
+    <section id="features">
+        <h2>Co Oferujemy</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Turnieje Live</h3>
+                <p>Organizuj i dołączaj do profesjonalnych turniejów z nagrodami.</p>
+            </div>
+            <div class="feature">
+                <h3>Analizy Pro</h3>
+                <p>Szczegółowe breakdown'y meczów od top graczy.</p>
+            </div>
+            <div class="feature">
+                <h3>Community Elite</h3>
+                <p>Sieciuj z najlepszymi graczami i teamami.</p>
+            </div>
+        </div>
     </section>
-    <section id="dashboard">
-        <h2>Panel kontroli</h2>
-        <p>Witaj w Twoim panelu kontroli. Oto Twoje informacje:</p>
-        <p><strong>Nazwa użytkownika:</strong> {{username}}</p>
-        <p><strong>Email:</strong> {{email}}</p>
-        <a href="/logout">Wyloguj się</a>
+
+    <section id="players" style="background: #111;">
+        <h2>Top Pro Gracze</h2>
+        <div class="players">
+            <div class="player-card">
+                <div class="player-card img"></div>
+                <h3>s1mple</h3>
+                <p>CS2 Legend</p>
+            </div>
+            <div class="player-card">
+                <div class="player-card img"></div>
+                <h3>Faker</h3>
+                <p>LoL God</p>
+            </div>
+            <div class="player-card">
+                <div class="player-card img"></div>
+                <h3>Ninja</h3>
+                <p>Streamer Pro</p>
+            </div>
+        </div>
     </section>
-    <footer>
-        <p>&copy; 2023 Portal Gracza</p>
+
+    <footer id="contact">
+        <p>&copy; 2026 ProGamers Hub. Wszelkie prawa zastrzeżone.</p>
     </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
