@@ -3,185 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Informacyjny - gov.pl</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>SYSTEM ALERTU RCB - Czuwanie</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Fundamenty wizualne gov.pl */
+        /* Stylistyka RCB: Agresywna, czytelna, ostrzegawcza */
         :root {
-            --gov-blue: #0b314b;
-            --gov-red: #e1143c;
-            --gov-light: #f4f4f4;
-            --gov-white: #ffffff;
-            --gov-text: #222222;
+            --rcb-bg: #000000;
+            --rcb-accent: #ff0000; /* Czerwień ostrzegawcza */
+            --rcb-text: #ffffff;
+            --rcb-subtext: #aaaaaa;
+            --rcb-ui: #222222;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Open Sans', sans-serif; background-color: var(--gov-light); color: var(--gov-text); line-height: 1.6; }
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background-color: var(--rcb-bg); 
+            color: var(--rcb-text); 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-        /* Nagłówek */
-        header { background-color: var(--gov-white); border-bottom: 4px solid var(--gov-blue); padding: 1.2rem 0; }
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
-        .header-flex { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 700; font-size: 1.6rem; color: var(--gov-blue); text-decoration: none; display: flex; align-items: center; }
-        .logo span { border-left: 2px solid #ccc; margin-left: 12px; padding-left: 12px; font-weight: 400; font-size: 1.1rem; color: #555; }
+        /* Ekran STARTOWY (Czuwania) */
+        #ekran-czuwania {
+            text-align: center;
+            transition: opacity 0.5s;
+        }
 
-        /* Wyszukiwarka */
-        .search-box { display: flex; border: 2px solid var(--gov-blue); border-radius: 2px; }
-        .search-box input { border: none; padding: 8px 15px; width: 200px; outline: none; }
-        .search-box button { background: var(--gov-blue); color: white; border: none; padding: 8px 15px; cursor: pointer; }
+        .rcb-logo-big {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            color: var(--rcb-accent);
+            margin-bottom: 20px;
+        }
 
-        /* Breadcrumbs */
-        .breadcrumbs { background: #fff; padding: 10px 0; border-bottom: 1px solid #ddd; font-size: 0.85rem; }
-        .breadcrumbs a { color: var(--gov-blue); text-decoration: underline; }
-        .breadcrumbs span { margin: 0 8px; color: #888; }
+        .status-badge {
+            display: inline-block;
+            background: var(--rcb-ui);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--rcb-subtext);
+            margin-bottom: 40px;
+        }
+        .status-badge.active { color: #00ff00; border: 1px solid #00ff00; }
 
-        /* Sekcja wyróżniona */
-        .hero { background: var(--gov-blue); color: white; padding: 4rem 0; }
-        .hero h1 { font-size: 2.8rem; margin-bottom: 15px; font-weight: 700; }
-        .hero p { font-size: 1.2rem; max-width: 800px; opacity: 0.9; }
+        .btn-aktywacja {
+            background-color: var(--rcb-accent);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            transition: 0.2s;
+        }
+        .btn-aktywacja:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 0, 0, 0.8); }
 
-        /* Siatka usług */
-        .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin: 40px 0; }
-        .card { background: white; border: 1px solid #ddd; border-bottom: 5px solid var(--gov-blue); padding: 30px; text-decoration: none; color: inherit; transition: 0.2s; }
-        .card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.1); transform: translateY(-3px); }
-        .card h3 { color: var(--gov-blue); text-decoration: underline; font-size: 1.4rem; margin-bottom: 15px; }
-
-        /* ALERT SYSTEMOWY (Ukryty domyślnie) */
-        #alert-systemowy {
-            display: none; 
+        /* Pełnoekranowy ALERT */
+        #alert-rcb {
+            display: none; /* Ukryty domyślnie */
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.95); z-index: 10000;
-            display: none; align-items: center; justify-content: center;
+            background: var(--rcb-bg); 
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-        .alert-box {
-            background: white; width: 90%; max-width: 700px; border: 10px solid var(--gov-red);
-            padding: 40px; text-align: center; position: relative;
-        }
-        .alert-header { background: var(--gov-red); color: white; padding: 10px; font-weight: bold; margin: -40px -40px 30px -40px; font-size: 1.5rem; }
-        .alert-box h2 { font-size: 2rem; color: var(--gov-blue); margin-bottom: 20px; }
-        .alert-box p { font-size: 1.3rem; margin-bottom: 30px; color: #333; }
-        .alert-btn { background: var(--gov-blue); color: white; border: none; padding: 15px 40px; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
 
-        /* Stopka */
-        footer { background: #222; color: white; padding: 50px 0; margin-top: 60px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-        .footer-grid h4 { border-bottom: 1px solid #444; padding-bottom: 10px; margin-bottom: 20px; }
-        .footer-grid ul { list-style: none; }
-        .footer-grid li { margin-bottom: 10px; font-size: 0.9rem; color: #ccc; }
+        /* Agresywna ramka RCB */
+        .alert-content {
+            background: white;
+            color: black;
+            width: 100%;
+            max-width: 800px;
+            border: 20px solid var(--rcb-accent);
+            padding: 50px;
+            text-align: center;
+            animation: pulse-border 1.5s infinite;
+        }
+
+        .alert-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            color: var(--rcb-accent);
+        }
+
+        .alert-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .alert-text {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            font-weight: 400;
+            color: #111;
+        }
+
+        .btn-zamknij {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Animacja pulsowania ramki */
+        @keyframes pulse-border {
+            0% { border-color: var(--rcb-accent); }
+            50% { border-color: #550000; }
+            100% { border-color: var(--rcb-accent); }
+        }
     </style>
 </head>
 <body>
 
-    <div id="alert-systemowy">
-        <div class="alert-box">
-            <div class="alert-header">ALERT RCB / SYSTEMOWY</div>
-            <h2>KOMUNIKAT OFICJALNY</h2>
-            <p>Uwaga! Została uruchomiona zaplanowana procedura informacyjna. Prosimy o zapoznanie się z nowymi wytycznymi na portalu.</p>
-            <button class="alert-btn" onclick="zamknijAlert()">ZAPOZNAŁEM SIĘ</button>
+    <div id="ekran-czuwania">
+        <div class="rcb-logo-big">ALERT RCB</div>
+        <div id="status" class="status-badge">System nieaktywny</div>
+        <br>
+        <button id="btn-start" class="btn-aktywacja" onclick="aktywujSystem()">Aktywuj System</button>
+        <p style="color: var(--rcb-subtext); margin-top: 20px; font-size: 0.8rem;">Wymagana interakcja dla dźwięku.</p>
+    </div>
+
+    <div id="alert-rcb">
+        <div class="alert-content">
+            <div class="alert-header">Rządowe Centrum Bezpieczeństwa</div>
+            <h1 class="alert-title">KOMUNIKAT PILNY</h1>
+            <p class="alert-text">Uwaga! Uruchomiono zaplanowaną procedurę systemową. Prosimy o pozostanie w gotowości i śledzenie dalszych komunikatów.</p>
+            <button class="btn-zamknij" onclick="zamknijAlert()">Potwierdzam odbiór</button>
         </div>
     </div>
 
-    <header>
-        <div class="container header-flex">
-            <a href="#" class="logo">GOV.PL <span>Serwis Rzeczypospolitej Polskiej</span></a>
-            <div class="search-box">
-                <input type="text" placeholder="Szukaj usług...">
-                <button>Szukaj</button>
-            </div>
-        </div>
-    </header>
-
-    <nav class="breadcrumbs">
-        <div class="container">
-            <a href="#">Strona główna</a> <span>/</span> <span>Informacje dla obywatela</span>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="container">
-            <h1>Witaj w serwisie informacyjnym</h1>
-            <p>Oficjalne źródło informacji i e-usług administracji publicznej. Załatwiaj sprawy urzędowe bez wychodzenia z domu.</p>
-        </div>
-    </section>
-
-    <main class="container">
-        <div class="services">
-            <a href="#" class="card">
-                <h3>Kierowcy i pojazdy</h3>
-                <p>Sprawdź punkty karne, historię pojazdu lub zgłoś sprzedaż samochodu online.</p>
-            </a>
-            <a href="#" class="card">
-                <h3>Zdrowie i profilaktyka</h3>
-                <p>Internetowe Konto Pacjenta, e-recepty oraz harmonogram szczepień.</p>
-            </a>
-            <a href="#" class="card">
-                <h3>Praca i biznes</h3>
-                <p>Załóż działalność gospodarczą, sprawdź rejestr przedsiębiorców i oferty pracy.</p>
-            </a>
-            <a href="#" class="card">
-                <h3>Świadczenia socjalne</h3>
-                <p>Złóż wniosek o 800+, dofinansowania do żłobka i inne wsparcie dla rodziny.</p>
-            </a>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container footer-grid">
-            <div>
-                <h4>O serwisie</h4>
-                <ul>
-                    <li>Podstawy prawne</li>
-                    <li>Polityka prywatności</li>
-                    <li>Deklaracja dostępności</li>
-                </ul>
-            </div>
-            <div>
-                <h4>Kontakt</h4>
-                <ul>
-                    <li>Infolinia: +48 222 500 115</li>
-                    <li>Centrum pomocy</li>
-                    <li>Zgłoś błąd</li>
-                </ul>
-            </div>
-            <div>
-                <h4>Dostępność cyfrowa</h4>
-                <p style="font-size: 0.8rem; color: #888;">Portal spełnia standardy WCAG 2.1 na poziomie AA.</p>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        // --- KONFIGURACJA CZASU ---
-        const GODZINA = 14;  // Ustaw godzinę (format 24h)
-        const MINUTA = 15;   // Ustaw minutę
-        // ---------------------------
+        // --- KONFIGURACJA CZASU ALERTU ---
+        const GODZINA = 16;  // Godzina (24h)
+        const MINUTA = 30;   // Minuta
+        // ---------------------------------
+
+        let systemAktywny = false;
+        let alertUruchomiony = false;
+
+        // Funkcja aktywująca nasłuchiwanie czasu
+        function aktywujSystem() {
+            systemAktywny = true;
+            
+            // Zmiana interfejsu
+            document.getElementById('status').innerText = "Czuwanie aktywne";
+            document.getElementById('status').classList.add('active');
+            document.getElementById('btn-start').innerText = "W gotowości...";
+            document.getElementById('btn-start').style.opacity = '0.5';
+            document.getElementById('btn-start').disabled = true;
+
+            // Uruchomienie pętli sprawdzającej czas
+            setInterval(sprawdzCzas, 1000); // Co sekundę
+            console.log("System RCB aktywowany. Oczekiwanie na " + GODZINA + ":" + MINUTA);
+        }
 
         function sprawdzCzas() {
-            const teraz = new Date();
-            const h = teraz.getHours();
-            const m = teraz.getMinutes();
+            if (!systemAktywny || alertUruchomiony) return;
 
-            // Jeśli czas się zgadza, wyświetl alert
-            if (h === GODZINA && m === MINUTA) {
-                const alertDiv = document.getElementById('alert-systemowy');
-                if (alertDiv.style.display !== 'flex') {
-                    alertDiv.style.display = 'flex';
-                    // Opcjonalny dźwięk
-                    const audio = new Audio('https://www.soundjay.com/buttons/beep-01a.mp3');
-                    audio.play();
-                }
+            const teraz = new Date();
+            if (teraz.getHours() === GODZINA && teraz.getMinutes() === MINUTA) {
+                odpalAlert();
             }
         }
 
-        function zamknijAlert() {
-            document.getElementById('alert-systemowy').style.display = 'none';
+        function odpalAlert() {
+            alertUruchomiony = true;
+            
+            // Wyświetl alert
+            document.getElementById('ekran-czuwania').style.opacity = '0';
+            document.getElementById('alert-rcb').style.display = 'flex';
+            
+            // Odtwórz agresywny dźwięk (Beep alarmowy)
+            const audio = new Audio('https://www.soundjay.com/buttons/beep-01a.mp3');
+            audio.loop = true; // Zapętl dźwięk
+            audio.play().catch(e => console.log("Przeglądarka zablokowała autoodtwarzanie. Wymagana wcześniejsza interakcja."));
+            
+            // Zapisz audio w oknie, by móc je wyłączyć
+            window.currentAlarmAudio = audio;
         }
 
-        // Sprawdzaj co 10 sekund, by nie obciążać procesora
-        setInterval(sprawdzCzas, 10000);
-        
-        // Wywołaj od razu przy starcie
-        sprawdzCzas();
+        function zamknijAlert() {
+            document.getElementById('alert-rcb').style.display = 'none';
+            document.getElementById('ekran-czuwania').style.opacity = '1';
+            
+            // Wyłącz dźwięk
+            if(window.currentAlarmAudio) {
+                window.currentAlarmAudio.pause();
+            }
+        }
     </script>
 
 </body>
