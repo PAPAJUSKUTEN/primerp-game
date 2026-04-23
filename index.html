@@ -7,41 +7,41 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="title">PROJECT</div>
+  <div id="app">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="title">PROJECT</div>
 
-      <div class="menu">
-        <button class="tab active" data-title="O nas / Nowości" data-desc="Tutaj możesz dać opis serwera, aktualności i najważniejsze informacje." data-extra="Tu pojawia się treść wybranej zakładki.">
-          <span class="icon">🏠</span><span>O NAS / NOWOŚCI</span>
-        </button>
+        <div class="menu">
+          <button class="tab active" data-title="O nas / Nowości" data-desc="Tutaj możesz dać opis serwera, aktualności i najważniejsze informacje." data-extra="Tu pojawia się treść wybranej zakładki.">
+            <span class="icon">🏠</span><span>O NAS / NOWOŚCI</span>
+          </button>
 
-        <button class="tab" data-title="Mapa sektorów" data-desc="Tu możesz wstawić mapę sektorów i stref." data-extra="Sekcja z mapą sektorów i lokalizacjami.">
-          <span class="icon">🗺️</span><span>MAPA SEKTORÓW</span>
-        </button>
+          <button class="tab" data-title="Mapa sektorów" data-desc="Tu możesz wstawić mapę sektorów i stref." data-extra="Sekcja z mapą sektorów i lokalizacjami.">
+            <span class="icon">🗺️</span><span>MAPA SEKTORÓW</span>
+          </button>
 
-        <button class="tab" data-title="Administracja" data-desc="Sekcja administracji, kontakt do osób odpowiedzialnych." data-extra="Lista administracji i kontakt.">
-          <span class="icon">🛡️</span><span>ADMINISTRACJA</span>
-        </button>
+          <button class="tab" data-title="Administracja" data-desc="Sekcja administracji, kontakt do osób odpowiedzialnych." data-extra="Lista administracji i kontakt.">
+            <span class="icon">🛡️</span><span>ADMINISTRACJA</span>
+          </button>
 
-        <button class="tab" data-title="Regulamin serwera" data-desc="Tu możesz wkleić regulamin i zasady." data-extra="W tym miejscu wstaw regulamin.">
-          <span class="icon">📜</span><span>REGULAMIN SERWERA</span>
-        </button>
+          <button class="tab" data-title="Regulamin serwera" data-desc="Tu możesz wkleić regulamin i zasady." data-extra="W tym miejscu wstaw regulamin.">
+            <span class="icon">📜</span><span>REGULAMIN SERWERA</span>
+          </button>
 
-        <button class="tab" data-title="Centrum zgłoszeń" data-desc="W tym miejscu dodaj formularz zgłoszeń i odwołań." data-extra="Formularz zgłoszeń i odwołań.">
-          <span class="icon">🐞</span><span>CENTRUM ZGŁOSZEŃ</span>
-        </button>
+          <button class="tab" data-title="Centrum zgłoszeń" data-desc="W tym miejscu dodaj formularz zgłoszeń i odwołań." data-extra="Formularz zgłoszeń i odwołań.">
+            <span class="icon">🐞</span><span>CENTRUM ZGŁOSZEŃ</span>
+          </button>
 
-        <button class="tab" data-title="Login" data-desc="Wpisz dane, aby się zalogować." data-extra="Formularz logowania znajduje się poniżej." data-login="true">
-          <span class="icon">🔑</span><span>LOGIN</span>
-        </button>
-      </div>
-    </aside>
+          <button class="tab" data-title="Login" data-desc="Wpisz dane, aby się zalogować." data-extra="Formularz logowania znajduje się poniżej." data-login="true">
+            <span class="icon">🔑</span><span>LOGIN</span>
+          </button>
+        </div>
+      </aside>
 
-    <main class="main">
-      <div class="content-wrap">
-        <div class="card">
-          <div id="guestView">
+      <main class="main">
+        <div class="content-wrap">
+          <div class="card">
             <h1 id="title">O nas / Nowości</h1>
             <p id="desc">Tutaj możesz dać opis serwera, aktualności i najważniejsze informacje.</p>
             <div id="extra" class="section-box">Tu pojawia się treść wybranej zakładki.</div>
@@ -52,21 +52,28 @@
               <button type="submit">Zaloguj</button>
             </form>
           </div>
+        </div>
+      </main>
+    </div>
+  </div>
 
-          <div id="profileView" class="profile-view">
-            <h1>Profil użytkownika</h1>
-            <div class="profile-card">
-              <div class="avatar">👤</div>
-              <div>
-                <h2 id="profileName">test1</h2>
-                <p id="profileInfo">Zalogowany użytkownik</p>
-              </div>
-            </div>
-            <button id="logoutBtn" class="logout-btn">Wyloguj</button>
-          </div>
+  <div id="profileScreen" class="profile-screen">
+    <div class="profile-panel">
+      <div class="profile-top">
+        <div class="avatar">👤</div>
+        <div>
+          <h1>Profil użytkownika</h1>
+          <p id="profileName">test1</p>
         </div>
       </div>
-    </main>
+
+      <div class="profile-box">
+        <h2>Witaj w panelu</h2>
+        <p>To jest nowy ekran główny po zalogowaniu.</p>
+      </div>
+
+      <button id="logoutBtn" class="logout-btn">Wyloguj</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
