@@ -6,185 +6,213 @@
   <title>PrimeRP – Panel</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg-dark: #0a0f2c;
-      --bg-card: #101428;
-      --bg-card-alt: rgba(16, 20, 40, 0.92);
+      /* Tło ciemne, ale nie „czarne” – lepsze na oczy */
+      --bg: #060816;
+      --bg-card: #0b0f26;
+      --bg-card-alt: rgba(11, 15, 38, 0.92);
       --border: rgba(255, 255, 255, 0.08);
-      --text: #e0e0e5;
-      --text-muted: #b0b0c5;
-      --text-primary: #bb9aff;
-      --accent: #7b52f5;
-      --accent-light: #9d7cf5;
-      --accent-hover: #b291ff;
-      --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.35);
-      --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.45);
-      --border-radius-lg: 16px;
-      --border-radius-md: 10px;
-      --transition: 0.35s cubic-bezier(0.2, 0, 0.2, 1);
+
+      --text: #e0e0f0;
+      --text-muted: #a3a9c7;
+      --text-primary: #b9a3ff;
+
+      --accent: #6a4cff;
+      --accent-alt: #8a6bff;
+      --accent-light: #b9a3ff;
+
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+      --shadow-card: 0 12px 48px rgba(0, 0, 0, 0.4);
+
+      --border-radius: 16px;
+      --border-radius-sm: 10px;
+      --transition: 0.4s cubic-bezier(0.2, 0, 0.2, 1);
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     body {
-      background: radial-gradient(ellipse at top, #0e083b 0%, #0a0f2c 60%, #060a21 100%);
+      background: linear-gradient(130deg, #080a25 0%, #060816 100%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
     }
 
+    /* PINNY BOK – bardziej „UI” niż zwykły panel */
     .sidebar {
-      width: 250px;
-      background: linear-gradient(180deg, var(--bg-dark) 0%, #080c24 100%);
+      width: 270px;
+      background: radial-gradient(circle at top left, rgba(106, 76, 255, 0.08), transparent 60%),
+                  #080a22;
       border-right: 1px solid var(--border);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-      padding: 1.8rem 0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      padding: 2rem 0 1.6rem 0;
+      position: sticky;
+      top: 0;
+      bottom: 0;
       display: flex;
       flex-direction: column;
     }
     .sidebar-header {
-      margin-bottom: 1.4rem;
       padding: 0 1.6rem 0 1.6rem;
+      margin-bottom: 1.6rem;
     }
     .sidebar-header h3 {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--text-primary);
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
+    .sidebar-header .subtitle {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
     .sidebar a {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0.9rem 1.4rem;
+      margin: 0 0.8rem 0.2rem 0.8rem;
       text-decoration: none;
       color: var(--text-muted);
-      margin-bottom: 0.2rem;
-      border-radius: var(--border-radius-md);
-      margin: 0 0.8rem 0.2rem 0.8rem;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid transparent;
       transition: var(--transition);
-      position: relative;
       font-weight: 500;
+      position: relative;
     }
-    .sidebar a::before {
+    .sidebar a::after, .sidebar a::before {
       content: "";
       position: absolute;
       left: 0;
       top: 0;
       bottom: 0;
-      width: 0;
-      background: var(--accent);
+      width: 4px;
+      background: var(--accent-alt);
       border-radius: inherit;
       opacity: 0;
       transition: var(--transition);
       z-index: -1;
     }
+    .sidebar a::before {
+      background: linear-gradient(180deg, var(--accent), var(--accent-alt));
+    }
+
     .sidebar a:hover {
-      background: rgba(123, 82, 245, 0.08);
+      background: rgba(106, 76, 255, 0.08);
+      border: 1px solid rgba(106, 76, 255, 0.16);
       color: var(--text);
     }
-    .sidebar a:hover::before {
-      width: 4px;
-      opacity: 1;
+    .sidebar a:hover::after {
+      opacity: 0.5;
     }
     .sidebar a.active {
-      background: rgba(123, 82, 245, 0.12);
+      background: rgba(106, 76, 255, 0.18);
+      border: 1px solid rgba(106, 76, 255, 0.24);
       color: var(--text-primary);
       font-weight: 600;
     }
-    .sidebar a.active::before {
-      width: 4px;
+    .sidebar a.active::after {
       opacity: 1;
     }
 
+    /* GŁÓWNY PANEL KONTENTU */
     .content {
       flex: 1;
-      padding: 1.6rem 2.2rem 2rem 2rem;
+      padding: 2rem 2.4rem 2.2rem 2.4rem;
     }
 
     .tab-content {
       display: none;
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-      padding: 1.8rem 2rem;
+      transform: translateY(12px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      padding: 2rem 2.2rem;
       background: var(--bg-card-alt);
-      border-radius: var(--border-radius-lg);
-      box-shadow: var(--shadow-lg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-card);
       border: 1px solid var(--border);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(14px);
       position: relative;
       overflow: hidden;
     }
     .tab-content::before {
       content: "";
       position: absolute;
-      top: -100%;
+      top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 30% 30%, rgba(123, 82, 245, 0.08), transparent 60%);
+      background: radial-gradient(circle at 25% 25%, rgba(106, 76, 255, 0.07), transparent 55%);
       pointer-events: none;
     }
+
     .tab-content.active {
       display: block;
       opacity: 1;
       transform: translateY(0);
     }
 
+    /* Nagłówki i tekst */
     h2 {
       color: var(--text-primary);
-      font-size: 1.5rem;
-      margin-bottom: 1.1rem;
+      font-size: 1.6rem;
+      margin-bottom: 1.2rem;
       font-weight: 600;
     }
     .subtitle {
-      color: #9ea7cf;
+      color: var(--text-muted);
       font-size: 0.96rem;
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
       font-weight: 400;
     }
     p {
-      margin-bottom: 0.9rem;
-      line-height: 1.65;
+      margin-bottom: 1rem;
+      line-height: 1.7;
       font-size: 1rem;
     }
     ul, ol {
-      margin-bottom: 1.1rem;
+      margin-bottom: 1.2rem;
     }
     ul li, ol li {
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       font-size: 0.98rem;
     }
     code {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       background: rgba(255, 255, 255, 0.08);
       padding: 0.2rem 0.5rem;
       border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
+    /* PRZYCISKI – bardziej „mocne” */
     .btn {
       display: inline-block;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
       color: #ffffff;
-      padding: 0.7rem 1.4rem;
-      border-radius: var(--border-radius-md);
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius-sm);
       text-decoration: none;
       font-weight: 600;
-      margin-top: 0.6rem;
-      margin-right: 0.5rem;
+      margin-top: 0.7rem;
+      margin-right: 0.6rem;
       transition: var(--transition);
-      box-shadow: 0 6px 20px rgba(123, 82, 245, 0.35);
-      border: 1px solid rgba(123, 82, 245, 0.3);
+      box-shadow: 0 6px 24px rgba(106, 76, 255, 0.4);
+      border: 1px solid rgba(106, 76, 255, 0.3);
+      letter-spacing: -0.02em;
     }
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(123, 82, 245, 0.48);
+      box-shadow: 0 10px 40px rgba(106, 76, 255, 0.55);
     }
     .btn:active {
       transform: translateY(-1px);
@@ -192,10 +220,10 @@
 
     footer {
       text-align: center;
-      padding: 1.3rem 0 1rem;
+      padding: 1.4rem 0 1.2rem 0;
       color: #8a8a9c;
       font-size: 0.9rem;
-      margin-top: 1.5rem;
+      margin-top: 1.8rem;
     }
     footer a {
       color: var(--text-primary);
@@ -207,10 +235,10 @@
   </style>
 </head>
 <body>
-  <!-- Zakładki po lewej – bez numerów -->
+  <!-- Zakładki po lewej – bez numerów, zupełnie nowy styl -->
   <div class="sidebar">
     <div class="sidebar-header">
-      <h3>PrimeRP Panel</h3>
+      <h3>PrimeRP<span class="subtitle"> – panel serwera</span></h3>
     </div>
     <a href="#news"   onclick="openTab(event, 'news')"   class="active">Nowości</a>
     <a href="#about"  onclick="openTab(event, 'about')"                  >O Nas</a>
@@ -224,31 +252,32 @@
     <div id="news" class="tab-content active">
       <h2>🔥 Nowości</h2>
       <p class="subtitle">
-        Najnowsze aktualizacje serwera PrimeRP.
+        Ostatnie aktualizacje serwera PrimeRP.
       </p>
       <p>
         <strong>20.04.2026 – Duża aktualizacja RP</strong><br />
-        Dodano nowe prace, ulepszenia systemu policji, medycyny i rozszerzono regulamin Role Play na serwerze.
+        Dodano nowe prace, ulepszenia systemu policji, medycyny oraz rozbudowano system firm i nieruchomości.
       </p>
       <p>
-        Wszystkie szczegóły znajdziesz na kanale <code>#aktualizacje</code> oraz <code>#news</code> na Discordzie.
+        Pełne szczegóły znajdziesz na kanale <code>#aktualizacje</code> i <code>#news</code> na Discordzie.
       </p>
-      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Sprawdź na Discordzie</a>
+      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Wejdź na Discord</a>
     </div>
 
     <!-- O Nas -->
     <div id="about" class="tab-content">
       <h2>ℹ️ O Nas</h2>
       <p class="subtitle">
-        Serwer, jego zespół i filozofia RP.
+        Serwer, jego zespół i styl gry.
       </p>
       <p>
-        PrimeRP to polski serwer <strong>Role Play</strong> w GTA V (FiveM), stworzony dla graczy, którzy chcą realnej, osadzonej w świecie rozgrywki.
+        PrimeRP to polski serwer <strong>Role Play</strong> w GTA V (FiveM), stworzony dla graczy, którzy chcą realnej,
+        ubogatej w historie i relacje rozgrywki.
       </p>
       <ul>
-        <li>Stabilna platforma oparta na <strong>FiveM</strong> i własnych modyfikacjach.</li>
+        <li>Stabilna, rozwijana przez lata baza pod RP.</li>
         <li>Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
-        <li>Profesjonalny, działający zespół administracyjny i support.</li>
+        <li>Profesjonalny zespół administracyjny i support na Discordzie.</li>
       </ul>
     </div>
 
@@ -259,15 +288,15 @@
         Handel pojazdami, nieruchomościami i firmami na serwerze.
       </p>
       <p>
-        Na tej zakładce znajdziesz informacje o obowiązujących zasadach sprzedaży na serwerze PrimeRP.
+        Na tej zakładce informujemy o zasadach sprzedaży i procedurach obowiązujących na serwerze PrimeRP.
       </p>
       <ol>
-        <li><strong>Pojazdy</strong> – handel prywatny oraz oferty na kanałach typu <code>#rynek</code> lub przez Discord‑bot.</li>
-        <li><strong>Nieruchomości</strong> – sprzedaż domów, mieszkań, biur i innych lokali, zgodnie z regulaminem.</li>
-        <li><strong>Firmy</strong> – zakup i sprzedaż firm, zmiana właściciela, formalności.</li>
+        <li><strong>Pojazdy</strong> – sprzedaż prywatna oraz oferty na kanałach <code>#rynek</code> i za pomocą botów.</li>
+        <li><strong>Nieruchomości</strong> – sprzedaż domów, mieszkań, biur i lokali, zgodnie z regulaminem.</li>
+        <li><strong>Firmy</strong> – zakup, sprzedaż i zmiana właściciela firm.</li>
       </ol>
       <p>
-        <strong>Uwaga:</strong> Wszelkie duże transakcje powinny być potwierdzone przez administrację i odbywać się zgodnie z regulaminem serwera.
+        <strong>Uwaga:</strong> Wszelkie duże transakcje powinny być zgodne z regulaminem i zatwierdzone przez administrację.
       </p>
     </div>
 
@@ -275,15 +304,15 @@
     <div id="admin" class="tab-content">
       <h2>👥 Administracja</h2>
       <p class="subtitle">
-        Zespół, który dba o serwer i graczy.
+        Zespół, który dba o serwer i społeczność.
       </p>
       <p>
-        Nasz zespół administracyjny jest odpowiedzialny za prawidłowe działanie serwera, egzekwowanie regulaminu oraz wspieranie społeczności.
+        Nasz zespół administracyjny jest odpowiedzialny za rozwój serwera, egzekwowanie regulaminu oraz rozwój RP.
       </p>
       <ul>
-        <li><strong>Head‑Admin</strong> – kierowanie rozwojem serwera, decyzje dotyczące regulaminu i aktualizacji.</li>
-        <li><strong>Admini</strong> – wsparcie na serwerze, rozwiązywanie konfliktów, uruchamianie zdarzeń.</li>
-        <li><strong>Support</strong> – pomoc na Discordzie, zgłoszenia, pomoc dla nowych graczy.</li>
+        <li><strong>Head‑Admin</strong> – kierowanie kierunkiem serwera i decyzje strategiczne.</li>
+        <li><strong>Admini</strong> – wspieranie graczy, rozwiązywanie konfliktów, organizacja wydarzeń.</li>
+        <li><strong>Support</strong> – pomoc na Discordzie, odpowiedzi na pytania, pomoc dla nowych graczy.</li>
       </ul>
     </div>
 
@@ -291,49 +320,55 @@
     <div id="login" class="tab-content">
       <h2>🔐 Zaloguj</h2>
       <p class="subtitle">
-        Panel administracyjny – dostęp tylko dla urzędników i adminów.
+        Panel administracyjny – tylko dla urzędników i adminów.
       </p>
       <p>
-        <strong>Panel logowania</strong> jest dostępny wyłącznie dla osób z uprawnieniami administracyjnymi.
+        <strong>Panel logowania</strong> jest dostępny wyłącznie dla osób z odpowiednimi uprawnieniami.
       </p>
       <ol>
-        <li>Wejdź na panel: <code>panel.primerp.pl</code> (lub podaj swój adres panelu).</li>
+        <li>Wejdź na panel: <code>panel.primerp.pl</code> (lub Twój adres panelu).</li>
         <li>Wpisz swój <strong>login</strong> i <strong>hasło</strong>.</li>
-        <li>Po udanym zalogowaniu uzyskaj dostęp do panelu administracyjnego.</li>
+        <li>Po zalogowaniu uzyskaj dostęp do panelu administracyjnego.</li>
       </ol>
       <p>
-        Jeśli nie masz uprawnień administracyjnych, nie masz możliwości dostępu do panelu.
+        Bez odpowiednich uprawnień nie masz możliwości zalogowania się do panelu.
       </p>
       <a href="https://panel.primerp.pl" class="btn" target="_blank">Panel administracyjny</a>
     </div>
 
     <footer>
       &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.<br />
-      Strona wykonana dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
+      Strona stworzona specjalnie dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
     </footer>
   </div>
 
+  <!-- Skrypt obsługujący zakładki -->
   <script>
     function openTab(evt, tabId) {
-      const contents = document.querySelectorAll(".tab-content");
-      contents.forEach(el => {
+      // ukryj wszystkie karty
+      document.querySelectorAll(".tab-content").forEach(el => {
         el.classList.remove("active");
       });
 
-      const links = document.querySelectorAll(".sidebar a");
-      links.forEach(el => el.classList.remove("active"));
+      // usunięcie aktywności z zakładek
+      document.querySelectorAll(".sidebar a").forEach(el => {
+        el.classList.remove("active");
+      });
 
       document.getElementById(tabId).classList.add("active");
       evt.currentTarget.classList.add("active");
     }
 
+    // lekki hover dla zakładek
     document.querySelectorAll(".sidebar a").forEach(link => {
       link.addEventListener("mouseenter", () => {
-        link.style.background = "rgba(123, 82, 245, 0.06)";
+        link.style.background = "rgba(106, 76, 255, 0.1)";
+        link.style.border = "1px solid rgba(106, 76, 255, 0.25)";
       });
       link.addEventListener("mouseleave", () => {
         if (!link.classList.contains("active")) {
           link.style.background = "";
+          link.style.border = "1px solid transparent";
         }
       });
     });
