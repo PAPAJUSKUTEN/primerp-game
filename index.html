@@ -40,7 +40,6 @@
       display: flex;
     }
 
-    /* Sidebar – bardziej zaawansowany */
     .sidebar {
       width: 250px;
       background: linear-gradient(180deg, var(--bg-dark) 0%, #080c24 100%);
@@ -103,7 +102,6 @@
       opacity: 1;
     }
 
-    /* Główne karty kontentu */
     .content {
       flex: 1;
       padding: 1.6rem 2.2rem 2rem 2rem;
@@ -139,7 +137,6 @@
       transform: translateY(0);
     }
 
-    /* Nagłówki i tekst */
     h2 {
       color: var(--text-primary);
       font-size: 1.5rem;
@@ -171,7 +168,6 @@
       border-radius: 6px;
     }
 
-    /* Przyciski – bardziej zaawansowane */
     .btn {
       display: inline-block;
       background: linear-gradient(90deg, var(--accent), var(--accent-light));
@@ -194,7 +190,6 @@
       transform: translateY(-1px);
     }
 
-    /* Stopka */
     footer {
       text-align: center;
       padding: 1.3rem 0 1rem;
@@ -212,19 +207,18 @@
   </style>
 </head>
 <body>
-  <!-- Zakładki po lewej -->
+  <!-- Zakładki po lewej – bez numerów -->
   <div class="sidebar">
     <div class="sidebar-header">
       <h3>PrimeRP Panel</h3>
     </div>
-    <a href="#news"   onclick="openTab(event, 'news')"   class="active">1. Nowości</a>
-    <a href="#about"  onclick="openTab(event, 'about')"                  >2. O Nas</a>
-    <a href="#market" onclick="openTab(event, 'market')"                >3. Rynek</a>
-    <a href="#admin"  onclick="openTab(event, 'admin')"                 >4. Administracja</a>
-    <a href="#login"  onclick="openTab(event, 'login')"                 >5. Zaloguj</a>
+    <a href="#news"   onclick="openTab(event, 'news')"   class="active">Nowości</a>
+    <a href="#about"  onclick="openTab(event, 'about')"                  >O Nas</a>
+    <a href="#market" onclick="openTab(event, 'market')"                >Rynek</a>
+    <a href="#admin"  onclick="openTab(event, 'admin')"                 >Administracja</a>
+    <a href="#login"  onclick="openTab(event, 'login')"                 >Zaloguj</a>
   </div>
 
-  <!-- Treść kart -->
   <div class="content">
     <!-- Nowości -->
     <div id="news" class="tab-content active">
@@ -234,7 +228,7 @@
       </p>
       <p>
         <strong>20.04.2026 – Duża aktualizacja RP</strong><br />
-        Dodano nowe prace, ulepszenia systemu policji, medycyny i rozszerzono regulamin Role Play na serwerze. 
+        Dodano nowe prace, ulepszenia systemu policji, medycyny i rozszerzono regulamin Role Play na serwerze.
       </p>
       <p>
         Wszystkie szczegóły znajdziesz na kanale <code>#aktualizacje</code> oraz <code>#news</code> na Discordzie.
@@ -319,25 +313,20 @@
     </footer>
   </div>
 
-  <!-- Zaawansowany JS – obsługa zakładek -->
   <script>
     function openTab(evt, tabId) {
-      // ukryj wszystkie karty
       const contents = document.querySelectorAll(".tab-content");
       contents.forEach(el => {
         el.classList.remove("active");
       });
 
-      // usunięcie klasy "active" z linków i ponowne włączenie
       const links = document.querySelectorAll(".sidebar a");
       links.forEach(el => el.classList.remove("active"));
 
-      // pokazanie wybranej karty
       document.getElementById(tabId).classList.add("active");
       evt.currentTarget.classList.add("active");
     }
 
-    // OPTIONAL – jeśli chcesz kolorować animowaną "szlufkę" przy hover (np. bardziej pływające podświetlenie)
     document.querySelectorAll(".sidebar a").forEach(link => {
       link.addEventListener("mouseenter", () => {
         link.style.background = "rgba(123, 82, 245, 0.06)";
