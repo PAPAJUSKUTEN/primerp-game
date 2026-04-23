@@ -1,5 +1,4 @@
 :root{
-  --bg:#060606;
   --text:#a8a8a8;
   --gold:#f4b61f;
   --gold2:#ffcf57;
@@ -7,6 +6,8 @@
   --line:rgba(255,255,255,.05);
   --input:#141414;
   --input-border:#262626;
+  --ok:#4ade80;
+  --bad:#f87171;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -20,10 +21,7 @@ body{
   color:#fff;
 }
 
-.layout{
-  display:flex;
-  min-height:100vh;
-}
+.layout{display:flex;min-height:100vh;}
 
 .sidebar{
   width:320px;
@@ -42,11 +40,7 @@ body{
   margin-bottom:22px;
 }
 
-.menu{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
+.menu{display:flex;flex-direction:column;gap:14px;}
 
 .tab{
   width:100%;
@@ -100,9 +94,7 @@ body{
   justify-content:center;
 }
 
-.content-wrap{
-  width:min(900px, 100%);
-}
+.content-wrap{width:min(900px, 100%);}
 
 .card{
   background: rgba(255,255,255,.03);
@@ -115,10 +107,7 @@ body{
   min-height:420px;
 }
 
-.card h1{
-  font-size:30px;
-  margin-bottom:12px;
-}
+.card h1{font-size:30px;margin-bottom:12px;}
 
 .card p{
   color:#b7b7b7;
@@ -134,7 +123,17 @@ body{
   border-radius:16px;
   background: rgba(0,0,0,.24);
   border:1px solid rgba(255,255,255,.05);
+  color:#d7d7d7;
 }
+
+.status{
+  margin-top:16px;
+  min-height:24px;
+  font-weight:700;
+}
+
+.status.ok{color:var(--ok);}
+.status.bad{color:var(--bad);}
 
 .login-form{
   display:none;
@@ -144,9 +143,7 @@ body{
   max-width:420px;
 }
 
-.login-form.active{
-  display:flex;
-}
+.login-form.active{display:flex;}
 
 .login-form input{
   width:100%;
@@ -184,10 +181,6 @@ body{
     border-right:none;
     border-bottom:1px solid var(--line);
   }
-  .main{
-    padding:18px;
-  }
-  .card{
-    min-height:320px;
-  }
+  .main{padding:18px;}
+  .card{min-height:320px;}
 }
