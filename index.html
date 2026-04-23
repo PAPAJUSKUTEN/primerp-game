@@ -10,51 +10,80 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #0a0f2c;
       color: #e0e0e0;
-      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+    /* Menu po lewej */
+    .sidebar {
+      width: 220px;
+      background: #0d1b3d;
+      border-right: 2px solid #ffeb3b;
+      padding: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar a {
+      display: block;
+      padding: 0.8rem 1.5rem;
+      text-decoration: none;
+      color: #cccccc;
+      margin-bottom: 0.3rem;
+      border-left: 3px solid transparent;
+      transition: 0.3s;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #1a237e;
+      color: #ffeb3b;
+      border-left: 3px solid #ffeb3b;
+    }
+    /* Główna treść */
+    .main {
+      flex: 1;
+      padding: 2rem 1.5rem;
     }
     header {
       background: linear-gradient(135deg, #1a237e, #0d47a1);
-      padding: 2rem 1rem;
+      padding: 1rem 0;
       text-align: center;
-      border-bottom: 3px solid #ffeb3b;
+      border-bottom: 2px solid #ffeb3b;
     }
     header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
       color: #ffffff;
     }
     header p {
-      font-size: 1.2rem;
-      opacity: 0.9;
+      font-size: 1rem;
+      opacity: 0.8;
     }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
+
     section {
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
     section h2 {
       color: #ffeb3b;
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #ffeb3b;
-      padding-bottom: 0.3rem;
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
     }
-    .highlight {
-      color: #ffeb3b;
-      font-weight: 600;
+    section p {
+      margin-bottom: 0.8rem;
+    }
+    section ul, section ol {
+      margin-bottom: 1rem;
+    }
+    section ul li, section ol li {
+      margin-bottom: 0.4rem;
     }
     .btn {
       display: inline-block;
       background: #ffeb3b;
       color: #000;
-      padding: 0.8rem 1.5rem;
+      padding: 0.6rem 1.2rem;
       border-radius: 6px;
       text-decoration: none;
-      margin-top: 1rem;
       font-weight: 600;
+      margin-top: 0.5rem;
+      margin-right: 0.5rem;
       transition: 0.3s;
     }
     .btn:hover {
@@ -63,10 +92,11 @@
     }
     footer {
       text-align: center;
-      padding: 1.5rem 1rem;
+      padding: 1rem 0;
       background: #0d1b3d;
       color: #aaa;
       font-size: 0.9rem;
+      margin-top: 1rem;
     }
     footer a {
       color: #ffeb3b;
@@ -75,75 +105,107 @@
     footer a:hover {
       text-decoration: underline;
     }
-    .social {
-      margin-top: 1rem;
-    }
-    .social a {
-      margin: 0 0.5rem;
-      color: #ffeb3b;
-      font-weight: 600;
-    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>PrimeRP</h1>
-    <p>Polski serwer Role Play w GTA V</p>
-  </header>
+  <!-- Zakładki po lewej -->
+  <div class="sidebar">
+    <a href="#news" class="active">Nowości</a>
+    <a href="#about">O Nas</a>
+    <a href="#market">Rynek</a>
+    <a href="#admin">Administracja</a>
+    <a href="#login">Zaloguj</a>
+  </div>
 
-  <div class="container">
-    <section>
-      <h2>Co to jest PrimeRP?</h2>
+  <!-- Główna treść -->
+  <div class="main">
+    <header>
+      <h1>PrimeRP – Polski serwer Role Play</h1>
+      <p>Informacje o serwerze, aktualności i rynek dla graczy</p>
+    </header>
+
+    <section id="news">
+      <h2>🔥 Nowości</h2>
       <p>
-        PrimeRP to dynamiczny serwer <span class="highlight">Role Play</span> w grze <strong>GTA V</strong>, 
-        gdzie----</p>
-      <p>
-        Serwer działa na technologii <strong>FiveM</strong>, oferując stabilną rozgrywkę i rozwinięty system zawodów, 
-        policji, medycyny oraz firm prywatnych.
+        <strong>20.04.2026 – Duża aktualizacja RP</strong><br />
+        Dodaliśmy nowe prace, ulepszyliśmy system policji oraz rozszerzyliśmy regulamin RP.
+        Wszystkie zmiany znajdziesz na Discordzie w kanałach <code>#news</code> i <code>#aktualizacje</code>.
       </p>
-      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Dołącz do Discorda</a>
+      <p>
+        <strong>15.04.2026 – Nowy system firm</strong><br />
+        Gracze mogą teraz łatwiej tworzyć własne firmy, zarejestrować je w urzędzie i zarządzać zatrudnieniem.
+      </p>
+      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Dowiedz się więcej na Discordzie</a>
     </section>
 
-    <section>
-      <h2>Zasady i regulamin</h2>
+    <section id="about">
+      <h2>ℹ️ O Nas</h2>
+      <p>
+        PrimeRP to polski serwer <strong>Role Play</strong> w grze <strong>GTA V</strong> (FiveM), stworzony dla graczy, 
+        którzy lubią realistyczną i ad‑hocową rozgrywkę.
+      </p>
+      <p>
+        Nasz serwer funkcjonuje już kilka lat, a rozwijamy go stale thanks do drużyny administracyjnej i aktywnej społeczności.
+      </p>
       <ul>
-        <li>Unikaj meta‑gamingu i OOC (rozmów „poza światem” obok mikrofonu).</li>
-        <li>Traktuj innych graczy tak, jak chcesz, żeby oni traktowali Ciebie.</li>
-        <li>Wszelkie formy cheatów, bug‑exploitów oraz naruszenia RP są surowo karane.</li>
-        <li>Wciąż chcesz dowiedzieć się więcej? Zajrzyj na naszego <a href="https://discord.gg/primerppl" target="_blank">Discorda</a>.</li>
+        <li>Stabilna platforma FiveM</li>
+        <li>Profesjonalny zespół administracyjny</li>
+        <li>Własne modyfikacje pod RP</li>
+        <li>Angażowana społeczność graczy</li>
       </ul>
     </section>
 
-    <section>
-      <h2>Jak dołączyć do serwera?</h2>
+    <section id="market">
+      <h2>🛒 Rynek</h2>
+      <p>
+        Na tej stronie znajdziesz informacje o <strong>rynkach serwerowych</strong>: sprzedażach pojazdów, nieruchomości, firm oraz usług RP.
+      </p>
       <ol>
-        <li>Zainstaluj modyfikację <strong>FiveM</strong> i przygotuj grę <strong>GTA V</strong>.</li>
-        <li>Dołącz do naszego serwera przez Discorda: <strong>discord.gg/primerppl</strong>.</li>
-        <li>Uzyskaj od Chiefa/ADMa lub w weryfikacji <strong>białando</strong> oraz aktywację konta.</li>
-        <li>Wpisz w kliencie FiveM adres serwera (IP) otrzymany na Discordzie i zacznij grać.</li>
+        <li><strong>Pojazdy</strong> – sprzedaż prywatna, aukcje, limity oraz ceny.</li>
+        <li><strong>Nieruchomości</strong> – domy, mieszkania i biura dostępne na serwerze.</li>
+        <li><strong>Firmy</strong> – sprzedaż i zakup firm, zmiana właściciela, regulamin.</li>
       </ol>
       <p>
-        <a href="https://discord.gg/primerppl" class="btn" target="_blank">Link do Discorda</a>
+        Wszelkie oferty na rynku muszą być zgodne z <strong>regulaminem serwera</strong> i potwierdzone przez administrację.
       </p>
+      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Przejdź do kanału #rynek</a>
     </section>
 
-    <section>
-      <h2>Kontakt i społeczność</h2>
+    <section id="admin">
+      <h2>👥 Administracja</h2>
       <p>
-        Zapraszamy do naszej społeczności na Discordzie, TikToku oraz Fanpage’u. 
-        Tam znajdziesz najnowsze informacje o aktualizacjach, wydarzeniach oraz zasadach.
+        Nasza administracja dzieli się na kilka teamów:
       </p>
-      <div class="social">
-        <a href="https://discord.gg/primerppl" target="_blank">Discord</a> |
-        <a href="https://www.facebook.com/Primerp-304804963781700/" target="_blank">Facebook</a> |
-        <a href="https://www.tiktok.com/@primeroleplaypl1" target="_blank">TikTok</a>
-      </div>
+      <ul>
+        <li><strong>Head‑Admin</strong> – kierowanie serwerem, ustalanie regulaminu.</li>
+        <li><strong>Admini</strong> – wspieranie graczy, rozwiązywanie problemów.</li>
+        <li><strong>Support</strong> – pomoc na codzień, weryfikacje zgłoszeń.</li>
+      </ul>
+      <p>
+        Jeżeli masz pytania lub zgłoszenie, możesz użyć komendy <code>/report</code> na serwerze lub napisać na Discordzie do <strong>Supporta</strong>.
+      </p>
     </section>
-  </div>
 
-  <footer>
-    &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.<br />
-    Strona stworzona dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
-  </footer>
+    <section id="login">
+      <h2>🔐 Zaloguj</h2>
+      <p>
+        <strong>Strona logowania</strong> przeznaczona jest dla administratorów i osób z uprawnieniami:
+      </p>
+      <ol>
+        <li>Wejdź na panel administracyjny: <code>panel.primerp.pl</code> (lub podaj swój adres panelu).</li>
+        <li>Wpisz <strong>login</strong> oraz <strong>hasło</strong>.</li>
+        <li>Po zalogowaniu uzyskasz dostęp do panelu administracyjnego, logów i zgłoszeń graczy.</li>
+      </ol>
+      <p>
+        <strong>Uwaga:</strong> Ten panel jest dostępny tylko dla członków administracji i moderatorów.
+      </p>
+      <a href="https://panel.primerp.pl" class="btn" target="_blank">Panel administracyjny</a>
+    </section>
+
+    <footer>
+      &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.<br />
+      Strona stworzona dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
+    </footer>
+  </div>
 </body>
 </html>
