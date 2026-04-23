@@ -1,4 +1,4 @@
-// Lista 10 użytkowników (login i hasło)
+// Lista 10 użytkowników
 const users = [
     { u: "admin", p: "haslo123" },
     { u: "user1", p: "test01" },
@@ -17,12 +17,12 @@ function checkLogin() {
     const passIn = document.getElementById('password').value;
     const error = document.getElementById('error-msg');
 
-    // Szukamy pasującego konta
     const validUser = users.find(user => user.u === userIn && user.p === passIn);
 
     if (validUser) {
-        // Zapisujemy w sesji, że jesteśmy zalogowani
-        sessionStorage.setItem("zalogowany", "tak");
+        // Zapamiętujemy zalogowanie w tej sesji przeglądarki
+        sessionStorage.setItem("isLogged", "true");
+        // PRZEKIEROWANIE na stronę z zakładkami
         window.location.href = "strona.html";
     } else {
         error.style.display = "block";
