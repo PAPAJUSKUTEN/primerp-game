@@ -3,604 +3,629 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProGamers Hub - Elite Gaming Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>ProGamers Hub - Elite Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --primary-neon: #00ff88;
-            --secondary-neon: #ff00ff;
-            --dark-bg: #0a0a0a;
-            --card-bg: rgba(255,255,255,0.05);
-            --glass-bg: rgba(255,255,255,0.1);
-            --text-light: #e0e0e0;
-            --text-dark: #fff;
+            --primary: #00ff88;
+            --secondary: #ff00ff;
+            --accent: #00d4ff;
+            --bg-dark: #0d1117;
+            --bg-card: rgba(20, 25, 35, 0.8);
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(0, 255, 136, 0.2);
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
         }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-light);
-            overflow-x: hidden;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
         }
-        /* Particle Background */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at 20% 80%, rgba(120,119,198,0.3) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255,119,198,0.3) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(120,219,255,0.3) 0%, transparent 50%);
-        }
-        
-        /* Header z Glassmorphism */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, rgba(13,17,23,0.95) 0%, rgba(20,25,35,0.95) 100%);
             backdrop-filter: blur(20px);
-            background: var(--glass-bg);
-            border-bottom: 1px solid rgba(0,255,136,0.2);
-            z-index: 1000;
+            border-right: 1px solid var(--border);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
             transition: all 0.3s ease;
         }
-        nav {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
+
+        .logo {
+            padding: 0 2rem 3rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .logo h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--glass);
+            color: var(--text-primary);
+            border: 1px solid var(--primary);
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+            width: 20px;
+        }
+
+        .nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
         }
-        .logo {
-            font-family: 'Orbitron', monospace;
+
+        .header-title {
             font-size: 2rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            cursor: pointer;
         }
-        .nav-links {
+
+        .user-profile {
             display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 600;
-            position: relative;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--glass);
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            cursor: pointer;
             transition: all 0.3s;
         }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
-            transition: width 0.3s;
+
+        .user-profile:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--primary);
         }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-neon);
-            transition: 0.3s;
-        }
-        
-        /* Hero Section z Parallax */
-        .hero {
-            height: 100vh;
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            position: relative;
-            padding: 0 2rem;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI4MDAiIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjEyMDAiIGhlaWdodD0iODAwIiBmaWxsPSJ1cmwoI2dyYWQpIi8+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9ImdyYWQiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+CiAgPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAwZmY4ODtzdG9wLW9wYWNpdHk6MC4yIi8+CiAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZmYwMGZmO3N0b3Atb3BhY2l0eTowLjEiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4=') center/cover;
-            opacity: 0.3;
-            z-index: -1;
-        }
-        .hero h1 {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(3rem, 8vw, 6rem);
-            margin-bottom: 1rem;
-            animation: heroGlow 2s ease-in-out infinite alternate;
-        }
-        @keyframes heroGlow {
-            from { filter: drop-shadow(0 0 20px var(--primary-neon)); }
-            to { filter: drop-shadow(0 0 40px var(--secondary-neon)); }
-        }
-        .hero p {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            max-width: 600px;
-            margin-bottom: 2rem;
-        }
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
             justify-content: center;
-        }
-        .cta {
-            padding: 1.2rem 2.5rem;
             font-weight: 700;
-            text-decoration: none;
-            border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-size: 1.1rem;
-            backdrop-filter: blur(10px);
-        }
-        .cta-primary {
-            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
             color: #000;
-            box-shadow: 0 10px 30px rgba(0,255,136,0.4);
+            font-size: 1rem;
         }
-        .cta-secondary {
-            background: transparent;
-            color: var(--primary-neon);
-            border: 2px solid var(--primary-neon);
-            box-shadow: 0 0 20px rgba(0,255,136,0.3);
-        }
-        .cta:hover {
-            transform: translateY(-8px) scale(1.05);
-        }
-        
-        /* Sections */
-        section {
-            padding: 8rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            text-align: center;
-            margin-bottom: 4rem;
-            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .features {
+
+        /* Dashboard Cards */
+        .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
+            margin-bottom: 2rem;
         }
-        .feature {
-            background: var(--glass-bg);
+
+        .card {
+            background: var(--glass);
             backdrop-filter: blur(20px);
-            padding: 3rem 2rem;
+            border: 1px solid var(--border);
             border-radius: 20px;
-            text-align: center;
-            border: 1px solid rgba(0,255,136,0.2);
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-        .feature::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-        .feature:hover::before {
-            left: 100%;
-        }
-        .feature:hover {
-            transform: translateY(-15px) scale(1.02);
-            border-color: var(--primary-neon);
-            box-shadow: 0 20px 40px rgba(0,255,136,0.2);
-        }
-        .feature i {
-            font-size: 4rem;
-            color: var(--primary-neon);
-            margin-bottom: 1rem;
-        }
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
-            margin: 4rem 0;
-        }
-        .stat {
             padding: 2rem;
-        }
-        .stat-number {
-            font-family: 'Orbitron', monospace;
-            font-size: 3rem;
-            color: var(--primary-neon);
-            display: block;
-        }
-        .players {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        .player-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255,0,255,0.2);
-            transition: all 0.4s;
+            transition: all 0.3s ease;
             position: relative;
+            overflow: hidden;
         }
-        .player-card::before {
+
+        .card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
         }
-        .player-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--secondary-neon);
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.15);
+            border-color: var(--primary);
         }
-        .player-img {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(45deg, #333, #555);
-            position: relative;
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
         }
-        .player-img i {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 4rem;
-            color: var(--primary-neon);
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
-        .player-info {
-            padding: 2rem;
-            text-align: center;
-        }
-        .player-name {
-            font-family: 'Orbitron', monospace;
+
+        .card-icon {
             font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
         }
-        .tournaments {
-            background: rgba(0,255,136,0.05);
+
+        /* Table */
+        .table-card {
+            grid-column: 1 / -1;
         }
-        .tournament-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
         }
-        .tournament-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 2rem;
-            border-left: 5px solid var(--primary-neon);
+
+        .table th,
+        .table td {
+            padding: 1rem 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
         }
-        footer {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            text-align: center;
-            padding: 4rem 2rem 2rem;
-            border-top: 1px solid rgba(0,255,136,0.2);
+
+        .table th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
         }
-        .social-links {
+
+        .table td {
+            color: var(--text-primary);
+        }
+
+        .status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status.live {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+        }
+
+        .status.upcoming {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        /* Tournament Card */
+        .tournament-item {
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(0, 255, 136, 0.05);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
         }
-        .social-links a {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
-            border-radius: 50%;
+
+        .tournament-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.5rem;
             color: #000;
-            font-size: 1.2rem;
-            transition: transform 0.3s;
         }
-        .social-links a:hover {
-            transform: scale(1.2) rotate(360deg);
-        }
-        
+
         /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
+            .main-content {
+                padding: 1rem;
             }
-            .nav-links {
-                display: none;
-            }
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            section {
-                padding: 4rem 1rem;
+            .dashboard-grid {
+                grid-template-columns: 1fr;
             }
         }
-        
-        /* Scroll Animations */
-        .animate-on-scroll {
+
+        /* Overlay for mobile */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
+            visibility: hidden;
+            transition: all 0.3s;
         }
-        .animate-on-scroll.visible {
+
+        .overlay.active {
             opacity: 1;
-            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                color: var(--text-primary);
+                cursor: pointer;
+                padding: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <canvas id="particles"></canvas>
-    
-    <header>
-        <nav>
-            <div class="logo">ProGamers<span style="color: var(--primary-neon);">Hub</span></div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#stats">Stats</a></li>
-                <li><a href="#players">Players</a></li>
-                <li><a href="#tournaments">Tournaments</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
+    <!-- Mobile Overlay -->
+    <div class="overlay" id="overlay"></div>
 
-    <section id="home" class="hero animate-on-scroll">
-        <h1>ProGamers Hub</h1>
-        <p>Platforma dla profesjonalnych graczy. Live turnieje, analizy pro graczy i elite community. Dołącz do 500k+ graczy.</p>
-        <div class="cta-buttons">
-            <a href="#tournaments" class="cta cta-primary">Dołącz do Turnieju</a>
-            <a href="#players" class="cta cta-secondary">Zobacz Top Graczy</a>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <h2>ProGamers <span>Hub</span></h2>
         </div>
-    </section>
-
-    <section id="features" class="animate-on-scroll">
-        <h2>Elite Features</h2>
-        <div class="features">
-            <div class="feature">
-                <i class="fas fa-trophy"></i>
-                <h3>Live Tournaments</h3>
-                <p>Organizuj i dołączaj do profesjonalnych turniejów z pulą nagród $1M+ miesięcznie.</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-chart-line"></i>
-                <h3>Pro Analytics</h3>
-                <p>Szczegółowe analizy meczów z AI insights od top profesjonalistów.</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-users"></i>
-                <h3>Elite Community</h3>
-                <p>Sieciuj z najlepszymi graczami, skautami i organizacjami esports.</p>
-            </div>
-            <div class="feature">
-                <i class="fas fa-stream"></i>
-                <h3>Live Streaming</h3>
-                <p>Profesjonalne streamy z overlay'ami i statystykami w czasie rzeczywistym.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="stats">
-        <h2>Our Impact</h2>
-        <div class="stats">
-            <div class="stat">
-                <span class="stat-number">500K+</span>
-                Aktywnych Graczy
-            </div>
-            <div class="stat">
-                <span class="stat-number">$10M+</span>
-                Wypłaconych Nagród
-            </div>
-            <div class="stat">
-                <span class="stat-number">1.2M+</span>
-                Obejrzań Miesięcznie
-            </div>
-            <div class="stat">
-                <span class="stat-number">250+</span>
-                Profesjonalnych Teamów
-            </div>
-        </div>
-    </section>
-
-    <section id="players" class="animate-on-scroll">
-        <h2>Top Pro Players</h2>
-        <div class="players">
-            <div class="player-card">
-                <div class="player-img">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link active" data-tab="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tab="tournaments">
+                    <i class="fas fa-trophy"></i>
+                    <span>Turnieje</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tab="players">
+                    <i class="fas fa-users"></i>
+                    <span>Gracze</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tab="stats">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Statystyki</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tab="profile">
                     <i class="fas fa-user"></i>
+                    <span>Profil</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tab="team">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Zespół</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" data-tab="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Ustawienia</span>
+            </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link login-btn" style="margin-top: 2rem; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: #000; font-weight: 600;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Zaloguj</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="top-bar">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="mobile-menu-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="header-title" id="pageTitle">Dashboard</h1>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar">PG</div>
+                <span>ProGamerX</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Aktywne Turnieje</h3>
+                        <i class="fas fa-trophy card-icon"></i>
+                    </div>
+                    <div class="stat-number">3</div>
+                    <p style="color: var(--text-secondary);">W trakcie</p>
                 </div>
-                <div class="player-info">
-                    <h3 class="player-name">s1mple</h3>
-                    <p>CS2 | $2.1M Earnings</p>
-                    <div style="margin-top: 1rem;">
-                        <i class="fas fa-star" style="color: gold;"></i>
-                        <i class="fas fa-star" style="color: gold;"></i>
-                        <i class="fas fa-star" style="color: gold;"></i>
-                        <i class="fas fa-star" style="color: gold;"></i>
-                        <i class="fas fa-star" style="color: gold;"></i>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Pula Nagród</h3>
+                        <i class="fas fa-coins card-icon"></i>
+                    </div>
+                    <div class="stat-number">$12,450</div>
+                    <p style="color: var(--text-secondary);">Dziś</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Ranking</h3>
+                        <i class="fas fa-medal card-icon"></i>
+                    </div>
+                    <div class="stat-number">#47</div>
+                    <p style="color: var(--text-secondary);">Globalny</p>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Win Rate</h3>
+                        <i class="fas fa-chart-line card-icon"></i>
+                    </div>
+                    <div class="stat-number">78%</div>
+                    <p style="color: var(--text-secondary);">Ostatni miesiąc</p>
+                </div>
+            </div>
+            
+            <div class="table-card card">
+                <div class="card-header">
+                    <h3 class="card-title">Nadchodzące Turnieje</h3>
+                    <i class="fas fa-list card-icon"></i>
+                </div>
+                <div class="tournament-item">
+                    <div class="tournament-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div>
+                        <h4>CS2 Elite League</h4>
+                        <p>Pula: $50,000 | Start: 15.05 | Zapisz się</p>
+                    </div>
+                </div>
+                <div class="tournament-item">
+                    <div class="tournament-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <h4>Valorant Pro Cup</h4>
+                        <p>Pula: $25,000 | Start: 18.05 | 12 slotów</p>
                     </div>
                 </div>
             </div>
-            <div class="player-card">
-                <div class="player-img">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="player-info">
-                    <h3 class="player-name">Faker</h3>
-                    <p>League of Legends | 4x World Champ</p>
-                </div>
-            </div>
-            <div class="player-card">
-                <div class="player-img">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="player-info">
-                    <h3 class="player-name">Bugha</h3>
-                    <p>Fortnite | World Champion</p>
-                </div>
-            </div>
-            <div class="player-card">
-                <div class="player-img">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="player-info">
-                    <h3 class="player-name">s4</h3>
-                    <p>Dota 2 | The International Winner</p>
-                </div>
-            </div>
         </div>
-    </section>
 
-    <section id="tournaments" class="tournaments animate-on-scroll">
-        <h2>Upcoming Tournaments</h2>
-        <div class="tournament-grid">
-            <div class="tournament-card">
-                <h3>CS2 Global Championship</h3>
-                <p>Pula: $1,000,000 | Start: 15.05.2026</p>
-                <a href="#" class="cta cta-secondary" style="font-size: 0.9rem; padding: 0.8rem 1.5rem;">Zapisz się</a>
-            </div>
-            <div class="tournament-card">
-                <h3>LoL Pro League S2</h3>
-                <p>Pula: $500,000 | Start: 01.06.2026</p>
-                <a href="#" class="cta cta-secondary" style="font-size: 0.9rem; padding: 0.8rem 1.5rem;">Zapisz się</a>
-            </div>
-            <div class="tournament-card">
-                <h3>Valorant Elite Cup</h3>
-                <p>Pula: $750,000 | Start: 20.05.2026</p>
-                <a href="#" class="cta cta-secondary" style="font-size: 0.9rem; padding: 0.8rem 1.5rem;">Zapisz się</a>
+        <!-- Tournaments Tab -->
+        <div id="tournaments" class="tab-content">
+            <h2 style="margin-bottom: 2rem;">Lista Turniejów</h2>
+            <div class="dashboard-grid">
+                <div class="card" style="grid-column: 1 / -1;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Turniej</th>
+                                <th>Status</th>
+                                <th>Pula</th>
+                                <th>Data</th>
+                                <th>Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CS2 Global Championship</td>
+                                <td><span class="status live">Live</span></td>
+                                <td>$1,000,000</td>
+                                <td>Teraz</td>
+                                <td><button style="background: var(--primary); color: #000; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Dołącz</button></td>
+                            </tr>
+                            <tr>
+                                <td>LoL Pro Series</td>
+                                <td><span class="status upcoming">Nadchodzące</span></td>
+                                <td>$500,000</td>
+                                <td>01.06</td>
+                                <td><button style="background: var(--accent); color: #000; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Zapisz</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </section>
 
-    <footer>
-        <div class="social-links">
-            <a href="#"><i class="fab fa-twitch"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+        <!-- Players Tab -->
+        <div id="players" class="tab-content">
+            <h2 style="margin-bottom: 2rem;">Top Gracze</h2>
+            <div class="dashboard-grid">
+                <!-- Player cards here -->
+                <div class="card">
+                    <h3>s1mple - CS2</h3>
+                    <p>Win Rate: 85% | Earnings: $2.1M</p>
+                </div>
+            </div>
         </div>
-        <p>&copy; 2026 ProGamers Hub. Elite Gaming Platform. Wszelkie prawa zastrzeżone.</p>
-    </footer>
+
+        <!-- Other tabs content would go here -->
+        <div id="stats" class="tab-content" style="display: none;">
+            <h2>Statystyki</h2>
+            <p>Tutaj wykresy i zaawansowane statystyki...</p>
+        </div>
+
+        <div id="profile" class="tab-content" style="display: none;">
+            <h2>Twój Profil</h2>
+            <p>Edytuj profil gracza...</p>
+        </div>
+
+        <div id="team" class="tab-content" style="display: none;">
+            <h2>Zespół</h2>
+            <p>Zarządzaj zespołem...</p>
+        </div>
+
+        <div id="settings" class="tab-content" style="display: none;">
+            <h2>Ustawienia</h2>
+            <p>Konto i preferencje...</p>
+        </div>
+    </main>
 
     <script>
-        // Particles Canvas
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Tab switching
+        const navLinks = document.querySelectorAll('.nav-link[data-tab]');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const pageTitle = document.getElementById('pageTitle');
 
-        const particles = [];
-        for(let i = 0; i < 100; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                radius: Math.random() * 2 + 1
-            });
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 255, 136, ${p.radius / 5})`;
-                ctx.fill();
-                
-                p.x += p.vx;
-                p.y += p.vy;
-                
-                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-
-        // Scroll Animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Remove active class from all nav links and tabs
+                navLinks.forEach(l => l.classList.remove('active'));
+                tabContents.forEach(t => t.classList.remove('active'));
+                
+                // Add active to clicked link
+                link.classList.add('active');
+                
+                // Show corresponding tab
+                const tabId = link.dataset.tab;
+                document.getElementById(tabId).classList.add('active');
+                
+                // Update page title
+                pageTitle.textContent = link.querySelector('span').textContent;
             });
         });
 
-        // Header Scroll Effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if(window.scrollY > 100) {
-                header.style.background = 'rgba(10,10,10,0.95)';
-            } else {
-                header.style.background = 'rgba(255,255,255,0.1)';
-            }
+        // Login button
+        document.querySelector('.login-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Modal logowania... (zintegrowane z Auth0/Firebase)');
         });
 
-        // Resize Canvas
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        // Mobile menu
+        const mobileToggle = document.getElementById('mobileToggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        mobileToggle?.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        });
+
+        // Tab content visibility
+        function initTabs() {
+            tabContents.forEach((tab, index) => {
+                if (index !== 0) tab.style.display = 'none';
+            });
+        }
+
+        // Set first tab active
+        document.getElementById('dashboard').classList.add('active');
+        initTabs();
+
+        // Smooth scroll for main content
+        document.querySelector('.main-content').addEventListener('scroll', () => {
+            // Add scroll effects if needed
         });
     </script>
 </body>
