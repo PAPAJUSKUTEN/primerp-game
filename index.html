@@ -2,42 +2,130 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>BEST Clan - Rebirth Champion Ultimate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weeknd Player</title>
     <style>
         body {
-            background-color: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle, #2b0000 0%, #000000 100%);
             color: white;
-            font-family: Arial;
-            text-align: center;
         }
-        h1 { color: #38bdf8; }
-        .box {
-            background: #1e293b;
-            padding: 20px;
-            margin: 20px;
+
+        .player-card {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 50px;
+            border-radius: 30px;
+            border: 2px solid #ff0000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            color: #ff0000;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        #playBtn {
+            background: #ff0000;
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 22px;
+            font-weight: bold;
             border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.4s;
+            text-transform: uppercase;
+        }
+
+        #playBtn:hover {
+            background: #ffffff;
+            color: #ff0000;
+            box-shadow: 0 0 30px #ff0000;
+            transform: scale(1.05);
+        }
+
+        #playBtn:disabled {
+            background: #333;
+            cursor: wait;
+        }
+
+        /* Ukrywamy ramkę YouTube */
+        #yt-api-player {
+            position: absolute;
+            top: -9999px;
         }
     </style>
 </head>
 <body>
 
-<h1>🔥 BEST Clan 🔥</h1>
-<p>Rebirth Champion Ultimate</p>
+    <div class="player-card">
+        <h1>The Weeknd Mix</h1>
+        <p>The Abyss X WMU X Starboy</p>
+        
+        <button id="playBtn" onclick="togglePlay()" disabled>Ładowanie...</button>
+    </div>
 
-<div class="box">
-    <h2>O nas</h2>
-    <p>Najlepszy klan w grze! 💪</p>
-</div>
+    <div id="yt-api-player"></div>
 
-<div class="box">
-    <h2>Wymagania</h2>
-    <p>✔ Aktywność<br>✔ Minimum rebirthów<br>✔ Discord (opcjonalnie)</p>
-</div>
+    <script>
+        var player;
+        var isPlaying = false;
+        
+        // Twoje ID z linku YouTube
+        var videoId = 'RTvUI7XXilM';
 
-<div class="box">
-    <h2>Dołącz</h2>
-    <p>Napisz do lidera w grze!</p>
-</div>
+        // Ładowanie API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('yt-api-player', {
+                height: '1',
+                width: '1',
+                videoId: videoId,
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            var btn = document.getElementById("playBtn");
+            btn.innerHTML = "Odtwórz ▶️";
+            btn.disabled = false;
+        }
+
+        function togglePlay() {
+            var btn = document.getElementById("playBtn");
+            if (!isPlaying) {
+                player.playVideo();
+                btn.innerHTML = "Pauza ⏸️";
+                isPlaying = true;
+            } else {
+                player.pauseVideo();
+                btn.innerHTML = "Odtwórz ▶️";
+                isPlaying = false;
+            }
+        }
+    </script>
 
 </body>
 </html>
