@@ -4,71 +4,134 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PrimeRP – Panel</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
   <style>
+    :root {
+      --bg-dark: #0a0f2c;
+      --bg-card: #101428;
+      --bg-card-alt: rgba(16, 20, 40, 0.92);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #e0e0e5;
+      --text-muted: #b0b0c5;
+      --text-primary: #bb9aff;
+      --accent: #7b52f5;
+      --accent-light: #9d7cf5;
+      --accent-hover: #b291ff;
+      --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.45);
+      --border-radius-lg: 16px;
+      --border-radius-md: 10px;
+      --transition: 0.35s cubic-bezier(0.2, 0, 0.2, 1);
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     body {
-      background: radial-gradient(ellipse at top, #1a0b33 0%, #0d1330 60%, #0a0f2c 100%);
-      color: #e0e0e5;
+      background: radial-gradient(ellipse at top, #0e083b 0%, #0a0f2c 60%, #060a21 100%);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
     }
 
-    /* Sidebar – nowoczesny, z cieniem */
+    /* Sidebar – bardziej zaawansowany */
     .sidebar {
-      width: 240px;
-      background: #0a0f2c;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      padding: 1.5rem 0;
+      width: 250px;
+      background: linear-gradient(180deg, var(--bg-dark) 0%, #080c24 100%);
+      border-right: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      padding: 1.8rem 0;
       display: flex;
       flex-direction: column;
     }
+    .sidebar-header {
+      margin-bottom: 1.4rem;
+      padding: 0 1.6rem 0 1.6rem;
+    }
+    .sidebar-header h3 {
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
     .sidebar a {
-      display: block;
+      display: flex;
+      align-items: center;
       padding: 0.9rem 1.4rem;
       text-decoration: none;
-      color: #b0b0c5;
+      color: var(--text-muted);
       margin-bottom: 0.2rem;
-      border-radius: 8px;
-      border-left: 4px solid transparent;
-      margin: 0 0.8rem 0.3rem 0.8rem;
-      transition: 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+      border-radius: var(--border-radius-md);
+      margin: 0 0.8rem 0.2rem 0.8rem;
+      transition: var(--transition);
+      position: relative;
+      font-weight: 500;
+    }
+    .sidebar a::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: var(--accent);
+      border-radius: inherit;
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
     }
     .sidebar a:hover {
-      background: rgba(100, 80, 180, 0.15);
-      color: #f0e6ff;
-      border-left: 4px solid #9d7cf5;
+      background: rgba(123, 82, 245, 0.08);
+      color: var(--text);
+    }
+    .sidebar a:hover::before {
+      width: 4px;
+      opacity: 1;
     }
     .sidebar a.active {
-      background: rgba(100, 80, 180, 0.25);
-      color: #f0e6ff;
-      border-left: 4px solid #9d7cf5;
+      background: rgba(123, 82, 245, 0.12);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+    .sidebar a.active::before {
+      width: 4px;
+      opacity: 1;
     }
 
-    /* Główna treść */
+    /* Główne karty kontentu */
     .content {
       flex: 1;
-      padding: 1.8rem 2rem;
-      margin-top: 1rem;
+      padding: 1.6rem 2.2rem 2rem 2rem;
     }
 
-    /* NAGŁÓWEK TYLKO NAJPIERW ZAKŁADKI */
     .tab-content {
       display: none;
       opacity: 0;
-      transform: translateY(8px);
+      transform: translateY(10px);
       transition: opacity 0.35s ease, transform 0.35s ease;
-      padding: 1.6rem 1.8rem;
-      background: rgba(16, 20, 40, 0.85);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.8rem 2rem;
+      background: var(--bg-card-alt);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+    .tab-content::before {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 30%, rgba(123, 82, 245, 0.08), transparent 60%);
+      pointer-events: none;
     }
     .tab-content.active {
       display: block;
@@ -76,49 +139,71 @@
       transform: translateY(0);
     }
 
+    /* Nagłówki i tekst */
     h2 {
-      color: #bb9aff;
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
+      color: var(--text-primary);
+      font-size: 1.5rem;
+      margin-bottom: 1.1rem;
       font-weight: 600;
     }
-    p {
+    .subtitle {
+      color: #9ea7cf;
+      font-size: 0.96rem;
       margin-bottom: 0.8rem;
-      line-height: 1.6;
+      font-weight: 400;
+    }
+    p {
+      margin-bottom: 0.9rem;
+      line-height: 1.65;
+      font-size: 1rem;
     }
     ul, ol {
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
     }
     ul li, ol li {
       margin-bottom: 0.4rem;
+      font-size: 0.98rem;
+    }
+    code {
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
     }
 
+    /* Przyciski – bardziej zaawansowane */
     .btn {
       display: inline-block;
-      background: linear-gradient(90deg, #7b52f5, #9d7cf5);
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
       color: #ffffff;
-      padding: 0.65rem 1.3rem;
-      border-radius: 10px;
+      padding: 0.7rem 1.4rem;
+      border-radius: var(--border-radius-md);
       text-decoration: none;
       font-weight: 600;
-      margin-top: 0.5rem;
+      margin-top: 0.6rem;
       margin-right: 0.5rem;
-      transition: 0.3s ease;
-      box-shadow: 0 4px 12px rgba(123, 82, 245, 0.25);
+      transition: var(--transition);
+      box-shadow: 0 6px 20px rgba(123, 82, 245, 0.35);
+      border: 1px solid rgba(123, 82, 245, 0.3);
     }
     .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(123, 82, 245, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(123, 82, 245, 0.48);
+    }
+    .btn:active {
+      transform: translateY(-1px);
     }
 
+    /* Stopka */
     footer {
       text-align: center;
-      padding: 1.2rem 0 1rem;
+      padding: 1.3rem 0 1rem;
       color: #8a8a9c;
       font-size: 0.9rem;
+      margin-top: 1.5rem;
     }
     footer a {
-      color: #bb9aff;
+      color: var(--text-primary);
       text-decoration: none;
     }
     footer a:hover {
@@ -129,11 +214,14 @@
 <body>
   <!-- Zakładki po lewej -->
   <div class="sidebar">
-    <a href="#news" onclick="openTab(event, 'news')" class="active">1. Nowości</a>
-    <a href="#about" onclick="openTab(event, 'about')">2. O Nas</a>
-    <a href="#market" onclick="openTab(event, 'market')">3. Rynek</a>
-    <a href="#admin" onclick="openTab(event, 'admin')">4. Administracja</a>
-    <a href="#login" onclick="openTab(event, 'login')">5. Zaloguj</a>
+    <div class="sidebar-header">
+      <h3>PrimeRP Panel</h3>
+    </div>
+    <a href="#news"   onclick="openTab(event, 'news')"   class="active">1. Nowości</a>
+    <a href="#about"  onclick="openTab(event, 'about')"                  >2. O Nas</a>
+    <a href="#market" onclick="openTab(event, 'market')"                >3. Rynek</a>
+    <a href="#admin"  onclick="openTab(event, 'admin')"                 >4. Administracja</a>
+    <a href="#login"  onclick="openTab(event, 'login')"                 >5. Zaloguj</a>
   </div>
 
   <!-- Treść kart -->
@@ -141,9 +229,15 @@
     <!-- Nowości -->
     <div id="news" class="tab-content active">
       <h2>🔥 Nowości</h2>
+      <p class="subtitle">
+        Najnowsze aktualizacje serwera PrimeRP.
+      </p>
       <p>
         <strong>20.04.2026 – Duża aktualizacja RP</strong><br />
-        Dodano nowe prace, ulepszenia systemu policji oraz rozszerzono regulamin RP.
+        Dodano nowe prace, ulepszenia systemu policji, medycyny i rozszerzono regulamin Role Play na serwerze. 
+      </p>
+      <p>
+        Wszystkie szczegóły znajdziesz na kanale <code>#aktualizacje</code> oraz <code>#news</code> na Discordzie.
       </p>
       <a href="https://discord.gg/primerppl" class="btn" target="_blank">Sprawdź na Discordzie</a>
     </div>
@@ -151,78 +245,109 @@
     <!-- O Nas -->
     <div id="about" class="tab-content">
       <h2>ℹ️ O Nas</h2>
+      <p class="subtitle">
+        Serwer, jego zespół i filozofia RP.
+      </p>
       <p>
-        PrimeRP to polski serwer <strong>Role Play</strong> w GTA V (FiveM) stworzony dla osadzonej w realnym świecie rozgrywki.
+        PrimeRP to polski serwer <strong>Role Play</strong> w GTA V (FiveM), stworzony dla graczy, którzy chcą realnej, osadzonej w świecie rozgrywki.
       </p>
       <ul>
-        >Stabilna platforma oparta na FiveM.</li>
-        >Profesjonalny zespół administracyjny.</li>
-        >Własne modyfikacje pod RP (prace, prawa jazdy, firmy).</li>
+        <li>Stabilna platforma oparta na <strong>FiveM</strong> i własnych modyfikacjach.</li>
+        <li>Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
+        <li>Profesjonalny, działający zespół administracyjny i support.</li>
       </ul>
     </div>
 
     <!-- Rynek -->
     <div id="market" class="tab-content">
       <h2>🛒 Rynek</h2>
+      <p class="subtitle">
+        Handel pojazdami, nieruchomościami i firmami na serwerze.
+      </p>
       <p>
-        Informacje o sprzedaży pojazdów, nieruchomości i firm na serwerze.
+        Na tej zakładce znajdziesz informacje o obowiązujących zasadach sprzedaży na serwerze PrimeRP.
       </p>
       <ol>
-        ><strong>Pojazdy</strong> – prywatne handele oraz aukcje.</li>
-        ><strong>Nieruchomości</strong> – domy, mieszkania, biura.</li>
-        ><strong>Firmy</strong> – zakup i sprzedaż firm.</li>
+        <li><strong>Pojazdy</strong> – handel prywatny oraz oferty na kanałach typu <code>#rynek</code> lub przez Discord‑bot.</li>
+        <li><strong>Nieruchomości</strong> – sprzedaż domów, mieszkań, biur i innych lokali, zgodnie z regulaminem.</li>
+        <li><strong>Firmy</strong> – zakup i sprzedaż firm, zmiana właściciela, formalności.</li>
       </ol>
       <p>
-        Wszelkie oferty muszą być zgodne z regulaminem serwera i zatwierdzone przez administrację.
+        <strong>Uwaga:</strong> Wszelkie duże transakcje powinny być potwierdzone przez administrację i odbywać się zgodnie z regulaminem serwera.
       </p>
     </div>
 
     <!-- Administracja -->
     <div id="admin" class="tab-content">
       <h2>👥 Administracja</h2>
+      <p class="subtitle">
+        Zespół, który dba o serwer i graczy.
+      </p>
       <p>
-        Nasz zespół pilnuje poprawnego działania serwera, regulaminu i dobrego klimatu rp.
+        Nasz zespół administracyjny jest odpowiedzialny za prawidłowe działanie serwera, egzekwowanie regulaminu oraz wspieranie społeczności.
       </p>
       <ul>
-        >Head‑Admin – kierowanie serwerem.</li>
-        >Admini – wsparcie graczy i egzekwowanie regulaminu.</li>
-        >Support – pomoc na codzień i zgłoszenia.</li>
+        <li><strong>Head‑Admin</strong> – kierowanie rozwojem serwera, decyzje dotyczące regulaminu i aktualizacji.</li>
+        <li><strong>Admini</strong> – wsparcie na serwerze, rozwiązywanie konfliktów, uruchamianie zdarzeń.</li>
+        <li><strong>Support</strong> – pomoc na Discordzie, zgłoszenia, pomoc dla nowych graczy.</li>
       </ul>
     </div>
 
     <!-- Zaloguj -->
     <div id="login" class="tab-content">
       <h2>🔐 Zaloguj</h2>
+      <p class="subtitle">
+        Panel administracyjny – dostęp tylko dla urzędników i adminów.
+      </p>
       <p>
-        <strong>Panel logowania</strong> służy wyłącznie administratorom i moderatorom serwera.
+        <strong>Panel logowania</strong> jest dostępny wyłącznie dla osób z uprawnieniami administracyjnymi.
       </p>
       <ol>
-        >Wejdź na de>panel.primerp.pl</code> (lub podaj swój adres).</li>
-        >Wpisz swoje <strong>login</strong> i <strong>hasło</strong>.</li>
-        >Uzyskaj dostęp do panelu administracyjnego.</li>
+        <li>Wejdź na panel: <code>panel.primerp.pl</code> (lub podaj swój adres panelu).</li>
+        <li>Wpisz swój <strong>login</strong> i <strong>hasło</strong>.</li>
+        <li>Po udanym zalogowaniu uzyskaj dostęp do panelu administracyjnego.</li>
       </ol>
+      <p>
+        Jeśli nie masz uprawnień administracyjnych, nie masz możliwości dostępu do panelu.
+      </p>
       <a href="https://panel.primerp.pl" class="btn" target="_blank">Panel administracyjny</a>
     </div>
 
     <footer>
-      &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.
+      &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.<br />
+      Strona wykonana dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
     </footer>
   </div>
 
-  <!-- JavaScript do tabów -->
+  <!-- Zaawansowany JS – obsługa zakładek -->
   <script>
     function openTab(evt, tabId) {
+      // ukryj wszystkie karty
       const contents = document.querySelectorAll(".tab-content");
       contents.forEach(el => {
         el.classList.remove("active");
       });
 
+      // usunięcie klasy "active" z linków i ponowne włączenie
       const links = document.querySelectorAll(".sidebar a");
       links.forEach(el => el.classList.remove("active"));
 
+      // pokazanie wybranej karty
       document.getElementById(tabId).classList.add("active");
       evt.currentTarget.classList.add("active");
     }
+
+    // OPTIONAL – jeśli chcesz kolorować animowaną "szlufkę" przy hover (np. bardziej pływające podświetlenie)
+    document.querySelectorAll(".sidebar a").forEach(link => {
+      link.addEventListener("mouseenter", () => {
+        link.style.background = "rgba(123, 82, 245, 0.06)";
+      });
+      link.addEventListener("mouseleave", () => {
+        if (!link.classList.contains("active")) {
+          link.style.background = "";
+        }
+      });
+    });
   </script>
 </body>
 </html>
