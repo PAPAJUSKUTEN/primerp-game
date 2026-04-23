@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Alarmowy</title>
+    <title>SYSTEM ALARMOWY</title>
     <style>
         body {
             display: flex;
@@ -12,93 +12,101 @@
             height: 100vh;
             margin: 0;
             font-family: 'Courier New', Courier, monospace;
-            background-color: #1a1a1a;
-            color: #ffcc00;
+            background-color: #000;
+            color: #ff0000;
+            overflow: hidden;
         }
 
-        .alarm-box {
+        /* Stylizacja ramki alarmowej */
+        .alarm-container {
             text-align: center;
-            padding: 50px;
-            border: 5px double #ffcc00;
-            background: #000;
-            box-shadow: 0 0 20px #ffcc00;
+            padding: 60px;
+            border: 10px double #ff0000;
+            background: linear-gradient(0deg, #1a0000 0%, #000 100%);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            margin: 0 0 20px 0;
             text-transform: uppercase;
+            letter-spacing: 5px;
+            animation: blink 1s infinite;
         }
 
-        /* Efekt pulsowania dla przycisku */
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(255, 204, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
 
-        #alarmBtn {
-            background: #ffcc00;
+        /* Stylizacja przycisku */
+        #controlBtn {
+            background: #ff0000;
             color: #000;
             border: none;
-            padding: 20px 60px;
-            font-size: 1.5rem;
+            padding: 25px 70px;
+            font-size: 1.8rem;
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
-            animation: pulse 2s infinite;
-            transition: 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px #ff0000;
         }
 
-        #alarmBtn:hover {
+        #controlBtn:hover {
             background: #fff;
+            box-shadow: 0 0 30px #fff;
             transform: scale(1.05);
         }
 
-        #alarmBtn:active {
-            background: #cc0000;
-            color: #fff;
-        }
-
-        #alarmBtn:disabled {
+        #controlBtn:disabled {
             background: #333;
-            color: #666;
-            animation: none;
+            color: #555;
+            box-shadow: none;
+            cursor: wait;
         }
 
-        #yt-player {
+        /* Ukryty odtwarzacz YouTube */
+        #yt-audio-element {
             position: absolute;
-            top: -999px;
+            top: -9999px;
+            left: -9999px;
         }
     </style>
 </head>
 <body>
 
-    <div class="alarm-box">
-        <h1>System Ostrzegawczy</h1>
-        <p>UWAGA: TEST SYGNAŁU ALARMOWEGO</p>
-        <button id="alarmBtn" onclick="toggleAlarm()" disabled>Ładowanie sygnału...</button>
+    <div class="alarm-container">
+        <h1>ALARM</h1>
+        <p style="color: #fff; margin-bottom: 30px;">UWAGA! SYGNAŁ OSTRZEGAWCZY</p>
+        <button id="controlBtn" onclick="toggleSiren()" disabled>Ładowanie...</button>
     </div>
 
-    <div id="yt-player"></div>
+    <div id="yt-audio-element"></div>
 
     <script>
         var player;
-        var isPlaying = false;
+        var isSirenPlaying = false;
         
-        // NOWE ID: Syrena alarmowa
-        var videoId = 'erOitvSsc8g';
+        // Twoje nowe ID filmu: L_qp8FOB_pE
+        var videoId = 'L_qp8FOB_pE';
 
+        // Załadowanie API YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('yt-player', {
+            player = new YT.Player('yt-audio-element', {
                 height: '1',
                 width: '1',
                 videoId: videoId,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0
+                },
                 events: {
                     'onReady': onPlayerReady
                 }
@@ -106,25 +114,25 @@
         }
 
         function onPlayerReady(event) {
-            var btn = document.getElementById("alarmBtn");
-            btn.innerHTML = "URUCHOM ALARM ⚠️";
+            var btn = document.getElementById("controlBtn");
+            btn.innerHTML = "WŁĄCZ SYRENĘ ⚠️";
             btn.disabled = false;
         }
 
-        function toggleAlarm() {
-            var btn = document.getElementById("alarmBtn");
-            if (!isPlaying) {
+        function toggleSiren() {
+            var btn = document.getElementById("controlBtn");
+            if (!isSirenPlaying) {
                 player.playVideo();
-                btn.innerHTML = "ZATRZYMAJ ALARM 🛑";
-                btn.style.background = "#cc0000";
-                btn.style.color = "#fff";
-                isPlaying = true;
+                btn.innerHTML = "WYŁĄCZ SYRENĘ 🛑";
+                btn.style.background = "#fff";
+                btn.style.color = "#ff0000";
+                isSirenPlaying = true;
             } else {
                 player.pauseVideo();
-                btn.innerHTML = "URUCHOM ALARM ⚠️";
-                btn.style.background = "#ffcc00";
+                btn.innerHTML = "WŁĄCZ SYRENĘ ⚠️";
+                btn.style.background = "#ff0000";
                 btn.style.color = "#000";
-                isPlaying = false;
+                isSirenPlaying = false;
             }
         }
     </script>
