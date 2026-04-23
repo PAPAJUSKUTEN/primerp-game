@@ -2,25 +2,170 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Logowanie</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Panelu</title>
     <style>
-        body { font-family: sans-serif; background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; }
-        .login-box { background: #16213e; padding: 40px; border-radius: 12px; width: 300px; text-align: center; }
-        input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
-        button { width: 100%; padding: 10px; background: #e94560; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        #error-msg { color: #ff4d4d; display: none; margin-bottom: 10px; font-size: 14px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; height: 100vh; overflow: hidden; }
+
+        /* --- STYL LOGOWANIA --- */
+        #login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            background: #16213e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 320px;
+            text-align: center;
+            color: white;
+        }
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #0f3460;
+            color: white;
+        }
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #e94560;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #error-msg { color: #ff4d4d; font-size: 14px; display: none; margin-bottom: 10px; }
+
+        /* --- STYL PANELU (UKRYTY NA START) --- */
+        #main-panel {
+            display: none; /* Ukryte na początku */
+            height: 100vh;
+            flex-direction: row;
+        }
+
+        nav {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        .nav-header { padding: 25px; background: #1a252f; font-weight: bold; text-align: center; }
+        
+        .menu-item {
+            padding: 15px 25px;
+            color: #bdc3c7;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+            border-left: 5px solid transparent;
+        }
+        .menu-item:hover { background: #34495e; color: white; }
+        .menu-item.active { background: #3e5871; color: white; border-left: 5px solid #e94560; }
+
+        main {
+            flex-grow: 1;
+            background: #ecf0f1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        .tab-content { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .tab-content.active { display: block; }
+        
+        .btn-logout { margin: auto 20px 20px; padding: 10px; background: #e74c3c; border: none; color: white; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
-        <h2>Zaloguj się</h2>
-        <div id="error-msg">Błędny login lub hasło!</div>
-        <input type="text" id="username" placeholder="Login">
-        <input type="password" id="password" placeholder="Hasło">
-        <button onclick="checkLogin()">WEJDŹ</button>
+    <div id="login-container">
+        <div class="login-box">
+            <h2>Zaloguj się</h2>
+            <div id="error-msg">Błędne dane!</div>
+            <input type="text" id="username" placeholder="Login">
+            <input type="password" id="password" placeholder="Hasło">
+            <button onclick="handleLogin()">WEJDŹ</button>
+        </div>
     </div>
 
-    <script src="auth.js"></script>
+    <div id="main-panel">
+        <nav>
+            <div class="nav-header">PANEL SYSTEMU</div>
+            <div class="menu-item active" onclick="switchTab(event, 'home')">🏠 Start</div>
+            <div class="menu-item" onclick="switchTab(event, 'data')">📁 Moje Dane</div>
+            <div class="menu-item" onclick="switchTab(event, 'settings')">⚙️ Ustawienia</div>
+            <button class="btn-logout" onclick="location.reload()">Wyloguj</button>
+        </nav>
+
+        <main>
+            <div id="home" class="tab-content active">
+                <h1>Witaj w systemie!</h1>
+                <p>Udało Ci się zalogować. Logowanie zniknęło, a Ty widzisz panel.</p>
+            </div>
+            <div id="data" class="tab-content">
+                <h1>Dane użytkownika</h1>
+                <p>Tutaj znajdziesz swoje poufne informacje.</p>
+            </div>
+            <div id="settings" class="tab-content">
+                <h1>Ustawienia</h1>
+                <p>Możesz tutaj skonfigurować swój profil.</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Baza 10 użytkowników
+        const users = [
+            { u: "admin", p: "haslo123" },
+            { u: "user1", p: "test01" },
+            { u: "biuro", p: "biuro2026" },
+            { u: "jan", p: "kowalski" },
+            { u: "szef", p: "mocne123" },
+            { u: "serwis", p: "naprawa" },
+            { u: "root", p: "toor" },
+            { u: "gosc", p: "gosc1" },
+            { u: "firma", p: "praca" },
+            { u: "klient", p: "zamowienie" }
+        ];
+
+        // FUNKCJA LOGOWANIA
+        function handleLogin() {
+            const userIn = document.getElementById('username').value;
+            const passIn = document.getElementById('password').value;
+            const error = document.getElementById('error-msg');
+
+            const valid = users.find(u => u.u === userIn && u.p === passIn);
+
+            if (valid) {
+                // Ukrywamy logowanie, pokazujemy panel
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('main-panel').style.display = 'flex';
+            } else {
+                error.style.display = 'block';
+            }
+        }
+
+        // FUNKCJA PRZEŁĄCZANIA ZAKŁADEK
+        function switchTab(e, tabId) {
+            // Ukryj wszystkie treści
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            // Odznacz wszystkie przyciski
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+
+            // Pokaż wybraną treść i zaznacz przycisk
+            document.getElementById(tabId).classList.add('active');
+            e.currentTarget.classList.add('active');
+        }
+    </script>
+
 </body>
 </html>
