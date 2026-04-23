@@ -3,139 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Użytkownika</title>
+    <title>Panel z zakładkami</title>
     <style>
-        body { margin: 0; display: flex; font-family: 'Segoe UI', sans-serif; height: 100vh; background: #f0f2f5; }
+        body { margin: 0; display: flex; font-family: sans-serif; height: 100vh; background: #ecf0f1; }
         
-        /* Panel boczny */
-        nav { 
-            width: 260px; 
-            background: #2c3e50; 
-            color: white; 
-            display: flex; 
-            flex-direction: column; 
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-        }
-
-        .nav-header { padding: 30px 20px; text-align: center; background: #1a252f; font-weight: bold; font-size: 1.2rem; }
-
-        .nav-links { flex-grow: 1; margin-top: 10px; }
-
-        .tab-link {
-            display: block;
+        /* Menu po lewej */
+        nav { width: 250px; background: #2c3e50; color: white; display: flex; flex-direction: column; }
+        .logo { padding: 25px; font-size: 1.5rem; font-weight: bold; background: #1a252f; text-align: center; }
+        
+        .menu-item {
             padding: 15px 25px;
             color: #bdc3c7;
             text-decoration: none;
-            border-left: 4px solid transparent;
             cursor: pointer;
+            border-left: 5px solid transparent;
             transition: 0.3s;
         }
+        .menu-item:hover { background: #34495e; color: white; }
+        .menu-item.active { background: #3e5871; color: white; border-left: 5px solid #e94560; }
 
-        .tab-link:hover { background: #34495e; color: white; }
-
-        .tab-link.active { 
-            background: #3e5871; 
-            color: white; 
-            border-left: 4px solid #3498db; 
-        }
-
-        /* Sekcja treści */
-        main { flex-grow: 1; padding: 40px; overflow-y: auto; }
-
-        .tab-content { display: none; animation: fadeIn 0.4s; }
+        /* Treść po prawej */
+        main { flex-grow: 1; padding: 40px; }
+        .tab-content { display: none; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .tab-content.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-
-        .logout-btn {
-            margin: 20px;
-            padding: 10px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+        
+        .btn-wyloguj { margin: auto 20px 20px; padding: 10px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
 
+    <script>
+        // Jeśli ktoś wejdzie bez logowania - cofnij do index.html
+        if (sessionStorage.getItem("zalogowany") !== "tak") {
+            window.location.href = "index.html";
+        }
+    </script>
+
     <nav>
-        <div class="nav-header">PANEL STEROWANIA</div>
-        <div class="nav-links">
-            <div class="tab-link active" onclick="openTab(event, 'pulpit')">🏠 Pulpit</div>
-            <div class="tab-link" onclick="openTab(event, 'uzytkownicy')">👥 Użytkownicy</div>
-            <div class="tab-link" onclick="openTab(event, 'raporty')">📊 Raporty</div>
-            <div class="tab-link" onclick="openTab(event, 'ustawienia')">⚙️ Ustawienia</div>
-        </div>
-        <button class="logout-btn" onclick="logout()">Wyloguj się</button>
+        <div class="logo">MOJA STRONA</div>
+        <div class="menu-item active" onclick="pokazTab(event, 'home')">🏠 Strona Główna</div>
+        <div class="menu-item" onclick="pokazTab(event, 'dane')">📁 Moje Dane</div>
+        <div class="menu-item" onclick="pokazTab(event, 'ustawienia')">⚙️ Ustawienia</div>
+        <div class="menu-item" onclick="pokazTab(event, 'pomoc')">❓ Pomoc</div>
+        <button class="btn-wyloguj" onclick="sessionStorage.clear(); window.location.href='index.html';">Wyloguj</button>
     </nav>
 
     <main>
-        <div id="pulpit" class="tab-content active">
-            <div class="card">
-                <h1>Witaj w systemie!</h1>
-                <p>To jest Twój główny pulpit menedżerski.</p>
-            </div>
+        <div id="home" class="tab-content active">
+            <h1>Witamy w panelu</h1>
+            <p>To jest pierwsza zakładka. Wybierz inne opcje z menu po lewej.</p>
         </div>
 
-        <div id="uzytkownicy" class="tab-content">
-            <div class="card">
-                <h1>Zarządzanie użytkownikami</h1>
-                <p>Tutaj możesz dodawać i usuwać osoby z dostępem do systemu.</p>
-            </div>
-        </div>
-
-        <div id="raporty" class="tab-content">
-            <div class="card">
-                <h1>Raporty i statystyki</h1>
-                <p>Dane z ostatniego miesiąca są gotowe do pobrania.</p>
-            </div>
+        <div id="dane" class="tab-content">
+            <h1>Twoje Dane</h1>
+            <p>Tutaj mogą znajdować się tabele lub pliki do pobrania.</p>
         </div>
 
         <div id="ustawienia" class="tab-content">
-            <div class="card">
-                <h1>Ustawienia konta</h1>
-                <p>Zmień hasło lub dostosuj kolory interfejsu.</p>
-            </div>
+            <h1>Ustawienia konta</h1>
+            <p>Zmień swój profil, kolorystykę i powiadomienia.</p>
+        </div>
+
+        <div id="pomoc" class="tab-content">
+            <h1>Pomoc</h1>
+            <p>Potrzebujesz wsparcia? Skontaktuj się z administratorem.</p>
         </div>
     </main>
 
     <script>
-        // Funkcja przełączania zakładek
-        function openTab(evt, tabName) {
-            // Ukryj wszystkie treści zakładek
-            const contents = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < contents.length; i++) {
-                contents[i].classList.remove("active");
-            }
+        function pokazTab(e, idTabu) {
+            // Ukryj wszystkie treści
+            let treści = document.querySelectorAll('.tab-content');
+            treści.forEach(t => t.classList.remove('active'));
 
-            // Usuń klasę 'active' ze wszystkich przycisków
-            const links = document.getElementsByClassName("tab-link");
-            for (let i = 0; i < links.length; i++) {
-                links[i].classList.remove("active");
-            }
+            // Usuń kolor z przycisków
+            let przyciski = document.querySelectorAll('.menu-item');
+            przyciski.forEach(p => p.classList.remove('active'));
 
-            // Pokaż wybraną zakładkę i dodaj klasę 'active' przyciskowi
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-        }
-
-        // Funkcja wylogowania
-        function logout() {
-            sessionStorage.removeItem("isLogged");
-            window.location.href = "index.html";
-        }
-
-        // Proste zabezpieczenie wejścia
-        if (sessionStorage.getItem("isLogged") !== "true") {
-            window.location.href = "index.html";
+            // Pokaż wybraną treść i zaznacz przycisk
+            document.getElementById(idTabu).classList.add('active');
+            e.currentTarget.classList.add('active');
         }
     </script>
+
 </body>
 </html>
