@@ -3,22 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProGamers Hub - Elite Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Strona z zakładkami po lewej</title>
     <style>
-        :root {
-            --primary: #00ff88;
-            --secondary: #ff00ff;
-            --accent: #00d4ff;
-            --bg-dark: #0d1117;
-            --bg-card: rgba(20, 25, 35, 0.8);
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(0, 255, 136, 0.2);
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -26,607 +12,121 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
+            font-family: Arial, sans-serif;
         }
 
-        /* Sidebar */
+        /* Nawigacja boczna */
         .sidebar {
-            width: 280px;
-            background: linear-gradient(180deg, rgba(13,17,23,0.95) 0%, rgba(20,25,35,0.95) 100%);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border);
-            padding: 2rem 0;
-            position: fixed;
+            width: 250px;
             height: 100vh;
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-
-        .logo {
-            padding: 0 2rem 3rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 2rem;
-        }
-
-        .logo h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.8rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-        }
-
-        .nav-menu {
-            list-style: none;
-            padding: 0 1rem;
-        }
-
-        .nav-item {
-            margin-bottom: 0.5rem;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background: var(--glass);
-            color: var(--text-primary);
-            border: 1px solid var(--primary);
-            transform: translateX(5px);
-        }
-
-        .nav-link i {
-            font-size: 1.2rem;
-            width: 20px;
-        }
-
-        .nav-link.active::before {
-            content: '';
-            position: absolute;
+            background-color: #2c3e50;
+            position: fixed;
+            top: 0;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-left: 280px;
-            flex: 1;
-            padding: 2rem;
             overflow-y: auto;
-            height: 100vh;
+            transition: width 0.3s;
         }
 
-        /* Top Bar */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
+        .sidebar a {
+            display: block;
+            color: #ecf0f1;
+            padding: 20px 25px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
 
-        .header-title {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #3498db;
         }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 1.5rem;
-            background: var(--glass);
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s;
+        /* Treść główna */
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+            min-height: 100vh;
         }
 
-        .user-profile:hover {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: #000;
-            font-size: 1rem;
-        }
-
-        /* Dashboard Cards */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.15);
-            border-color: var(--primary);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .card-icon {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Table */
-        .table-card {
-            grid-column: 1 / -1;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        .table th,
-        .table td {
-            padding: 1rem 0.5rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .table th {
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
-
-        .table td {
-            color: var(--text-primary);
-        }
-
-        .status {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .status.live {
-            background: rgba(0, 255, 0, 0.2);
-            color: #00ff00;
-        }
-
-        .status.upcoming {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-        }
-
-        /* Tournament Card */
-        .tournament-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: rgba(0, 255, 136, 0.05);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary);
-        }
-
-        .tournament-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #000;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .main-content {
-                margin-left: 0;
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 1rem;
-            }
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Overlay for mobile */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 99;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu-toggle {
+        .tab-content {
             display: none;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
         }
 
-        @media (max-width: 1024px) {
-            .mobile-menu-toggle {
-                display: block;
-                background: none;
-                border: none;
-                font-size: 1.5rem;
-                color: var(--text-primary);
-                cursor: pointer;
-                padding: 0.5rem;
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsywność */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .content {
+                margin-left: 0;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Overlay -->
-    <div class="overlay" id="overlay"></div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <div class="logo">
-            <h2>ProGamers <span>Hub</span></h2>
-        </div>
-        <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" data-tab="dashboard">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" data-tab="tournaments">
-                    <i class="fas fa-trophy"></i>
-                    <span>Turnieje</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" data-tab="players">
-                    <i class="fas fa-users"></i>
-                    <span>Gracze</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" data-tab="stats">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Statystyki</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" data-tab="profile">
-                    <i class="fas fa-user"></i>
-                    <span>Profil</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" data-tab="team">
-                    <i class="fas fa-users-cog"></i>
-                    <span>Zespół</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link" data-tab="settings">
-                    <i class="fas fa-cog"></i>
-                    <span>Ustawienia</span>
-            </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link login-btn" style="margin-top: 2rem; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: #000; font-weight: 600;">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>Zaloguj</span>
-                </a>
-            </li>
-        </ul>
-    </aside>
+    <!-- Zakładki po lewej -->
+    <div class="sidebar">
+        <a href="#home" class="active" onclick="openTab(event, 'home')">Strona główna</a>
+        <a href="#news" onclick="openTab(event, 'news')">Wiadomości</a>
+        <a href="#contact" onclick="openTab(event, 'contact')">Kontakt</a>
+        <a href="#about" onclick="openTab(event, 'about')">O nas</a>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="top-bar">
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <button class="mobile-menu-toggle" id="mobileToggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <h1 class="header-title" id="pageTitle">Dashboard</h1>
-            </div>
-            <div class="user-profile">
-                <div class="user-avatar">PG</div>
-                <span>ProGamerX</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
+    <!-- Treść strony -->
+    <div class="content">
+        <h1>Strona z boczną nawigacją</h1>
+        
+        <div id="home" class="tab-content active">
+            <h2>Strona główna</h2>
+            <p>To jest zawartość zakładki "Strona główna". Sidebar jest stały po lewej i responsywny.</p>
         </div>
-
-        <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content active">
-            <div class="dashboard-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Aktywne Turnieje</h3>
-                        <i class="fas fa-trophy card-icon"></i>
-                    </div>
-                    <div class="stat-number">3</div>
-                    <p style="color: var(--text-secondary);">W trakcie</p>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Pula Nagród</h3>
-                        <i class="fas fa-coins card-icon"></i>
-                    </div>
-                    <div class="stat-number">$12,450</div>
-                    <p style="color: var(--text-secondary);">Dziś</p>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Ranking</h3>
-                        <i class="fas fa-medal card-icon"></i>
-                    </div>
-                    <div class="stat-number">#47</div>
-                    <p style="color: var(--text-secondary);">Globalny</p>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Win Rate</h3>
-                        <i class="fas fa-chart-line card-icon"></i>
-                    </div>
-                    <div class="stat-number">78%</div>
-                    <p style="color: var(--text-secondary);">Ostatni miesiąc</p>
-                </div>
-            </div>
-            
-            <div class="table-card card">
-                <div class="card-header">
-                    <h3 class="card-title">Nadchodzące Turnieje</h3>
-                    <i class="fas fa-list card-icon"></i>
-                </div>
-                <div class="tournament-item">
-                    <div class="tournament-icon">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <div>
-                        <h4>CS2 Elite League</h4>
-                        <p>Pula: $50,000 | Start: 15.05 | Zapisz się</p>
-                    </div>
-                </div>
-                <div class="tournament-item">
-                    <div class="tournament-icon">
-                        <i class="fas fa-gamepad"></i>
-                    </div>
-                    <div>
-                        <h4>Valorant Pro Cup</h4>
-                        <p>Pula: $25,000 | Start: 18.05 | 12 slotów</p>
-                    </div>
-                </div>
-            </div>
+        
+        <div id="news" class="tab-content">
+            <h2>Wiadomości</h2>
+            <p>Tutaj możesz dodać aktualności lub inne treści.</p>
         </div>
-
-        <!-- Tournaments Tab -->
-        <div id="tournaments" class="tab-content">
-            <h2 style="margin-bottom: 2rem;">Lista Turniejów</h2>
-            <div class="dashboard-grid">
-                <div class="card" style="grid-column: 1 / -1;">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Turniej</th>
-                                <th>Status</th>
-                                <th>Pula</th>
-                                <th>Data</th>
-                                <th>Akcje</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>CS2 Global Championship</td>
-                                <td><span class="status live">Live</span></td>
-                                <td>$1,000,000</td>
-                                <td>Teraz</td>
-                                <td><button style="background: var(--primary); color: #000; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Dołącz</button></td>
-                            </tr>
-                            <tr>
-                                <td>LoL Pro Series</td>
-                                <td><span class="status upcoming">Nadchodzące</span></td>
-                                <td>$500,000</td>
-                                <td>01.06</td>
-                                <td><button style="background: var(--accent); color: #000; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Zapisz</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        
+        <div id="contact" class="tab-content">
+            <h2>Kontakt</h2>
+            <p>Formularz kontaktowy: email@example.com</p>
         </div>
-
-        <!-- Players Tab -->
-        <div id="players" class="tab-content">
-            <h2 style="margin-bottom: 2rem;">Top Gracze</h2>
-            <div class="dashboard-grid">
-                <!-- Player cards here -->
-                <div class="card">
-                    <h3>s1mple - CS2</h3>
-                    <p>Win Rate: 85% | Earnings: $2.1M</p>
-                </div>
-            </div>
+        
+        <div id="about" class="tab-content">
+            <h2>O nas</h2>
+            <p>Opis firmy lub projektu.</p>
         </div>
-
-        <!-- Other tabs content would go here -->
-        <div id="stats" class="tab-content" style="display: none;">
-            <h2>Statystyki</h2>
-            <p>Tutaj wykresy i zaawansowane statystyki...</p>
-        </div>
-
-        <div id="profile" class="tab-content" style="display: none;">
-            <h2>Twój Profil</h2>
-            <p>Edytuj profil gracza...</p>
-        </div>
-
-        <div id="team" class="tab-content" style="display: none;">
-            <h2>Zespół</h2>
-            <p>Zarządzaj zespołem...</p>
-        </div>
-
-        <div id="settings" class="tab-content" style="display: none;">
-            <h2>Ustawienia</h2>
-            <p>Konto i preferencje...</p>
-        </div>
-    </main>
+    </div>
 
     <script>
-        // Tab switching
-        const navLinks = document.querySelectorAll('.nav-link[data-tab]');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const pageTitle = document.getElementById('pageTitle');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Remove active class from all nav links and tabs
-                navLinks.forEach(l => l.classList.remove('active'));
-                tabContents.forEach(t => t.classList.remove('active'));
-                
-                // Add active to clicked link
-                link.classList.add('active');
-                
-                // Show corresponding tab
-                const tabId = link.dataset.tab;
-                document.getElementById(tabId).classList.add('active');
-                
-                // Update page title
-                pageTitle.textContent = link.querySelector('span').textContent;
-            });
-        });
-
-        // Login button
-        document.querySelector('.login-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Modal logowania... (zintegrowane z Auth0/Firebase)');
-        });
-
-        // Mobile menu
-        const mobileToggle = document.getElementById('mobileToggle');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-
-        mobileToggle?.addEventListener('click', () => {
-            sidebar.classList.add('open');
-            overlay.classList.add('active');
-        });
-
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('open');
-            overlay.classList.remove('active');
-        });
-
-        // Tab content visibility
-        function initTabs() {
-            tabContents.forEach((tab, index) => {
-                if (index !== 0) tab.style.display = 'none';
-            });
+        function openTab(evt, tabName) {
+            // Ukryj wszystkie tab-content
+            var tabcontents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabcontents.length; i++) {
+                tabcontents[i].classList.remove("active");
+            }
+            
+            // Usuń active z wszystkich linków
+            var tablinks = document.getElementsByClassName("sidebar")[0].getElementsByTagName("a");
+            for (var i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            // Pokaż wybraną treść i dodaj active do linku
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
         }
-
-        // Set first tab active
-        document.getElementById('dashboard').classList.add('active');
-        initTabs();
-
-        // Smooth scroll for main content
-        document.querySelector('.main-content').addEventListener('scroll', () => {
-            // Add scroll effects if needed
-        });
     </script>
+
 </body>
 </html>
