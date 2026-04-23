@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Użytkownika</title>
+    <style>
+        body { margin: 0; display: flex; font-family: 'Segoe UI', sans-serif; height: 100vh; background: #f0f2f5; }
+        
+        /* Panel boczny */
+        nav { 
+            width: 260px; 
+            background: #2c3e50; 
+            color: white; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
 
+        .nav-header { padding: 30px 20px; text-align: center; background: #1a252f; font-weight: bold; font-size: 1.2rem; }
+
+        .nav-links { flex-grow: 1; margin-top: 10px; }
+
+        .tab-link {
+            display: block;
+            padding: 15px 25px;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-link:hover { background: #34495e; color: white; }
+
+        .tab-link.active { 
+            background: #3e5871; 
+            color: white; 
+            border-left: 4px solid #3498db; 
+        }
+
+        /* Sekcja treści */
+        main { flex-grow: 1; padding: 40px; overflow-y: auto; }
+
+        .tab-content { display: none; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        .logout-btn {
+            margin: 20px;
+            padding: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-header">PANEL STEROWANIA</div>
+        <div class="nav-links">
+            <div class="tab-link active" onclick="openTab(event, 'pulpit')">🏠 Pulpit</div>
+            <div class="tab-link" onclick="openTab(event, 'uzytkownicy')">👥 Użytkownicy</div>
+            <div class="tab-link" onclick="openTab(event, 'raporty')">📊 Raporty</div>
+            <div class="tab-link" onclick="openTab(event, 'ustawienia')">⚙️ Ustawienia</div>
+        </div>
+        <button class="logout-btn" onclick="logout()">Wyloguj się</button>
+    </nav>
+
+    <main>
+        <div id="pulpit" class="tab-content active">
+            <div class="card">
+                <h1>Witaj w systemie!</h1>
+                <p>To jest Twój główny pulpit menedżerski.</p>
+            </div>
+        </div>
+
+        <div id="uzytkownicy" class="tab-content">
+            <div class="card">
+                <h1>Zarządzanie użytkownikami</h1>
+                <p>Tutaj możesz dodawać i usuwać osoby z dostępem do systemu.</p>
+            </div>
+        </div>
+
+        <div id="raporty" class="tab-content">
+            <div class="card">
+                <h1>Raporty i statystyki</h1>
+                <p>Dane z ostatniego miesiąca są gotowe do pobrania.</p>
+            </div>
+        </div>
+
+        <div id="ustawienia" class="tab-content">
+            <div class="card">
+                <h1>Ustawienia konta</h1>
+                <p>Zmień hasło lub dostosuj kolory interfejsu.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Funkcja przełączania zakładek
+        function openTab(evt, tabName) {
+            // Ukryj wszystkie treści zakładek
+            const contents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].classList.remove("active");
+            }
+
+            // Usuń klasę 'active' ze wszystkich przycisków
+            const links = document.getElementsByClassName("tab-link");
+            for (let i = 0; i < links.length; i++) {
+                links[i].classList.remove("active");
+            }
+
+            // Pokaż wybraną zakładkę i dodaj klasę 'active' przyciskowi
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Funkcja wylogowania
+        function logout() {
+            sessionStorage.removeItem("isLogged");
+            window.location.href = "index.html";
+        }
+
+        // Proste zabezpieczenie wejścia
+        if (sessionStorage.getItem("isLogged") !== "true") {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
