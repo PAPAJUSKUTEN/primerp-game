@@ -3,8 +3,7 @@ const title = document.getElementById('title');
 const desc = document.getElementById('desc');
 const extra = document.getElementById('extra');
 const loginForm = document.getElementById('loginForm');
-const guestView = document.getElementById('guestView');
-const profileView = document.getElementById('profileView');
+const profileScreen = document.getElementById('profileScreen');
 const profileName = document.getElementById('profileName');
 const logoutBtn = document.getElementById('logoutBtn');
 
@@ -13,14 +12,14 @@ const accounts = [
   { user: 'test2', pass: 'test2' }
 ];
 
-function showGuest() {
-  guestView.style.display = 'block';
-  profileView.classList.remove('active');
+function showApp() {
+  document.getElementById('app').style.display = 'block';
+  profileScreen.classList.remove('active');
 }
 
 function showProfile(username) {
-  guestView.style.display = 'none';
-  profileView.classList.add('active');
+  document.getElementById('app').style.display = 'none';
+  profileScreen.classList.add('active');
   profileName.textContent = username;
 }
 
@@ -37,7 +36,6 @@ tabs.forEach(tab => {
       loginForm.classList.add('active');
     } else {
       loginForm.classList.remove('active');
-      if (!localStorage.getItem('currentUser')) showGuest();
     }
   });
 });
@@ -60,7 +58,7 @@ loginForm.addEventListener('submit', (e) => {
 
 logoutBtn.addEventListener('click', () => {
   localStorage.removeItem('currentUser');
-  showGuest();
+  showApp();
 });
 
 window.addEventListener('DOMContentLoaded', () => {
