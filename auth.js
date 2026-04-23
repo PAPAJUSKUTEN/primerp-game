@@ -1,15 +1,15 @@
-// Baza użytkowników dostępna dla skryptu
+// Lista 10 użytkowników (login i hasło)
 const users = [
     { u: "admin", p: "haslo123" },
     { u: "user1", p: "test01" },
-    { u: "biuro", p: "biuro2024" },
-    { u: "jan", p: "kowalski99" },
-    { u: "projekt", p: "tajne123" },
-    { u: "klient", p: "zapraszam" },
-    { u: "manager", p: "boss1" },
+    { u: "biuro", p: "biuro2026" },
+    { u: "jan", p: "kowalski" },
+    { u: "szef", p: "mocne123" },
     { u: "serwis", p: "naprawa" },
-    { u: "gosc", p: "gosc2024" },
-    { u: "root", p: "toor" }
+    { u: "root", p: "toor" },
+    { u: "gosc", p: "gosc1" },
+    { u: "firma", p: "praca" },
+    { u: "klient", p: "zamowienie" }
 ];
 
 function checkLogin() {
@@ -17,14 +17,14 @@ function checkLogin() {
     const passIn = document.getElementById('password').value;
     const error = document.getElementById('error-msg');
 
-    // Szukanie użytkownika w tablicy
-    const userFound = users.find(user => user.u === userIn && user.p === passIn);
+    // Szukamy pasującego konta
+    const validUser = users.find(user => user.u === userIn && user.p === passIn);
 
-    if (userFound) {
-        // Jeśli dane są poprawne, przenosi do strony z zakładkami
-        window.location.href = "strona_z_zakladkami.html";
+    if (validUser) {
+        // Zapisujemy w sesji, że jesteśmy zalogowani
+        sessionStorage.setItem("zalogowany", "tak");
+        window.location.href = "strona.html";
     } else {
-        // Jeśli błędne, pokazuje komunikat
         error.style.display = "block";
     }
 }
