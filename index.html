@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona z zakładkami po lewej</title>
+    <title>Roblox-style Sidebar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,52 +13,121 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e5e7eb;
+            overflow-x: hidden;
         }
 
-        /* Nawigacja boczna */
+        /* Roblox-style sidebar */
         .sidebar {
-            width: 250px;
+            width: 280px;
             height: 100vh;
-            background-color: #2c3e50;
+            background: linear-gradient(180deg, #0f1419 0%, #1a1f2b 100%);
             position: fixed;
             top: 0;
             left: 0;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+            border-right: 2px solid #333;
             overflow-y: auto;
-            transition: width 0.3s;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #1a1f2b;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #4a5568;
+            border-radius: 4px;
         }
 
         .sidebar a {
-            display: block;
-            color: #ecf0f1;
-            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            color: #d1d5db;
+            padding: 18px 25px;
             text-decoration: none;
             font-size: 16px;
-            transition: background-color 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            position: relative;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+            width: 20px;
+            font-size: 18px;
         }
 
         .sidebar a:hover,
         .sidebar a.active {
-            background-color: #3498db;
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            color: white;
+            border-left-color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        .sidebar a.active::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 30px;
+            background: #00d4ff;
+            border-radius: 0 2px 2px 0;
         }
 
         /* Treść główna */
         .content {
-            margin-left: 250px;
-            padding: 20px;
+            margin-left: 280px;
+            padding: 30px;
             min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(15, 20, 25, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+            backdrop-filter: blur(10px);
         }
 
         .tab-content {
             display: none;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            margin-top: 20px;
+            padding: 30px;
+            background: rgba(26, 31, 43, 0.6);
+            border-radius: 12px;
+            border: 1px solid #444;
+            backdrop-filter: blur(20px);
+            animation: fadeIn 0.5s ease;
         }
 
         .tab-content.active {
             display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1, h2 {
+            color: #f8fafc;
+            margin-bottom: 15px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
         }
 
         /* Responsywność */
@@ -66,6 +136,10 @@
                 width: 100%;
                 height: auto;
                 position: relative;
+                flex-direction: column;
+            }
+            .sidebar a {
+                justify-content: center;
             }
             .content {
                 margin-left: 0;
@@ -75,54 +149,66 @@
 </head>
 <body>
 
-    <!-- Zakładki po lewej -->
+    <!-- Roblox-style sidebar -->
     <div class="sidebar">
-        <a href="#home" class="active" onclick="openTab(event, 'home')">Strona główna</a>
-        <a href="#news" onclick="openTab(event, 'news')">Wiadomości</a>
-        <a href="#contact" onclick="openTab(event, 'contact')">Kontakt</a>
-        <a href="#about" onclick="openTab(event, 'about')">O nas</a>
+        <a href="#home" class="active" onclick="openTab(event, 'home')">
+            <i class="fas fa-home"></i>
+            Strona Główna
+        </a>
+        <a href="#news" onclick="openTab(event, 'news')">
+            <i class="fas fa-newspaper"></i>
+            Gry & News
+        </a>
+        <a href="#contact" onclick="openTab(event, 'contact')">
+            <i class="fas fa-users"></i>
+            Przyjaciele
+        </a>
+        <a href="#about" onclick="openTab(event, 'about')">
+            <i class="fas fa-cog"></i>
+            Ustawienia
+        </a>
     </div>
 
     <!-- Treść strony -->
     <div class="content">
-        <h1>Strona z boczną nawigacją</h1>
+        <div class="header">
+            <h1><i class="fas fa-gamepad"></i> Roblox Dashboard</h1>
+            <p>Witaj w symulowanym panelu Roblox z boczną nawigacją!</p>
+        </div>
         
         <div id="home" class="tab-content active">
-            <h2>Strona główna</h2>
-            <p>To jest zawartość zakładki "Strona główna". Sidebar jest stały po lewej i responsywny.</p>
+            <h2><i class="fas fa-home"></i> Strona Główna</h2>
+            <p>Odkryj popularne gry Roblox. Sidebar w stylu dark theme z gradientami i animacjami.</p>
         </div>
         
         <div id="news" class="tab-content">
-            <h2>Wiadomości</h2>
-            <p>Tutaj możesz dodać aktualności lub inne treści.</p>
+            <h2><i class="fas fa-newspaper"></i> Gry & News</h2>
+            <p>Najnowsze aktualizacje Roblox: nowe eventy, gry i Robux promocje.</p>
         </div>
         
         <div id="contact" class="tab-content">
-            <h2>Kontakt</h2>
-            <p>Formularz kontaktowy: email@example.com</p>
+            <h2><i class="fas fa-users"></i> Przyjaciele</h2>
+            <p>Lista znajomych online. Zapraszaj do gry!</p>
         </div>
         
         <div id="about" class="tab-content">
-            <h2>O nas</h2>
-            <p>Opis firmy lub projektu.</p>
+            <h2><i class="fas fa-cog"></i> Ustawienia</h2>
+            <p>Dostosuj theme, powiadomienia i konto Roblox.</p>
         </div>
     </div>
 
     <script>
         function openTab(evt, tabName) {
-            // Ukryj wszystkie tab-content
             var tabcontents = document.getElementsByClassName("tab-content");
             for (var i = 0; i < tabcontents.length; i++) {
                 tabcontents[i].classList.remove("active");
             }
             
-            // Usuń active z wszystkich linków
-            var tablinks = document.getElementsByClassName("sidebar")[0].getElementsByTagName("a");
+            var tablinks = document.querySelectorAll(".sidebar a");
             for (var i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active");
             }
             
-            // Pokaż wybraną treść i dodaj active do linku
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
