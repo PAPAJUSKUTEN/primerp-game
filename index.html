@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel z logowaniem</title>
+  <title>Panel z profilem</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -41,18 +41,29 @@
     <main class="main">
       <div class="content-wrap">
         <div class="card">
-          <h1 id="title">O nas / Nowości</h1>
-          <p id="desc">Tutaj możesz dać opis serwera, aktualności i najważniejsze informacje.</p>
+          <div id="guestView">
+            <h1 id="title">O nas / Nowości</h1>
+            <p id="desc">Tutaj możesz dać opis serwera, aktualności i najważniejsze informacje.</p>
+            <div id="extra" class="section-box">Tu pojawia się treść wybranej zakładki.</div>
 
-          <div id="extra" class="section-box">Tu pojawia się treść wybranej zakładki.</div>
+            <form id="loginForm" class="login-form">
+              <input id="loginUser" type="text" placeholder="Login" autocomplete="off" />
+              <input id="loginPass" type="password" placeholder="Hasło" />
+              <button type="submit">Zaloguj</button>
+            </form>
+          </div>
 
-          <div id="status" class="status"></div>
-
-          <form id="loginForm" class="login-form">
-            <input id="loginUser" type="text" placeholder="Login" autocomplete="off" />
-            <input id="loginPass" type="password" placeholder="Hasło" />
-            <button type="submit">Zaloguj</button>
-          </form>
+          <div id="profileView" class="profile-view">
+            <h1>Profil użytkownika</h1>
+            <div class="profile-card">
+              <div class="avatar">👤</div>
+              <div>
+                <h2 id="profileName">test1</h2>
+                <p id="profileInfo">Zalogowany użytkownik</p>
+              </div>
+            </div>
+            <button id="logoutBtn" class="logout-btn">Wyloguj</button>
+          </div>
         </div>
       </div>
     </main>
