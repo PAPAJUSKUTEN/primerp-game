@@ -6,7 +6,7 @@
   <title>PrimeRP – Panel</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  //fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -51,7 +51,7 @@
       }
     }
 
-    /* ✅ Zamrożony sidebar z zakładkami (nie przesuwa się przy scrollu) */
+    /* ✅ Zamrożony sidebar z zakładkami (nie przesuwa się przy scrollu i zmianie zakładek) */
     .sidebar {
       width: 270px;
       background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.08), transparent 60%), #000000;
@@ -271,6 +271,15 @@
       transform: translateY(-1px);
     }
 
+    /* ✅ Mały przycisk w karcie produkcyjnej – potrzebny w Rynku */
+    .btn.market-card-btn {
+      padding: 0.5rem 0.9rem;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 16px rgba(255, 165, 0, 0.45);
+      text-decoration: none;
+    }
+
     footer {
       text-align: center;
       padding: 1.4rem 0 1.2rem 0;
@@ -284,6 +293,70 @@
     }
     footer a:hover {
       text-decoration: underline;
+    }
+
+    /* ✅ Siatka kart „Rynek” – zawsze w rzędach, obok siebie, nie tylko „pod siebie” */
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.6rem;
+      margin-top: 1rem;
+      width: 100%;
+    }
+    @media (max-width: 992px) {
+      .market-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1.2rem;
+      }
+    }
+    @media (max-width: 768px) {
+      .market-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+    }
+    @media (max-width: 576px) {
+      .market-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    .market-card {
+      background: rgba(8, 8, 8, 0.92);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 165, 0, 0.16);
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: var(--transition);
+    }
+    .market-card:hover {
+      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.5);
+    }
+    .market-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      filter: brightness(0.9);
+    }
+    .market-card-body {
+      padding: 1rem 1.2rem;
+    }
+    .market-card-title {
+      color: #ffaa33;
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .market-card-desc {
+      color: #c0c0c0;
+      margin-bottom: 0.6rem;
+      font-size: 0.94rem;
+    }
+    .market-card-price {
+      color: #ffa500;
+      font-size: 0.94rem;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -323,7 +396,7 @@
         Dodano nowe prace, ulepszenia systemu policji, medycyny oraz rozbudowano system firm i nieruchomości.
       </p>
       <p>
-        Pełne szczegóły znajdziesz na kanale <code>#aktualizacje</code> i <code>#news</code> na Discordzie.
+        Pełne szczegóły znajdziesz na kanale de>#aktualizacje</code> i de>#news</code> na Discordzie.
       </p>
       <a href="https://discord.gg/primerppl" class="btn" target="_blank">Sprawdź na Discordzie</a>
     </div>
@@ -339,11 +412,19 @@
         ubogatej w historie i relacje rozgrywki.
       </p>
       <ul>
-        <li>Stabilna, rozwijana przez lata baza pod RP.</li>
-        <li>Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
-        <li>Profesjonalny zespół administracyjny i support na Discordzie.</li>
+        >Stabilna, rozwijana przez lata baza pod RP.</li>
+        >Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
+        >Profesjonalny zespół administracyjny i support na Discordzie.</li>
       </ul>
     </div>
+
+    <!-- ✅ Rynek – karty w siatce obok siebie (z przyciskiem „Kup” w każdej) -->
+    <div id="market" class="tab-content">
+      <h2>🛒 Rynek</h2>
+      <p class="subtitle">
+        Oferty sprzedanych / kupowanych przedmiotów na serwerze PrimeRP.
+      </p>
+      <div class="market-grid">
             <!-- Rynek – 10 kart – Część 1 -->
         <div id="market" class="tab-content">
           <h2>🛒 Rynek</h2>
