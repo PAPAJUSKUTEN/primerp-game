@@ -6,39 +6,27 @@
   <title>PrimeRP – Panel</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --bg: #000000;
       --bg-card: #080808;
-      --bg-card-alt: rgba(8, 8, 8, 0.95);
-      --border: rgba(255, 165, 0, 0.12);
-
+      --bg-card-alt: rgba(8,8,8,0.95);
+      --border: rgba(255,165,0,0.12);
       --text: #f0f0f0;
       --text-muted: #c0c0c0;
       --text-primary: #ffa500;
-
       --accent: #ff8c00;
       --accent-light: #ffaa33;
       --accent-hover: #ffca66;
-
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
-      --shadow-card: 0 12px 48px rgba(0, 0, 0, 0.5);
-
+      --shadow: 0 8px 32px rgba(0,0,0,0.55);
+      --shadow-card: 0 12px 48px rgba(0,0,0,0.5);
       --border-radius: 16px;
       --border-radius-sm: 10px;
-      --transition: 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+      --transition: 0.4s cubic-bezier(0.2,0,0.2,1);
     }
-
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Inter", sans-serif; }
     body {
       background: linear-gradient(130deg, #000000 0%, #080808 100%);
       color: var(--text);
@@ -46,11 +34,11 @@
       display: flex;
     }
 
-    /* Sidebar – czarny, z pomarańczowym akcentem */
+    /* Sidebar – czarny, pomarańczowy */
     .sidebar {
       width: 270px;
-      background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.08), transparent 60%), #000000;
-      border-right: 1px solid rgba(255, 165, 0, 0.24);
+      background: radial-gradient(circle at top left, rgba(255,165,0,0.08), transparent 60%), #000000;
+      border-right: 1px solid rgba(255,165,0,0.24);
       box-shadow: var(--shadow);
       padding: 2rem 0 1.6rem 0;
       position: sticky;
@@ -58,7 +46,6 @@
       bottom: 0;
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
     }
     .sidebar-header {
       padding: 0 1.6rem;
@@ -68,14 +55,12 @@
       font-size: 1.3rem;
       color: var(--text-primary);
       font-weight: 700;
-      letter-spacing: -0.02em;
     }
     .sidebar-header .subtitle {
       font-size: 0.86rem;
       color: #b0b0b0;
       margin-top: 0.1rem;
     }
-
     .sidebar a {
       display: flex;
       align-items: center;
@@ -84,13 +69,12 @@
       margin: 0 0.8rem 0.2rem 0.8rem;
       text-decoration: none;
       color: var(--text-muted);
-      border-radius: var(--border-radius-sm);
+      border-radius: 10px;
       border: 1px solid transparent;
-      transition: var(--transition);
+      transition: 0.4s cubic-bezier(0.2,0,0.2,1);
       font-weight: 500;
       position: relative;
     }
-    .sidebar a::after,
     .sidebar a::before {
       content: "";
       position: absolute;
@@ -98,50 +82,45 @@
       top: 0;
       bottom: 0;
       width: 4px;
-      background: var(--accent);
-      border-radius: inherit;
+      background: linear-gradient(180deg, #ff8c00, #ffaa33);
+      border-radius: 10px;
       opacity: 0;
-      transition: var(--transition);
+      transition: 0.4s cubic-bezier(0.2,0,0.2,1);
       z-index: -1;
     }
-    .sidebar a::before {
-      background: linear-gradient(180deg, var(--accent), var(--accent-light));
-    }
-
     .sidebar a:hover {
-      background: rgba(255, 165, 0, 0.12);
-      border: 1px solid rgba(255, 165, 0, 0.32);
+      background: rgba(255,165,0,0.12);
+      border: 1px solid rgba(255,165,0,0.32);
       color: var(--text);
     }
-    .sidebar a:hover::after {
-      opacity: 0.6;
+    .sidebar a:hover::before {
+      opacity: 0.5;
     }
     .sidebar a.active {
-      background: rgba(255, 165, 0, 0.24);
-      border: 1px solid rgba(255, 165, 0, 0.48);
+      background: rgba(255,165,0,0.24);
+      border: 1px solid rgba(255,165,0,0.48);
       color: var(--text-primary);
       font-weight: 600;
     }
-    .sidebar a.active::after {
+    .sidebar a.active::before {
       opacity: 1;
     }
 
-    /* Główna treść */
+    /* Treść – karty */
     .content {
       flex: 1;
       padding: 2rem 2.4rem 2.2rem 2.4rem;
     }
-
     .tab-content {
       display: none;
       opacity: 0;
       transform: translateY(12px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      transition: 0.4s ease;
       padding: 2rem 2.2rem;
-      background: var(--bg-card-alt);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-card);
-      border: 1px solid var(--border);
+      background: rgba(8,8,8,0.95);
+      border-radius: 16px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,165,0,0.16);
       position: relative;
       overflow: hidden;
     }
@@ -152,10 +131,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 25% 25%, rgba(255, 165, 0, 0.08), transparent 55%);
+      background: radial-gradient(circle at 25% 25%, rgba(255,165,0,0.08), transparent 55%);
       pointer-events: none;
     }
-
     .tab-content.active {
       display: block;
       opacity: 1;
@@ -163,77 +141,21 @@
     }
 
     h2 {
-      color: var(--text-primary);
+      color: #ffa500;
       font-size: 1.6rem;
       margin-bottom: 1.2rem;
-      font-weight: 600;
     }
     .subtitle {
       color: #b0b0b0;
       font-size: 0.96rem;
       margin-bottom: 1rem;
-      font-weight: 400;
     }
     p {
       margin-bottom: 1rem;
       line-height: 1.7;
-      font-size: 1rem;
-    }
-    ul, ol {
-      margin-bottom: 1.2rem;
-    }
-    ul li,
-    ol li {
-      margin-bottom: 0.5rem;
-      font-size: 0.98rem;
-    }
-    code {
-      font-size: 0.92rem;
-      background: rgba(255, 165, 0, 0.08);
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 165, 0, 0.12);
     }
 
-    .btn {
-      display: inline-block;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
-      color: #ffffff;
-      padding: 0.75rem 1.5rem;
-      border-radius: var(--border-radius-sm);
-      text-decoration: none;
-      font-weight: 600;
-      margin-top: 0.7rem;
-      margin-right: 0.6rem;
-      transition: var(--transition);
-      box-shadow: 0 6px 24px rgba(255, 165, 0, 0.45);
-      border: 1px solid rgba(255, 165, 0, 0.35);
-      letter-spacing: -0.02em;
-    }
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 40px rgba(255, 165, 0, 0.6);
-    }
-    .btn:active {
-      transform: translateY(-1px);
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.4rem 0 1.2rem 0;
-      color: #808080;
-      font-size: 0.9rem;
-      margin-top: 1.8rem;
-    }
-    footer a {
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* Karty w zakładce Rynek */
+    /* Rynek – karty */
     .market-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -241,11 +163,11 @@
       margin-top: 1rem;
     }
     .market-card {
-      background: rgba(8, 8, 8, 0.92);
+      background: rgba(8,8,8,0.92);
       border-radius: 12px;
-      border: 1px solid rgba(255, 165, 0, 0.16);
+      border: 1px solid rgba(255,165,0,0.16);
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     }
     .market-card img {
       width: 100%;
@@ -275,18 +197,19 @@
   </style>
 </head>
 <body>
-  <!-- Zakładki po lewej – czarno‑pomarańczowe -->
+  <!-- Sidebar z zakładkami -->
   <div class="sidebar">
     <div class="sidebar-header">
       <h3>PrimeRP<span class="subtitle"> – panel serwera</span></h3>
     </div>
-    <a href="#news"   onclick="openTab(event, 'news')"   class="active">Nowości</a>
-    <a href="#about"  onclick="openTab(event, 'about')"                  >O Nas</a>
-    <a href="#market" onclick="openTab(event, 'market')"                >Rynek</a>
-    <a href="#admin"  onclick="openTab(event, 'admin')"                 >Administracja</a>
-    <a href="#login"  onclick="openTab(event, 'login')"                 >Zaloguj</a>
+    <a href="#news"   onclick="openTab(event, 'news')" class="active">Nowości</a>
+    <a href="#about"  onclick="openTab(event, 'about')"              >O Nas</a>
+    <a href="#market" onclick="openTab(event, 'market')"            >Rynek</a>
+    <a href="#admin"  onclick="openTab(event, 'admin')"             >Administracja</a>
+    <a href="#login"  onclick="openTab(event, 'login')"             >Zaloguj</a>
   </div>
 
+  <!-- Główna treść (karty) -->
   <div class="content">
     <!-- Nowości -->
     <div id="news" class="tab-content active">
@@ -295,13 +218,13 @@
         Ostatnie aktualizacje serwera PrimeRP.
       </p>
       <p>
-        <strong>20.04.2026 – Duża aktualizacja RP</strong><br />
+        <strong>20.04.2026 – Duża aktualizacja RP</strong><br>
         Dodano nowe prace, ulepszenia systemu policji, medycyny oraz rozbudowano system firm i nieruchomości.
       </p>
       <p>
         Pełne szczegóły znajdziesz na kanale <code>#aktualizacje</code> i <code>#news</code> na Discordzie.
       </p>
-      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Wejdź na Discord</a>
+      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Zobacz na Discordzie</a>
     </div>
 
     <!-- O Nas -->
@@ -321,17 +244,15 @@
       </ul>
     </div>
 
-    <!-- Rynek – 3 testowe ramki z zdjęciami i opisem -->
+    <!-- Rynek – 3 karty -->
     <div id="market" class="tab-content">
       <h2>🛒 Rynek</h2>
       <p class="subtitle">
         Oferty sprzedanych / kupowanych przedmiotów na serwerze PrimeRP.
       </p>
-
       <div class="market-grid">
-        <!-- Karta 1 – Pojazd -->
         <div class="market-card">
-          <img src="https://picsum.photos/400/200" alt="Pojazd na sprzedaż" />
+          <img src="https://picsum.photos/400/200" alt="Pojazd Toyota Supra">
           <div class="market-card-body">
             <h3 class="market-card-title">Pojazd – Toyota Supra</h3>
             <p class="market-card-desc">
@@ -341,10 +262,8 @@
             <p class="market-card-price">Cena: 1 200 000$ RP</p>
           </div>
         </div>
-
-        <!-- Karta 2 – Nieruchomość -->
         <div class="market-card">
-          <img src="https://picsum.photos/400/200" alt="Mieszkanie na sprzedaż" />
+          <img src="https://picsum.photos/400/200" alt="Mieszkanie Vesper Bay">
           <div class="market-card-body">
             <h3 class="market-card-title">Mieszkanie – Vesper Bay, 2 pok.</h3>
             <p class="market-card-desc">
@@ -354,10 +273,8 @@
             <p class="market-card-price">Cena: 3 500 000$ RP</p>
           </div>
         </div>
-
-        <!-- Karta 3 – Firma -->
         <div class="market-card">
-          <img src="https://picsum.photos/400/200" alt="Firma na sprzedaż" />
+          <img src="https://picsum.photos/400/200" alt="Firma Prime Delivery">
           <div class="market-card-body">
             <h3 class="market-card-title">Firma – „Prime Delivery”</h3>
             <p class="market-card-desc">
@@ -399,4 +316,45 @@
         <li>Wejdź na panel: <code>panel.primerp.pl</code> (lub Twój adres panelu).</li>
         <li>Wpisz swój <strong>login</strong> i <strong>hasło</strong>.</li>
         <li>Po zalogowaniu uzyskaj dostęp do panelu administracyjnego.</li>
-      </
+      </ol>
+      <p>
+        Bez odpowiednich uprawnień nie masz możliwości zalogowania się do panelu.
+      </p>
+      <a href="https://panel.primerp.pl" class="btn" target="_blank">Panel administracyjny</a>
+    </div>
+
+    <footer>
+      &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.<br>
+      Strona stworzona specjalnie dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
+    </footer>
+  </div>
+
+  <!-- Skrypt – przełączanie zakładek -->
+  <script>
+    function openTab(evt, tabId) {
+      // ukryj wszystkie karty
+      const contents = document.querySelectorAll(".tab-content");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+      }
+
+      // usunięcie aktywnego z zakładki
+      const links = document.querySelectorAll(".sidebar a");
+      for (let i = 0; i < links.length; i++) {
+        links[i].classList.remove("active");
+      }
+
+      // pokazanie wybranej karty
+      const tab = document.getElementById(tabId);
+      if (tab) {
+        tab.classList.add("active");
+      }
+
+      // zaznaczenie aktywnej zakładki
+      if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add("active");
+      }
+    }
+  </script>
+</body>
+</html>
