@@ -51,7 +51,7 @@
       }
     }
 
-    /* ✅ ZAMROŻONY sidebar z zakładkami */
+    /* ✅ Zamrożony sidebar z zakładkami (nie przesuwa się przy scrollu) */
     .sidebar {
       width: 270px;
       background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.08), transparent 60%), #000000;
@@ -96,7 +96,7 @@
     }
     .sidebar-header .subtitle {
       font-size: 0.86rem;
-      color: #b0b0b0;
+      color: #b0b0c0;
       margin-top: 0.1rem;
     }
 
@@ -166,7 +166,7 @@
       opacity: 1;
     }
 
-    /* ✅ Zmieniony content z odsunięciem i scroll tylko w prawej części */
+    /* ✅ Treść przewija się, sidebar stoi w miejscu */
     .content {
       margin-left: 270px;            /* 270 = szerokość sidebara */
       padding: 2rem 2.4rem 2.2rem 2.4rem;
@@ -222,7 +222,7 @@
       font-weight: 600;
     }
     .subtitle {
-      color: #b0b0b0;
+      color: #b0b0c0;
       font-size: 0.96rem;
       margin-bottom: 1rem;
       font-weight: 400;
@@ -271,15 +271,6 @@
       transform: translateY(-1px);
     }
 
-    /* ✅ Mały przycisk w karcie produkcyjnej */
-    .btn.market-card-btn {
-      padding: 0.5rem 0.9rem;
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 16px rgba(255, 165, 0, 0.45);
-      text-decoration: none;
-    }
-
     footer {
       text-align: center;
       padding: 1.4rem 0 1.2rem 0;
@@ -293,50 +284,6 @@
     }
     footer a:hover {
       text-decoration: underline;
-    }
-
-    /* Karty w zakładce Rynek */
-    .market-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.6rem;
-      margin-top: 1rem;
-    }
-    .market-card {
-      background: rgba(8, 8, 8, 0.92);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 165, 0, 0.16);
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-      transition: var(--transition);
-    }
-    .market-card:hover {
-      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.5);
-    }
-    .market-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      filter: brightness(0.9);
-    }
-    .market-card-body {
-      padding: 1rem 1.2rem;
-    }
-    .market-card-title {
-      color: #ffaa33;
-      font-size: 1.1rem;
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-    }
-    .market-card-desc {
-      color: #c0c0c0;
-      margin-bottom: 0.6rem;
-      font-size: 0.94rem;
-    }
-    .market-card-price {
-      color: #ffa500;
-      font-size: 0.94rem;
-      font-weight: 600;
     }
   </style>
 </head>
@@ -397,7 +344,6 @@
         <li>Profesjonalny zespół administracyjny i support na Discordzie.</li>
       </ul>
     </div>
-
             <!-- Rynek – 10 kart – Część 1 -->
         <div id="market" class="tab-content">
           <h2>🛒 Rynek</h2>
