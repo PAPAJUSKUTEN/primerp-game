@@ -6,26 +6,25 @@
   <title>PrimeRP – Panel</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  //fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      /* Tło ciemne, ale nie „czarne” – lepsze na oczy */
-      --bg: #060816;
-      --bg-card: #0b0f26;
-      --bg-card-alt: rgba(11, 15, 38, 0.92);
-      --border: rgba(255, 255, 255, 0.08);
+      --bg: #000000;
+      --bg-card: #080808;
+      --bg-card-alt: rgba(8, 8, 8, 0.95);
+      --border: rgba(255, 165, 0, 0.12);
 
-      --text: #e0e0f0;
-      --text-muted: #a3a9c7;
-      --text-primary: #b9a3ff;
+      --text: #f0f0f0;
+      --text-muted: #c0c0c0;
+      --text-primary: #ffa500;
 
-      --accent: #6a4cff;
-      --accent-alt: #8a6bff;
-      --accent-light: #b9a3ff;
+      --accent: #ff8c00;
+      --accent-light: #ffaa33;
+      --accent-hover: #ffca66;
 
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-      --shadow-card: 0 12px 48px rgba(0, 0, 0, 0.4);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+      --shadow-card: 0 12px 48px rgba(0, 0, 0, 0.5);
 
       --border-radius: 16px;
       --border-radius-sm: 10px;
@@ -39,19 +38,19 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
     body {
-      background: linear-gradient(130deg, #080a25 0%, #060816 100%);
+      background: linear-gradient(130deg, #000000 0%, #080808 100%);
       color: var(--text);
       min-height: 100vh;
       display: flex;
     }
 
-    /* PINNY BOK – bardziej „UI” niż zwykły panel */
+    /* Sidebar – czarny, z pomarańczowym akcentem */
     .sidebar {
       width: 270px;
-      background: radial-gradient(circle at top left, rgba(106, 76, 255, 0.08), transparent 60%),
-                  #080a22;
-      border-right: 1px solid var(--border);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.08), transparent 60%),
+                  #000000;
+      border-right: 1px solid rgba(255, 165, 0, 0.24);
+      box-shadow: var(--shadow);
       padding: 2rem 0 1.6rem 0;
       position: sticky;
       top: 0;
@@ -71,7 +70,7 @@
     }
     .sidebar-header .subtitle {
       font-size: 0.86rem;
-      color: var(--text-muted);
+      color: #b0b0b0;
       margin-top: 0.1rem;
     }
 
@@ -96,27 +95,27 @@
       top: 0;
       bottom: 0;
       width: 4px;
-      background: var(--accent-alt);
+      background: var(--accent);
       border-radius: inherit;
       opacity: 0;
       transition: var(--transition);
       z-index: -1;
     }
     .sidebar a::before {
-      background: linear-gradient(180deg, var(--accent), var(--accent-alt));
+      background: linear-gradient(180deg, var(--accent), var(--accent-light));
     }
 
     .sidebar a:hover {
-      background: rgba(106, 76, 255, 0.08);
-      border: 1px solid rgba(106, 76, 255, 0.16);
+      background: rgba(255, 165, 0, 0.08);
+      border: 1px solid rgba(255, 165, 0, 0.24);
       color: var(--text);
     }
     .sidebar a:hover::after {
-      opacity: 0.5;
+      opacity: 0.6;
     }
     .sidebar a.active {
-      background: rgba(106, 76, 255, 0.18);
-      border: 1px solid rgba(106, 76, 255, 0.24);
+      background: rgba(255, 165, 0, 0.2);
+      border: 1px solid rgba(255, 165, 0, 0.4);
       color: var(--text-primary);
       font-weight: 600;
     }
@@ -124,7 +123,7 @@
       opacity: 1;
     }
 
-    /* GŁÓWNY PANEL KONTENTU */
+    /* Główny panel */
     .content {
       flex: 1;
       padding: 2rem 2.4rem 2.2rem 2.4rem;
@@ -140,7 +139,6 @@
       border-radius: var(--border-radius);
       box-shadow: var(--shadow-card);
       border: 1px solid var(--border);
-      backdrop-filter: blur(14px);
       position: relative;
       overflow: hidden;
     }
@@ -151,7 +149,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 25% 25%, rgba(106, 76, 255, 0.07), transparent 55%);
+      background: radial-gradient(circle at 25% 25%, rgba(255, 165, 0, 0.08), transparent 55%);
       pointer-events: none;
     }
 
@@ -161,7 +159,6 @@
       transform: translateY(0);
     }
 
-    /* Nagłówki i tekst */
     h2 {
       color: var(--text-primary);
       font-size: 1.6rem;
@@ -169,7 +166,7 @@
       font-weight: 600;
     }
     .subtitle {
-      color: var(--text-muted);
+      color: #b0b0b0;
       font-size: 0.96rem;
       margin-bottom: 1rem;
       font-weight: 400;
@@ -188,16 +185,16 @@
     }
     code {
       font-size: 0.92rem;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 165, 0, 0.08);
       padding: 0.2rem 0.5rem;
       border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 165, 0, 0.12);
     }
 
-    /* PRZYCISKI – bardziej „mocne” */
+    /* Przyciski pomarańczowe */
     .btn {
       display: inline-block;
-      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
       color: #ffffff;
       padding: 0.75rem 1.5rem;
       border-radius: var(--border-radius-sm);
@@ -206,13 +203,13 @@
       margin-top: 0.7rem;
       margin-right: 0.6rem;
       transition: var(--transition);
-      box-shadow: 0 6px 24px rgba(106, 76, 255, 0.4);
-      border: 1px solid rgba(106, 76, 255, 0.3);
+      box-shadow: 0 6px 24px rgba(255, 165, 0, 0.45);
+      border: 1px solid rgba(255, 165, 0, 0.35);
       letter-spacing: -0.02em;
     }
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 40px rgba(106, 76, 255, 0.55);
+      box-shadow: 0 10px 40px rgba(255, 165, 0, 0.6);
     }
     .btn:active {
       transform: translateY(-1px);
@@ -221,7 +218,7 @@
     footer {
       text-align: center;
       padding: 1.4rem 0 1.2rem 0;
-      color: #8a8a9c;
+      color: #808080;
       font-size: 0.9rem;
       margin-top: 1.8rem;
     }
@@ -235,7 +232,7 @@
   </style>
 </head>
 <body>
-  <!-- Zakładki po lewej – bez numerów, zupełnie nowy styl -->
+  <!-- Zakładki po lewej – czarno‑pomarańczowe -->
   <div class="sidebar">
     <div class="sidebar-header">
       <h3>PrimeRP<span class="subtitle"> – panel serwera</span></h3>
@@ -259,7 +256,7 @@
         Dodano nowe prace, ulepszenia systemu policji, medycyny oraz rozbudowano system firm i nieruchomości.
       </p>
       <p>
-        Pełne szczegóły znajdziesz na kanale <code>#aktualizacje</code> i <code>#news</code> na Discordzie.
+        Pełne szczegóły znajdziesz na kanale de>#aktualizacje</code> i de>#news</code> na Discordzie.
       </p>
       <a href="https://discord.gg/primerppl" class="btn" target="_blank">Wejdź na Discord</a>
     </div>
@@ -275,9 +272,9 @@
         ubogatej w historie i relacje rozgrywki.
       </p>
       <ul>
-        <li>Stabilna, rozwijana przez lata baza pod RP.</li>
-        <li>Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
-        <li>Profesjonalny zespół administracyjny i support na Discordzie.</li>
+        >Stabilna, rozwijana przez lata baza pod RP.</li>
+        >Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
+        >Profesjonalny zespół administracyjny i support na Discordzie.</li>
       </ul>
     </div>
 
@@ -291,9 +288,9 @@
         Na tej zakładce informujemy o zasadach sprzedaży i procedurach obowiązujących na serwerze PrimeRP.
       </p>
       <ol>
-        <li><strong>Pojazdy</strong> – sprzedaż prywatna oraz oferty na kanałach <code>#rynek</code> i za pomocą botów.</li>
-        <li><strong>Nieruchomości</strong> – sprzedaż domów, mieszkań, biur i lokali, zgodnie z regulaminem.</li>
-        <li><strong>Firmy</strong> – zakup, sprzedaż i zmiana właściciela firm.</li>
+        ><strong>Pojazdy</strong> – sprzedaż prywatna oraz oferty na kanałach de>#rynek</code> i za pomocą botów.</li>
+        ><strong>Nieruchomości</strong> – sprzedaż domów, mieszkań, biur i lokali, zgodnie z regulaminem.</li>
+        ><strong>Firmy</strong> – zakup, sprzedaż i zmiana właściciela firm.</li>
       </ol>
       <p>
         <strong>Uwaga:</strong> Wszelkie duże transakcje powinny być zgodne z regulaminem i zatwierdzone przez administrację.
@@ -310,9 +307,9 @@
         Nasz zespół administracyjny jest odpowiedzialny za rozwój serwera, egzekwowanie regulaminu oraz rozwój RP.
       </p>
       <ul>
-        <li><strong>Head‑Admin</strong> – kierowanie kierunkiem serwera i decyzje strategiczne.</li>
-        <li><strong>Admini</strong> – wspieranie graczy, rozwiązywanie konfliktów, organizacja wydarzeń.</li>
-        <li><strong>Support</strong> – pomoc na Discordzie, odpowiedzi na pytania, pomoc dla nowych graczy.</li>
+        ><strong>Head‑Admin</strong> – kierowanie kierunkiem serwera i decyzje strategiczne.</li>
+        ><strong>Admini</strong> – wspieranie graczy, rozwiązywanie konfliktów, organizacja wydarzeń.</li>
+        ><strong>Support</strong> – pomoc na Discordzie, odpowiedzi na pytania, pomoc dla nowych graczy.</li>
       </ul>
     </div>
 
@@ -326,9 +323,9 @@
         <strong>Panel logowania</strong> jest dostępny wyłącznie dla osób z odpowiednimi uprawnieniami.
       </p>
       <ol>
-        <li>Wejdź na panel: <code>panel.primerp.pl</code> (lub Twój adres panelu).</li>
-        <li>Wpisz swój <strong>login</strong> i <strong>hasło</strong>.</li>
-        <li>Po zalogowaniu uzyskaj dostęp do panelu administracyjnego.</li>
+        >Wejdź na panel: de>panel.primerp.pl</code> (lub Twój adres panelu).</li>
+        >Wpisz swój <strong>login</strong> i <strong>hasło</strong>.</li>
+        >Po zalogowaniu uzyskaj dostęp do panelu administracyjnego.</li>
       </ol>
       <p>
         Bez odpowiednich uprawnień nie masz możliwości zalogowania się do panelu.
@@ -342,15 +339,12 @@
     </footer>
   </div>
 
-  <!-- Skrypt obsługujący zakładki -->
   <script>
     function openTab(evt, tabId) {
-      // ukryj wszystkie karty
       document.querySelectorAll(".tab-content").forEach(el => {
         el.classList.remove("active");
       });
 
-      // usunięcie aktywności z zakładek
       document.querySelectorAll(".sidebar a").forEach(el => {
         el.classList.remove("active");
       });
@@ -359,11 +353,10 @@
       evt.currentTarget.classList.add("active");
     }
 
-    // lekki hover dla zakładek
     document.querySelectorAll(".sidebar a").forEach(link => {
       link.addEventListener("mouseenter", () => {
-        link.style.background = "rgba(106, 76, 255, 0.1)";
-        link.style.border = "1px solid rgba(106, 76, 255, 0.25)";
+        link.style.background = "rgba(255, 165, 0, 0.12)";
+        link.style.border = "1px solid rgba(255, 165, 0, 0.32)";
       });
       link.addEventListener("mouseleave", () => {
         if (!link.classList.contains("active")) {
