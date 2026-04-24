@@ -23,7 +23,6 @@
       --accent-light: #ffaa33;
       --accent-hover: #ffca66;
 
-      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.4);
       --shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
       --shadow-card: 0 12px 48px rgba(0, 0, 0, 0.5);
 
@@ -52,7 +51,7 @@
       }
     }
 
-    /* Sidebar – czarny, z pomarańczowym akcentem */
+    /* Sidebar – czarny, pomarańczowy */
     .sidebar {
       width: 270px;
       background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.08), transparent 60%), #000000;
@@ -164,7 +163,7 @@
       opacity: 1;
     }
 
-    /* Główna treść */
+    /* Treść – karty */
     .content {
       flex: 1;
       padding: 2rem 2.4rem 2.2rem 2.4rem;
@@ -327,7 +326,7 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar z zakładkami – Nowości, Rynek, O Nas itd. -->
+  <!-- Sidebar – zakładki: Nowości, Rynek, O Nas itd. -->
   <div class="sidebar">
     <div class="sidebar-header">
       <h3>PrimeRP<span class="subtitle"> – panel serwera</span></h3>
@@ -349,7 +348,7 @@
     </a>
   </div>
 
-  <!-- Główna treść – karty -->
+  <!-- Treść – karty -->
   <div class="content">
     <!-- Nowości -->
     <div id="news" class="tab-content active">
@@ -384,7 +383,7 @@
       </ul>
     </div>
 
-    <!-- Rynek – 3 karty z zdjęciami i opisem -->
+    <!-- Rynek – 3 karty -->
     <div id="market" class="tab-content">
       <h2>🛒 Rynek</h2>
       <p class="subtitle">
@@ -403,6 +402,7 @@
             <p class="market-card-price">Cena: 1 200 000$ RP</p>
           </div>
         </div>
+
         <!-- Karta 2 – Nieruchomość -->
         <div class="market-card">
           <img src="https://picsum.photos/400/200" alt="Mieszkanie na sprzedaż" />
@@ -415,6 +415,7 @@
             <p class="market-card-price">Cena: 3 500 000$ RP</p>
           </div>
         </div>
+
         <!-- Karta 3 – Firma -->
         <div class="market-card">
           <img src="https://picsum.photos/400/200" alt="Firma na sprzedaż" />
@@ -424,4 +425,79 @@
               Transportowa firma z 2 pojazdami i 3 pracownikami.
               Stałe kontrakty z biurami i restauracjami.
             </p>
-            <
+            <p class="market-card-price">Cena: 5 750 000$ RP</p>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- Administracja -->
+    <div id="admin" class="tab-content">
+      <h2>👥 Administracja</h2>
+      <p class="subtitle">
+        Zespół, który dba o serwer i społeczność.
+      </p>
+      <p>
+        Nasz zespół administracyjny jest odpowiedzialny za rozwój serwera, egzekwowanie regulaminu oraz rozwój RP.
+      </p>
+      <ul>
+        <li><strong>Head‑Admin</strong> – kierowanie kierunkiem serwera i decyzje strategiczne.</li>
+        <li><strong>Admini</strong> – wspieranie graczy, rozwiązywanie konfliktów, organizacja wydarzeń.</li>
+        <li><strong>Support</strong> – pomoc na Discordzie, odpowiedzi na pytania, pomoc dla nowych graczy.</li>
+      </ul>
+    </div>
+
+    <!-- Zaloguj -->
+    <div id="login" class="tab-content">
+      <h2>🔐 Zaloguj</h2>
+      <p class="subtitle">
+        Panel administracyjny – tylko dla urzędników i adminów.
+      </p>
+      <p>
+        <strong>Panel logowania</strong> jest dostępny wyłącznie dla osób z odpowiednimi uprawnieniami.
+      </p>
+      <ol>
+        <li>Wejdź na panel: <code>panel.primerp.pl</code> (lub Twój adres panelu).</li>
+        <li>Wpisz swój <strong>login</strong> i <strong>hasło</strong>.</li>
+        <li>Po zalogowaniu uzyskaj dostęp do panelu administracyjnego.</li>
+      </ol>
+      <p>
+        Bez odpowiednich uprawnień nie masz możliwości zalogowania się do panelu.
+      </p>
+      <a href="https://panel.primerp.pl" class="btn" target="_blank">Panel administracyjny</a>
+    </div>
+
+    <footer>
+      &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.<br />
+      Strona stworzona specjalnie dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
+    </footer>
+  </div>
+
+  <!-- Skrypt – przełączanie zakładek -->
+  <script>
+    function openTab(evt, tabId) {
+      // ukryj wszystkie karty
+      const contents = document.querySelectorAll(".tab-content");
+      for (let i = 0; i < contents.length; i++) {
+        contents[i].classList.remove("active");
+      }
+
+      // usunięcie aktywnego z zakładki
+      const links = document.querySelectorAll(".sidebar a");
+      for (let i = 0; i < links.length; i++) {
+        links[i].classList.remove("active");
+      }
+
+      // pokazanie wybranej karty
+      const tab = document.getElementById(tabId);
+      if (tab) {
+        tab.classList.add("active");
+      }
+
+      // zaznaczenie aktywnej zakładki
+      if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add("active");
+      }
+    }
+  </script>
+</body>
+</html>
