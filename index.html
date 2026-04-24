@@ -232,6 +232,46 @@
     footer a:hover {
       text-decoration: underline;
     }
+
+    /* Karty w zakładce Rynek */
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.6rem;
+      margin-top: 1rem;
+    }
+    .market-card {
+      background: rgba(8, 8, 8, 0.92);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 165, 0, 0.16);
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .market-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      filter: brightness(0.9);
+    }
+    .market-card-body {
+      padding: 1rem 1.2rem;
+    }
+    .market-card-title {
+      color: #ffaa33;
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+    .market-card-desc {
+      color: #c0c0c0;
+      margin-bottom: 0.6rem;
+      font-size: 0.94rem;
+    }
+    .market-card-price {
+      color: #ffa500;
+      font-size: 0.94rem;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -281,23 +321,53 @@
       </ul>
     </div>
 
-    <!-- Rynek -->
+    <!-- Rynek – 3 testowe ramki z zdjęciami i opisem -->
     <div id="market" class="tab-content">
       <h2>🛒 Rynek</h2>
       <p class="subtitle">
-        Handel pojazdami, nieruchomościami i firmami na serwerze.
+        Oferty sprzedanych / kupowanych przedmiotów na serwerze PrimeRP.
       </p>
-      <p>
-        Na tej zakładce informujemy o zasadach sprzedaży i procedurach obowiązujących na serwerze PrimeRP.
-      </p>
-      <ol>
-        <li><strong>Pojazdy</strong> – sprzedaż prywatna oraz oferty na kanałach <code>#rynek</code> i za pomocą botów.</li>
-        <li><strong>Nieruchomości</strong> – sprzedaż domów, mieszkań, biur i lokali, zgodnie z regulaminem.</li>
-        <li><strong>Firmy</strong> – zakup, sprzedaż i zmiana właściciela firm.</li>
-      </ol>
-      <p>
-        <strong>Uwaga:</strong> Wszelkie duże transakcje powinny być zgodne z regulaminem i zatwierdzone przez administrację.
-      </p>
+
+      <div class="market-grid">
+        <!-- Karta 1 – Pojazd -->
+        <div class="market-card">
+          <img src="https://picsum.photos/400/200" alt="Pojazd na sprzedaż" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Toyota Supra</h3>
+            <p class="market-card-desc">
+              Stan: 85% kondycji, 1 właściciel, brak kolizji.
+              Idealny na ulice Prime City.
+            </p>
+            <p class="market-card-price">Cena: 1 200 000$ RP</p>
+          </div>
+        </div>
+
+        <!-- Karta 2 – Nieruchomość -->
+        <div class="market-card">
+          <img src="https://picsum.photos/400/200" alt="Mieszkanie na sprzedaż" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Mieszkanie – Vesper Bay, 2 pok.</h3>
+            <p class="market-card-desc">
+              Nowe, urządzonę, w cichej części miasta.
+              W cenie 1 rok gwarancji RH.
+            </p>
+            <p class="market-card-price">Cena: 3 500 000$ RP</p>
+          </div>
+        </div>
+
+        <!-- Karta 3 – Firma -->
+        <div class="market-card">
+          <img src="https://picsum.photos/400/200" alt="Firma na sprzedaż" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Prime Delivery”</h3>
+            <p class="market-card-desc">
+              Transportowa firma z 2 pojazdami i 3 pracownikami.
+              Stałe kontrakty z biurami i restauracjami.
+            </p>
+            <p class="market-card-price">Cena: 5 750 000$ RP</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Administracja -->
@@ -333,40 +403,4 @@
       <p>
         Bez odpowiednich uprawnień nie masz możliwości zalogowania się do panelu.
       </p>
-      <a href="https://panel.primerp.pl" class="btn" target="_blank">Panel administracyjny</a>
-    </div>
-
-    <footer>
-      &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.<br />
-      Strona stworzona specjalnie dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
-    </footer>
-  </div>
-
-  <script>
-    function openTab(evt, tabId) {
-      // ukryj wszystkie karty
-      const contents = document.querySelectorAll(".tab-content");
-      for (let i = 0; i < contents.length; i++) {
-        contents[i].classList.remove("active");
-      }
-
-      // usunięcie aktywnej zakładki
-      const links = document.querySelectorAll(".sidebar a");
-      for (let i = 0; i < links.length; i++) {
-        links[i].classList.remove("active");
-      }
-
-      // pokazanie wybranej karty
-      const tab = document.getElementById(tabId);
-      if (tab) {
-        tab.classList.add("active");
-      }
-
-      // aktywacja zakładki w sidebarze
-      if (evt && evt.currentTarget) {
-        evt.currentTarget.classList.add("active");
-      }
-    }
-  </script>
-</body>
-</html>
+      <a href="https://panel.primerp.pl" class="btn" target="_blank">
