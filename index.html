@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.免除0" />
   <title>PrimeRP – Panel</title>
 
   <!-- Google Fonts -->
@@ -271,13 +271,15 @@
       transform: translateY(-1px);
     }
 
-    /* ✅ Mały przycisk w karcie produkcyjnej */
+    /* ✅ Mały przycisk w karcie produkcyjnej – zawsze na dole */
     .btn.market-card-btn {
       padding: 0.5rem 0.9rem;
       margin-top: 0.5rem;
       font-size: 0.9rem;
       box-shadow: 0 4px 16px rgba(255, 165, 0, 0.45);
       text-decoration: none;
+      margin-top: auto;          /* przycisk przylega na dół karty */
+      align-self: flex-start;    /* nie wypycha przycisk pośrodku */
     }
 
     footer {
@@ -329,6 +331,11 @@
       overflow: hidden;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
       transition: var(--transition);
+
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 270px;   /* stała minimalna wysokość karty */
     }
     .market-card:hover {
       box-shadow: 0 10px 36px rgba(0, 0, 0, 0.5);
@@ -341,6 +348,9 @@
     }
     .market-card-body {
       padding: 1rem 1.2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
     .market-card-title {
       color: #ffaa33;
@@ -417,6 +427,7 @@
         <li>Profesjonalny zespół administracyjny i support na Discordzie.</li>
       </ul>
     </div>
+
 <!-- ✅ Rynek – top 3 sprzedane, reszta w siatce po 4 -->
 <div id="market" class="tab-content">
   <h2>🛒 Rynek</h2>
