@@ -6,7 +6,7 @@
   <title>PrimeRP – Panel</title>
 
   <!-- Google Fonts -->
-  //fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -51,7 +51,7 @@
       }
     }
 
-    /* ✅ Zamrożony sidebar z zakładkami (nie przesuwa się przy scrollu i zmianie zakładek) */
+    /* ✅ Zamrożony sidebar z zakładkami */
     .sidebar {
       width: 270px;
       background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.08), transparent 60%), #000000;
@@ -168,7 +168,7 @@
 
     /* ✅ Treść przewija się, sidebar stoi w miejscu */
     .content {
-      margin-left: 270px;            /* 270 = szerokość sidebara */
+      margin-left: 270px;
       padding: 2rem 2.4rem 2.2rem 2.4rem;
       min-height: 100vh;
       overflow-y: auto;
@@ -271,7 +271,7 @@
       transform: translateY(-1px);
     }
 
-    /* ✅ Mały przycisk w karcie produkcyjnej – potrzebny w Rynku */
+    /* ✅ Mały przycisk w karcie produkcyjnej */
     .btn.market-card-btn {
       padding: 0.5rem 0.9rem;
       margin-top: 0.5rem;
@@ -295,7 +295,7 @@
       text-decoration: underline;
     }
 
-    /* ✅ Siatka kart „Rynek” – zawsze w rzędach, obok siebie, nie tylko „pod siebie” */
+    /* ✅ Siatka kart „Rynek” – zawsze w rzędach */
     .market-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -396,7 +396,7 @@
         Dodano nowe prace, ulepszenia systemu policji, medycyny oraz rozbudowano system firm i nieruchomości.
       </p>
       <p>
-        Pełne szczegóły znajdziesz na kanale de>#aktualizacje</code> i de>#news</code> na Discordzie.
+        Pełne szczegóły znajdziesz na kanale <code>#aktualizacje</code> i <code>#news</code> na Discordzie.
       </p>
       <a href="https://discord.gg/primerppl" class="btn" target="_blank">Sprawdź na Discordzie</a>
     </div>
@@ -412,416 +412,476 @@
         ubogatej w historie i relacje rozgrywki.
       </p>
       <ul>
-        >Stabilna, rozwijana przez lata baza pod RP.</li>
-        >Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
-        >Profesjonalny zespół administracyjny i support na Discordzie.</li>
+        <li>Stabilna, rozwijana przez lata baza pod RP.</li>
+        <li>Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
+        <li>Profesjonalny zespół administracyjny i support na Discordzie.</li>
       </ul>
     </div>
 
-    <!-- ✅ Rynek – karty w siatce obok siebie (z przyciskiem „Kup” w każdej) -->
+    <!-- ✅ Rynek – karty w siatce (35 kart, z przyciskiem „Kup” w każdej) -->
     <div id="market" class="tab-content">
       <h2>🛒 Rynek</h2>
       <p class="subtitle">
         Oferty sprzedanych / kupowanych przedmiotów na serwerze PrimeRP.
       </p>
       <div class="market-grid">
-            <!-- Rynek – 10 kart – Część 1 -->
-        <div id="market" class="tab-content">
-          <h2>🛒 Rynek</h2>
-          <p class="subtitle">
-            Oferty sprzedanych / kupowanych przedmiotów na serwerze PrimeRP.
-          </p>
-          <div class="market-grid">
-
-            <!-- 1 -->
-<div class="market-card">
-  <img src="https://picsum.photos/seed/1/400/200" alt="Pojazd Toyota Supra" />
-  <div class="market-card-body">
-    <h3 class="market-card-title">Pojazd – Toyota Supra</h3>
-    <p class="market-card-desc">
-      Stan: 85% kondycji, 1 właściciel, brak kolizji.
-    </p>
-    <p class="market-card-price">Cena: 1 200 000$ RP</p>
-    <button class="btn market-card-btn" type="button">Kup teraz</button>
-  </div>
-</div>
-            <!-- 2 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/2/400/200" alt="Mieszkanie Vesper Bay" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Mieszkanie – Vesper Bay, 2 pok.</h3>
-                <p class="market-card-desc">
-                  Nowe, urządzonę, w cichej części miasta.
-                </p>
-                <p class="market-card-price">Cena: 3 500 000$ RP</p>
-              </div>
-            </div>
-            <!-- 3 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/3/400/200" alt="Firma Prime Delivery" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Firma – „Prime Delivery”</h3>
-                <p class="market-card-desc">
-                  Transportowa firma z 2 pojazdami i 3 pracownikami.
-                </p>
-                <p class="market-card-price">Cena: 5 750 000$ RP</p>
-              </div>
-            </div>
-            <!-- 4 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/4/400/200" alt="Dom Beverly Hills" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Dom – Beverly Hills</h3>
-                <p class="market-card-desc">
-                  Luksusowy dom w centrum Beverly, 4 pokoje.
-                </p>
-                <p class="market-card-price">Cena: 8 000 000$ RP</p>
-              </div>
-            </div>
-            <!-- 5 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/5/400/200" alt="Pojazd Porsche 911" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Porsche 911</h3>
-                <p class="market-card-desc">
-                  Nowy, 2 rok gwarancji, zero kolizji.
-                </p>
-                <p class="market-card-price">Cena: 2 400 000$ RP</p>
-              </div>
-            </div>
-            <!-- 6 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/6/400/200" alt="Mieszkanie Downtown" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Mieszkanie – Downtown</h3>
-                <p class="market-card-desc">
-                  Małe studio w centrum, dobra lokacja.
-                </p>
-                <p class="market-card-price">Cena: 1 100 000$ RP</p>
-              </div>
-            </div>
-            <!-- 7 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/7/400/200" alt="Pojazd Subaru WRX" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Subaru WRX</h3>
-                <p class="market-card-desc">
-                  Auto sportowe, idealne na ulice Prime City.
-                </p>
-                <p class="market-card-price">Cena: 1 600 000$ RP</p>
-              </div>
-            </div>
-            <!-- 8 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/8/400/200" alt="Dom Rockford Hills" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Dom – Rockford Hills</h3>
-                <p class="market-card-desc">
-                  3 pokoje, dwa garże, dobra dzielnica.
-                </p>
-                <p class="market-card-price">Cena: 4 200 000$ RP</p>
-              </div>
-            </div>
-            <!-- 9 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/9/400/200" alt="Pojazd BMW X3" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – BMW X3</h3>
-                <p class="market-card-desc">
-                  SUV, bardzo mocne, do praca z logistyką.
-                </p>
-                <p class="market-card-price">Cena: 2 100 000$ RP</p>
-              </div>
-            </div>
-            <!-- 10 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/10/400/200" alt="Pojazd Harley‑Davidson" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Harley‑Davidson</h3>
-                <p class="market-card-desc">
-                  Motocykl, idealny na coroczne eventy RP.
-                </p>
-                <p class="market-card-price">Cena: 1 400 000$ RP</p>
-              </div>
-            </div>
-            <!-- 11 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/11/400/200" alt="Pojazd Mitsubishi Evo" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Mitsubishi Evo</h3>
-                <p class="market-card-desc">
-                  Auto sportowe, tuning, zero kolizji.
-                </p>
-                <p class="market-card-price">Cena: 1 800 000$ RP</p>
-              </div>
-            </div>
-            <!-- 12 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/12/400/200" alt="Pojazd Nissan GTR" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Nissan GTR</h3>
-                <p class="market-card-desc">
-                  Nowe, 1000 koni mechanicznych, 1 właściciel.
-                </p>
-                <p class="market-card-price">Cena: 3 000 000$ RP</p>
-              </div>
-            </div>
-            <!-- 13 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/13/400/200" alt="Pojazd Range Rover" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Range Rover</h3>
-                <p class="market-card-desc">
-                  SUV klasy premium, idealny na role bossa.
-                </p>
-                <p class="market-card-price">Cena: 2 600 000$ RP</p>
-              </div>
-            </div>
-            <!-- 14 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/14/400/200" alt="Pojazd Jeep Wrangler" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Jeep Wrangler</h3>
-                <p class="market-card-desc">
-                  Dojazd do farmy, gór itp.
-                </p>
-                <p class="market-card-price">Cena: 1 300 000$ RP</p>
-              </div>
-            </div>
-            <!-- 15 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/15/400/200" alt="Pojazd Kombi VW" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Kombi VW</h3>
-                <p class="market-card-desc">
-                  Idealny na przyjaciółskie wyjazdy RP.
-                </p>
-                <p class="market-card-price">Cena: 1 450 000$ RP</p>
-              </div>
-            </div>
-            <!-- 16 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/16/400/200" alt="Pojazd Audi A6" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Audi A6</h3>
-                <p class="market-card-desc">
-                  Auto biznesowe, idealne na role CEO.
-                </p>
-                <p class="market-card-price">Cena: 1 900 000$ RP</p>
-              </div>
-            </div>
-            <!-- 17 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/17/400/200" alt="Pojazd Lexus LS" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Lexus LS</h3>
-                <p class="market-card-desc">
-                  Luksus, cicha jazda, prestiżowy wygląd.
-                </p>
-                <p class="market-card-price">Cena: 2 800 000$ RP</p>
-              </div>
-            </div>
-            <!-- 18 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/18/400/200" alt="Pojazd Ford Mustang" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Ford Mustang</h3>
-                <p class="market-card-desc">
-                  Klasyczny muscle car, idealny w gangach RP.
-                </p>
-                <p class="market-card-price">Cena: 1 700 000$ RP</p>
-              </div>
-            </div>
-            <!-- 19 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/19/400/200" alt="Pojazd Chevrolet Camaro" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Chevrolet Camaro</h3>
-                <p class="market-card-desc">
-                  Druga opcja do Mustanga, równie mocne.
-                </p>
-                <p class="market-card-price">Cena: 1 700 000$ RP</p>
-              </div>
-            </div>
-            <!-- 20 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/20/400/200" alt="Pojazd Dodge Charger" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Dodge Charger</h3>
-                <p class="market-card-desc">
-                  Mocny, szybki, idealny na numery policji.
-                </p>
-                <p class="market-card-price">Cena: 2 000 000$ RP</p>
-              </div>
-            </div>
-              <!-- 21 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/21/400/200" alt="Dom Glen Park" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Dom – Glen Park</h3>
-                <p class="market-card-desc">
-                  5 pokoi, ogród, spokojna okolica.
-                </p>
-                <p class="market-card-price">Cena: 5 100 000$ RP</p>
-              </div>
-            </div>
-            <!-- 22 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/22/400/200" alt="Dom druga wyspa" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Dom – Druga wyspa</h3>
-                <p class="market-card-desc">
-                  Mieszkanie na drugiej wyspie, bardzo ciche.
-                </p>
-                <p class="market-card-price">Cena: 2 200 000$ RP</p>
-              </div>
-            </div>
-            <!-- 23 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/23/400/200" alt="Pojazd dachówka" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Dachówka</h3>
-                <p class="market-card-desc">
-                  Przydatne do logistki, dostaw, handlu.
-                </p>
-                <p class="market-card-price">Cena: 1 500 000$ RP</p>
-              </div>
-            </div>
-            <!-- 24 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/24/400/200" alt="Pojazd SUV na farmę" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – SUV na farmę</h3>
-                <p class="market-card-desc">
-                  Duża przestrzeń, pasuje do pracy na roli.
-                </p>
-                <p class="market-card-price">Cena: 1 350 000$ RP</p>
-              </div>
-            </div>
-            <!-- 25 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/25/400/200" alt="Firma Taxi Service" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Firma – „Taxi Service”</h3>
-                <p class="market-card-desc">
-                  5 samochodów, 8 kierowców, stałe przychody.
-                </p>
-                <p class="market-card-price">Cena: 4 800 000$ RP</p>
-              </div>
-            </div>
-            <!-- 26 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/26/400/200" alt="Firma Night Club" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Firma – „Night Club”</h3>
-                <p class="market-card-desc">
-                  Lokal nocny z 20 slotami dla pracowników.
-                </p>
-                <p class="market-card-price">Cena: 7 300 000$ RP</p>
-              </div>
-            </div>
-            <!-- 27 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/27/400/200" alt="Firma Clothing Store" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Firma – „Clothing Store”</h3>
-                <p class="market-card-desc">
-                  Sklep z odzieżą, 2 nieruchomości, 5 pracowników.
-                </p>
-                <p class="market-card-price">Cena: 3 200 000$ RP</p>
-              </div>
-            </div>
-            <!-- 28 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/28/400/200" alt="Firma Restaurant Prime" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Firma – „Restaurant Prime”</h3>
-                <p class="market-card-desc">
-                  Restauracja z 3 kuchniami i 10 pracownikami.
-                </p>
-                <p class="market-card-price">Cena: 4 500 000$ RP</p>
-              </div>
-            </div>
-            <!-- 29 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/29/400/200" alt="Firma Construction" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Firma – „Construction”</h3>
-                <p class="market-card-desc">
-                  Pracownia budowlana z 5 pojazdami ciężarowymi.
-                </p>
-                <p class="market-card-price">Cena: 5 000 000$ RP</p>
-              </div>
-            </div>
-            <!-- 30 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/30/400/200" alt="Pojazd emergency car" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Samochód ratunkowy</h3>
-                <p class="market-card-desc">
-                  Zwykły samochód ambulans/gabaryt, zero uszkodzeń.
-                </p>
-                <p class="market-card-price">Cena: 1 050 000$ RP</p>
-              </div>
-            </div>
-              <!-- 31 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/31/400/200" alt="Pojazd bicycle" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Rower</h3>
-                <p class="market-card-desc">
-                  Smycz wiadomościowa, idealna do krótkich przejażdżek.
-                </p>
-                <p class="market-card-price">Cena: 120 000$ RP</p>
-              </div>
-            </div>
-            <!-- 32 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/32/400/200" alt="Pojazd skateboard" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Pojazd – Deskorolka</h3>
-                <p class="market-card-desc">
-                  Dojazd na litoce, do klubów, do parków.
-                </p>
-                <p class="market-card-price">Cena: 80 000$ RP</p>
-              </div>
-            </div>
-            <!-- 33 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/33/400/200" alt="Dom offshore villa" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Dom – Offshore Villa</h3>
-                <p class="market-card-desc">
-                  Luksusowa willa nad wodą, 6 pokoi, basen.
-                </p>
-                <p class="market-card-price">Cena: 9 500 000$ RP</p>
-              </div>
-            </div>
-            <!-- 34 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/34/400/200" alt="Firma Auto Shop" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Firma – „Auto Shop”</h3>
-                <p class="market-card-desc">
-                  Warsztat samochodowy z 3 stacjami serwisowymi.
-                </p>
-                <p class="market-card-price">Cena: 3 900 000$ RP</p>
-              </div>
-            </div>
-            <!-- 35 -->
-            <div class="market-card">
-              <img src="https://picsum.photos/seed/35/400/200" alt="Firma Drugstore" />
-              <div class="market-card-body">
-                <h3 class="market-card-title">Firma – „Drugstore”</h3>
-                <p class="market-card-desc">
-                  Sklep z lekami i przyborami, 2 lokacje.
-                </p>
-                <p class="market-card-price">Cena: 2 100 000$ RP</p>
-              </div>
-            </div>
+                <!-- 1 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/1/400/200" alt="Pojazd Toyota Supra" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Toyota Supra</h3>
+            <p class="market-card-desc">
+              Stan: 85% kondycji, 1 właściciel, brak kolizji.
+            </p>
+            <p class="market-card-price">Cena: 1 200 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
           </div>
         </div>
-        <!-- Administracja -->
+
+        <!-- 2 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/2/400/200" alt="Mieszkanie Vesper Bay" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Mieszkanie – Vesper Bay, 2 pok.</h3>
+            <p class="market-card-desc">
+              Nowe, urządzonę, w cichej części miasta.
+            </p>
+            <p class="market-card-price">Cena: 3 500 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/3/400/200" alt="Firma Prime Delivery" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Prime Delivery”</h3>
+            <p class="market-card-desc">
+              Transportowa firma z 2 pojazdami i 3 pracownikami.
+            </p>
+            <p class="market-card-price">Cena: 5 750 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/4/400/200" alt="Dom Beverly Hills" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Dom – Beverly Hills</h3>
+            <p class="market-card-desc">
+              Luksusowy dom w centrum Beverly, 4 pokoje.
+            </p>
+            <p class="market-card-price">Cena: 8 000 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/5/400/200" alt="Pojazd Porsche 911" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Porsche 911</h3>
+            <p class="market-card-desc">
+              Nowy, 2 rok gwarancji, zero kolizji.
+            </p>
+            <p class="market-card-price">Cena: 2 400 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/6/400/200" alt="Mieszkanie Downtown" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Mieszkanie – Downtown</h3>
+            <p class="market-card-desc">
+              Małe studio w centrum, dobra lokacja.
+            </p>
+            <p class="market-card-price">Cena: 1 100 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/7/400/200" alt="Pojazd Subaru WRX" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Subaru WRX</h3>
+            <p class="market-card-desc">
+              Auto sportowe, idealne na ulice Prime City.
+            </p>
+            <p class="market-card-price">Cena: 1 600 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/8/400/200" alt="Dom Rockford Hills" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Dom – Rockford Hills</h3>
+            <p class="market-card-desc">
+              3 pokoje, dwa garże, dobra dzielnica.
+            </p>
+            <p class="market-card-price">Cena: 4 200 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/9/400/200" alt="Pojazd BMW X3" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – BMW X3</h3>
+            <p class="market-card-desc">
+              SUV, bardzo mocne, do praca z logistyką.
+            </p>
+            <p class="market-card-price">Cena: 2 100 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/10/400/200" alt="Pojazd Harley‑Davidson" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Harley‑Davidson</h3>
+            <p class="market-card-desc">
+              Motocykl, idealny na coroczne eventy RP.
+            </p>
+            <p class="market-card-price">Cena: 1 400 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/11/400/200" alt="Pojazd Mitsubishi Evo" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Mitsubishi Evo</h3>
+            <p class="market-card-desc">
+              Auto sportowe, tuning, zero kolizji.
+            </p>
+            <p class="market-card-price">Cena: 1 800 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/12/400/200" alt="Pojazd Nissan GTR" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Nissan GTR</h3>
+            <p class="market-card-desc">
+              Nowe, 1000 koni mechanicznych, 1 właściciel.
+            </p>
+            <p class="market-card-price">Cena: 3 000 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 13 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/13/400/200" alt="Pojazd Range Rover" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Range Rover</h3>
+            <p class="market-card-desc">
+              SUV klasy premium, idealny na role bossa.
+            </p>
+            <p class="market-card-price">Cena: 2 600 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 14 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/14/400/200" alt="Pojazd Jeep Wrangler" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Jeep Wrangler</h3>
+            <p class="market-card-desc">
+              Dojazd do farmy, gór itp.
+            </p>
+            <p class="market-card-price">Cena: 1 300 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 15 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/15/400/200" alt="Pojazd Kombi VW" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Kombi VW</h3>
+            <p class="market-card-desc">
+              Idealny na przyjaciółskie wyjazdy RP.
+            </p>
+            <p class="market-card-price">Cena: 1 450 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 16 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/16/400/200" alt="Pojazd Audi A6" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Audi A6</h3>
+            <p class="market-card-desc">
+              Auto biznesowe, idealne na role CEO.
+            </p>
+            <p class="market-card-price">Cena: 1 900 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 17 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/17/400/200" alt="Pojazd Lexus LS" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Lexus LS</h3>
+            <p class="market-card-desc">
+              Luksus, cicha jazda, prestiżowy wygląd.
+            </p>
+            <p class="market-card-price">Cena: 2 800 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 18 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/18/400/200" alt="Pojazd Ford Mustang" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Ford Mustang</h3>
+            <p class="market-card-desc">
+              Klasyczny muscle car, idealny w gangach RP.
+            </p>
+            <p class="market-card-price">Cena: 1 700 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 19 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/19/400/200" alt="Pojazd Chevrolet Camaro" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Chevrolet Camaro</h3>
+            <p class="market-card-desc">
+              Druga opcja do Mustanga, równie mocne.
+            </p>
+            <p class="market-card-price">Cena: 1 700 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 20 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/20/400/200" alt="Pojazd Dodge Charger" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Dodge Charger</h3>
+            <p class="market-card-desc">
+              Mocny, szybki, idealny na numery policji.
+            </p>
+            <p class="market-card-price">Cena: 2 000 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 21 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/21/400/200" alt="Dom Glen Park" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Dom – Glen Park</h3>
+            <p class="market-card-desc">
+              5 pokoi, ogród, spokojna okolica.
+            </p>
+            <p class="market-card-price">Cena: 5 100 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 22 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/22/400/200" alt="Dom druga wyspa" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Dom – Druga wyspa</h3>
+            <p class="market-card-desc">
+              Mieszkanie na drugiej wyspie, bardzo ciche.
+            </p>
+            <p class="market-card-price">Cena: 2 200 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 23 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/23/400/200" alt="Pojazd dachówka" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Dachówka</h3>
+            <p class="market-card-desc">
+              Przydatne do logistki, dostaw, handlu.
+            </p>
+            <p class="market-card-price">Cena: 1 500 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 24 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/24/400/200" alt="Pojazd SUV na farmę" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – SUV na farmę</h3>
+            <p class="market-card-desc">
+              Duża przestrzeń, pasuje do pracy na roli.
+            </p>
+            <p class="market-card-price">Cena: 1 350 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+        
+        <!-- 25 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/25/400/200" alt="Firma Taxi Service" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Taxi Service”</h3>
+            <p class="market-card-desc">
+              5 samochodów, 8 kierowców, stałe przychody.
+            </p>
+            <p class="market-card-price">Cena: 4 800 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 26 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/26/400/200" alt="Firma Night Club" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Night Club”</h3>
+            <p class="market-card-desc">
+              Lokal nocny z 20 slotami dla pracowników.
+            </p>
+            <p class="market-card-price">Cena: 7 300 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 27 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/27/400/200" alt="Firma Clothing Store" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Clothing Store”</h3>
+            <p class="market-card-desc">
+              Sklep z odzieżą, 2 nieruchomości, 5 pracowników.
+            </p>
+            <p class="market-card-price">Cena: 3 200 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 28 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/28/400/200" alt="Firma Restaurant Prime" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Restaurant Prime”</h3>
+            <p class="market-card-desc">
+              Restauracja z 3 kuchniami i 10 pracownikami.
+            </p>
+            <p class="market-card-price">Cena: 4 500 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 29 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/29/400/200" alt="Firma Construction" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Construction”</h3>
+            <p class="market-card-desc">
+              Pracownia budowlana z 5 pojazdami ciężarowymi.
+            </p>
+            <p class="market-card-price">Cena: 5 000 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 30 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/30/400/200" alt="Pojazd emergency car" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Samochód ratunkowy</h3>
+            <p class="market-card-desc">
+              Zwykły samochód ambulans/gabaryt, zero uszkodzeń.
+            </p>
+            <p class="market-card-price">Cena: 1 050 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 31 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/31/400/200" alt="Pojazd bicycle" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Rower</h3>
+            <p class="market-card-desc">
+              Smycz wiadomościowa, idealna do krótkich przejażdżek.
+            </p>
+            <p class="market-card-price">Cena: 120 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 32 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/32/400/200" alt="Pojazd skateboard" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Pojazd – Deskorolka</h3>
+            <p class="market-card-desc">
+              Dojazd na litoce, do klubów, do parków.
+            </p>
+            <p class="market-card-price">Cena: 80 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 33 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/33/400/200" alt="Dom offshore villa" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Dom – Offshore Villa</h3>
+            <p class="market-card-desc">
+              Luksusowa willa nad wodą, 6 pokoi, basen.
+            </p>
+            <p class="market-card-price">Cena: 9 500 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 34 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/34/400/200" alt="Firma Auto Shop" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Auto Shop”</h3>
+            <p class="market-card-desc">
+              Warsztat samochodowy z 3 stacjami serwisowymi.
+            </p>
+            <p class="market-card-price">Cena: 3 900 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+
+        <!-- 35 -->
+        <div class="market-card">
+          <img src="https://picsum.photos/seed/35/400/200" alt="Firma Drugstore" />
+          <div class="market-card-body">
+            <h3 class="market-card-title">Firma – „Drugstore”</h3>
+            <p class="market-card-desc">
+              Sklep z lekami i przyborami, 2 lokacje.
+            </p>
+            <p class="market-card-price">Cena: 2 100 000$ RP</p>
+            <button class="btn market-card-btn" type="button">Kup teraz</button>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- Administracja -->
     <div id="admin" class="tab-content">
       <h2>👥 Administracja</h2>
       <p class="subtitle">
