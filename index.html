@@ -1,967 +1,201 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.免除0" />
-  <title>PrimeRP – Panel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dołącz do Naszego Zespołu | Rekrutacja</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e293b;
+            --accent-color: #f8fafc;
+            --text-color: #334155;
+        }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            color: var(--text-color);
+            background-color: var(--accent-color);
+        }
 
-  <style>
-    :root {
-      --bg: #000000;
-      --bg-card: #080808;
-      --bg-card-alt: rgba(8, 8, 8, 0.95);
-      --border: rgba(255, 165, 0, 0.12);
+        header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
 
-      --text: #f0f0f0;
-      --text-muted: #c0c0c0;
-      --text-primary: #ffa500;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
 
-      --accent: #ff8c00;
-      --accent-light: #ffaa33;
-      --accent-hover: #ffca66;
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
 
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
-      --shadow-card: 0 12px 48px rgba(0, 0, 0, 0.5);
+        /* Sekcja Ofert */
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
 
-      --border-radius: 16px;
-      --border-radius-sm: 10px;
-      --transition: 0.4s cubic-bezier(0.2, 0, 0.2, 1);
-    }
+        .job-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
 
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-    body {
-      background: radial-gradient(ellipse at top, #000000 0%, #080812 100%);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-    }
-    @media (max-width: 992px) {
-      body {
-        flex-direction: column;
-      }
-    }
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
 
-    /* ✅ Zamrożony sidebar z zakładkami */
-    .sidebar {
-      width: 270px;
-      background: radial-gradient(circle at top left, rgba(255, 165, 0, 0.08), transparent 60%), #000000;
-      border-right: 1px solid rgba(255, 165, 0, 0.24);
-      box-shadow: var(--shadow);
-      padding: 2rem 0 1.6rem 0;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      z-index: 10;
-    }
-    @media (max-width: 992px) {
-      .sidebar {
-        position: sticky;
-        top: 0;
-        width: 100%;
-        border-bottom: 1px solid rgba(255, 165, 0, 0.24);
-        border-right: none;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 0.8rem 0;
-      }
-    }
-    .sidebar-header {
-      padding: 0 1.6rem;
-      margin-bottom: 1.6rem;
-    }
-    @media (max-width: 992px) {
-      .sidebar-header {
-        display: none;
-      }
-    }
-    .sidebar-header h3 {
-      font-size: 1.3rem;
-      color: var(--text-primary);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .sidebar-header .subtitle {
-      font-size: 0.86rem;
-      color: #b0b0c0;
-      margin-top: 0.1rem;
-    }
+        .job-tag {
+            background: #dbeafe;
+            color: var(--primary-color);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
 
-    .sidebar a {
-      display: flex;
-      align-items: center;
-      padding: 0.9rem 1.4rem;
-      margin: 0 0.8rem 0.2rem 0.8rem;
-      text-decoration: none;
-      color: var(--text-muted);
-      border-radius: var(--border-radius-sm);
-      border: 1px solid transparent;
-      transition: var(--transition);
-      font-weight: 500;
-      position: relative;
-      gap: 0.6rem;
-    }
-    @media (max-width: 992px) {
-      .sidebar a {
-        padding: 0.7rem 1rem;
-        margin: 0.3rem;
-        border-radius: 8px;
-      }
-    }
-    .tab-icon {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: rgba(255, 165, 0, 0.16);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-    .sidebar a::before,
-    .sidebar a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: linear-gradient(180deg, var(--accent), var(--accent-light));
-      border-radius: inherit;
-      opacity: 0;
-      transition: var(--transition);
-      z-index: -1;
-    }
+        /* Formularz */
+        .apply-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            margin-top: 4rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
 
-    .sidebar a:hover {
-      background: rgba(255, 165, 0, 0.08);
-      border: 1px solid rgba(255, 165, 0, 0.16);
-      color: var(--text);
-    }
-    .sidebar a:hover::after {
-      opacity: 0.6;
-    }
-    .sidebar a.active {
-      background: rgba(255, 165, 0, 0.24);
-      border: 1px solid rgba(255, 165, 0, 0.48);
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-    .sidebar a.active::before {
-      opacity: 1;
-    }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-    /* ✅ Treść przewija się, sidebar stoi w miejscu */
-    .content {
-      margin-left: 270px;
-      padding: 2rem 2.4rem 2.2rem 2.4rem;
-      min-height: 100vh;
-      overflow-y: auto;
-    }
-    @media (max-width: 992px) {
-      .content {
-        margin-left: 0;
-        padding: 1.6rem 1.4rem;
-      }
-    }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
 
-    .tab-content {
-      display: none;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      padding: 2rem 2.2rem;
-      background: var(--bg-card-alt);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow-card);
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    @media (max-width: 576px) {
-      .tab-content {
-        padding: 1.4rem 1.4rem;
-      }
-    }
-    .tab-content::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 25% 25%, rgba(255, 165, 0, 0.08), transparent 55%);
-      pointer-events: none;
-    }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
 
-    .tab-content.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 100%;
+        }
 
-    h2 {
-      color: var(--text-primary);
-      font-size: 1.6rem;
-      margin-bottom: 1.2rem;
-      font-weight: 600;
-    }
-    .subtitle {
-      color: #b0b0c0;
-      font-size: 0.96rem;
-      margin-bottom: 1rem;
-      font-weight: 400;
-    }
-    p {
-      margin-bottom: 1rem;
-      line-height: 1.7;
-      font-size: 1rem;
-    }
-    ul, ol {
-      margin-bottom: 1.2rem;
-    }
-    ul li,
-    ol li {
-      margin-bottom: 0.5rem;
-      font-size: 0.98rem;
-    }
-    code {
-      font-size: 0.92rem;
-      background: rgba(255, 165, 0, 0.08);
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 165, 0, 0.12);
-    }
+        button:hover {
+            background-color: #1d4ed8;
+        }
 
-    .btn {
-      display: inline-block;
-      background: linear-gradient(90deg, var(--accent), var(--accent-light));
-      color: #ffffff;
-      padding: 0.75rem 1.5rem;
-      border-radius: var(--border-radius-sm);
-      text-decoration: none;
-      font-weight: 600;
-      margin-top: 0.7rem;
-      margin-right: 0.6rem;
-      transition: var(--transition);
-      box-shadow: 0 6px 24px rgba(255, 165, 0, 0.45);
-      border: 1px solid rgba(255, 165, 0, 0.35);
-      letter-spacing: -0.02em;
-    }
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 40px rgba(255, 165, 0, 0.6);
-    }
-    .btn:active {
-      transform: translateY(-1px);
-    }
-
-    /* ✅ Mały przycisk w karcie produkcyjnej – zawsze na dole */
-    .btn.market-card-btn {
-      padding: 0.5rem 0.9rem;
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 16px rgba(255, 165, 0, 0.45);
-      text-decoration: none;
-      margin-top: auto;          /* przycisk przylega na dół karty */
-      align-self: flex-start;    /* nie wypycha przycisk pośrodku */
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.4rem 0 1.2rem 0;
-      color: #808080;
-      font-size: 0.9rem;
-      margin-top: 1.8rem;
-    }
-    footer a {
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* ✅ Siatka kart „Rynek” – zawsze w rzędach */
-    .market-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.6rem;
-      margin-top: 1rem;
-      width: 100%;
-    }
-    @media (max-width: 992px) {
-      .market-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 1.2rem;
-      }
-    }
-    @media (max-width: 768px) {
-      .market-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 1rem;
-      }
-    }
-    @media (max-width: 576px) {
-      .market-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-    }
-
-    .market-card {
-      background: rgba(8, 8, 8, 0.92);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 165, 0, 0.16);
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-      transition: var(--transition);
-
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      min-height: 270px;   /* stała minimalna wysokość karty */
-    }
-    .market-card:hover {
-      box-shadow: 0 10px 36px rgba(0, 0, 0, 0.5);
-    }
-    .market-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      filter: brightness(0.9);
-    }
-    .market-card-body {
-      padding: 1rem 1.2rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .market-card-title {
-      color: #ffaa33;
-      font-size: 1.1rem;
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-    }
-    .market-card-desc {
-      color: #c0c0c0;
-      margin-bottom: 0.6rem;
-      font-size: 0.94rem;
-    }
-    .market-card-price {
-      color: #ffa500;
-      font-size: 0.94rem;
-      font-weight: 600;
-    }
-  </style>
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+    </style>
 </head>
 <body>
-  <!-- Sidebar – zakładki: Nowości, Rynek, O Nas itd. -->
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <h3>PrimeRP<span class="subtitle"> – panel serwera</span></h3>
-    </div>
-    <a href="#news"   onclick="openTab(event, 'news')"   class="active">
-      <span class="tab-icon">🔥</span> Nowości
-    </a>
-    <a href="#about"  onclick="openTab(event, 'about')"                 >
-      <span class="tab-icon">ℹ️</span> O Nas
-    </a>
-    <a href="#market" onclick="openTab(event, 'market')"               >
-      <span class="tab-icon">🛒</span> Rynek
-    </a>
-    <a href="#admin"  onclick="openTab(event, 'admin')"                >
-      <span class="tab-icon">👥</span> Administracja
-    </a>
-    <a href="#login"  onclick="openTab(event, 'login')"                >
-      <span class="tab-icon">🔐</span> Zaloguj
-    </a>
-  </div>
 
-  <!-- Treść – karty -->
-  <div class="content">
-    <!-- Nowości -->
-    <div id="news" class="tab-content active">
-      <h2>🔥 Nowości</h2>
-      <p class="subtitle">
-        Ostatnie aktualizacje serwera PrimeRP.
-      </p>
-      <p>
-        <strong>20.04.2026 – Duża aktualizacja RP</strong><br />
-        Dodano nowe prace, ulepszenia systemu policji, medycyny oraz rozbudowano system firm i nieruchomości.
-      </p>
-      <p>
-        Pełne szczegóły znajdziesz na kanale <code>#aktualizacje</code> i <code>#news</code> na Discordzie.
-      </p>
-      <a href="https://discord.gg/primerppl" class="btn" target="_blank">Sprawdź na Discordzie</a>
-    </div>
+    <header>
+        <h1>Buduj z nami przyszłość 🚀</h1>
+        <p>Szukamy pasjonatów, którzy nie boją się wyzwań.</p>
+    </header>
 
-    <!-- O Nas -->
-    <div id="about" class="tab-content">
-      <h2>ℹ️ O Nas</h2>
-      <p class="subtitle">
-        Serwer, jego zespół i styl gry.
-      </p>
-      <p>
-        PrimeRP to polski serwer <strong>Role Play</strong> w GTA V (FiveM), stworzony dla graczy, którzy chcą realnej,
-        ubogatej w historie i relacje rozgrywki.
-      </p>
-      <ul>
-        <li>Stabilna, rozwijana przez lata baza pod RP.</li>
-        <li>Własny system <strong>imieniowych kart</strong>, praw jazdy, firm i nieruchomości.</li>
-        <li>Profesjonalny zespół administracyjny i support na Discordzie.</li>
-      </ul>
-    </div>
+    <div class="container">
+        
+        <section>
+            <h2 class="section-title">Aktualne Oferty Pracy</h2>
+            <div class="job-grid">
+                
+                <div class="job-card">
+                    <span class="job-tag">Remote</span>
+                    <h3>Frontend Developer</h3>
+                    <p>Technologie: React, TypeScript, Tailwind CSS.</p>
+                    <p><strong>Wynagrodzenie:</strong> 12 000 - 18 000 PLN</p>
+                </div>
 
-<!-- ✅ Rynek – top 3 sprzedane, reszta w siatce po 4 -->
-<div id="market" class="tab-content">
-  <h2>🛒 Rynek</h2>
-  <p class="subtitle">
-    Oferty sprzedanych / kupowanych przedmiotów na serwerze PrimeRP.
-  </p>
+                <div class="job-card">
+                    <span class="job-tag">Warszawa / Hybrydowo</span>
+                    <h3>Project Manager</h3>
+                    <p>Zarządzanie zwinnymi zespołami (Scrum/Agile).</p>
+                    <p><strong>Wynagrodzenie:</strong> 10 000 - 15 000 PLN</p>
+                </div>
 
-  <!-- Top 3 – Top Sprzedaże -->
-  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.6rem; margin-bottom: 1.6rem;">
-    <!-- 1 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Toyota Supra" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Toyota Supra</h3>
-        <p class="market-card-desc">
-          Stan: 85% kondycji, 1 właściciel, brak kolizji.
-        </p>
-        <p class="market-card-price">Cena: 1 200 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
+                <div class="job-card">
+                    <span class="job-tag">Kraków</span>
+                    <h3>UX/UI Designer</h3>
+                    <p>Projektowanie interfejsów dla aplikacji SaaS.</p>
+                    <p><strong>Wynagrodzenie:</strong> 9 000 - 14 000 PLN</p>
+                </div>
 
-    <!-- 2 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Mieszkanie Vesper Bay" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Mieszkanie – Vesper Bay, 2 pok.</h3>
-        <p class="market-card-desc">
-          Nowe, urządzonę, w cichej części miasta.
-        </p>
-        <p class="market-card-price">Cena: 3 500 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
+            </div>
+        </section>
 
-    <!-- 3 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Firma Prime Delivery" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Firma – „Prime Delivery”</h3>
-        <p class="market-card-desc">
-          Transportowa firma z 2 pojazdami i 3 pracownikami.
-        </p>
-        <p class="market-card-price">Cena: 5 750 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-  </div>
+        <section id="apply" class="apply-form">
+            <h2 style="margin-top:0">Aplikuj teraz</h2>
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="name">Imię i Nazwisko</label>
+                    <input type="text" id="name" name="name" placeholder="Jan Kowalski" required>
+                </div>
 
-  <!-- Reszta 32 kart – siatka po 4 kolumny -->
-  <div class="market-grid" style="grid-template-columns: repeat(4, 1fr);">
-    <!-- 4 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Dom Beverly Hills" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Dom – Beverly Hills</h3>
-        <p class="market-card-desc">
-          Luksusowy dom w centrum Beverly, 4 pokoje.
-        </p>
-        <p class="market-card-price">Cena: 8 000 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="jan.kowalski@example.com" required>
+                </div>
 
-    <!-- 5 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Porsche 911" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Porsche 911</h3>
-        <p class="market-card-desc">
-          Nowy, 2 rok gwarancji, zero kolizji.
-        </p>
-        <p class="market-card-price">Cena: 2 400 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
+                <div class="form-group">
+                    <label for="position">Stanowisko</label>
+                    <select id="position" name="position">
+                        <option value="frontend">Frontend Developer</option>
+                        <option value="pm">Project Manager</option>
+                        <option value="uiux">UX/UI Designer</option>
+                    </select>
+                </div>
 
-    <!-- 6 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Mieszkanie Downtown" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Mieszkanie – Downtown</h3>
-        <p class="market-card-desc">
-          Małe studio w centrum, dobra lokacja.
-        </p>
-        <p class="market-card-price">Cena: 1 100 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
+                <div class="form-group">
+                    <label for="cv">Link do CV / Portfolio</label>
+                    <input type="url" id="cv" name="cv" placeholder="https://linkedin.com/in/twojprofil" required>
+                </div>
 
-    <!-- 7 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Subaru WRX" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Subaru WRX</h3>
-        <p class="market-card-desc">
-          Auto sportowe, idealne na ulice Prime City.
-        </p>
-        <p class="market-card-price">Cena: 1 600 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
+                <div class="form-group">
+                    <label for="message">Kilka słów o Tobie (opcjonalnie)</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
+                </div>
 
-    <!-- 8 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Dom Rockford Hills" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Dom – Rockford Hills</h3>
-        <p class="market-card-desc">
-          3 pokoje, dwa garże, dobra dzielnica.
-        </p>
-        <p class="market-card-price">Cena: 4 200 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
+                <button type="submit">Wyślij aplikację</button>
+            </form>
+        </section>
 
-    <!-- 9 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd BMW X3" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – BMW X3</h3>
-        <p class="market-card-desc">
-          SUV, bardzo mocne, do pracy z logistyką.
-        </p>
-        <p class="market-card-price">Cena: 2 100 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 10 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Harley‑Davidson" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Harley‑Davidson</h3>
-        <p class="market-card-desc">
-          Motocykl, idealny na coroczne eventy RP.
-        </p>
-        <p class="market-card-price">Cena: 1 400 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 11 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Mitsubishi Evo" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Mitsubishi Evo</h3>
-        <p class="market-card-desc">
-          Auto sportowe, tuning, zero kolizji.
-        </p>
-        <p class="market-card-price">Cena: 1 800 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 12 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Nissan GTR" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Nissan GTR</h3>
-        <p class="market-card-desc">
-          Nowe, 1000 koni mechanicznych, 1 właściciel.
-        </p>
-        <p class="market-card-price">Cena: 3 000 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 13 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Range Rover" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Range Rover</h3>
-        <p class="market-card-desc">
-          SUV klasy premium, idealny na role bossa.
-        </p>
-        <p class="market-card-price">Cena: 2 600 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 14 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Jeep Wrangler" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Jeep Wrangler</h3>
-        <p class="market-card-desc">
-          Dojazd do farmy, gór itp.
-        </p>
-        <p class="market-card-price">Cena: 1 300 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 15 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Kombi VW" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Kombi VW</h3>
-        <p class="market-card-desc">
-          Idealny na przyjaciółskie wyjazdy RP.
-        </p>
-        <p class="market-card-price">Cena: 1 450 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 16 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Audi A6" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Audi A6</h3>
-        <p class="market-card-desc">
-          Auto biznesowe, idealne na role CEO.
-        </p>
-        <p class="market-card-price">Cena: 1 900 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 17 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Lexus LS" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Lexus LS</h3>
-        <p class="market-card-desc">
-          Luksus, cicha jazda, prestiżowy wygląd.
-        </p>
-        <p class="market-card-price">Cena: 2 800 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 18 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Ford Mustang" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Ford Mustang</h3>
-        <p class="market-card-desc">
-          Klasyczny muscle car, idealny w gangach RP.
-        </p>
-        <p class="market-card-price">Cena: 1 700 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 19 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Chevrolet Camaro" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Chevrolet Camaro</h3>
-        <p class="market-card-desc">
-          Druga opcja do Mustanga, równie mocne.
-        </p>
-        <p class="market-card-price">Cena: 1 700 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 20 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd Dodge Charger" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Dodge Charger</h3>
-        <p class="market-card-desc">
-          Mocny, szybki, idealny na numery policji.
-        </p>
-        <p class="market-card-price">Cena: 2 000 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 21 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Dom Glen Park" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Dom – Glen Park</h3>
-        <p class="market-card-desc">
-          5 pokoi, ogród, spokojna okolica.
-        </p>
-        <p class="market-card-price">Cena: 5 100 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 22 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Dom druga wyspa" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Dom – Druga wyspa</h3>
-        <p class="market-card-desc">
-          Mieszkanie na drugiej wyspie, bardzo ciche.
-        </p>
-        <p class="market-card-price">Cena: 2 200 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-
-    <!-- 23 -->
-    <div class="market-card">
-      <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd dachówka" />
-      <div class="market-card-body">
-        <h3 class="market-card-title">Pojazd – Dachówka</h3>
-        <p class="market-card-desc">
-          Przydatne do logistki, dostaw, handlu.
-        </p>
-        <p class="market-card-price">Cena: 1 500 000$ RP</p>
-        <button class="btn market-card-btn" type="button">Kup teraz</button>
-      </div>
-    </div>
-    
-        <!-- 24 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd SUV na farmę" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Pojazd – SUV na farmę</h3>
-            <p class="market-card-desc">
-              Duża przestrzeń, pasuje do pracy na roli.
-            </p>
-            <p class="market-card-price">Cena: 1 350 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 25 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Firma Taxi Service" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Firma – „Taxi Service”</h3>
-            <p class="market-card-desc">
-              5 samochodów, 8 kierowców, stałe przychody.
-            </p>
-            <p class="market-card-price">Cena: 4 800 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 26 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Firma Night Club" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Firma – „Night Club”</h3>
-            <p class="market-card-desc">
-              Lokal nocny z 20 slotami dla pracowników.
-            </p>
-            <p class="market-card-price">Cena: 7 300 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 27 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Firma Clothing Store" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Firma – „Clothing Store”</h3>
-            <p class="market-card-desc">
-              Sklep z odzieżą, 2 nieruchomości, 5 pracowników.
-            </p>
-            <p class="market-card-price">Cena: 3 200 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 28 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Firma Restaurant Prime" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Firma – „Restaurant Prime”</h3>
-            <p class="market-card-desc">
-              Restauracja z 3 kuchniami i 10 pracownikami.
-            </p>
-            <p class="market-card-price">Cena: 4 500 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 29 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Firma Construction" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Firma – „Construction”</h3>
-            <p class="market-card-desc">
-              Pracownia budowlana z 5 pojazdami ciężarowymi.
-            </p>
-            <p class="market-card-price">Cena: 5 000 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 30 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd emergency car" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Pojazd – Samochód ratunkowy</h3>
-            <p class="market-card-desc">
-              Zwykły samochód ambulans/gabaryt, zero uszkodzeń.
-            </p>
-            <p class="market-card-price">Cena: 1 050 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 31 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd bicycle" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Pojazd – Rower</h3>
-            <p class="market-card-desc">
-              Smycz wiadomościowa, idealna do krótkich przejażdżek.
-            </p>
-            <p class="market-card-price">Cena: 120 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 32 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Pojazd skateboard" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Pojazd – Deskorolka</h3>
-            <p class="market-card-desc">
-              Dojazd na litoce, do klubów, do parków.
-            </p>
-            <p class="market-card-price">Cena: 80 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 33 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Dom offshore villa" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Dom – Offshore Villa</h3>
-            <p class="market-card-desc">
-              Luksusowa willa nad wodą, 6 pokoi, basen.
-            </p>
-            <p class="market-card-price">Cena: 9 500 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 34 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Firma Auto Shop" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Firma – „Auto Shop”</h3>
-            <p class="market-card-desc">
-              Warsztat samochodowy z 3 stacjami serwisowymi.
-            </p>
-            <p class="market-card-price">Cena: 3 900 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-
-        <!-- 35 -->
-        <div class="market-card">
-          <img src="https://i.postimg.cc/SNgv55Yt/images-(9).jpg" alt="Firma Drugstore" />
-          <div class="market-card-body">
-            <h3 class="market-card-title">Firma – „Drugstore”</h3>
-            <p class="market-card-desc">
-              Sklep z lekami i przyborami, 2 lokacje.
-            </p>
-            <p class="market-card-price">Cena: 2 100 000$ RP</p>
-            <button class="btn market-card-btn" type="button">Kup teraz</button>
-          </div>
-        </div>
-     <!-- Administracja -->
-    <div id="admin" class="tab-content">
-      <h2>👥 Administracja</h2>
-      <p class="subtitle">
-        Zespół, który dba o serwer i społeczność.
-      </p>
-      <p>
-        Nasz zespół administracyjny jest odpowiedzialny za rozwój serwera, egzekwowanie regulaminu oraz rozwój RP.
-      </p>
-      <ul>
-        <li><strong>Head‑Admin</strong> – kierowanie kierunkiem serwera i decyzje strategiczne.</li>
-        <li><strong>Admini</strong> – wspieranie graczy, rozwiązywanie konfliktów, organizacja wydarzeń.</li>
-        <li><strong>Support</strong> – pomoc na Discordzie, odpowiedzi na pytania, pomoc dla nowych graczy.</li>
-      </ul>
-    </div>
-
-    <!-- Zaloguj -->
-    <div id="login" class="tab-content">
-      <h2>🔐 Zaloguj</h2>
-      <p class="subtitle">
-        Panel administracyjny – tylko dla urzędników i adminów.
-      </p>
-      <p>
-        <strong>Panel logowania</strong> jest dostępny wyłącznie dla osób z odpowiednimi uprawnieniami.
-      </p>
-      <ol>
-        <li>Wejdź na panel: <code>panel.primerp.pl</code> (lub Twój adres panelu).</li>
-        <li>Wpisz swój <strong>login</strong> i <strong>hasło</strong>.</li>
-        <li>Po zalogowaniu uzyskaj dostęp do panelu administracyjnego.</li>
-      </ol>
-      <p>
-        Bez odpowiednich uprawnień nie masz możliwości zalogowania się do panelu.
-      </p>
-      <a href="https://panel.primerp.pl" class="btn" target="_blank">Panel administracyjny</a>
     </div>
 
     <footer>
-      &copy; 2026 PrimeRP – Polski serwer Role Play GTA V.<br />
-      Strona stworzona specjalnie dla serwera <a href="https://discord.gg/primerppl" target="_blank">PrimeRP</a>.
+        &copy; 2026 TwojaFirma Sp. z o.o. Wszystkie prawa zastrzeżone.
     </footer>
-  </div>
 
-  <!-- Skrypt – przełączanie zakładek -->
-  <script>
-    function openTab(evt, tabId) {
-      // ukryj wszystkie karty
-      const contents = document.querySelectorAll(".tab-content");
-      for (let i = 0; i < contents.length; i++) {
-        contents[i].classList.remove("active");
-      }
-
-      // usunięcie aktywnego z zakładki
-      const links = document.querySelectorAll(".sidebar a");
-      for (let i = 0; i < links.length; i++) {
-        links[i].classList.remove("active");
-      }
-
-      // pokazanie wybranej karty
-      const tab = document.getElementById(tabId);
-      if (tab) {
-        tab.classList.add("active");
-      }
-
-      // zaznaczenie aktywnej zakładki
-      if (evt && evt.currentTarget) {
-        evt.currentTarget.classList.add("active");
-      }
-    }
-  </script>
 </body>
 </html>
