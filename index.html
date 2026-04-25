@@ -3,198 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dołącz do Naszego Zespołu | Rekrutacja</title>
+    <title>Rekrutacja do Klanu [BEST]</title>
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e293b;
-            --accent-color: #f8fafc;
-            --text-color: #334155;
+            --bg-dark: #0f172a;
+            --accent-gold: #fbbf24;
+            --accent-red: #ef4444;
+            --text-light: #f1f5f9;
+            --card-bg: #1e293b;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            font-family: 'Black Ops One', 'Arial Black', sans-serif; /* Styl militarny/gamingowy */
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             margin: 0;
-            color: var(--text-color);
-            background-color: var(--accent-color);
+            line-height: 1.6;
         }
 
         header {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
+            height: 60vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), 
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-gold);
+        }
+
+        .logo-text {
+            font-size: 5rem;
+            letter-spacing: 10px;
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+            margin: 0;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
+            max-width: 900px;
+            margin: -50px auto 50px;
+            padding: 0 20px;
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        /* Sekcja Ofert */
-        .job-grid {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .job-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .job-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .job-tag {
-            background: #dbeafe;
-            color: var(--primary-color);
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        /* Formularz */
-        .apply-form {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            margin-top: 4rem;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            width: 100%;
-        }
-
-        button:hover {
-            background-color: #1d4ed8;
-        }
-
-        footer {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            font-size: 0.9rem;
-            color: #64748b;
+            margin-bottom: 40px;
         }
+
+        .stat-item {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+        }
+
+        .stat-item h3 { color: var(--accent-gold); margin-bottom: 5px; }
+
+        .requirements {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        ul { list-style: none; padding: 0; }
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+        }
+        li::before { content: '✔️'; margin-right: 15px; color: var(--accent-gold); }
+
+        .apply-btn {
+            display: block;
+            width: 100%;
+            background: var(--accent-red);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 30px;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: #b91c1c;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+
+        footer { text-align: center; padding: 40px; color: #64748b; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Buduj z nami przyszłość 🚀</h1>
-        <p>Szukamy pasjonatów, którzy nie boją się wyzwań.</p>
+        <h1 class="logo-text">BEST</h1>
+        <p>TYLKO DLA NAJLEPSZYCH. DOŁĄCZ LUB ZGIŃ.</p>
     </header>
 
     <div class="container">
         
-        <section>
-            <h2 class="section-title">Aktualne Oferty Pracy</h2>
-            <div class="job-grid">
-                
-                <div class="job-card">
-                    <span class="job-tag">Remote</span>
-                    <h3>Frontend Developer</h3>
-                    <p>Technologie: React, TypeScript, Tailwind CSS.</p>
-                    <p><strong>Wynagrodzenie:</strong> 12 000 - 18 000 PLN</p>
-                </div>
-
-                <div class="job-card">
-                    <span class="job-tag">Warszawa / Hybrydowo</span>
-                    <h3>Project Manager</h3>
-                    <p>Zarządzanie zwinnymi zespołami (Scrum/Agile).</p>
-                    <p><strong>Wynagrodzenie:</strong> 10 000 - 15 000 PLN</p>
-                </div>
-
-                <div class="job-card">
-                    <span class="job-tag">Kraków</span>
-                    <h3>UX/UI Designer</h3>
-                    <p>Projektowanie interfejsów dla aplikacji SaaS.</p>
-                    <p><strong>Wynagrodzenie:</strong> 9 000 - 14 000 PLN</p>
-                </div>
-
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>Top 1%</h3>
+                <p>Ranking Globalny</p>
             </div>
-        </section>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Aktywnych Graczy</p>
+            </div>
+            <div class="stat-item">
+                <h3>Daily</h3>
+                <p>Wojny Klanów</p>
+            </div>
+        </div>
 
-        <section id="apply" class="apply-form">
-            <h2 style="margin-top:0">Aplikuj teraz</h2>
-            <form action="#" method="POST">
-                <div class="form-group">
-                    <label for="name">Imię i Nazwisko</label>
-                    <input type="text" id="name" name="name" placeholder="Jan Kowalski" required>
-                </div>
+        <section class="requirements">
+            <h2>Czego wymagamy?</h2>
+            <ul>
+                <li>Wiek: 18+ (lub wysoka kultura osobista)</li>
+                <li>Obowiązkowy Discord i sprawny mikrofon</li>
+                <li>Aktywność min. 4 wieczory w tygodniu</li>
+                <li>KD Ratio na poziomie minimum 1.5</li>
+                <li>Brak banów w historii konta</li>
+            </ul>
 
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="jan.kowalski@example.com" required>
-                </div>
+            <h2>Co oferujemy?</h2>
+            <ul>
+                <li>Własny serwer Discord z botami premium</li>
+                <li>Treningi pod okiem topowych graczy</li>
+                <li>Udział w turniejach z nagrodami</li>
+                <li>Luźną atmosferę (poza godzinami raidów!)</li>
+            </ul>
 
-                <div class="form-group">
-                    <label for="position">Stanowisko</label>
-                    <select id="position" name="position">
-                        <option value="frontend">Frontend Developer</option>
-                        <option value="pm">Project Manager</option>
-                        <option value="uiux">UX/UI Designer</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="cv">Link do CV / Portfolio</label>
-                    <input type="url" id="cv" name="cv" placeholder="https://linkedin.com/in/twojprofil" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Kilka słów o Tobie (opcjonalnie)</label>
-                    <textarea id="message" name="message" rows="4"></textarea>
-                </div>
-
-                <button type="submit">Wyślij aplikację</button>
-            </form>
+            <a href="https://discord.gg/twoj-link" class="apply-btn">Aplikuj przez Discord</a>
         </section>
 
     </div>
 
     <footer>
-        &copy; 2026 TwojaFirma Sp. z o.o. Wszystkie prawa zastrzeżone.
+        &copy; 2026 Klan BEST. Strona stworzona dla prawdziwych wojowników.
     </footer>
 
 </body>
