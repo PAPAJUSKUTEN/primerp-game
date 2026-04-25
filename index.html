@@ -1,94 +1,493 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Klan BEST | Rebirth Champions Ultimate</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Klan BEST - Rebirth Champions Ultimate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a0a00 100%); color: #fff; display: flex; min-height: 100vh; }
-    .sidebar { width: 280px; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); border-right: 2px solid #ff6600; padding: 2rem 1rem; position: fixed; height: 100vh; overflow-y: auto; }
-    .sidebar h1 { font-size: 1.8rem; background: linear-gradient(45deg, #ff6600, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem; text-align: center; }
-    .sidebar ul { list-style: none; }
-    .sidebar li { margin-bottom: 1rem; }
-    .sidebar a { color: #fff; text-decoration: none; display: block; padding: 1rem 1.5rem; border-radius: 12px; transition: all 0.3s; border: 1px solid transparent; }
-    .sidebar a:hover, .sidebar a.active { background: #ff6600; border-color: #ff6600; transform: translateX(5px); }
-    .main { margin-left: 280px; padding: 2rem; flex: 1; }
-    .section { display: none; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; border: 1px solid rgba(255,102,0,0.2); min-height: 60vh; }
-    .section.active { display: block; }
-    .section h2 { color: #ff6600; margin-bottom: 1.5rem; font-size: 2rem; }
-    ul { list-style: none; }
-    ul li { padding: 0.8rem 0; padding-left: 2rem; position: relative; }
-    ul li::before { content: '⚡'; position: absolute; left: 0; color: #ff6600; font-size: 1.2rem; }
-    .discord-btn { background: #5865f2; color: #fff; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; margin-top: 1rem; display: inline-block; transition: transform 0.3s; }
-    .discord-btn:hover { transform: scale(1.05); }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
-    .stat-card { background: rgba(255,102,0,0.1); padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,102,0,0.3); }
-    @media (max-width: 768px) { .sidebar { width: 100%; height: auto; position: relative; } .main { margin-left: 0; } }
+    :root{
+      --bg1:#9fe9ff;
+      --bg2:#fff3cf;
+      --panel:#ffffff;
+      --panel2:#f8fbff;
+      --border:#2b3b4a;
+      --text:#213041;
+      --accent:#ff4f6d;
+      --accent2:#7b5cff;
+      --accent3:#57d15f;
+      --shadow:0 8px 0 rgba(43,59,74,.22), 0 14px 30px rgba(43,59,74,.15);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Fredoka",sans-serif;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.8) 0 10%, transparent 11%),
+        radial-gradient(circle at 80% 30%, rgba(255,255,255,.55) 0 8%, transparent 9%),
+        radial-gradient(circle at 70% 80%, rgba(255,255,255,.35) 0 7%, transparent 8%),
+        linear-gradient(180deg,var(--bg1),#8edbff 45%, var(--bg2));
+      color:var(--text);
+      overflow-x:hidden;
+    }
+
+    .app{
+      display:flex;
+      min-height:100vh;
+      gap:18px;
+      padding:18px;
+    }
+
+    .sidebar{
+      width:118px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      flex-shrink:0;
+    }
+
+    .nav-btn{
+      background:linear-gradient(180deg,#fff,#eef6ff);
+      border:4px solid var(--border);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:10px 8px;
+      text-align:center;
+      cursor:pointer;
+      transition:.15s ease;
+      user-select:none;
+      font-size:13px;
+      font-weight:700;
+      color:#27384a;
+    }
+
+    .nav-btn:hover{
+      transform:translateY(-2px) scale(1.02);
+    }
+
+    .nav-btn.active{
+      background:linear-gradient(180deg,#fff7fb,#ffdce6);
+      border-color:#ff5677;
+    }
+
+    .nav-icon{
+      width:42px;
+      height:42px;
+      margin:0 auto 6px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-size:24px;
+      background:#dff6ff;
+      border:3px solid var(--border);
+    }
+
+    .main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      min-width:0;
+    }
+
+    .topbar{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .stat{
+      min-width:170px;
+      background:linear-gradient(180deg,#fff,#edf7ff);
+      border:4px solid var(--border);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:10px 16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
+    }
+
+    .stat .emoji{
+      width:42px;height:42px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      font-size:24px;
+      border:3px solid var(--border);
+      background:#fff;
+      flex-shrink:0;
+    }
+
+    .stat .label{
+      font-size:14px;
+      opacity:.85;
+      line-height:1.1;
+    }
+
+    .stat .value{
+      font-size:22px;
+      color:#1c2d3c;
+      line-height:1;
+    }
+
+    .content{
+      display:none;
+      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      border:4px solid var(--border);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      min-height:620px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .content.active{display:block;}
+
+    .header-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .title{
+      font-size:40px;
+      color:#213041;
+      text-shadow:3px 3px 0 #ffffff, 0 0 0 var(--border);
+      letter-spacing:.5px;
+    }
+
+    .search{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:#fff;
+      border:4px solid var(--border);
+      border-radius:999px;
+      padding:8px 14px;
+      min-width:min(360px,100%);
+    }
+
+    .search input{
+      border:none;
+      outline:none;
+      width:100%;
+      font-family:inherit;
+      font-size:16px;
+      background:transparent;
+      color:var(--text);
+    }
+
+    .close-x{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      border:4px solid var(--border);
+      background:linear-gradient(180deg,#ff6d82,#ff365d);
+      color:#fff;
+      font-size:32px;
+      font-weight:700;
+      display:grid;
+      place-items:center;
+      box-shadow:var(--shadow);
+      margin-left:auto;
+    }
+
+    .equipped{
+      text-align:center;
+      font-size:22px;
+      font-weight:700;
+      margin-bottom:14px;
+    }
+
+    .pets-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(90px, 1fr));
+      gap:12px;
+    }
+
+    .pet{
+      aspect-ratio:1;
+      border:3px solid var(--border);
+      border-radius:18px;
+      box-shadow:0 5px 0 rgba(43,59,74,.2);
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      padding:8px;
+      text-align:center;
+      color:#fff;
+      font-weight:700;
+      font-size:13px;
+      text-shadow:2px 2px 0 rgba(0,0,0,.35);
+    }
+
+    .pet span{
+      position:absolute;
+      bottom:6px;
+      left:0;
+      right:0;
+      font-size:14px;
+    }
+
+    .c1{background:linear-gradient(180deg,#ffde59,#ff9f1a);}
+    .c2{background:linear-gradient(180deg,#ff8f5a,#d94a2b);}
+    .c3{background:linear-gradient(180deg,#7be7ff,#3da7ff);}
+    .c4{background:linear-gradient(180deg,#ff7ad9,#b145ff);}
+    .c5{background:linear-gradient(180deg,#7dff6f,#25b84a);}
+    .c6{background:linear-gradient(180deg,#c56dff,#7f2bff);}
+    .c7{background:linear-gradient(180deg,#ffe57b,#ff6bcb);}
+
+    .tabs{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .card{
+      background:#fff;
+      border:4px solid var(--border);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    .card h3{
+      font-size:24px;
+      margin-bottom:10px;
+      color:#203040;
+    }
+
+    .card p, .card li{
+      font-size:17px;
+      line-height:1.45;
+    }
+
+    .card ul{
+      padding-left:20px;
+      display:grid;
+      gap:8px;
+    }
+
+    .btn{
+      display:inline-block;
+      margin-top:14px;
+      background:linear-gradient(180deg,#57d15f,#2cae42);
+      color:#fff;
+      text-decoration:none;
+      border:4px solid var(--border);
+      border-radius:18px;
+      padding:12px 18px;
+      font-weight:700;
+      box-shadow:var(--shadow);
+    }
+
+    .btn.discord{
+      background:linear-gradient(180deg,#7b5cff,#5b33ff);
+    }
+
+    .reward-side{
+      position:absolute;
+      right:18px;
+      top:50%;
+      transform:translateY(-50%);
+      width:72px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .mini{
+      width:100%;
+      height:72px;
+      border-radius:22px;
+      border:4px solid var(--border);
+      background:linear-gradient(180deg,#fff,#edf7ff);
+      box-shadow:var(--shadow);
+      display:grid;
+      place-items:center;
+      font-size:28px;
+    }
+
+    @media (max-width: 980px){
+      .app{flex-direction:column;}
+      .sidebar{width:100%;flex-direction:row;flex-wrap:wrap;}
+      .nav-btn{flex:1 1 110px;}
+      .reward-side{display:none;}
+      .content{min-height:auto;}
+    }
+
+    @media (max-width: 640px){
+      .title{font-size:30px;}
+      .search{min-width:100%;}
+      .stat{min-width:100%;}
+    }
   </style>
 </head>
 <body>
-  <nav class="sidebar">
-    <h1>🏆 Klan BEST</h1>
-    <ul>
-      <li><a href="#" onclick="showTab('home')" class="active">🏠 Strona Główna</a></li>
-      <li><a href="#" onclick="showTab('stats')">📊 Statystyki</a></li>
-      <li><a href="#" onclick="showTab('czlonkowie')">👥 Członkowie</a></li>
-      <li><a href="#" onclick="showTab('boosty')">🚀 Boosty & Rebirths</a></li>
-      <li><a href="#" onclick="showTab('rekrutacja')">✨ Rekrutacja</a></li>
-    </ul>
-    <a href="https://discord.gg/YOURDISCORD" class="discord-btn" style="margin-top: 2rem;">Dołącz na Discord</a>
-  </nav>
-  <main class="main">
-    <div id="home" class="section active">
-      <h2>Witaj w Klan BEST – Rebirth Champions Ultimate</h2>
-      <p>Najsilniejszy klan w RCU! Pomagamy w boostach, rebirths i pet farming. Dołącz i stań się BEST!</p>
-      <div class="stats-grid">
-        <div class="stat-card"><h3>1.2M</h3><p>Całkowity Rebirth</p></div>
-        <div class="stat-card"><h3>250+</h3><p>Członkowie</p></div>
-        <div class="stat-card"><h3>500k</h3><p>Boostów Dziennie</p></div>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="nav-btn active" onclick="showTab('home', this)">
+        <div class="nav-icon">🏠</div>
+        Strona
       </div>
-    </div>
-    <div id="stats" class="section">
-      <h2>Statystyki Klanu</h2>
-      <ul>
-        <li>Średni Rebirth: 50k na członka</li>
-        <li>Top Pet: Divine Phoenix x10</li>
-        <li>Całkowity Damage: 10B+</li>
-        <li>World Record: 1h 30min do 1M Rebirth</li>
-      </ul>
-    </div>
-    <div id="czlonkowie" class="section">
-      <h2>Top Członkowie</h2>
-      <ul>
-        <li>Leader: BestRebirther (2M Rebirth)</li>
-        <li>Co-Leader: UltimateBooster</li>
-        <li>VIP: PetMasterPL, DamageKing</li>
-      </ul>
-    </div>
-    <div id="boosty" class="section">
-      <h2>Boosty & Rebirths</h2>
-      <p>Skrypty boostów, eventy farmingu i rebirth parties. Wymaksuj konto z nami!</p>
-      <ul>
-        <li>2x Money Boost na eventach</li>
-        <li>Pet Sharing System</li>
-        <li>Rebirth Challenges z nagrodami</li>
-      </ul>
-    </div>
-    <div id="rekrutacja" class="section">
-      <h2>Rekrutacja</h2>
-      <p>Min. 10k Rebirth + daily boosty. Aplikuj na Discord: stats + screen z rebirth board.</p>
-    </div>
-  </main>
+      <div class="nav-btn" onclick="showTab('pets', this)">
+        <div class="nav-icon">🐾</div>
+        Pets
+      </div>
+      <div class="nav-btn" onclick="showTab('clan', this)">
+        <div class="nav-icon">🛡️</div>
+        Klan
+      </div>
+      <div class="nav-btn" onclick="showTab('recruit', this)">
+        <div class="nav-icon">✨</div>
+        Rekrutacja
+      </div>
+      <div class="nav-btn" onclick="showTab('contact', this)">
+        <div class="nav-icon">💬</div>
+        Kontakt
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="stat"><div class="emoji">🔁</div><div><div class="value">5.26N</div><div class="label">Rebirths</div></div></div>
+        <div class="stat"><div class="emoji">🖱️</div><div><div class="value">99.79NvD</div><div class="label">Clicks</div></div></div>
+        <div class="stat"><div class="emoji">💎</div><div><div class="value">242.1N</div><div class="label">Gems</div></div></div>
+      </div>
+
+      <section id="home" class="content active">
+        <div class="header-row">
+          <div class="title">Klan BEST</div>
+          <div class="search"><span>🔎</span><input type="text" placeholder="Search"></div>
+          <div class="close-x">×</div>
+        </div>
+
+        <div class="equipped">Rebirth Champions Ultimate</div>
+
+        <div class="tabs">
+          <div class="card">
+            <h3>O klanie</h3>
+            <p>BEST to klan tworzony dla graczy Rebirth Champions Ultimate, którzy chcą farmić szybciej, wymieniać się buildami i robić eventy razem.</p>
+          </div>
+          <div class="card">
+            <h3>Nasze cele</h3>
+            <ul>
+              <li>Wspólne boosty i farmienie.</li>
+              <li>Pomoc w petach i rebirthach.</li>
+              <li>Aktywność w grze i na Discordzie.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Dołącz do nas</h3>
+            <p>Jeśli chcesz grać w zespole i rozwijać konto szybciej, ten klan jest dla Ciebie.</p>
+            <a class="btn discord" href="#">Discord klanu</a>
+          </div>
+        </div>
+
+        <div class="reward-side">
+          <div class="mini">🐾</div>
+          <div class="mini">⚔️</div>
+          <div class="mini">🏆</div>
+        </div>
+      </section>
+
+      <section id="pets" class="content">
+        <div class="header-row">
+          <div class="title">Pets</div>
+          <div class="search"><span>🔎</span><input type="text" placeholder="Search"></div>
+          <div class="close-x">×</div>
+        </div>
+
+        <div class="equipped">Equipped (22/22)</div>
+
+        <div class="pets-grid">
+          <div class="pet c1">⭐<span>155%</span></div>
+          <div class="pet c2">🧸<span>128%</span></div>
+          <div class="pet c3">❄️<span>100%</span></div>
+          <div class="pet c4">🦋<span>2Sp</span></div>
+          <div class="pet c6">💠<span>1.68Sp</span></div>
+          <div class="pet c4">🌸<span>1.2Sp</span></div>
+          <div class="pet c5">🌿<span>840Sx</span></div>
+          <div class="pet c5">🌿<span>840Sx</span></div>
+          <div class="pet c5">🌿<span>840Sx</span></div>
+          <div class="pet c5">🌿<span>840Sx</span></div>
+          <div class="pet c5">🌿<span>840Sx</span></div>
+          <div class="pet c7">✨<span>600Sx</span></div>
+          <div class="pet c1">🔥<span>420Sx</span></div>
+          <div class="pet c5">🍀<span>420Sx</span></div>
+          <div class="pet c4">💜<span>416Sx</span></div>
+          <div class="pet c6">💜<span>416Sx</span></div>
+          <div class="pet c4">💜<span>416Sx</span></div>
+          <div class="pet c6">💜<span>336Sx</span></div>
+          <div class="pet c4">💜<span>336Sx</span></div>
+          <div class="pet c6">💜<span>336Sx</span></div>
+        </div>
+      </section>
+
+      <section id="clan" class="content">
+        <div class="header-row">
+          <div class="title">Klan</div>
+          <div class="close-x">×</div>
+        </div>
+        <div class="tabs">
+          <div class="card">
+            <h3>Jak działamy</h3>
+            <p>Gramy razem, robimy sesje boostów i pomagamy nowym członkom szybko wejść na wyższy poziom.</p>
+          </div>
+          <div class="card">
+            <h3>Wymagania</h3>
+            <ul>
+              <li>Aktywność w grze.</li>
+              <li>Chęć współpracy.</li>
+              <li>Szacunek do innych graczy.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="recruit" class="content">
+        <div class="header-row">
+          <div class="title">Rekrutacja</div>
+          <div class="close-x">×</div>
+        </div>
+        <div class="card">
+          <h3>Dołącz do BEST</h3>
+          <p>Napisz na Discordzie, pokaż swoje staty i opowiedz, jak grasz w Rebirth Champions Ultimate.</p>
+          <a class="btn" href="#">Aplikuj</a>
+        </div>
+      </section>
+
+      <section id="contact" class="content">
+        <div class="header-row">
+          <div class="title">Kontakt</div>
+          <div class="close-x">×</div>
+        </div>
+        <div class="card">
+          <h3>Kontakt z liderem</h3>
+          <p>Dodaj tutaj Discord, Roblox nick albo link do grupy klanu.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
   <script>
-    function showTab(tabName) {
-      const sections = document.querySelectorAll('.section');
-      const links = document.querySelectorAll('.sidebar a');
-      sections.forEach(s => s.classList.remove('active'));
-      links.forEach(l => l.classList.remove('active'));
-      document.getElementById(tabName).classList.add('active');
-      event.target.classList.add('active');
+    function showTab(id, el){
+      document.querySelectorAll('.content').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(x => x.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      el.classList.add('active');
     }
   </script>
 </body>
