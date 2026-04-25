@@ -1,160 +1,70 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekrutacja do Klanu [BEST]</title>
-    <style>
-        :root {
-            --bg-dark: #0f172a;
-            --accent-gold: #fbbf24;
-            --accent-red: #ef4444;
-            --text-light: #f1f5f9;
-            --card-bg: #1e293b;
-        }
-
-        body {
-            font-family: 'Black Ops One', 'Arial Black', sans-serif; /* Styl militarny/gamingowy */
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        header {
-            height: 60vh;
-            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), 
-                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 4px solid var(--accent-gold);
-        }
-
-        .logo-text {
-            font-size: 5rem;
-            letter-spacing: 10px;
-            color: var(--accent-gold);
-            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
-            margin: 0;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: -50px auto 50px;
-            padding: 0 20px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .stat-item {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-        }
-
-        .stat-item h3 { color: var(--accent-gold); margin-bottom: 5px; }
-
-        .requirements {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        ul { list-style: none; padding: 0; }
-        li {
-            padding: 10px 0;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            align-items: center;
-        }
-        li::before { content: '✔️'; margin-right: 15px; color: var(--accent-gold); }
-
-        .apply-btn {
-            display: block;
-            width: 100%;
-            background: var(--accent-red);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 1.5rem;
-            text-decoration: none;
-            border-radius: 8px;
-            margin-top: 30px;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-
-        .apply-btn:hover {
-            background: #b91c1c;
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
-        }
-
-        footer { text-align: center; padding: 40px; color: #64748b; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Klan BEST | Roblox</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a0a00 100%); color: #fff; min-height: 100vh; }
+    header { background: rgba(0,0,0,0.9); padding: 1rem 2rem; text-align: center; border-bottom: 2px solid #ff6600; }
+    header h1 { font-size: 2.5rem; background: linear-gradient(45deg, #ff6600, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    nav { display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; flex-wrap: wrap; }
+    nav a { color: #fff; text-decoration: none; padding: 0.8rem 1.5rem; border: 1px solid #ff6600; border-radius: 50px; transition: all 0.3s; }
+    nav a:hover { background: #ff6600; transform: translateY(-2px); }
+    .container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+    .section { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; border: 1px solid rgba(255,102,0,0.2); }
+    .section h2 { color: #ff6600; margin-bottom: 1rem; font-size: 2rem; }
+    ul { list-style: none; }
+    ul li { padding: 0.5rem 0; padding-left: 2rem; position: relative; }
+    ul li::before { content: '⭐'; position: absolute; left: 0; color: #ff6600; }
+    .discord-btn { display: inline-block; background: #5865f2; color: #fff; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; margin-top: 1rem; transition: transform 0.3s; }
+    .discord-btn:hover { transform: scale(1.05); }
+    @media (max-width: 768px) { header h1 { font-size: 2rem; } nav { flex-direction: column; align-items: center; } }
+  </style>
 </head>
 <body>
-
-    <header>
-        <h1 class="logo-text">BEST</h1>
-        <p>TYLKO DLA NAJLEPSZYCH. DOŁĄCZ LUB ZGIŃ.</p>
-    </header>
-
-    <div class="container">
-        
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3>Top 1%</h3>
-                <p>Ranking Globalny</p>
-            </div>
-            <div class="stat-item">
-                <h3>50+</h3>
-                <p>Aktywnych Graczy</p>
-            </div>
-            <div class="stat-item">
-                <h3>Daily</h3>
-                <p>Wojny Klanów</p>
-            </div>
-        </div>
-
-        <section class="requirements">
-            <h2>Czego wymagamy?</h2>
-            <ul>
-                <li>Wiek: 18+ (lub wysoka kultura osobista)</li>
-                <li>Obowiązkowy Discord i sprawny mikrofon</li>
-                <li>Aktywność min. 4 wieczory w tygodniu</li>
-                <li>KD Ratio na poziomie minimum 1.5</li>
-                <li>Brak banów w historii konta</li>
-            </ul>
-
-            <h2>Co oferujemy?</h2>
-            <ul>
-                <li>Własny serwer Discord z botami premium</li>
-                <li>Treningi pod okiem topowych graczy</li>
-                <li>Udział w turniejach z nagrodami</li>
-                <li>Luźną atmosferę (poza godzinami raidów!)</li>
-            </ul>
-
-            <a href="https://discord.gg/twoj-link" class="apply-btn">Aplikuj przez Discord</a>
-        </section>
-
+  <header>
+    <h1>🏆 Klan BEST Roblox</h1>
+    <nav>
+      <a href="#o-nas">O Nas</a>
+      <a href="#czlonkowie">Członkowie</a>
+      <a href="#gry">Nasze Gry</a>
+      <a href="#rekrutacja">Rekrutacja</a>
+    </nav>
+  </header>
+  <div class="container">
+    <div id="o-nas" class="section">
+      <h2>O Klan BEST</h2>
+      <p>Najlepszy klan w Roblox z Polski – dominujemy w PvP, eventach i scrimach. Założony w 2024, ponad 500 członków.</p>
+      <ul>
+        <li>Top 1 w BedWars i Arsenal</li>
+        <li>Własny Discord z 24/7 supportem</li>
+        <li>Turnieje co tydzień z nagrodami Robux</li>
+      </ul>
+      <a href="https://discord.gg/YOURDISCORD" class="discord-btn">Dołącz na Discord</a>
     </div>
-
-    <footer>
-        &copy; 2026 Klan BEST. Strona stworzona dla prawdziwych wojowników.
-    </footer>
-
+    <div id="czlonkowie" class="section">
+      <h2>Top Członkowie</h2>
+      <ul>
+        <li>Leader: BestPlayerPL (5000 win)</li>
+        <li>Co-Leader: ProKiller2000</li>
+        <li>VIP: SniperKing, NoobSlayer</li>
+      </ul>
+    </div>
+    <div id="gry" class="section">
+      <h2>Najlepsze Gry</h2>
+      <ul>
+        <li>BedWars: roblox.com/games/123456789</li>
+        <li>Arsenal: roblox.com/games/987654321</li>
+        <li>Blade Ball: roblox.com/games/111222333</li>
+      </ul>
+    </div>
+    <div id="rekrutacja" class="section">
+      <h2>Rekrutacja</h2>
+      <p>Chcesz dołączyć? Napisz na Discord: aplikacja + stats z PvP. Min. 1000 win w BedWars.</p>
+    </div>
+  </div>
 </body>
 </html>
