@@ -3,68 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Klan BEST | Roblox</title>
+  <title>Klan BEST | Rebirth Champions Ultimate</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a0a00 100%); color: #fff; min-height: 100vh; }
-    header { background: rgba(0,0,0,0.9); padding: 1rem 2rem; text-align: center; border-bottom: 2px solid #ff6600; }
-    header h1 { font-size: 2.5rem; background: linear-gradient(45deg, #ff6600, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    nav { display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; flex-wrap: wrap; }
-    nav a { color: #fff; text-decoration: none; padding: 0.8rem 1.5rem; border: 1px solid #ff6600; border-radius: 50px; transition: all 0.3s; }
-    nav a:hover { background: #ff6600; transform: translateY(-2px); }
-    .container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
-    .section { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; border: 1px solid rgba(255,102,0,0.2); }
-    .section h2 { color: #ff6600; margin-bottom: 1rem; font-size: 2rem; }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a0a00 100%); color: #fff; display: flex; min-height: 100vh; }
+    .sidebar { width: 280px; background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); border-right: 2px solid #ff6600; padding: 2rem 1rem; position: fixed; height: 100vh; overflow-y: auto; }
+    .sidebar h1 { font-size: 1.8rem; background: linear-gradient(45deg, #ff6600, #ffaa00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem; text-align: center; }
+    .sidebar ul { list-style: none; }
+    .sidebar li { margin-bottom: 1rem; }
+    .sidebar a { color: #fff; text-decoration: none; display: block; padding: 1rem 1.5rem; border-radius: 12px; transition: all 0.3s; border: 1px solid transparent; }
+    .sidebar a:hover, .sidebar a.active { background: #ff6600; border-color: #ff6600; transform: translateX(5px); }
+    .main { margin-left: 280px; padding: 2rem; flex: 1; }
+    .section { display: none; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; margin-bottom: 2rem; border: 1px solid rgba(255,102,0,0.2); min-height: 60vh; }
+    .section.active { display: block; }
+    .section h2 { color: #ff6600; margin-bottom: 1.5rem; font-size: 2rem; }
     ul { list-style: none; }
-    ul li { padding: 0.5rem 0; padding-left: 2rem; position: relative; }
-    ul li::before { content: '⭐'; position: absolute; left: 0; color: #ff6600; }
-    .discord-btn { display: inline-block; background: #5865f2; color: #fff; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; margin-top: 1rem; transition: transform 0.3s; }
+    ul li { padding: 0.8rem 0; padding-left: 2rem; position: relative; }
+    ul li::before { content: '⚡'; position: absolute; left: 0; color: #ff6600; font-size: 1.2rem; }
+    .discord-btn { background: #5865f2; color: #fff; padding: 1rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; margin-top: 1rem; display: inline-block; transition: transform 0.3s; }
     .discord-btn:hover { transform: scale(1.05); }
-    @media (max-width: 768px) { header h1 { font-size: 2rem; } nav { flex-direction: column; align-items: center; } }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .stat-card { background: rgba(255,102,0,0.1); padding: 1.5rem; border-radius: 12px; text-align: center; border: 1px solid rgba(255,102,0,0.3); }
+    @media (max-width: 768px) { .sidebar { width: 100%; height: auto; position: relative; } .main { margin-left: 0; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🏆 Klan BEST Roblox</h1>
-    <nav>
-      <a href="#o-nas">O Nas</a>
-      <a href="#czlonkowie">Członkowie</a>
-      <a href="#gry">Nasze Gry</a>
-      <a href="#rekrutacja">Rekrutacja</a>
-    </nav>
-  </header>
-  <div class="container">
-    <div id="o-nas" class="section">
-      <h2>O Klan BEST</h2>
-      <p>Najlepszy klan w Roblox z Polski – dominujemy w PvP, eventach i scrimach. Założony w 2024, ponad 500 członków.</p>
+  <nav class="sidebar">
+    <h1>🏆 Klan BEST</h1>
+    <ul>
+      <li><a href="#" onclick="showTab('home')" class="active">🏠 Strona Główna</a></li>
+      <li><a href="#" onclick="showTab('stats')">📊 Statystyki</a></li>
+      <li><a href="#" onclick="showTab('czlonkowie')">👥 Członkowie</a></li>
+      <li><a href="#" onclick="showTab('boosty')">🚀 Boosty & Rebirths</a></li>
+      <li><a href="#" onclick="showTab('rekrutacja')">✨ Rekrutacja</a></li>
+    </ul>
+    <a href="https://discord.gg/YOURDISCORD" class="discord-btn" style="margin-top: 2rem;">Dołącz na Discord</a>
+  </nav>
+  <main class="main">
+    <div id="home" class="section active">
+      <h2>Witaj w Klan BEST – Rebirth Champions Ultimate</h2>
+      <p>Najsilniejszy klan w RCU! Pomagamy w boostach, rebirths i pet farming. Dołącz i stań się BEST!</p>
+      <div class="stats-grid">
+        <div class="stat-card"><h3>1.2M</h3><p>Całkowity Rebirth</p></div>
+        <div class="stat-card"><h3>250+</h3><p>Członkowie</p></div>
+        <div class="stat-card"><h3>500k</h3><p>Boostów Dziennie</p></div>
+      </div>
+    </div>
+    <div id="stats" class="section">
+      <h2>Statystyki Klanu</h2>
       <ul>
-        <li>Top 1 w BedWars i Arsenal</li>
-        <li>Własny Discord z 24/7 supportem</li>
-        <li>Turnieje co tydzień z nagrodami Robux</li>
+        <li>Średni Rebirth: 50k na członka</li>
+        <li>Top Pet: Divine Phoenix x10</li>
+        <li>Całkowity Damage: 10B+</li>
+        <li>World Record: 1h 30min do 1M Rebirth</li>
       </ul>
-      <a href="https://discord.gg/YOURDISCORD" class="discord-btn">Dołącz na Discord</a>
     </div>
     <div id="czlonkowie" class="section">
       <h2>Top Członkowie</h2>
       <ul>
-        <li>Leader: BestPlayerPL (5000 win)</li>
-        <li>Co-Leader: ProKiller2000</li>
-        <li>VIP: SniperKing, NoobSlayer</li>
+        <li>Leader: BestRebirther (2M Rebirth)</li>
+        <li>Co-Leader: UltimateBooster</li>
+        <li>VIP: PetMasterPL, DamageKing</li>
       </ul>
     </div>
-    <div id="gry" class="section">
-      <h2>Najlepsze Gry</h2>
+    <div id="boosty" class="section">
+      <h2>Boosty & Rebirths</h2>
+      <p>Skrypty boostów, eventy farmingu i rebirth parties. Wymaksuj konto z nami!</p>
       <ul>
-        <li>BedWars: roblox.com/games/123456789</li>
-        <li>Arsenal: roblox.com/games/987654321</li>
-        <li>Blade Ball: roblox.com/games/111222333</li>
+        <li>2x Money Boost na eventach</li>
+        <li>Pet Sharing System</li>
+        <li>Rebirth Challenges z nagrodami</li>
       </ul>
     </div>
     <div id="rekrutacja" class="section">
       <h2>Rekrutacja</h2>
-      <p>Chcesz dołączyć? Napisz na Discord: aplikacja + stats z PvP. Min. 1000 win w BedWars.</p>
+      <p>Min. 10k Rebirth + daily boosty. Aplikuj na Discord: stats + screen z rebirth board.</p>
     </div>
-  </div>
+  </main>
+  <script>
+    function showTab(tabName) {
+      const sections = document.querySelectorAll('.section');
+      const links = document.querySelectorAll('.sidebar a');
+      sections.forEach(s => s.classList.remove('active'));
+      links.forEach(l => l.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
 </body>
 </html>
