@@ -2,77 +2,56 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RCU Clan Management</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Ranking Klanów</title>
+    <style>
+        /* CSS - Wygląd aplikacji */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a2e; color: white; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: #e94560; margin-top: 30px; }
+        #clan-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+        .clan-card { background: #16213e; border: 2px solid #0f3460; border-radius: 15px; padding: 20px; width: 250px; text-align: center; transition: transform 0.3s; }
+        .clan-card:hover { transform: scale(1.05); border-color: #e94560; }
+        .clan-name { font-size: 1.5rem; font-weight: bold; color: #00d2ff; margin-bottom: 10px; }
+        .clan-info { font-size: 0.9rem; color: #95a5a6; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <h1>PRIME</h1>
-                <span>PROJECT</span>
-            </div>
-            <nav>
-                <a href="#" class="active">O NAS / NOWOŚCI</a>
-                <a href="#">LISTA CZŁONKÓW</a>
-                <a href="#">STRUKTURA KLANU</a>
-                <a href="#">REGULAMIN</a>
-                <a href="#">REKRUTACJA</a>
-            </nav>
-            <div class="auth-btn">
-                <a href="#">AUTORYZACJA</a>
-            </div>
-        </aside>
 
-        <main class="main-content">
-            <header class="top-bar">
-                <div class="welcome">
-                    <p>CLAN MANAGEMENT PLATFORM</p>
-                    <h2>WITAJ, <span>REKRUCIE</span></h2>
-                </div>
-                <div class="date-time">25.04.2026, 16:45:00</div>
-            </header>
+    <h1>Lista Naszych Klanów</h1>
+    
+    <div id="clan-list"></div>
 
-            <div class="dashboard-grid">
-                <section class="about-section">
-                    <h3>O KLANIE RCU</h3>
-                    <p>Nasz klan to zorganizowana grupa działająca w świecie RCU. Stawiamy na lojalność, profesjonalizm i wspólną zabawę na najwyższym poziomie Roleplay. Każda nasza akcja jest starannie planowana, a każdy członek ma realny wpływ na losy klanu.</p>
-                </section>
+    <script>
+        // JavaScript - Dane i logika
+        
+        // 1. Lista klanów (możesz tu dopisać własne!)
+        const klany = [
+            { nazwa: "Smoki Północy", czlonkowie: 24, poziom: 10 },
+            { nazwa: "Cyber Duchy", czlonkowie: 15, poziom: 7 },
+            { nazwa: "Złoci Rycerze", czlonkowie: 30, poziom: 12 },
+            { nazwa: "Bractwo Kodu", czlonkowie: 8, poziom: 5 }
+        ];
 
-                <div class="updates-column">
-                    <div class="update-card">
-                        <div class="icon">🚀</div>
-                        <div>
-                            <h4>OPERACJA V3.0</h4>
-                            <p>Zaktualizowano taktyki defensywne i system komunikacji.</p>
-                        </div>
-                    </div>
-                    <div class="update-card">
-                        <div class="icon">💎</div>
-                        <div>
-                            <h4>SKARBIEC KLANOWY</h4>
-                            <p>Nowy podział łupów i składek członkowskich.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        // 2. Funkcja wyświetlająca klany na stronie
+        function wyswietlKlany() {
+            const kontener = document.getElementById('clan-list');
+            
+            klany.forEach(klan => {
+                // Tworzymy element karty dla każdego klanu
+                const karta = document.createElement('div');
+                karta.className = 'clan-card';
+                
+                karta.innerHTML = `
+                    <div class="clan-name">${klan.nazwa}</div>
+                    <div class="clan-info">Członkowie: ${klan.czlonkowie}</div>
+                    <div class="clan-info">Poziom: ${klan.poziom}</div>
+                `;
+                
+                kontener.appendChild(karta);
+            });
+        }
 
-            <div class="stats-row">
-                <div class="stat-card">
-                    <p>STATUS KLANU</p>
-                    <h3 class="online">GOTOWY</h3>
-                </div>
-                <div class="stat-card">
-                    <p>CZŁONKOWIE ONLINE</p>
-                    <h3>12 / 30</h3>
-                </div>
-                <div class="stat-card">
-                    <p>HASŁO RADIOWE</p>
-                    <h3 class="gold-text">RCU_2026</h3>
-                </div>
-            </div>
-        </main>
-    </div>
+        // Uruchomienie funkcji po załadowaniu strony
+        wyswietlKlany();
+    </script>
 </body>
 </html>
