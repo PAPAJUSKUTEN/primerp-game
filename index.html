@@ -2,56 +2,182 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Ranking Klanów</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Zarządzania Klanami Pro</title>
     <style>
-        /* CSS - Wygląd aplikacji */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a2e; color: white; display: flex; flex-direction: column; align-items: center; }
-        h1 { color: #e94560; margin-top: 30px; }
-        #clan-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
-        .clan-card { background: #16213e; border: 2px solid #0f3460; border-radius: 15px; padding: 20px; width: 250px; text-align: center; transition: transform 0.3s; }
-        .clan-card:hover { transform: scale(1.05); border-color: #e94560; }
-        .clan-name { font-size: 1.5rem; font-weight: bold; color: #00d2ff; margin-bottom: 10px; }
-        .clan-info { font-size: 0.9rem; color: #95a5a6; }
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #dfe6e9;
+            --danger: #ff7675;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: var(--light);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-container {
+            width: 90%;
+            max-width: 1000px;
+            margin-top: 50px;
+        }
+
+        /* Formularz - Glassmorphism */
+        .admin-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+        }
+
+        button {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        /* Lista Klanów */
+        #clan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .clan-card {
+            background: #ffffff10;
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            border-radius: 12px;
+            position: relative;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-    <h1>Lista Naszych Klanów</h1>
-    
-    <div id="clan-list"></div>
+    <div class="app-container">
+        <h1>🛡️ Clan Management System</h1>
+        
+        <div class="admin-panel">
+            <h3>Dodaj Nowy Klan</h3>
+            <div class="input-group">
+                <input type="text" id="clanName" placeholder="Nazwa klanu">
+                <input type="number" id="clanMembers" placeholder="Liczba członków">
+                <input type="text" id="clanLeader" placeholder="Lider klanu">
+                <button onclick="clanManager.addClan()">Dodaj Klan</button>
+            </div>
+        </div>
+
+        <div id="clan-grid"></div>
+    </div>
 
     <script>
-        // JavaScript - Dane i logika
-        
-        // 1. Lista klanów (możesz tu dopisać własne!)
-        const klany = [
-            { nazwa: "Smoki Północy", czlonkowie: 24, poziom: 10 },
-            { nazwa: "Cyber Duchy", czlonkowie: 15, poziom: 7 },
-            { nazwa: "Złoci Rycerze", czlonkowie: 30, poziom: 12 },
-            { nazwa: "Bractwo Kodu", czlonkowie: 8, poziom: 5 }
-        ];
+        // Logika aplikacji w formie obiektu - podejście profesjonalne
+        const clanManager = {
+            klany: JSON.parse(localStorage.getItem('myClans')) || [],
 
-        // 2. Funkcja wyświetlająca klany na stronie
-        function wyswietlKlany() {
-            const kontener = document.getElementById('clan-list');
-            
-            klany.forEach(klan => {
-                // Tworzymy element karty dla każdego klanu
-                const karta = document.createElement('div');
-                karta.className = 'clan-card';
-                
-                karta.innerHTML = `
-                    <div class="clan-name">${klan.nazwa}</div>
-                    <div class="clan-info">Członkowie: ${klan.czlonkowie}</div>
-                    <div class="clan-info">Poziom: ${klan.poziom}</div>
-                `;
-                
-                kontener.appendChild(karta);
-            });
-        }
+            save() {
+                localStorage.setItem('myClans', JSON.stringify(this.klany));
+                this.render();
+            },
 
-        // Uruchomienie funkcji po załadowaniu strony
-        wyswietlKlany();
+            addClan() {
+                const name = document.getElementById('clanName').value;
+                const members = document.getElementById('clanMembers').value;
+                const leader = document.getElementById('clanLeader').value;
+
+                if(name && members && leader) {
+                    const newClan = {
+                        id: Date.now(),
+                        name: name,
+                        members: members,
+                        leader: leader
+                    };
+                    
+                    this.klany.push(newClan);
+                    this.save();
+                    this.clearInputs();
+                } else {
+                    alert("Wypełnij wszystkie pola!");
+                }
+            },
+
+            deleteClan(id) {
+                this.klany = this.klany.filter(c => c.id !== id);
+                this.save();
+            },
+
+            clearInputs() {
+                document.getElementById('clanName').value = '';
+                document.getElementById('clanMembers').value = '';
+                document.getElementById('clanLeader').value = '';
+            },
+
+            render() {
+                const grid = document.getElementById('clan-grid');
+                grid.innerHTML = '';
+
+                this.klany.forEach(klan => {
+                    grid.innerHTML += `
+                        <div class="clan-card">
+                            <button class="delete-btn" onclick="clanManager.deleteClan(${klan.id})">X</button>
+                            <h2>${klan.name}</h2>
+                            <p>👤 Lider: <strong>${klan.leader}</strong></p>
+                            <p>👥 Członkowie: <strong>${klan.members}</strong></p>
+                        </div>
+                    `;
+                });
+            }
+        };
+
+        // Inicjalizacja
+        clanManager.render();
     </script>
 </body>
 </html>
