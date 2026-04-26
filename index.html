@@ -3,49 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <style>
-    .container {
-        display: flex;
-        align-items: flex-start;
-    }
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: #f9f9f9; }
+    .container { display: flex; height: 100vh; }
+    
     .sidebar {
-        width: 200px;
-        border-right: 1px solid #ccc;
-        padding-right: 20px;
+        width: 250px;
+        background: linear-gradient(180deg, #2c3e50, #34495e);
+        color: white;
+        padding: 20px 0;
     }
-    .sidebar ul {
-        list-style-type: none;
-        padding: 0;
-    }
+    .sidebar h2 { text-align: center; font-size: 1.2rem; margin-bottom: 30px; color: #ecf0f1; }
+    .sidebar ul { list-style: none; padding: 0; }
     .sidebar li {
-        margin-bottom: 10px;
-        padding: 10px;
-        background-color: #f4f4f4;
+        padding: 15px 25px;
+        transition: 0.3s;
         cursor: pointer;
+        border-left: 5px solid transparent;
     }
     .sidebar li:hover {
-        background-color: #ddd;
+        background-color: #1a252f;
+        border-left: 5px solid #3498db;
     }
-    .content {
-        padding-left: 20px;
-    }
+    
+    .content { flex-grow: 1; padding: 40px; background-color: #fff; }
+    .content h1 { color: #2c3e50; }
 </style>
 </head>
 <body>
 
 <div class="container">
     <nav class="sidebar">
+        <h2>Menu Nawigacji</h2>
         <ul>
-            <li>Zakładka 1</li>
-            <li>Zakładka 2</li>
-            <li>Zakładka 3</li>
-            <li>Zakładka 4</li>
-            <li>Zakładka 5</li>
-            <li>Zakładka 6</li>
+            <li>Strona główna</li>
+            <li>O nas</li>
+            <li>Usługi</li>
+            <li>Portfolio</li>
+            <li>Aktualności</li>
+            <li>Kontakt</li>
         </ul>
     </nav>
     <main class="content">
-        <h1>Zawartość</h1>
-        <p>Tutaj pojawi się treść wybranej zakładki.</p>
+        <h1>Witaj na stronie</h1>
+        <p>Wybierz jedną z zakładek po lewej stronie, aby przejść do odpowiedniej sekcji.</p>
     </main>
 </div>
 
