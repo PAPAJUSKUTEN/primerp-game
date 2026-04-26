@@ -2,67 +2,86 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System RP - Black & Yellow</title>
 <style>
     :root {
-        --bg-black: #0a0a0a;
-        --accent-yellow: #fbbf24;
+        --bg-dark: #0a0a0a;
+        --sidebar-dark: #121212;
+        --accent-yellow: #f8c537;
         --text-white: #ffffff;
         --text-gray: #a3a3a3;
+        --card-bg: #1a1a1a;
     }
-    * { box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; margin: 0; background-color: #171717; color: var(--text-white); }
-    .layout { display: flex; min-height: 100vh; }
+    body { 
+        font-family: 'Segoe UI', Roboto, sans-serif; 
+        margin: 0; 
+        background-color: var(--bg-dark); 
+        color: var(--text-white);
+        display: flex;
+        height: 100vh;
+    }
+    .sidebar {
+        width: 280px;
+        background-color: var(--sidebar-dark);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid #333;
+    }
+    .logo { color: white; font-size: 24px; font-weight: bold; margin-bottom: 40px; }
+    .nav-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #1a1a1a;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .nav-item.active { background-color: var(--accent-yellow); color: black; font-weight: bold; }
     
-    /* Sidebar */
-    .sidebar { width: 280px; background: var(--bg-black); padding: 2rem; border-right: 2px solid var(--accent-yellow); }
-    .sidebar h2 { color: var(--accent-yellow); font-size: 1.5rem; margin-bottom: 2rem; text-transform: uppercase; }
-    .nav-list { list-style: none; padding: 0; }
-    .nav-item { padding: 1rem; cursor: pointer; border-bottom: 1px solid #333; transition: 0.3s; color: var(--text-gray); }
-    .nav-item:hover { color: var(--accent-yellow); padding-left: 1.5rem; }
-    
-    /* Main Content */
-    .content-area { flex: 1; padding: 3rem; }
-    .card { background: #262626; padding: 2.5rem; border-radius: 0.5rem; border-left: 4px solid var(--accent-yellow); margin-bottom: 2rem; }
-    h1 { color: var(--accent-yellow); }
-    .server-card { background: #171717; padding: 1.5rem; border: 1px solid #333; margin-top: 1rem; }
+    .main-content { flex: 1; padding: 40px; }
+    .header { display: flex; justify-content: space-between; align-items: center; }
+    .card { background-color: var(--card-bg); padding: 25px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--accent-yellow); }
+    .yellow-text { color: var(--accent-yellow); }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .status-card { background: var(--card-bg); padding: 20px; border-radius: 10px; text-align: center; }
 </style>
 </head>
 <body>
 
-<div class="layout">
-    <nav class="sidebar">
-        <h2>Panel RP</h2>
-        <ul class="nav-list">
-            <li class="nav-item">Regulamin</li>
-            <li class="nav-item">Informacje</li>
-            <li class="nav-item">Serwery RP</li>
-            <li class="nav-item">Ekipa</li>
-            <li class="nav-item">Statystyki</li>
-            <li class="nav-item">Kontakt</li>
-        </ul>
-    </nav>
+<div class="sidebar">
+    <div class="logo">PRIME <br> PROJECT</div>
+    <div class="nav-item active">O NAS / NOWOŚCI</div>
+    <div class="nav-item">MAPA SEKTORÓW</div>
+    <div class="nav-item">ADMINISTRACJA</div>
+    <div class="nav-item">REGULAMIN SERWERA</div>
+    <div class="nav-item">CENTRUM ZGŁOSZEŃ</div>
+    <div style="margin-top: auto;" class="nav-item">AUTORYZACJA</div>
+</div>
 
-    <main class="content-area">
-        <div class="card">
-            <h1>Regulamin</h1>
-            <p>Zasady panujące na serwerze:</p>
-            <ul>
-                <li>Brak zachowań toksycznych.</li>
-                <li>Zakaz metagamingu i powergamingu.</li>
-                <li>Obowiązek przestrzegania zasad RP.</li>
-            </ul>
-        </div>
+<div class="main-content">
+    <div class="header">
+        <h1>WITAJ, <span class="yellow-text">GOŚĆ</span></h1>
+        <div>25.04.2026, 16:38:28</div>
+    </div>
+    
+    <div class="card">
+        <h2>O PROJEKCIE PRIMERP</h2>
+        <p>PrimeRP to innowacyjny serwer roleplay osadzony w fikcyjnej, mrocznej wersji Hamburg City. Naszą misją jest zapewnienie najwyższej jakości immersji...</p>
+    </div>
 
-        <div class="card">
-            <h1>Serwery RP</h1>
-            <div class="server-card">
-                <h3>Alpha Roleplay</h3>
-                <p style="color: var(--accent-yellow);">Status: Online</p>
-            </div>
+    <div class="grid">
+        <div class="status-card">
+            <h3>SERWER GRY</h3>
+            <h1 style="color: green;">ONLINE</h1>
         </div>
-    </main>
+        <div class="status-card">
+            <h3>AKTYWNE POŁĄCZENIA</h3>
+            <h1>48 / 64</h1>
+        </div>
+    </div>
 </div>
 
 </body>
