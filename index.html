@@ -1,458 +1,53 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIME PROJECT | Clan Management Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* DEFINICJA KOLORYSTYKI PRIME */
-        :root {
-            --prime-black: #050505;
-            --prime-dark-gray: #0d0d0d;
-            --prime-gold: #ffcc00;
-            --prime-gold-glow: rgba(255, 204, 0, 0.4);
-            --prime-border: #1a1a1a;
-            --text-gray: #808080;
-            --glass: rgba(255, 255, 255, 0.03);
-        }
-
-        * {
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--prime-black);
-            color: white;
-            font-family: 'Rajdhani', sans-serif;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* LEWY PASEK BOCZNY - NAVIGATION */
-        aside {
-            width: 320px;
-            background-color: var(--prime-black);
-            border-right: 2px solid var(--prime-border);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            z-index: 10;
-        }
-
-        .logo-container {
-            padding: 20px 0 40px 0;
-            text-align: center;
-        }
-
-        .logo-main {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: 4px;
-            color: white;
-            margin: 0;
-        }
-
-        .logo-sub {
-            font-size: 0.8rem;
-            letter-spacing: 5px;
-            color: var(--prime-gold);
-            text-transform: uppercase;
-        }
-
-        .menu-label {
-            color: var(--text-gray);
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            padding-left: 10px;
-        }
-
-        .game-nav {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            flex-grow: 1;
-        }
-
-        .game-link {
-            background: var(--prime-dark-gray);
-            border: 1px solid var(--prime-border);
-            padding: 18px 20px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-gray);
-        }
-
-        .game-link:hover {
-            border-color: var(--prime-gold);
-            color: white;
-        }
-
-        .game-link.active {
-            background: linear-gradient(90deg, var(--prime-gold) 0%, #b38f00 100%);
-            color: black;
-            border: none;
-            box-shadow: 0 0 20px var(--prime-gold-glow);
-        }
-
-        .game-link i {
-            margin-right: 15px;
-            font-style: normal;
-            font-family: 'Orbitron';
-        }
-
-        .auth-footer {
-            border-top: 1px solid var(--prime-border);
-            padding-top: 20px;
-        }
-
-        .btn-auth {
-            width: 100%;
-            background: transparent;
-            border: 1px solid var(--prime-gold);
-            color: var(--prime-gold);
-            padding: 12px;
-            border-radius: 4px;
-            font-family: 'Orbitron';
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-auth:hover {
-            background: var(--prime-gold);
-            color: black;
-        }
-
-        /* PRAWY PANEL - CONTENT AREA */
-        main {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 60px;
-            position: relative;
-            background-image: 
-                radial-gradient(circle at 50% -20%, #1a1a1a 0%, transparent 50%);
-        }
-
-        .header-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 50px;
-        }
-
-        .welcome-text {
-            text-transform: uppercase;
-        }
-
-        .welcome-text span {
-            display: block;
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            color: var(--text-gray);
-        }
-
-        .welcome-text h1 {
-            margin: 5px 0 0 0;
-            font-family: 'Orbitron';
-            font-size: 3rem;
-        }
-
-        .welcome-text h1 b {
-            color: var(--prime-gold);
-            text-shadow: 0 0 30px var(--prime-gold-glow);
-        }
-
-        .timestamp {
-            background: var(--prime-dark-gray);
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-family: monospace;
-            border: 1px solid var(--prime-border);
-            color: var(--prime-gold);
-        }
-
-        /* GRID KLANÓW */
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        .clans-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .clan-card {
-            background: var(--prime-dark-gray);
-            border: 1px solid var(--prime-border);
-            padding: 30px;
-            border-radius: 8px;
-            position: relative;
-            transition: 0.3s;
-        }
-
-        .clan-card:hover {
-            border-color: var(--prime-gold);
-            background: #121212;
-            transform: translateY(-5px);
-        }
-
-        .clan-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 0%;
-            background: var(--prime-gold);
-            transition: 0.3s;
-        }
-
-        .clan-card:hover::before {
-            height: 100%;
-        }
-
-        .clan-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--prime-border);
-            padding-bottom: 15px;
-        }
-
-        .clan-name {
-            font-family: 'Orbitron';
-            font-size: 1.2rem;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        .clan-status {
-            font-size: 0.7rem;
-            color: var(--prime-gold);
-            border: 1px solid var(--prime-gold);
-            padding: 2px 8px;
-            border-radius: 20px;
-        }
-
-        .clan-info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-        }
-
-        .clan-info-row span:first-child {
-            color: var(--text-gray);
-        }
-
-        .clan-desc {
-            margin-top: 20px;
-            font-weight: 300;
-            color: #ccc;
-            line-height: 1.6;
-        }
-
-        .footer-stats {
-            position: fixed;
-            bottom: 40px;
-            right: 60px;
-            display: flex;
-            gap: 20px;
-        }
-
-        .stat-box {
-            background: var(--prime-dark-gray);
-            border: 1px solid var(--prime-border);
-            padding: 15px 30px;
-            border-radius: 4px;
-            text-align: center;
-        }
-
-        .stat-box label {
-            display: block;
-            font-size: 0.7rem;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .stat-box span {
-            font-family: 'Orbitron';
-            color: var(--prime-gold);
-            font-size: 1.2rem;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-    </style>
+<meta charset="UTF-8">
+<style>
+    .container {
+        display: flex;
+        align-items: flex-start;
+    }
+    .sidebar {
+        width: 200px;
+        border-right: 1px solid #ccc;
+        padding-right: 20px;
+    }
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .sidebar li {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f4f4f4;
+        cursor: pointer;
+    }
+    .sidebar li:hover {
+        background-color: #ddd;
+    }
+    .content {
+        padding-left: 20px;
+    }
+</style>
 </head>
 <body>
 
-    <aside>
-        <div class="logo-container">
-            <h2 class="logo-main">PRIME</h2>
-            <div class="logo-sub">PROJECT</div>
-        </div>
-
-        <div class="menu-label">Dostępne Produkty</div>
-        <nav class="game-nav" id="sidebar-menu">
-            </nav>
-
-        <div class="auth-footer">
-            <button class="btn-auth">🔓 AUTORYZACJA</button>
-        </div>
-    </aside>
-
-    <main>
-        <div class="header-meta">
-            <div class="welcome-text">
-                <span>INTERNAL MANAGEMENT PLATFORM</span>
-                <h1 id="dynamic-title">WITAJ, <b>GOŚĆ</b></h1>
-            </div>
-            <div class="timestamp" id="clock">26.04.2026, 17:30:15</div>
-        </div>
-
-        <div id="welcome-screen" class="content-section active">
-            <div style="border: 1px solid var(--prime-gold); padding: 40px; border-radius: 8px; background: rgba(255,204,0,0.02); max-width: 800px;">
-                <h2 style="font-family: 'Orbitron'; color: var(--prime-gold);">O PROJEKCIE PRIME</h2>
-                <p style="font-size: 1.2rem; line-height: 1.8; color: #aaa;">
-                    Wybierz jedną z gier po lewej stronie, aby uzyskać dostęp do bazy danych klanów, 
-                    statystyk serwerowych oraz struktury zarządzania. System zsynchronizowany 
-                    z bazą danych silnika V3.0 Final.
-                </p>
-            </div>
-        </div>
-
-        <div id="clan-view" class="content-section">
-            <div class="clans-container" id="clans-list">
-                </div>
-        </div>
-
-        <div class="footer-stats">
-            <div class="stat-box">
-                <label>Status</label>
-                <span>ONLINE</span>
-            </div>
-            <div class="stat-box">
-                <label>Użytkownicy</label>
-                <span id="user-count">48 / 64</span>
-            </div>
-        </div>
+<div class="container">
+    <nav class="sidebar">
+        <ul>
+            <li>Zakładka 1</li>
+            <li>Zakładka 2</li>
+            <li>Zakładka 3</li>
+            <li>Zakładka 4</li>
+            <li>Zakładka 5</li>
+            <li>Zakładka 6</li>
+        </ul>
+    </nav>
+    <main class="content">
+        <h1>Zawartość</h1>
+        <p>Tutaj pojawi się treść wybranej zakładki.</p>
     </main>
+</div>
 
-    <script>
-        // BAZA DANYCH PRIME
-        const primeData = [
-            {
-                id: "cs2",
-                name: "Counter-Strike 2",
-                clans: [
-                    { name: "Virtus.pro", leader: "Pasha", members: "15/20", desc: "Dywizja uderzeniowa. Wymagana weryfikacja TS3." },
-                    { name: "NAVI Division", leader: "S1mple", members: "12/15", desc: "Treningi taktyczne codziennie o 20:00." },
-                    { name: "G2 Army", leader: "NiKo", members: "40/50", desc: "Największa społeczność w sektorze 7." }
-                ]
-            },
-            {
-                id: "lol",
-                name: "League of Legends",
-                clans: [
-                    { name: "T1 Academy", leader: "Faker", members: "5/5", desc: "Skład zamknięty. Tylko diament+." },
-                    { name: "Fnatic Rising", leader: "Rekkles", members: "8/10", desc: "Rekrutacja otwarta dla wsparcia." }
-                ]
-            },
-            {
-                id: "wow",
-                name: "World of Warcraft",
-                clans: [
-                    { name: "Method", leader: "Sco", members: "150/200", desc: "Gildia rajdowa. Progres Mythic." },
-                    { name: "Echo", leader: "Roger", members: "140/150", desc: "Gildia nastawiona na World First." }
-                ]
-            }
-        ];
-
-        const menu = document.getElementById('sidebar-menu');
-        const clanView = document.getElementById('clan-view');
-        const welcomeScreen = document.getElementById('welcome-screen');
-        const clansList = document.getElementById('clans-list');
-        const dynamicTitle = document.getElementById('dynamic-title');
-
-        // INICJALIZACJA MENU
-        function initMenu() {
-            primeData.forEach(game => {
-                const item = document.createElement('div');
-                item.className = 'game-link';
-                item.innerHTML = `<i>></i> ${game.name}`;
-                item.onclick = () => loadClans(game, item);
-                menu.appendChild(item);
-            });
-        }
-
-        // ŁADOWANIE KLANÓW
-        function loadClans(game, element) {
-            // UI Update
-            document.querySelectorAll('.game-link').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-            
-            welcomeScreen.classList.remove('active');
-            clanView.classList.add('active');
-            
-            dynamicTitle.innerHTML = `PRODUKCJA: <b>${game.name}</b>`;
-
-            // Render kart
-            clansList.innerHTML = '';
-            game.clans.forEach(clan => {
-                const card = document.createElement('div');
-                card.className = 'clan-card';
-                card.innerHTML = `
-                    <div class="clan-header">
-                        <div class="clan-name">${clan.name}</div>
-                        <div class="clan-status">ACTIVE</div>
-                    </div>
-                    <div class="clan-info-row">
-                        <span>Lider Sektora:</span>
-                        <span>${clan.leader}</span>
-                    </div>
-                    <div class="clan-info-row">
-                        <span>Jednostki:</span>
-                        <span>${clan.members}</span>
-                    </div>
-                    <div class="clan-desc">${clan.desc}</div>
-                `;
-                clansList.appendChild(card);
-            });
-        }
-
-        // ZEGAR
-        function updateClock() {
-            const now = new Date();
-            const timeStr = now.toLocaleString('pl-PL');
-            document.getElementById('clock').innerText = timeStr;
-        }
-
-        setInterval(updateClock, 1000);
-        initMenu();
-    </script>
 </body>
 </html>
