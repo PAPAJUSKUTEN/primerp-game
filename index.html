@@ -3,88 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Serwerów RP - Panel Informacyjny</title>
+    <title>Panel RP - Układ Boczny</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Portal Społeczności Roleplay</h1>
-            <p>Wszystkie informacje w jednym miejscu</p>
-        </header>
-
-        <div class="tabs-nav">
-            <button class="tab-link active" onclick="openTab(event, 'Regulamin')">Regulamin</button>
-            <button class="tab-link" onclick="openTab(event, 'Informacje')">Informacje</button>
-            <button class="tab-link" onclick="openTab(event, 'Serwery')">Serwery RP</button>
-        </div>
-
-        <div id="Regulamin" class="tab-content" style="display: block;">
-            <h2>Regulamin Społeczności</h2>
-            <div class="scroll-box">
-                <ol>
-                    <li><strong>Szanuj innych graczy:</strong> Zakazuje się wyzywania, toksyczności oraz nękania innych użytkowników.</li>
-                    <li><strong>Zakaz MetaGamingu (MG):</strong> Wykorzystywanie informacji zdobytych poza postacią w grze jest surowo zabronione.</li>
-                    <li><strong>Zakaz PowerGaming (PG):</strong> Zmuszanie innych graczy do akcji bez ich zgody lub wykonywanie czynności niemożliwych w rzeczywistości.</li>
-                    <li><strong>Value of Life:</strong> Twoja postać musi szanować swoje życie. Nie ryzykuj go bez uzasadnionego powodu fabularnego.</li>
-                    <li><strong>Kultura osobista:</strong> Na kanałach OOC obowiązuje pełna kultura wypowiedzi.</li>
-                </ol>
+    <div class="main-wrapper">
+        <nav class="side-nav">
+            <div class="nav-header">
+                <h2>RP PANEL</h2>
+                <span>Management System</span>
             </div>
-        </div>
+            
+            <div class="tabs-nav">
+                <button class="tab-link active" onclick="openTab(event, 'Regulamin')">
+                    <span class="icon">📜</span> Regulamin
+                </button>
+                <button class="tab-link" onclick="openTab(event, 'Informacje')">
+                    <span class="icon">ℹ️</span> Informacje
+                </button>
+                <button class="tab-link" onclick="openTab(event, 'Serwery')">
+                    <span class="icon">🖥️</span> Serwery RP
+                </button>
+            </div>
 
-        <div id="Informacje" class="tab-content">
-            <h2>O projekcie</h2>
-            <p>Nasz portal zrzesza miłośników odgrywania ról z całego kraju. Zapewniamy stabilną infrastrukturę oraz wsparcie techniczne dla graczy i administratorów.</p>
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>Wersja platformy</h3>
-                    <p>v2.4.5 (Stable Build)</p>
+            <div class="nav-footer">
+                <p>Status: <span class="status-dot"></span> Online</p>
+            </div>
+        </nav>
+
+        <main class="content-area">
+            <div id="Regulamin" class="tab-content" style="display: block;">
+                <div class="content-header">
+                    <h1>Regulamin Serwera</h1>
+                    <hr>
                 </div>
-                <div class="info-card">
-                    <h3>Status usług</h3>
-                    <p style="color: #2ecc71;">Operacyjne</p>
+                <div class="text-body">
+                    <p>Poniżej znajdują się zasady obowiązujące każdego gracza bez wyjątku:</p>
+                    <ul class="rule-list">
+                        <li><strong>§1.1</strong> Każdy gracz zobowiązany jest do posiadania sprawnego mikrofonu.</li>
+                        <li><strong>§1.2</strong> Zakaz wychodzenia z roli podczas rozgrywki (tzw. OOC w IC).</li>
+                        <li><strong>§1.3</strong> Respektowanie poleceń administracji jest priorytetowe.</li>
+                        <li><strong>§1.4</strong> Wykorzystywanie błędów gry (bugusing) skutkuje banem permanentnym.</li>
+                    </ul>
                 </div>
             </div>
-        </div>
 
-        <div id="Serwery" class="tab-content">
-            <h2>Lista Dostępnych Serwerów</h2>
-            <table class="server-table">
-                <thead>
-                    <tr>
-                        <th>Nazwa Serwera</th>
-                        <th>Typ</th>
-                        <th>Graczy</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Los Santos Stories</td>
-                        <td>Hard RP</td>
-                        <td>124/128</td>
-                        <td><span class="online">Online</span></td>
-                    </tr>
-                    <tr>
-                        <td>Wild West RP</td>
-                        <td>Voice RP</td>
-                        <td>45/64</td>
-                        <td><span class="online">Online</span></td>
-                    </tr>
-                    <tr>
-                        <td>Liberty City Life</td>
-                        <td>Mid RP</td>
-                        <td>0/100</td>
-                        <td><span class="offline">Przerwa techniczna</span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div id="Informacje" class="tab-content">
+                <div class="content-header">
+                    <h1>Informacje o Projekcie</h1>
+                    <hr>
+                </div>
+                <div class="text-body">
+                    <p>Nasz projekt powstał w 2024 roku z inicjatywy pasjonatów gatunku Roleplay.</p>
+                    <div class="stats-container">
+                        <div class="stat-item">
+                            <h4>Graczy Online</h4>
+                            <p>1,240</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Zarejestrowani</h4>
+                            <p>15,800</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <footer>
-            <p>&copy; 2026 Skrypter RP Engine. Wszelkie prawa zastrzeżone.</p>
-        </footer>
+            <div id="Serwery" class="tab-content">
+                <div class="content-header">
+                    <h1>Lista Serwerów</h1>
+                    <hr>
+                </div>
+                <table class="server-grid">
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Sloty</th>
+                            <th>Ping</th>
+                            <th>Akcja</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>[PL] GÓRA RP #1</td>
+                            <td>64/64</td>
+                            <td>12ms</td>
+                            <td><button class="btn-join">DOŁĄCZ</button></td>
+                        </tr>
+                        <tr>
+                            <td>[PL] GÓRA RP #2</td>
+                            <td>32/64</td>
+                            <td>15ms</td>
+                            <td><button class="btn-join">DOŁĄCZ</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
 
     <script src="script.js"></script>
