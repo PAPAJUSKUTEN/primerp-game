@@ -3,157 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Zakładek</title>
+    <title>Modern RP Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --bg-dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+        }
+
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: #1a1a1a;
-            color: white;
+            background: radial-gradient(circle at top left, #1e293b, #0f172a);
+            height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 50px;
-            margin: 0;
+            color: var(--text-main);
+            overflow: hidden; /* Brak przewijania strony głównej */
         }
 
-        .container {
-            display: flex;
-            width: 900px;
-            background: #2d2d2d;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        /* Styl zakładek po lewej */
-        .tabs {
-            width: 250px;
-            background: #252525;
+        /* Lewy Sidebar */
+        .sidebar {
+            width: 320px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid var(--glass-border);
             display: flex;
             flex-direction: column;
-            border-right: 2px solid #3d3d3d;
+            padding: 40px 0;
+            z-index: 10;
+        }
+
+        .logo {
+            padding: 0 40px 40px 40px;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-list {
+            list-style: none;
+            flex-grow: 1;
         }
 
         .tab-btn {
-            padding: 20px;
+            width: 100%;
+            padding: 18px 40px;
             border: none;
-            background: none;
-            color: #aaa;
+            background: transparent;
+            color: var(--text-dim);
             text-align: left;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-            outline: none;
-            border-bottom: 1px solid #333;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            position: relative;
         }
 
         .tab-btn:hover {
-            background: #333;
-            color: #fff;
+            color: var(--text-main);
+            background: var(--glass);
         }
 
         .tab-btn.active {
-            background: #3d3d3d;
-            color: #00adb5;
-            border-left: 4px solid #00adb5;
+            color: var(--primary);
+            background: rgba(0, 210, 255, 0.05);
         }
 
-        /* Styl treści po prawej */
-        .content-area {
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 4px;
+            background: var(--primary);
+            border-radius: 4px 0 0 4px;
+            box-shadow: -2px 0 10px rgba(0, 210, 255, 0.5);
+        }
+
+        /* Główny obszar treści */
+        .main-content {
             flex: 1;
-            padding: 40px;
-            min-height: 400px;
+            padding: 60px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        /* Dekoracyjne tło wewnątrz */
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            filter: blur(150px);
+            opacity: 0.1;
+            pointer-events: none;
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s ease;
+            max-width: 800px;
+            animation: slideUp 0.5s ease-out forwards;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        h2 {
-            margin-top: 0;
-            color: #00adb5;
+        h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(10px); }
-            to { opacity: 1; transform: translateX(0); }
+        .description {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            margin-bottom: 30px;
         }
+
+        /* Karta z informacjami */
+        .info-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 30px;
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openTab(event, 'regulamin')">Regulamin</button>
-        <button class="tab-btn" onclick="openTab(event, 'informacje')">Informacje</button>
-        <button class="tab-btn" onclick="openTab(event, 'serwery')">Serwery RP</button>
-        <button class="tab-btn" onclick="openTab(event, 'test1')">Test Nazwa 1</button>
-        <button class="tab-btn" onclick="openTab(event, 'test2')">Test Nazwa 2</button>
-        <button class="tab-btn" onclick="openTab(event, 'test3')">Test Nazwa 3</button>
-    </div>
+    <nav class="sidebar">
+        <div class="logo">RP_PROJECT</div>
+        <div class="nav-list">
+            <button class="tab-btn active" onclick="showTab(event, 'tab1')">Regulamin</button>
+            <button class="tab-btn" onclick="showTab(event, 'tab2')">Informacje</button>
+            <button class="tab-btn" onclick="showTab(event, 'tab3')">Serwery RP</button>
+            <button class="tab-btn" onclick="showTab(event, 'tab4')">Test Nazwa 1</button>
+            <button class="tab-btn" onclick="showTab(event, 'tab5')">Test Nazwa 2</button>
+            <button class="tab-btn" onclick="showTab(event, 'tab6')">Test Nazwa 3</button>
+        </div>
+    </nav>
 
-    <div class="content-area">
-        <div id="regulamin" class="tab-content active">
-            <h2>Regulamin</h2>
-            <p>Tutaj znajduje się tekst regulaminu. Przestrzegaj zasad panujących na serwerze!</p>
+    <main class="main-content">
+        <div id="tab1" class="tab-content active">
+            <h1>Regulamin</h1>
+            <p class="description">Zasady obowiązujące każdego gracza na naszych serwerach. Przeczytaj uważnie, aby uniknąć kar.</p>
+            <div class="info-card">
+                <p>1. Zakaz RDM / VDM.<br>2. Szanuj innych graczy.<br>3. Zakaz Powergamingu.</p>
+            </div>
         </div>
 
-        <div id="informacje" class="tab-content">
-            <h2>Informacje</h2>
-            <p>Najważniejsze informacje o naszym projekcie i aktualizacjach.</p>
+        <div id="tab2" class="tab-content">
+            <h1>Informacje</h1>
+            <p class="description">Wszystko, co musisz wiedzieć o aktualnej wersji skryptów i planowanych eventach.</p>
+            <div class="info-card">
+                <p>Wersja systemu: 2.4.0<br>Ostatnia aktualizacja: Dzisiaj</p>
+            </div>
         </div>
 
-        <div id="serwery" class="tab-content">
-            <h2>Serwery RP</h2>
-            <p>Lista dostępnych serwerów Roleplay oraz ich statusy.</p>
+        <div id="tab3" class="tab-content">
+            <h1>Serwery RP</h1>
+            <p class="description">Wybierz serwer, na którym chcesz rozpocząć swoją przygodę.</p>
+            <div class="info-card">
+                <p>🟢 Serwer #1 - WL-OFF<br>🔴 Serwer #2 - WL-ON (Przerwa)</p>
+            </div>
         </div>
 
-        <div id="test1" class="tab-content">
-            <h2>Test Nazwa 1</h2>
-            <p>Treść testowa dla czwartej zakładki.</p>
+        <div id="tab4" class="tab-content">
+            <h1>Test Nazwa 1</h1>
+            <p class="description">Opis dla pierwszej sekcji testowej.</p>
         </div>
 
-        <div id="test2" class="tab-content">
-            <h2>Test Nazwa 2</h2>
-            <p>Treść testowa dla piątej zakładki.</p>
+        <div id="tab5" class="tab-content">
+            <h1>Test Nazwa 2</h1>
+            <p class="description">Opis dla drugiej sekcji testowej.</p>
         </div>
 
-        <div id="test3" class="tab-content">
-            <h2>Test Nazwa 3</h2>
-            <p>Treść testowa dla szóstej zakładki.</p>
+        <div id="tab6" class="tab-content">
+            <h1>Test Nazwa 3</h1>
+            <p class="description">Opis dla trzeciej sekcji testowej.</p>
         </div>
-    </div>
-</div>
+    </main>
 
-<script>
-    function openTab(evt, tabName) {
-        // Ukryj wszystkie treści
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].classList.remove("active");
+    <script>
+        function showTab(event, tabId) {
+            // Ukryj wszystkie treści
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Dezaktywuj wszystkie przyciski
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Aktywuj wybraną zakładkę i przycisk
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
-
-        // Usuń klasę active ze wszystkich przycisków
-        tablinks = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
-
-        // Pokaż obecną zakładkę i dodaj klasę active do przycisku
-        document.getElementById(tabName).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-</script>
+    </script>
 
 </body>
 </html>
