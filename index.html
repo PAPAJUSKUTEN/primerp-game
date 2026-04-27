@@ -1,88 +1,159 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<style>
-    :root {
-        --bg-dark: #0a0a0a;
-        --sidebar-dark: #121212;
-        --accent-yellow: #f8c537;
-        --text-white: #ffffff;
-        --text-gray: #a3a3a3;
-        --card-bg: #1a1a1a;
-    }
-    body { 
-        font-family: 'Segoe UI', Roboto, sans-serif; 
-        margin: 0; 
-        background-color: var(--bg-dark); 
-        color: var(--text-white);
-        display: flex;
-        height: 100vh;
-    }
-    .sidebar {
-        width: 280px;
-        background-color: var(--sidebar-dark);
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        border-right: 1px solid #333;
-    }
-    .logo { color: white; font-size: 24px; font-weight: bold; margin-bottom: 40px; }
-    .nav-item {
-        padding: 15px;
-        margin-bottom: 10px;
-        background-color: #1a1a1a;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .nav-item.active { background-color: var(--accent-yellow); color: black; font-weight: bold; }
-    
-    .main-content { flex: 1; padding: 40px; }
-    .header { display: flex; justify-content: space-between; align-items: center; }
-    .card { background-color: var(--card-bg); padding: 25px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--accent-yellow); }
-    .yellow-text { color: var(--accent-yellow); }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .status-card { background: var(--card-bg); padding: 20px; border-radius: 10px; text-align: center; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Zakładek</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            width: 900px;
+            background: #2d2d2d;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Styl zakładek po lewej */
+        .tabs {
+            width: 250px;
+            background: #252525;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #3d3d3d;
+        }
+
+        .tab-btn {
+            padding: 20px;
+            border: none;
+            background: none;
+            color: #aaa;
+            text-align: left;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            outline: none;
+            border-bottom: 1px solid #333;
+        }
+
+        .tab-btn:hover {
+            background: #333;
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            background: #3d3d3d;
+            color: #00adb5;
+            border-left: 4px solid #00adb5;
+        }
+
+        /* Styl treści po prawej */
+        .content-area {
+            flex: 1;
+            padding: 40px;
+            min-height: 400px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #00adb5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <div class="logo">PRIME <br> PROJECT</div>
-    <div class="nav-item active">O NAS / NOWOŚCI</div>
-    <div class="nav-item">MAPA SEKTORÓW</div>
-    <div class="nav-item">ADMINISTRACJA</div>
-    <div class="nav-item">REGULAMIN SERWERA</div>
-    <div class="nav-item">CENTRUM ZGŁOSZEŃ</div>
-    <div style="margin-top: auto;" class="nav-item">AUTORYZACJA</div>
-</div>
-
-<div class="main-content">
-    <div class="header">
-        <h1>WITAJ, <span class="yellow-text">GOŚĆ</span></h1>
-        <div>25.04.2026, 16:38:28</div>
-    </div>
-    
-    <div class="card">
-        <h2>O PROJEKCIE PRIMERP</h2>
-        <p>PrimeRP to innowacyjny serwer roleplay osadzony w fikcyjnej, mrocznej wersji Hamburg City. Naszą misją jest zapewnienie najwyższej jakości immersji...</p>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'regulamin')">Regulamin</button>
+        <button class="tab-btn" onclick="openTab(event, 'informacje')">Informacje</button>
+        <button class="tab-btn" onclick="openTab(event, 'serwery')">Serwery RP</button>
+        <button class="tab-btn" onclick="openTab(event, 'test1')">Test Nazwa 1</button>
+        <button class="tab-btn" onclick="openTab(event, 'test2')">Test Nazwa 2</button>
+        <button class="tab-btn" onclick="openTab(event, 'test3')">Test Nazwa 3</button>
     </div>
 
-    <div class="grid">
-        <div class="status-card">
-            <h3>SERWER GRY</h3>
-            <h1 style="color: green;">ONLINE</h1>
+    <div class="content-area">
+        <div id="regulamin" class="tab-content active">
+            <h2>Regulamin</h2>
+            <p>Tutaj znajduje się tekst regulaminu. Przestrzegaj zasad panujących na serwerze!</p>
         </div>
-        <div class="status-card">
-            <h3>AKTYWNE POŁĄCZENIA</h3>
-            <h1>48 / 64</h1>
+
+        <div id="informacje" class="tab-content">
+            <h2>Informacje</h2>
+            <p>Najważniejsze informacje o naszym projekcie i aktualizacjach.</p>
+        </div>
+
+        <div id="serwery" class="tab-content">
+            <h2>Serwery RP</h2>
+            <p>Lista dostępnych serwerów Roleplay oraz ich statusy.</p>
+        </div>
+
+        <div id="test1" class="tab-content">
+            <h2>Test Nazwa 1</h2>
+            <p>Treść testowa dla czwartej zakładki.</p>
+        </div>
+
+        <div id="test2" class="tab-content">
+            <h2>Test Nazwa 2</h2>
+            <p>Treść testowa dla piątej zakładki.</p>
+        </div>
+
+        <div id="test3" class="tab-content">
+            <h2>Test Nazwa 3</h2>
+            <p>Treść testowa dla szóstej zakładki.</p>
         </div>
     </div>
 </div>
+
+<script>
+    function openTab(evt, tabName) {
+        // Ukryj wszystkie treści
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+
+        // Usuń klasę active ze wszystkich przycisków
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+
+        // Pokaż obecną zakładkę i dodaj klasę active do przycisku
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
 
 </body>
 </html>
