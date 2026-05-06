@@ -3,118 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja Przykładowa Strona</title>
-    <style>
-        /* CSS - Wygląd strony */
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --text-light: #ecf0f1;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f4f4f4;
-        }
-
-        header {
-            background: var(--primary-color);
-            color: var(--text-light);
-            padding: 2rem 1rem;
-            text-align: center;
-        }
-
-        nav {
-            background: #34495e;
-            padding: 0.5rem;
-            text-align: center;
-            position: sticky;
-            top: 0;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0 15px;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            color: var(--accent-color);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-
-        .btn-click {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: background 0.3s;
-        }
-
-        .btn-click:hover {
-            background: #2980b9;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
-            color: #777;
-        }
-    </style>
+    <title>System Portalowy</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Witaj na mojej stronie!</h1>
-        <p>To jest przykładowy szablon stworzony w HTML i CSS.</p>
-    </header>
-
-    <nav>
-        <a href="#o-mnie">O mnie</a>
-        <a href="#uslugi">Usługi</a>
-        <a href="#kontakt">Kontakt</a>
-    </nav>
-
-    <div class="container" id="o-mnie">
-        <h2>O projekcie</h2>
-        <p>Stworzenie strony internetowej to połączenie trzech elementów:</p>
-        <ul>
-            <li><strong>HTML:</strong> Szkielet strony.</li>
-            <li><strong>CSS:</strong> Styl i estetyka.</li>
-            <li><strong>JavaScript:</strong> Interakcja z użytkownikiem.</li>
-        </ul>
-        
-        <button class="btn-click" onclick="powitanie()">Kliknij mnie!</button>
-        <p id="wiadomosc" style="margin-top: 15px; font-weight: bold; color: var(--accent-color);"></p>
+    <!-- SEKCJA POWITALNA -->
+    <div id="welcome-screen">
+        <div class="hero-left">
+            <div class="logo">NEXT<span>GEN</span></div>
+            <p>Przyszłość Twoich danych.</p>
+        </div>
+        <div class="hero-right">
+            <div class="info-box">
+                <h2>Panel Zarządzania</h2>
+                <p>Zaloguj się, aby uzyskać dostęp do swoich statystyk, ustawień profilu oraz bezpiecznego przesyłania plików.</p>
+                <button class="btn-primary" onclick="toggleModal(true)">Zaloguj się</button>
+            </div>
+        </div>
     </div>
 
-    <footer>
-        &copy; 2026 Projekt Gemini. Stworzono z pasją.
-    </footer>
+    <!-- MODAL LOGOWANIA -->
+    <div id="login-modal" class="modal-overlay">
+        <div class="login-card">
+            <h2>Logowanie</h2>
+            <div class="form-group">
+                <input type="text" id="username" placeholder="Login: admin">
+                <input type="password" id="password" placeholder="Hasło: 123">
+            </div>
+            <button class="btn-primary full-width" onclick="handleLogin()">Wejdź</button>
+            <button class="btn-text" onclick="toggleModal(false)">Anuluj</button>
+            <p id="error-msg" class="error">Niepoprawne dane!</p>
+        </div>
+    </div>
 
-    <script>
-        // JavaScript - Interakcja
-        function powitanie() {
-            const msg = document.getElementById('wiadomosc');
-            msg.innerText = "Dziękuję za kliknięcie! JavaScript działa poprawnie.";
-        }
-    </script>
+    <!-- EKRAN PROFILU -->
+    <div id="profile-screen" class="hidden">
+        <nav class="top-nav">
+            <div class="logo-small">NEXT<span>GEN</span></div>
+            <button class="btn-outline" onclick="handleLogout()">Wyloguj</button>
+        </nav>
+        
+        <main class="profile-container">
+            <section class="user-card">
+                <div class="avatar" id="user-initial">U</div>
+                <div class="user-info">
+                    <h1 id="display-name">Użytkownik</h1>
+                    <p>Poziom dostępu: <strong>Administrator</strong></p>
+                </div>
+            </section>
 
+            <section class="stats-grid">
+                <div class="stat-box"><h3>Email</h3><p>kontakt@example.pl</p></div>
+                <div class="stat-box"><h3>Lokalizacja</h3><p>Warszawa, PL</p></div>
+                <div class="stat-box"><h3>Ostatnia sesja</h3><p>Dzisiaj, 20:26</p></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
