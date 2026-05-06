@@ -3,64 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Portalowy</title>
+    <title>HUB GIER | NEXTGEN PORTAL</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Import nowoczesnej czcionki -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- SEKCJA POWITALNA -->
-    <div id="welcome-screen">
+    <!-- Animowane tło z cząsteczkami (generowane w JS) -->
+    <div id="particles-js"></div>
+
+    <!-- 1. EKRAN POWITALNY (SPLIT SCREEN) -->
+    <div id="welcome-screen" class="active">
         <div class="hero-left">
-            <div class="logo">NEXT<span>GEN</span></div>
-            <p>Przyszłość Twoich danych.</p>
+            <div class="logo-container">
+                <div class="logo-icon"></div>
+                <h1 class="logo-text">HUB<span>GEN</span></h1>
+            </div>
+            <p class="tagline">Twoja brama do cyfrowej rzeczywistości.</p>
         </div>
         <div class="hero-right">
-            <div class="info-box">
-                <h2>Panel Zarządzania</h2>
-                <p>Zaloguj się, aby uzyskać dostęp do swoich statystyk, ustawień profilu oraz bezpiecznego przesyłania plików.</p>
-                <button class="btn-primary" onclick="toggleModal(true)">Zaloguj się</button>
+            <div class="info-card glass">
+                <h2>Cześć, Graczu!</h2>
+                <p>Zaloguj się, aby uzyskać dostęp do swojego panelu, statystyk gier i znajomych.</p>
+                <button class="btn-neon" onclick="showLoginModal()">Uruchom Panel</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL LOGOWANIA -->
+    <!-- 2. MODAL LOGOWANIA (GLASSMORPHISM) -->
     <div id="login-modal" class="modal-overlay">
-        <div class="login-card">
-            <h2>Logowanie</h2>
-            <div class="form-group">
-                <input type="text" id="username" placeholder="Login: admin">
-                <input type="password" id="password" placeholder="Hasło: 123">
+        <div class="login-card glass">
+            <span class="close-modal" onclick="closeLoginModal()">&times;</span>
+            <h3>Uwierzytelnienie</h3>
+            <div class="input-group">
+                <input type="text" id="username" required>
+                <label>Login (admin)</label>
+                <div class="bar"></div>
             </div>
-            <button class="btn-primary full-width" onclick="handleLogin()">Wejdź</button>
-            <button class="btn-text" onclick="toggleModal(false)">Anuluj</button>
-            <p id="error-msg" class="error">Niepoprawne dane!</p>
+            <div class="input-group">
+                <input type="password" id="password" required>
+                <label>Hasło (123)</label>
+                <div class="bar"></div>
+            </div>
+            <button class="btn-neon full-width" onclick="handleLogin()">Zaloguj</button>
+            <p id="error-msg" class="error-text">Błędne dane!</p>
         </div>
     </div>
 
-    <!-- EKRAN PROFILU -->
-    <div id="profile-screen" class="hidden">
-        <nav class="top-nav">
-            <div class="logo-small">NEXT<span>GEN</span></div>
-            <button class="btn-outline" onclick="handleLogout()">Wyloguj</button>
+    <!-- 3. EKRAN PROFILU -->
+    <div id="profile-screen">
+        <nav class="top-nav glass">
+            <div class="logo-small">HUB<span>GEN</span></div>
+            <div class="nav-right">
+                <span class="status-online">ONLINE</span>
+                <button class="btn-outline" onclick="handleLogout()">Wyloguj</button>
+            </div>
         </nav>
         
-        <main class="profile-container">
-            <section class="user-card">
-                <div class="avatar" id="user-initial">U</div>
-                <div class="user-info">
-                    <h1 id="display-name">Użytkownik</h1>
-                    <p>Poziom dostępu: <strong>Administrator</strong></p>
+        <main class="profile-content">
+            <header class="profile-header glass">
+                <div class="avatar-container">
+                    <div class="avatar" id="user-initial">A</div>
+                    <div class="avatar-glow"></div>
                 </div>
-            </section>
+                <div class="user-main-info">
+                    <h1 id="display-name">Administrator</h1>
+                    <p class="user-title">Główny Architekt Systemu</p>
+                </div>
+            </header>
 
-            <section class="stats-grid">
-                <div class="stat-box"><h3>Email</h3><p>kontakt@example.pl</p></div>
-                <div class="stat-box"><h3>Lokalizacja</h3><p>Warszawa, PL</p></div>
-                <div class="stat-box"><h3>Ostatnia sesja</h3><p>Dzisiaj, 20:26</p></div>
+            <section class="info-grid">
+                <div class="info-tile glass">
+                    <h4>Poziom</h4>
+                    <p class="stat-value">99</p>
+                </div>
+                <div class="info-tile glass">
+                    <h4>Rola</h4>
+                    <p class="stat-value">Admin</p>
+                </div>
+                <div class="info-tile glass">
+                    <h4>Reputacja</h4>
+                    <p class="stat-value">Legenda</p>
+                </div>
             </section>
         </main>
     </div>
 
+    <!-- Skrypt do cząsteczek (lekki) -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
