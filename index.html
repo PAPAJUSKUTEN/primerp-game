@@ -1,71 +1,135 @@
 <!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Programista</title>
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #d4d4d4;
+            --accent-color: #569cd6;
+            --keyword-color: #c586c0;
+            --string-color: #ce9178;
+            --comment-color: #6a9955;
+            --line-numbers: #858585;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .window {
+            width: 90%;
+            max-width: 800px;
+            background: #252526;
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+
+        .title-bar {
+            background: #323233;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .file-name {
+            margin-left: 20px;
+            color: #969696;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 20px;
+            overflow-x: auto;
+            counter-reset: line;
+        }
+
+        .line {
+            display: block;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .line::before {
+            counter-increment: line;
+            content: counter(line);
+            position: absolute;
+            left: 0;
+            color: var(--line-numbers);
+            width: 35px;
+            text-align: right;
+            padding-right: 15px;
+            border-right: 1px solid #444;
+        }
+
+        .keyword { color: var(--keyword-color); }
+        .string { color: var(--string-color); }
+        .comment { color: var(--comment-color); }
+        .function { color: var(--accent-color); }
+        
+        a { color: var(--string-color); text-decoration: underline; }
+        a:hover { color: #fff; }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background: #aeafad;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-  <div class="background"></div>
 
-  <header class="hero">
-    <nav class="navbar">
-      <div class="logo">Wkrótce!</div>
-
-      <div class="nav-links">
-        <a href="#about">Informacje</a>
-        <a href="#features">Funkcje</a>
-        <a href="#discord">Discord</a>
-      </div>
-    </nav>
-
-    <section class="hero-content">
-      <span class="badge">NOWY SERWER ROLEPLAY</span>
-
-      <h1>Wkrótce!</h1>
-
-      <p>
-        Tworzymy nowoczesny serwer roleplay z rozbudowaną ekonomią,
-        realistycznymi systemami i aktywną społecznością.
-      </p>
-
-      <div class="buttons">
-        <a href="#discord" class="primary-btn">Dołącz</a>
-        <a href="#about" class="secondary-btn">Więcej</a>
-      </div>
-    </section>
-  </header>
-
-  <section id="about" class="section glass">
-    <h2>O projekcie</h2>
-
-    <p>
-      Projekt jest aktualnie w trakcie tworzenia. Naszym celem jest stworzenie
-      nowoczesnego i stabilnego środowiska roleplay dla każdego gracza.
-    </p>
-  </section>
-
-  <section id="features" class="features">
-    <div class="feature-card">
-      <h3>Nowoczesny Design</h3>
-      <p>Minimalistyczny i przejrzysty interfejs użytkownika.</p>
+<div class="window">
+    <div class="title-bar">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <span class="file-name">developer_profile.js — Visual Studio Code</span>
     </div>
-
-    <div class="feature-card">
-      <h3>Optymalizacja</h3>
-      <p>Płynna rozgrywka oraz stabilne działanie serwera.</p>
+    
+    <div class="content">
+        <span class="line"><span class="keyword">const</span> <span class="function">programista</span> = {</span>
+        <span class="line">&nbsp;&nbsp;imie: <span class="string">"Twoje Imię"</span>,</span>
+        <span class="line">&nbsp;&nbsp;rola: <span class="string">"Fullstack Developer"</span>,</span>
+        <span class="line">&nbsp;&nbsp;technologie: [</span>
+        <span class="line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"JavaScript"</span>, <span class="string">"React"</span>, <span class="string">"Node.js"</span>, <span class="string">"Python"</span></span>
+        <span class="line">&nbsp;&nbsp;],</span>
+        <span class="line">&nbsp;&nbsp;kontakt: {</span>
+        <span class="line">&nbsp;&nbsp;&nbsp;&nbsp;email: <span class="string">"<a href="mailto:twoj@email.com">twoj@email.com</a>"</span>,</span>
+        <span class="line">&nbsp;&nbsp;&nbsp;&nbsp;github: <span class="string">"<a href="https://github.com">github.com/twoj-nick</a>"</span></span>
+        <span class="line">&nbsp;&nbsp;},</span>
+        <span class="line">&nbsp;&nbsp;status: <span class="string">"Dostępny do nowych projektów"</span></span>
+        <span class="line">};</span>
+        <span class="line"></span>
+        <span class="line"><span class="comment">// Kliknij powyższe linki, aby nawiązać kontakt.</span></span>
+        <span class="line"><span class="function">console</span>.<span class="function">log</span>(programista.status);<span class="cursor"></span></span>
     </div>
+</div>
 
-    <div class="feature-card">
-      <h3>Społeczność</h3>
-      <p>Aktywna administracja i rozwijający się projekt.</p>
-    </div>
-  </section>
-
-  <section id="discord" class="discord-section glass">
-    <h2>Dołącz do społeczności</h2>
-    <p>Śledź postępy projektu oraz bierz udział w testach.</p>
-
-    <a href="#" class="primary-btn">Discord</a>
-  </section>
-
-  <footer>
-    <p>© 2026 Wkrótce! — Wszystkie prawa zastrzeżone</p>
-  </footer>
 </body>
 </html>
