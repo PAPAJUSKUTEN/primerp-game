@@ -3,133 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Programista</title>
+    <title>Kuba | Portfolio</title>
     <style>
         :root {
-            --bg-color: #1e1e1e;
-            --text-color: #d4d4d4;
-            --accent-color: #569cd6;
-            --keyword-color: #c586c0;
-            --string-color: #ce9178;
-            --comment-color: #6a9955;
-            --line-numbers: #858585;
+            --bg-color: #0d1117;
+            --window-bg: #161b22;
+            --text-color: #c9d1d9;
+            --keyword: #ff7b72;
+            --function: #d2a8ff;
+            --string: #a5d6ff;
+            --comment: #8b949e;
+            --number: #79c0ff;
+            --cursor-color: #58a6ff;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            line-height: 1.6;
-            margin: 0;
+            font-family: 'Fira Code', 'Cascadia Code', monospace;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
+            margin: 0;
         }
 
-        .window {
+        .terminal-window {
             width: 90%;
-            max-width: 800px;
-            background: #252526;
-            border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 850px;
+            background: var(--window-bg);
+            border-radius: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            border: 1px solid #30363d;
             overflow: hidden;
-            border: 1px solid #444;
         }
 
-        .title-bar {
-            background: #323233;
-            padding: 10px 15px;
+        .header {
+            background: #21262d;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            border-bottom: 1px solid #30363d;
         }
 
+        .dots { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .red { background: #ff5f56; }
         .yellow { background: #ffbd2e; }
         .green { background: #27c93f; }
-
-        .file-name {
-            margin-left: 20px;
-            color: #969696;
-            font-size: 14px;
-        }
+        .title { margin-left: 20px; font-size: 13px; color: #8b949e; flex-grow: 1; text-align: center; }
 
         .content {
-            padding: 20px;
-            overflow-x: auto;
-            counter-reset: line;
+            padding: 25px;
+            font-size: 16px;
+            line-height: 1.5;
+            white-space: pre;
         }
 
-        .line {
-            display: block;
-            position: relative;
-            padding-left: 50px;
-        }
+        .kwd { color: var(--keyword); }
+        .func { color: var(--function); }
+        .str { color: var(--string); }
+        .cmt { color: var(--comment); }
+        .num { color: var(--number); }
 
-        .line::before {
-            counter-increment: line;
-            content: counter(line);
-            position: absolute;
-            left: 0;
-            color: var(--line-numbers);
-            width: 35px;
-            text-align: right;
-            padding-right: 15px;
-            border-right: 1px solid #444;
-        }
-
-        .keyword { color: var(--keyword-color); }
-        .string { color: var(--string-color); }
-        .comment { color: var(--comment-color); }
-        .function { color: var(--accent-color); }
-        
-        a { color: var(--string-color); text-decoration: underline; }
-        a:hover { color: #fff; }
-
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 18px;
-            background: #aeafad;
+        #typewriter::after {
+            content: "|";
+            color: var(--cursor-color);
             animation: blink 1s infinite;
-            vertical-align: middle;
         }
 
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        a { color: var(--string); text-decoration: none; border-bottom: 1px dashed; }
+        a:hover { color: #fff; border-bottom: 1px solid; }
     </style>
 </head>
 <body>
 
-<div class="window">
-    <div class="title-bar">
-        <div class="dot red"></div>
-        <div class="dot yellow"></div>
-        <div class="dot green"></div>
-        <span class="file-name">developer_profile.js — Visual Studio Code</span>
+<div class="terminal-window">
+    <div class="header">
+        <div class="dots">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+        </div>
+        <div class="title">kuba_dev — profile.cpp</div>
     </div>
-    
-    <div class="content">
-        <span class="line"><span class="keyword">const</span> <span class="function">programista</span> = {</span>
-        <span class="line">&nbsp;&nbsp;imie: <span class="string">"Twoje Imię"</span>,</span>
-        <span class="line">&nbsp;&nbsp;rola: <span class="string">"Fullstack Developer"</span>,</span>
-        <span class="line">&nbsp;&nbsp;technologie: [</span>
-        <span class="line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"JavaScript"</span>, <span class="string">"React"</span>, <span class="string">"Node.js"</span>, <span class="string">"Python"</span></span>
-        <span class="line">&nbsp;&nbsp;],</span>
-        <span class="line">&nbsp;&nbsp;kontakt: {</span>
-        <span class="line">&nbsp;&nbsp;&nbsp;&nbsp;email: <span class="string">"<a href="mailto:twoj@email.com">twoj@email.com</a>"</span>,</span>
-        <span class="line">&nbsp;&nbsp;&nbsp;&nbsp;github: <span class="string">"<a href="https://github.com">github.com/twoj-nick</a>"</span></span>
-        <span class="line">&nbsp;&nbsp;},</span>
-        <span class="line">&nbsp;&nbsp;status: <span class="string">"Dostępny do nowych projektów"</span></span>
-        <span class="line">};</span>
-        <span class="line"></span>
-        <span class="line"><span class="comment">// Kliknij powyższe linki, aby nawiązać kontakt.</span></span>
-        <span class="line"><span class="function">console</span>.<span class="function">log</span>(programista.status);<span class="cursor"></span></span>
-    </div>
+    <div class="content" id="typewriter"></div>
 </div>
+
+<script>
+    const codeText = 
+`/*
+ * 4 lata doświadczenia w budowaniu rozwiązań.
+ */
+
+#include <iostream>
+#include <vector>
+
+const char* name = "Kuba";
+int experience_years = 4;
+
+std::vector<std::string> stack = {
+    "JavaScript", "React", "Node.js", 
+    "Python", "C++"
+};
+
+void contact() {
+    std::cout << "Email: kuba@twojdomena.pl" << std::endl;
+}
+
+// Inicjalizacja portfolio...
+int main() {
+    return 0;
+}`;
+
+    let i = 0;
+    const speed = 30; // prędkość pisania (ms)
+    const target = document.getElementById("typewriter");
+
+    function typeWriter() {
+        if (i < codeText.length) {
+            // Zamiana znaków na kolory (prosty parser)
+            let rawChar = codeText.charAt(i);
+            target.textContent += rawChar;
+            
+            // Logika kolorowania po zakończeniu pisania (opcjonalnie)
+            // Dla prostoty w tej wersji używamy czystego tekstu z efektem pisania
+            
+            i++;
+            setTimeout(typeWriter, speed);
+        } else {
+            // Po zakończeniu pisania, sformatuj kod dla kolorów
+            formatCode();
+        }
+    }
+
+    function formatCode() {
+        let formatted = target.textContent
+            .replace(/\/\*[\s\S]*?\*\//g, '<span class="cmt">$&</span>')
+            .replace(/\/\/.*/g, '<span class="cmt">$&</span>')
+            .replace(/#include|const|int|char|void|return|std/g, '<span class="kwd">$&</span>')
+            .replace(/"[^"]*"/g, '<span class="str">$&</span>')
+            .replace(/\d+/g, '<span class="num">$&</span>')
+            .replace(/main|contact|cout|endl/g, '<span class="func">$&</span>');
+        
+        target.innerHTML = formatted;
+    }
+
+    window.onload = typeWriter;
+</script>
 
 </body>
 </html>
