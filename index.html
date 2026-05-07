@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KUBA | Dev Core 2030</title>
+    <!-- IKONA STRONY (💻) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -55,7 +58,6 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* MUZYKA */
         .music-card {
             cursor: pointer;
             border: 1px dashed var(--accent);
@@ -63,7 +65,6 @@
         }
         .music-card.playing { border-style: solid; box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); }
 
-        /* DISCORD CARD */
         .discord-card {
             background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(0,0,0,0));
             border: 1px solid var(--discord);
@@ -170,17 +171,14 @@
 </div>
 
 <script>
-    // Copy Discord logic
     function copyDiscord() {
         const nick = "kubasruba0713_0";
         navigator.clipboard.writeText(nick);
         const card = document.getElementById('discordBtn');
         const hint = document.getElementById('copyHint');
-        
         card.style.borderColor = "#00ff00";
         hint.innerText = "SKOPIOWANO!";
         hint.style.color = "#00ff00";
-        
         setTimeout(() => {
             card.style.borderColor = "";
             hint.innerText = "KLIKNIJ, ABY SKOPIOWAĆ NICK";
@@ -188,7 +186,6 @@
         }, 2000);
     }
 
-    // YouTube API
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -218,7 +215,6 @@
         }
     }
 
-    // Modern Terminal Typewriter
     const codeText = `/* 
  * Kuba Dev OS v4.0.0
  * Status: Available for projects
