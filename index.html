@@ -3,233 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuba | Portfolio</title>
+    <title>KUBA | Dev Core 2030</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0d1117;
-            --sidebar-bg: #161b22;
-            --accent: #58a6ff;
-            --text-main: #c9d1d9;
-            --text-dim: #8b949e;
-            /* Kolory kodu */
-            --kwd: #ff7b72;
-            --func: #d2a8ff;
-            --str: #a5d6ff;
-            --cmt: #8b949e;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #00f2ff;
+            --text: #e0e0e0;
+            --text-dim: #808080;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        body, html {
             margin: 0;
-            display: flex;
-            height: 100vh;
+            padding: 0;
+            height: 100%;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow: hidden;
         }
 
-        /* LEWA STRONA - INFO */
-        .info-sidebar {
-            width: 40%;
-            background-color: var(--sidebar-bg);
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border-right: 1px solid #30363d;
+        .container {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            height: 100vh;
+            gap: 20px;
+            padding: 20px;
             box-sizing: border-box;
         }
 
-        .info-sidebar h1 {
-            font-size: 3rem;
+        /* LEWA STRONA - BENTO INFO */
+        .sidebar {
+            display: grid;
+            grid-template-rows: auto auto 1fr auto;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .profile h1 {
             margin: 0;
-            color: var(--accent);
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .info-sidebar h2 {
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            font-weight: 400;
-            margin-bottom: 30px;
-        }
-
-        .stats {
-            margin-bottom: 40px;
-        }
-
-        .stat-item {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-
-        .stat-label {
-            color: var(--accent);
-            font-weight: bold;
-            display: block;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-        }
-
-        .btn-contact {
+        .tag {
             display: inline-block;
-            padding: 12px 24px;
-            border: 1px solid var(--accent);
+            background: rgba(0, 242, 255, 0.1);
             color: var(--accent);
-            text-decoration: none;
-            border-radius: 6px;
-            transition: 0.3s;
-            width: fit-content;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
         }
 
-        .btn-contact:hover {
-            background: var(--accent);
-            color: white;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
-        /* PRAWA STRONA - KOD */
-        .code-container {
-            width: 60%;
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-val { font-size: 24px; font-weight: 700; color: #fff; }
+        .stat-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
+
+        .tech-list {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            background: radial-gradient(circle at center, #1c2128 0%, #0d1117 100%);
-        }
-
-        .terminal-window {
-            width: 100%;
-            max-width: 600px;
-            background: #010409;
-            border-radius: 10px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border: 1px solid #30363d;
-            overflow: hidden;
-        }
-
-        .header {
-            background: #161b22;
-            padding: 10px 15px;
-            display: flex;
+            flex-wrap: wrap;
             gap: 8px;
         }
 
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #ff5f56; }
-        .yellow { background: #ffbd2e; }
-        .green { background: #27c93f; }
-
-        .content {
-            padding: 20px;
-            font-family: 'Fira Code', 'Consolas', monospace;
+        .tech-item {
             font-size: 14px;
-            line-height: 1.6;
-            white-space: pre;
-            overflow-x: auto;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 12px;
         }
 
-        .kwd { color: var(--kwd); }
-        .func { color: var(--func); }
-        .str { color: var(--str); }
-        .cmt { color: var(--cmt); }
-
-        #typewriter::after {
-            content: "_";
-            animation: blink 1s infinite;
-            color: var(--accent);
+        /* PRAWA STRONA - TERMINAL */
+        .terminal-container {
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        @keyframes blink { 50% { opacity: 0; } }
+        .terminal-header {
+            padding: 15px 25px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        /* Responsywność */
-        @media (max-width: 900px) {
-            body { flex-direction: column; overflow: auto; height: auto; }
-            .info-sidebar, .code-container { width: 100%; padding: 30px; }
-            .info-sidebar { height: auto; }
+        .window-controls { display: flex; gap: 8px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #333; }
+
+        .terminal-body {
+            padding: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            overflow-y: auto;
+        }
+
+        .code-keyword { color: #ff7b72; }
+        .code-func { color: #d2a8ff; }
+        .code-string { color: #a5d6ff; }
+        .code-comment { color: #6a737d; font-style: italic; }
+
+        /* ANIMACJA POŚWIATY */
+        .glow {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 242, 255, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        @media (max-width: 1000px) {
+            .container { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
+            .sidebar { height: auto; }
         }
     </style>
 </head>
 <body>
 
-    <!-- LEWA SEKCJA -->
-    <aside class="info-sidebar">
-        <h1>Kuba</h1>
-        <h2>Software Developer</h2>
-        
-        <div class="stats">
-            <div class="stat-item">
-                <span class="stat-label">Doświadczenie</span>
-                4 lata w branży IT
+<div class="container">
+    <!-- LEWA STRONA -->
+    <aside class="sidebar">
+        <div class="card profile">
+            <h1>Kuba.dev</h1>
+            <span class="tag">SENIOR ARCHITECT</span>
+            <p style="color: var(--text-dim); margin-top: 15px;">Buduję systemy jutra przy użyciu dzisiejszego kodu.</p>
+        </div>
+
+        <div class="card stats-grid">
+            <div class="stat-card">
+                <div class="stat-val">4+</div>
+                <div class="stat-label">Lata exp</div>
             </div>
-            <div class="stat-item">
-                <span class="stat-label">Główny Stack</span>
-                JS, React, Node.js, Python, C++
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Lokalizacja</span>
-                Polska / Remote
+            <div class="stat-card">
+                <div class="stat-val">∞</div>
+                <div class="stat-label">Pasja</div>
             </div>
         </div>
 
-        <a href="mailto:kuba@example.com" class="btn-contact">Napisz do mnie</a>
+        <div class="card">
+            <h3 style="margin-top:0">Tech Stack</h3>
+            <div class="tech-list">
+                <span class="tech-item">C++</span>
+                <span class="tech-item">React 22</span>
+                <span class="tech-item">Node.js</span>
+                <span class="tech-item">Python 3.x</span>
+                <span class="tech-item">Next.js</span>
+            </div>
+        </div>
+
+        <div class="card" style="background: var(--accent); color: #000; font-weight: bold; text-align: center; cursor: pointer;">
+            ZAINICJUJ KONTAKT
+        </div>
     </aside>
 
-    <!-- PRAWA SEKCJA -->
-    <main class="code-container">
-        <div class="terminal-window">
-            <div class="header">
-                <div class="dot red"></div>
-                <div class="dot yellow"></div>
-                <div class="dot green"></div>
+    <!-- PRAWA STRONA -->
+    <main class="terminal-container">
+        <div class="glow"></div>
+        <div class="terminal-header">
+            <div class="window-controls">
+                <div class="dot" style="background: #ff5f56;"></div>
+                <div class="dot" style="background: #ffbd2e;"></div>
+                <div class="dot" style="background: #27c93f;"></div>
             </div>
-            <div class="content" id="typewriter"></div>
+            <span style="font-size: 12px; opacity: 0.5;">main_kernel.cpp</span>
         </div>
+        <div class="terminal-body" id="code"></div>
     </main>
+</div>
 
 <script>
-    const codeText = `class Developer {
-  constructor() {
-    this.name = "Kuba";
-    this.exp = "4 years";
-  }
+    const code = `// System Diagnostic v4.0.2
+#include <iostream>
+#include <vector>
 
-  getSkills() {
-    return [
-      "JavaScript", "React", 
-      "Node.js", "Python", "C++"
-    ];
-  }
+class Developer {
+    std::string name = "Kuba";
+    int xp = 4; // years in matrix
 
-  isReady() {
-    return true; 
-  }
-}
-
-// Inicjalizacja...
-const me = new Developer();`;
-
-    let i = 0;
-    const target = document.getElementById("typewriter");
-
-    function typeWriter() {
-        if (i < codeText.length) {
-            target.textContent += codeText.charAt(i);
-            i++;
-            setTimeout(typeWriter, 25);
-        } else {
-            formatCode();
+public:
+    void renderSkills() {
+        std::vector<std::string> stack = {
+            "JavaScript", "React", "Node.js", "Python", "C++"
+        };
+        for(auto const& skill : stack) {
+            connect_to_knowledge_base(skill);
         }
     }
 
-    function formatCode() {
-        let html = target.textContent
-            .replace(/class|constructor|this|return|new|const/g, '<span class="kwd">$&</span>')
-            .replace(/getSkills|isReady/g, '<span class="func">$&</span>')
-            .replace(/"[^"]*"/g, '<span class="str">$&</span>')
-            .replace(/\/\/ .*/g, '<span class="cmt">$&</span>');
-        target.innerHTML = html;
+    bool is_available() {
+        return true; // system ready for deployment
+    }
+};
+
+// Start initialization...
+int main() {
+    Developer kuba;
+    if(kuba.is_available()) {
+        kuba.renderSkills();
+        std::cout << "Status: Online" << std::endl;
+    }
+    return 0;
+}`;
+
+    let i = 0;
+    function type() {
+        if (i < code.length) {
+            document.getElementById("code").textContent += code.charAt(i);
+            i++;
+            setTimeout(type, 15);
+        } else {
+            format();
+        }
     }
 
-    window.onload = typeWriter;
+    function format() {
+        const el = document.getElementById("code");
+        let text = el.textContent;
+        text = text.replace(/(#include|class|int|void|public|bool|return|for|auto)/g, '<span class="code-keyword">$1</span>');
+        text = text.replace(/(\".*\")/g, '<span class="code-string">$1</span>');
+        text = text.replace(/(\/\/.*)/g, '<span class="code-comment">$1</span>');
+        text = text.replace(/(renderSkills|is_available|main|cout)/g, '<span class="code-func">$1</span>');
+        el.innerHTML = text;
+    }
+
+    window.onload = type;
 </script>
 
 </body>
