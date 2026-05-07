@@ -3,227 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KUBA | HACKER CORE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>KUBA | Dev Core 2030</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #000a00; /* Bardzo ciemna zieleń/czerń */
-            --terminal-bg: rgba(0, 15, 0, 0.9);
-            --accent: #00ff41; /* Klasyczny Matrix Green */
-            --accent-dim: rgba(0, 255, 65, 0.2);
-            --text: #00ff41;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #00f2ff;
             --discord: #5865F2;
+            --text: #e0e0e0;
+            --text-dim: #808080;
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
             background-color: var(--bg);
             color: var(--text);
-            font-family: 'Fira Code', monospace;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow: hidden;
-        }
-
-        /* EFEKT CRT (SKANOWANIE) */
-        body::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 10;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
         }
 
         .container {
             display: grid;
-            grid-template-columns: 350px 1fr;
+            grid-template-columns: 400px 1fr;
             height: 100vh;
             gap: 20px;
             padding: 20px;
             box-sizing: border-box;
-            position: relative;
-            z-index: 5;
         }
 
         .sidebar {
             display: grid;
             grid-template-rows: auto auto auto 1fr auto;
-            gap: 15px;
+            gap: 20px;
         }
 
         .card {
-            background: var(--terminal-bg);
-            border: 1px solid var(--accent);
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: 0 0 10px var(--accent-dim);
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
         }
 
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* MUZYKA */
+        .music-card {
+            cursor: pointer;
+            border: 1px dashed var(--accent);
+            text-align: center;
+        }
+        .music-card.playing { border-style: solid; box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); }
+
+        /* DISCORD CARD */
+        .discord-card {
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(0,0,0,0));
+            border: 1px solid var(--discord);
+            cursor: pointer;
+            text-align: center;
+            overflow: hidden;
+        }
+        .discord-card:hover { background: var(--discord); color: white; }
+        .discord-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; opacity: 0.8; }
+        .discord-card .username { font-size: 1.1rem; font-family: 'JetBrains Mono', monospace; font-weight: bold; }
+
         .profile h1 {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0; font-size: 1.8rem;
-            text-shadow: 0 0 10px var(--accent);
+            margin: 0; font-size: 2.5rem; letter-spacing: -1px;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .tag {
-            font-size: 10px;
-            border: 1px solid var(--accent);
-            padding: 2px 8px;
-            margin-top: 10px;
-            display: inline-block;
-            animation: blink 1s infinite;
+            display: inline-block; background: rgba(0, 242, 255, 0.1);
+            color: var(--accent); padding: 4px 12px; border-radius: 100px;
+            font-size: 12px; font-weight: 700; margin-top: 8px;
         }
 
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* MUZYKA HAKERSKA */
-        .music-card {
-            cursor: pointer;
-            background: rgba(0, 255, 65, 0.05);
-            text-align: center;
-        }
-        .music-card:hover { background: var(--accent); color: #000; }
-
-        /* DISCORD GLITCH */
-        .discord-card {
-            border-color: var(--discord);
-            color: var(--discord);
-            cursor: pointer;
-            text-align: center;
-        }
-        .discord-card:hover {
-            box-shadow: 0 0 20px var(--discord);
-            background: var(--discord);
-            color: #fff;
+        .tech-item {
+            display: inline-block; font-size: 12px; color: var(--text-dim);
+            border: 1px solid var(--border); padding: 4px 10px;
+            border-radius: 8px; margin: 0 4px 8px 0;
         }
 
-        /* TERMINAL */
         .terminal-container {
-            border: 1px solid var(--accent);
-            background: var(--terminal-bg);
-            display: flex; flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* MATRIX FALLING CODE BG */
-        #matrix-canvas {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.15;
-            pointer-events: none;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            display: flex; flex-direction: column; overflow: hidden;
         }
 
         .terminal-header {
-            padding: 10px;
-            background: var(--accent);
-            color: #000;
-            font-weight: bold;
-            display: flex; justify-content: space-between;
-            font-size: 12px;
+            padding: 15px 25px; background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
         }
 
         .terminal-body {
-            padding: 30px;
-            font-size: 14px;
-            line-height: 1.6;
-            overflow-y: auto;
-            position: relative;
-            z-index: 2;
+            padding: 40px; font-family: 'JetBrains Mono', monospace;
+            font-size: 15px; line-height: 1.8; overflow-y: auto;
         }
 
-        .code-keyword { color: #fff; font-weight: bold; }
-        .code-string { color: #888; }
-        
-        .tech-item {
-            font-size: 12px;
-            margin-right: 10px;
-            text-decoration: underline;
-        }
+        .code-keyword { color: #ff7b72; }
+        .code-func { color: #d2a8ff; }
+        .code-string { color: #a5d6ff; }
+        .code-comment { color: #8b949e; }
 
-        #youtube-player { position: absolute; width: 0; height: 0; opacity: 0; }
+        #youtube-player { position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none; }
+
+        @media (max-width: 1000px) {
+            .container { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
+        }
     </style>
 </head>
 <body>
 
-<canvas id="matrix-canvas"></canvas>
 <div id="youtube-player"></div>
 
 <div class="container">
     <aside class="sidebar">
         <div class="card profile">
-            <h1>KUBA_ROOT</h1>
-            <div class="tag">ACCESS_GRANTED: 4_YEARS_EXP</div>
-            <p style="font-size: 0.8rem; margin-top: 15px; color: #008f11;">SYSTEM: JS | REACT | PYTHON | C++</p>
+            <h1>Kuba.dev</h1>
+            <span class="tag">SOFTWARE ENGINEER</span>
+            <p style="color: var(--text-dim); margin-top: 15px; font-size: 0.9rem;">4 lata doświadczenia w budowaniu przyszłości.</p>
         </div>
 
-        <div class="card music-card" onclick="toggleMusic()">
-            <div style="font-weight: bold;">[ NACIŚNIJ NA MNIE ]</div>
-            <div id="musicStatus" style="font-size: 10px;">PLAY_HACKER_ATMOSPHERE.mp3</div>
+        <div class="card music-card" id="musicToggle" onclick="toggleMusic()">
+            <div style="font-weight: bold; letter-spacing: 1px; color: var(--accent);">NACIŚNIJ NA MNIE</div>
+            <div id="musicStatus" style="font-size: 11px; color: var(--text-dim);">ODTWÓRZ ATMOSFERĘ</div>
         </div>
 
         <div class="card">
-            <div style="font-size: 12px; margin-bottom: 10px;">> SKILLS_MANIFEST:</div>
-            <span class="tech-item">JS</span><span class="tech-item">Node</span>
-            <span class="tech-item">C++</span><span class="tech-item">React</span>
+            <h3 style="margin: 0 0 15px 0; font-size: 12px; color: var(--accent); text-transform: uppercase;">Zestaw narzędzi</h3>
+            <div>
+                <span class="tech-item">JS</span><span class="tech-item">React</span>
+                <span class="tech-item">Node</span><span class="tech-item">Python</span>
+                <span class="tech-item">C++</span>
+            </div>
         </div>
 
-        <div class="card discord-card" onclick="copyDiscord()">
-            <div style="font-size: 10px;">ESTABLISH_CONNECTION</div>
-            <div style="font-weight: bold;" id="discordNick">kubasruba0713_0</div>
-            <div id="copyHint" style="font-size: 9px; margin-top: 5px;">[ CLICK TO COPY NICK ]</div>
+        <div class="card discord-card" id="discordBtn" onclick="copyDiscord()">
+            <div class="label">Kontakt via Discord</div>
+            <div class="username" id="discordNick">kubasruba0713_0</div>
+            <div id="copyHint" style="font-size: 9px; margin-top: 8px; opacity: 0.6;">KLIKNIJ, ABY SKOPIOWAĆ NICK</div>
         </div>
     </aside>
 
     <main class="terminal-container">
         <div class="terminal-header">
-            <span>TERMINAL_V.4.0.1 - SESSION: ACTIVE</span>
-            <span>USER: KUBA</span>
+            <div style="display: flex; gap: 8px;">
+                <div style="width:10px; height:10px; border-radius:50%; background:#ff5f56"></div>
+                <div style="width:10px; height:10px; border-radius:50%; background:#ffbd2e"></div>
+                <div style="width:10px; height:10px; border-radius:50%; background:#27c93f"></div>
+            </div>
+            <span style="font-size: 11px; color: var(--text-dim);">kuba_system.cpp</span>
         </div>
         <div class="terminal-body" id="code"></div>
     </main>
 </div>
 
 <script>
-    // Matrix Rain Effect
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(0, 10, 0, 0.05)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#00ff41";
-        ctx.font = fontSize + "px monospace";
-        for (let i = 0; i < drops.length; i++) {
-            const text = characters.charAt(Math.floor(Math.random() * characters.length));
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
-        }
-    }
-    setInterval(drawMatrix, 35);
-
-    // Copy Discord
+    // Copy Discord logic
     function copyDiscord() {
-        navigator.clipboard.writeText("kubasruba0713_0");
+        const nick = "kubasruba0713_0";
+        navigator.clipboard.writeText(nick);
+        const card = document.getElementById('discordBtn');
         const hint = document.getElementById('copyHint');
-        hint.innerText = "NICK_COPIED_TO_CLIPBOARD";
-        setTimeout(() => hint.innerText = "[ CLICK TO COPY NICK ]", 2000);
+        
+        card.style.borderColor = "#00ff00";
+        hint.innerText = "SKOPIOWANO!";
+        hint.style.color = "#00ff00";
+        
+        setTimeout(() => {
+            card.style.borderColor = "";
+            hint.innerText = "KLIKNIJ, ABY SKOPIOWAĆ NICK";
+            hint.style.color = "";
+        }, 2000);
     }
 
     // YouTube API
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
     var player;
+    var isPlaying = false;
+
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('youtube-player', {
             videoId: '3GnwNV72UbE',
@@ -231,52 +204,54 @@
         });
     }
 
-    let isPlaying = false;
     function toggleMusic() {
         if (!isPlaying) {
             player.playVideo();
-            document.getElementById('musicStatus').innerText = "AUDIO_FEED: STREAMING";
+            document.getElementById('musicToggle').classList.add('playing');
+            document.getElementById('musicStatus').innerText = "SYSTEM AUDIO: ONLINE";
             isPlaying = true;
         } else {
             player.pauseVideo();
-            document.getElementById('musicStatus').innerText = "AUDIO_FEED: PAUSED";
+            document.getElementById('musicToggle').classList.remove('playing');
+            document.getElementById('musicStatus').innerText = "SYSTEM AUDIO: PAUSED";
             isPlaying = false;
         }
     }
 
-    // Typewriter
-    const codeText = `> INITIALIZING KUBA_KERNEL...
-> LOADING LIBS: [JS, REACT, CPP, PYTHON]
-> STATUS: 4 YEARS OF CODING_EXPERIENCE
-> ENCRYPTING CONNECTION...
+    // Modern Terminal Typewriter
+    const codeText = `/* 
+ * Kuba Dev OS v4.0.0
+ * Status: Available for projects
+ */
 
-class HackerKuba {
-    constructor() {
-        this.user = "kubasruba0713_0";
-        this.capabilities = ["Pentesting", "DevOps", "Fullstack"];
-    }
+#include <iostream>
 
-    async runWorld() {
-        while(true) {
-            await this.code();
-            await this.improve();
-        }
-    }
+void initialize_profile() {
+    std::string user = "kubasruba0713_0";
+    int experience = 4;
+    
+    std::cout << "Loading system..." << std::endl;
+    std::cout << "Target: Build the future." << std::endl;
 }
 
-// System ready. _`;
+int main() {
+    initialize_profile();
+    return 0;
+}`;
 
     let i = 0;
     function type() {
         if (i < codeText.length) {
             document.getElementById("code").textContent += codeText.charAt(i);
             i++;
-            setTimeout(type, 20);
+            setTimeout(type, 25);
         } else {
             const el = document.getElementById("code");
             let html = el.textContent
-                .replace(/(class|constructor|this|async|await|while|true|const)/g, '<span class="code-keyword">$1</span>')
-                .replace(/(\".*\")/g, '<span class="code-string">$1</span>');
+                .replace(/(#include|void|int|return|std|string)/g, '<span class="code-keyword">$1</span>')
+                .replace(/(initialize_profile|main|cout|endl)/g, '<span class="code-func">$1</span>')
+                .replace(/(\".*\")/g, '<span class="code-string">$1</span>')
+                .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="code-comment">$1</span>');
             el.innerHTML = html;
         }
     }
