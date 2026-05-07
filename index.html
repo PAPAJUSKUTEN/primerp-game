@@ -7,148 +7,226 @@
     <style>
         :root {
             --bg-color: #0d1117;
-            --window-bg: #161b22;
-            --text-color: #c9d1d9;
-            --keyword: #ff7b72;
-            --function: #d2a8ff;
-            --string: #a5d6ff;
-            --comment: #8b949e;
-            --number: #79c0ff;
-            --cursor-color: #58a6ff;
+            --sidebar-bg: #161b22;
+            --accent: #58a6ff;
+            --text-main: #c9d1d9;
+            --text-dim: #8b949e;
+            /* Kolory kodu */
+            --kwd: #ff7b72;
+            --func: #d2a8ff;
+            --str: #a5d6ff;
+            --cmt: #8b949e;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Fira Code', 'Cascadia Code', monospace;
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* LEWA STRONA - INFO */
+        .info-sidebar {
+            width: 40%;
+            background-color: var(--sidebar-bg);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid #30363d;
+            box-sizing: border-box;
+        }
+
+        .info-sidebar h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: var(--accent);
+        }
+
+        .info-sidebar h2 {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .stats {
+            margin-bottom: 40px;
+        }
+
+        .stat-item {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .stat-label {
+            color: var(--accent);
+            font-weight: bold;
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .btn-contact {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.3s;
+            width: fit-content;
+        }
+
+        .btn-contact:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* PRAWA STRONA - KOD */
+        .code-container {
+            width: 60%;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            padding: 40px;
+            background: radial-gradient(circle at center, #1c2128 0%, #0d1117 100%);
         }
 
         .terminal-window {
-            width: 90%;
-            max-width: 850px;
-            background: var(--window-bg);
-            border-radius: 12px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            width: 100%;
+            max-width: 600px;
+            background: #010409;
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             border: 1px solid #30363d;
             overflow: hidden;
         }
 
         .header {
-            background: #21262d;
-            padding: 12px 20px;
+            background: #161b22;
+            padding: 10px 15px;
             display: flex;
-            align-items: center;
-            border-bottom: 1px solid #30363d;
+            gap: 8px;
         }
 
-        .dots { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .red { background: #ff5f56; }
         .yellow { background: #ffbd2e; }
         .green { background: #27c93f; }
-        .title { margin-left: 20px; font-size: 13px; color: #8b949e; flex-grow: 1; text-align: center; }
 
         .content {
-            padding: 25px;
-            font-size: 16px;
-            line-height: 1.5;
+            padding: 20px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.6;
             white-space: pre;
+            overflow-x: auto;
         }
 
-        .kwd { color: var(--keyword); }
-        .func { color: var(--function); }
-        .str { color: var(--string); }
-        .cmt { color: var(--comment); }
-        .num { color: var(--number); }
+        .kwd { color: var(--kwd); }
+        .func { color: var(--func); }
+        .str { color: var(--str); }
+        .cmt { color: var(--cmt); }
 
         #typewriter::after {
-            content: "|";
-            color: var(--cursor-color);
+            content: "_";
             animation: blink 1s infinite;
+            color: var(--accent);
         }
 
         @keyframes blink { 50% { opacity: 0; } }
-        
-        a { color: var(--string); text-decoration: none; border-bottom: 1px dashed; }
-        a:hover { color: #fff; border-bottom: 1px solid; }
+
+        /* Responsywność */
+        @media (max-width: 900px) {
+            body { flex-direction: column; overflow: auto; height: auto; }
+            .info-sidebar, .code-container { width: 100%; padding: 30px; }
+            .info-sidebar { height: auto; }
+        }
     </style>
 </head>
 <body>
 
-<div class="terminal-window">
-    <div class="header">
-        <div class="dots">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
+    <!-- LEWA SEKCJA -->
+    <aside class="info-sidebar">
+        <h1>Kuba</h1>
+        <h2>Software Developer</h2>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-label">Doświadczenie</span>
+                4 lata w branży IT
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Główny Stack</span>
+                JS, React, Node.js, Python, C++
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Lokalizacja</span>
+                Polska / Remote
+            </div>
         </div>
-        <div class="title">kuba_dev — profile.cpp</div>
-    </div>
-    <div class="content" id="typewriter"></div>
-</div>
+
+        <a href="mailto:kuba@example.com" class="btn-contact">Napisz do mnie</a>
+    </aside>
+
+    <!-- PRAWA SEKCJA -->
+    <main class="code-container">
+        <div class="terminal-window">
+            <div class="header">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <div class="content" id="typewriter"></div>
+        </div>
+    </main>
 
 <script>
-    const codeText = 
-`/*
- * 4 lata doświadczenia w budowaniu rozwiązań.
- */
+    const codeText = `class Developer {
+  constructor() {
+    this.name = "Kuba";
+    this.exp = "4 years";
+  }
 
-#include <iostream>
-#include <vector>
+  getSkills() {
+    return [
+      "JavaScript", "React", 
+      "Node.js", "Python", "C++"
+    ];
+  }
 
-const char* name = "Kuba";
-int experience_years = 4;
-
-std::vector<std::string> stack = {
-    "JavaScript", "React", "Node.js", 
-    "Python", "C++"
-};
-
-void contact() {
-    std::cout << "Email: kuba@twojdomena.pl" << std::endl;
+  isReady() {
+    return true; 
+  }
 }
 
-// Inicjalizacja portfolio...
-int main() {
-    return 0;
-}`;
+// Inicjalizacja...
+const me = new Developer();`;
 
     let i = 0;
-    const speed = 30; // prędkość pisania (ms)
     const target = document.getElementById("typewriter");
 
     function typeWriter() {
         if (i < codeText.length) {
-            // Zamiana znaków na kolory (prosty parser)
-            let rawChar = codeText.charAt(i);
-            target.textContent += rawChar;
-            
-            // Logika kolorowania po zakończeniu pisania (opcjonalnie)
-            // Dla prostoty w tej wersji używamy czystego tekstu z efektem pisania
-            
+            target.textContent += codeText.charAt(i);
             i++;
-            setTimeout(typeWriter, speed);
+            setTimeout(typeWriter, 25);
         } else {
-            // Po zakończeniu pisania, sformatuj kod dla kolorów
             formatCode();
         }
     }
 
     function formatCode() {
-        let formatted = target.textContent
-            .replace(/\/\*[\s\S]*?\*\//g, '<span class="cmt">$&</span>')
-            .replace(/\/\/.*/g, '<span class="cmt">$&</span>')
-            .replace(/#include|const|int|char|void|return|std/g, '<span class="kwd">$&</span>')
+        let html = target.textContent
+            .replace(/class|constructor|this|return|new|const/g, '<span class="kwd">$&</span>')
+            .replace(/getSkills|isReady/g, '<span class="func">$&</span>')
             .replace(/"[^"]*"/g, '<span class="str">$&</span>')
-            .replace(/\d+/g, '<span class="num">$&</span>')
-            .replace(/main|contact|cout|endl/g, '<span class="func">$&</span>');
-        
-        target.innerHTML = formatted;
+            .replace(/\/\/ .*/g, '<span class="cmt">$&</span>');
+        target.innerHTML = html;
     }
 
     window.onload = typeWriter;
