@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIFH Clan - Clean Mode</title>
+    <title>FIFH Clan - Interactive</title>
     <style>
         :root {
             --ps99-blue: #00a2ff;
@@ -11,7 +11,6 @@
             --text-dark: #2c3e50;
             --text-light: #7f8c8d;
             --bg-main: #f8f9fa;
-            --sidebar-bg: #ffffff;
         }
 
         body {
@@ -20,10 +19,10 @@
             background: var(--bg-main);
             color: var(--text-dark);
             height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden; /* Blokujemy scroll całego body na rzecz sekcji */
         }
 
-        /* --- PRZYCISK MENU (HAMBURGER) --- */
+        /* --- MENU TOGGLE --- */
         .menu-toggle {
             position: fixed;
             top: 20px;
@@ -38,37 +37,23 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
-            transition: 0.3s;
         }
-
-        .menu-toggle:hover { background: var(--ps99-light-blue); border-color: var(--ps99-blue); }
 
         .bar { width: 20px; height: 2px; background: var(--ps99-blue); border-radius: 2px; }
 
-        /* --- WYSUWANY SIDEBAR --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             position: fixed;
-            top: 0;
-            left: -280px; /* Schowany poza ekranem */
-            width: 260px;
-            height: 100%;
-            background: var(--sidebar-bg);
+            top: 0; left: -280px;
+            width: 260px; height: 100%;
+            background: white;
             border-right: 1px solid #e0e0e0;
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 999;
             padding-top: 80px;
-            box-shadow: 10px 0 30px rgba(0,0,0,0.05);
         }
 
         .sidebar.active { left: 0; }
-
-        .sidebar-header {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--ps99-blue);
-            margin-bottom: 30px;
-        }
 
         .nav-item {
             padding: 15px 30px;
@@ -76,44 +61,38 @@
             transition: 0.2s;
             font-weight: 500;
             color: var(--text-light);
-            text-decoration: none;
-            display: block;
         }
 
         .nav-item:hover { background: var(--ps99-light-blue); color: var(--ps99-blue); }
+        .nav-item.active { background: var(--ps99-light-blue); color: var(--ps99-blue); font-weight: 700; }
 
-        /* --- TREŚĆ GŁÓWNA --- */
+        /* --- TREŚĆ --- */
         .main-content {
+            height: 100vh;
+            overflow-y: auto;
             padding: 40px;
-            transition: 0.4s;
+            padding-top: 100px;
+            box-sizing: border-box;
+        }
+
+        /* Sekcje zakładek */
+        .tab-content {
+            display: none; /* Domyślnie ukryte */
             max-width: 900px;
             margin: 0 auto;
-            padding-top: 100px;
+            animation: fadeIn 0.3s ease;
         }
 
-        /* Przycisk logowania w rogu */
-        .login-corner {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            z-index: 10;
+        .tab-content.active {
+            display: block; /* Pokazuje tylko aktywną */
         }
 
-        .btn-mini-login {
-            background: white;
-            border: 1px solid #ddd;
-            color: var(--text-light);
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: 0.3s;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .btn-mini-login:hover { border-color: var(--ps99-blue); color: var(--ps99-blue); }
-
-        /* Karty i sekcje */
+        /* Stylizacja kart */
         .info-card {
             background: white;
             padding: 40px;
@@ -121,15 +100,6 @@
             border: 1px solid #eaeaea;
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             margin-bottom: 30px;
-        }
-
-        .status-badge {
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 700;
         }
 
         .social-grid {
@@ -146,107 +116,137 @@
             text-align: center;
             text-decoration: none;
             color: var(--text-dark);
-            font-weight: 600;
             border: 1px solid #eee;
-            transition: 0.2s;
+            font-weight: 600;
         }
 
-        .social-box:hover { border-color: var(--ps99-blue); transform: translateY(-3px); }
+        /* Login Button */
+        .login-corner { position: fixed; top: 25px; right: 25px; z-index: 10; }
+        .btn-mini-login {
+            background: white; border: 1px solid #ddd; color: var(--text-light);
+            padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 12px;
+        }
 
-        /* Nakładka przy otwartym menu */
         .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.1);
-            display: none;
-            z-index: 998;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.1); display: none; z-index: 998;
         }
         .overlay.active { display: block; }
-
-        /* Modal logowania */
-        #login-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            z-index: 2000;
-            justify-content: center; align-items: center;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Przycisk do pokazywania/zakrywania zakładek -->
     <div class="menu-toggle" onclick="toggleSidebar()">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
     </div>
 
-    <!-- Ciemne tło gdy menu jest otwarte -->
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- Wysuwane Zakładki -->
     <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">FIFH</div>
-        <div class="nav-item" onclick="toggleSidebar()">🏠 Home / Info</div>
-        <div class="nav-item" onclick="toggleSidebar()">📢 Nowości</div>
-        <div class="nav-item" onclick="toggleSidebar()">📊 Statystyki</div>
-        <div class="nav-item" onclick="toggleSidebar()">👥 Członkowie</div>
-        <div class="nav-item" onclick="toggleSidebar()">🎁 Giveaway</div>
-        <div class="nav-item" onclick="toggleSidebar()">📩 Rekrutacja</div>
+        <div style="text-align:center; font-size:24px; font-weight:800; color:var(--ps99-blue); margin-bottom:20px;">FIFH CLAN</div>
+        <div class="nav-item active" onclick="showTab('home')">🏠 Home / Info</div>
+        <div class="nav-item" onclick="showTab('news')">📢 Nowości</div>
+        <div class="nav-item" onclick="showTab('stats')">📊 Statystyki</div>
+        <div class="nav-item" onclick="showTab('members')">👥 Członkowie</div>
+        <div class="nav-item" onclick="showTab('giveaway')">🎁 Giveaway</div>
+        <div class="nav-item" onclick="showTab('recruitment')">📩 Rekrutacja</div>
     </nav>
 
     <div class="login-corner">
-        <button class="btn-mini-login" onclick="toggleLogin()">LOGOWANIE</button>
+        <button class="btn-mini-login" onclick="alert('Panel logowania wkrótce!')">LOGOWANIE</button>
     </div>
 
     <main class="main-content">
-        <div class="info-card">
-            <span class="status-badge">● REKRUTACJA OTWARTA</span>
-            <h1 style="margin-top:20px;">Klan FIFH</h1>
-            <p>Najlepsza ekipa w Pet Simulator 99. Kliknij przycisk menu po lewej, aby zobaczyć więcej opcji!</p>
+        
+        <!-- ZAKŁADKA 1: HOME -->
+        <div id="home" class="tab-content active">
+            <div class="info-card">
+                <span style="background:#e8f5e9; color:#2e7d32; padding:5px 12px; border-radius:50px; font-size:12px; font-weight:700;">● STATUS: ONLINE</span>
+                <h1 style="margin-top:20px;">Witaj w klanie FIFH</h1>
+                <p>To jest nasz ekran główny. Jesteśmy jedną z najbardziej zorganizowanych grup w Pet Simulator 99. Znajdziesz tu najważniejsze linki i informacje o klanie.</p>
+            </div>
+            <h2>Social Media</h2>
+            <div class="social-grid">
+                <a href="#" class="social-box">YouTube</a>
+                <a href="#" class="social-box">Discord</a>
+                <a href="#" class="social-box">TikTok</a>
+                <a href="#" class="social-box">X / Twitter</a>
+            </div>
         </div>
 
-        <h2>Social Media</h2>
-        <div class="social-grid">
-            <a href="#" class="social-box">YouTube</a>
-            <a href="#" class="social-box">Discord</a>
-            <a href="#" class="social-box">TikTok</a>
-            <a href="#" class="social-box">X / Twitter</a>
+        <!-- ZAKŁADKA 2: NOWOŚCI -->
+        <div id="news" class="tab-content">
+            <div class="info-card">
+                <h1>📢 Nowości</h1>
+                <p>Tutaj będą pojawiać się najnowsze aktualizacje z życia klanu i gry.</p>
+            </div>
         </div>
+
+        <!-- ZAKŁADKA 3: STATYSTYKI -->
+        <div id="stats" class="tab-content">
+            <div class="info-card">
+                <h1>📊 Statystyki</h1>
+                <p>Miejsce na statystyki klanowe, diamenty i poziomy.</p>
+            </div>
+        </div>
+
+        <!-- ZAKŁADKA 4: CZŁONKOWIE -->
+        <div id="members" class="tab-content">
+            <div class="info-card">
+                <h1>👥 Członkowie</h1>
+                <p>Lista wszystkich graczy należących do FIFH.</p>
+            </div>
+        </div>
+
+        <!-- ZAKŁADKA 5: GIVEAWAY -->
+        <div id="giveaway" class="tab-content">
+            <div class="info-card">
+                <h1>🎁 Giveaway</h1>
+                <p>Aktualne konkursy na Huge Pety i przedmioty.</p>
+            </div>
+        </div>
+
+        <!-- ZAKŁADKA 6: REKRUTACJA -->
+        <div id="recruitment" class="tab-content">
+            <div class="info-card">
+                <h1>📩 Rekrutacja</h1>
+                <p>Formularz zgłoszeniowy dla nowych członków.</p>
+            </div>
+        </div>
+
     </main>
 
-    <!-- Modal Logowania -->
-    <div id="login-modal">
-        <div style="text-align:center; background:white; padding:40px; border-radius:20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 300px;">
-            <h3>Panel Członka</h3>
-            <input type="password" id="pass" placeholder="Hasło" style="width:100%; padding:10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px;">
-            <button onclick="checkPass()" style="width:100%; padding:10px; background:var(--ps99-blue); color:white; border:none; border-radius:8px; cursor:pointer;">Zaloguj</button>
-            <p onclick="toggleLogin()" style="cursor:pointer; font-size:12px; color:gray; margin-top:15px;">Zamknij</p>
-        </div>
-    </div>
-
     <script>
-        // Funkcja pokazywania/ukrywania menu
+        // Zarządzanie paskiem bocznym
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        // Funkcja logowania
-        function toggleLogin() {
-            const modal = document.getElementById('login-modal');
-            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        function checkPass() {
-            if (document.getElementById('pass').value === "fifh99") {
-                alert("Zalogowano!");
-                toggleLogin();
-            } else {
-                alert("Błąd!");
+        // System zmiany zakładek
+        function showTab(tabId) {
+            // 1. Ukryj wszystkie zakładki
+            const tabs = document.getElementsByClassName('tab-content');
+            for (let tab of tabs) {
+                tab.classList.remove('active');
             }
+
+            // 2. Usuń klasę active z przycisków menu
+            const navItems = document.getElementsByClassName('nav-item');
+            for (let item of navItems) {
+                item.classList.remove('active');
+            }
+
+            // 3. Pokaż wybraną zakładkę
+            document.getElementById(tabId).classList.add('active');
+
+            // 4. Ustaw przycisk w menu jako aktywny
+            event.currentTarget.classList.add('active');
+
+            // 5. Zamknij menu po wyborze (opcjonalne)
+            toggleSidebar();
         }
     </script>
 </body>
