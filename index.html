@@ -9,19 +9,76 @@
             --ps99-blue: #00b4ff;
             --ps99-yellow: #ffca28;
             --ps99-dark: #1a1a2e;
+            --sidebar-width: 250px;
         }
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            display: flex;
             background: var(--ps99-dark);
-            background-image: radial-gradient(circle, #2a2a4e 0%, #1a1a2e 100%);
             color: white;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        /* Mały przycisk w rogu */
+        /* --- PASEK BOCZNY --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 2px solid var(--ps99-blue);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-header {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--ps99-yellow);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 180, 255, 0.1);
+            color: white;
+            border-left: 4px solid var(--ps99-blue);
+        }
+
+        .nav-item.active {
+            background: rgba(0, 180, 255, 0.2);
+            color: var(--ps99-blue);
+            border-left: 4px solid var(--ps99-blue);
+        }
+
+        /* --- TREŚĆ GŁÓWNA --- */
+        .main-content {
+            flex-grow: 1;
+            position: relative;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(circle, #2a2a4e 0%, #1a1a2e 100%);
+        }
+
+        /* Przycisk w rogu */
         .login-corner {
             position: absolute;
             top: 20px;
@@ -29,94 +86,72 @@
         }
 
         .btn-mini-login {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 6px 12px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             transition: 0.3s;
         }
 
         .btn-mini-login:hover {
             background: var(--ps99-blue);
-            border-color: var(--ps99-blue);
+            color: white;
         }
 
-        /* Ekran główny */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .hero-title {
+            font-size: 60px;
+            margin: 0;
+            color: white;
             text-align: center;
         }
 
-        .clan-logo {
-            font-size: 80px;
-            font-weight: 900;
-            color: var(--ps99-yellow);
-            text-shadow: 0 0 20px rgba(255, 202, 40, 0.5), 4px 4px 0px #855e00;
-            margin-bottom: 10px;
-        }
-
-        .clan-tag {
-            background: var(--ps99-blue);
-            padding: 5px 20px;
-            border-radius: 50px;
-            font-weight: bold;
+        .hero-subtitle {
+            color: var(--ps99-blue);
             font-size: 20px;
-            box-shadow: 0 4px 15px rgba(0, 180, 255, 0.4);
+            margin-bottom: 30px;
         }
 
-        .stats-preview {
-            margin-top: 50px;
-            display: flex;
-            gap: 30px;
-        }
-
-        .stat-card {
+        /* Sekcja nowości */
+        .news-container {
             background: rgba(255, 255, 255, 0.05);
             padding: 20px;
             border-radius: 15px;
-            border-bottom: 4px solid var(--ps99-blue);
-            min-width: 120px;
+            width: 80%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .stat-card span {
-            display: block;
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--ps99-yellow);
-        }
-
-        /* Panel logowania (overlay) */
+        /* Okno logowania */
         #login-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .login-box {
             background: #252545;
-            padding: 40px;
-            border-radius: 20px;
+            padding: 30px;
+            border-radius: 15px;
             border: 2px solid var(--ps99-blue);
-            width: 300px;
+            width: 280px;
+            text-align: center;
         }
 
         input {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
             border: none;
+            background: #1a1a2e;
+            color: white;
         }
 
         .btn-submit {
@@ -133,38 +168,44 @@
 </head>
 <body>
 
-    <div class="login-corner">
-        <button class="btn-mini-login" onclick="toggleLogin()">LOGOWANIE CZŁONKÓW</button>
+    <!-- PASEK BOCZNY -->
+    <div class="sidebar">
+        <div class="sidebar-header">FIFH</div>
+        <div class="nav-item active">🏠 Nowości</div>
+        <div class="nav-item">💎 Bank Klanu</div>
+        <div class="nav-item">🐾 Członkowie</div>
+        <div class="nav-item">🏆 Leaderboard</div>
+        <div class="nav-item">⚔️ Wojny Klanów</div>
+        <div class="nav-item">📩 Rekrutacja</div>
     </div>
 
-    <section class="hero">
-        <div class="clan-logo">FIFH</div>
-        <div class="clan-tag">TOP CLAN | PET SIMULATOR 99</div>
-
-        <div class="stats-preview">
-            <div class="stat-card">
-                <p>Członkowie</p>
-                <span>50/50</span>
-            </div>
-            <div class="stat-card">
-                <p>Diamenty</p>
-                <span>1.2B+</span>
-            </div>
-            <div class="stat-card">
-                <p>Ranga</p>
-                <span>#120</span>
-            </div>
+    <!-- TREŚĆ GŁÓWNA -->
+    <div class="main-content">
+        <div class="login-corner">
+            <button class="btn-mini-login" onclick="toggleLogin()">ZALOGUJ</button>
         </div>
-    </section>
 
-    <!-- Okno logowania -->
+        <h1 class="hero-title">Witaj w FIFH</h1>
+        <p class="hero-subtitle">Najlepszy klan w Pet Simulator 99</p>
+
+        <div class="news-container">
+            <h3>📢 Ostatnie Nowości:</h3>
+            <ul>
+                <li>Nowy update w PS99 już dostępny!</li>
+                <li>Wpłacajcie diamenty na klanowy Bank.</li>
+                <li>Trwa rekrutacja na nowych moderatorów.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- LOGOWANIE -->
     <div id="login-overlay">
         <div class="login-box">
             <h2>Panel Członka</h2>
-            <input type="text" placeholder="Nick z Roblox">
-            <input type="password" id="pass" placeholder="Hasło klanowe">
+            <input type="text" placeholder="Nick Roblox">
+            <input type="password" id="pass" placeholder="Hasło">
             <button class="btn-submit" onclick="checkPass()">Zaloguj</button>
-            <button style="background:none; border:none; color:gray; cursor:pointer; margin-top:10px" onclick="toggleLogin()">Anuluj</button>
+            <p onclick="toggleLogin()" style="cursor:pointer; font-size:12px; margin-top:15px; color:gray">Zamknij</p>
         </div>
     </div>
 
@@ -177,11 +218,10 @@
         function checkPass() {
             const pass = document.getElementById('pass').value;
             if (pass === "fifh99") {
-                alert("Witaj w panelu FIFH!");
-                // Tutaj możemy przekierować do innej strony
-                window.location.href = "#"; 
+                alert("Zalogowano pomyślnie!");
+                toggleLogin();
             } else {
-                alert("Nieprawidłowe hasło klanowe!");
+                alert("Błąd!");
             }
         }
     </script>
