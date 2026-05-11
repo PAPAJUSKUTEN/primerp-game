@@ -4,178 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIFH Clan - Pet Simulator 99</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
-        
         :root {
-            --primary: #ff00aa;
-            --secondary: #00ffff;
-            --bg: #0a001f;
+            --primary: #ff0088;
+            --accent: #00ccff;
+            --roblox: #ff0000;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'VT323', monospace;
-            background: linear-gradient(135deg, #0a001f, #1a0033);
-            color: #fff;
+            background: linear-gradient(135deg, #f0f8ff, #e0f0ff);
+            color: #222;
             line-height: 1.6;
-            overflow-x: hidden;
         }
-        
-        .header {
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .nav a {
+            color: #222;
+            text-decoration: none;
+            padding: 15px 35px;
+            font-size: 1.4rem;
+            transition: 0.3s;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        header {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
+            background: linear-gradient(rgba(240,248,255,0.85), rgba(224,240,255,0.85)), url('https://picsum.photos/id/1015/1920/1080') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             position: relative;
         }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,0,170,0.3) 0%, transparent 70%);
-            animation: pulse 4s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        
+
         .logo {
             font-family: 'Press Start 2P', cursive;
-            font-size: 4.5rem;
+            font-size: 6rem;
             color: var(--primary);
-            text-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
-            margin-bottom: 20px;
+            text-shadow: 0 0 30px var(--primary), 0 0 60px var(--accent);
             animation: glow 2s infinite alternate;
         }
-        
+
         @keyframes glow {
-            from { text-shadow: 0 0 20px #ff00aa; }
-            to { text-shadow: 0 0 60px #00ffff, 0 0 80px #ff00aa; }
+            from { text-shadow: 0 0 20px #ff0088; }
+            to { text-shadow: 0 0 50px #00ccff, 0 0 80px #ff0088; }
         }
-        
+
         .tagline {
-            font-size: 2rem;
-            color: var(--secondary);
-            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: #333;
+            margin: 20px 0;
         }
-        
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 0, 31, 0.95);
-            padding: 15px 0;
-            z-index: 1000;
-            border-bottom: 3px solid var(--primary);
-        }
-        
-        .nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-        }
-        
-        .nav a {
-            color: white;
-            text-decoration: none;
-            padding: 15px 30px;
-            font-size: 1.3rem;
-            transition: all 0.3s;
-        }
-        
-        .nav a:hover {
-            color: var(--primary);
-            text-shadow: 0 0 15px var(--primary);
-        }
-        
+
         section {
-            padding: 100px 10%;
-            max-width: 1400px;
+            padding: 100px 8%;
+            max-width: 1300px;
             margin: 0 auto;
         }
-        
-        .about {
-            background: rgba(26, 0, 51, 0.6);
-        }
-        
+
         h2 {
             font-family: 'Press Start 2P', cursive;
             font-size: 3rem;
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             color: var(--primary);
         }
-        
-        .clan-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-        
-        .card {
-            background: rgba(255,255,255,0.05);
-            border: 3px solid var(--secondary);
-            padding: 30px;
-            border-radius: 15px;
-            transition: transform 0.4s;
-        }
-        
-        .card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 0 40px var(--primary);
-        }
-        
-        .members {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        
-        .member {
-            background: rgba(0,0,0,0.4);
-            padding: 20px;
+
+        .login-panel {
+            background: white;
+            border: 5px solid var(--primary);
+            padding: 40px;
+            max-width: 500px;
+            margin: 40px auto;
             text-align: center;
-            border: 2px dashed var(--primary);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,0,136,0.3);
         }
-        
-        .footer {
-            text-align: center;
-            padding: 60px;
-            background: #05000f;
-            border-top: 4px solid var(--primary);
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 1.3rem;
+            border: 3px solid #ccc;
         }
-        
+
         button {
-            background: var(--primary);
+            background: var(--roblox);
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.4rem;
+            padding: 18px 50px;
+            font-size: 1.5rem;
             cursor: pointer;
             margin: 20px;
-            border-radius: 0;
-            box-shadow: 0 0 20px var(--primary);
-            transition: all 0.3s;
+            box-shadow: 0 0 20px var(--roblox);
         }
-        
-        button:hover {
-            background: var(--secondary);
-            color: black;
-            transform: scale(1.1);
+
+        .socials, .videos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border: 4px solid var(--accent);
+            border-radius: 15px;
+            text-align: center;
         }
     </style>
 </head>
@@ -184,62 +144,86 @@
         <ul>
             <li><a href="#home">HOME</a></li>
             <li><a href="#about">O KLANNIE</a></li>
-            <li><a href="#members">CZŁONKOWIE</a></li>
-            <li><a href="#join">DOŁĄCZ</a></li>
+            <li><a href="#login">PANEL CZŁONKÓW</a></li>
+            <li><a href="#socials">SOCIALE</a></li>
+            <li><a href="#videos">FILMY</a></li>
         </ul>
     </nav>
 
-    <header class="header" id="home">
+    <header id="home">
         <div>
             <h1 class="logo">FIFH</h1>
-            <p class="tagline">FIFH - Najlepszy Klan w Pet Simulator 99</p>
-            <p style="font-size:1.5rem; margin-top:20px;">Top Clan • Clan Battles • Huge Pets</p>
-            <a href="#join"><button>DOŁĄCZ DO NAS</button></a>
+            <p class="tagline">FIFH CLAN • Pet Simulator 99</p>
+            <p style="font-size:1.8rem;">Najlepszy klan Roblox w PS99!</p>
+            <a href="#login"><button>WEJDŹ DO PANELU</button></a>
         </div>
     </header>
 
-    <section class="about" id="about">
+    <section id="about">
         <h2>O KLANNIE FIFH</h2>
-        <div class="clan-info">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;">
             <div class="card">
-                <h3>🏆 Cele</h3>
-                <p>Top 10 Clan Battles • Najlepsze Huge • Szybki rozwój</p>
+                <h3>🏆 Cele klanu</h3>
+                <p>Top leaderboard • Clan Battles • Najlepsze Huge Pets</p>
             </div>
             <div class="card">
-                <h3>🔥 Styl gry</h3>
-                <p>Aktywni gracze, grinding, trading, eventy i clan wars</p>
-            </div>
-            <div class="card">
-                <h3>📈 Statystyki</h3>
-                <p>Level Max • Miliony donated • Top leaderboard</p>
+                <h3>🔥 Aktywność</h3>
+                <p>Codzienny grind • Trading • Eventy • Clan Wars</p>
             </div>
         </div>
     </section>
 
-    <section id="members">
-        <h2>CZŁONKOWIE</h2>
-        <div class="members">
-            <div class="member">
-                <h3>👑 Lider</h3>
-                <p><strong>PAPAJUSKUTEN</strong></p>
+    <section id="login" style="background:#f8f9ff;">
+        <h2>PANEL LOGOWANIA DLA CZŁONKÓW</h2>
+        <div class="login-panel">
+            <h3>🔐 Logowanie</h3>
+            <input type="text" id="username" placeholder="Roblox Username">
+            <input type="password" id="password" placeholder="Hasło klanowe">
+            <button onclick="login()">ZALOGUJ SIĘ</button>
+            <p id="login-status" style="margin-top:15px;color:green;"></p>
+        </div>
+    </section>
+
+    <section id="socials">
+        <h2>SOCIALE & KONTAKT</h2>
+        <div class="socials">
+            <div class="card">
+                <h3>Discord</h3>
+                <p><strong>[Dodaj link do Discorda]</strong></p>
             </div>
-            <div class="member">
-                <h3>⭐ Core Members</h3>
-                <p>Miejsce na Twoje nicki</p>
+            <div class="card">
+                <h3>YouTube</h3>
+                <p><strong>[Twój kanał]</strong></p>
             </div>
         </div>
     </section>
 
-    <section id="join" style="background: linear-gradient(45deg, #1a0033, #0a001f); text-align:center;">
-        <h2>DOŁĄCZ DO FIFH</h2>
-        <p style="font-size:2rem; margin:30px 0;">Masz silne petsy i chcesz grać z najlepszymi?</p>
-        <button onclick="alert('Zgłoszenie wysłane! Skontaktuj się na Discordie.')">ZGŁOŚ SIĘ TERAZ</button>
-        <p>Discord: (dodaj link)</p>
+    <section id="videos" style="background:#f0f8ff;">
+        <h2>FILMY KLANU</h2>
+        <div class="videos">
+            <div class="card">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9wgxcq" title="Clan Video" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
     </section>
 
-    <footer class="footer">
-        <p>&copy; 2026 FIFH Clan • Pet Simulator 99</p>
-        <p>Made with ❤️ by Grok + PAPAJUSKUTEN</p>
+    <footer style="text-align:center;padding:60px;background:#e0f0ff;border-top:6px solid #ff0088;">
+        <p>&copy; 2026 FIFH Clan • Pet Simulator 99 • Roblox</p>
+        <p>Made with ❤️ by Grok</p>
     </footer>
+
+    <script>
+        function login() {
+            const user = document.getElementById('username').value;
+            const status = document.getElementById('login-status');
+            if (user.length > 3) {
+                status.textContent = '✅ Zalogowano jako ' + user + '! Witaj w FIFH!';
+                status.style.color = 'green';
+            } else {
+                status.textContent = '❌ Podaj poprawny username';
+                status.style.color = 'red';
+            }
+        }
+    </script>
 </body>
 </html>
