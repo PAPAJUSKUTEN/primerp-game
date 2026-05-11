@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIFH Clan - Pet Simulator 99</title>
+    <title>FIFH Clan - Official Page</title>
     <style>
         :root {
             --ps99-blue: #00b4ff;
             --ps99-yellow: #ffca28;
-            --ps99-dark: #1a1a2e;
-            --sidebar-width: 250px;
+            --ps99-dark: #0f0f1e;
+            --sidebar-width: 260px;
+            --accent-red: #ff4b2b;
         }
 
         body {
@@ -19,193 +20,214 @@
             background: var(--ps99-dark);
             color: white;
             height: 100vh;
-            overflow: hidden;
         }
 
-        /* --- PASEK BOCZNY --- */
+        /* --- LEWY SIDEBAR --- */
         .sidebar {
             width: var(--sidebar-width);
-            background: rgba(0, 0, 0, 0.3);
-            border-right: 2px solid var(--ps99-blue);
+            background: #16162d;
+            border-right: 1px solid rgba(0, 180, 255, 0.3);
             display: flex;
             flex-direction: column;
             padding: 20px 0;
-            backdrop-filter: blur(10px);
+            flex-shrink: 0;
         }
 
         .sidebar-header {
             text-align: center;
-            font-size: 32px;
+            font-size: 35px;
             font-weight: 900;
             color: var(--ps99-yellow);
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 0px #000;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
         }
 
         .nav-item {
-            padding: 15px 25px;
+            padding: 15px 30px;
             cursor: pointer;
-            transition: 0.3s;
-            border-left: 4px solid transparent;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 14px;
-            letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.2s;
+            font-weight: 600;
+            color: #a0a0c0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .nav-item:hover {
             background: rgba(0, 180, 255, 0.1);
             color: white;
-            border-left: 4px solid var(--ps99-blue);
         }
 
         .nav-item.active {
-            background: rgba(0, 180, 255, 0.2);
             color: var(--ps99-blue);
-            border-left: 4px solid var(--ps99-blue);
+            background: rgba(0, 180, 255, 0.05);
+            border-right: 3px solid var(--ps99-blue);
         }
 
-        /* --- TREŚĆ GŁÓWNA --- */
+        /* --- EKRAN GŁÓWNY --- */
         .main-content {
             flex-grow: 1;
+            overflow-y: auto;
             position: relative;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-image: radial-gradient(circle, #2a2a4e 0%, #1a1a2e 100%);
+            background-image: linear-gradient(to bottom, rgba(26, 26, 46, 0.8), var(--ps99-dark)), url('https://via.placeholder.com/1920x1080'); /* Tu możesz dać tło z gry */
+            background-size: cover;
+            background-position: center;
         }
 
-        /* Przycisk w rogu */
         .login-corner {
             position: absolute;
             top: 20px;
             right: 20px;
+            z-index: 10;
         }
 
         .btn-mini-login {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.5);
-            padding: 6px 12px;
+            color: #fff;
+            padding: 5px 12px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 11px;
-            transition: 0.3s;
+            opacity: 0.6;
         }
 
-        .btn-mini-login:hover {
-            background: var(--ps99-blue);
-            color: white;
+        .btn-mini-login:hover { opacity: 1; background: var(--ps99-blue); }
+
+        .content-container {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 20px;
         }
 
-        .hero-title {
-            font-size: 60px;
-            margin: 0;
-            color: white;
-            text-align: center;
-        }
-
-        .hero-subtitle {
-            color: var(--ps99-blue);
-            font-size: 20px;
+        /* Sekcja Info */
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 30px;
         }
 
-        /* Sekcja nowości */
-        .news-container {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 15px;
-            width: 80%;
-            max-width: 600px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .status-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
-        /* Okno logowania */
+        /* Social Media Grid */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .social-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--ps99-blue);
+        }
+
+        .youtube { border-bottom: 3px solid #ff0000; }
+        .discord { border-bottom: 3px solid #7289da; }
+        .tiktok  { border-bottom: 3px solid #ff0050; }
+        .x-twitter { border-bottom: 3px solid #ffffff; }
+
+        .live-indicator {
+            color: var(--accent-red);
+            font-weight: bold;
+            font-size: 12px;
+            display: block;
+            margin-top: 5px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
         #login-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .login-box {
-            background: #252545;
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid var(--ps99-blue);
-            width: 280px;
-            text-align: center;
-        }
-
-        input {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-            background: #1a1a2e;
-            color: white;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 10px;
-            background: var(--ps99-blue);
-            border: none;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
+            justify-content: center; align-items: center; z-index: 100;
         }
     </style>
 </head>
 <body>
 
-    <!-- PASEK BOCZNY -->
     <div class="sidebar">
         <div class="sidebar-header">FIFH</div>
-        <div class="nav-item active">🏠 Nowości</div>
-        <div class="nav-item">💎 Bank Klanu</div>
-        <div class="nav-item">🐾 Członkowie</div>
-        <div class="nav-item">🏆 Leaderboard</div>
-        <div class="nav-item">⚔️ Wojny Klanów</div>
+        <div class="nav-item active">🏠 Home / Info</div>
+        <div class="nav-item">📢 Nowości</div>
+        <div class="nav-item">📊 Statystyki</div>
+        <div class="nav-item">👥 Członkowie</div>
+        <div class="nav-item">🎁 Giveaway</div>
         <div class="nav-item">📩 Rekrutacja</div>
     </div>
 
-    <!-- TREŚĆ GŁÓWNA -->
     <div class="main-content">
         <div class="login-corner">
-            <button class="btn-mini-login" onclick="toggleLogin()">ZALOGUJ</button>
+            <button class="btn-mini-login" onclick="toggleLogin()">LOG IN</button>
         </div>
 
-        <h1 class="hero-title">Witaj w FIFH</h1>
-        <p class="hero-subtitle">Najlepszy klan w Pet Simulator 99</p>
+        <div class="content-container">
+            <div class="info-card">
+                <div class="status-badge">REKRUTACJA: OTWARTA</div>
+                <h1>Klan FIFH – Pet Simulator 99</h1>
+                <p>Witamy na oficjalnej stronie klanu FIFH. Jesteśmy grupą aktywnych graczy dążących do topki serwera. Stawiamy na wspólną zabawę, handel i wzajemną pomoc w zdobywaniu Huge Petów!</p>
+            </div>
 
-        <div class="news-container">
-            <h3>📢 Ostatnie Nowości:</h3>
-            <ul>
-                <li>Nowy update w PS99 już dostępny!</li>
-                <li>Wpłacajcie diamenty na klanowy Bank.</li>
-                <li>Trwa rekrutacja na nowych moderatorów.</li>
-            </ul>
+            <h2>Nasze Social Media</h2>
+            <div class="social-grid">
+                <a href="#" class="social-box youtube">
+                    <strong>YouTube</strong>
+                    <span class="live-indicator">● LIVE NOW</span>
+                </a>
+                <a href="#" class="social-box discord">
+                    <strong>Discord</strong>
+                    <span>Dołącz do nas</span>
+                </a>
+                <a href="#" class="social-box tiktok">
+                    <strong>TikTok</strong>
+                    <span>Daily Clips</span>
+                </a>
+                <a href="#" class="social-box x-twitter">
+                    <strong>X (Twitter)</strong>
+                    <span>Newsy</span>
+                </a>
+            </div>
+
+            <div class="info-card" style="margin-top: 40px;">
+                <h3>Jak dołączyć?</h3>
+                <p>Przejdź do zakładki <strong>Rekrutacja</strong>, aby wypełnić formularz. Wymagamy minimum 10m Power oraz aktywnego uczestnictwa w klanowych eventach!</p>
+            </div>
         </div>
     </div>
 
-    <!-- LOGOWANIE -->
+    <!-- Modal Logowania -->
     <div id="login-overlay">
-        <div class="login-box">
+        <div style="background:#252545; padding:30px; border-radius:15px; text-align:center; border: 2px solid var(--ps99-blue);">
             <h2>Panel Członka</h2>
-            <input type="text" placeholder="Nick Roblox">
-            <input type="password" id="pass" placeholder="Hasło">
-            <button class="btn-submit" onclick="checkPass()">Zaloguj</button>
-            <p onclick="toggleLogin()" style="cursor:pointer; font-size:12px; margin-top:15px; color:gray">Zamknij</p>
+            <input type="password" id="pass" placeholder="Klanowe Hasło" style="padding:10px; border-radius:5px; border:none; width:80%"><br><br>
+            <button onclick="checkPass()" style="padding:10px 20px; background:var(--ps99-blue); border:none; color:white; cursor:pointer; border-radius:5px;">Zaloguj</button>
+            <p onclick="toggleLogin()" style="color:gray; cursor:pointer; margin-top:10px; font-size:12px;">Zamknij</p>
         </div>
     </div>
 
@@ -214,17 +236,14 @@
             const overlay = document.getElementById('login-overlay');
             overlay.style.display = (overlay.style.display === 'flex') ? 'none' : 'flex';
         }
-
         function checkPass() {
-            const pass = document.getElementById('pass').value;
-            if (pass === "fifh99") {
-                alert("Zalogowano pomyślnie!");
+            if (document.getElementById('pass').value === "fifh99") {
+                alert("Witaj Członku!");
                 toggleLogin();
             } else {
-                alert("Błąd!");
+                alert("Błędne hasło!");
             }
         }
     </script>
-
 </body>
 </html>
