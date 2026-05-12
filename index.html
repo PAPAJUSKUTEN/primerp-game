@@ -39,6 +39,7 @@
     <a href="#news" class="nav-link" onclick="showSection('news')">📰 Nowości</a>
     <a href="#members" class="nav-link" onclick="showSection('members')">👥 Członkowie</a>
     <a href="#socials" class="nav-link" onclick="showSection('socials')">🔗 Sociale</a>
+    <a href="#recruit" class="nav-link" onclick="showSection('recruit')">📋 Rekrutacja</a>
     <a href="#panel" class="nav-link locked" onclick="requireLogin('panel')">🔐 Panel Klanu</a>
   </div>
   <div class="nav-auth">
@@ -63,6 +64,7 @@
       <p class="hero-sub">Najlepszy klan w Pet Simulator 99! Dołącz do nas i zdobywaj epickie nagrody razem z najlepszymi graczami!</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="showSection('members')">👥 Poznaj Członków</button>
+        <button class="btn-secondary" onclick="showSection('recruit')">📋 Aplikuj do Klanu</button>
         <button class="btn-secondary" onclick="openLogin()">🔑 Panel Klanu</button>
       </div>
       <div class="hero-stats">
@@ -186,6 +188,166 @@
   </div>
 </section>
 
+<!-- ===================== REKRUTACJA ===================== -->
+<section id="recruit" class="section">
+  <div class="page-header">
+    <h1>📋 Rekrutacja do FIFH</h1>
+    <p>Wypełnij formularz i dołącz do najlepszego klanu w PS99!</p>
+  </div>
+
+  <!-- STATUS BOX -->
+  <div id="recruitStatus" class="recruit-status hidden"></div>
+
+  <!-- FORM -->
+  <div class="recruit-form-wrap" id="recruitFormWrap">
+    <div class="recruit-intro-card">
+      <div class="recruit-intro-emoji">🐉</div>
+      <h2>Chcesz dołączyć do klanu FIFH?</h2>
+      <p>Wypełnij poniższe pytania rzetelnie. Liderzy przejrzą Twoją aplikację i skontaktują się przez Discord!</p>
+      <div class="recruit-reqs">
+        <div class="req-item">✅ Minimum poziom PS99: <strong>300</strong></div>
+        <div class="req-item">✅ Aktywność co najmniej <strong>4 dni/tydzień</strong></div>
+        <div class="req-item">✅ Posiadanie <strong>konta Discord</strong></div>
+        <div class="req-item">✅ Znajomość podstaw <strong>clan events</strong></div>
+      </div>
+    </div>
+
+    <form class="recruit-form" id="recruitForm" onsubmit="submitRecruitment(event)">
+
+      <!-- Krok 1: Dane podstawowe -->
+      <div class="form-section">
+        <div class="form-section-title">👤 Dane Podstawowe</div>
+
+        <div class="form-group">
+          <label>Nazwa w Roblox <span class="required">*</span></label>
+          <input type="text" id="rNick" placeholder="np. FuryKing123" required maxlength="50">
+        </div>
+
+        <div class="form-group">
+          <label>Nazwa Discord (np. user#1234 lub user) <span class="required">*</span></label>
+          <input type="text" id="rDiscord" placeholder="np. furyking#0001" required maxlength="60">
+        </div>
+
+        <div class="form-group">
+          <label>Wiek <span class="required">*</span></label>
+          <input type="number" id="rAge" placeholder="np. 15" min="8" max="99" required>
+        </div>
+
+        <div class="form-group">
+          <label>Skąd o nas wiesz?</label>
+          <select id="rSource">
+            <option value="Discord">Discord</option>
+            <option value="YouTube">YouTube</option>
+            <option value="TikTok">TikTok</option>
+            <option value="Od znajomego">Od znajomego</option>
+            <option value="Inne">Inne</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Krok 2: Statystyki PS99 -->
+      <div class="form-section">
+        <div class="form-section-title">⚡ Statystyki PS99</div>
+
+        <div class="form-group">
+          <label>Twój poziom w PS99 <span class="required">*</span></label>
+          <input type="number" id="rLevel" placeholder="np. 500" min="1" required>
+        </div>
+
+        <div class="form-group">
+          <label>Liczba petów (przybliżona)</label>
+          <input type="text" id="rPets" placeholder="np. 150">
+        </div>
+
+        <div class="form-group">
+          <label>Ilość Gemsów (przybliżona)</label>
+          <input type="text" id="rGems" placeholder="np. 2.5B">
+        </div>
+
+        <div class="form-group">
+          <label>Najrzadszy pet jaki posiadasz</label>
+          <input type="text" id="rRarePet" placeholder="np. Titanic Dragon">
+        </div>
+      </div>
+
+      <!-- Krok 3: Pytania -->
+      <div class="form-section">
+        <div class="form-section-title">💬 Pytania Rekrutacyjne</div>
+
+        <div class="form-group">
+          <label>Ile godzin dziennie grasz w PS99? <span class="required">*</span></label>
+          <select id="rHours" required>
+            <option value="">-- wybierz --</option>
+            <option value="Mniej niż 1h">Mniej niż 1h</option>
+            <option value="1-2h">1-2 godziny</option>
+            <option value="2-4h">2-4 godziny</option>
+            <option value="4-6h">4-6 godzin</option>
+            <option value="Ponad 6h">Ponad 6 godzin</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Czy uczestniczyłeś/aś już w klanie? Jeśli tak, w jakim? <span class="required">*</span></label>
+          <textarea id="rPrevClan" placeholder="Opisz krótko swoją historię z klanami w PS99..." rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Dlaczego chcesz dołączyć do FIFH? <span class="required">*</span></label>
+          <textarea id="rWhy" placeholder="Co Cię przyciągnęło do naszego klanu?" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Co możesz wnieść do klanu? <span class="required">*</span></label>
+          <textarea id="rOffer" placeholder="np. aktywność, handel, pomoc nowym graczom, organisowanie eventów..." rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Czy zgadzasz się przestrzegać zasad klanu FIFH? <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="rRules" value="Tak" required> ✅ Tak, zgadzam się</label>
+            <label class="radio-label"><input type="radio" name="rRules" value="Nie"> ❌ Nie</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Krok 4: Zdjęcie / screenshoty -->
+      <div class="form-section">
+        <div class="form-section-title">📸 Screenshot Profilu (opcjonalne)</div>
+        <p class="form-hint">Możesz dołączyć screenshot ze swoim profilem PS99 lub ekwipunkiem. Max 8MB, JPG/PNG/GIF/WEBP.</p>
+
+        <div class="form-group">
+          <label>Wgraj screenshot</label>
+          <div class="file-drop-area" id="fileDropArea" onclick="document.getElementById('rScreenshot').click()">
+            <div class="file-drop-icon">📷</div>
+            <div class="file-drop-text">Kliknij lub przeciągnij plik tutaj</div>
+            <div class="file-drop-sub">JPG, PNG, GIF, WEBP • max 8MB</div>
+            <input type="file" id="rScreenshot" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+          </div>
+          <div class="file-preview hidden" id="filePreview">
+            <img id="filePreviewImg" alt="preview">
+            <button type="button" onclick="removeFile()" class="file-remove-btn">✕ Usuń</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-submit-area">
+        <button type="submit" class="btn-recruit-submit" id="recruitSubmitBtn">
+          <span id="recruitBtnText">🚀 Wyślij Aplikację</span>
+        </button>
+        <p class="form-privacy">Dane są wysyłane tylko do liderów klanu FIFH przez Discord. Twoja odpowiedź zostanie rozpatrzona w ciągu 48h.</p>
+      </div>
+    </form>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="recruit-success hidden" id="recruitSuccess">
+    <div class="success-icon">🎉</div>
+    <h2>Aplikacja wysłana!</h2>
+    <p>Dziękujemy za zainteresowanie klanem <strong>FIFH</strong>!<br>Liderzy przejrzą Twoją aplikację i skontaktują się przez Discord w ciągu <strong>48 godzin</strong>.</p>
+    <button class="btn-primary" onclick="resetRecruitForm()">📋 Wyślij kolejną</button>
+  </div>
+</section>
+
 <!-- ===================== PANEL (LOGGED IN) ===================== -->
 <section id="panel" class="section">
   <div class="page-header">
@@ -212,7 +374,7 @@
     <a href="#" onclick="showSection('home')">Główna</a>
     <a href="#" onclick="showSection('news')">Nowości</a>
     <a href="#" onclick="showSection('members')">Członkowie</a>
-    <a href="#" onclick="showSection('socials')">Sociale</a>
+    <a href="#" onclick="showSection('recruit')">Rekrutacja</a>
   </div>
 </footer>
 
