@@ -289,3 +289,161 @@ function copyDC(dc) {
     prompt('Skopiuj ręcznie:', dc);
   });
 }
+
+// ============ RECRUITMENT ============
+const WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1503873692151713823/aiA8n5Bdg2khRRG_ujPjF3DwRx1H-At6aidtNmXJlSnAJQdJ__htz2IF8JSOvXzFXJ8p';
+
+let recruitFile = null;
+
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 8 * 1024 * 1024) {
+    showRecruitStatus('❌ Plik jest za duży! Maksymalny rozmiar to 8MB.', 'error');
+    return;
+  }
+  recruitFile = file;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    document.getElementById('filePreviewImg').src = ev.target.result;
+    document.getElementById('filePreview').classList.remove('hidden');
+    document.getElementById('fileDropArea').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+// Drag & drop support
+window.addEventListener('DOMContentLoaded', () => {
+  const area = document.getElementById('fileDropArea');
+  if (!area) return;
+  area.addEventListener('dragover', e => { e.preventDefault(); area.style.background = 'rgba(255,107,53,0.15)'; });
+  area.addEventListener('dragleave', () => { area.style.background = ''; });
+  area.addEventListener('drop', e => {
+    e.preventDefault();
+    area.style.background = '';
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      document.getElementById('rScreenshot').files; // trigger
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      document.getElementById('rScreenshot').files = dt.files;
+      handleFileSelect({ target: { files: [file] } });
+    }
+  });
+}, { once: false });
+
+function removeFile() {
+  recruitFile = null;
+  document.getElementById('rScreenshot').value = '';
+  document.getElementById('filePreview').classList.add('hidden');
+  document.getElementById('fileDropArea').style.display = '';
+}
+
+function showRecruitStatus(msg, type) {
+  const el = document.getElementById('recruitStatus');
+  el.textContent = msg;
+  el.className = 'recruit-status ' + type;
+  el.classList.remove('hidden');
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+async function submitRecruitment(e) {
+  e.preventDefault();
+
+  const btn = document.getElementById('recruitSubmitBtn');
+  const btnText = document.getElementById('recruitBtnText');
+  btn.disabled = true;
+  btnText.textContent = '⏳ Wysyłanie...';
+
+  const rulesEl = document.querySelector('input[name="rRules"]:checked');
+  if (!rulesEl) {
+    showRecruitStatus('❌ Musisz odpowiedzieć na pytanie o zasady klanu!', 'error');
+    btn.disabled = false;
+    btnText.textContent = '🚀 Wyślij Aplikację';
+    return;
+  }
+
+  const data = {
+    nick:      document.getElementById('rNick').value.trim(),
+    discord:   document.getElementById('rDiscord').value.trim(),
+    age:       document.getElementById('rAge').value,
+    source:    document.getElementById('rSource').value,
+    level:     document.getElementById('rLevel').value,
+    pets:      document.getElementById('rPets').value || 'Nie podano',
+    gems:      document.getElementById('rGems').value || 'Nie podano',
+    rarePet:   document.getElementById('rRarePet').value || 'Nie podano',
+    hours:     document.getElementById('rHours').value,
+    prevClan:  document.getElementById('rPrevClan').value.trim() || 'Nie podano',
+    why:       document.getElementById('rWhy').value.trim(),
+    offer:     document.getElementById('rOffer').value.trim(),
+    rules:     rulesEl.value,
+    timestamp: new Date().toLocaleString('pl-PL'),
+  };
+
+  // Build Discord embed
+  const embed = {
+    title: '🐾 Nowa Aplikacja Rekrutacyjna — FIFH Clan',
+    color: 0xff6b35,
+    thumbnail: { url: 'https://i.postimg.cc/wM00FXFB/Gemini-Generated-Image-rbsejmrbsejmrbse.png' },
+    fields: [
+      { name: '👤 Nick Roblox',        value: data.nick,      inline: true },
+      { name: '💬 Discord',             value: data.discord,   inline: true },
+      { name: '🎂 Wiek',               value: data.age,       inline: true },
+      { name: '⚡ Poziom PS99',         value: data.level,     inline: true },
+      { name: '🐾 Liczba Petów',        value: data.pets,      inline: true },
+      { name: '💎 Gemsas',             value: data.gems,      inline: true },
+      { name: '🌟 Najrzadszy Pet',      value: data.rarePet,   inline: true },
+      { name: '⏱️ Godziny dziennie',   value: data.hours,     inline: true },
+      { name: '📡 Skąd o nas wie',      value: data.source,    inline: true },
+      { name: '🏰 Poprzednie Klany',    value: data.prevClan,  inline: false },
+      { name: '❓ Dlaczego FIFH?',      value: data.why,       inline: false },
+      { name: '🎁 Co wniesie?',         value: data.offer,     inline: false },
+      { name: '📜 Zgoda na zasady',     value: data.rules === 'Tak' ? '✅ Tak' : '❌ Nie', inline: true },
+    ],
+    footer: { text: `Aplikacja złożona: ${data.timestamp} • FIFH Clan Website` },
+  };
+
+  try {
+    if (recruitFile) {
+      // Send with image attachment
+      const formData = new FormData();
+      formData.append('files[0]', recruitFile, recruitFile.name);
+      formData.append('payload_json', JSON.stringify({
+        content: `📋 **Nowa aplikacja od ${data.nick}** | Discord: ${data.discord}`,
+        embeds: [embed]
+      }));
+      const res = await fetch(WEBHOOK_URL, { method: 'POST', body: formData });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+    } else {
+      // Text only
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `📋 **Nowa aplikacja od ${data.nick}** | Discord: ${data.discord}`,
+          embeds: [embed]
+        })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+    }
+
+    // Success
+    document.getElementById('recruitFormWrap').classList.add('hidden');
+    document.getElementById('recruitSuccess').classList.remove('hidden');
+    document.getElementById('recruitStatus').classList.add('hidden');
+    window.scrollTo(0, 0);
+
+  } catch (err) {
+    showRecruitStatus('❌ Błąd wysyłania! Sprawdź połączenie i spróbuj ponownie. (' + err.message + ')', 'error');
+    btn.disabled = false;
+    btnText.textContent = '🚀 Wyślij Aplikację';
+  }
+}
+
+function resetRecruitForm() {
+  document.getElementById('recruitForm').reset();
+  removeFile();
+  document.getElementById('recruitFormWrap').classList.remove('hidden');
+  document.getElementById('recruitSuccess').classList.add('hidden');
+  document.getElementById('recruitStatus').classList.add('hidden');
+}
