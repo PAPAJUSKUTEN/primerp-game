@@ -637,15 +637,18 @@
 
         <div class="form-group">
           <label>Wgraj screenshot</label>
-          <div class="file-drop-area" id="fileDropArea" onclick="document.getElementById('rScreenshot').click()">
-            <div class="file-drop-icon">📷</div>
+          <div class="file-drop-area" id="fileDropArea" onclick="document.getElementById('rScreenshot').click()" style="cursor:pointer;">
+            <span class="file-drop-icon">📷</span>
             <div class="file-drop-text">Kliknij lub przeciągnij plik tutaj</div>
             <div class="file-drop-sub">JPG, PNG, GIF, WEBP • max 8MB</div>
-            <input type="file" id="rScreenshot" accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+            <input type="file" id="rScreenshot" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none" onchange="handleFileSelect(event)">
           </div>
-          <div class="file-preview hidden" id="filePreview">
-            <img id="filePreviewImg" alt="preview">
-            <button type="button" onclick="removeFile()" class="file-remove-btn">✕ Usuń</button>
+          <div id="filePreview" style="display:none; margin-top:14px; background:#e8eeff; border-radius:14px; padding:14px; align-items:center; gap:14px; flex-wrap:wrap;">
+            <img id="filePreviewImg" alt="Podgląd" style="height:120px; max-width:200px; object-fit:cover; border-radius:10px; border:2px solid rgba(0,0,0,0.12); display:block;">
+            <div style="flex:1; min-width:120px;">
+              <div id="filePreviewName" style="font-weight:700; font-size:0.85rem; color:#1a1a2e; margin-bottom:8px; word-break:break-all;"></div>
+              <button type="button" onclick="removeFile()" style="background:#ff4444;color:white;border:none;border-radius:8px;padding:8px 18px;font-size:0.85rem;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;">✕ Usuń zdjęcie</button>
+            </div>
           </div>
         </div>
       </div>
@@ -663,10 +666,34 @@
   <div class="recruit-success hidden" id="recruitSuccess">
     <div class="success-icon">🎉</div>
     <h2>Aplikacja wysłana!</h2>
-    <p>Dziękujemy za zainteresowanie klanem <strong>FIFH</strong>!<br>Liderzy przejrzą Twoją aplikację i skontaktują się przez Discord w ciągu <strong>48 godzin</strong>.</p>
-    <button class="btn-primary" onclick="resetRecruitForm()">📋 Wyślij kolejną</button>
+    <p>Dziękujemy, <strong id="successNick"></strong>!<br>Twoja aplikacja trafiła do liderów klanu <strong>FIFH</strong>.<br>Odezwiemy się przez Discord na konto <strong id="successDiscord"></strong><br>w ciągu <strong>48 godzin</strong>. Trzymaj kciuki! 🐾</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary" onclick="resetRecruitForm()">📋 Wyślij kolejną aplikację</button>
+      <button class="btn-secondary" onclick="showSection('home')">🏠 Wróć na stronę główną</button>
+    </div>
   </div>
 </section>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirmOverlay" class="login-overlay hidden" style="z-index:3000;">
+  <div class="login-box" style="max-width:460px;width:90%;">
+    <div style="font-size:2.2rem;margin-bottom:8px;">📋</div>
+    <h2 style="margin-bottom:6px;">Potwierdź wysłanie</h2>
+    <p style="color:#5a6080;font-size:0.9rem;margin-bottom:20px;line-height:1.5;">Sprawdź czy dane są poprawne przed wysłaniem aplikacji do liderów FIFH.</p>
+    <div style="background:#f0f4ff;border-radius:14px;padding:16px;margin-bottom:20px;text-align:left;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.88rem;">
+        <div><span style="color:#5a6080;font-weight:700;">👤 Nick Roblox</span><br><strong id="confirmNick" style="color:#1a1a2e;"></strong></div>
+        <div><span style="color:#5a6080;font-weight:700;">💬 Discord</span><br><strong id="confirmDiscord" style="color:#1a1a2e;"></strong></div>
+        <div><span style="color:#5a6080;font-weight:700;">⚡ Poziom PS99</span><br><strong id="confirmLevel" style="color:#1a1a2e;"></strong></div>
+        <div><span style="color:#5a6080;font-weight:700;">⏱️ Godziny/dzień</span><br><strong id="confirmHours" style="color:#1a1a2e;"></strong></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button onclick="confirmAndSend()" style="background:linear-gradient(135deg,#ff6b35,#ff9a56);color:white;border:none;border-radius:50px;padding:13px 32px;font-size:1rem;font-weight:900;font-family:'Fredoka One',cursive;cursor:pointer;box-shadow:0 6px 20px rgba(255,107,53,0.35);">🚀 Wyślij Aplikację</button>
+      <button onclick="closeConfirmModal()" style="background:#e8eeff;color:#5a6080;border:none;border-radius:50px;padding:13px 28px;font-size:0.95rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;">✏️ Popraw</button>
+    </div>
+  </div>
+</div>
 
 <!-- ===================== PANEL (LOGGED IN) ===================== -->
 <section id="panel" class="section">
