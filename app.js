@@ -291,75 +291,109 @@ function copyDC(dc) {
 }
 
 // ============ RECRUITMENT ============
-const WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1503873692151713823/aiA8n5Bdg2khRRG_ujPjF3DwRx1H-At6aidtNmXJlSnAJQdJ__htz2IF8JSOvXzFXJ8p';
+const WEBHOOK_URL = 'https://discord.com/api/webhooks/1503873692151713823/aiA8n5Bdg2khRRG_ujPjF3DwRx1H-At6aidtNmXJlSnAJQdJ__htz2IF8JSOvXzFXJ8p';
 
 let recruitFile = null;
 
+// ---- FILE UPLOAD / PREVIEW ----
 function handleFileSelect(e) {
   const file = e.target.files[0];
   if (!file) return;
-  if (file.size > 8 * 1024 * 1024) {
-    showRecruitStatus('❌ Plik jest za duży! Maksymalny rozmiar to 8MB.', 'error');
+
+  if (!file.type.startsWith('image/')) {
+    alert('❌ Wybierz plik graficzny (JPG, PNG, GIF, WEBP)!');
     return;
   }
+  if (file.size > 8 * 1024 * 1024) {
+    alert('❌ Plik jest za duży! Maksymalny rozmiar to 8MB.');
+    return;
+  }
+
   recruitFile = file;
+
   const reader = new FileReader();
-  reader.onload = ev => {
-    document.getElementById('filePreviewImg').src = ev.target.result;
+  reader.onload = function(ev) {
+    const img = document.getElementById('filePreviewImg');
+    img.src = ev.target.result;
+
+    // show preview, hide drop area
+    document.getElementById('filePreview').style.display = 'flex';
     document.getElementById('filePreview').classList.remove('hidden');
     document.getElementById('fileDropArea').style.display = 'none';
+
+    // show file name
+    const nameEl = document.getElementById('filePreviewName');
+    if (nameEl) nameEl.textContent = file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)';
   };
   reader.readAsDataURL(file);
 }
 
-// Drag & drop support
-window.addEventListener('DOMContentLoaded', () => {
-  const area = document.getElementById('fileDropArea');
-  if (!area) return;
-  area.addEventListener('dragover', e => { e.preventDefault(); area.style.background = 'rgba(255,107,53,0.15)'; });
-  area.addEventListener('dragleave', () => { area.style.background = ''; });
-  area.addEventListener('drop', e => {
-    e.preventDefault();
-    area.style.background = '';
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      document.getElementById('rScreenshot').files; // trigger
-      const dt = new DataTransfer();
-      dt.items.add(file);
-      document.getElementById('rScreenshot').files = dt.files;
-      handleFileSelect({ target: { files: [file] } });
-    }
-  });
-}, { once: false });
-
 function removeFile() {
   recruitFile = null;
   document.getElementById('rScreenshot').value = '';
+  document.getElementById('filePreview').style.display = 'none';
   document.getElementById('filePreview').classList.add('hidden');
   document.getElementById('fileDropArea').style.display = '';
 }
 
+// Drag & drop
+document.addEventListener('DOMContentLoaded', function() {
+  const area = document.getElementById('fileDropArea');
+  if (!area) return;
+  area.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    area.style.background = 'rgba(255,107,53,0.15)';
+    area.style.borderColor = '#e04a15';
+  });
+  area.addEventListener('dragleave', function() {
+    area.style.background = '';
+    area.style.borderColor = '';
+  });
+  area.addEventListener('drop', function(e) {
+    e.preventDefault();
+    area.style.background = '';
+    area.style.borderColor = '';
+    const file = e.dataTransfer.files[0];
+    if (file) handleFileSelect({ target: { files: [file] } });
+  });
+});
+
+// ---- STATUS ----
 function showRecruitStatus(msg, type) {
   const el = document.getElementById('recruitStatus');
-  el.textContent = msg;
+  el.innerHTML = msg;
   el.className = 'recruit-status ' + type;
   el.classList.remove('hidden');
   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
+// ---- CONFIRMATION MODAL ----
+function openConfirmModal(data) {
+  const overlay = document.getElementById('confirmOverlay');
+  document.getElementById('confirmNick').textContent = data.nick;
+  document.getElementById('confirmDiscord').textContent = data.discord;
+  document.getElementById('confirmLevel').textContent = data.level;
+  document.getElementById('confirmHours').textContent = data.hours;
+  overlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeConfirmModal() {
+  document.getElementById('confirmOverlay').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+// ---- SUBMIT ----
 async function submitRecruitment(e) {
   e.preventDefault();
-
-  const btn = document.getElementById('recruitSubmitBtn');
-  const btnText = document.getElementById('recruitBtnText');
-  btn.disabled = true;
-  btnText.textContent = '⏳ Wysyłanie...';
 
   const rulesEl = document.querySelector('input[name="rRules"]:checked');
   if (!rulesEl) {
     showRecruitStatus('❌ Musisz odpowiedzieć na pytanie o zasady klanu!', 'error');
-    btn.disabled = false;
-    btnText.textContent = '🚀 Wyślij Aplikację';
+    return;
+  }
+  if (!document.getElementById('rHours').value) {
+    showRecruitStatus('❌ Wybierz ile godzin dziennie grasz!', 'error');
     return;
   }
 
@@ -369,9 +403,9 @@ async function submitRecruitment(e) {
     age:       document.getElementById('rAge').value,
     source:    document.getElementById('rSource').value,
     level:     document.getElementById('rLevel').value,
-    pets:      document.getElementById('rPets').value || 'Nie podano',
-    gems:      document.getElementById('rGems').value || 'Nie podano',
-    rarePet:   document.getElementById('rRarePet').value || 'Nie podano',
+    pets:      document.getElementById('rPets').value.trim() || 'Nie podano',
+    gems:      document.getElementById('rGems').value.trim() || 'Nie podano',
+    rarePet:   document.getElementById('rRarePet').value.trim() || 'Nie podano',
     hours:     document.getElementById('rHours').value,
     prevClan:  document.getElementById('rPrevClan').value.trim() || 'Nie podano',
     why:       document.getElementById('rWhy').value.trim(),
@@ -380,61 +414,90 @@ async function submitRecruitment(e) {
     timestamp: new Date().toLocaleString('pl-PL'),
   };
 
-  // Build Discord embed
+  // show confirmation modal first
+  openConfirmModal(data);
+  // store data for actual send after confirm
+  window._pendingRecruitData = data;
+}
+
+async function confirmAndSend() {
+  closeConfirmModal();
+
+  const data = window._pendingRecruitData;
+  if (!data) return;
+
+  const btn = document.getElementById('recruitSubmitBtn');
+  const btnText = document.getElementById('recruitBtnText');
+  btn.disabled = true;
+  btnText.textContent = '⏳ Wysyłanie...';
+
+  // show loading status
+  showRecruitStatus('⏳ Trwa wysyłanie aplikacji na Discord...', 'success');
+
   const embed = {
     title: '🐾 Nowa Aplikacja Rekrutacyjna — FIFH Clan',
-    color: 0xff6b35,
+    color: 16737845,
     thumbnail: { url: 'https://i.postimg.cc/wM00FXFB/Gemini-Generated-Image-rbsejmrbsejmrbse.png' },
     fields: [
-      { name: '👤 Nick Roblox',        value: data.nick,      inline: true },
-      { name: '💬 Discord',             value: data.discord,   inline: true },
-      { name: '🎂 Wiek',               value: data.age,       inline: true },
-      { name: '⚡ Poziom PS99',         value: data.level,     inline: true },
-      { name: '🐾 Liczba Petów',        value: data.pets,      inline: true },
-      { name: '💎 Gemsas',             value: data.gems,      inline: true },
-      { name: '🌟 Najrzadszy Pet',      value: data.rarePet,   inline: true },
-      { name: '⏱️ Godziny dziennie',   value: data.hours,     inline: true },
-      { name: '📡 Skąd o nas wie',      value: data.source,    inline: true },
-      { name: '🏰 Poprzednie Klany',    value: data.prevClan,  inline: false },
-      { name: '❓ Dlaczego FIFH?',      value: data.why,       inline: false },
-      { name: '🎁 Co wniesie?',         value: data.offer,     inline: false },
-      { name: '📜 Zgoda na zasady',     value: data.rules === 'Tak' ? '✅ Tak' : '❌ Nie', inline: true },
+      { name: '👤 Nick Roblox',       value: String(data.nick),     inline: true },
+      { name: '💬 Discord',            value: String(data.discord),  inline: true },
+      { name: '🎂 Wiek',              value: String(data.age),      inline: true },
+      { name: '⚡ Poziom PS99',        value: String(data.level),    inline: true },
+      { name: '🐾 Liczba Petów',       value: String(data.pets),     inline: true },
+      { name: '💎 Gemsas',            value: String(data.gems),     inline: true },
+      { name: '🌟 Najrzadszy Pet',     value: String(data.rarePet),  inline: true },
+      { name: '⏱️ Godziny dziennie',  value: String(data.hours),    inline: true },
+      { name: '📡 Skąd o nas wie',     value: String(data.source),   inline: true },
+      { name: '🏰 Poprzednie Klany',   value: String(data.prevClan), inline: false },
+      { name: '❓ Dlaczego FIFH?',     value: String(data.why),      inline: false },
+      { name: '🎁 Co wniesie?',        value: String(data.offer),    inline: false },
+      { name: '📜 Zgoda na zasady',    value: data.rules === 'Tak' ? '✅ Tak' : '❌ Nie', inline: true },
     ],
-    footer: { text: `Aplikacja złożona: ${data.timestamp} • FIFH Clan Website` },
+    footer: { text: 'Aplikacja złożona: ' + data.timestamp + ' • FIFH Clan Website' },
+    timestamp: new Date().toISOString(),
+  };
+
+  const payload = {
+    username: 'FIFH Rekrutacja',
+    avatar_url: 'https://i.postimg.cc/wM00FXFB/Gemini-Generated-Image-rbsejmrbsejmrbse.png',
+    content: '📋 @here **Nowa aplikacja rekrutacyjna!**\n> **Nick:** ' + data.nick + ' | **Discord:** ' + data.discord,
+    embeds: [embed],
   };
 
   try {
+    let res;
     if (recruitFile) {
-      // Send with image attachment
-      const formData = new FormData();
-      formData.append('files[0]', recruitFile, recruitFile.name);
-      formData.append('payload_json', JSON.stringify({
-        content: `📋 **Nowa aplikacja od ${data.nick}** | Discord: ${data.discord}`,
-        embeds: [embed]
-      }));
-      const res = await fetch(WEBHOOK_URL, { method: 'POST', body: formData });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const fd = new FormData();
+      fd.append('payload_json', JSON.stringify(payload));
+      fd.append('files[0]', recruitFile, recruitFile.name);
+      res = await fetch(WEBHOOK_URL, { method: 'POST', body: fd });
     } else {
-      // Text only
-      const res = await fetch(WEBHOOK_URL, {
+      res = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: `📋 **Nowa aplikacja od ${data.nick}** | Discord: ${data.discord}`,
-          embeds: [embed]
-        })
+        body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
     }
 
-    // Success
+    if (!res.ok) {
+      let errBody = '';
+      try { errBody = await res.text(); } catch(_) {}
+      throw new Error('HTTP ' + res.status + ' — ' + errBody);
+    }
+
+    // SUCCESS — show success screen
+    document.getElementById('recruitStatus').classList.add('hidden');
     document.getElementById('recruitFormWrap').classList.add('hidden');
     document.getElementById('recruitSuccess').classList.remove('hidden');
-    document.getElementById('recruitStatus').classList.add('hidden');
-    window.scrollTo(0, 0);
+
+    // Fill success details
+    document.getElementById('successNick').textContent = data.nick;
+    document.getElementById('successDiscord').textContent = data.discord;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
   } catch (err) {
-    showRecruitStatus('❌ Błąd wysyłania! Sprawdź połączenie i spróbuj ponownie. (' + err.message + ')', 'error');
+    showRecruitStatus('❌ Błąd wysyłania! ' + err.message, 'error');
     btn.disabled = false;
     btnText.textContent = '🚀 Wyślij Aplikację';
   }
@@ -446,4 +509,8 @@ function resetRecruitForm() {
   document.getElementById('recruitFormWrap').classList.remove('hidden');
   document.getElementById('recruitSuccess').classList.add('hidden');
   document.getElementById('recruitStatus').classList.add('hidden');
+  const btn = document.getElementById('recruitSubmitBtn');
+  const btnText = document.getElementById('recruitBtnText');
+  if (btn) { btn.disabled = false; btnText.textContent = '🚀 Wyślij Aplikację'; }
+  window._pendingRecruitData = null;
 }
