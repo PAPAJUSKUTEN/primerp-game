@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFH Clan – Pet Simulator 99</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        /* Efekt neonowego blasku */
+        .neon {
+            text-shadow: 0 0 10px #6b5bff, 0 0 20px #6b5bff, 0 0 40px #6b5bff;
+        }
+        .gold {
+            color: #f5d142;
+            text-shadow: 0 0 10px #f5d142;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-[#0a0f2d] to-[#1a0b3c] text-white font-sans">
+
+    <!-- HERO -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+        <h1 class="text-6xl md:text-7xl font-extrabold neon">FIFH</h1>
+        <p class="text-xl md:text-2xl mt-4 text-blue-300">Dominujemy tabele wyników</p>
+
+        <button class="mt-8 px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl text-lg font-bold shadow-lg hover:scale-110 transition-all duration-300">
+            Dołącz do nas
+        </button>
+    </section>
+
+    <!-- STATYSTYKI -->
+    <section class="py-20 px-6">
+        <h2 class="text-4xl font-bold text-center mb-12 gold">Statystyki Klanowe</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div class="p-8 bg-white/10 rounded-2xl text-center backdrop-blur-md hover:scale-105 transition">
+                <p class="text-5xl font-extrabold text-blue-400">128</p>
+                <p class="mt-2 text-lg">Członków</p>
+            </div>
+
+            <div class="p-8 bg-white/10 rounded-2xl text-center backdrop-blur-md hover:scale-105 transition">
+                <p class="text-5xl font-extrabold text-purple-400">42</p>
+                <p class="mt-2 text-lg">Poziom klanu</p>
+            </div>
+
+            <div class="p-8 bg-white/10 rounded-2xl text-center backdrop-blur-md hover:scale-105 transition">
+                <p class="text-5xl font-extrabold text-blue-300">3.2M</p>
+                <p class="mt-2 text-lg">Diamondów</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section class="py-20 px-6 bg-white/5">
+        <h2 class="text-4xl font-bold text-center mb-12 gold">Top 5 Graczy</h2>
+
+        <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl shadow-xl">
+            <table class="w-full text-left bg-white/10 backdrop-blur-md">
+                <thead class="bg-white/20">
+                    <tr>
+                        <th class="p-4">Miejsce</th>
+                        <th class="p-4">Nick</th>
+                        <th class="p-4">Punkty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="hover:bg-white/10 transition">
+                        <td class="p-4">1</td>
+                        <td class="p-4">ItsLegend</td>
+                        <td class="p-4">152,000</td>
+                    </tr>
+                    <tr class="hover:bg-white/10 transition">
+                        <td class="p-4">2</td>
+                        <td class="p-4">ShadowFIFH</td>
+                        <td class="p-4">140,500</td>
+                    </tr>
+                    <tr class="hover:bg-white/10 transition">
+                        <td class="p-4">3</td>
+                        <td class="p-4">BlueStorm</td>
+                        <td class="p-4">132,900</td>
+                    </tr>
+                    <tr class="hover:bg-white/10 transition">
+                        <td class="p-4">4</td>
+                        <td class="p-4">MegaPetHunter</td>
+                        <td class="p-4">120,300</td>
+                    </tr>
+                    <tr class="hover:bg-white/10 transition">
+                        <td class="p-4">5</td>
+                        <td class="p-4">FIFH_Pro</td>
+                        <td class="p-4">118,700</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section class="py-20 px-6">
+        <h2 class="text-4xl font-bold text-center mb-12 gold">Huge Pets – Galeria</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="bg-white/10 rounded-2xl h-48 backdrop-blur-md hover:scale-105 transition flex items-center justify-center">
+                <p class="text-blue-300">Zdjęcie 1</p>
+            </div>
+            <div class="bg-white/10 rounded-2xl h-48 backdrop-blur-md hover:scale-105 transition flex items-center justify-center">
+                <p class="text-blue-300">Zdjęcie 2</p>
+            </div>
+            <div class="bg-white/10 rounded-2xl h-48 backdrop-blur-md hover:scale-105 transition flex items-center justify-center">
+                <p class="text-blue-300">Zdjęcie 3</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-white/60">
+        © 2026 FIFH Clan – Pet Simulator 99
+    </footer>
+
+</body>
+</html>
