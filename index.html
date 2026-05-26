@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wirtualny System RP - Portal Społeczności</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Płynne przejścia dla elementów interaktywnych */
         .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.4s ease-in-out;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
         body {
@@ -44,7 +44,7 @@
             </div>
         </nav>
 
-        <header class="relative overflow-hidden py-24 border-b border-gray-800 bg-radial from-blue-900/10 via-transparent to-transparent">
+        <header class="relative overflow-hidden py-24 border-b border-gray-800 bg-gradient-to-b from-blue-900/10 to-transparent">
             <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
                 <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -169,7 +169,7 @@
             </div>
         </section>
 
-        <section id="o-projekcie" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-850">
+        <section id="o-projekcie" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-800">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-white tracking-tight">Co oferuje nasz projekt?</h2>
                 <p class="text-gray-400 mt-2">Przełamujemy barierę klasycznych rozwiązań</p>
@@ -359,7 +359,7 @@
                                 <th class="p-4">Lokalizacja</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-850">
+                        <tbody class="divide-y divide-gray-800">
                             <tr>
                                 <td class="p-4 font-bold text-white">Karin Sultan RS</td>
                                 <td class="p-4 font-mono text-blue-400">LSP 5921</td>
@@ -505,7 +505,7 @@
                         <i class="fa-solid fa-circle-info mr-1"></i> Możesz użyć konta testowego: login <strong>test</strong> / hasło <strong>test</strong>
                     </div>
 
-                    <button onclick="autoryzacjaDiscord()" class="cursor-pointer w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-3.5 rounded-xl font-semibold transition shadow-lg shadow-[#5865F2]/20 flex items-center justify-center gap-3 mb-4">
+                    <button type="button" onclick="autoryzacjaDiscord()" class="cursor-pointer w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-3.5 rounded-xl font-semibold transition shadow-lg shadow-[#5865F2]/20 flex items-center justify-center gap-3 mb-4">
                         <i class="fa-brands fa-discord text-xl"></i> Autoryzacja przez Discord
                     </button>
 
@@ -540,4 +540,119 @@
         const modal = document.getElementById('modal-logowanie');
         const krok1 = document.getElementById('krok-wyboru-serwera');
         const krok2 = document.getElementById('krok-autoryzacji');
-        const nazwaSerweraSpan = document.
+        const nazwaSerweraSpan = document.getElementById('nazwa-wybranego-serwera');
+        const podpowiedzTestowa = document.getElementById('podpowiedz-testowa');
+        
+        const loginInput = document.getElementById('input-login');
+        const hasloInput = document.getElementById('input-haslo');
+
+        const statusBelka = document.getElementById('status-belka');
+        const przyciskWyslij = document.getElementById('przycisk-wyslij');
+
+        function otworzLogowanie() {
+            modal.classList.remove('hidden');
+            wrocDoWyboruSerwera();
+        }
+
+        function otworzLogowanieZRole(rola) {
+            modal.classList.remove('hidden');
+            wybierzSerwer(rola);
+        }
+
+        function zamknijLogowanie() {
+            modal.classList.add('hidden');
+        }
+
+        function wybierzSerwer(rola) {
+            nazwaSerweraSpan.innerText = rola;
+            krok1.classList.add('hidden');
+            krok2.classList.remove('hidden');
+
+            loginInput.value = '';
+            hasloInput.value = '';
+
+            if (rola === 'Cywil') {
+                podpowiedzTestowa.classList.remove('hidden');
+            } else {
+                podpowiedzTestowa.classList.add('hidden');
+            }
+
+            statusBelka.className = "flex items-center justify-between border rounded-xl p-3 mb-6 text-sm ";
+            przyciskWyslij.className = "cursor-pointer w-full text-white py-3.5 rounded-xl font-semibold transition shadow-lg ";
+
+            if (rola === 'Cywil') {
+                statusBelka.classList.add('bg-blue-600/5', 'border-blue-500/20', 'text-blue-400');
+                przyciskWyslij.classList.add('bg-blue-600', 'hover:bg-blue-500', 'shadow-blue-600/10');
+            } else if (rola === 'Frakcje') {
+                statusBelka.classList.add('bg-emerald-600/5', 'border-emerald-500/20', 'text-emerald-400');
+                przyciskWyslij.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'shadow-emerald-600/10');
+            } else if (rola === 'Admin') {
+                statusBelka.classList.add('bg-red-600/5', 'border-red-500/20', 'text-red-400');
+                przyciskWyslij.classList.add('bg-red-600', 'hover:bg-red-500', 'shadow-red-600/10');
+            } else if (rola === 'Technik') {
+                statusBelka.classList.add('bg-amber-600/5', 'border-amber-500/20', 'text-amber-400');
+                przyciskWyslij.classList.add('bg-amber-600', 'hover:bg-amber-500', 'shadow-amber-600/10');
+            }
+        }
+
+        function wrocDoWyboruSerwera() {
+            krok2.classList.add('hidden');
+            krok1.classList.remove('hidden');
+        }
+
+        function autoryzacjaDiscord() {
+            alert('Autoryzacja Discord OAuth2 dla uprawnień typu: ' + nazwaSerweraSpan.innerText);
+        }
+
+        function obslugaLogowania(event) {
+            event.preventDefault();
+            
+            const wybranaRola = nazwaSerweraSpan.innerText;
+            const login = loginInput.value.trim();
+            const haslo = hasloInput.value;
+
+            if (wybranaRola === 'Cywil') {
+                if (login === 'test' && haslo === 'test') {
+                    zamknijLogowanie();
+                    stronaGlowna.classList.replace('block', 'hidden');
+                    panelCywila.classList.replace('hidden', 'flex');
+                    przepnijZakladke('ekran-glowny-rp'); 
+                } else {
+                    alert('Błąd autoryzacji! Dla panelu cywila poprawne dane testowe to: test / test');
+                }
+            } else {
+                alert('Zalogowano pomyślnie do panelu: ' + wybranaRola + ' jako: ' + login);
+                zamknijLogowanie();
+            }
+        }
+
+        function przepnijZakladke(identyfikator) {
+            const zakladki = ['ekran-glowny-rp', 'profil-postaci', 'dokumenty-licencje', 'garaz-pojazdy', 'nieruchomosci', 'skladanie-podan'];
+            
+            zakladki.forEach(z => {
+                const element = document.getElementById('sub-' + z);
+                const przycisk = document.getElementById('btn-' + z);
+                
+                if (z === identyfikator) {
+                    element.classList.remove('hidden');
+                    przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-white bg-blue-600 shadow-md shadow-blue-600/10 text-left cursor-pointer";
+                } else {
+                    element.classList.add('hidden');
+                    przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer";
+                }
+            });
+        }
+
+        function wylogujCywila() {
+            panelCywila.classList.replace('flex', 'hidden');
+            stronaGlowna.classList.replace('hidden', 'block');
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                zamknijLogowanie();
+            }
+        }
+    </script>
+</body>
+</html>
