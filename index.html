@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wirtualny System RP - Portal Społeczności</title>
-    <!-- Tailwind CSS dla nowoczesnego i szybkiego stylowania UI -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Ikony FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Płynne przejścia dla elementów interaktywnych */
@@ -24,210 +22,407 @@
 </head>
 <body class="text-gray-200 font-sans antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Nawigacja główna -->
-    <nav class="border-b border-gray-800 bg-[#0e1424]/90 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-3">
-                    <div class="p-2 bg-blue-600/10 rounded-lg border border-blue-500/30">
-                        <i class="fa-solid fa-server text-blue-500 text-xl"></i>
+    <div id="strona-glowna" class="block">
+        <nav class="border-b border-gray-800 bg-[#0e1424]/90 backdrop-blur-md sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-blue-600/10 rounded-lg border border-blue-500/30">
+                            <i class="fa-solid fa-server text-blue-500 text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-wider text-white">WIRTUALNY<span class="text-blue-500">RP</span></span>
                     </div>
-                    <span class="text-xl font-bold tracking-wider text-white">WIRTUALNY<span class="text-blue-500">RP</span></span>
-                </div>
-                <div class="flex items-center gap-4">
-                    <a href="#prezentacja" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">Prezentacja</a>
-                    <a href="#socialmedia" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">Społeczność</a>
-                    <a href="#o-projekcie" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">O projekcie</a>
-                    <button onclick="otworzLogowanie()" class="cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg font-medium text-sm transition shadow-lg shadow-blue-600/20 flex items-center gap-2">
-                        <i class="fa-solid fa-right-to-bracket"></i> Panel Serwera
-                    </button>
+                    <div class="flex items-center gap-4">
+                        <a href="#prezentacja" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">Prezentacja</a>
+                        <a href="#socialmedia" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">Społeczność</a>
+                        <a href="#o-projekcie" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">O projekcie</a>
+                        <button onclick="otworzLogowanie()" class="cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg font-medium text-sm transition shadow-lg shadow-blue-600/20 flex items-center gap-2">
+                            <i class="fa-solid fa-right-to-bracket"></i> Panel Serwera
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- Sekcja Główna (Hero) -->
-    <header class="relative overflow-hidden py-24 border-b border-gray-800 bg-radial from-blue-900/10 via-transparent to-transparent">
-        <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-            <!-- Status serwera głównego na żywo -->
-            <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                Serwer Główny: 92/128 graczy online
+        <header class="relative overflow-hidden py-24 border-b border-gray-800 bg-radial from-blue-900/10 via-transparent to-transparent">
+            <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Serwer Główny: 92/128 graczy online
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6 leading-tight">
+                    Nowy Wymiar Rozgrywki <br class="hidden sm:inline"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-400">Roleplay</span>
+                </h1>
+                
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Dołącz do zaawansowanej społeczności, gdzie realizm łączy się z rozbudowanymi systemami skryptowymi. Zarządzaj postacią, frakcją lub kodem z poziomu jednej aplikacji.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <button onclick="otworzLogowanie()" class="cursor-pointer w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-right-to-bracket text-lg"></i> Zaloguj się do Panelu
+                    </button>
+                    <a href="https://discord.gg" target="_blank" class="w-full sm:w-auto bg-[#5865F2] hover:bg-[#4752C4] text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-[#5865F2]/10 flex items-center justify-center gap-3">
+                        <i class="fa-brands fa-discord text-lg"></i> Serwer Discord
+                    </a>
+                </div>
             </div>
-            
-            <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6 leading-tight">
-                Nowy Wymiar Rozgrywki <br class="hidden sm:inline"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-400">Roleplay</span>
-            </h1>
-            
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-                Dołącz do zaawansowanej społeczności, gdzie realizm łączy się z rozbudowanymi systemami skryptowymi. Zarządzaj postacią, frakcją lub kodem z poziomu jednej aplikacji.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <button onclick="otworzLogowanie()" class="cursor-pointer w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-right-to-bracket text-lg"></i> Zaloguj się do Panelu
-                </button>
-                <a href="https://discord.gg" target="_blank" class="w-full sm:w-auto bg-[#5865F2] hover:bg-[#4752C4] text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-[#5865F2]/10 flex items-center justify-center gap-3">
-                    <i class="fa-brands fa-discord text-lg"></i> Serwer Discord
+        </header>
+
+        <section id="prezentacja" class="py-16 max-w-5xl mx-auto px-4 border-b border-gray-800">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Oficjalny Trailer Serwera</h2>
+                <p class="text-gray-400 text-sm mt-1">Zobacz jak wygląda rozgrywka i życie mieszkańców na naszym serwerze</p>
+            </div>
+            <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-gray-800 bg-[#0e1424] shadow-2xl shadow-blue-500/5">
+                <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Wirtualny System RP Prezentacja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section id="socialmedia" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-gray-800">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Nasze Media Społecznościowe</h2>
+                <p class="text-gray-400 text-sm mt-1">Bądź na bieżąco, bierz udział w konkursach i oglądaj materiały z serwera</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                <a href="https://discord.gg" target="_blank" class="flex items-center gap-4 p-5 bg-[#121829] border border-[#5865F2]/20 rounded-xl hover:border-[#5865F2] hover:bg-[#5865F2]/5 transition group">
+                    <div class="w-12 h-12 rounded-lg bg-[#5865F2]/10 flex items-center justify-center text-[#5865F2] text-2xl group-hover:bg-[#5865F2] group-hover:text-white transition">
+                        <i class="fa-brands fa-discord"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">Discord</h4>
+                        <p class="text-gray-400 text-xs">Główny czat i ogłoszenia</p>
+                    </div>
+                </a>
+                <a href="https://youtube.com" target="_blank" class="flex items-center gap-4 p-5 bg-[#121829] border border-[#FF0000]/20 rounded-xl hover:border-[#FF0000] hover:bg-[#FF0000]/5 transition group">
+                    <div class="w-12 h-12 rounded-lg bg-[#FF0000]/10 flex items-center justify-center text-[#FF0000] text-2xl group-hover:bg-[#FF0000] group-hover:text-white transition">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">YouTube</h4>
+                        <p class="text-gray-400 text-xs">Trailery, devblogi i shoty</p>
+                    </div>
+                </a>
+                <a href="https://tiktok.com" target="_blank" class="flex items-center gap-4 p-5 bg-[#121829] border border-gray-800 rounded-xl hover:border-white hover:bg-white/5 transition group">
+                    <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center text-white text-2xl group-hover:bg-white group-hover:text-black transition">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">TikTok</h4>
+                        <p class="text-gray-400 text-xs">Zabawne akcje i nowości</p>
+                    </div>
                 </a>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <!-- SEKCJA: WIDEO PREZENTACYJNE -->
-    <section id="prezentacja" class="py-16 max-w-5xl mx-auto px-4 border-b border-gray-800">
-        <div class="text-center mb-8">
-            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Oficjalny Trailer Serwera</h2>
-            <p class="text-gray-400 text-sm mt-1">Zobacz jak wygląda rozgrywka i życie mieszkańców na naszym serwerze</p>
-        </div>
-        <!-- Kontener zachowujący proporcje 16:9 dla wideo -->
-        <div class="relative w-full aspect-video rounded-2xl overflow-hidden border border-gray-800 bg-[#0e1424] shadow-2xl shadow-blue-500/5">
-            <!-- Podmień adres URL w src na właściwy link osadzania (embed) z YouTube -->
-            <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Wirtualny System RP Prezentacja" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-    </section>
+        <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white tracking-tight">Dedykowane Strefy Logowania</h2>
+                <p class="text-gray-400 mt-2">Wybierz swoją rolę na projekcie, aby przejść do właściwego systemu</p>
+            </div>
 
-    <!-- SEKCJA: SOCIAL MEDIA -->
-    <section id="socialmedia" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-gray-800">
-        <div class="text-center mb-10">
-            <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Nasze Media Społecznościowe</h2>
-            <p class="text-gray-400 text-sm mt-1">Bądź na bieżąco, bierz udział w konkursach i oglądaj materiały z serwera</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            <!-- Discord -->
-            <a href="https://discord.gg" target="_blank" class="flex items-center gap-4 p-5 bg-[#121829] border border-[#5865F2]/20 rounded-xl hover:border-[#5865F2] hover:bg-[#5865F2]/5 transition group">
-                <div class="w-12 h-12 rounded-lg bg-[#5865F2]/10 flex items-center justify-center text-[#5865F2] text-2xl group-hover:bg-[#5865F2] group-hover:text-white transition">
-                    <i class="fa-brands fa-discord"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white text-base">Discord</h4>
-                    <p class="text-gray-400 text-xs">Główny czat i ogłoszenia</p>
-                </div>
-            </a>
-            <!-- YouTube -->
-            <a href="https://youtube.com" target="_blank" class="flex items-center gap-4 p-5 bg-[#121829] border border-[#FF0000]/20 rounded-xl hover:border-[#FF0000] hover:bg-[#FF0000]/5 transition group">
-                <div class="w-12 h-12 rounded-lg bg-[#FF0000]/10 flex items-center justify-center text-[#FF0000] text-2xl group-hover:bg-[#FF0000] group-hover:text-white transition">
-                    <i class="fa-brands fa-youtube"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white text-base">YouTube</h4>
-                    <p class="text-gray-400 text-xs">Trailery, devblogi i shoty</p>
-                </div>
-            </a>
-            <!-- TikTok -->
-            <a href="https://tiktok.com" target="_blank" class="flex items-center gap-4 p-5 bg-[#121829] border border-gray-800 rounded-xl hover:border-white hover:bg-white/5 transition group">
-                <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center text-white text-2xl group-hover:bg-white group-hover:text-black transition">
-                    <i class="fa-brands fa-tiktok"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white text-base">TikTok</h4>
-                    <p class="text-gray-400 text-xs">Zabawne akcje i nowości</p>
-                </div>
-            </a>
-        </div>
-    </section>
-
-    <!-- Sekcja: Szybki dostęp do paneli -->
-    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white tracking-tight">Dedykowane Strefy Logowania</h2>
-            <p class="text-gray-400 mt-2">Wybierz swoją rolę na projekcie, aby przejść do właściwego systemu</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Panel Cywila -->
-            <div onclick="otworzLogowanieZRole('Cywil')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-blue-500 transition group flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-4 group-hover:bg-blue-600 group-hover:text-white transition">
-                        <i class="fa-solid fa-user text-xl"></i>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div onclick="otworzLogowanieZRole('Cywil')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-blue-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-4 group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-user text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-base mb-1">Panel Cywila</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie postacią, pojazdami, stanem konta oraz składanie podań.</p>
                     </div>
-                    <h3 class="font-bold text-white text-base mb-1">Panel Cywila</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie postacią, pojazdami, stanem konta oraz składanie podań.</p>
+                    <span class="text-blue-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
                 </div>
-                <span class="text-blue-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
-            </div>
 
-            <!-- Panel Frakcji -->
-            <div onclick="otworzLogowanieZRole('Frakcje')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-emerald-500 transition group flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-xl bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4 group-hover:bg-emerald-600 group-hover:text-white transition">
-                        <i class="fa-solid fa-shield-halved text-xl"></i>
+                <div onclick="otworzLogowanieZRole('Frakcje')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-emerald-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4 group-hover:bg-emerald-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-shield-halved text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-base mb-1">Panel Frakcji (MDT)</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">System kartotek, mandatów i zgłoszeń dla LSPD, EMS oraz Fire Department.</p>
                     </div>
-                    <h3 class="font-bold text-white text-base mb-1">Panel Frakcji (MDT)</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">System kartotek, mandatów i zgłoszeń dla LSPD, EMS oraz Fire Department.</p>
+                    <span class="text-emerald-400 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
                 </div>
-                <span class="text-emerald-400 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
-            </div>
 
-            <!-- Panel Admina -->
-            <div onclick="otworzLogowanieZRole('Admin')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-red-500 transition group flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-xl bg-red-600/10 border border-red-500/20 flex items-center justify-center text-red-500 mb-4 group-hover:bg-red-600 group-hover:text-white transition">
-                        <i class="fa-solid fa-user-shield text-xl"></i>
+                <div onclick="otworzLogowanieZRole('Admin')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-red-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-red-600/10 border border-red-500/20 flex items-center justify-center text-red-500 mb-4 group-hover:bg-red-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-user-shield text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-base mb-1">Panel Administracji</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie graczami, rozpatrywanie ticketów, nadawanie kar i whitelist.</p>
                     </div>
-                    <h3 class="font-bold text-white text-base mb-1">Panel Administracji</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie graczami, rozpatrywanie ticketów, nadawanie kar i whitelist.</p>
+                    <span class="text-red-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
                 </div>
-                <span class="text-red-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
-            </div>
 
-            <!-- Panel Technika -->
-            <div onclick="otworzLogowanieZRole('Technik')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-amber-500 transition group flex flex-col justify-between">
-                <div>
-                    <div class="w-12 h-12 rounded-xl bg-amber-600/10 border border-amber-500/20 flex items-center justify-center text-amber-500 mb-4 group-hover:bg-amber-600 group-hover:text-white transition">
-                        <i class="fa-solid fa-laptop-code text-xl"></i>
+                <div onclick="otworzLogowanieZRole('Technik')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-amber-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-600/10 border border-amber-500/20 flex items-center justify-center text-amber-500 mb-4 group-hover:bg-amber-600 group-hover:text-white transition">
+                            <i class="fa-solid fa-laptop-code text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-white text-base mb-1">Panel Technika</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie konfiguracją, podgląd logów live, status MySQL oraz błędy skryptów.</p>
                     </div>
-                    <h3 class="font-bold text-white text-base mb-1">Panel Technika</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie konfiguracją, podgląd logów live, status MySQL oraz błędy skryptów.</p>
+                    <span class="text-amber-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
                 </div>
-                <span class="text-amber-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Sekcja: O Projekcie -->
-    <section id="o-projekcie" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-850">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold text-white tracking-tight">Co oferuje nasz projekt?</h2>
-            <p class="text-gray-400 mt-2">Przełamujemy barierę klasycznych rozwiązań</p>
-        </div>
+        <section id="o-projekcie" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-850">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white tracking-tight">Co oferuje nasz projekt?</h2>
+                <p class="text-gray-400 mt-2">Przełamujemy barierę klasycznych rozwiązań</p>
+            </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
-                <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-coins text-xl"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
+                    <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-coins text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Zbalansowana Ekonomia</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Nasza ekonomia została zaprojektowana od zera, aby zapobiec hiperinflacji i wymusić realistyczne interakcje handlowe między graczami.</p>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Zbalansowana Ekonomia</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Nasza ekonomia została zaprojektowana od zera, aby zapobiec hiperinflacji i wymusić realistyczne interakcje handlowe między graczami.</p>
-            </div>
-            <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
-                <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+                <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
+                    <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Zintegrowane systemy</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Wszystkie akcje z poziomu gry synchronizują się z bazą danych i od razu wpływają na wygląd oraz stan Twoich paneli webowych.</p>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Zintegrowane systemy</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Wszystkie akcje z poziomu gry synchronizują się z bazą danych i od razu wpływają na wygląd oraz stan Twoich paneli webowych.</p>
-            </div>
-            <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
-                <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-users text-xl"></i>
+                <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
+                    <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-users text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Doświadczona Administracja</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Ekipa składająca się z weteranów sceny RP zadba o wysoki poziom rozgrywki i błyskawiczną pomoc w sprawach zgłoszeń.</p>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Doświadczona Administracja</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Ekipa składająca się z weteranów sceny RP zadba o wysoki poziom rozgrywki i błyskawiczną pomoc w sprawach zgłoszeń.</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Stopka strony -->
-    <footer class="bg-[#0b0f19] border-t border-gray-800 py-8 text-center text-xs text-gray-500">
-        <p>&copy; 2026 WirtualnySystemRP. Wszelkie prawa zastrzeżone.</p>
-        <p class="mt-2 text-gray-600">Projekt nie jest powiązany z Rockstar Games ani Mojang/Roblox Corporation.</p>
-    </footer>
+        <footer class="bg-[#0b0f19] border-t border-gray-800 py-8 text-center text-xs text-gray-500">
+            <p>&copy; 2026 WirtualnySystemRP. Wszelkie prawa zastrzeżone.</p>
+            <p class="mt-2 text-gray-600">Projekt nie jest powiązany z Rockstar Games ani Mojang/Roblox Corporation.</p>
+        </footer>
+    </div>
 
-    <!-- MODAL: EKRAN WYBORU ROLI I AUTORYZACJI -->
+
+    <div id="panel-cywila" class="hidden min-h-screen bg-[#0b0f19] flex">
+        
+        <aside class="w-64 bg-[#0e1424] border-r border-gray-800 flex flex-col justify-between shrink-0">
+            <div>
+                <div class="h-16 border-b border-gray-800 flex items-center px-6 gap-3">
+                    <i class="fa-solid fa-user text-blue-500 text-lg"></i>
+                    <span class="font-bold tracking-wider text-sm text-white">STREFA <span class="text-blue-500">CYWILA</span></span>
+                </div>
+                
+                <div class="p-4 border-b border-gray-800 bg-[#121a2e]/30 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">
+                        T
+                    </div>
+                    <div>
+                        <h5 class="text-sm font-bold text-white">Jan Kowalski</h5>
+                        <p class="text-[11px] text-emerald-400 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Obywatel (Zalogowany)
+                        </p>
+                    </div>
+                </div>
+
+                <nav class="p-4 space-y-1">
+                    <button onclick="przepnijZakladke('ekran-glowny-rp')" id="btn-ekran-glowny-rp" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-white bg-blue-600 shadow-md shadow-blue-600/10 text-left cursor-pointer">
+                        <i class="fa-solid fa-house w-5 text-center"></i> Ekran Główny
+                    </button>
+                    
+                    <button onclick="przepnijZakladke('profil-postaci')" id="btn-profil-postaci" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
+                        <i class="fa-solid fa-id-card w-5 text-center"></i> Profil Postaci
+                    </button>
+                    
+                    <button onclick="przepnijZakladke('dokumenty-licencje')" id="btn-dokumenty-licencje" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
+                        <i class="fa-solid fa-file-invoice w-5 text-center"></i> Dokumenty i Licencje
+                    </button>
+                    
+                    <button onclick="przepnijZakladke('garaz-pojazdy')" id="btn-garaz-pojazdy" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
+                        <i class="fa-solid fa-car w-5 text-center"></i> Garaż i Pojazdy
+                    </button>
+                    
+                    <button onclick="przepnijZakladke('nieruchomosci')" id="btn-nieruchomosci" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
+                        <i class="fa-solid fa-building w-5 text-center"></i> Nieruchomości
+                    </button>
+
+                    <button onclick="przepnijZakladke('skladanie-podan')" id="btn-skladanie-podan" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
+                        <i class="fa-solid fa-paper-plane w-5 text-center"></i> Składanie Podań
+                    </button>
+                </nav>
+            </div>
+
+            <div class="p-4 border-t border-gray-800">
+                <button onclick="wylogujCywila()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600/10 hover:bg-red-600 border border-red-500/20 text-red-400 hover:text-white text-xs font-semibold rounded-xl transition cursor-pointer">
+                    <i class="fa-solid fa-right-from-bracket"></i> Wyloguj z Panelu
+                </button>
+            </div>
+        </aside>
+
+        <main class="flex-grow p-8 overflow-y-auto max-h-screen">
+            
+            <div id="sub-ekran-glowny-rp" class="space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-white">Witaj w systemie, Jan</h2>
+                    <p class="text-sm text-gray-400">Oto aktualny podsumowujący stan Twojej tożsamości na serwerze głównym.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl">
+                        <span class="text-xs text-gray-500 font-bold uppercase tracking-wider block mb-1">Gotówka przy sobie</span>
+                        <h4 class="text-2xl font-bold text-emerald-400">$12,450</h4>
+                    </div>
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl">
+                        <span class="text-xs text-gray-500 font-bold uppercase tracking-wider block mb-1">Konto bankowe Maze Bank</span>
+                        <h4 class="text-2xl font-bold text-blue-400">$245,000</h4>
+                    </div>
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl">
+                        <span class="text-xs text-gray-500 font-bold uppercase tracking-wider block mb-1">Czas spędzony w grze</span>
+                        <h4 class="text-2xl font-bold text-purple-400">142 godz.</h4>
+                    </div>
+                </div>
+                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6">
+                    <h3 class="font-bold text-white mb-3 flex items-center gap-2"><i class="fa-solid fa-bullhorn text-blue-500"></i> Komunikaty dla obywateli</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Pamiętaj, że każdy zakupiony pojazd musi zostać zarejestrowany w urzędzie miasta w ciągu 48 godzin od zakupu. Niedopełnienie obowiązku skutkuje odholowaniem pojazdu przez LSPD.</p>
+                </div>
+            </div>
+
+            <div id="sub-profil-postaci" class="hidden space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-white">Profil Tożsamości RP</h2>
+                    <p class="text-sm text-gray-400">Szczegółowe dane personalne wygenerowane przez kartotekę miejską.</p>
+                </div>
+                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 max-w-2xl">
+                    <div class="grid grid-cols-2 gap-y-4 text-sm">
+                        <div class="text-gray-500">Imię i Nazwisko:</div><div class="text-white font-semibold">Jan Kowalski</div>
+                        <div class="text-gray-500">Data Urodzenia:</div><div class="text-white font-semibold">12/05/1995 (31 lat)</div>
+                        <div class="text-gray-500">Numer Telefonu:</div><div class="text-blue-400 font-semibold">555-231-102</div>
+                        <div class="text-gray-500">Numer ID Obywatela (CID):</div><div class="text-gray-300 font-mono">#5921</div>
+                        <div class="text-gray-500">Zatrudnienie / Praca:</div><div class="text-amber-400 font-semibold">Kierowca logistyki (brak frakcji)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sub-dokumenty-licencje" class="hidden space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-white">Posiadane Licencje</h2>
+                    <p class="text-sm text-gray-400">Sprawdź status swoich uprawnień państwowych.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
+                    <div class="bg-[#0e1424] border border-emerald-500/20 p-4 rounded-xl flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-address-card text-emerald-400 text-xl"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Dowód Osobisty</h4>
+                                <p class="text-xs text-gray-500">Status: Ważny bezterminowo</p>
+                            </div>
+                        </div>
+                        <span class="bg-emerald-500/10 text-emerald-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-emerald-500/20">Posiada</span>
+                    </div>
+                    <div class="bg-[#0e1424] border border-emerald-500/20 p-4 rounded-xl flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-id-card-clip text-emerald-400 text-xl"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Prawo Jazdy Kat. B</h4>
+                                <p class="text-xs text-gray-500">Punkty karne: 0 / 24</p>
+                            </div>
+                        </div>
+                        <span class="bg-emerald-500/10 text-emerald-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-emerald-500/20">Posiada</span>
+                    </div>
+                    <div class="bg-[#0e1424] border border-red-500/20 p-4 rounded-xl flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-gun text-red-400 text-xl"></i>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Licencja na broń krótką (CCW)</h4>
+                                <p class="text-xs text-gray-500">Status: Brak uprawnień</p>
+                            </div>
+                        </div>
+                        <span class="bg-red-500/10 text-red-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-red-500/20">Brak</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sub-garaz-pojazdy" class="hidden space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-white">Twój Garaż</h2>
+                    <p class="text-sm text-gray-400">Lista zarejestrowanych pojazdów prywatnych przypisanych do Twojego CID.</p>
+                </div>
+                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl overflow-hidden max-w-4xl">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-[#121a2e] text-gray-400 uppercase text-[11px] font-bold tracking-wider">
+                            <tr>
+                                <th class="p-4">Model Pojazdu</th>
+                                <th class="p-4">Numer Rejestracyjny</th>
+                                <th class="p-4">Stan techniczny</th>
+                                <th class="p-4">Lokalizacja</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-850">
+                            <tr>
+                                <td class="p-4 font-bold text-white">Karin Sultan RS</td>
+                                <td class="p-4 font-mono text-blue-400">LSP 5921</td>
+                                <td class="p-4 text-emerald-400">100% (Sprawny)</td>
+                                <td class="p-4 text-gray-400">Garaż Główny Legion SQ</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold text-white">Vapid Dominator</td>
+                                <td class="p-4 font-mono text-blue-400">REG 7110</td>
+                                <td class="p-4 text-amber-400">65% (Uszkodzony)</td>
+                                <td class="p-4 text-gray-400">Parking policyjny Impound</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="sub-nieruchomosci" class="hidden space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-white">Zarządzanie Majątkiem i Posiadłościami</h2>
+                    <p class="text-sm text-gray-400">Wykaz domów, mieszkań i magazynów, do których posiadasz klucze.</p>
+                </div>
+                <div class="bg-[#0e1424] border border-gray-800 rounded-xl p-5 max-w-xl flex items-center gap-4">
+                    <div class="w-12 h-12 bg-blue-600/10 border border-blue-500/20 text-blue-500 flex items-center justify-center rounded-xl text-xl">
+                        <i class="fa-solid fa-house-chimney"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">Apartament nr 4, Alta Street</h4>
+                        <p class="text-xs text-gray-500">Opłacony do: <span class="text-amber-400 font-medium">04/06/2026</span> • Współwłaściciele: Brak</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sub-skladanie-podan" class="hidden space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-white">System Rekrutacji i Wniosków</h2>
+                    <p class="text-sm text-gray-400">Złóż aplikację do struktur publicznych lub złóż wniosek biznesowy do rządu.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
+                    <div class="bg-[#0e1424] border border-gray-800 p-5 rounded-xl flex flex-col justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Podanie do Los Santos Police Department</h4>
+                            <p class="text-xs text-gray-500 mt-1">Status naboru: <span class="text-emerald-400 font-semibold">OTWARTY</span></p>
+                        </div>
+                        <button onclick="alert('Formularz aplikacyjny LSPD zostanie otwarty')" class="cursor-pointer mt-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">Wypełnij wniosek</button>
+                    </div>
+                    <div class="bg-[#0e1424] border border-gray-800 p-5 rounded-xl flex flex-col justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Wniosek o założenie Firmy / Biznesu</h4>
+                            <p class="text-xs text-gray-500 mt-1">Status: Wymaga opłaty skarbowej $5,000</p>
+                        </div>
+                        <button onclick="alert('Formularz rejestracji działalności gospodarczej')" class="cursor-pointer mt-4 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-semibold px-4 py-2 rounded-lg transition">Złóż wniosek</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+
     <div id="modal-logowanie" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm fade-in">
         <div class="bg-[#0e1424] border border-gray-800 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl relative">
             
-            <!-- Nagłówek modala -->
             <div class="p-6 border-b border-gray-800 flex justify-between items-center bg-[#121a2e]">
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-right-to-bracket text-blue-500"></i> Logowanie do Systemu
@@ -237,14 +432,11 @@
                 </button>
             </div>
 
-            <!-- Zawartość Modala -->
             <div class="p-6">
-                <!-- KROK 1: Wybór roli -->
                 <div id="krok-wyboru-serwera" class="space-y-4">
                     <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Wybierz typ konta docelowego</label>
                     <div class="space-y-2.5">
                         
-                        <!-- Cywil -->
                         <div onclick="wybierzSerwer('Cywil')" class="cursor-pointer group border border-gray-800 hover:border-blue-500 bg-[#0b0f19] p-3.5 rounded-xl flex items-center justify-between transition">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-lg bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition">
@@ -261,7 +453,6 @@
                             <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-blue-500 transition"></i>
                         </div>
 
-                        <!-- Frakcje -->
                         <div onclick="wybierzSerwer('Frakcje')" class="cursor-pointer group border border-gray-800 hover:border-emerald-500 bg-[#0b0f19] p-3.5 rounded-xl flex items-center justify-between transition">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-lg bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white transition">
@@ -275,7 +466,6 @@
                             <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-emerald-500 transition"></i>
                         </div>
 
-                        <!-- Admin -->
                         <div onclick="wybierzSerwer('Admin')" class="cursor-pointer group border border-gray-800 hover:border-red-500 bg-[#0b0f19] p-3.5 rounded-xl flex items-center justify-between transition">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-lg bg-red-600/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition">
@@ -289,7 +479,6 @@
                             <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-red-500 transition"></i>
                         </div>
 
-                        <!-- Technik -->
                         <div onclick="wybierzSerwer('Technik')" class="cursor-pointer group border border-gray-800 hover:border-amber-500 bg-[#0b0f19] p-3.5 rounded-xl flex items-center justify-between transition">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 rounded-lg bg-amber-600/10 border border-amber-500/20 flex items-center justify-center text-amber-500 group-hover:bg-amber-600 group-hover:text-white transition">
@@ -306,14 +495,12 @@
                     </div>
                 </div>
 
-                <!-- KROK 2: Formularz autoryzacji -->
                 <div id="krok-autoryzacji" class="hidden fade-in">
                     <div id="status-belka" class="flex items-center justify-between border rounded-xl p-3 mb-6 text-sm">
                         <span class="text-gray-400">Wybrany panel: <strong id="nazwa-wybranego-serwera" class="text-white"></strong></span>
                         <button onclick="wrocDoWyboruSerwera()" class="cursor-pointer text-xs font-medium underline">Zmień</button>
                     </div>
 
-                    <!-- Informacja o danych testowych dla cywila -->
                     <div id="podpowiedz-testowa" class="hidden bg-blue-500/5 border border-blue-500/20 rounded-xl p-3 mb-4 text-xs text-blue-400">
                         <i class="fa-solid fa-circle-info mr-1"></i> Możesz użyć konta testowego: login <strong>test</strong> / hasło <strong>test</strong>
                     </div>
@@ -328,7 +515,6 @@
                         <div class="flex-grow border-t border-gray-800"></div>
                     </div>
 
-                    <!-- Formularz Logowania -->
                     <form onsubmit="obslugaLogowania(event)" class="space-y-4 mt-2">
                         <div>
                             <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Nick z gry / Login</label>
@@ -347,105 +533,11 @@
         </div>
     </div>
 
-    <!-- LOGIKA JAVASCRIPT SYSTEMU -->
     <script>
+        const stronaGlowna = document.getElementById('strona-glowna');
+        const panelCywila = document.getElementById('panel-cywila');
+
         const modal = document.getElementById('modal-logowanie');
         const krok1 = document.getElementById('krok-wyboru-serwera');
         const krok2 = document.getElementById('krok-autoryzacji');
-        const nazwaSerweraSpan = document.getElementById('nazwa-wybranego-serwera');
-        const podpowiedzTestowa = document.getElementById('podpowiedz-testowa');
-        
-        const loginInput = document.getElementById('input-login');
-        const hasloInput = document.getElementById('input-haslo');
-
-        const statusBelka = document.getElementById('status-belka');
-        const przyciskWyslij = document.getElementById('przycisk-wyslij');
-
-        function otworzLogowanie() {
-            modal.classList.remove('hidden');
-            wrocDoWyboruSerwera();
-        }
-
-        function otworzLogowanieZRole(rola) {
-            modal.classList.remove('hidden');
-            wybierzSerwer(rola);
-        }
-
-        function zamknijLogowanie() {
-            modal.classList.add('hidden');
-        }
-
-        function wybierzSerwer(rola) {
-            nazwaSerweraSpan.innerText = rola;
-            krok1.classList.add('hidden');
-            krok2.classList.remove('hidden');
-
-            // Czyszczenie pól formularza przy zmianie panelu
-            loginInput.value = '';
-            hasloInput.value = '';
-
-            // Pokazanie wskazówki logowania testowego tylko dla Cywila
-            if (rola === 'Cywil') {
-                podpowiedzTestowa.classList.remove('hidden');
-            } else {
-                podpowiedzTestowa.classList.add('hidden');
-            }
-
-            // Reset i ustawienie klas kolorów
-            statusBelka.className = "flex items-center justify-between border rounded-xl p-3 mb-6 text-sm ";
-            przyciskWyslij.className = "cursor-pointer w-full text-white py-3.5 rounded-xl font-semibold transition shadow-lg ";
-
-            if (rola === 'Cywil') {
-                statusBelka.classList.add('bg-blue-600/5', 'border-blue-500/20', 'text-blue-400');
-                przyciskWyslij.classList.add('bg-blue-600', 'hover:bg-blue-500', 'shadow-blue-600/10');
-            } else if (rola === 'Frakcje') {
-                statusBelka.classList.add('bg-emerald-600/5', 'border-emerald-500/20', 'text-emerald-400');
-                przyciskWyslij.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'shadow-emerald-600/10');
-            } else if (rola === 'Admin') {
-                statusBelka.classList.add('bg-red-600/5', 'border-red-500/20', 'text-red-400');
-                przyciskWyslij.classList.add('bg-red-600', 'hover:bg-red-500', 'shadow-red-600/10');
-            } else if (rola === 'Technik') {
-                statusBelka.classList.add('bg-amber-600/5', 'border-amber-500/20', 'text-amber-400');
-                przyciskWyslij.classList.add('bg-amber-600', 'hover:bg-amber-500', 'shadow-amber-600/10');
-            }
-        }
-
-        function wrocDoWyboruSerwera() {
-            krok2.classList.add('hidden');
-            krok1.classList.remove('hidden');
-        }
-
-        function autoryzacjaDiscord() {
-            alert('Autoryzacja Discord OAuth2 dla uprawnień typu: ' + nazwaSerweraSpan.innerText);
-        }
-
-        function obslugaLogowania(event) {
-            event.preventDefault();
-            
-            const wybranaRola = nazwaSerweraSpan.innerText;
-            const login = loginInput.value.trim();
-            const haslo = hasloInput.value;
-
-            // Logika walidacji danych testowych dla panelu Cywila
-            if (wybranaRola === 'Cywil') {
-                if (login === 'test' && haslo === 'test') {
-                    alert('Sukces! Zalogowano pomyślnie na konto TESTOWE Cywila.');
-                    zamknijLogowanie();
-                } else {
-                    alert('Błąd autoryzacji! Dla panelu cywila poprawne dane testowe to: test / test');
-                }
-            } else {
-                // Pozostałe role zachowują atrapę standardowego przesyłania
-                alert('Zalogowano pomyślnie do panelu: ' + wybranaRola + ' jako: ' + login);
-                zamknijLogowanie();
-            }
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                zamknijLogowanie();
-            }
-        }
-    </script>
-</body>
-</html>
+        const nazwaSerweraSpan = document.
