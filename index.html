@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Płynne przejścia dla elementów interaktywnych */
         .fade-in {
             animation: fadeIn 0.4s ease-in-out;
         }
@@ -18,10 +17,28 @@
         body {
             background-color: #0b0f19;
         }
+        /* Custom scrollbar for better styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
     </style>
 </head>
 <body class="text-gray-200 font-sans antialiased selection:bg-blue-600 selection:text-white">
 
+    <!-- SYSTEM POWIADOMIEŃ TOAST -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 space-y-3 pointer-events-none"></div>
+
+    <!-- STRONA GŁÓWNA -->
     <div id="strona-glowna" class="block">
         <nav class="border-b border-gray-800 bg-[#0e1424]/90 backdrop-blur-md sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -206,14 +223,21 @@
         </footer>
     </div>
 
-
-    <div id="panel-cywila" class="hidden min-h-screen bg-[#0b0f19] flex">
+    <!-- PANEL CYWILA -->
+    <div id="panel-cywila" class="hidden min-h-screen bg-[#0b0f19] flex flex-col md:flex-row">
         
-        <aside class="w-64 bg-[#0e1424] border-r border-gray-800 flex flex-col justify-between shrink-0">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 bg-[#0e1424] border-b md:border-b-0 md:border-r border-gray-800 flex flex-col justify-between shrink-0 z-20">
             <div>
-                <div class="h-16 border-b border-gray-800 flex items-center px-6 gap-3">
-                    <i class="fa-solid fa-user text-blue-500 text-lg"></i>
-                    <span class="font-bold tracking-wider text-sm text-white">STREFA <span class="text-blue-500">CYWILA</span></span>
+                <div class="h-16 border-b border-gray-800 flex items-center justify-between px-6">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-user text-blue-500 text-lg"></i>
+                        <span class="font-bold tracking-wider text-sm text-white">STREFA <span class="text-blue-500">CYWILA</span></span>
+                    </div>
+                    <!-- Mobile Nav Toggle -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-400 hover:text-white">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
                 </div>
                 
                 <div class="p-4 border-b border-gray-800 bg-[#121a2e]/30 flex items-center gap-3">
@@ -228,7 +252,7 @@
                     </div>
                 </div>
 
-                <nav class="p-4 space-y-1">
+                <nav id="sidebar-menu" class="hidden md:block p-4 space-y-1">
                     <button onclick="przepnijZakladke('ekran-glowny-rp')" id="btn-ekran-glowny-rp" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-white bg-blue-600 shadow-md shadow-blue-600/10 text-left cursor-pointer">
                         <i class="fa-solid fa-house w-5 text-center"></i> Ekran Główny
                     </button>
@@ -238,7 +262,7 @@
                     </button>
                     
                     <button onclick="przepnijZakladke('dokumenty-licencje')" id="btn-dokumenty-licencje" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
-                        <i class="fa-solid fa-file-invoice w-5 text-center"></i> Dokumenty i Licencje
+                        <i class="fa-solid fa-file-invoice w-5 text-center"></i> Dokumenty i Kartoteka
                     </button>
                     
                     <button onclick="przepnijZakladke('garaz-pojazdy')" id="btn-garaz-pojazdy" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
@@ -255,68 +279,146 @@
                 </nav>
             </div>
 
-            <div class="p-4 border-t border-gray-800">
+            <div class="p-4 border-t border-gray-800 hidden md:block" id="sidebar-footer">
                 <button onclick="wylogujCywila()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600/10 hover:bg-red-600 border border-red-500/20 text-red-400 hover:text-white text-xs font-semibold rounded-xl transition cursor-pointer">
                     <i class="fa-solid fa-right-from-bracket"></i> Wyloguj z Panelu
                 </button>
             </div>
         </aside>
 
-        <main class="flex-grow p-8 overflow-y-auto max-h-screen">
+        <!-- Main Content Area -->
+        <main class="flex-grow p-4 md:p-8 overflow-y-auto max-h-none md:max-h-screen">
             
+            <!-- SUB: Ekran Główny -->
             <div id="sub-ekran-glowny-rp" class="space-y-6 fade-in">
-                <div>
-                    <h2 class="text-2xl font-black text-white">Witaj w systemie, Jan</h2>
-                    <p class="text-sm text-gray-400">Oto aktualny podsumowujący stan Twojej tożsamości na serwerze głównym.</p>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl font-black text-white">Witaj w systemie, Jan</h2>
+                        <p class="text-sm text-gray-400">Oto aktualny stan Twojej tożsamości na serwerze głównym.</p>
+                    </div>
+                    <div class="bg-[#0e1424] border border-gray-800 px-4 py-2 rounded-xl text-xs flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="text-gray-400">Ostatnia synchronizacja danych: <strong class="text-white">Live</strong></span>
+                    </div>
                 </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl">
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl relative overflow-hidden group hover:border-emerald-500/30 transition">
+                        <div class="absolute right-4 bottom-2 text-emerald-500/5 text-7xl font-bold group-hover:scale-110 transition-transform"><i class="fa-solid fa-money-bill-wave"></i></div>
                         <span class="text-xs text-gray-500 font-bold uppercase tracking-wider block mb-1">Gotówka przy sobie</span>
-                        <h4 class="text-2xl font-bold text-emerald-400">$12,450</h4>
+                        <h4 id="dash-cash" class="text-3xl font-bold text-emerald-400">$12,450</h4>
                     </div>
-                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl">
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition">
+                        <div class="absolute right-4 bottom-2 text-blue-500/5 text-7xl font-bold group-hover:scale-110 transition-transform"><i class="fa-solid fa-vault"></i></div>
                         <span class="text-xs text-gray-500 font-bold uppercase tracking-wider block mb-1">Konto bankowe Maze Bank</span>
-                        <h4 class="text-2xl font-bold text-blue-400">$245,000</h4>
+                        <h4 id="dash-bank" class="text-3xl font-bold text-blue-400">$245,000</h4>
                     </div>
-                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl">
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl relative overflow-hidden group hover:border-purple-500/30 transition">
+                        <div class="absolute right-4 bottom-2 text-purple-500/5 text-7xl font-bold group-hover:scale-110 transition-transform"><i class="fa-solid fa-clock"></i></div>
                         <span class="text-xs text-gray-500 font-bold uppercase tracking-wider block mb-1">Czas spędzony w grze</span>
-                        <h4 class="text-2xl font-bold text-purple-400">142 godz.</h4>
+                        <h4 class="text-3xl font-bold text-purple-400">142 godz.</h4>
                     </div>
                 </div>
-                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6">
-                    <h3 class="font-bold text-white mb-3 flex items-center gap-2"><i class="fa-solid fa-bullhorn text-blue-500"></i> Komunikaty dla obywateli</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Pamiętaj, że każdy zakupiony pojazd musi zostać zarejestrowany w urzędzie miasta w ciągu 48 godzin od zakupu. Niedopełnienie obowiązku skutkuje odholowaniem pojazdu przez LSPD.</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-[#0e1424] border border-gray-800 rounded-2xl p-6">
+                        <h3 class="font-bold text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-bullhorn text-blue-500"></i> Komunikaty dla obywateli</h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl text-sm">
+                                <div class="flex justify-between font-semibold text-white mb-1">
+                                    <span>Wydział Komunikacji LS</span>
+                                    <span class="text-xs text-gray-500">Dzisiaj, 12:40</span>
+                                </div>
+                                <p class="text-gray-400 leading-relaxed">Pamiętaj, że każdy zakupiony pojazd musi zostać zarejestrowany w urzędzie miasta w ciągu 48 godzin od zakupu. Niedopełnienie obowiązku skutkuje odholowaniem pojazdu przez LSPD.</p>
+                            </div>
+                            <div class="p-4 bg-amber-500/5 border border-amber-500/10 rounded-xl text-sm">
+                                <div class="flex justify-between font-semibold text-white mb-1">
+                                    <span>Urząd Skarbowy (Tax Departament)</span>
+                                    <span class="text-xs text-gray-500">Wczoraj, 18:15</span>
+                                </div>
+                                <p class="text-gray-400 leading-relaxed">Przypominamy o konieczności opłacenia podatków od nieruchomości gruntowych i mieszkaniowych do 5 dnia każdego miesiąca z poziomu zakładki Majątek.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-white mb-3 flex items-center gap-2"><i class="fa-solid fa-wallet text-amber-500"></i> Szybki Przelew</h3>
+                            <p class="text-xs text-gray-400 mb-4">Przelej fundusze ze swojego konta bankowego na konto innego gracza.</p>
+                            <div class="space-y-3">
+                                <input id="transfer-target" type="text" placeholder="CID Odbiorcy (np. #1234)" class="w-full bg-[#0b0f19] border border-gray-800 focus:border-blue-500 text-white rounded-xl px-3 py-2.5 text-xs outline-none transition">
+                                <input id="transfer-amount" type="number" placeholder="Kwota ($)" class="w-full bg-[#0b0f19] border border-gray-800 focus:border-blue-500 text-white rounded-xl px-3 py-2.5 text-xs outline-none transition">
+                            </div>
+                        </div>
+                        <button onclick="wykonajPrzelew()" class="w-full mt-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-3 rounded-xl transition shadow-lg shadow-blue-600/10">
+                            Autoryzuj i Wyślij Przelew
+                        </button>
+                    </div>
                 </div>
             </div>
 
+            <!-- SUB: Profil Postaci -->
             <div id="sub-profil-postaci" class="hidden space-y-6 fade-in">
                 <div>
                     <h2 class="text-2xl font-black text-white">Profil Tożsamości RP</h2>
                     <p class="text-sm text-gray-400">Szczegółowe dane personalne wygenerowane przez kartotekę miejską.</p>
                 </div>
-                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 max-w-2xl">
-                    <div class="grid grid-cols-2 gap-y-4 text-sm">
-                        <div class="text-gray-500">Imię i Nazwisko:</div><div class="text-white font-semibold">Jan Kowalski</div>
-                        <div class="text-gray-500">Data Urodzenia:</div><div class="text-white font-semibold">12/05/1995 (31 lat)</div>
-                        <div class="text-gray-500">Numer Telefonu:</div><div class="text-blue-400 font-semibold">555-231-102</div>
-                        <div class="text-gray-500">Numer ID Obywatela (CID):</div><div class="text-gray-300 font-mono">#5921</div>
-                        <div class="text-gray-500">Zatrudnienie / Praca:</div><div class="text-amber-400 font-semibold">Kierowca logistyki (brak frakcji)</div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-[#0e1424] border border-gray-800 rounded-2xl p-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
+                            <div class="space-y-1 p-3 bg-[#0b0f19] border border-gray-800 rounded-xl">
+                                <span class="text-xs text-gray-500 block">Imię i Nazwisko</span>
+                                <span class="text-white font-semibold text-base">Jan Kowalski</span>
+                            </div>
+                            <div class="space-y-1 p-3 bg-[#0b0f19] border border-gray-800 rounded-xl">
+                                <span class="text-xs text-gray-500 block">Data Urodzenia / Wiek</span>
+                                <span class="text-white font-semibold text-base">12/05/1995 (31 lat)</span>
+                            </div>
+                            <div class="space-y-1 p-3 bg-[#0b0f19] border border-gray-800 rounded-xl">
+                                <span class="text-xs text-gray-500 block">Numer Telefonu</span>
+                                <span class="text-blue-400 font-mono font-semibold text-base">555-231-102</span>
+                            </div>
+                            <div class="space-y-1 p-3 bg-[#0b0f19] border border-gray-800 rounded-xl">
+                                <span class="text-xs text-gray-500 block">Numer ID Obywatela (CID)</span>
+                                <span class="text-amber-500 font-mono font-bold text-base">#5921</span>
+                            </div>
+                            <div class="space-y-1 p-3 bg-[#0b0f19] border border-gray-800 rounded-xl sm:col-span-2">
+                                <span class="text-xs text-gray-500 block">Zatrudnienie / Miejsce pracy</span>
+                                <span class="text-gray-200 font-semibold text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-truck-ramp-box text-amber-500"></i> Kierowca logistyki (Działalność indywidualna)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-24 h-24 rounded-2xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 text-4xl mb-4">
+                            <i class="fa-solid fa-fingerprint"></i>
+                        </div>
+                        <h4 class="font-bold text-white text-sm">Status Kartoteki</h4>
+                        <p class="text-xs text-gray-400 mt-1 max-w-[200px]">Twoje cyfrowe dossier jest powiązane bezpośrednio z systemem MDT Frakcji.</p>
+                        <div class="mt-4 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 font-bold text-xs uppercase">
+                            Brak listów gończych
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- SUB: Dokumenty i Licencje -->
             <div id="sub-dokumenty-licencje" class="hidden space-y-6 fade-in">
                 <div>
-                    <h2 class="text-2xl font-black text-white">Posiadane Licencje</h2>
-                    <p class="text-sm text-gray-400">Sprawdź status swoich uprawnień państwowych.</p>
+                    <h2 class="text-2xl font-black text-white">Posiadane Licencje i Kartoteka Kary</h2>
+                    <p class="text-sm text-gray-400">Sprawdź status swoich uprawnień państwowych oraz wpisy wystawione przez LSPD.</p>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl">
+                
+                <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-address-card text-blue-500"></i> Uprawnienia państwowe</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-[#0e1424] border border-emerald-500/20 p-4 rounded-xl flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-address-card text-emerald-400 text-xl"></i>
                             <div>
                                 <h4 class="font-bold text-white text-sm">Dowód Osobisty</h4>
-                                <p class="text-xs text-gray-500">Status: Ważny bezterminowo</p>
+                                <p class="text-xs text-gray-500">Ważny bezterminowo</p>
                             </div>
                         </div>
                         <span class="bg-emerald-500/10 text-emerald-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-emerald-500/20">Posiada</span>
@@ -326,100 +428,185 @@
                             <i class="fa-solid fa-id-card-clip text-emerald-400 text-xl"></i>
                             <div>
                                 <h4 class="font-bold text-white text-sm">Prawo Jazdy Kat. B</h4>
-                                <p class="text-xs text-gray-500">Punkty karne: 0 / 24</p>
+                                <p class="text-xs text-gray-500">Punkty karne: <strong id="licence-pts">0</strong> / 24</p>
                             </div>
                         </div>
                         <span class="bg-emerald-500/10 text-emerald-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-emerald-500/20">Posiada</span>
                     </div>
-                    <div class="bg-[#0e1424] border border-red-500/20 p-4 rounded-xl flex items-center justify-between">
+                    <div id="license-weapon-card" class="bg-[#0e1424] border border-red-500/20 p-4 rounded-xl flex items-center justify-between transition-all">
                         <div class="flex items-center gap-3">
-                            <i class="fa-solid fa-gun text-red-400 text-xl"></i>
+                            <i class="fa-solid fa-gun text-red-400 text-xl" id="weapon-icon"></i>
                             <div>
-                                <h4 class="font-bold text-white text-sm">Licencja na broń krótką (CCW)</h4>
-                                <p class="text-xs text-gray-500">Status: Brak uprawnień</p>
+                                <h4 class="font-bold text-white text-sm">Licencja na broń (CCW)</h4>
+                                <p class="text-xs text-gray-500" id="weapon-status-text">Status: Brak uprawnień</p>
                             </div>
                         </div>
-                        <span class="bg-red-500/10 text-red-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-red-500/20">Brak</span>
+                        <span id="weapon-badge" class="bg-red-500/10 text-red-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-red-500/20">Brak</span>
+                    </div>
+                </div>
+
+                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 mt-6">
+                    <h3 class="font-bold text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-gavel text-red-500"></i> Historia Mandatów i Wyroków (Kartoteka MDT)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-[#121a2e] text-gray-400 uppercase text-[11px] font-bold tracking-wider">
+                                <tr>
+                                    <th class="p-3">Data</th>
+                                    <th class="p-3">Powód / Wykroczenie</th>
+                                    <th class="p-3">Grzywna</th>
+                                    <th class="p-3">Wyrok (Miesiące)</th>
+                                    <th class="p-3">Funkcjonariusz</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-800 text-gray-300">
+                                <tr class="hover:bg-gray-800/20 transition">
+                                    <td class="p-3 font-mono text-xs">22/05/2026</td>
+                                    <td class="p-3">Przekroczenie prędkości w terenie zabudowanym (+40km/h)</td>
+                                    <td class="p-3 text-amber-500 font-semibold">$1,500</td>
+                                    <td class="p-3">0</td>
+                                    <td class="p-3 text-gray-400">Sgt. J. Lawson</td>
+                                </tr>
+                                <tr class="hover:bg-gray-800/20 transition">
+                                    <td class="p-3 font-mono text-xs">10/04/2026</td>
+                                    <td class="p-3">Niezastosowanie się do poleceń funkcjonariusza, stwarzanie zagrożenia</td>
+                                    <td class="p-3 text-amber-500 font-semibold">$3,000</td>
+                                    <td class="p-3 text-red-400 font-bold">15 min</td>
+                                    <td class="p-3 text-gray-400">Ofc. M. Briggs</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
+            <!-- SUB: Garaż i Pojazdy -->
             <div id="sub-garaz-pojazdy" class="hidden space-y-6 fade-in">
                 <div>
                     <h2 class="text-2xl font-black text-white">Twój Garaż</h2>
                     <p class="text-sm text-gray-400">Lista zarejestrowanych pojazdów prywatnych przypisanych do Twojego CID.</p>
                 </div>
-                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl overflow-hidden max-w-4xl">
-                    <table class="w-full text-left text-sm">
-                        <thead class="bg-[#121a2e] text-gray-400 uppercase text-[11px] font-bold tracking-wider">
-                            <tr>
-                                <th class="p-4">Model Pojazdu</th>
-                                <th class="p-4">Numer Rejestracyjny</th>
-                                <th class="p-4">Stan techniczny</th>
-                                <th class="p-4">Lokalizacja</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-800">
-                            <tr>
-                                <td class="p-4 font-bold text-white">Karin Sultan RS</td>
-                                <td class="p-4 font-mono text-blue-400">LSP 5921</td>
-                                <td class="p-4 text-emerald-400">100% (Sprawny)</td>
-                                <td class="p-4 text-gray-400">Garaż Główny Legion SQ</td>
-                            </tr>
-                            <tr>
-                                <td class="p-4 font-bold text-white">Vapid Dominator</td>
-                                <td class="p-4 font-mono text-blue-400">REG 7110</td>
-                                <td class="p-4 text-amber-400">65% (Uszkodzony)</td>
-                                <td class="p-4 text-gray-400">Parking policyjny Impound</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-[#121a2e] text-gray-400 uppercase text-[11px] font-bold tracking-wider">
+                                <tr>
+                                    <th class="p-4">Model Pojazdu</th>
+                                    <th class="p-4">Tablice Rejestracyjne</th>
+                                    <th class="p-4">Stan Silnika</th>
+                                    <th class="p-4">Lokalizacja</th>
+                                    <th class="p-4 text-right">Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody id="garage-table-body" class="divide-y divide-gray-800">
+                                <tr id="car-1" class="hover:bg-gray-800/10 transition">
+                                    <td class="p-4 font-bold text-white flex items-center gap-2">
+                                        <i class="fa-solid fa-car text-blue-500"></i> Karin Sultan RS
+                                    </td>
+                                    <td class="p-4 font-mono text-blue-400">LSP 5921</td>
+                                    <td class="p-4">
+                                        <span class="text-emerald-400 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> 100%</span>
+                                    </td>
+                                    <td class="p-4 text-gray-400">Garaż Główny Legion SQ</td>
+                                    <td class="p-4 text-right">
+                                        <button onclick="namierzPojazd('Karin Sultan RS')" class="bg-blue-600/10 hover:bg-blue-600 border border-blue-500/20 text-blue-400 hover:text-white px-3 py-1.5 rounded-lg text-xs transition font-semibold">Namierz GPS</button>
+                                    </td>
+                                </tr>
+                                <tr id="car-2" class="hover:bg-gray-800/10 transition">
+                                    <td class="p-4 font-bold text-white flex items-center gap-2">
+                                        <i class="fa-solid fa-car text-amber-500"></i> Vapid Dominator
+                                    </td>
+                                    <td class="p-4 font-mono text-blue-400">REG 7110</td>
+                                    <td class="p-4">
+                                        <span class="text-amber-400 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span> 65%</span>
+                                    </td>
+                                    <td class="p-4 text-red-400">Parking Policyjny (Impound)</td>
+                                    <td class="p-4 text-right">
+                                        <button onclick="wykupPojazd()" class="bg-emerald-600/20 hover:bg-emerald-600 border border-emerald-500/30 text-emerald-400 hover:text-white px-3 py-1.5 rounded-lg text-xs transition font-semibold">Opłać kaucję ($500)</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
+            <!-- SUB: Nieruchomości -->
             <div id="sub-nieruchomosci" class="hidden space-y-6 fade-in">
                 <div>
                     <h2 class="text-2xl font-black text-white">Zarządzanie Majątkiem i Posiadłościami</h2>
                     <p class="text-sm text-gray-400">Wykaz domów, mieszkań i magazynów, do których posiadasz klucze.</p>
                 </div>
-                <div class="bg-[#0e1424] border border-gray-800 rounded-xl p-5 max-w-xl flex items-center gap-4">
-                    <div class="w-12 h-12 bg-blue-600/10 border border-blue-500/20 text-blue-500 flex items-center justify-center rounded-xl text-xl">
-                        <i class="fa-solid fa-house-chimney"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white text-base">Apartament nr 4, Alta Street</h4>
-                        <p class="text-xs text-gray-500">Opłacony do: <span class="text-amber-400 font-medium">04/06/2026</span> • Współwłaściciele: Brak</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-[#0e1424] border border-gray-800 rounded-xl p-5 flex items-center justify-between group hover:border-blue-500/30 transition">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-600/10 border border-blue-500/20 text-blue-500 flex items-center justify-center rounded-xl text-xl">
+                                <i class="fa-solid fa-house-chimney"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Apartament nr 4, Alta Street</h4>
+                                <p class="text-xs text-gray-500">Opłacony do: <span id="property-date" class="text-emerald-400 font-medium">04/06/2026</span> • Współwłaściciele: Brak</p>
+                            </div>
+                        </div>
+                        <button onclick="oplacCzynsz()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-2 rounded-lg text-xs font-semibold transition">Opłać czynsz ($250)</button>
                     </div>
                 </div>
             </div>
 
+            <!-- SUB: Składanie Podań -->
             <div id="sub-skladanie-podan" class="hidden space-y-6 fade-in">
                 <div>
                     <h2 class="text-2xl font-black text-white">System Rekrutacji i Wniosków</h2>
-                    <p class="text-sm text-gray-400">Złóż aplikację do struktur publicznych lub złóż wniosek biznesowy do rządu.</p>
+                    <p class="text-sm text-gray-400">Złóż aplikację do struktur publicznych lub zarejestruj własną działalność gospodarczą.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
-                    <div class="bg-[#0e1424] border border-gray-800 p-5 rounded-xl flex flex-col justify-between items-start">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-xl flex flex-col justify-between">
                         <div>
-                            <h4 class="font-bold text-white text-sm">Podanie do Los Santos Police Department</h4>
-                            <p class="text-xs text-gray-500 mt-1">Status naboru: <span class="text-emerald-400 font-semibold">OTWARTY</span></p>
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-white text-base">Aplikacja do Los Santos Police Department</h4>
+                                <span class="bg-emerald-500/10 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-500/20">OTWARTA</span>
+                            </div>
+                            <p class="text-xs text-gray-400 leading-relaxed">Wstąp w szeregi największej frakcji porządkowej na serwerze. Wymagany czysty rejestr karny w profilu oraz licencja prawa jazdy kat. B.</p>
                         </div>
-                        <button onclick="alert('Formularz aplikacyjny LSPD zostanie otwarty')" class="cursor-pointer mt-4 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">Wypełnij wniosek</button>
+                        <button onclick="otworzFormularz('lspd')" class="cursor-pointer mt-6 w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-2.5 rounded-lg transition">Otwórz formularz rekrutacji</button>
                     </div>
-                    <div class="bg-[#0e1424] border border-gray-800 p-5 rounded-xl flex flex-col justify-between items-start">
+
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-xl flex flex-col justify-between">
                         <div>
-                            <h4 class="font-bold text-white text-sm">Wniosek o założenie Firmy / Biznesu</h4>
-                            <p class="text-xs text-gray-500 mt-1">Status: Wymaga opłaty skarbowej $5,000</p>
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-white text-base">Wniosek o założenie Firmy / Biznesu</h4>
+                                <span class="bg-amber-500/10 text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-500/20">KOSZT: $5,000</span>
+                            </div>
+                            <p class="text-xs text-gray-400 leading-relaxed">Zarejestruj własną firmę (gastronomia, warsztat mechaniczny, logistyka) i uzyskaj dostęp do skryptów zarządzania pracownikami i fakturami.</p>
                         </div>
-                        <button onclick="alert('Formularz rejestracji działalności gospodarczej')" class="cursor-pointer mt-4 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-semibold px-4 py-2 rounded-lg transition">Złóż wniosek</button>
+                        <button onclick="otworzFormularz('biznes')" class="cursor-pointer mt-6 w-full text-center bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-semibold py-2.5 rounded-lg transition">Złóż wniosek biznesowy</button>
                     </div>
+                </div>
+
+                <!-- Moduł aktywnego formularza podania -->
+                <div id="formularz-podania-kontener" class="hidden bg-[#0e1424] border border-gray-800 rounded-xl p-6 mt-6 fade-in">
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-4">
+                        <h3 id="formularz-tytul" class="font-bold text-white">Formularz aplikacyjny</h3>
+                        <button onclick="zamknijFormularz()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <form onsubmit="wyslijPodanie(event)" class="space-y-4">
+                        <input type="hidden" id="formularz-typ">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 uppercase mb-2">Uzasadnienie wniosku / List motywacyjny (min. 30 słów)</label>
+                            <textarea required id="formularz-tresc" rows="5" placeholder="Napisz dlaczego to właśnie Ty powinieneś zostać wybrany..." class="w-full bg-[#0b0f19] border border-gray-800 focus:border-blue-500 text-white text-sm rounded-xl px-4 py-3 outline-none transition resize-none"></textarea>
+                        </div>
+                        <div class="flex justify-end gap-3">
+                            <button type="button" onclick="zamknijFormularz()" class="bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-white px-4 py-2 rounded-lg text-xs font-semibold transition">Anuluj</button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg text-xs font-semibold transition shadow-lg shadow-blue-600/10">Wyślij podanie do systemu</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
         </main>
     </div>
 
-
+    <!-- MODAL LOGOWANIA -->
     <div id="modal-logowanie" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm fade-in">
         <div class="bg-[#0e1424] border border-gray-800 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl relative">
             
@@ -533,10 +720,19 @@
         </div>
     </div>
 
+    <!-- JAVASCRIPT: LOGIKA RETENCJI I MECHANIKI PANELU -->
     <script>
+        // Dane symulowanej bazy danych (State Management)
+        let stanKonta = {
+            gotowka: 12450,
+            bank: 245000,
+            punktyKarne: 0,
+            licencjaBron: false,
+            czynszOpłaconyDo: new Date('2026-06-04')
+        };
+
         const stronaGlowna = document.getElementById('strona-glowna');
         const panelCywila = document.getElementById('panel-cywila');
-
         const modal = document.getElementById('modal-logowanie');
         const krok1 = document.getElementById('krok-wyboru-serwera');
         const krok2 = document.getElementById('krok-autoryzacji');
@@ -545,9 +741,51 @@
         
         const loginInput = document.getElementById('input-login');
         const hasloInput = document.getElementById('input-haslo');
-
         const statusBelka = document.getElementById('status-belka');
         const przyciskWyslij = document.getElementById('przycisk-wyslij');
+
+        // Funkcja powiadomień TOAST
+        function pokazToast(tresc, typ = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `fade-in flex items-center gap-3 px-4 py-3 rounded-xl border text-xs font-semibold shadow-2xl pointer-events-auto transition duration-300`;
+            
+            if (typ === 'success') {
+                toast.classList.add('bg-emerald-500/10', 'border-emerald-500/30', 'text-emerald-400');
+                toast.innerHTML = `<i class="fa-solid fa-circle-check text-base"></i> <span>${tresc}</span>`;
+            } else if (typ === 'error') {
+                toast.classList.add('bg-red-500/10', 'border-red-500/30', 'text-red-400');
+                toast.innerHTML = `<i class="fa-solid fa-circle-exclamation text-base"></i> <span>${tresc}</span>`;
+            } else {
+                toast.classList.add('bg-blue-500/10', 'border-blue-500/30', 'text-blue-400');
+                toast.innerHTML = `<i class="fa-solid fa-circle-info text-base"></i> <span>${tresc}</span>`;
+            }
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Odświeżanie wartości dashboardu na żywo
+        function odswiezDashboard() {
+            document.getElementById('dash-cash').innerText = `$${stanKonta.gotowka.toLocaleString()}`;
+            document.getElementById('dash-bank').innerText = `$${stanKonta.bank.toLocaleString()}`;
+            document.getElementById('licence-pts').innerText = stanKonta.punktyKarne;
+            
+            // Formatowanie daty nieruchomości
+            const d = stanKonta.czynszOpłaconyDo;
+            document.getElementById('property-date').innerText = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+        }
+
+        // Interakcja mobilna menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('sidebar-menu');
+            const footer = document.getElementById('sidebar-footer');
+            menu.classList.toggle('hidden');
+            footer.classList.toggle('hidden');
+        }
 
         function otworzLogowanie() {
             modal.classList.remove('hidden');
@@ -567,7 +805,6 @@
             nazwaSerweraSpan.innerText = rola;
             krok1.classList.add('hidden');
             krok2.classList.remove('hidden');
-
             loginInput.value = '';
             hasloInput.value = '';
 
@@ -601,12 +838,11 @@
         }
 
         function autoryzacjaDiscord() {
-            alert('Autoryzacja Discord OAuth2 dla uprawnień typu: ' + nazwaSerweraSpan.innerText);
+            pokazToast('Inicjowanie OAuth2 za pośrednictwem Discord API...', 'info');
         }
 
         function obslugaLogowania(event) {
             event.preventDefault();
-            
             const wybranaRola = nazwaSerweraSpan.innerText;
             const login = loginInput.value.trim();
             const haslo = hasloInput.value;
@@ -617,11 +853,13 @@
                     stronaGlowna.classList.replace('block', 'hidden');
                     panelCywila.classList.replace('hidden', 'flex');
                     przepnijZakladke('ekran-glowny-rp'); 
+                    odswiezDashboard();
+                    pokazToast('Zalogowano pomyślnie jako Jan Kowalski.');
                 } else {
-                    alert('Błąd autoryzacji! Dla panelu cywila poprawne dane testowe to: test / test');
+                    pokazToast('Błędne dane! Wpisz test / test.', 'error');
                 }
             } else {
-                alert('Zalogowano pomyślnie do panelu: ' + wybranaRola + ' jako: ' + login);
+                pokazToast(`Moduł ${wybranaRola} w fazie produkcyjnej. Połącz z bazą danych MySQL.`, 'info');
                 zamknijLogowanie();
             }
         }
@@ -641,11 +879,117 @@
                     przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer";
                 }
             });
+
+            // Ukryj menu mobilne po kliknięciu karty
+            if(window.innerWidth < 768) {
+                toggleMobileMenu();
+            }
+        }
+
+        // Funkcje Interaktywne dla Cywila
+        function wykonajPrzelew() {
+            const target = document.getElementById('transfer-target').value.trim();
+            const amount = parseInt(document.getElementById('transfer-amount').value);
+
+            if(!target || isNaN(amount) || amount <= 0) {
+                pokazToast('Wprowadź prawidłowy identyfikator obywatela oraz kwotę!', 'error');
+                return;
+            }
+
+            if(amount > stanKonta.bank) {
+                pokazToast('Brak wystarczających środków na koncie Maze Bank.', 'error');
+                return;
+            }
+
+            stanKonta.bank -= amount;
+            odswiezDashboard();
+            document.getElementById('transfer-target').value = '';
+            document.getElementById('transfer-amount').value = '';
+            pokazToast(`Pomyślnie przelano kwotę $${amount.toLocaleString()} dla gracza ${target}.`);
+        }
+
+        function namierzPojazd(nazwa) {
+            pokazToast(`Sygnał GPS wysłany pomyślnie. Znajdziesz ${nazwa} zaznaczony na radarze w grze.`, 'info');
+        }
+
+        function wykupPojazd() {
+            if(stanKonta.gotowka < 500) {
+                pokazToast('Nie masz wystarczającej gotówki przy sobie ($500), aby uiścić kaucję!', 'error');
+                return;
+            }
+
+            stanKonta.gotowka -= 500;
+            odswiezDashboard();
+            
+            const Row = document.getElementById('car-2');
+            Row.querySelector('td:nth-child(4)').className = "p-4 text-emerald-400";
+            Row.querySelector('td:nth-child(4)').innerHTML = "Garaż Główny Legion SQ";
+            Row.querySelector('td:nth-child(5)').innerHTML = `<button onclick="namierzPojazd('Vapid Dominator')" class="bg-blue-600/10 hover:bg-blue-600 border border-blue-500/20 text-blue-400 hover:text-white px-3 py-1.5 rounded-lg text-xs transition font-semibold">Namierz GPS</button>`;
+            
+            pokazToast('Pojazd został zwolniony z parkingu policyjnego i przetransportowany do Garażu Głównego.');
+        }
+
+        function oplacCzynsz() {
+            if(stanKonta.bank < 250) {
+                pokazToast('Brak środków na koncie bankowym, aby opłacić czynsz nieruchomości.', 'error');
+                return;
+            }
+
+            stanKonta.bank -= 250;
+            stanKonta.czynszOpłaconyDo.setDate(stanKonta.czynszOpłaconyDo.getDate() + 7);
+            odswiezDashboard();
+            pokazToast('Okres najmu przedłużony o dodatkowe 7 dni.');
+        }
+
+        // Obsługa Systemu podań i wniosków
+        function otworzFormularz(typ) {
+            const container = document.getElementById('formularz-podania-kontener');
+            const tytul = document.getElementById('formularz-tytul');
+            const typInput = document.getElementById('formularz-typ');
+            
+            container.classList.remove('hidden');
+            typInput.value = typ;
+
+            if(typ === 'lspd') {
+                tytul.innerText = "Podanie o rekrutację do struktur LSPD";
+            } else {
+                tytul.innerText = "Wniosek o wpis działalności gospodarczej do KRS";
+            }
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function zamknijFormularz() {
+            document.getElementById('formularz-podania-kontener').classList.add('hidden');
+            document.getElementById('formularz-tresc').value = '';
+        }
+
+        function wyslijPodanie(event) {
+            event.preventDefault();
+            const tresc = document.getElementById('formularz-tresc').value.trim();
+            const typ = document.getElementById('formularz-typ').value;
+
+            if(tresc.split(/\s+/).length < 5) {
+                pokazToast('Twoje uzasadnienie jest zbyt krótkie. Rozwiń swoją wypowiedź.', 'error');
+                return;
+            }
+
+            if(typ === 'biznes') {
+                if(stanKonta.bank < 5000) {
+                    pokazToast('Nie masz wystarczających środków w banku ($5,000) na pokrycie opłaty skarbowej!', 'error');
+                    return;
+                }
+                stanKonta.bank -= 5000;
+                odswiezDashboard();
+            }
+
+            zamknijFormularz();
+            pokazToast('Twój wniosek został pomyślnie zarejestrowany w systemie i oczekuje na weryfikację przez zarząd.');
         }
 
         function wylogujCywila() {
             panelCywila.classList.replace('flex', 'hidden');
             stronaGlowna.classList.replace('hidden', 'block');
+            pokazToast('Wylogowano bezpiecznie z profilu obywatela.', 'info');
         }
 
         window.onclick = function(event) {
