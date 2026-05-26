@@ -32,6 +32,7 @@
                     <span class="text-xl font-bold tracking-wider text-white">WIRTUALNY<span class="text-blue-500">RP</span></span>
                 </div>
                 <div class="flex items-center gap-4">
+                    <a href="#top-serwery" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">Top Serwery</a>
                     <a href="#o-projekcie" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">O projekcie</a>
                     <a href="#nowosci" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">Nowości</a>
                     <button onclick="otworzLogowanie()" class="cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg font-medium text-sm transition shadow-lg shadow-blue-600/20 flex items-center gap-2">
@@ -46,7 +47,7 @@
         <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
             <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-Serwery online | Zapraszamy
+                Wszystkie systemy działają stabilnie
             </div>
             
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6 leading-tight">
@@ -58,9 +59,9 @@ Serwery online | Zapraszamy
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <button onclick="otworzLogowanie()" class="cursor-pointer w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-gamepad text-lg"></i> Wybierz Serwer i Zaloguj się
-                </button>
+                <a href="#top-serwery" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-list-ol text-lg"></i> Zobacz Listę Serwerów
+                </a>
                 <a href="https://discord.gg" target="_blank" class="w-full sm:w-auto bg-[#5865F2] hover:bg-[#4752C4] text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-[#5865F2]/10 flex items-center justify-center gap-3">
                     <i class="fa-brands fa-discord text-lg"></i> Serwer Discord
                 </a>
@@ -68,7 +69,84 @@ Serwery online | Zapraszamy
         </div>
     </header>
 
-    <section id="o-projekcie" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="top-serwery" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-white tracking-tight">Nasze Top Serwery</h2>
+            <p class="text-gray-400 mt-2">Wybierz interesujący Cię świat i wejdź do gry lub panelu</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-blue-500/30 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 bg-blue-600/10 text-blue-400 border-b border-l border-gray-800 px-4 py-1.5 rounded-bl-xl text-xs font-bold tracking-wide uppercase">
+                    Główny świat
+                </div>
+                <div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 font-black text-xl">
+                            #1
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition">Serwer Główny (Rozgrywka)</h3>
+                            <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-network-wired"></i> port: 30120 • Tryb: Hardcore RP</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Pełna ekonomia, zaawansowane systemy frakcyjne (LSPD/EMS) oraz autorskie skrypty napadów i narkotyków. Wymagana wysoka kultura rozgrywki.
+                    </p>
+                </div>
+                <div class="border-t border-gray-850 pt-4 mt-2">
+                    <div class="flex justify-between text-xs font-semibold mb-2">
+                        <span class="text-gray-400 uppercase">Gracze online</span>
+                        <span class="text-blue-400">92 / 128</span>
+                    </div>
+                    <div class="w-full bg-[#0b0f19] h-2.5 rounded-full overflow-hidden p-0.5 border border-gray-800">
+                        <div class="bg-gradient-to-r from-blue-600 to-indigo-500 h-full rounded-full" style="width: 71.8%"></div>
+                    </div>
+                    <div class="flex gap-3 mt-6">
+                        <button onclick="otworzLogowanieZSerwerem('Serwer Główny (Rozgrywka)')" class="cursor-pointer flex-1 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-right-to-bracket"></i> Zaloguj do Panelu
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-purple-500/30 transition-all duration-300 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 bg-purple-600/10 text-purple-400 border-b border-l border-gray-800 px-4 py-1.5 rounded-bl-xl text-xs font-bold tracking-wide uppercase">
+                    Szkoleniowy
+                </div>
+                <div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-500 font-black text-xl">
+                            #2
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Serwer Szkoleniowy / Akademia</h3>
+                            <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-network-wired"></i> port: 30125 • Tryb: Treningowy</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Serwer przeznaczony do prowadzenia egzaminów, szkoleń frakcji publicznych oraz testowania nowych mechanik przed wdrożeniem ich na główny świat.
+                    </p>
+                </div>
+                <div class="border-t border-gray-850 pt-4 mt-2">
+                    <div class="flex justify-between text-xs font-semibold mb-2">
+                        <span class="text-gray-400 uppercase">Gracze online</span>
+                        <span class="text-purple-400">14 / 64</span>
+                    </div>
+                    <div class="w-full bg-[#0b0f19] h-2.5 rounded-full overflow-hidden p-0.5 border border-gray-800">
+                        <div class="bg-gradient-to-r from-purple-600 to-fuchsia-500 h-full rounded-full" style="width: 21.8%"></div>
+                    </div>
+                    <div class="flex gap-3 mt-6">
+                        <button onclick="otworzLogowanieZSerwerem('Serwer Szkoleniowy / Akademia')" class="cursor-pointer flex-1 bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-right-to-bracket"></i> Zaloguj do Panelu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="o-projekcie" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-850">
         <div class="text-center mb-16">
             <h2 class="text-3xl font-bold text-white tracking-tight">Co oferuje nasz projekt?</h2>
             <p class="text-gray-400 mt-2">Przełamujemy barierę klasycznych rozwiązań</p>
@@ -242,6 +320,12 @@ Serwery online | Zapraszamy
             wrocDoWyboruSerwera(); // Zaczynamy od wyboru serwera
         }
 
+        // Nowa funkcja: Otwiera modal i od razu ustawia wybrany z karty serwer
+        function otworzLogowanieZSerwerem(nazwaSerwera) {
+            modal.classList.remove('hidden');
+            wybierzSerwer(nazwaSerwera);
+        }
+
         function zamknijLogowanie() {
             modal.classList.add('hidden');
         }
@@ -254,6 +338,7 @@ Serwery online | Zapraszamy
 
         function wrocDoWyboruSerwera() {
             krok2.classList.add('hidden');
+            krok1.github.classList.remove('hidden'); // Zabezpieczenie przed błędem struktury
             krok1.classList.remove('hidden');
         }
 
