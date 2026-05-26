@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wirtualny System RP - Portal Społeczności</title>
-    <!-- Tailwind CSS dla nowoczesnego i szybkiego stylowania UI -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Ikony FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Płynne przejścia dla elementów interaktywnych */
@@ -24,7 +22,6 @@
 </head>
 <body class="text-gray-200 font-sans antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- Nawigacja główna -->
     <nav class="border-b border-gray-800 bg-[#0e1424]/90 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -35,7 +32,6 @@
                     <span class="text-xl font-bold tracking-wider text-white">WIRTUALNY<span class="text-blue-500">RP</span></span>
                 </div>
                 <div class="flex items-center gap-4">
-                    <a href="#top-serwery" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">Top Serwery</a>
                     <a href="#o-projekcie" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">O projekcie</a>
                     <a href="#nowosci" class="text-gray-400 hover:text-white transition hidden sm:inline-block text-sm font-medium">Nowości</a>
                     <button onclick="otworzLogowanie()" class="cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg font-medium text-sm transition shadow-lg shadow-blue-600/20 flex items-center gap-2">
@@ -46,13 +42,11 @@
         </div>
     </nav>
 
-    <!-- Sekcja Główna (Hero) -->
     <header class="relative overflow-hidden py-24 border-b border-gray-800 bg-radial from-blue-900/10 via-transparent to-transparent">
         <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
-            <!-- Status serwerów na żywo -->
             <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                Wszystkie systemy działają stabilnie
+                Serwer Główny: 92/128 graczy online
             </div>
             
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6 leading-tight">
@@ -60,13 +54,13 @@
             </h1>
             
             <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-                Dołącz do zaawansowanej społeczności, gdzie realizm łączy się z rozbudowanymi systemami skryptowymi. Zarządzaj postacią z poziomu przeglądarki i twórz własną historię.
+                Dołącz do zaawansowanej społeczności, gdzie realizm łączy się z rozbudowanymi systemami skryptowymi. Zarządzaj postacią, frakcją lub kodem z poziomu jednej aplikacji.
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <a href="#top-serwery" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-list-ol text-lg"></i> Zobacz Listę Serwerów
-                </a>
+                <button onclick="otworzLogowanie()" class="cursor-pointer w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-right-to-bracket text-lg"></i> Zaloguj się do Panelu
+                </button>
                 <a href="https://discord.gg" target="_blank" class="w-full sm:w-auto bg-[#5865F2] hover:bg-[#4752C4] text-white px-8 py-4 rounded-xl font-semibold transition shadow-xl shadow-[#5865F2]/10 flex items-center justify-center gap-3">
                     <i class="fa-brands fa-discord text-lg"></i> Serwer Discord
                 </a>
@@ -74,87 +68,59 @@
         </div>
     </header>
 
-    <!-- SEKCJA: TOP SERWERY -->
-    <section id="top-serwery" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-16">
+    <section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white tracking-tight">Nasze Top Serwery</h2>
-            <p class="text-gray-400 mt-2">Wybierz interesujący Cię świat i wejdź do gry lub panelu</p>
+            <h2 class="text-3xl font-bold text-white tracking-tight">Dedykowane Strefy Logowania</h2>
+            <p class="text-gray-400 mt-2">Wybierz swoją rolę na projekcie, aby przejść do właściwego systemu</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Serwer 1 -->
-            <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-blue-500/30 transition-all duration-300 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 bg-blue-600/10 text-blue-400 border-b border-l border-gray-800 px-4 py-1.5 rounded-bl-xl text-xs font-bold tracking-wide uppercase">
-                    Główny świat
-                </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div onclick="otworzLogowanieZRole('Cywil')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-blue-500 transition group flex flex-col justify-between">
                 <div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 font-black text-xl">
-                            #1
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition">Serwer Główny (Rozgrywka)</h3>
-                            <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-network-wired"></i> port: 30120 • Tryb: Hardcore RP</p>
-                        </div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-4 group-hover:bg-blue-600 group-hover:text-white transition">
+                        <i class="fa-solid fa-user text-xl"></i>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        Pełna ekonomia, zaawansowane systemy frakcyjne (LSPD/EMS) oraz autorskie skrypty napadów i narkotyków. Wymagana wysoka kultura rozgrywki.
-                    </p>
+                    <h3 class="font-bold text-white text-base mb-1">Panel Cywila</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie postacią, pojazdami, stanem konta oraz składanie podań.</p>
                 </div>
-                <div class="border-t border-gray-850 pt-4 mt-2">
-                    <div class="flex justify-between text-xs font-semibold mb-2">
-                        <span class="text-gray-400 uppercase">Gracze online</span>
-                        <span class="text-blue-400">92 / 128</span>
-                    </div>
-                    <div class="w-full bg-[#0b0f19] h-2.5 rounded-full overflow-hidden p-0.5 border border-gray-800">
-                        <div class="bg-gradient-to-r from-blue-600 to-indigo-500 h-full rounded-full" style="width: 71.8%"></div>
-                    </div>
-                    <div class="flex gap-3 mt-6">
-                        <button onclick="otworzLogowanieZSerwerem('Serwer Główny')" class="cursor-pointer flex-1 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-right-to-bracket"></i> Zaloguj do Panelu
-                        </button>
-                    </div>
-                </div>
+                <span class="text-blue-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
             </div>
 
-            <!-- Serwer 2 -->
-            <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between hover:border-purple-500/30 transition-all duration-300 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 bg-purple-600/10 text-purple-400 border-b border-l border-gray-800 px-4 py-1.5 rounded-bl-xl text-xs font-bold tracking-wide uppercase">
-                    Szkoleniowy
-                </div>
+            <div onclick="otworzLogowanieZRole('Frakcje')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-emerald-500 transition group flex flex-col justify-between">
                 <div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-14 h-14 rounded-xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-500 font-black text-xl">
-                            #2
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Serwer Szkoleniowy / Akademia</h3>
-                            <p class="text-xs text-gray-500 mt-0.5"><i class="fa-solid fa-network-wired"></i> port: 30125 • Tryb: Treningowy</p>
-                        </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4 group-hover:bg-emerald-600 group-hover:text-white transition">
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                        Serwer przeznaczony do prowadzenia egzaminów, szkoleń frakcji publicznych oraz testowania nowych mechanik przed wdrożeniem ich na główny świat.
-                    </p>
+                    <h3 class="font-bold text-white text-base mb-1">Panel Frakcji (MDT)</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">System kartotek, mandatów i zgłoszeń dla LSPD, EMS oraz Fire Department.</p>
                 </div>
-                <div class="border-t border-gray-850 pt-4 mt-2">
-                    <div class="flex justify-between text-xs font-semibold mb-2">
-                        <span class="text-gray-400 uppercase">Gracze online</span>
-                        <span class="text-purple-400">14 / 64</span>
+                <span class="text-emerald-400 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
+            </div>
+
+            <div onclick="otworzLogowanieZRole('Admin')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-red-500 transition group flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-red-600/10 border border-red-500/20 flex items-center justify-center text-red-500 mb-4 group-hover:bg-red-600 group-hover:text-white transition">
+                        <i class="fa-solid fa-user-shield text-xl"></i>
                     </div>
-                    <div class="w-full bg-[#0b0f19] h-2.5 rounded-full overflow-hidden p-0.5 border border-gray-800">
-                        <div class="bg-gradient-to-r from-purple-600 to-fuchsia-500 h-full rounded-full" style="width: 21.8%"></div>
-                    </div>
-                    <div class="flex gap-3 mt-6">
-                        <button onclick="otworzLogowanieZSerwerem('Serwer Szkoleniowy')" class="cursor-pointer flex-1 bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl font-semibold text-sm transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-right-to-bracket"></i> Zaloguj do Panelu
-                        </button>
-                    </div>
+                    <h3 class="font-bold text-white text-base mb-1">Panel Administracji</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie graczami, rozpatrywanie ticketów, nadawanie kar i whitelist.</p>
                 </div>
+                <span class="text-red-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
+            </div>
+
+            <div onclick="otworzLogowanieZRole('Technik')" class="cursor-pointer bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-amber-500 transition group flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-600/10 border border-amber-500/20 flex items-center justify-center text-amber-500 mb-4 group-hover:bg-amber-600 group-hover:text-white transition">
+                        <i class="fa-solid fa-laptop-code text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-base mb-1">Panel Technika</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">Zarządzanie konfiguracją, podgląd logów live, status MySQL oraz błędy skryptów.</p>
+                </div>
+                <span class="text-amber-500 text-xs font-semibold mt-4 block group-hover:underline">Przejdź do logowania &rarr;</span>
             </div>
         </div>
     </section>
 
-    <!-- Sekcja: O Projekcie -->
     <section id="o-projekcie" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-850">
         <div class="text-center mb-16">
             <h2 class="text-3xl font-bold text-white tracking-tight">Co oferuje nasz projekt?</h2>
@@ -162,23 +128,20 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Karta 1 -->
             <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
                 <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-shield-halved text-xl"></i>
+                    <i class="fa-solid fa-coins text-xl"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white mb-3">Zbalansowana Ekonomia</h3>
                 <p class="text-gray-400 text-sm leading-relaxed">Nasza ekonomia została zaprojektowana od zera, aby zapobiec hiperinflacji i wymusić realistyczne interakcje handlowe między graczami.</p>
             </div>
-            <!-- Karta 2 -->
             <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
                 <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
-                    <i class="fa-solid fa-laptop-code text-xl"></i>
+                    <i class="fa-solid fa-mobile-screen-button text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Autorski Panel MDT</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Zaawansowany system dla frakcji publicznych (Policja, Medycy) działający w czasie rzeczywistym bezpośrednio z poziomu tej witryny.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Zintegrowane systemy</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Wszystkie akcje z poziomu gry synchronizują się z bazą danych i od razu wpływają na wygląd oraz stan Twoich paneli webowych.</p>
             </div>
-            <!-- Karta 3 -->
             <div class="bg-[#0e1424] border border-gray-800 p-8 rounded-2xl hover:border-blue-500/40 transition group">
                 <div class="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
                     <i class="fa-solid fa-users text-xl"></i>
@@ -189,7 +152,6 @@
         </div>
     </section>
 
-    <!-- Sekcja: Nowości / Changelog -->
     <section id="nowosci" class="py-20 bg-[#0e1424]/50 border-t border-b border-gray-800">
         <div class="max-w-4xl mx-auto px-4">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-12 gap-4">
@@ -204,7 +166,6 @@
             </div>
 
             <div class="space-y-6">
-                <!-- Wpis 1 -->
                 <div class="bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition">
                     <div class="flex items-center gap-3 text-xs text-blue-400 mb-3 font-semibold uppercase tracking-wider">
                         <span><i class="fa-solid fa-code-branch"></i> Aktualizacja v1.4.2</span>
@@ -220,105 +181,79 @@
                         <span class="bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2.5 py-1 rounded-md text-xs font-medium">Baza Danych</span>
                     </div>
                 </div>
-
-                <!-- Wpis 2 -->
-                <div class="bg-[#0e1424] border border-gray-800 rounded-xl p-6 hover:border-gray-700 transition">
-                    <div class="flex items-center gap-3 text-xs text-amber-400 mb-3 font-semibold uppercase tracking-wider">
-                        <span><i class="fa-solid fa-bullhorn"></i> Ogłoszenie</span>
-                        <span class="text-gray-600">•</span>
-                        <span class="text-gray-400">25 Maja 2026</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Otwarcie rekrutacji do struktur Los Santos Police Department</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Zarząd frakcji ogłasza nabór w szeregi akademii. Wnioski można składać bezpośrednio przez dedykowany panel gracza po zalogowaniu się na serwer główny. Wymagany czysty rejestr karny.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-amber-500/10 border border-amber-500/20 text-amber-400 px-2.5 py-1 rounded-md text-xs font-medium">Rekrutacja</span>
-                        <span class="bg-purple-500/10 border border-purple-500/20 text-purple-400 px-2.5 py-1 rounded-md text-xs font-medium">LSPD</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Stopka strony -->
     <footer class="bg-[#0b0f19] border-t border-gray-800 py-8 text-center text-xs text-gray-500">
         <p>&copy; 2026 WirtualnySystemRP. Wszelkie prawa zastrzeżone.</p>
         <p class="mt-2 text-gray-600">Projekt nie jest powiązany z Rockstar Games ani Mojang/Roblox Corporation.</p>
     </footer>
 
-    <!-- MODAL: EKRAN WYBORU SERWERA I LOGOWANIA -->
     <div id="modal-logowanie" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm fade-in">
         <div class="bg-[#0e1424] border border-gray-800 w-full max-w-md rounded-2xl overflow-hidden shadow-2xl relative">
             
-            <!-- Nagłówek modala -->
             <div class="p-6 border-b border-gray-800 flex justify-between items-center bg-[#121a2e]">
                 <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-right-to-bracket text-blue-500"></i> Dostęp do Systemu
+                    <i class="fa-solid fa-right-to-bracket text-blue-500"></i> Logowanie do Systemu
                 </h3>
                 <button onclick="zamknijLogowanie()" class="cursor-pointer text-gray-400 hover:text-white transition w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-800">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
-            <!-- Zawartość Modala -->
-            <div class="p-6 max-h-[80vh] overflow-y-auto">
-                <!-- KROK 1: Wybór konkretnego serwera (Zaktualizowany do 4 pozycji) -->
+            <div class="p-6">
                 <div id="krok-wyboru-serwera" class="space-y-4">
-                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Wybierz serwer docelowy</label>
-                    <div class="space-y-3">
+                    <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Wybierz typ konta docelowego</label>
+                    <div class="space-y-2.5">
                         
-                        <!-- Serwer 1 -->
-                        <div onclick="wybierzSerwer('Serwer Główny')" class="cursor-pointer group border border-gray-800 hover:border-blue-500 bg-[#0b0f19] p-4 rounded-xl flex items-center justify-between transition">
+                        <div onclick="wybierzSerwer('Cywil')" class="cursor-pointer group border border-gray-800 hover:border-blue-500 bg-[#0b0f19] p-3.5 rounded-xl flex items-center justify-between transition">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition">
-                                    <span class="font-bold text-sm">#1</span>
+                                <div id="icon-cywil" class="w-9 h-9 rounded-lg bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition">
+                                    <i class="fa-solid fa-user text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-white text-sm group-hover:text-blue-400 transition">Serwer Główny</h4>
-                                    <p class="text-xs text-gray-500">Tryb: Hardcore RP • Główne miasto</p>
+                                    <h4 class="font-bold text-white text-sm group-hover:text-blue-400 transition">Panel Cywila</h4>
+                                    <p class="text-[11px] text-gray-500">Konta graczy, ekwipunek, postacie</p>
                                 </div>
                             </div>
                             <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-blue-500 transition"></i>
                         </div>
 
-                        <!-- Serwer 2 -->
-                        <div onclick="wybierzSerwer('Serwer Szkoleniowy')" class="cursor-pointer group border border-gray-800 hover:border-purple-500 bg-[#0b0f19] p-4 rounded-xl flex items-center justify-between transition">
+                        <div onclick="wybierzSerwer('Frakcje')" class="cursor-pointer group border border-gray-800 hover:border-emerald-500 bg-[#0b0f19] p-3.5 rounded-xl flex items-center justify-between transition">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-500 group-hover:bg-purple-600 group-hover:text-white transition">
-                                    <span class="font-bold text-sm">#2</span>
+                                <div id="icon-frakcje" class="w-9 h-9 rounded-lg bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white transition">
+                                    <i class="fa-solid fa-shield-halved text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-white text-sm group-hover:text-purple-400 transition">Serwer Szkoleniowy</h4>
-                                    <p class="text-xs text-gray-500">Egzaminy, szkolenia i rekrutacje</p>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-purple-500 transition"></i>
-                        </div>
-
-                        <!-- Serwer 3 -->
-                        <div onclick="wybierzSerwer('Serwer Wolnej Rozgrywki')" class="cursor-pointer group border border-gray-800 hover:border-emerald-500 bg-[#0b0f19] p-4 rounded-xl flex items-center justify-between transition">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white transition">
-                                    <span class="font-bold text-sm">#3</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-white text-sm group-hover:text-emerald-400 transition">Serwer Wolnej Rozgrywki</h4>
-                                    <p class="text-xs text-gray-500">Tryb: Freeroam / Casual RP</p>
+                                    <h4 class="font-bold text-white text-sm group-hover:text-emerald-400 transition">Panel Frakcji (MDT)</h4>
+                                    <p class="text-[11px] text-gray-500">LSPD / EMS / Korporacje</p>
                                 </div>
                             </div>
                             <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-emerald-500 transition"></i>
                         </div>
 
-                        <!-- Serwer 4 -->
-                        <div onclick="wybierzSerwer('Serwer Deweloperski (TEST)')" class="cursor-pointer group border border-gray-800 hover:border-amber-500 bg-[#0b0f19] p-4 rounded-xl flex items-center justify-between transition">
+                        <div onclick="wybierzSerwer('Admin')" class="cursor-pointer group border border-gray-800 hover:border-red-500 bg-[#0b0f19] p-3.5 rounded-xl flex items-center justify-between transition">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-amber-600/10 border border-amber-500/20 flex items-center justify-center text-amber-500 group-hover:bg-amber-600 group-hover:text-white transition">
-                                    <span class="font-bold text-sm">#4</span>
+                                <div id="icon-admin" class="w-9 h-9 rounded-lg bg-red-600/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:bg-red-600 group-hover:text-white transition">
+                                    <i class="fa-solid fa-user-shield text-sm"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-white text-sm group-hover:text-amber-400 transition">Serwer Deweloperski (TEST)</h4>
-                                    <p class="text-xs text-gray-500">Dostęp tylko dla administracji i testerów</p>
+                                    <h4 class="font-bold text-white text-sm group-hover:text-red-400 transition">Panel Administracji</h4>
+                                    <p class="text-[11px] text-gray-500">Zarządzanie banami, zgłoszenia i nadzór</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-red-500 transition"></i>
+                        </div>
+
+                        <div onclick="wybierzSerwer('Technik')" class="cursor-pointer group border border-gray-800 hover:border-amber-500 bg-[#0b0f19] p-3.5 rounded-xl flex items-center justify-between transition">
+                            <div class="flex items-center gap-3">
+                                <div id="icon-technik" class="w-9 h-9 rounded-lg bg-amber-600/10 border border-amber-500/20 flex items-center justify-center text-amber-500 group-hover:bg-amber-600 group-hover:text-white transition">
+                                    <i class="fa-solid fa-laptop-code text-sm"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm group-hover:text-amber-400 transition">Panel Technika</h4>
+                                    <p class="text-[11px] text-gray-500">Konfiguracja serwera, logi, baza danych</p>
                                 </div>
                             </div>
                             <i class="fa-solid fa-chevron-right text-gray-600 group-hover:text-amber-500 transition"></i>
@@ -327,37 +262,33 @@
                     </div>
                 </div>
 
-                <!-- KROK 2: Formularz autoryzacji -->
                 <div id="krok-autoryzacji" class="hidden fade-in">
-                    <!-- Wybrany serwer (nagłówek powrotny) -->
-                    <div class="flex items-center justify-between bg-blue-600/5 border border-blue-500/20 rounded-xl p-3 mb-6 text-sm">
-                        <span class="text-gray-400">Wybrano: <strong id="nazwa-wybranego-serwera" class="text-white"></strong></span>
-                        <button onclick="wrocDoWyboruSerwera()" class="cursor-pointer text-xs text-blue-400 hover:underline font-medium">Zmień</button>
+                    <div id="status-belka" class="flex items-center justify-between border rounded-xl p-3 mb-6 text-sm">
+                        <span class="text-gray-400">Wybrany panel: <strong id="nazwa-wybranego-serwera" class="text-white"></strong></span>
+                        <button onclick="wrocDoWyboruSerwera()" class="cursor-pointer text-xs font-medium underline">Zmień</button>
                     </div>
 
-                    <!-- Bezpieczne logowanie przez Discord -->
                     <button onclick="autoryzacjaDiscord()" class="cursor-pointer w-full bg-[#5865F2] hover:bg-[#4752C4] text-white py-3.5 rounded-xl font-semibold transition shadow-lg shadow-[#5865F2]/20 flex items-center justify-center gap-3 mb-4">
-                        <i class="fa-brands fa-discord text-xl"></i> Zaloguj przez Discord
+                        <i class="fa-brands fa-discord text-xl"></i> Autoryzacja przez Discord
                     </button>
 
                     <div class="relative flex py-3 items-center">
                         <div class="flex-grow border-t border-gray-800"></div>
-                        <span class="flex-shrink mx-4 text-gray-600 text-xs font-bold uppercase tracking-wider">Lub tradycyjnie</span>
+                        <span class="flex-shrink mx-4 text-gray-600 text-xs font-bold uppercase tracking-wider">Lub kontem wewnętrznym</span>
                         <div class="flex-grow border-t border-gray-800"></div>
                     </div>
 
-                    <!-- Formularz Logowania dla zarejestrowanych kont -->
                     <form onsubmit="obslugaLogowania(event)" class="space-y-4 mt-2">
                         <div>
-                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Nazwa Użytkownika / Nick z gry</label>
-                            <input type="text" required placeholder="np. Jan_Kowalski" class="w-full bg-[#0b0f19] border border-gray-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white rounded-xl px-4 py-3 text-sm transition outline-none">
+                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Nick z gry / Login</label>
+                            <input type="text" required placeholder="Wprowadź swój identyfikator" class="w-full bg-[#0b0f19] border border-gray-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white rounded-xl px-4 py-3 text-sm transition outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Hasło dostępowe</label>
+                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Hasło bezpieczne</label>
                             <input type="password" required placeholder="••••••••" class="w-full bg-[#0b0f19] border border-gray-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-white rounded-xl px-4 py-3 text-sm transition outline-none">
                         </div>
-                        <button type="submit" class="cursor-pointer w-full bg-blue-600 hover:bg-blue-500 text-white py-3.5 rounded-xl font-semibold transition shadow-lg shadow-blue-600/10">
-                            Zaloguj do Panelu
+                        <button id="przycisk-wyslij" type="submit" class="cursor-pointer w-full text-white py-3.5 rounded-xl font-semibold transition shadow-lg">
+                            Zaloguj do systemu
                         </button>
                     </form>
                 </div>
@@ -365,32 +296,54 @@
         </div>
     </div>
 
-    <!-- LOGIKA JAVASCRIPT SYSTEMU -->
     <script>
         const modal = document.getElementById('modal-logowanie');
         const krok1 = document.getElementById('krok-wyboru-serwera');
         const krok2 = document.getElementById('krok-autoryzacji');
         const nazwaSerweraSpan = document.getElementById('nazwa-wybranego-serwera');
+        
+        const statusBelka = document.getElementById('status-belka');
+        const przyciskWyslij = document.getElementById('przycisk-wyslij');
 
         function otworzLogowanie() {
             modal.classList.remove('hidden');
-            wrocDoWyboruSerwera(); // Zaczynamy od wyboru serwera
+            wrocDoWyboruSerwera();
         }
 
-        // Otwiera modal i od razu ustawia wybrany z karty serwer
-        function otworzLogowanieZSerwerem(nazwaSerwera) {
+        // Uruchamia modal bezpośrednio ze stref kliknięcia na stronie głównej
+        function otworzLogowanieZRole(rola) {
             modal.classList.remove('hidden');
-            wybierzSerwer(nazwaSerwera);
+            wybierzSerwer(rola);
         }
 
         function zamknijLogowanie() {
             modal.classList.add('hidden');
         }
 
-        function wybierzSerwer(nazwaSerwera) {
-            nazwaSerweraSpan.innerText = nazwaSerwera;
+        // Dostosowanie wyglądu i kolorów modala w zależności od wybranej roli
+        function wybierzSerwer(rola) {
+            nazwaSerweraSpan.innerText = rola;
             krok1.classList.add('hidden');
             krok2.classList.remove('hidden');
+
+            // Reset stylów
+            statusBelka.className = "flex items-center justify-between border rounded-xl p-3 mb-6 text-sm ";
+            przyciskWyslij.className = "cursor-pointer w-full text-white py-3.5 rounded-xl font-semibold transition shadow-lg ";
+
+            // Dynamiczne przypisanie klas kolorów Tailwind dla kroku autoryzacji
+            if (rola === 'Cywil') {
+                statusBelka.classList.add('bg-blue-600/5', 'border-blue-500/20', 'text-blue-400');
+                przyciskWyslij.classList.add('bg-blue-600', 'hover:bg-blue-500', 'shadow-blue-600/10');
+            } else if (rola === 'Frakcje') {
+                statusBelka.classList.add('bg-emerald-600/5', 'border-emerald-500/20', 'text-emerald-400');
+                przyciskWyslij.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'shadow-emerald-600/10');
+            } else if (rola === 'Admin') {
+                statusBelka.classList.add('bg-red-600/5', 'border-red-500/20', 'text-red-400');
+                przyciskWyslij.classList.add('bg-red-600', 'hover:bg-red-500', 'shadow-red-600/10');
+            } else if (rola === 'Technik') {
+                statusBelka.classList.add('bg-amber-600/5', 'border-amber-500/20', 'text-amber-400');
+                przyciskWyslij.classList.add('bg-amber-600', 'hover:bg-amber-500', 'shadow-amber-600/10');
+            }
         }
 
         function wrocDoWyboruSerwera() {
@@ -399,12 +352,12 @@
         }
 
         function autoryzacjaDiscord() {
-            alert('Przekierowanie do API Discord OAuth2 dla serwera: ' + nazwaSerweraSpan.innerText);
+            alert('Autoryzacja Discord OAuth2 dla uprawnień typu: ' + nazwaSerweraSpan.innerText);
         }
 
         function obslugaLogowania(event) {
             event.preventDefault();
-            alert('Autoryzacja zakończona sukcesem! Logowanie do panelu dla: ' + nazwaSerweraSpan.innerText);
+            alert('Zalogowano pomyślnie do panelu: ' + nazwaSerweraSpan.innerText);
             zamknijLogowanie();
         }
 
