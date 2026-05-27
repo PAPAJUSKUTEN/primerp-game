@@ -828,25 +828,39 @@
 
 <!-- ==================== PANEL FRAKCJI ==================== -->
 <div id="panel-frakcji" class="hidden min-h-screen bg-[#0b0f19] flex flex-col">
-    <!-- Wybór departamentu -->
+    <!-- KROK 1: Wybór Służby -->
     <div id="frakcja-select" class="min-h-screen flex flex-col items-center justify-center p-8">
         <div class="mb-10 text-center">
             <i class="fa-solid fa-shield-halved text-emerald-400 text-5xl mb-4 block"></i>
-            <h1 class="text-3xl font-black text-white">Wybierz Departament</h1>
+            <h1 class="text-3xl font-black text-white">Wybierz Służbę</h1>
             <p class="text-gray-400 mt-2">Zalogowano jako: <span class="text-emerald-400 font-semibold">mjr Adam Strzałkowski</span></p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl w-full">
-            <button onclick="otworzMDT('lspd')" class="bg-[#0e1424] border border-blue-500/30 hover:border-blue-500 rounded-2xl p-8 flex flex-col items-center gap-4 transition group">
+            <!-- Policja Państwowa — klikalny -->
+            <button onclick="pokazWyborFrakcjiPolicji()" class="bg-[#0e1424] border border-blue-500/30 hover:border-blue-500 rounded-2xl p-8 flex flex-col items-center gap-4 transition group cursor-pointer">
                 <div class="w-16 h-16 bg-blue-600/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-500 text-3xl group-hover:bg-blue-600 group-hover:text-white transition"><i class="fa-solid fa-shield"></i></div>
-                <div class="text-center"><h3 class="font-bold text-white text-lg">LSPD</h3><p class="text-xs text-gray-400">Policja Los Santos</p></div>
+                <div class="text-center">
+                    <h3 class="font-bold text-white text-lg">Policja Państwowa</h3>
+                    <p class="text-xs text-gray-400">Los Santos Police Department</p>
+                </div>
+                <span class="text-blue-500 text-xs font-semibold group-hover:underline">Wybierz wydział &rarr;</span>
             </button>
-            <button onclick="otworzMDT('ems')" class="bg-[#0e1424] border border-red-500/30 hover:border-red-500 rounded-2xl p-8 flex flex-col items-center gap-4 transition group">
+            <!-- Ratownictwo Medyczne — klikalny -->
+            <button onclick="otworzMDT('ems')" class="bg-[#0e1424] border border-red-500/30 hover:border-red-500 rounded-2xl p-8 flex flex-col items-center gap-4 transition group cursor-pointer">
                 <div class="w-16 h-16 bg-red-600/10 border border-red-500/20 rounded-2xl flex items-center justify-center text-red-500 text-3xl group-hover:bg-red-600 group-hover:text-white transition"><i class="fa-solid fa-star-of-life"></i></div>
-                <div class="text-center"><h3 class="font-bold text-white text-lg">EMS</h3><p class="text-xs text-gray-400">Pogotowie Ratunkowe</p></div>
+                <div class="text-center">
+                    <h3 class="font-bold text-white text-lg">Ratownictwo Medyczne</h3>
+                    <p class="text-xs text-gray-400">Emergency Medical Services</p>
+                </div>
+                <span class="text-red-400 text-xs font-semibold group-hover:underline">Wejdź do MDT &rarr;</span>
             </button>
+            <!-- Straż Pożarna — zablokowana -->
             <div class="relative bg-[#0e1424] border border-gray-800 rounded-2xl p-8 flex flex-col items-center gap-4 opacity-60 select-none">
                 <div class="w-16 h-16 bg-orange-600/10 border border-orange-500/20 rounded-2xl flex items-center justify-center text-orange-500 text-3xl"><i class="fa-solid fa-fire"></i></div>
-                <div class="text-center"><h3 class="font-bold text-white text-lg">Straż Pożarna</h3><p class="text-xs text-gray-400">Los Santos Fire Dept.</p></div>
+                <div class="text-center">
+                    <h3 class="font-bold text-white text-lg">Straż Pożarna</h3>
+                    <p class="text-xs text-gray-400">Los Santos Fire Department</p>
+                </div>
                 <div class="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-[#0b0f19]/80 backdrop-blur-sm">
                     <i class="fa-solid fa-circle-xmark text-orange-500 text-2xl mb-2"></i>
                     <p class="text-xs font-bold text-orange-400 uppercase tracking-widest">System Offline</p>
@@ -857,19 +871,76 @@
         <button onclick="wylogujPanel('frakcji')" class="mt-8 text-gray-500 hover:text-red-400 transition text-sm"><i class="fa-solid fa-right-from-bracket mr-2"></i>Wyloguj się</button>
     </div>
 
+    <!-- KROK 2: Wybór Wydziału Policji -->
+    <div id="frakcja-policja-wybor" class="hidden min-h-screen flex flex-col items-center justify-center p-8">
+        <div class="mb-10 text-center">
+            <!-- breadcrumb -->
+            <div class="flex items-center justify-center gap-2 text-xs text-gray-500 mb-6">
+                <button onclick="otworzMDT('select')" class="hover:text-blue-400 transition">Służby</button>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                <span class="text-blue-400 font-semibold">Policja Państwowa</span>
+            </div>
+            <div class="w-16 h-16 bg-blue-600/10 border border-blue-500/20 rounded-2xl flex items-center justify-center text-blue-500 text-3xl mx-auto mb-4"><i class="fa-solid fa-shield"></i></div>
+            <h1 class="text-3xl font-black text-white">Policja Państwowa</h1>
+            <p class="text-gray-400 mt-2">Wybierz swój wydział operacyjny</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-4xl w-full">
+            <!-- Policja Patrolowa -->
+            <button onclick="otworzWydzialPolicji('patrolowa')" class="bg-[#0e1424] border border-blue-500/20 hover:border-blue-500 rounded-2xl p-6 flex flex-col items-center gap-3 transition group cursor-pointer">
+                <div class="w-14 h-14 bg-blue-600/10 border border-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 text-2xl group-hover:bg-blue-600 group-hover:text-white transition"><i class="fa-solid fa-car-burst"></i></div>
+                <div class="text-center">
+                    <h3 class="font-bold text-white text-sm">Policja Patrolowa</h3>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Patrol ulic i interwencje</p>
+                </div>
+                <span class="badge-info text-[10px] px-2 py-0.5 rounded-full font-bold">AKTYWNA</span>
+            </button>
+            <!-- Policja Drogowa -->
+            <button onclick="otworzWydzialPolicji('drogowa')" class="bg-[#0e1424] border border-cyan-500/20 hover:border-cyan-500 rounded-2xl p-6 flex flex-col items-center gap-3 transition group cursor-pointer">
+                <div class="w-14 h-14 bg-cyan-600/10 border border-cyan-500/20 rounded-xl flex items-center justify-center text-cyan-400 text-2xl group-hover:bg-cyan-600 group-hover:text-white transition"><i class="fa-solid fa-road"></i></div>
+                <div class="text-center">
+                    <h3 class="font-bold text-white text-sm">Policja Drogowa</h3>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Kontrola ruchu drogowego</p>
+                </div>
+                <span class="badge-info text-[10px] px-2 py-0.5 rounded-full font-bold">AKTYWNA</span>
+            </button>
+            <!-- BCŚP -->
+            <button onclick="otworzWydzialPolicji('bcsp')" class="bg-[#0e1424] border border-purple-500/20 hover:border-purple-500 rounded-2xl p-6 flex flex-col items-center gap-3 transition group cursor-pointer">
+                <div class="w-14 h-14 bg-purple-600/10 border border-purple-500/20 rounded-xl flex items-center justify-center text-purple-400 text-2xl group-hover:bg-purple-600 group-hover:text-white transition"><i class="fa-solid fa-person-rifle"></i></div>
+                <div class="text-center">
+                    <h3 class="font-bold text-white text-sm">BCŚP</h3>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Jednostka antyterrorystyczna</p>
+                </div>
+                <span class="badge-info text-[10px] px-2 py-0.5 rounded-full font-bold">AKTYWNA</span>
+            </button>
+            <!-- Wywiad -->
+            <button onclick="otworzWydzialPolicji('wywiad')" class="bg-[#0e1424] border border-amber-500/20 hover:border-amber-500 rounded-2xl p-6 flex flex-col items-center gap-3 transition group cursor-pointer">
+                <div class="w-14 h-14 bg-amber-600/10 border border-amber-500/20 rounded-xl flex items-center justify-center text-amber-400 text-2xl group-hover:bg-amber-600 group-hover:text-white transition"><i class="fa-solid fa-user-secret"></i></div>
+                <div class="text-center">
+                    <h3 class="font-bold text-white text-sm">Wywiad</h3>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Operacje specjalne / CBI</p>
+                </div>
+                <span class="badge-info text-[10px] px-2 py-0.5 rounded-full font-bold">AKTYWNA</span>
+            </button>
+        </div>
+        <button onclick="otworzMDT('select')" class="mt-8 text-gray-500 hover:text-white transition text-sm flex items-center gap-2"><i class="fa-solid fa-arrow-left"></i> Wróć do wyboru służby</button>
+    </div>
+
     <!-- MDT LSPD -->
     <div id="mdt-lspd" class="hidden min-h-screen flex flex-col md:flex-row">
         <aside class="w-full md:w-64 bg-[#0e1424] border-b md:border-b-0 md:border-r border-gray-800 flex flex-col shrink-0">
             <div class="h-16 border-b border-gray-800 flex items-center justify-between px-6">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-shield text-blue-500 text-lg"></i>
-                    <span class="font-bold tracking-wider text-sm text-white">MDT <span class="text-blue-500">LSPD</span></span>
+                    <div>
+                        <span class="font-bold tracking-wider text-sm text-white">MDT <span class="text-blue-500">POLICJA</span></span>
+                        <p id="mdt-lspd-wydzial-label" class="text-[10px] text-gray-500">Wydział Patrolowy</p>
+                    </div>
                 </div>
-                <button onclick="otworzMDT('select')" class="text-gray-500 hover:text-white text-sm transition"><i class="fa-solid fa-arrow-left"></i></button>
+                <button onclick="pokazWyborFrakcjiPolicji()" class="text-gray-500 hover:text-white text-sm transition" title="Zmień wydział"><i class="fa-solid fa-arrow-left"></i></button>
             </div>
             <div class="p-4 border-b border-gray-800 flex items-center gap-3">
                 <img src="https://i.pravatar.cc/44?img=20" class="w-11 h-11 rounded-xl object-cover border border-blue-500/40">
-                <div><h5 class="text-sm font-bold text-white">mjr Adam Strzałkowski</h5><p class="text-[11px] text-blue-400">Major — Wydział Kryminalny</p></div>
+                <div><h5 class="text-sm font-bold text-white">mjr Adam Strzałkowski</h5><p id="mdt-lspd-rola-label" class="text-[11px] text-blue-400">Major — Wydział Patrolowy</p></div>
             </div>
             <nav class="p-3 space-y-1 flex-1">
                 <button onclick="przełączLSPD('lspd-kartoteka')" id="lbtn-lspd-kartoteka" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl border border-transparent text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer transition"><i class="fa-solid fa-database w-4 text-center"></i> Baza Obywateli</button>
@@ -1573,7 +1644,9 @@ function obslugaLogowania(event) {
             pokazToast('Zalogowano jako Jan Kowalski.');
         } else if(rola === 'Frakcje') {
             panelFrakcji.classList.replace('hidden','flex');
-            otworzMDT('select');
+            ukryjWszystkiePaneleFrakcji();
+            const sel = document.getElementById('frakcja-select');
+            sel.classList.remove('hidden'); sel.classList.add('flex','flex-col');
             pokazToast('Zalogowano do Systemu MDT.', 'info');
         } else if(rola === 'Admin') {
             panelAdmina.classList.replace('hidden','flex');
@@ -1626,20 +1699,52 @@ function toggleMobileMenu(menuId, footerId) {
 }
 
 // ==================== MDT FRAKCJI ====================
+const wydzialy = {
+    patrolowa: { nazwa: 'Policja Patrolowa', rola: 'Starszy Posterunkowy — Patrol Ulic', icon: 'fa-car-burst', color: 'blue' },
+    drogowa:   { nazwa: 'Policja Drogowa',   rola: 'Aspirant — Kontrola Drogowa',        icon: 'fa-road',        color: 'cyan' },
+    bcsp:      { nazwa: 'BCŚP',              rola: 'Kapral — Jednostka AT',              icon: 'fa-person-rifle',color: 'purple' },
+    wywiad:    { nazwa: 'Wywiad / CBI',       rola: 'Agent — Operacje Specjalne',          icon: 'fa-user-secret', color: 'amber' },
+};
+
+function ukryjWszystkiePaneleFrakcji() {
+    ['frakcja-select','frakcja-policja-wybor','mdt-lspd','mdt-ems'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) { el.classList.add('hidden'); el.classList.remove('flex'); }
+    });
+}
+
+function pokazWyborFrakcjiPolicji() {
+    ukryjWszystkiePaneleFrakcji();
+    const el = document.getElementById('frakcja-policja-wybor');
+    el.classList.remove('hidden');
+    el.classList.add('flex', 'flex-col');
+}
+
+function otworzWydzialPolicji(wydzial) {
+    const w = wydzialy[wydzial] || wydzialy['patrolowa'];
+    ukryjWszystkiePaneleFrakcji();
+    const mdt = document.getElementById('mdt-lspd');
+    mdt.classList.remove('hidden');
+    mdt.classList.add('flex');
+    // Aktualizuj etykiety
+    const labelWydzial = document.getElementById('mdt-lspd-wydzial-label');
+    const labelRola = document.getElementById('mdt-lspd-rola-label');
+    if(labelWydzial) labelWydzial.innerText = w.nazwa;
+    if(labelRola) labelRola.innerText = w.rola;
+    przełączLSPD('lspd-kartoteka');
+    pokazToast(`Zalogowano do MDT — ${w.nazwa}`, 'info');
+}
+
 function otworzMDT(dept) {
-    document.getElementById('frakcja-select').classList.add('hidden');
-    document.getElementById('mdt-lspd').classList.add('hidden');
-    document.getElementById('mdt-ems').classList.add('hidden');
+    ukryjWszystkiePaneleFrakcji();
     if(dept === 'select') {
-        document.getElementById('frakcja-select').classList.remove('hidden');
-        document.getElementById('frakcja-select').classList.add('flex');
+        const el = document.getElementById('frakcja-select');
+        el.classList.remove('hidden'); el.classList.add('flex', 'flex-col');
     } else if(dept === 'lspd') {
-        document.getElementById('mdt-lspd').classList.remove('hidden');
-        document.getElementById('mdt-lspd').classList.add('flex');
-        przełączLSPD('lspd-kartoteka');
+        pokazWyborFrakcjiPolicji();
     } else if(dept === 'ems') {
-        document.getElementById('mdt-ems').classList.remove('hidden');
-        document.getElementById('mdt-ems').classList.add('flex');
+        const el = document.getElementById('mdt-ems');
+        el.classList.remove('hidden'); el.classList.add('flex');
         przełączEMS('ems-pacjenci');
     }
 }
