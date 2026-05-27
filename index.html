@@ -240,14 +240,19 @@
                     </button>
                 </div>
                 
+                <!-- PROFIL CYWILA ZE ZDJĘCIEM -->
                 <div class="p-4 border-b border-gray-800 bg-[#121a2e]/30 flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold">
-                        T
+                    <div class="relative">
+                        <img src="https://i.postimg.cc/kXtGkVnR/images.jpg" alt="Avatar" class="w-11 h-11 rounded-xl object-cover border border-blue-500/40 shadow-md shadow-blue-500/10">
+                        <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-[#0e1424] animate-pulse" title="Online w grze"></span>
                     </div>
                     <div>
-                        <h5 class="text-sm font-bold text-white">Jan Kowalski</h5>
-                        <p class="text-[11px] text-emerald-400 flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Obywatel (Zalogowany)
+                        <div class="flex items-center gap-1.5">
+                            <h5 class="text-sm font-bold text-white">Jan Kowalski</h5>
+                            <span class="text-[9px] bg-blue-600/20 text-blue-400 px-1 rounded font-mono border border-blue-500/20">#5921</span>
+                        </div>
+                        <p class="text-[11px] text-emerald-400 flex items-center gap-1 mt-0.5">
+                            Obywatel (Zalogowany)
                         </p>
                     </div>
                 </div>
@@ -275,6 +280,21 @@
 
                     <button onclick="przepnijZakladke('skladanie-podan')" id="btn-skladanie-podan" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
                         <i class="fa-solid fa-paper-plane w-5 text-center"></i> Składanie Podań
+                    </button>
+
+                    <!-- NOWE ZAKŁADKI -->
+                    <div class="pt-4 pb-1 px-4 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Usługi i Rynek</div>
+
+                    <button onclick="przepnijZakladke('sklep-premium')" id="btn-sklep-premium" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-amber-400 hover:text-amber-300 hover:bg-amber-500/5 text-left cursor-pointer border border-transparent hover:border-amber-500/20">
+                        <i class="fa-solid fa-basket-shopping w-5 text-center text-amber-500"></i> Sklep Premium <span class="ml-auto text-[9px] bg-amber-500/10 text-amber-400 px-1 rounded font-bold">NEW</span>
+                    </button>
+
+                    <button onclick="przepnijZakladke('e-bankowosc')" id="btn-e-bankowosc" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
+                        <i class="fa-solid fa-wallet w-5 text-center"></i> E-Bankowość
+                    </button>
+
+                    <button onclick="przepnijZakladke('rynek-ogloszenia')" id="btn-rynek-ogloszenia" class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer">
+                        <i class="fa-solid fa-scale-balanced w-5 text-center"></i> Rynek / Giełda
                     </button>
                 </nav>
             </div>
@@ -321,27 +341,53 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-[#0e1424] border border-gray-800 rounded-2xl p-6">
-                        <h3 class="font-bold text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-bullhorn text-blue-500"></i> Komunikaty dla obywateli</h3>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl text-sm">
-                                <div class="flex justify-between font-semibold text-white mb-1">
-                                    <span>Wydział Komunikacji LS</span>
-                                    <span class="text-xs text-gray-500">Dzisiaj, 12:40</span>
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6">
+                            <h3 class="font-bold text-white mb-4 flex items-center gap-2"><i class="fa-solid fa-bullhorn text-blue-500"></i> Komunikaty dla obywateli</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-blue-500/5 border border-blue-500/10 rounded-xl text-sm">
+                                    <div class="flex justify-between font-semibold text-white mb-1">
+                                        <span>Wydział Komunikacji LS</span>
+                                        <span class="text-xs text-gray-500">Dzisiaj, 12:40</span>
+                                    </div>
+                                    <p class="text-gray-400 leading-relaxed">Pamiętaj, że każdy zakupiony pojazd musi zostać zarejestrowany w urzędzie miasta w ciągu 48 godzin od zakupu. Niedopełnienie obowiązku skutkuje odholowaniem pojazdu przez LSPD.</p>
                                 </div>
-                                <p class="text-gray-400 leading-relaxed">Pamiętaj, że każdy zakupiony pojazd musi zostać zarejestrowany w urzędzie miasta w ciągu 48 godzin od zakupu. Niedopełnienie obowiązku skutkuje odholowaniem pojazdu przez LSPD.</p>
+                                <div class="p-4 bg-amber-500/5 border border-amber-500/10 rounded-xl text-sm">
+                                    <div class="flex justify-between font-semibold text-white mb-1">
+                                        <span>Urząd Skarbowy (Tax Departament)</span>
+                                        <span class="text-xs text-gray-500">Wczoraj, 18:15</span>
+                                    </div>
+                                    <p class="text-gray-400 leading-relaxed">Przypominamy o konieczności opłacenia podatków od nieruchomości gruntowych i mieszkaniowych do 5 dnia każdego miesiąca z poziomu zakładki Majątek.</p>
+                                </div>
                             </div>
-                            <div class="p-4 bg-amber-500/5 border border-amber-500/10 rounded-xl text-sm">
-                                <div class="flex justify-between font-semibold text-white mb-1">
-                                    <span>Urząd Skarbowy (Tax Departament)</span>
-                                    <span class="text-xs text-gray-500">Wczoraj, 18:15</span>
+                        </div>
+
+                        <!-- COŚ FAJNEGO OD SIEBIE: MINI-GIEŁDA LIVE -->
+                        <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 relative overflow-hidden">
+                            <div class="absolute top-4 right-4 flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px] text-emerald-400 font-bold">
+                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span> LIVE STREAM
+                            </div>
+                            <h3 class="font-bold text-white mb-3 flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-500"></i> Mini-Giełda i Aktywność Serwera</h3>
+                            <p class="text-xs text-gray-400 mb-4">Podgląd na żywo najnowszych transakcji i ogłoszeń graczy z wyspy.</p>
+                            
+                            <div class="space-y-2.5 max-h-[160px] overflow-y-auto pr-1 text-xs" id="live-feed-container">
+                                <div class="flex items-center justify-between p-2.5 bg-[#0b0f19] border border-gray-800/60 rounded-xl">
+                                    <span class="text-gray-400 font-mono">[14:02] <strong class="text-white">Sultan RS</strong> (Reg. LSP5921) wystawiony na Rynek za <strong class="text-emerald-400">$195,000</strong></span>
+                                    <span class="text-[10px] text-gray-500">Przed chwilą</span>
                                 </div>
-                                <p class="text-gray-400 leading-relaxed">Przypominamy o konieczności opłacenia podatków od nieruchomości gruntowych i mieszkaniowych do 5 dnia każdego miesiąca z poziomu zakładki Majątek.</p>
+                                <div class="flex items-center justify-between p-2.5 bg-[#0b0f19] border border-gray-800/60 rounded-xl">
+                                    <span class="text-gray-400 font-mono">[13:58] <strong class="text-[#5865F2]">Sklep:</strong> Promocja -25% na modyfikacje silnika u mechaników!</span>
+                                    <span class="text-[10px] text-gray-500">4 min temu</span>
+                                </div>
+                                <div class="flex items-center justify-between p-2.5 bg-[#0b0f19] border border-gray-800/60 rounded-xl">
+                                    <span class="text-gray-400 font-mono">[13:45] Działka nr 23, Chumash sprzedana za <strong class="text-blue-400">$320,000</strong></span>
+                                    <span class="text-[10px] text-gray-500">17 min temu</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                    <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between h-fit lg:sticky lg:top-6">
                         <div>
                             <h3 class="font-bold text-white mb-3 flex items-center gap-2"><i class="fa-solid fa-wallet text-amber-500"></i> Szybki Przelew</h3>
                             <p class="text-xs text-gray-400 mb-4">Przelej fundusze ze swojego konta bankowego na konto innego gracza.</p>
@@ -600,6 +646,119 @@
                             <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-lg text-xs font-semibold transition shadow-lg shadow-blue-600/10">Wyślij podanie do systemu</button>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <!-- NOWA ZAKŁADKA: SKLEP PREMIUM -->
+            <div id="sub-sklep-premium" class="hidden space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-amber-400">Sklep Premium & Wsparcie</h2>
+                    <p class="text-sm text-gray-400">Wymieniaj punkty premium na unikalne pojazdy, skiny oraz ułatwienia rozgrywki.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-[#0e1424] border border-amber-500/20 p-6 rounded-2xl flex flex-col justify-between group hover:border-amber-500/40 transition">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-2xl mb-4"><i class="fa-solid fa-gem"></i></div>
+                            <h4 class="font-bold text-white text-base mb-2">Konto VIP (30 dni)</h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">Zwiększone wypłaty o 15%, tańsze tankowanie paliwa oraz unikalny prefix na czacie gry i Discordzie.</p>
+                        </div>
+                        <div class="mt-6">
+                            <div class="text-amber-400 font-bold text-lg mb-3">500 W-Coins</div>
+                            <button onclick="pokazToast('Zakupiono pomyślnie pakiet VIP na 30 dni!', 'success')" class="w-full bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold py-2.5 rounded-xl transition">Zakup pakiet</button>
+                        </div>
+                    </div>
+                    <div class="bg-[#0e1424] border border-gray-800 p-6 rounded-2xl flex flex-col justify-between group hover:border-blue-500/30 transition">
+                        <div>
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 text-2xl mb-4"><i class="fa-solid fa-car-on"></i></div>
+                            <h4 class="font-bold text-white text-base mb-2">Pegassi Osiris Custom</h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">Limitowany supersamochód z unikalnym malowaniem RGB niedostępny w klasycznym salonie samochodowym.</p>
+                        </div>
+                        <div class="mt-6">
+                            <div class="text-amber-400 font-bold text-lg mb-3">2500 W-Coins</div>
+                            <button onclick="pokazToast('Brak wystarczającej ilości monet premium (W-Coins)!', 'error')" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-400 text-xs font-bold py-2.5 rounded-xl transition">Zakup pojazd</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOWA ZAKŁADKA: E-BANKOWOŚĆ -->
+            <div id="sub-e-bankowosc" class="hidden space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-white">System Bankowości Elektronicznej</h2>
+                    <p class="text-sm text-gray-400">Zarządzaj swoimi lokatami, spłacaj kredyty i sprawdzaj historię rachunku online.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6">
+                        <h3 class="font-bold text-white text-sm mb-4 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-blue-500"></i> Ostatnie operacje</h3>
+                        <div class="space-y-3 text-xs">
+                            <div class="flex justify-between items-center p-3 bg-[#0b0f19] rounded-xl border border-gray-800/40">
+                                <div>
+                                    <p class="font-semibold text-white">Wypłata z bankomatu</p>
+                                    <p class="text-gray-500 font-mono">Legion Square ATM #4</p>
+                                </div>
+                                <span class="text-red-400 font-bold">-$1,200</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-[#0b0f19] rounded-xl border border-gray-800/40">
+                                <div>
+                                    <p class="font-semibold text-white">Wypłata z frakcji (Zarobki)</p>
+                                    <p class="text-gray-500 font-mono">Logistyka LS</p>
+                                </div>
+                                <span class="text-emerald-400 font-bold">+$4,500</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-white text-sm mb-2 flex items-center gap-2"><i class="fa-solid fa-percent text-purple-500"></i> Aktywne Lokaty terminowe</h3>
+                            <p class="text-xs text-gray-400 mb-4">Zdeponuj swoje fundusze na bezpiecznej lokacie oprocentowanej 3.5% w skali tygodnia.</p>
+                            <div class="p-4 bg-purple-600/5 border border-purple-500/20 rounded-xl text-xs flex justify-between items-center">
+                                <div>
+                                    <p class="font-bold text-white">Lokata Oszczędnościowa #1</p>
+                                    <p class="text-gray-500 mt-0.5">Zdeponowano: <strong class="text-gray-300">$50,000</strong></p>
+                                </div>
+                                <span class="bg-purple-500/10 text-purple-400 font-bold px-2 py-1 rounded border border-purple-500/20">PRACUJE</span>
+                            </div>
+                        </div>
+                        <button onclick="pokazToast('System lokat zostanie zaktualizowany przy następnym restarcie wyspy.', 'info')" class="mt-4 w-full bg-gray-800 hover:bg-gray-700 text-xs font-semibold py-2.5 rounded-xl transition text-center">Utwórz nową lokatę</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOWA ZAKŁADKA: RYNEK / GIEŁDA -->
+            <div id="sub-rynek-ogloszenia" class="hidden space-y-6 fade-in">
+                <div>
+                    <h2 class="text-2xl font-black text-white">Ogłoszenia i Rynek Obywatelski</h2>
+                    <p class="text-sm text-gray-400">Przeglądaj oferty sprzedaży aut, broni, legalnych biznesów oraz nieruchomości wystawionych przez graczy.</p>
+                </div>
+                <div class="bg-[#0e1424] border border-gray-800 rounded-2xl p-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                        <h3 class="font-bold text-white text-base">Aktualne oferty kupna/sprzedaży</h3>
+                        <button onclick="pokazToast('Musisz podjechać do urzędu, aby wystawić własną ofertę na giełdę!', 'error')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition flex items-center gap-2"><i class="fa-solid fa-plus"></i> Wystaw ofertę</button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-4 bg-[#0b0f19] border border-gray-800 rounded-xl flex justify-between items-center">
+                            <div>
+                                <span class="bg-blue-500/10 text-blue-400 font-bold text-[9px] uppercase px-1.5 py-0.5 rounded border border-blue-500/20 block w-fit mb-1">Pojazd</span>
+                                <h4 class="font-bold text-white text-sm">Bravado Banshee (Full Tune)</h4>
+                                <p class="text-xs text-gray-500 mt-0.5">Sprzedawca: <strong class="text-gray-400">CID #3210</strong></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-emerald-400 font-mono font-bold text-sm">$115,000</p>
+                                <button onclick="pokazToast('Skontaktuj się ze sprzedawcą na numer: 555-012-993', 'info')" class="mt-1.5 text-[11px] text-blue-500 hover:underline font-semibold block">Kontakt &rarr;</button>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-[#0b0f19] border border-gray-800 rounded-xl flex justify-between items-center">
+                            <div>
+                                <span class="bg-purple-500/10 text-purple-400 font-bold text-[9px] uppercase px-1.5 py-0.5 rounded border border-purple-500/20 block w-fit mb-1">Przedmiot</span>
+                                <h4 class="font-bold text-white text-sm">Części elektroniczne (x50)</h4>
+                                <p class="text-xs text-gray-500 mt-0.5">Sprzedawca: <strong class="text-gray-400">CID #1105</strong></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-emerald-400 font-mono font-bold text-sm">$15,000</p>
+                                <button onclick="pokazToast('Kupiono pomyślnie części. Odbierz je w najbliższym paczkomacie w grze!', 'success')" class="mt-1.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[10px] px-2.5 py-1 rounded transition block">Kup teraz</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -865,18 +1024,34 @@
         }
 
         function przepnijZakladke(identyfikator) {
-            const zakladki = ['ekran-glowny-rp', 'profil-postaci', 'dokumenty-licencje', 'garaz-pojazdy', 'nieruchomosci', 'skladanie-podan'];
+            const zakladki = [
+                'ekran-glowny-rp', 'profil-postaci', 'dokumenty-licencje', 
+                'garaz-pojazdy', 'nieruchomosci', 'skladanie-podan',
+                'sklep-premium', 'e-bankowosc', 'rynek-ogloszenia'
+            ];
             
             zakladki.forEach(z => {
                 const element = document.getElementById('sub-' + z);
                 const przycisk = document.getElementById('btn-' + z);
                 
                 if (z === identyfikator) {
-                    element.classList.remove('hidden');
-                    przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-white bg-blue-600 shadow-md shadow-blue-600/10 text-left cursor-pointer";
+                    if (element) element.classList.remove('hidden');
+                    if (przycisk) {
+                        if (z === 'sklep-premium') {
+                            przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-white bg-amber-500 shadow-md shadow-amber-500/10 text-left cursor-pointer";
+                        } else {
+                            przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-white bg-blue-600 shadow-md shadow-blue-600/10 text-left cursor-pointer";
+                        }
+                    }
                 } else {
-                    element.classList.add('hidden');
-                    przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer";
+                    if (element) element.classList.add('hidden');
+                    if (przycisk) {
+                        if (z === 'sklep-premium') {
+                            przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-amber-400 hover:text-amber-300 hover:bg-amber-500/5 text-left cursor-pointer border border-transparent hover:border-amber-500/20";
+                        } else {
+                            przycisk.className = "w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition text-gray-400 hover:text-white hover:bg-gray-800/50 text-left cursor-pointer";
+                        }
+                    }
                 }
             });
 
@@ -906,6 +1081,9 @@
             document.getElementById('transfer-target').value = '';
             document.getElementById('transfer-amount').value = '';
             pokazToast(`Pomyślnie przelano kwotę $${amount.toLocaleString()} dla gracza ${target}.`);
+            
+            // Symulacja dodania do giełdy/logów live
+            dodajDoGieldyLive(`Obywatel #5921 przesłał przelew bankowy na kwotę $${amount.toLocaleString()}`);
         }
 
         function namierzPojazd(nazwa) {
@@ -990,6 +1168,21 @@
             panelCywila.classList.replace('flex', 'hidden');
             stronaGlowna.classList.replace('hidden', 'block');
             pokazToast('Wylogowano bezpiecznie z profilu obywatela.', 'info');
+        }
+
+        // COŚ FAJNEGO: Funkcja dynamicznego dodawania zdarzeń do Mini-Giełdy Live
+        function dodajDoGieldyLive(tekst) {
+            const container = document.getElementById('live-feed-container');
+            const now = new Date();
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            
+            const item = document.createElement('div');
+            item.className = "flex items-center justify-between p-2.5 bg-blue-500/5 border border-blue-500/20 rounded-xl fade-in";
+            item.innerHTML = `
+                <span class="text-gray-200 font-mono">[${timeStr}] ${tekst}</span>
+                <span class="text-[10px] text-blue-400 font-bold">Nowe</span>
+            `;
+            container.insertBefore(item, container.firstChild);
         }
 
         window.onclick = function(event) {
