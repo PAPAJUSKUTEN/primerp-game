@@ -827,9 +827,9 @@
 </div>
 
 <!-- ==================== PANEL FRAKCJI ==================== -->
-<div id="panel-frakcji" class="hidden min-h-screen bg-[#0b0f19] flex flex-col">
+<div id="panel-frakcji" class="hidden min-h-screen bg-[#0b0f19] flex-col">
     <!-- KROK 1: Wybór Służby -->
-    <div id="frakcja-select" class="min-h-screen flex flex-col items-center justify-center p-8">
+    <div id="frakcja-select" class="hidden min-h-screen flex-col items-center justify-center p-8">
         <div class="mb-10 text-center">
             <i class="fa-solid fa-shield-halved text-emerald-400 text-5xl mb-4 block"></i>
             <h1 class="text-3xl font-black text-white">Wybierz Służbę</h1>
@@ -872,7 +872,7 @@
     </div>
 
     <!-- KROK 2: Wybór Wydziału Policji -->
-    <div id="frakcja-policja-wybor" class="hidden min-h-screen flex flex-col items-center justify-center p-8">
+    <div id="frakcja-policja-wybor" class="hidden min-h-screen flex-col items-center justify-center p-8">
         <div class="mb-10 text-center">
             <!-- breadcrumb -->
             <div class="flex items-center justify-center gap-2 text-xs text-gray-500 mb-6">
@@ -1636,24 +1636,26 @@ function obslugaLogowania(event) {
 
     if(login === expLogin && haslo === expHaslo) {
         zamknijLogowanie();
-        stronaGlowna.classList.replace('block','hidden');
+        stronaGlowna.classList.add('hidden');
+        stronaGlowna.classList.remove('block');
         if(rola === 'Cywil') {
-            panelCywila.classList.replace('hidden','flex');
+            panelCywila.classList.remove('hidden');
             przepnijZakladkeCywila('ekran-glowny-rp');
             odswiezDashboard();
             pokazToast('Zalogowano jako Jan Kowalski.');
         } else if(rola === 'Frakcje') {
-            panelFrakcji.classList.replace('hidden','flex');
+            panelFrakcji.classList.remove('hidden');
+            panelFrakcji.classList.add('flex');
             ukryjWszystkiePaneleFrakcji();
             const sel = document.getElementById('frakcja-select');
             sel.classList.remove('hidden'); sel.classList.add('flex','flex-col');
             pokazToast('Zalogowano do Systemu MDT.', 'info');
         } else if(rola === 'Admin') {
-            panelAdmina.classList.replace('hidden','flex');
+            panelAdmina.classList.remove('hidden');
             przełączAdmin('admin-gracze');
             pokazToast('Zalogowano do Panelu Administracji.', 'warn');
         } else if(rola === 'Technik') {
-            panelTechnika.classList.replace('hidden','flex');
+            panelTechnika.classList.remove('hidden');
             przełączTech('tech-statystyki');
             startServerStats();
             startLogi();
@@ -1668,7 +1670,8 @@ function autoryzacjaDiscord() { pokazToast('Inicjowanie OAuth2 przez Discord API
 
 function wylogujPanel(panel) {
     [panelCywila, panelFrakcji, panelAdmina, panelTechnika].forEach(p => { p.classList.add('hidden'); p.classList.remove('flex'); });
-    stronaGlowna.classList.replace('hidden','block');
+    stronaGlowna.classList.remove('hidden');
+    stronaGlowna.classList.add('block');
     pokazToast('Wylogowano bezpiecznie z systemu.', 'info');
 }
 
