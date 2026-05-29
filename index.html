@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Sim 99 - Item Shop</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --price-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b, #311042);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        header p {
+            color: var(--text-muted);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sklep z przedmiotami */
+        .shop-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .item-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            background-color: #334155;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-rarity {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* Kolory rzadkości */
+        .exclusive { background-color: #7c3aed; color: #fff; }
+        .huge { background-color: #db2777; color: #fff; }
+        .titanic { background-color: #dc2626; color: #fff; }
+        .hype { background-color: #ea580c; color: #fff; }
+
+        .item-price {
+            font-size: 1.3rem;
+            color: var(--price-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .btn-add {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn-add:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Koszyk */
+        .cart-sidebar {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            border: 1px solid #334155;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .cart-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-items {
+            list-style: none;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #334155;
+            font-size: 0.9rem;
+        }
+
+        .cart-item button {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-checkout {
+            background-color: var(--price-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn-checkout:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Pet Sim 99 Item Shop</h1>
+        <p>Najlepsze Huges, Titanics i przedmioty w najniższych cenach!</p>
+    </header>
+
+    <div class="container">
+        <!-- Sekcja produktów -->
+        <main class="shop-items" id="shop-items">
+            <!-- Przedmioty zostaną wygenerowane przez JavaScript -->
+        </main>
+
+        <!-- Sekcja Koszyka -->
+        <aside class="cart-sidebar">
+            <div class="cart-title">
+                <span>Twój Koszyk</span>
+                <span id="cart-count">0</span>
+            </div>
+            <ul class="cart-items" id="cart-list">
+                <!-- Przedmioty w koszyku -->
+            </ul>
+            <div class="cart-total">
+                <span>Razem:</span>
+                <span id="cart-total-price">0.00 PLN</span>
+            </div>
+            <button class="btn-checkout" onclick="checkout()">Przejdź do płatności</button>
+        </aside>
+    </div>
+
+    <script>
+        // Baza danych przedmiotów (możesz edytować ceny i nazwy)
+        const products = [
+            { id: 1, name: "Huge Cat", price: 45.00, rarity: "huge", emoji: "🐱" },
+            { id: 2, name: "Titanic Hubert", price: 250.00, rarity: "titanic", emoji: "🐊" },
+            { id: 3, name: "Exclusive Egg", price: 12.50, rarity: "exclusive", emoji: "🥚" },
+            { id: 4, name: "Huge Happy Rock", price: 25.00, rarity: "huge", emoji: "🪨" },
+            { id: 5, name: "Titanic Jelly Cat", price: 299.99, rarity: "titanic", emoji: "🍮" },
+            { id: 6, name: "Hype Hoverboard", price: 8.00, rarity: "hype", emoji: "🛹" },
+            { id: 7, name: "Huge Hell Rock", price: 27.50, rarity: "huge", emoji: "🔥" },
+            { id: 8, name: "Royalty Charm", price: 15.00, rarity: "exclusive", emoji: "👑" }
+        ];
+
+        let cart = [];
+
+        // Generowanie przedmiotów w sklepie
+        const shopContainer = document.getElementById('shop-items');
+        
+        function displayProducts() {
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="item-image">${product.emoji}</div>
+                        <div class="item-title">${product.name}</div>
+                        <span class="item-rarity ${product.rarity}">${product.rarity}</span>
+                    </div>
+                    <div>
+                        <div class="item-price">${product.price.toFixed(2)} PLN</div>
+                        <button class="btn-add" onclick="addToCart(${product.id})">Dodaj do koszyka</button>
+                    </div>
+                `;
+                shopContainer.appendChild(card);
+            });
+        }
+
+        // Dodawanie do koszyka
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const cartItem = cart.find(item => item.id === productId);
+
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCart();
+        }
+
+        // Usuwanie z koszyka
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Aktualizacja wyglądu koszyka i obliczeń
+        function updateCart() {
+            const cartList = document.getElementById('cart-list');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total-price');
+            
+            cartList.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                count += item.quantity;
+
+                const li = document.createElement('li');
+                li.className = 'cart-item';
+                li.innerHTML = `
+                    <div>
+                        <strong>${item.name}</strong> x${item.quantity}
+                        <br><small style="color: var(--text-muted)">${(item.price * item.quantity).toFixed(2)} PLN</small>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})">Usuń</button>
+                `;
+                cartList.appendChild(li);
+            });
+
+            cartCount.innerText = count;
+            cartTotal.innerText = `${total.toFixed(2)} PLN`;
+        }
+
+        // Finalizacja zakupu (atrapa)
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Twój koszyk jest pusty!");
+                return;
+            }
+            alert("Dziękujemy za zamówienie! W prawdziwym sklepie nastąpiłoby teraz przekierowanie do płatności (np. Stripe/PayPal).");
+            cart = [];
+            updateCart();
+        }
+
+        // Inicjalizacja sklepu przy załadowaniu strony
+        displayProducts();
+    </script>
+</body>
+</html>
