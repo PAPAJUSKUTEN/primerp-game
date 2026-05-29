@@ -3,33 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PS99 Shop - Wirtualny Ekwipunek</title>
+    <title>BIG Games Pets - Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Reset i Podstawowe Style */
+        /* Reset i Czcionka w stylu Cartoon/Clean */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Nunito', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #0b0c10;
-            color: #ffffff;
-            overflow-x: hidden;
+            background: linear-gradient(180deg, #1aa6ff 0%, #007acc 100%);
+            background-attachment: fixed;
+            color: #333333;
+            min-height: 100vh;
         }
 
-        /* Nawigacja z motywem szklanym */
+        /* Górny pasek nawigacji - Styl BIG Games */
         header {
-            background: rgba(15, 16, 26, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+            background: #ffffff;
+            border-bottom: 5px solid #005999;
             position: fixed;
             width: 100%;
             top: 0;
             left: 0;
             z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .nav-container {
@@ -38,111 +39,123 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 12px 20px;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #00e5ff;
-            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            letter-spacing: 0.5px;
+            color: #111111;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .logo span {
-            color: #ff007f;
-            text-shadow: 0 0 10px rgba(ff, 0, 127, 0.5);
+            color: #ff0055;
+            background: #ffe6ee;
+            padding: 2px 8px;
+            border-radius: 8px;
+            border: 2px solid #ff0055;
         }
 
         .cart-icon {
-            font-size: 20px;
-            color: #ffffff;
+            font-size: 22px;
+            color: #007acc;
             cursor: pointer;
             position: relative;
-            transition: 0.3s;
+            background: #f0f8ff;
+            padding: 10px;
+            border-radius: 50%;
+            border: 3px solid #007acc;
+            transition: 0.2s;
         }
 
         .cart-icon:hover {
-            color: #00e5ff;
+            transform: scale(1.1);
+            background: #e0f2ff;
         }
 
         .cart-count {
             position: absolute;
-            top: -8px;
-            right: -10px;
-            background: #ff007f;
+            top: -5px;
+            right: -5px;
+            background: #ff0055;
             color: white;
-            font-size: 11px;
+            font-size: 12px;
             padding: 2px 7px;
-            border-radius: 50%;
-            font-weight: bold;
+            border-radius: 20px;
+            font-weight: 900;
+            border: 2px solid white;
         }
 
-        /* Hero */
+        /* Hero sekcja z białym dymkiem */
         .hero {
-            background: radial-gradient(circle at center, rgba(0, 229, 255, 0.12) 0%, rgba(11, 12, 16, 1) 75%);
-            padding: 140px 20px 40px;
+            padding: 140px 20px 30px;
             text-align: center;
+            color: #ffffff;
         }
 
         .hero h1 {
-            font-size: 46px;
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-            background: linear-gradient(45deg, #00e5ff, #ff007f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 44px;
+            font-weight: 900;
+            text-shadow: 3px 3px 0px #004d80;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
         }
 
         .hero p {
-            color: #8fa0dd;
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 18px;
+            font-weight: 600;
+            color: #e6f5ff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
-        /* Filtry Kategorii (Menu) */
+        /* Filtry jako bąbelkowe przyciski 3D */
         .filter-menu {
             max-width: 1200px;
-            margin: 30px auto;
+            margin: 20px auto 40px;
             padding: 0 20px;
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            background: rgba(25, 28, 41, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bdf;
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-radius: 8px;
+            background: #ffffff;
+            border: 3px solid #005999;
+            border-bottom: 6px solid #005999;
+            color: #005999;
+            padding: 10px 22px;
+            font-size: 15px;
+            font-weight: 900;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: 0.15s;
         }
 
-        .filter-btn:hover, .filter-btn.active {
-            color: #ffffff;
-            background: rgba(0, 229, 255, 0.15);
-            border-color: #00e5ff;
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+        .filter-btn:hover {
             transform: translateY(-2px);
+            border-bottom-width: 8px;
         }
 
-        .filter-btn[data-filter="titanic"].active, .filter-btn[data-filter="titanic"]:hover {
-            border-color: #ff007f;
-            background: rgba(255, 0, 127, 0.15);
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+        .filter-btn:active {
+            transform: translateY(2px);
+            border-bottom-width: 3px;
         }
 
-        /* Główny Sklep */
+        /* Aktywne filtry w stylach podkategorii BIG Games */
+        .filter-btn.active {
+            background: #7b2cbf;
+            color: #ffffff;
+            border-color: #4a157d;
+            border-bottom: 6px solid #4a157d;
+        }
+
+        /* Główny kontener sklepu */
         .shop-container {
             max-width: 1200px;
             margin: 0 auto 80px;
@@ -152,97 +165,90 @@
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 30px;
         }
 
-        /* Ukrywanie przedmiotów nieaktywnych filtrem */
         .product-card.hidden {
             display: none !important;
         }
 
-        /* Karta Produktu */
+        /* Kartonowe karty 3D (Zupełnie jak w grze/sklepie BG) */
         .product-card {
-            background: rgba(20, 22, 33, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 14px;
+            background: #ffffff;
+            border: 4px solid #e2e8f0;
+            border-bottom: 10px solid #cbd5e1;
+            border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 0px rgba(0,0,0,0.1);
         }
 
         .product-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(0, 229, 255, 0.35);
-            box-shadow: 0 12px 24px rgba(0, 229, 255, 0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0px rgba(0,0,0,0.12);
+            border-color: #93c5fd;
+            border-bottom-color: #60a5fa;
         }
 
-        /* Personalizacja podświetlenia dla Titanic */
-        .product-card[data-category="titanic"]:hover {
-            border-color: rgba(255, 0, 127, 0.4);
-            box-shadow: 0 12px 24px rgba(255, 0, 127, 0.08);
-        }
-
+        /* Okno tła dla zwierzaka (Wesołe kwadraty z gry) */
         .product-image {
             width: 100%;
-            height: 190px;
-            background: #141622;
+            height: 180px;
+            background: #f1f5f9;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
 
-        /* Możesz zamienić ikonę <i> na znacznik <img src="" /> */
         .product-image i {
-            font-size: 55px;
-            transition: 0.3s;
+            font-size: 65px;
+            filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.1));
         }
 
-        .product-card:hover .product-image i {
-            transform: scale(1.1);
-        }
-
+        /* Odznaki rzadkości */
         .product-tag {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            padding: 4px 10px;
-            font-size: 11px;
-            border-radius: 6px;
-            font-weight: 800;
+            top: 12px;
+            left: 12px;
+            padding: 4px 12px;
+            font-size: 12px;
+            border-radius: 20px;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            border: 2px solid transparent;
         }
 
-        /* Kolory tagów na bazie kategorii */
-        .tag-titanic { background: rgba(255, 0, 127, 0.15); border: 1px solid #ff007f; color: #ff007f; }
-        .tag-huge { background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7; color: #a855f7; }
-        .tag-gems { background: rgba(0, 229, 255, 0.15); border: 1px solid #00e5ff; color: #00e5ff; }
-        .tag-items { background: rgba(234, 179, 8, 0.15); border: 1px solid #eab308; color: #eab308; }
+        .tag-titanic { background: #ff0055; color: white; border-color: #b3003b; }
+        .tag-huge { background: #a21caf; color: white; border-color: #701a75; }
+        .tag-gems { background: #0284c7; color: white; border-color: #0369a1; }
+        .tag-items { background: #eab308; color: #451a03; border-color: #ca8a04; }
 
+        /* Wnętrze opisowe */
         .product-info {
             padding: 20px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            background: #ffffff;
         }
 
         .product-title {
-            font-size: 19px;
+            font-size: 21px;
+            font-weight: 900;
+            color: #1e293b;
             margin-bottom: 8px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
         }
 
         .product-desc {
-            color: #8188a8;
-            font-size: 13.5px;
-            line-height: 1.5;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.4;
             margin-bottom: 20px;
             flex-grow: 1;
+            font-weight: 600;
         }
 
         .product-footer {
@@ -250,98 +256,108 @@
             justify-content: space-between;
             align-items: center;
             margin-top: auto;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #f1f5f9;
         }
 
         .product-price {
             font-size: 20px;
-            font-weight: 800;
-            color: #ffffff;
+            font-weight: 900;
+            color: #0f172a;
         }
 
         .product-price span {
             font-size: 13px;
-            color: #00e5ff;
-            margin-left: 2px;
+            color: #64748b;
+            font-weight: 700;
         }
 
+        /* Wielkie, klikalne przyciski KUP (Styl 3D z BIG Games) */
         .buy-btn {
-            background: linear-gradient(45deg, #00e5ff, #0086ff);
-            color: #0b0c10;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 800;
+            background: #22c55e;
+            color: #ffffff;
+            border: 2px solid #15803d;
+            border-bottom: 5px solid #15803d;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-weight: 900;
             cursor: pointer;
-            transition: 0.3s;
+            font-size: 14px;
             text-transform: uppercase;
-            font-size: 13px;
+            transition: 0.1s;
         }
 
         .buy-btn:hover {
-            box-shadow: 0 0 15px rgba(0, 229, 255, 0.45);
-            transform: scale(1.03);
+            background: #4ade80;
         }
 
+        .buy-btn:active {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+
+        /* Zmiana koloru przycisku dla urozmaicenia klasy Titanic */
         .product-card[data-category="titanic"] .buy-btn {
-            background: linear-gradient(45deg, #ff007f, #7928ca);
-            color: #ffffff;
+            background: #ea580c;
+            border-color: #9a3412;
+            border-bottom-color: #9a3412;
         }
         .product-card[data-category="titanic"] .buy-btn:hover {
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.45);
+            background: #f97316;
         }
 
         /* Stopka */
         footer {
-            background: #07080c;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            background: #ffffff;
+            border-top: 5px solid #e2e8f0;
             padding: 30px 20px;
             text-align: center;
-            color: #4f536c;
-            font-size: 13px;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 50px;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Górny Panel Nawigacji -->
     <header>
         <div class="nav-container">
-            <div class="logo">PS99<span>SHOP</span></div>
+            <div class="logo">BIG GAMES <span>PETS</span></div>
             <div class="cart-icon">
-                <i class="fas fa-shopping-basket"></i>
+                <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count">0</span>
             </div>
         </div>
     </header>
 
-    <!-- Sekcja Powitalna -->
     <section class="hero">
-        <h1>Wirtualny Market Pet Simulator 99</h1>
-        <p>Wybierz najlepsze zwierzaki, doładuj diamenty lub zdobądź cenne przedmioty użytkowe.</p>
+        <h1>Oficjalny Sklep PS99</h1>
+        <p>Zbuduj swój legendarny skład i zdominuj tabele wyników!</p>
     </section>
 
-    <!-- Filtry Wyboru Kategorii -->
     <div class="filter-menu">
         <button class="filter-btn active" data-filter="all">Wszystko</button>
-        <button class="filter-btn" data-filter="titanic">Titanic Pets</button>
-        <button class="filter-btn" data-filter="huge">Huge Pets</button>
-        <button class="filter-btn" data-filter="gems">Gems (Diamenty)</button>
-        <button class="filter-btn" data-filter="items">Items (Przedmioty)</button>
+        <button class="filter-btn" data-filter="titanic">⚡ Titanic</button>
+        <button class="filter-btn" data-filter="huge">⭐ Huge Pets</button>
+        <button class="filter-btn" data-filter="gems">💎 Diamenty</button>
+        <button class="filter-btn" data-filter="items">📦 Przedmioty</button>
     </div>
 
-    <!-- Główna Siatka Produktów -->
     <main class="shop-container">
         <div class="products-grid">
             
-            <!-- ====== TITANIC PETS ====== -->
             <div class="product-card" data-category="titanic">
-                <div class="product-image">
+                <div class="product-image" style="background: #ffe6ee;">
                     <span class="product-tag tag-titanic">Titanic</span>
-                    <i class="fas fa-cat" style="color: #ff007f; text-shadow: 0 0 20px rgba(255,0,127,0.4);"></i>
+                    <i class="fas fa-cat" style="color: #ff0055;"></i>
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Titanic Rich Cat</h3>
-                    <p class="product-desc">Jeden z najbardziej elitarnych petów w grze. Posiada gigantyczny rozmiar, unikalne animacje oraz bazową siłę x4 Twojego najlepszego zwierzaka.</p>
+                    <p class="product-desc">Ogromny unikalny towarzysz! Posiada status zwierzaka do jazdy oraz mnożnik obrażeń x4.</p>
                     <div class="product-footer">
                         <div class="product-price">149.99 <span>PLN</span></div>
                         <button class="buy-btn">Kup</button>
@@ -349,30 +365,14 @@
                 </div>
             </div>
 
-            <div class="product-card" data-category="titanic">
-                <div class="product-image">
-                    <span class="product-tag tag-titanic">Titanic</span>
-                    <i class="fas fa-dragon" style="color: #a855f7; text-shadow: 0 0 20px rgba(168,85,247,0.4);"></i>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Titanic Fire Dragon</h3>
-                    <p class="product-desc">Rzadki, potężny smok z edycji limitowanej. Oprócz ekstremalnych obrażeń pozwala graczowi na jazdę na jego grzbiecie (Ridable).</p>
-                    <div class="product-footer">
-                        <div class="product-price">139.99 <span>PLN</span></div>
-                        <button class="buy-btn">Kup</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ====== HUGE PETS ====== -->
             <div class="product-card" data-category="huge">
-                <div class="product-image">
+                <div class="product-image" style="background: #fae8ff;">
                     <span class="product-tag tag-huge">Huge</span>
-                    <i class="fas fa-gem" style="color: #c084fc;"></i>
+                    <i class="fas fa-dragon" style="color: #a21caf;"></i>
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Huge Cosmic Axolotl</h3>
-                    <p class="product-desc">Ogromny i niezwykle popularny zwierzak kosmologiczny. Zadaje stałe obrażenia równe 200% mocy Twojego najsilniejszego wyposażonego peta.</p>
+                    <h3 class="product-title">Huge Fire Dragon</h3>
+                    <p class="product-desc">Zadaje stałe obrażenia równe 200% mocy Twoich najlepszych zwierzaków w ekwipunku.</p>
                     <div class="product-footer">
                         <div class="product-price">24.99 <span>PLN</span></div>
                         <button class="buy-btn">Kup</button>
@@ -380,30 +380,14 @@
                 </div>
             </div>
 
-            <div class="product-card" data-category="huge">
-                <div class="product-image">
-                    <span class="product-tag tag-huge">Huge</span>
-                    <i class="fas fa-mountain" style="color: #a1a1aa;"></i>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Huge Hell Rock</h3>
-                    <p class="product-desc">Klasyczny, uwielbiany przez traderów Huge Pet. Doskonały bazowy element do budowania potęgi Twojego zespołu w grze.</p>
-                    <div class="product-footer">
-                        <div class="product-price">14.99 <span>PLN</span></div>
-                        <button class="buy-btn">Kup</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ====== GEMS ====== -->
             <div class="product-card" data-category="gems">
-                <div class="product-image">
+                <div class="product-image" style="background: #e0f2fe;">
                     <span class="product-tag tag-gems">Gems</span>
-                    <i class="fas fa-coins" style="color: #00e5ff; text-shadow: 0 0 15px rgba(0,229,255,0.4);"></i>
+                    <i class="fas fa-gem" style="color: #0284c7;"></i>
                 </div>
                 <div class="product-info">
-                    <h3 class="product-title">Pakiet 100M Diamentów</h3>
-                    <p class="product-desc">Zestaw 100 milionów podstawowej waluty (Gems / Diamonds). Idealna kwota na zakupy w Trading Plaza lub ulepszenie enchantów.</p>
+                    <h3 class="product-title">100,000,000 Diamentów</h3>
+                    <p class="product-desc">Błyskawiczne doładowanie gotówki na zakupy w grze oraz Trading Plaza.</p>
                     <div class="product-footer">
                         <div class="product-price">9.99 <span>PLN</span></div>
                         <button class="buy-btn">Kup</button>
@@ -411,45 +395,14 @@
                 </div>
             </div>
 
-            <div class="product-card" data-category="gems">
-                <div class="product-image">
-                    <span class="product-tag tag-gems">Gems</span>
-                    <i class="fas fa-vault" style="color: #0086ff; text-shadow: 0 0 15px rgba(0,134,255,0.4);"></i>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Pakiet 1B Diamentów</h3>
-                    <p class="product-desc">Miliard diamentów gotowych do natychmiastowego przetransferowania. Pozwoli Ci na zakup upragnionych petów na rynku od innych graczy.</p>
-                    <div class="product-footer">
-                        <div class="product-price">69.99 <span>PLN</span></div>
-                        <button class="buy-btn">Kup</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ====== ITEMS ====== -->
             <div class="product-card" data-category="items">
-                <div class="product-image">
+                <div class="product-image" style="background: #fef9c3;">
                     <span class="product-tag tag-items">Item</span>
-                    <i class="fas fa-key" style="color: #eab308;"></i>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">Secret Key (x25)</h3>
-                    <p class="product-desc">Zestaw 25 sztuk ukrytych kluczy, służących do otwierania sekretnych pomieszczeń i zamków rozsianych po mapach PS99.</p>
-                    <div class="product-footer">
-                        <div class="product-price">7.50 <span>PLN</span></div>
-                        <button class="buy-btn">Kup</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card" data-category="items">
-                <div class="product-image">
-                    <span class="product-tag tag-items">Item</span>
-                    <i class="fas fa-box-open" style="color: #f97316;"></i>
+                    <i class="fas fa-box-open" style="color: #ca8a04;"></i>
                 </div>
                 <div class="product-info">
                     <h3 class="product-title">Exclusive Egg</h3>
-                    <p class="product-desc">Limitowane, fabrycznie zamknięte jajko z Exclusive Shopu. Masz szansę wykluć z niego unikalne zwierzaki Exclusive lub Huge.</p>
+                    <p class="product-desc">Oryginalne jajko z szansą na trafienie limitowanych maskotek z serii Exclusive.</p>
                     <div class="product-footer">
                         <div class="product-price">19.99 <span>PLN</span></div>
                         <button class="buy-btn">Kup</button>
@@ -460,29 +413,23 @@
         </div>
     </main>
 
-    <!-- Stopka -->
     <footer>
-        <p>&copy; 2026 PS99Shop. Strona jest projektem graficzno-programistycznym i nie jest powiązana z BIG Games.</p>
+        <p>&copy; 2026 BIG Games Fan-Shop. Wyprodukowane przez graczy dla graczy.</p>
     </footer>
 
-    <!-- Skrypt obsługi filtrów oraz koszyka -->
     <script>
-        // Logika Filtrowania Przedmiotów
         const filterButtons = document.querySelectorAll('.filter-btn');
         const productCards = document.querySelectorAll('.product-card');
 
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
-                // Zmiana aktywnej klasy na przycisku
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
 
                 const filterValue = button.getAttribute('data-filter');
 
-                // Filtrowanie kart produktowych
                 productCards.forEach(card => {
                     const cardCategory = card.getAttribute('data-category');
-                    
                     if (filterValue === 'all' || cardCategory === filterValue) {
                         card.classList.remove('hidden');
                     } else {
@@ -492,7 +439,6 @@
             });
         });
 
-        // Logika Koszyka (proste naliczanie kliknięć)
         let cartCount = 0;
         const buyButtons = document.querySelectorAll('.buy-btn');
         const cartCountBadge = document.querySelector('.cart-count');
@@ -501,11 +447,6 @@
             button.addEventListener('click', () => {
                 cartCount++;
                 cartCountBadge.textContent = cartCount;
-                
-                button.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    button.style.transform = 'none';
-                }, 100);
             });
         });
     </script>
