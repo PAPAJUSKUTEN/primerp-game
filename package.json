@@ -1,1 +1,15 @@
-
+{
+  "name": "zaawansowany-sklep-firmowy",
+  "version": "1.0.0",
+  "description": "Dopracowana aplikacja sklepu internetowego z bezpiecznym backendem",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["ecommerce", "express", "javascript", "fullstack"],
+  "author": "Twoje Imię",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
