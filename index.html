@@ -1,2532 +1,532 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetVault99 — Premium Pet Simulator Marketplace</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --neon-purple: #a855f7;
-  --neon-violet: #7c3aed;
-  --neon-blue: #3b82f6;
-  --neon-cyan: #06b6d4;
-  --neon-gold: #f59e0b;
-  --neon-pink: #ec4899;
-  --dark-bg: #050508;
-  --dark-surface: #0d0d1a;
-  --dark-card: #111128;
-  --dark-border: rgba(168,85,247,0.2);
-  --glass-bg: rgba(13,13,26,0.7);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --gradient-main: linear-gradient(135deg, #a855f7 0%, #3b82f6 50%, #06b6d4 100%);
-  --gradient-gold: linear-gradient(135deg, #f59e0b, #ef4444);
-  --gradient-purple: linear-gradient(135deg, #7c3aed, #a855f7, #ec4899);
-  --shadow-neon: 0 0 30px rgba(168,85,247,0.4), 0 0 60px rgba(168,85,247,0.1);
-  --shadow-gold: 0 0 30px rgba(245,158,11,0.4);
-  --shadow-blue: 0 0 30px rgba(59,130,246,0.4);
-}
-
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Rajdhani', sans-serif;
-  background: var(--dark-bg);
-  color: var(--text-primary);
-  overflow-x: hidden;
-  cursor: default;
-}
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--dark-bg); }
-::-webkit-scrollbar-thumb { background: var(--neon-purple); border-radius: 3px; }
-
-/* ANIMATED BACKGROUND */
-.bg-grid {
-  position: fixed; inset: 0; z-index: 0;
-  background-image:
-    linear-gradient(rgba(168,85,247,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(168,85,247,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-}
-
-.bg-orbs {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-}
-.orb {
-  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15;
-  animation: orb-float 20s ease-in-out infinite;
-}
-.orb-1 { width: 600px; height: 600px; background: var(--neon-purple); top: -200px; right: -100px; animation-delay: 0s; }
-.orb-2 { width: 400px; height: 400px; background: var(--neon-blue); bottom: -100px; left: -100px; animation-delay: -7s; }
-.orb-3 { width: 300px; height: 300px; background: var(--neon-cyan); top: 40%; left: 40%; animation-delay: -14s; }
-
-@keyframes orb-float {
-  0%, 100% { transform: translate(0,0) scale(1); }
-  33% { transform: translate(30px,-40px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-}
-
-/* NAVBAR */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: rgba(5,5,8,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--dark-border);
-  padding: 0 2rem;
-  height: 72px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-
-.nav-logo {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.4rem;
-  font-weight: 900;
-  background: var(--gradient-main);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: 2px;
-  text-decoration: none;
-}
-
-.nav-logo span {
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.nav-links {
-  display: flex; align-items: center; gap: 2rem;
-  list-style: none;
-}
-
-.nav-links a {
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: color 0.3s;
-  position: relative;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0; right: 0;
-  height: 1px;
-  background: var(--gradient-main);
-  transform: scaleX(0);
-  transition: transform 0.3s;
-}
-
-.nav-links a:hover { color: var(--text-primary); }
-.nav-links a:hover::after { transform: scaleX(1); }
-
-.nav-actions { display: flex; align-items: center; gap: 1rem; }
-
-.btn-glass {
-  background: rgba(168,85,247,0.1);
-  border: 1px solid rgba(168,85,247,0.3);
-  color: var(--neon-purple);
-  padding: 0.5rem 1.2rem;
-  border-radius: 8px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-  display: inline-flex; align-items: center; gap: 0.5rem;
-}
-
-.btn-glass:hover {
-  background: rgba(168,85,247,0.2);
-  border-color: var(--neon-purple);
-  box-shadow: 0 0 20px rgba(168,85,247,0.3);
-  color: #fff;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--neon-violet), var(--neon-purple));
-  border: none;
-  color: #fff;
-  padding: 0.6rem 1.4rem;
-  border-radius: 8px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.5s;
-}
-
-.btn-primary:hover { box-shadow: var(--shadow-neon); transform: translateY(-1px); }
-.btn-primary:hover::before { transform: translateX(100%); }
-
-.btn-gold {
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
-  border: none;
-  color: #fff;
-  padding: 0.8rem 2rem;
-  border-radius: 10px;
-  font-family: 'Orbitron', monospace;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-gold:hover { box-shadow: var(--shadow-gold); transform: translateY(-2px) scale(1.02); }
-
-.cart-btn {
-  position: relative;
-}
-
-.cart-badge {
-  position: absolute;
-  top: -6px; right: -6px;
-  background: var(--neon-gold);
-  color: #000;
-  font-size: 0.65rem;
-  font-weight: 700;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  animation: badge-pulse 2s ease-in-out infinite;
-}
-
-@keyframes badge-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-}
-
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-.hamburger span { width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all 0.3s; }
-
-/* HERO SECTION */
-.hero {
-  min-height: 100vh;
-  display: flex; align-items: center;
-  padding: 80px 2rem 2rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: rgba(168,85,247,0.1);
-  border: 1px solid rgba(168,85,247,0.3);
-  padding: 0.4rem 1rem;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--neon-purple);
-  margin-bottom: 1.5rem;
-  animation: fade-in-up 0.6s ease both;
-}
-
-.badge-dot {
-  width: 8px; height: 8px;
-  background: #4ade80;
-  border-radius: 50%;
-  animation: dot-pulse 2s ease-in-out infinite;
-}
-
-@keyframes dot-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
-.hero-title {
-  font-family: 'Orbitron', monospace;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  animation: fade-in-up 0.6s ease 0.1s both;
-}
-
-.hero-title .gradient-text {
-  background: var(--gradient-main);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-title .gold-text {
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-desc {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: 2rem;
-  font-weight: 300;
-  animation: fade-in-up 0.6s ease 0.2s both;
-}
-
-.hero-cta {
-  display: flex; gap: 1rem; flex-wrap: wrap;
-  animation: fade-in-up 0.6s ease 0.3s both;
-}
-
-.hero-stats {
-  display: flex; gap: 2rem; margin-top: 3rem;
-  animation: fade-in-up 0.6s ease 0.4s both;
-}
-
-.hero-stat { text-align: center; }
-.hero-stat-value {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-stat-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-
-.hero-visual {
-  position: relative;
-  display: flex; align-items: center; justify-content: center;
-  animation: fade-in-right 0.8s ease 0.2s both;
-}
-
-.hero-pet-showcase {
-  position: relative;
-  width: 420px; height: 420px;
-}
-
-.pet-orbit {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(168,85,247,0.15);
-  animation: orbit-rotate 20s linear infinite;
-}
-
-.orbit-1 { width: 380px; height: 380px; top: 20px; left: 20px; }
-.orbit-2 { width: 280px; height: 280px; top: 70px; left: 70px; animation-duration: 15s; animation-direction: reverse; }
-.orbit-3 { width: 180px; height: 180px; top: 120px; left: 120px; animation-duration: 10s; }
-
-@keyframes orbit-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-.pet-center {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 140px; height: 140px;
-  background: radial-gradient(circle, rgba(168,85,247,0.3), rgba(59,130,246,0.1));
-  border-radius: 50%;
-  border: 2px solid rgba(168,85,247,0.5);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 5rem;
-  animation: pet-float 3s ease-in-out infinite;
-  box-shadow: 0 0 40px rgba(168,85,247,0.4), inset 0 0 40px rgba(168,85,247,0.1);
-}
-
-@keyframes pet-float {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); }
-  50% { transform: translate(-50%, -54%) scale(1.05); }
-}
-
-.orbit-pet {
-  position: absolute;
-  font-size: 1.8rem;
-  width: 50px; height: 50px;
-  background: rgba(13,13,26,0.9);
-  border: 1px solid rgba(168,85,247,0.4);
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  backdrop-filter: blur(10px);
-  animation: counter-rotate 20s linear infinite;
-}
-
-.orbit-1 .orbit-pet:nth-child(1) { top: -25px; left: calc(50% - 25px); }
-.orbit-1 .orbit-pet:nth-child(2) { top: calc(50% - 25px); right: -25px; }
-.orbit-1 .orbit-pet:nth-child(3) { bottom: -25px; left: calc(50% - 25px); }
-.orbit-1 .orbit-pet:nth-child(4) { top: calc(50% - 25px); left: -25px; }
-
-@keyframes counter-rotate { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-.glow-ring {
-  position: absolute;
-  border-radius: 50%;
-  animation: glow-pulse 3s ease-in-out infinite;
-}
-
-.glow-ring-1 { width: 420px; height: 420px; top: 0; left: 0; border: 1px solid rgba(168,85,247,0.1); }
-.glow-ring-2 { width: 460px; height: 460px; top: -20px; left: -20px; border: 1px solid rgba(59,130,246,0.05); animation-delay: -1s; }
-
-@keyframes glow-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.02); opacity: 1; }
-}
-
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fade-in-right {
-  from { opacity: 0; transform: translateX(20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-/* PROMO SLIDER */
-.promo-section {
-  padding: 2rem;
-  position: relative; z-index: 1;
-}
-
-.promo-container { max-width: 1200px; margin: 0 auto; }
-
-.promo-slider {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-}
-
-.promo-slides { display: flex; transition: transform 0.5s ease; }
-
-.promo-slide {
-  min-width: 100%;
-  padding: 3rem;
-  display: flex; align-items: center; justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-}
-
-.promo-slide::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(168,85,247,0.15) 0%, transparent 50%);
-}
-
-.promo-slide-1::after { content: '🎃'; position: absolute; right: 5%; top: 50%; transform: translateY(-50%); font-size: 8rem; opacity: 0.3; }
-.promo-slide-2::after { content: '⚡'; position: absolute; right: 5%; top: 50%; transform: translateY(-50%); font-size: 8rem; opacity: 0.3; }
-.promo-slide-3::after { content: '💎'; position: absolute; right: 5%; top: 50%; transform: translateY(-50%); font-size: 8rem; opacity: 0.3; }
-
-.promo-tag {
-  display: inline-block;
-  background: linear-gradient(135deg, #ef4444, #f97316);
-  color: #fff;
-  font-family: 'Orbitron', monospace;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.3rem 0.8rem;
-  border-radius: 4px;
-  letter-spacing: 2px;
-  margin-bottom: 1rem;
-}
-
-.promo-title {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.promo-desc { color: var(--text-secondary); font-size: 1rem; margin-bottom: 1.5rem; }
-
-.promo-timer {
-  display: flex; gap: 1rem; margin-top: 1.5rem;
-}
-
-.timer-unit {
-  text-align: center;
-  background: rgba(168,85,247,0.1);
-  border: 1px solid rgba(168,85,247,0.3);
-  padding: 0.5rem 0.8rem;
-  border-radius: 8px;
-  min-width: 60px;
-}
-
-.timer-value {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--neon-gold);
-}
-
-.timer-label { font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
-
-.slider-dots {
-  position: absolute;
-  bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 0.5rem;
-}
-
-.slider-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: rgba(168,85,247,0.3);
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.slider-dot.active { background: var(--neon-purple); width: 24px; border-radius: 4px; }
-
-/* SECTION STYLES */
-section { position: relative; z-index: 1; padding: 5rem 2rem; }
-
-.section-container { max-width: 1200px; margin: 0 auto; }
-
-.section-header { text-align: center; margin-bottom: 3rem; }
-
-.section-tag {
-  display: inline-block;
-  color: var(--neon-purple);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-  font-family: 'Orbitron', monospace;
-}
-
-.section-title {
-  font-family: 'Orbitron', monospace;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.section-title .highlight {
-  background: var(--gradient-main);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.section-desc { color: var(--text-secondary); font-size: 1rem; max-width: 500px; margin: 0 auto; }
-
-/* STATS */
-.stats-section { padding: 3rem 2rem; }
-
-.stats-grid {
-  max-width: 1200px; margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.stat-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--dark-border);
-  border-radius: 16px;
-  padding: 1.5rem;
-  text-align: center;
-  backdrop-filter: blur(20px);
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--gradient-main);
-  transform: scaleX(0);
-  transition: transform 0.3s;
-}
-
-.stat-card:hover { border-color: rgba(168,85,247,0.4); transform: translateY(-4px); box-shadow: var(--shadow-neon); }
-.stat-card:hover::before { transform: scaleX(1); }
-
-.stat-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-
-.stat-value {
-  font-family: 'Orbitron', monospace;
-  font-size: 2rem;
-  font-weight: 700;
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.stat-label { color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.25rem; }
-
-/* CATEGORIES */
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-}
-
-.category-card {
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-  border-radius: 16px;
-  padding: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  color: var(--text-primary);
-}
-
-.category-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: var(--cat-color, var(--gradient-main));
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.category-card:hover { transform: translateY(-6px) scale(1.02); }
-.category-card:hover::before { opacity: 0.08; }
-.category-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px var(--cat-glow, rgba(168,85,247,0.3)); border-color: var(--cat-border, rgba(168,85,247,0.4)); }
-
-.cat-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; position: relative; z-index: 1; }
-.cat-name { font-family: 'Orbitron', monospace; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; position: relative; z-index: 1; }
-.cat-count { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; position: relative; z-index: 1; }
-
-.cat-badge {
-  position: absolute;
-  top: 0.75rem; right: 0.75rem;
-  background: linear-gradient(135deg, #ef4444, #f97316);
-  color: #fff;
-  font-size: 0.6rem;
-  font-weight: 700;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  z-index: 1;
-}
-
-/* PRODUCTS */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.product-card {
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.3s;
-  position: relative;
-  cursor: pointer;
-}
-
-.product-card:hover { transform: translateY(-8px); border-color: rgba(168,85,247,0.5); box-shadow: var(--shadow-neon); }
-
-.product-image {
-  position: relative;
-  height: 180px;
-  background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(59,130,246,0.1));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 5rem;
-  overflow: hidden;
-}
-
-.product-image::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at center, rgba(168,85,247,0.2), transparent 70%);
-}
-
-.product-rarity {
-  position: absolute;
-  top: 0.75rem; left: 0.75rem;
-  padding: 0.25rem 0.6rem;
-  border-radius: 6px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-family: 'Orbitron', monospace;
-}
-
-.rarity-huge { background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff; }
-.rarity-titanic { background: linear-gradient(135deg, #a855f7, #3b82f6); color: #fff; }
-.rarity-exclusive { background: linear-gradient(135deg, #10b981, #06b6d4); color: #fff; }
-.rarity-rare { background: linear-gradient(135deg, #3b82f6, #6366f1); color: #fff; }
-.rarity-event { background: linear-gradient(135deg, #ec4899, #f97316); color: #fff; }
-.rarity-limited { background: linear-gradient(135deg, #ef4444, #ec4899); color: #fff; }
-
-.product-wishlist {
-  position: absolute;
-  top: 0.75rem; right: 0.75rem;
-  background: rgba(13,13,26,0.8);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 50%;
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-size: 0.9rem;
-  backdrop-filter: blur(10px);
-}
-
-.product-wishlist:hover { background: rgba(168,85,247,0.2); border-color: var(--neon-purple); transform: scale(1.1); }
-
-.product-glow {
-  position: absolute;
-  bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 60%; height: 40px;
-  background: radial-gradient(ellipse, rgba(168,85,247,0.4), transparent 70%);
-  filter: blur(10px);
-}
-
-.product-info { padding: 1.25rem; }
-
-.product-name {
-  font-family: 'Orbitron', monospace;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.product-meta {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 0.75rem;
-}
-
-.product-rating { display: flex; align-items: center; gap: 0.25rem; font-size: 0.75rem; color: var(--neon-gold); }
-.product-sold { font-size: 0.7rem; color: var(--text-secondary); }
-
-.product-price-row {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.product-price {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.1rem;
-  font-weight: 700;
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.product-old-price {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  text-decoration: line-through;
-}
-
-.product-discount {
-  font-size: 0.7rem;
-  background: rgba(74,222,128,0.1);
-  color: #4ade80;
-  border: 1px solid rgba(74,222,128,0.2);
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.product-actions { display: flex; gap: 0.5rem; }
-
-.btn-cart {
-  flex: 1;
-  background: rgba(168,85,247,0.1);
-  border: 1px solid rgba(168,85,247,0.3);
-  color: var(--neon-purple);
-  padding: 0.6rem;
-  border-radius: 8px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-align: center;
-}
-
-.btn-cart:hover { background: rgba(168,85,247,0.2); border-color: var(--neon-purple); }
-
-.btn-buy {
-  flex: 1;
-  background: linear-gradient(135deg, var(--neon-violet), var(--neon-purple));
-  border: none;
-  color: #fff;
-  padding: 0.6rem;
-  border-radius: 8px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn-buy:hover { box-shadow: 0 0 15px rgba(168,85,247,0.4); transform: scale(1.02); }
-
-.product-availability {
-  display: flex; align-items: center; gap: 0.4rem;
-  font-size: 0.7rem;
-  margin-bottom: 0.75rem;
-}
-
-.avail-dot { width: 6px; height: 6px; border-radius: 50%; }
-.avail-in { background: #4ade80; }
-.avail-low { background: var(--neon-gold); }
-.avail-out { background: #ef4444; }
-.avail-in-text { color: #4ade80; }
-.avail-low-text { color: var(--neon-gold); }
-.avail-out-text { color: #ef4444; }
-
-/* FILTER BAR */
-.filter-bar {
-  display: flex; align-items: center; gap: 1rem;
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  background: rgba(168,85,247,0.05);
-  border: 1px solid rgba(168,85,247,0.15);
-  color: var(--text-secondary);
-  padding: 0.5rem 1.2rem;
-  border-radius: 50px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.filter-btn:hover, .filter-btn.active {
-  background: rgba(168,85,247,0.15);
-  border-color: var(--neon-purple);
-  color: var(--neon-purple);
-}
-
-/* TESTIMONIALS */
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.testimonial-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--dark-border);
-  border-radius: 20px;
-  padding: 1.75rem;
-  backdrop-filter: blur(20px);
-  transition: all 0.3s;
-  position: relative;
-}
-
-.testimonial-card::before {
-  content: '"';
-  position: absolute;
-  top: 1rem; right: 1.5rem;
-  font-family: 'Orbitron', monospace;
-  font-size: 4rem;
-  color: rgba(168,85,247,0.1);
-  line-height: 1;
-}
-
-.testimonial-card:hover { border-color: rgba(168,85,247,0.3); transform: translateY(-4px); }
-
-.testimonial-stars { color: var(--neon-gold); font-size: 0.9rem; margin-bottom: 1rem; }
-.testimonial-text { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.25rem; }
-
-.testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
-
-.author-avatar {
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: var(--gradient-main);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700;
-  font-size: 0.875rem;
-  color: #fff;
-  flex-shrink: 0;
-  font-family: 'Orbitron', monospace;
-}
-
-.author-name { font-weight: 600; font-size: 0.9rem; }
-.author-badge {
-  display: flex; align-items: center; gap: 0.3rem;
-  font-size: 0.7rem;
-  color: var(--neon-gold);
-}
-
-/* FAQ */
-.faq-container { max-width: 800px; margin: 0 auto; }
-
-.faq-item {
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-  border-radius: 12px;
-  margin-bottom: 0.75rem;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-
-.faq-item:hover { border-color: rgba(168,85,247,0.3); }
-.faq-item.open { border-color: rgba(168,85,247,0.4); }
-
-.faq-question {
-  padding: 1.25rem 1.5rem;
-  display: flex; align-items: center; justify-content: space-between;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.faq-icon {
-  width: 24px; height: 24px;
-  border-radius: 50%;
-  border: 1px solid rgba(168,85,247,0.4);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--neon-purple);
-  font-size: 1rem;
-  flex-shrink: 0;
-  transition: transform 0.3s;
-}
-
-.faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(168,85,247,0.1); }
-
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.3s;
-}
-
-.faq-item.open .faq-answer { max-height: 200px; }
-
-.faq-answer-inner {
-  padding: 0 1.5rem 1.25rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.7;
-  border-top: 1px solid rgba(168,85,247,0.1);
-  padding-top: 1rem;
-}
-
-/* PAYMENT METHODS */
-.payment-methods {
-  display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
-}
-
-.payment-badge {
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-  border-radius: 12px;
-  padding: 0.75rem 1.25rem;
-  display: flex; align-items: center; gap: 0.6rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  transition: all 0.3s;
-  cursor: pointer;
-}
-
-.payment-badge:hover { border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.05); transform: translateY(-2px); }
-.payment-icon { font-size: 1.2rem; }
-
-/* NEWSLETTER */
-.newsletter-section {
-  background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(59,130,246,0.1));
-  border: 1px solid rgba(168,85,247,0.2);
-  border-radius: 24px;
-  padding: 3rem;
-  text-align: center;
-}
-
-.newsletter-form {
-  display: flex; gap: 1rem; max-width: 480px; margin: 1.5rem auto 0;
-}
-
-.newsletter-input {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(168,85,247,0.3);
-  border-radius: 10px;
-  padding: 0.75rem 1.25rem;
-  color: var(--text-primary);
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.newsletter-input::placeholder { color: var(--text-secondary); }
-.newsletter-input:focus { border-color: var(--neon-purple); }
-
-/* LOYALTY SECTION */
-.loyalty-tiers {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.loyalty-tier {
-  background: var(--dark-card);
-  border: 2px solid transparent;
-  border-radius: 20px;
-  padding: 2rem 1.5rem;
-  text-align: center;
-  position: relative;
-  transition: all 0.3s;
-}
-
-.loyalty-tier.active { border-color: var(--neon-gold); box-shadow: var(--shadow-gold); }
-.loyalty-tier:hover { transform: translateY(-4px); }
-
-.tier-badge { font-size: 2.5rem; margin-bottom: 1rem; }
-.tier-name { font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
-.tier-points { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; }
-.tier-perks { list-style: none; font-size: 0.8rem; color: var(--text-secondary); line-height: 2; }
-.tier-perk-item::before { content: '✓ '; color: #4ade80; font-weight: 700; }
-
-/* MODAL */
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 2000;
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(8px);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-
-.modal {
-  background: var(--dark-surface);
-  border: 1px solid var(--dark-border);
-  border-radius: 24px;
-  width: 90%;
-  max-width: 440px;
-  padding: 2rem;
-  position: relative;
-  transform: scale(0.95);
-  transition: transform 0.3s;
-}
-
-.modal-overlay.open .modal { transform: scale(1); }
-
-.modal-close {
-  position: absolute;
-  top: 1rem; right: 1rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 50%;
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  color: var(--text-secondary);
-  font-size: 1rem;
-  transition: all 0.3s;
-}
-
-.modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
-
-.modal-title {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  background: var(--gradient-main);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.modal-tabs {
-  display: flex; gap: 0;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 4px;
-  margin: 1.5rem 0;
-}
-
-.modal-tab {
-  flex: 1;
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  padding: 0.6rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-
-.modal-tab.active { background: rgba(168,85,247,0.15); color: var(--neon-purple); }
-
-.form-group { margin-bottom: 1rem; }
-.form-label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.4rem; letter-spacing: 0.5px; text-transform: uppercase; }
-
-.form-input {
-  width: 100%;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(168,85,247,0.2);
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
-  color: var(--text-primary);
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.3s;
-}
-
-.form-input:focus { border-color: var(--neon-purple); box-shadow: 0 0 0 3px rgba(168,85,247,0.1); }
-.form-input::placeholder { color: rgba(148,163,184,0.5); }
-
-/* CART SIDEBAR */
-.cart-sidebar {
-  position: fixed;
-  top: 0; right: 0;
-  width: 380px; height: 100vh;
-  background: var(--dark-surface);
-  border-left: 1px solid var(--dark-border);
-  z-index: 1500;
-  display: flex; flex-direction: column;
-  transform: translateX(100%);
-  transition: transform 0.4s ease;
-  overflow: hidden;
-}
-
-.cart-sidebar.open { transform: translateX(0); }
-
-.cart-header {
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--dark-border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-
-.cart-title {
-  font-family: 'Orbitron', monospace;
-  font-size: 1.1rem;
-  font-weight: 700;
-  background: var(--gradient-main);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.cart-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
-
-.cart-item {
-  display: flex; gap: 1rem; align-items: center;
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 0.75rem;
-}
-
-.cart-item-emoji { font-size: 2rem; flex-shrink: 0; }
-
-.cart-item-info { flex: 1; min-width: 0; }
-.cart-item-name { font-weight: 600; font-size: 0.85rem; font-family: 'Orbitron', monospace; margin-bottom: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cart-item-price { font-size: 0.9rem; color: var(--neon-gold); font-weight: 600; }
-
-.cart-qty {
-  display: flex; align-items: center; gap: 0.5rem;
-}
-
-.qty-btn {
-  width: 26px; height: 26px;
-  background: rgba(168,85,247,0.1);
-  border: 1px solid rgba(168,85,247,0.3);
-  border-radius: 6px;
-  color: var(--neon-purple);
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.9rem;
-  transition: all 0.2s;
-}
-
-.qty-btn:hover { background: rgba(168,85,247,0.2); }
-.qty-value { font-size: 0.85rem; font-weight: 600; min-width: 20px; text-align: center; }
-
-.cart-footer {
-  padding: 1.5rem;
-  border-top: 1px solid var(--dark-border);
-}
-
-.coupon-row {
-  display: flex; gap: 0.5rem;
-  margin-bottom: 1.25rem;
-}
-
-.coupon-input {
-  flex: 1;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(168,85,247,0.2);
-  border-radius: 8px;
-  padding: 0.6rem 0.75rem;
-  color: var(--text-primary);
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 0.85rem;
-  outline: none;
-}
-
-.coupon-input:focus { border-color: var(--neon-purple); }
-
-.order-summary { margin-bottom: 1rem; }
-.order-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.25rem 0; color: var(--text-secondary); }
-.order-row.total { font-weight: 700; font-size: 1rem; color: var(--text-primary); border-top: 1px solid var(--dark-border); margin-top: 0.5rem; padding-top: 0.75rem; }
-.order-row.discount { color: #4ade80; }
-
-/* LIVE CHAT */
-.live-chat-btn {
-  position: fixed;
-  bottom: 2rem; right: 2rem;
-  z-index: 999;
-  background: linear-gradient(135deg, var(--neon-violet), var(--neon-purple));
-  border: none;
-  border-radius: 50%;
-  width: 56px; height: 56px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem;
-  cursor: pointer;
-  box-shadow: var(--shadow-neon);
-  animation: chat-bounce 3s ease-in-out infinite;
-  transition: transform 0.3s;
-}
-
-.live-chat-btn:hover { transform: scale(1.1); }
-
-@keyframes chat-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-.chat-bubble {
-  position: absolute;
-  bottom: 65px; right: 0;
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-  border-radius: 12px 12px 0 12px;
-  padding: 0.6rem 1rem;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  animation: bubble-appear 0.3s ease both;
-}
-
-@keyframes bubble-appear {
-  from { opacity: 0; transform: scale(0.8) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-/* FOOTER */
-footer {
-  background: var(--dark-surface);
-  border-top: 1px solid var(--dark-border);
-  padding: 4rem 2rem 2rem;
-  position: relative; z-index: 1;
-}
-
-.footer-grid {
-  max-width: 1200px; margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
-}
-
-.footer-brand-desc { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; }
-
-.footer-socials {
-  display: flex; gap: 0.75rem; margin-top: 1.5rem;
-}
-
-.social-btn {
-  width: 36px; height: 36px;
-  background: rgba(168,85,247,0.1);
-  border: 1px solid rgba(168,85,247,0.2);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-}
-
-.social-btn:hover { background: rgba(168,85,247,0.2); color: var(--neon-purple); border-color: var(--neon-purple); transform: translateY(-2px); }
-
-.footer-heading {
-  font-family: 'Orbitron', monospace;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--neon-purple);
-  margin-bottom: 1.5rem;
-}
-
-.footer-links { list-style: none; }
-.footer-links li { margin-bottom: 0.6rem; }
-.footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
-.footer-links a:hover { color: var(--text-primary); }
-
-.footer-bottom {
-  max-width: 1200px; margin: 0 auto;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 1rem;
-}
-
-.footer-legal { display: flex; gap: 1.5rem; }
-.footer-legal a { color: var(--text-secondary); text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
-.footer-legal a:hover { color: var(--text-primary); }
-
-.footer-copy { color: var(--text-secondary); font-size: 0.8rem; }
-
-/* NOTIFICATION TOAST */
-.toast-container {
-  position: fixed;
-  bottom: 6rem; right: 2rem;
-  z-index: 3000;
-  display: flex; flex-direction: column; gap: 0.5rem;
-}
-
-.toast {
-  background: var(--dark-card);
-  border: 1px solid var(--dark-border);
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  display: flex; align-items: center; gap: 0.75rem;
-  min-width: 280px;
-  animation: toast-in 0.4s ease both;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-}
-
-@keyframes toast-in {
-  from { opacity: 0; transform: translateX(100%); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.toast-icon { font-size: 1.2rem; }
-.toast-text { flex: 1; font-size: 0.85rem; }
-.toast-title { font-weight: 600; margin-bottom: 0.1rem; }
-.toast-sub { color: var(--text-secondary); font-size: 0.75rem; }
-.toast-close { color: var(--text-secondary); cursor: pointer; font-size: 0.9rem; transition: color 0.2s; }
-.toast-close:hover { color: var(--text-primary); }
-
-/* MOBILE MENU */
-.mobile-menu {
-  position: fixed;
-  top: 72px; left: 0; right: 0;
-  background: rgba(5,5,8,0.97);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--dark-border);
-  padding: 1.5rem 2rem;
-  z-index: 999;
-  transform: translateY(-100%);
-  opacity: 0;
-  transition: all 0.4s ease;
-  pointer-events: none;
-}
-
-.mobile-menu.open {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: all;
-}
-
-.mobile-nav-links { list-style: none; margin-bottom: 1.5rem; }
-.mobile-nav-links li { border-bottom: 1px solid rgba(255,255,255,0.04); }
-.mobile-nav-links a {
-  display: block; padding: 0.9rem 0;
-  color: var(--text-secondary); text-decoration: none;
-  font-size: 1rem; font-weight: 600;
-  letter-spacing: 1px; text-transform: uppercase;
-  transition: color 0.3s;
-}
-.mobile-nav-links a:hover { color: var(--neon-purple); }
-.mobile-actions { display: flex; flex-direction: column; gap: 0.75rem; }
-
-/* SHIMMER LOADING */
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
-}
-
-/* ANIMATED COUNTER */
-.counter-animate {
-  display: inline-block;
-}
-
-/* TRENDING BADGE */
-.trending-badge {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  background: rgba(239,68,68,0.1);
-  border: 1px solid rgba(239,68,68,0.3);
-  color: #ef4444;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-/* NEW BADGE */
-.new-badge {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  background: rgba(74,222,128,0.1);
-  border: 1px solid rgba(74,222,128,0.3);
-  color: #4ade80;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-/* NEON DIVIDER */
-.neon-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(168,85,247,0.5), var(--neon-blue), transparent);
-  margin: 0;
-}
-
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-  .hero-content { grid-template-columns: 1fr; text-align: center; }
-  .hero-visual { display: none; }
-  .hero-cta { justify-content: center; }
-  .hero-stats { justify-content: center; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .categories-grid { grid-template-columns: repeat(4, 1fr); }
-  .products-grid { grid-template-columns: repeat(3, 1fr); }
-  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
-  .loyalty-tiers { grid-template-columns: repeat(2, 1fr); }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-  .cart-sidebar { width: 100%; max-width: 380px; }
-}
-
-@media (max-width: 768px) {
-  .categories-grid { grid-template-columns: repeat(2, 1fr); }
-  .products-grid { grid-template-columns: repeat(2, 1fr); }
-  .testimonials-grid { grid-template-columns: 1fr; }
-  .loyalty-tiers { grid-template-columns: 1fr 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .newsletter-form { flex-direction: column; }
-  .promo-slide { flex-direction: column; text-align: center; }
-  .promo-slide::after { display: none; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 480px) {
-  .products-grid { grid-template-columns: 1fr; }
-  .categories-grid { grid-template-columns: repeat(2, 1fr); }
-  .loyalty-tiers { grid-template-columns: 1fr; }
-  .hero-stats { flex-wrap: wrap; justify-content: center; }
-  nav { padding: 0 1rem; }
-  section { padding: 3rem 1rem; }
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; }
-}
-
-/* GLOW EFFECTS FOR SPECIFIC ELEMENTS */
-.glow-purple { filter: drop-shadow(0 0 8px rgba(168,85,247,0.6)); }
-.glow-gold { filter: drop-shadow(0 0 8px rgba(245,158,11,0.6)); }
-
-/* CARD HOVER GLOW BORDERS */
-.card-hover-glow {
-  position: relative;
-}
-
-.card-hover-glow::after {
-  content: '';
-  position: absolute; inset: -1px;
-  border-radius: inherit;
-  background: var(--gradient-main);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.card-hover-glow:hover::after { opacity: 0.3; }
-
-/* PARTICLE STARS */
-.stars-bg {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  overflow: hidden;
-}
-
-.star {
-  position: absolute;
-  width: 2px; height: 2px;
-  background: #fff;
-  border-radius: 50%;
-  animation: twinkle var(--d, 3s) ease-in-out var(--delay, 0s) infinite;
-  opacity: var(--o, 0.3);
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: var(--o, 0.3); }
-  50% { opacity: calc(var(--o, 0.3) * 2.5); }
-}
-
-/* NEON TEXT GLITCH */
-.glitch-text {
-  position: relative;
-}
-
-/* FEATURE BADGES */
-.feature-badges {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.feature-badge {
-  display: flex; align-items: center; gap: 0.4rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-.feature-badge-icon { font-size: 1rem; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoRoleplay - Oficjalna Strona Serwera</title>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --secondary-bg: #1f2833;
+            --text-color: #c5a100; /* Zmieniono z #c5a1a0 na złoty/bursztynowy */
+            --text-muted: #95a5a6;
+            --accent-color: #00ffcc; /* Neonowy cyjan */
+            --accent-hover: #00cc99;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: rgba(31, 40, 51, 0.95);
+            padding: 20px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(11, 12, 16, 0.8), rgba(11, 12, 16, 0.95)), url('https://picsum.photos/1920/1080?blur=5') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: 70px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .hero h1 span {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0 auto;
+            box-shadow: 0 0 8px var(--accent-color);
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--secondary-bg);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .feature-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* Frakcje (Tabela) */
+        .table-container {
+            overflow-x: auto;
+            background-color: var(--secondary-bg);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            background-color: rgba(0, 255, 204, 0.1);
+            color: var(--accent-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td strong {
+            color: var(--white);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        td span {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Jak dołączyć (Kroki) */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .step-num {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--accent-color);
+            min-width: 50px;
+        }
+
+        .step-text h3 {
+            margin-bottom: 5px;
+        }
+
+        .step-text p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Status & Info Box */
+        .info-panel {
+            background: linear-gradient(45deg, var(--secondary-bg), rgba(0, 255, 204, 0.05));
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+        }
+
+        .status-badge {
+            display: inline-block;
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
+        }
+
+        .info-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stat-item font {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-item span {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Ustrzeżenie */
+        .warning-box {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid #e74c3c;
+            padding: 20px;
+            border-radius: 4px;
+            max-width: 800px;
+            margin: 40px auto 0 auto;
+            font-size: 14px;
+        }
+
+        .warning-box strong {
+            color: #e74c3c;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #060709;
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* RWD */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav a {
+                margin: 0 10px;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .info-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            table, th, td {
+                display: block;
+                width: 100%;
+            }
+            th {
+                display: none;
+            }
+            td {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- BACKGROUND EFFECTS -->
-<div class="bg-grid"></div>
-<div class="bg-orbs">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-</div>
-<div class="stars-bg" id="starsContainer"></div>
+    <!-- Header / Menu -->
+    <header>
+        <div class="logo">NEO<span>ROLEPLAY</span></div>
+        <nav>
+            <a href="#o-nas">O nas</a>
+            <a href="#frakcje">Kariera</a>
+            <a href="#jak-grac">Jak zacząć</a>
+            <a href="#status">Status</a>
+        </nav>
+    </header>
 
-<!-- NAVIGATION -->
-<nav>
-  <a href="#" class="nav-logo">Pet<span>Vault</span>99</a>
-  <ul class="nav-links">
-    <li><a href="#shop">Sklep</a></li>
-    <li><a href="#categories">Kategorie</a></li>
-    <li><a href="#deals">Oferty</a></li>
-    <li><a href="#loyalty">Loyalty</a></li>
-    <li><a href="#faq">FAQ</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button class="btn-glass" onclick="openModal('loginModal')">🔑 Logowanie</button>
-    <button class="btn-primary cart-btn" onclick="toggleCart()">
-      🛒 Koszyk
-      <span class="cart-badge" id="cartBadge">0</span>
-    </button>
-    <div class="hamburger" onclick="toggleMobileMenu()">
-      <span></span><span></span><span></span>
+    <!-- Sekcja Główna (Hero) -->
+    <div class="hero">
+        <h1>Twoja historia zaczyna się w <span>NeoRoleplay</span></h1>
+        <p>Wejdź do zaawansowanego świata pełnego unikalnych możliwości. Wybierz legalną ścieżkę kariery lub zaryzykuj życie w przestępczym półświatku.</p>
+        <a href="https://discord.gg/neoroleplay" target="_blank" class="btn">Dołącz do Discorda</a>
     </div>
-  </div>
-</nav>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <ul class="mobile-nav-links">
-    <li><a href="#shop" onclick="toggleMobileMenu()">Sklep</a></li>
-    <li><a href="#categories" onclick="toggleMobileMenu()">Kategorie</a></li>
-    <li><a href="#deals" onclick="toggleMobileMenu()">Oferty</a></li>
-    <li><a href="#loyalty" onclick="toggleMobileMenu()">Loyalty</a></li>
-    <li><a href="#faq" onclick="toggleMobileMenu()">FAQ</a></li>
-  </ul>
-  <div class="mobile-actions">
-    <button class="btn-glass" style="width:100%; justify-content:center;" onclick="openModal('loginModal'); toggleMobileMenu()">🔑 Logowanie</button>
-    <button class="btn-primary" style="width:100%; justify-content:center;" onclick="toggleCart(); toggleMobileMenu()">🛒 Koszyk</button>
-  </div>
-</div>
+    <!-- Główna zawartość strony -->
+    <div class="container">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div>
-      <div class="hero-badge">
-        <span class="badge-dot"></span>
-        PREMIUM MARKETPLACE · ONLINE 24/7
-      </div>
-      <h1 class="hero-title">
-        Największy Sklep<br>
-        <span class="gradient-text">Pet Simulator</span><br>
-        <span class="gold-text">w Polsce</span>
-      </h1>
-      <p class="hero-desc">
-        Tysiące unikalnych Hugów, Titanics i Exclusive Pets. Błyskawiczne dostarczanie, bezpieczne płatności i najlepsze ceny na rynku.
-      </p>
-      <div class="hero-cta">
-        <a href="#shop" class="btn-gold">⚡ Kup Teraz</a>
-        <button class="btn-glass" onclick="openModal('loginModal')">👤 Załóż Konto</button>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-value"><span class="counter-animate" data-target="24891">0</span>+</div>
-          <div class="hero-stat-label">Zamówień</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value"><span class="counter-animate" data-target="8412">0</span>+</div>
-          <div class="hero-stat-label">Klientów</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-value"><span class="counter-animate" data-target="99">0</span>%</div>
-          <div class="hero-stat-label">Pozytywnych</div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-pet-showcase">
-        <div class="glow-ring glow-ring-1"></div>
-        <div class="glow-ring glow-ring-2"></div>
-        <div class="pet-orbit orbit-1">
-          <div class="orbit-pet">🐉</div>
-          <div class="orbit-pet">🦋</div>
-          <div class="orbit-pet">🌟</div>
-          <div class="orbit-pet">🦊</div>
-        </div>
-        <div class="pet-orbit orbit-2">
-          <div class="orbit-pet" style="font-size:1.2rem">🐺</div>
-          <div class="orbit-pet" style="font-size:1.2rem">🦄</div>
-          <div class="orbit-pet" style="font-size:1.2rem">🐙</div>
-          <div class="orbit-pet" style="font-size:1.2rem">🦅</div>
-        </div>
-        <div class="pet-center">🐾</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROMO SLIDER -->
-<div class="promo-section">
-  <div class="promo-container">
-    <div class="promo-slider">
-      <div class="promo-slides" id="promoSlides">
-        <div class="promo-slide promo-slide-1">
-          <div>
-            <div class="promo-tag">🔥 FLASH SALE</div>
-            <h2 class="promo-title">Halloween Bundle<br><span style="color:var(--neon-gold)">-60% Taniej!</span></h2>
-            <p class="promo-desc">Exkluzywne Halloween Pets — tylko przez ograniczony czas!</p>
-            <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
-              <a href="#shop" class="btn-gold">Kup Bundle</a>
-              <div class="promo-timer">
-                <div class="timer-unit"><div class="timer-value" id="t1h">02</div><div class="timer-label">Godz</div></div>
-                <div class="timer-unit"><div class="timer-value" id="t1m">34</div><div class="timer-label">Min</div></div>
-                <div class="timer-unit"><div class="timer-value" id="t1s">58</div><div class="timer-label">Sek</div></div>
-              </div>
+        <!-- O nas / Zalety -->
+        <section id="o-nas">
+            <h2>Dlaczego warto u nas grać?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Zoptymalizowana Rozgrywka</h3>
+                    <p>Autorskie skrypty i optymalizacja na najwyższym poziomie. Ciesz się płynną grą bez nagłych spadków FPS.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Rozbudowana Ekonomia</h3>
+                    <p>Realistyczna ekonomia typu Medium/Hard RP, która sprawia, że każdy zarobiony grosz ma realną wartość.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Unikalne Skrypty</h3>
+                    <p>Od zaawansowanych systemów napadów i narkotyków, po interaktywne i intuicyjne panele zarządzania firmami.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Głęboka Imersja</h3>
+                    <p>Stawiamy na kreatywne tworzenie postaci i rozwijanie ciekawych wątków fabularnych, a nie na bezmyślne strzelanie.</p>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="promo-slide promo-slide-2">
-          <div>
-            <div class="promo-tag" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">⚡ NOWOŚĆ</div>
-            <h2 class="promo-title">Titanic Dragon<br><span style="color:var(--neon-purple)">Nowy w Sklepie!</span></h2>
-            <p class="promo-desc">Najrzadszy smok sezonu właśnie trafił do naszej oferty.</p>
-            <a href="#shop" class="btn-primary" style="padding:.8rem 2rem; font-family:'Orbitron', monospace; font-size:.85rem;">Zobacz Ofertę →</a>
-          </div>
-        </div>
-        <div class="promo-slide promo-slide-3">
-          <div>
-            <div class="promo-tag" style="background:linear-gradient(135deg,#10b981,#06b6d4)">💎 VIP DEAL</div>
-            <h2 class="promo-title">Gem Package<br><span style="color:var(--neon-cyan)">10M Gems za $4.99</span></h2>
-            <p class="promo-desc">Najlepsza oferta gemów w całym marketplace!</p>
-            <a href="#shop" class="btn-gold" style="background:linear-gradient(135deg,#10b981,#06b6d4)">Dodaj do Koszyka</a>
-          </div>
-        </div>
-      </div>
-      <div class="slider-dots">
-        <div class="slider-dot active" onclick="goToSlide(0)"></div>
-        <div class="slider-dot" onclick="goToSlide(1)"></div>
-        <div class="slider-dot" onclick="goToSlide(2)"></div>
-      </div>
-    </div>
-  </div>
-</div>
+        </section>
 
-<!-- STATS -->
-<div class="stats-section">
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-icon">🎮</div>
-      <div class="stat-value">24,891</div>
-      <div class="stat-label">Zamówień Zrealizowanych</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">⚡</div>
-      <div class="stat-value">&lt; 5min</div>
-      <div class="stat-label">Średni Czas Dostawy</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">🛡️</div>
-      <div class="stat-value">100%</div>
-      <div class="stat-label">Bezpieczne Płatności</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">🌟</div>
-      <div class="stat-value">4.97/5</div>
-      <div class="stat-label">Średnia Ocena</div>
-    </div>
-  </div>
-</div>
+        <!-- Frakcje (Tabela) -->
+        <section id="frakcje">
+            <h2>Wybierz swoją ścieżkę</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Frakcje Publiczne</th>
+                            <th>Świat Przestępczy</th>
+                            <th>Biznes i Rozrywka</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>LSPD / SASP</strong>
+                                <span>Dbaj o porządek i ścigaj najgroźniejszych przestępców w mieście.</span>
+                            </td>
+                            <td>
+                                <strong>Gangi Uliczne</strong>
+                                <span>Walcz o wpływy, szacunek i kontrolę nad lokalnymi dzielnicami.</span>
+                            </td>
+                            <td>
+                                <strong>Własna Firma</strong>
+                                <span>Otwórz warsztat samochodowy, klimatyczną restaurację lub salon aut.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>EMS (Medical Services)</strong>
+                                <span>Ratuj ludzkie życie na pierwszej linii frontu w sytuacjach kryzysowych.</span>
+                            </td>
+                            <td>
+                                <strong>Kartale & Mafie</strong>
+                                <span>Zarządzaj rynkiem nielegalnych substancji, broni oraz wielkich kontraktów.</span>
+                            </td>
+                            <td>
+                                <strong>Kluby Nocne</strong>
+                                <span>Organizuj masowe imprezy, koncerty i wydarzenia, które przejdą do historii.</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>LSC (Los Santos Customs)</strong>
+                                <span>Pomagaj kierowcom, modyfikuj najlepsze fury i dbaj o stan techniczny pojazdów.</span>
+                            </td>
+                            <td>
+                                <strong>Wolni Strzelcy</strong>
+                                <span>Pracuj na własny rachunek jako zawodowy złodziej, włamywacz lub paser.</span>
+                            </td>
+                            <td>
+                                <strong>Lokalne Media</strong>
+                                <span>Prowadź niezależne dziennikarstwo śledcze lub najpopularniejszy portal plotkarski.</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-<div class="neon-divider"></div>
+        <!-- Jak zacząć -->
+        <section id="jak-grac">
+            <h2>Jak zacząć rozgrywkę?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">01</div>
+                    <div class="step-text">
+                        <h3>Dołącz do Discorda</h3>
+                        <p>To tam bije serce naszej społeczności. Znajdziesz tam ogłoszenia, regulamin oraz pomoc techniczną.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">02</div>
+                    <div class="step-text">
+                        <h3>Zapoznaj się z Regulaminem</h3>
+                        <p>Dbamy o wysoki poziom rozgrywki. Dokładna znajomość zasad pozwoli Ci uniknąć kar i nieporozumień.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">03</div>
+                    <div class="step-text">
+                        <h3>Przejdź Whitelist (WL)</h3>
+                        <p>Wypełnij formularz rekrutacyjny lub przejdź krótką rozmowę na naszym Discordzie, aby aktywować swój dostęp.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">04</div>
+                    <div class="step-text">
+                        <h3>Uruchom FiveM i dołącz do gry</h3>
+                        <p>Wyszukaj "NeoRoleplay" na liście serwerów FiveM lub połącz się za pomocą podanego na Discordzie adresu IP.</p>
+                    </div>
+                </div>
+            </div>
 
-<!-- CATEGORIES -->
-<section id="categories">
-  <div class="section-container">
-    <div class="section-header">
-      <div class="section-tag">🏷️ Przeglądaj</div>
-      <h2 class="section-title">Kategorie <span class="highlight">Produktów</span></h2>
-      <p class="section-desc">Od Hugów po Titanics — znajdź swoje wymarzone zwierzątko</p>
-    </div>
-    <div class="categories-grid">
-      <a href="#shop" class="category-card" style="--cat-color:linear-gradient(135deg,#f59e0b,#ef4444); --cat-glow:rgba(245,158,11,0.4); --cat-border:rgba(245,158,11,0.5)">
-        <span class="cat-badge">HOT</span>
-        <span class="cat-emoji">🐉</span>
-        <div class="cat-name">Huge Pets</div>
-        <div class="cat-count">847 przedmiotów</div>
-      </a>
-      <a href="#shop" class="category-card" style="--cat-color:linear-gradient(135deg,#a855f7,#3b82f6); --cat-glow:rgba(168,85,247,0.4); --cat-border:rgba(168,85,247,0.5)">
-        <span class="cat-badge">EPIC</span>
-        <span class="cat-emoji">⚔️</span>
-        <div class="cat-name">Titanic Pets</div>
-        <div class="cat-count">234 przedmioty</div>
-      </a>
-      <a href="#shop" class="category-card" style="--cat-color:linear-gradient(135deg,#10b981,#06b6d4); --cat-glow:rgba(16,185,129,0.4); --cat-border:rgba(16,185,129,0.5)">
-        <span class="cat-emoji">💎</span>
-        <div class="cat-name">Exclusive Pets</div>
-        <div class="cat-count">178 przedmiotów</div>
-      </a>
-      <a href="#shop" class="category-card" style="--cat-color:linear-gradient(135deg,#6366f1,#3b82f6); --cat-glow:rgba(99,102,241,0.4); --cat-border:rgba(99,102,241,0.5)">
-        <span class="cat-emoji">💠</span>
-        <div class="cat-name">Gems</div>
-        <div class="cat-count">56 pakietów</div>
-      </a>
-      <a href="#shop" class="category-card" style="--cat-color:linear-gradient(135deg,#ec4899,#f97316); --cat-glow:rgba(236,72,153,0.4); --cat-border:rgba(236,72,153,0.5)">
-        <span class="cat-badge">NEW</span>
-        <span class="cat-emoji">📦</span>
-        <div class="cat-name">Bundles</div>
-        <div class="cat-count">43 zestawy</div>
-      </a>
-      <a href="#shop" class="category-card" style="--cat-color:linear-gradient(135deg,#f97316,#f59e0b); --cat-glow:rgba(249,115,22,0.4); --cat-border:rgba(249,115,22,0.5)">
-        <span class="cat-badge">LIMITED</span>
-        <span class="cat-emoji">🎃</span>
-        <div class="cat-name">Event Pets</div>
-        <div class="cat-count">89 przedmiotów</div>
-      </a>
-      <a href="#shop" class="category-card" style="--cat-color:linear-gradient(135deg,#3b82f6,#06b6d4); --cat-glow:rgba(59,130,246,0.4); --cat-border:rgba(59,130,246,0.5)">
-        <span class="cat-emoji">🌟</span>
-        <div class="cat-name">Rare Pets</div>
-        <div class="cat-count">312 przedmiotów</div>
-      </a>
-      <a href="#shop" class="category-card" style="--cat-color:linear-gradient(135deg,#ef4444,#a855f7); --cat-glow:rgba(239,68,68,0.4); --cat-border:rgba(239,68,68,0.5)">
-        <span class="cat-badge">⏰</span>
-        <span class="cat-emoji">🔒</span>
-        <div class="cat-name">Limited Pets</div>
-        <div class="cat-count">67 przedmiotów</div>
-      </a>
-    </div>
-  </div>
-</section>
+            <div class="warning-box">
+                <strong>⚠️ WAŻNA INFORMACJA:</strong> Na serwerze obowiązuje całkowity zakaz toksycznego zachowania oraz łamania podstawowych zasad Roleplay (takich jak MG, DM czy Powergaming). Budujemy zgraną społeczność dla każdego!
+            </div>
+        </section>
 
-<div class="neon-divider"></div>
+        <!-- Status i Statystyki -->
+        <section id="status">
+            <h2>Status Projektu</h2>
+            <div class="info-panel">
+                <div class="status-badge">🟢 SERWER ONLINE</div>
+                <div class="info-stats">
+                    <div class="stat-item">
+                        <font>128</font>
+                        <span>Dostępnych Slotów</span>
+                    </div>
+                    <div class="stat-item">
+                        <font>Medium/Hard</font>
+                        <span>Poziom Rozgrywki</span>
+                    </div>
+                    <div class="stat-item">
+                        <font>16+</font>
+                        <span>Wymagany Wiek</span>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://forum.neoroleplay.pl" target="_blank" class="btn">Złóż podanie o Whitelist</a>
+            </div>
+        </section>
 
-<!-- PRODUCTS SECTION -->
-<section id="shop">
-  <div class="section-container">
-    <div class="section-header">
-      <div class="section-tag">🔥 Popularne</div>
-      <h2 class="section-title">Najlepiej <span class="highlight">Sprzedające się</span></h2>
-      <p class="section-desc">Wybierz spośród setek unikalnych zwierzaków premium</p>
-    </div>
-    
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="setFilter(this, 'all')">Wszystkie</button>
-      <button class="filter-btn" onclick="setFilter(this, 'huge')">🐉 Huge</button>
-      <button class="filter-btn" onclick="setFilter(this, 'titanic')">⚔️ Titanic</button>
-      <button class="filter-btn" onclick="setFilter(this, 'exclusive')">💎 Exclusive</button>
-      <button class="filter-btn" onclick="setFilter(this, 'event')">🎃 Event</button>
-      <button class="filter-btn" onclick="setFilter(this, 'gems')">💠 Gems</button>
     </div>
 
-    <div class="products-grid" id="productsGrid">
-      <!-- Products rendered by JS -->
-    </div>
-  </div>
-</section>
+    <!-- Stopka strony -->
+    <footer>
+        <p>&copy; 2026 NeoRoleplay. Wszelkie prawa zastrzeżone. Projekt strony stworzony dla społeczności serwera.</p>
+    </footer>
 
-<!-- NEWEST DEALS -->
-<section id="deals">
-  <div class="section-container">
-    <div class="section-header">
-      <div class="section-tag">⚡ Nowości</div>
-      <h2 class="section-title">Najnowsze <span class="highlight">Oferty</span></h2>
-      <p class="section-desc">Świeżo dodane do naszego sklepu</p>
-    </div>
-    <div class="products-grid" id="newDealsGrid">
-      <!-- Rendered by JS -->
-    </div>
-  </div>
-</section>
-
-<div class="neon-divider"></div>
-
-<!-- PAYMENT METHODS -->
-<section style="padding: 3rem 2rem;">
-  <div class="section-container">
-    <div class="section-header">
-      <div class="section-tag">💳 Płatności</div>
-      <h2 class="section-title">Akceptujemy <span class="highlight">Wszystkie Metody</span></h2>
-    </div>
-    <div class="payment-methods">
-      <div class="payment-badge"><span class="payment-icon">💳</span> Stripe</div>
-      <div class="payment-badge"><span class="payment-icon">🅿️</span> PayPal</div>
-      <div class="payment-badge"><span class="payment-icon">🏦</span> BLIK</div>
-      <div class="payment-badge"><span class="payment-icon">🍎</span> Apple Pay</div>
-      <div class="payment-badge"><span class="payment-icon">🟢</span> Google Pay</div>
-      <div class="payment-badge"><span class="payment-icon">💙</span> Visa</div>
-      <div class="payment-badge"><span class="payment-icon">🔴</span> Mastercard</div>
-      <div class="payment-badge"><span class="payment-icon">₿</span> Bitcoin</div>
-      <div class="payment-badge"><span class="payment-icon">⟠</span> Ethereum</div>
-      <div class="payment-badge"><span class="payment-icon">💵</span> USDT</div>
-    </div>
-  </div>
-</section>
-
-<div class="neon-divider"></div>
-
-<!-- LOYALTY PROGRAM -->
-<section id="loyalty">
-  <div class="section-container">
-    <div class="section-header">
-      <div class="section-tag">👑 Program Lojalnościowy</div>
-      <h2 class="section-title">Zdobywaj <span class="highlight">Nagrody</span></h2>
-      <p class="section-desc">Każdy zakup to punkty. Więcej punktów = większe zniżki!</p>
-    </div>
-    <div class="loyalty-tiers">
-      <div class="loyalty-tier">
-        <div class="tier-badge">🥉</div>
-        <div class="tier-name">BRONZE</div>
-        <div class="tier-points">0 – 999 punktów</div>
-        <ul class="tier-perks">
-          <li class="tier-perk-item">5% zniżki stałej</li>
-          <li class="tier-perk-item">Priorytetowe wsparcie</li>
-          <li class="tier-perk-item">Newsletter VIP</li>
-        </ul>
-      </div>
-      <div class="loyalty-tier">
-        <div class="tier-badge">🥈</div>
-        <div class="tier-name">SILVER</div>
-        <div class="tier-points">1000 – 4999 pkt</div>
-        <ul class="tier-perks">
-          <li class="tier-perk-item">10% zniżki stałej</li>
-          <li class="tier-perk-item">Wczesny dostęp</li>
-          <li class="tier-perk-item">Darmowy bonus co miesiąc</li>
-        </ul>
-      </div>
-      <div class="loyalty-tier active">
-        <div class="tier-badge">🥇</div>
-        <div class="tier-name">GOLD</div>
-        <div class="tier-points">5000 – 14999 pkt</div>
-        <ul class="tier-perks">
-          <li class="tier-perk-item">15% zniżki stałej</li>
-          <li class="tier-perk-item">Ekskluzywne oferty</li>
-          <li class="tier-perk-item">Dedykowany opiekun</li>
-          <li class="tier-perk-item">Darmowa dostawa</li>
-        </ul>
-      </div>
-      <div class="loyalty-tier">
-        <div class="tier-badge">💎</div>
-        <div class="tier-name">DIAMOND</div>
-        <div class="tier-points">15 000+ punktów</div>
-        <ul class="tier-perks">
-          <li class="tier-perk-item">25% zniżki stałej</li>
-          <li class="tier-perk-item">Oferty VIP Only</li>
-          <li class="tier-perk-item">Pet w prezencie/miesiąc</li>
-          <li class="tier-perk-item">Dostęp do beta</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="neon-divider"></div>
-
-<!-- TESTIMONIALS -->
-<section>
-  <div class="section-container">
-    <div class="section-header">
-      <div class="section-tag">⭐ Opinie</div>
-      <h2 class="section-title">Co Mówią <span class="highlight">Klienci</span></h2>
-      <p class="section-desc">Tysiące zadowolonych kupujących w Polsce i na świecie</p>
-    </div>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">Zamówiłem Titanic Dragon i dostałem go w mniej niż 2 minuty! Niesamowity sklep, polecam każdemu graczowi PS99!</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">MK</div>
-          <div>
-            <div class="author-name">MaksymK99</div>
-            <div class="author-badge">💎 Diamond Member · 47 zamówień</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">Ceny niższe niż wszędzie indziej, dostarczanie natychmiastowe. Kupiłem już ponad 30 razy i zawsze jest idealnie!</p>
-        <div class="testimonial-author">
-          <div class="author-avatar" style="background:var(--gradient-gold)">ZP</div>
-          <div>
-            <div class="author-name">ZofiaPrzybysz</div>
-            <div class="author-badge">🥇 Gold Member · 31 zamówień</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">Kod rabatowy dostałem przez Discord bota i zaoszczędziłem 20%. Obsługa klienta jest na naprawdę wysokim poziomie.</p>
-        <div class="testimonial-author">
-          <div class="author-avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4)">AW</div>
-          <div>
-            <div class="author-name">AdrianW_PL</div>
-            <div class="author-badge">🥈 Silver Member · 18 zamówień</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="neon-divider"></div>
-
-<!-- NEWSLETTER -->
-<section style="padding: 3rem 2rem;">
-  <div class="section-container">
-    <div class="newsletter-section">
-      <div class="section-tag">📧 Newsletter</div>
-      <h2 class="section-title" style="margin-top:0.5rem">Bądź Pierwszym, <span class="highlight">Który Wie</span></h2>
-      <p class="section-desc">Subskrybuj i otrzymuj ekskluzywne kody rabatowe oraz powiadomienia o nowych produktach.</p>
-      <div class="newsletter-form">
-        <input type="email" class="newsletter-input" placeholder="twoj@email.com" id="newsletterEmail">
-        <button class="btn-primary" onclick="subscribeNewsletter()" style="white-space:nowrap">Subskrybuj ✉️</button>
-      </div>
-      <div class="feature-badges">
-        <div class="feature-badge"><span class="feature-badge-icon">🎁</span> Kod powitalny -15%</div>
-        <div class="feature-badge"><span class="feature-badge-icon">⚡</span> Flash Sale alerts</div>
-        <div class="feature-badge"><span class="feature-badge-icon">🔔</span> Nowe produkty</div>
-        <div class="feature-badge"><span class="feature-badge-icon">🛡️</span> Bez spamu</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="section-container">
-    <div class="section-header">
-      <div class="section-tag">❓ FAQ</div>
-      <h2 class="section-title">Często Zadawane <span class="highlight">Pytania</span></h2>
-    </div>
-    <div class="faq-container" id="faqContainer">
-      <!-- Rendered by JS -->
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div>
-      <a href="#" class="nav-logo" style="font-size:1.6rem">Pet<span>Vault</span>99</a>
-      <p class="footer-brand-desc">Największy i najbezpieczniejszy marketplace Pet Simulator 99 w Polsce. Tysiące produktów, błyskawiczne dostarczanie i bezpieczne płatności.</p>
-      <div class="footer-socials">
-        <a href="#" class="social-btn">💬</a>
-        <a href="#" class="social-btn">🐦</a>
-        <a href="#" class="social-btn">📸</a>
-        <a href="#" class="social-btn">▶️</a>
-        <a href="#" class="social-btn">🎮</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-heading">Sklep</div>
-      <ul class="footer-links">
-        <li><a href="#shop">Huge Pets</a></li>
-        <li><a href="#shop">Titanic Pets</a></li>
-        <li><a href="#shop">Exclusive Pets</a></li>
-        <li><a href="#shop">Gems & Bundles</a></li>
-        <li><a href="#shop">Event Pets</a></li>
-        <li><a href="#shop">Limited Pets</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-heading">Pomoc</div>
-      <ul class="footer-links">
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#">Live Chat</a></li>
-        <li><a href="#">System Ticketów</a></li>
-        <li><a href="#">Discord Support</a></li>
-        <li><a href="#">Jak Zamawiać?</a></li>
-        <li><a href="#">Status Serwisu</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-heading">Konto</div>
-      <ul class="footer-links">
-        <li><a href="#" onclick="openModal('loginModal')">Logowanie</a></li>
-        <li><a href="#" onclick="openModal('loginModal')">Rejestracja</a></li>
-        <li><a href="#">Historia Zamówień</a></li>
-        <li><a href="#">Program Lojalnościowy</a></li>
-        <li><a href="#">Powiadomienia</a></li>
-        <li><a href="#">Ustawienia</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2024 PetVault99. Wszelkie prawa zastrzeżone. Nie jesteśmy powiązani z Roblox Corporation.</div>
-    <div class="footer-legal">
-      <a href="#">Regulamin</a>
-      <a href="#">Polityka Prywatności</a>
-      <a href="#">Polityka Cookies</a>
-      <a href="#">Kontakt</a>
-    </div>
-  </div>
-</footer>
-
-<!-- CART SIDEBAR -->
-<div class="cart-sidebar" id="cartSidebar">
-  <div class="cart-header">
-    <div class="cart-title">🛒 Twój Koszyk</div>
-    <button class="modal-close" onclick="toggleCart()">✕</button>
-  </div>
-  <div class="cart-body" id="cartBody">
-    <div style="text-align:center; padding:3rem 1rem; color:var(--text-secondary)">
-      <div style="font-size:3rem; margin-bottom:1rem">🛒</div>
-      <p>Koszyk jest pusty</p>
-      <p style="font-size:0.8rem; margin-top:0.5rem">Dodaj produkty aby kontynuować</p>
-    </div>
-  </div>
-  <div class="cart-footer" id="cartFooter" style="display:none">
-    <div class="coupon-row">
-      <input type="text" class="coupon-input" placeholder="Kod rabatowy..." id="couponInput">
-      <button class="btn-glass" onclick="applyCoupon()" style="padding:0.6rem 1rem; white-space:nowrap">Użyj</button>
-    </div>
-    <div class="order-summary" id="orderSummary"></div>
-    <button class="btn-gold" style="width:100%; justify-content:center; font-size:.9rem;" onclick="checkout()">💳 Przejdź do Płatności</button>
-  </div>
-</div>
-
-<!-- LOGIN/REGISTER MODAL -->
-<div class="modal-overlay" id="loginModal" onclick="closeModalOutside(event, 'loginModal')">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
-    <div class="modal-title">PetVault99</div>
-    <p style="color:var(--text-secondary); font-size:0.85rem">Dołącz do największej społeczności graczy</p>
-    <div class="modal-tabs">
-      <button class="modal-tab active" onclick="switchTab('login')">Logowanie</button>
-      <button class="modal-tab" onclick="switchTab('register')">Rejestracja</button>
-    </div>
-    <div id="loginForm">
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-input" placeholder="twoj@email.com">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Hasło</label>
-        <input type="password" class="form-input" placeholder="••••••••">
-      </div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem">
-        <label style="display:flex; align-items:center; gap:.5rem; font-size:.8rem; color:var(--text-secondary); cursor:pointer">
-          <input type="checkbox" style="accent-color:var(--neon-purple)"> Zapamiętaj mnie
-        </label>
-        <a href="#" style="color:var(--neon-purple); font-size:.8rem; text-decoration:none">Zapomniałem hasła</a>
-      </div>
-      <button class="btn-primary" style="width:100%; justify-content:center; padding:.9rem; font-size:.95rem;" onclick="loginUser()">Zaloguj się →</button>
-      <div style="margin-top:1rem; text-align:center">
-        <p style="color:var(--text-secondary); font-size:.8rem; margin-bottom:.75rem">lub zaloguj się przez</p>
-        <div style="display:flex; gap:.75rem; justify-content:center">
-          <button class="btn-glass" style="flex:1; justify-content:center">🎮 Roblox</button>
-          <button class="btn-glass" style="flex:1; justify-content:center">💬 Discord</button>
-        </div>
-      </div>
-    </div>
-    <div id="registerForm" style="display:none">
-      <div class="form-group">
-        <label class="form-label">Nazwa użytkownika</label>
-        <input type="text" class="form-input" placeholder="CoolGamer99">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-input" placeholder="twoj@email.com">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Hasło</label>
-        <input type="password" class="form-input" placeholder="Min. 8 znaków">
-      </div>
-      <div style="margin-bottom:1.25rem">
-        <label style="display:flex; align-items:flex-start; gap:.5rem; font-size:.78rem; color:var(--text-secondary); cursor:pointer">
-          <input type="checkbox" style="accent-color:var(--neon-purple); margin-top:2px"> Akceptuję Regulamin i Politykę Prywatności PetVault99
-        </label>
-      </div>
-      <button class="btn-primary" style="width:100%; justify-content:center; padding:.9rem; font-size:.95rem;" onclick="registerUser()">Utwórz Konto →</button>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST CONTAINER -->
-<div class="toast-container" id="toastContainer"></div>
-
-<!-- LIVE CHAT -->
-<button class="live-chat-btn" id="liveChatBtn" onclick="toggleChat()">
-  💬
-  <div class="chat-bubble" id="chatBubble">Potrzebujesz pomocy?</div>
-</button>
-
-<script>
-// =================== PRODUCTS DATA ===================
-const products = [
-  { id:1, name:'Huge Dragon', emoji:'🐉', category:'huge', price:29.99, oldPrice:49.99, discount:40, rarity:'huge', rating:4.9, sold:1247, available:'in', availableText:'Dostępny', shimmer:true, tags:['trending'] },
-  { id:2, name:'Titanic Phoenix', emoji:'🦅', category:'titanic', price:89.99, oldPrice:null, discount:0, rarity:'titanic', rating:5.0, sold:89, available:'low', availableText:'Ostatnie 3!', shimmer:false, tags:['new'] },
-  { id:3, name:'Exclusive Unicorn', emoji:'🦄', category:'exclusive', price:49.99, oldPrice:64.99, discount:23, rarity:'exclusive', rating:4.8, sold:562, available:'in', availableText:'Dostępny', shimmer:true, tags:[] },
-  { id:4, name:'Gem Pack 5M', emoji:'💎', category:'gems', price:4.99, oldPrice:7.99, discount:38, rarity:'rare', rating:4.7, sold:3891, available:'in', availableText:'Dostępny', shimmer:false, tags:['trending'] },
-  { id:5, name:'Halloween Cat', emoji:'🎃', category:'event', price:19.99, oldPrice:29.99, discount:33, rarity:'event', rating:4.9, sold:445, available:'low', availableText:'Ostatnie 7!', shimmer:true, tags:['limited'] },
-  { id:6, name:'Dark Matter Wolf', emoji:'🐺', category:'huge', price:39.99, oldPrice:54.99, discount:27, rarity:'huge', rating:4.8, sold:334, available:'in', availableText:'Dostępny', shimmer:false, tags:[] },
-  { id:7, name:'Titanic Kraken', emoji:'🐙', category:'titanic', price:119.99, oldPrice:null, discount:0, rarity:'titanic', rating:5.0, sold:23, available:'low', availableText:'Ostatni 1!', shimmer:true, tags:['new','limited'] },
-  { id:8, name:'Rainbow Butterfly', emoji:'🦋', category:'exclusive', price:34.99, oldPrice:44.99, discount:22, rarity:'exclusive', rating:4.6, sold:789, available:'in', availableText:'Dostępny', shimmer:false, tags:[] },
-];
-
-const newDeals = [
-  { id:9, name:'Cyber Dragon V2', emoji:'🤖', category:'huge', price:44.99, oldPrice:59.99, discount:25, rarity:'huge', rating:4.9, sold:12, available:'in', availableText:'Dostępny', shimmer:true, tags:['new'] },
-  { id:10, name:'Crystal Fox', emoji:'🦊', category:'rare', price:14.99, oldPrice:19.99, discount:25, rarity:'rare', rating:4.7, sold:67, available:'in', availableText:'Dostępny', shimmer:false, tags:['new'] },
-  { id:11, name:'Titanic Golem', emoji:'🗿', category:'titanic', price:99.99, oldPrice:null, discount:0, rarity:'titanic', rating:4.9, sold:4, available:'low', availableText:'Ostatnie 2!', shimmer:true, tags:['new','limited'] },
-  { id:12, name:'Gem Bundle XL', emoji:'💠', category:'gems', price:9.99, oldPrice:14.99, discount:33, rarity:'exclusive', rating:4.8, sold:234, available:'in', availableText:'Dostępny', shimmer:false, tags:['new'] },
-];
-
-// =================== STATE ===================
-let cart = [];
-let currentSlide = 0;
-let timer = { h: 2, m: 34, s: 58 };
-let mobileMenuOpen = false;
-
-// =================== RENDER PRODUCTS ===================
-function renderProduct(p) {
-  const tagsBadges = p.tags.map(t => {
-    if (t === 'trending') return '<span class="trending-badge">🔥 Trending</span>';
-    if (t === 'new') return '<span class="new-badge">✨ Nowy</span>';
-    if (t === 'limited') return '<span class="trending-badge" style="background:rgba(168,85,247,.1); border-color:rgba(168,85,247,.3); color:var(--neon-purple)">⏰ Limitowany</span>';
-    return '';
-  }).join(' ');
-
-  const priceRow = p.oldPrice
-    ? `<div class="product-old-price">$${p.oldPrice}</div><div class="product-discount">-${p.discount}%</div>`
-    : '';
-
-  const availClass = p.available === 'in' ? 'avail-in' : p.available === 'low' ? 'avail-low' : 'avail-out';
-  const availTextClass = p.available === 'in' ? 'avail-in-text' : p.available === 'low' ? 'avail-low-text' : 'avail-out-text';
-
-  return `
-    <div class="product-card card-hover-glow" data-category="${p.category}">
-      <div class="product-image">
-        <span class="product-rarity rarity-${p.rarity}">${rarityName(p.rarity)}</span>
-        <div class="product-wishlist" onclick="toggleWishlist(${p.id}, this)" title="Dodaj do wishlisty">🤍</div>
-        <span style="font-size:5rem; position:relative; z-index:1; animation:pet-float ${2+Math.random()*2}s ease-in-out infinite">${p.emoji}</span>
-        <div class="product-glow"></div>
-      </div>
-      <div class="product-info">
-        ${tagsBadges ? `<div style="display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:.5rem">${tagsBadges}</div>` : ''}
-        <div class="product-name" title="${p.name}">${p.name}</div>
-        <div class="product-meta">
-          <div class="product-rating">★★★★★ <span style="color:var(--text-secondary)">${p.rating}</span></div>
-          <div class="product-sold">${p.sold.toLocaleString()} sprzedanych</div>
-        </div>
-        <div class="product-availability">
-          <div class="avail-dot ${availClass}"></div>
-          <span class="${availTextClass}">${p.availableText}</span>
-        </div>
-        <div class="product-price-row">
-          <div class="product-price">$${p.price}</div>
-          <div style="display:flex; gap:.4rem; align-items:center">${priceRow}</div>
-        </div>
-        <div class="product-actions">
-          <button class="btn-cart" onclick="addToCart(${p.id})">🛒 Koszyk</button>
-          <button class="btn-buy" onclick="buyNow(${p.id})">⚡ Kup</button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function rarityName(r) {
-  const map = { huge:'Huge', titanic:'Titanic', exclusive:'Exclusive', rare:'Rare', event:'Event', limited:'Limited' };
-  return map[r] || r;
-}
-
-function initProducts() {
-  const grid = document.getElementById('productsGrid');
-  grid.innerHTML = products.map(renderProduct).join('');
-  const newGrid = document.getElementById('newDealsGrid');
-  newGrid.innerHTML = newDeals.map(renderProduct).join('');
-}
-
-// =================== FILTER ===================
-function setFilter(btn, category) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const cards = document.querySelectorAll('#productsGrid .product-card');
-  cards.forEach(card => {
-    if (category === 'all' || card.dataset.category === category) {
-      card.style.display = '';
-      card.style.animation = 'fade-in-up 0.4s ease both';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-// =================== CART ===================
-function addToCart(id) {
-  const product = [...products, ...newDeals].find(p => p.id === id);
-  if (!product) return;
-  const existing = cart.find(i => i.id === id);
-  if (existing) { existing.qty++; }
-  else { cart.push({ ...product, qty: 1 }); }
-  updateCart();
-  showToast('🛒', 'Dodano do koszyka!', product.name, 'success');
-}
-
-function buyNow(id) {
-  addToCart(id);
-  setTimeout(() => { toggleCart(); }, 300);
-}
-
-function toggleWishlist(id, btn) {
-  if (btn.textContent === '🤍') { btn.textContent = '❤️'; showToast('❤️', 'Dodano do wishlisty!', 'Produkt zapisany', 'info'); }
-  else { btn.textContent = '🤍'; }
-}
-
-function updateCart() {
-  const total = cart.reduce((s, i) => s + i.qty, 0);
-  document.getElementById('cartBadge').textContent = total;
-  renderCartBody();
-}
-
-function renderCartBody() {
-  const body = document.getElementById('cartBody');
-  const footer = document.getElementById('cartFooter');
-  if (cart.length === 0) {
-    body.innerHTML = `<div style="text-align:center; padding:3rem 1rem; color:var(--text-secondary)"><div style="font-size:3rem; margin-bottom:1rem">🛒</div><p>Koszyk jest pusty</p><p style="font-size:.8rem; margin-top:.5rem">Dodaj produkty aby kontynuować</p></div>`;
-    footer.style.display = 'none';
-    return;
-  }
-  footer.style.display = 'block';
-  body.innerHTML = cart.map(i => `
-    <div class="cart-item">
-      <div class="cart-item-emoji">${i.emoji}</div>
-      <div class="cart-item-info">
-        <div class="cart-item-name">${i.name}</div>
-        <div class="cart-item-price">$${(i.price * i.qty).toFixed(2)}</div>
-      </div>
-      <div class="cart-qty">
-        <button class="qty-btn" onclick="changeQty(${i.id}, -1)">−</button>
-        <span class="qty-value">${i.qty}</span>
-        <button class="qty-btn" onclick="changeQty(${i.id}, 1)">+</button>
-        <button class="qty-btn" onclick="removeFromCart(${i.id})" style="margin-left:.25rem; color:#ef4444; border-color:rgba(239,68,68,.3)">✕</button>
-      </div>
-    </div>
-  `).join('');
-  renderOrderSummary();
-}
-
-function changeQty(id, delta) {
-  const item = cart.find(i => i.id === id);
-  if (!item) return;
-  item.qty += delta;
-  if (item.qty <= 0) removeFromCart(id);
-  else { updateCart(); }
-}
-
-function removeFromCart(id) {
-  cart = cart.filter(i => i.id !== id);
-  updateCart();
-}
-
-let appliedDiscount = 0;
-
-function applyCoupon() {
-  const code = document.getElementById('couponInput').value.trim().toUpperCase();
-  const codes = { 'PETVAULT20': 20, 'WELCOME15': 15, 'DRAGON50': 50, 'VIP25': 25 };
-  if (codes[code]) {
-    appliedDiscount = codes[code];
-    showToast('🎉', 'Kupon aktywowany!', `Zniżka ${appliedDiscount}% zastosowana`, 'success');
-    renderCartBody();
-  } else {
-    showToast('❌', 'Nieprawidłowy kupon', 'Sprawdź kod i spróbuj ponownie', 'error');
-  }
-}
-
-function renderOrderSummary() {
-  const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const discount = subtotal * appliedDiscount / 100;
-  const total = subtotal - discount;
-  const el = document.getElementById('orderSummary');
-  el.innerHTML = `
-    <div class="order-row"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
-    ${appliedDiscount ? `<div class="order-row discount"><span>Rabat (${appliedDiscount}%)</span><span>-$${discount.toFixed(2)}</span></div>` : ''}
-    <div class="order-row"><span>Dostawa</span><span style="color:#4ade80">Gratis ⚡</span></div>
-    <div class="order-row total"><span>Razem</span><span>$${total.toFixed(2)}</span></div>
-  `;
-}
-
-function checkout() {
-  showToast('💳', 'Przekierowuję do płatności...', 'Bezpieczna transakcja SSL', 'info');
-  setTimeout(() => { openModal('loginModal'); }, 1500);
-}
-
-function toggleCart() {
-  document.getElementById('cartSidebar').classList.toggle('open');
-}
-
-// =================== SLIDER ===================
-function goToSlide(n) {
-  currentSlide = n;
-  document.getElementById('promoSlides').style.transform = `translateX(-${n * 100}%)`;
-  document.querySelectorAll('.slider-dot').forEach((d, i) => {
-    d.classList.toggle('active', i === n);
-  });
-}
-
-function autoSlide() {
-  setInterval(() => { goToSlide((currentSlide + 1) % 3); }, 5000);
-}
-
-// =================== TIMER ===================
-function startTimer() {
-  setInterval(() => {
-    timer.s--;
-    if (timer.s < 0) { timer.s = 59; timer.m--; }
-    if (timer.m < 0) { timer.m = 59; timer.h--; }
-    if (timer.h < 0) { timer.h = 23; timer.m = 59; timer.s = 59; }
-    const fmt = n => String(n).padStart(2, '0');
-    const hs = document.getElementById('t1h');
-    const ms = document.getElementById('t1m');
-    const ss = document.getElementById('t1s');
-    if(hs) hs.textContent = fmt(timer.h);
-    if(ms) ms.textContent = fmt(timer.m);
-    if(ss) ss.textContent = fmt(timer.s);
-  }, 1000);
-}
-
-// =================== MODALS ===================
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-function closeModalOutside(e, id) { if (e.target.id === id) closeModal(id); }
-
-function switchTab(tab) {
-  document.querySelectorAll('.modal-tab').forEach((t, i) => t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register')));
-  document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
-  document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
-}
-
-function loginUser() {
-  showToast('✅', 'Zalogowano!', 'Witaj z powrotem w PetVault99', 'success');
-  closeModal('loginModal');
-}
-
-function registerUser() {
-  showToast('🎉', 'Konto utworzone!', 'Sprawdź email z kodem -15%', 'success');
-  closeModal('loginModal');
-}
-
-// =================== TOASTS ===================
-function showToast(icon, title, sub, type = 'info') {
-  const container = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  const borderColor = { success: '#4ade80', error: '#ef4444', info: 'var(--neon-purple)', warning: 'var(--neon-gold)' }[type] || 'var(--dark-border)';
-  toast.style.borderColor = borderColor;
-  toast.innerHTML = `
-    <div class="toast-icon">${icon}</div>
-    <div class="toast-text">
-      <div class="toast-title">${title}</div>
-      <div class="toast-sub">${sub}</div>
-    </div>
-    <div class="toast-close" onclick="this.parentElement.remove()">✕</div>
-  `;
-  container.appendChild(toast);
-  setTimeout(() => { toast.style.animation = 'toast-in 0.4s ease reverse'; setTimeout(() => toast.remove(), 400); }, 3500);
-}
-
-// =================== FAQ ===================
-const faqs = [
-  { q: 'Jak szybko otrzymam zakupionego Peta?', a: 'Dostarczamy zakupione przedmioty automatycznie — zazwyczaj w ciągu 1-5 minut od potwierdzenia płatności. W rzadkich przypadkach może to potrwać do 30 minut.' },
-  { q: 'Jakie metody płatności akceptujecie?', a: 'Akceptujemy wszystkie główne metody płatności: karty Visa/Mastercard, PayPal, BLIK, Apple Pay, Google Pay, a także kryptowaluty (Bitcoin, Ethereum, USDT).' },
-  { q: 'Czy mogę zwrócić zakupionego Peta?', a: 'Ze względu na cyfrowy charakter produktów, zwroty są możliwe tylko w przypadku problemów technicznych z dostawą. Skontaktuj się z naszym supportem przez Discord lub Live Chat.' },
-  { q: 'Jak działa program lojalnościowy?', a: 'Za każdy zakup otrzymujesz punkty lojalnościowe (1 PLN = 1 punkt). Zbierając punkty awansujesz przez poziomy Bronze, Silver, Gold i Diamond, odblokowując coraz większe zniżki i przywileje.' },
-  { q: 'Jak mogę skontaktować się z supportem?', a: 'Jesteśmy dostępni 24/7 przez Live Chat na stronie, serwer Discord (link w stopce) oraz system ticketów. Staramy się odpowiadać w ciągu 15 minut.' },
-  { q: 'Czy kody rabatowe można łączyć?', a: 'Nie, w danej transakcji można użyć tylko jednego kodu rabatowego. Wyjątkiem są kody programu lojalnościowego, które mogą być stosowane łącznie z niektórymi promocjami.' },
-];
-
-function initFAQ() {
-  const container = document.getElementById('faqContainer');
-  container.innerHTML = faqs.map((f, i) => `
-    <div class="faq-item" id="faq-${i}">
-      <div class="faq-question" onclick="toggleFAQ(${i})">
-        <span>${f.q}</span>
-        <div class="faq-icon">+</div>
-      </div>
-      <div class="faq-answer">
-        <div class="faq-answer-inner">${f.a}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function toggleFAQ(i) {
-  const item = document.getElementById(`faq-${i}`);
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
-}
-
-// =================== NEWSLETTER ===================
-function subscribeNewsletter() {
-  const email = document.getElementById('newsletterEmail').value;
-  if (!email || !email.includes('@')) { showToast('❌', 'Nieprawidłowy email', 'Wpisz poprawny adres email', 'error'); return; }
-  showToast('📧', 'Zapisano!', 'Sprawdź email z kodem powitalnym -15%', 'success');
-  document.getElementById('newsletterEmail').value = '';
-}
-
-// =================== MOBILE MENU ===================
-function toggleMobileMenu() {
-  mobileMenuOpen = !mobileMenuOpen;
-  document.getElementById('mobileMenu').classList.toggle('open', mobileMenuOpen);
-}
-
-// =================== CHAT ===================
-let chatOpen = false;
-function toggleChat() {
-  chatOpen = !chatOpen;
-  const bubble = document.getElementById('chatBubble');
-  if (chatOpen) { bubble.textContent = 'Ładowanie chatu...'; setTimeout(() => { showToast('💬', 'Live Chat', 'Łączymy z agentem... chwila!', 'info'); bubble.textContent = 'Potrzebujesz pomocy?'; chatOpen = false; }, 1500); }
-}
-
-// =================== COUNTER ANIMATION ===================
-function animateCounters() {
-  const counters = document.querySelectorAll('.counter-animate');
-  counters.forEach(el => {
-    const target = parseInt(el.dataset.target);
-    const duration = 2000;
-    const step = target / (duration / 16);
-    let current = 0;
-    const interval = setInterval(() => {
-      current = Math.min(current + step, target);
-      el.textContent = Math.floor(current).toLocaleString();
-      if (current >= target) clearInterval(interval);
-    }, 16);
-  });
-}
-
-// =================== STARS ===================
-function createStars() {
-  const container = document.getElementById('starsContainer');
-  for (let i = 0; i < 80; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.cssText = `left:${Math.random()*100}%; top:${Math.random()*100}%; --d:${2+Math.random()*4}s; --delay:${Math.random()*4}s; --o:${0.1+Math.random()*0.4}`;
-    container.appendChild(star);
-  }
-}
-
-// =================== SCROLL REVEAL ===================
-function initScrollReveal() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.animation = 'fade-in-up 0.6s ease both';
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.stat-card, .category-card, .product-card, .testimonial-card, .loyalty-tier, .faq-item').forEach(el => {
-    el.style.opacity = '0';
-    observer.observe(el);
-  });
-}
-
-// =================== INIT ===================
-document.addEventListener('DOMContentLoaded', () => {
-  createStars();
-  initProducts();
-  initFAQ();
-  autoSlide();
-  startTimer();
-  setTimeout(animateCounters, 500);
-  setTimeout(initScrollReveal, 100);
-  setTimeout(() => showToast('🎉', 'Witaj w PetVault99!', 'Użyj kodu WELCOME15 na -15% 🎁', 'success'), 2000);
-});
-</script>
 </body>
 </html>
