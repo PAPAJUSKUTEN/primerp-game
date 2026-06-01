@@ -1,45 +1,155 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Serwera</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #1e1e2f;
-            color: white;
-            text-align: center;
-            margin: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rekrutacja Serwera</title>
 
-        header {
-            padding: 40px;
-            background: #2b2b45;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,sans-serif;
+}
 
-        .container {
-            padding: 40px;
-        }
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#5865F2,#2B2D31);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
 
-        a.button {
-            display: inline-block;
-            background: #5865F2;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-    </style>
+.card{
+    width:100%;
+    max-width:700px;
+    background:#1E1F22;
+    border-radius:20px;
+    padding:35px;
+    color:white;
+    box-shadow:0 0 30px rgba(0,0,0,.3);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:6px;
+}
+
+input, textarea{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#2B2D31;
+    color:white;
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#5865F2;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+#status{
+    text-align:center;
+    margin-top:15px;
+}
+</style>
 </head>
 <body>
-    <header>
-        <h1>Witamy w Systemie Serwera</h1>
-        <p>Dołącz do naszej społeczności.</p>
-    </header>
 
-    <div class="container">
-        <a href="formularz.html" class="button">Dołącz teraz</a>
-    </div>
+<div class="card">
+
+<h1>Formularz Rekrutacyjny</h1>
+
+<form id="rekrutacja">
+
+<label>Nick Discord</label>
+<input type="text" id="nick" required>
+
+<label>Wiek</label>
+<input type="number" id="wiek" min="13" required>
+
+<label>ID Discord</label>
+<input type="text" id="discordid" required>
+
+<label>Dlaczego chcesz dołączyć?</label>
+<textarea id="powod" required></textarea>
+
+<label>Doświadczenie</label>
+<textarea id="doswiadczenie" required></textarea>
+
+<button type="submit">
+Wyślij zgłoszenie
+</button>
+
+</form>
+
+<div id="status"></div>
+
+</div>
+
+<script>
+document.getElementById("rekrutacja")
+.addEventListener("submit", async (e)=>{
+
+e.preventDefault();
+
+const dane = {
+    nick: document.getElementById("nick").value,
+    wiek: document.getElementById("wiek").value,
+    discordid: document.getElementById("discordid").value,
+    powod: document.getElementById("powod").value,
+    doswiadczenie: document.getElementById("doswiadczenie").value
+};
+
+try{
+    const res = await fetch("/api/rekrutacja",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify(dane)
+    });
+
+    if(res.ok){
+        document.getElementById("status").innerHTML =
+        "✅ Zgłoszenie zostało wysłane.";
+        e.target.reset();
+    }else{
+        document.getElementById("status").innerHTML =
+        "❌ Błąd wysyłania.";
+    }
+}catch{
+    document.getElementById("status").innerHTML =
+    "❌ Serwer niedostępny.";
+}
+});
+</script>
+
 </body>
 </html>
