@@ -3,59 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rekrutacja Serwera</title>
+<title>NeoRolePlay</title>
 
 <style>
+:root{
+    --bg:#0f1117;
+    --card:#171a22;
+    --accent:#5865F2;
+    --accent2:#7289DA;
+    --text:#ffffff;
+    --muted:#b8b8b8;
+}
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
+    background:var(--bg);
+    color:var(--text);
+}
+
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    backdrop-filter:blur(12px);
+    background:rgba(15,17,23,.85);
+    z-index:1000;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav-container{
+    max-width:1200px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:700;
+}
+
+.logo span{
+    color:var(--accent);
+}
+
+nav ul{
+    display:flex;
+    gap:20px;
+    list-style:none;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+}
+
+.hero{
     min-height:100vh;
-    background:linear-gradient(135deg,#5865F2,#2B2D31);
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:20px;
+    text-align:center;
+    padding:40px;
+    background:
+    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.8)),
+    radial-gradient(circle at center,#2f3d85,#0f1117 60%);
 }
 
-.container{
-    width:100%;
-    max-width:700px;
-    background:#1e1f22;
+.hero-content{
+    max-width:900px;
+}
+
+.hero h1{
+    font-size:72px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    color:var(--muted);
+    font-size:20px;
+    margin-bottom:35px;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.btn{
+    background:var(--accent);
+    color:white;
+    padding:15px 28px;
+    border-radius:12px;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+section{
+    max-width:1200px;
+    margin:auto;
+    padding:90px 20px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+    font-size:42px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:var(--card);
+    padding:25px;
+    border-radius:18px;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+
+.stat{
+    background:var(--card);
+    text-align:center;
+    padding:30px;
+    border-radius:18px;
+}
+
+.stat-number{
+    font-size:42px;
+    color:var(--accent);
+    font-weight:bold;
+}
+
+.form-container{
+    background:var(--card);
     border-radius:20px;
     padding:30px;
-    color:white;
-    box-shadow:0 0 30px rgba(0,0,0,.4);
-}
-
-h1{
-    text-align:center;
-    margin-bottom:25px;
+    max-width:700px;
+    margin:auto;
 }
 
 label{
     display:block;
     margin-top:15px;
-    margin-bottom:5px;
+    margin-bottom:6px;
 }
 
-input,
-textarea{
+input,textarea{
     width:100%;
     padding:12px;
     border:none;
     border-radius:10px;
-    background:#2b2d31;
+    background:#232733;
     color:white;
 }
 
 textarea{
     min-height:120px;
-    resize:vertical;
 }
 
 button{
@@ -64,133 +197,230 @@ button{
     padding:14px;
     border:none;
     border-radius:10px;
-    background:#5865F2;
+    background:var(--accent);
     color:white;
-    font-size:16px;
     cursor:pointer;
-}
-
-button:hover{
-    opacity:.9;
+    font-size:16px;
 }
 
 #status{
     text-align:center;
     margin-top:15px;
 }
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#8a8a8a;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+@media(max-width:768px){
+    .hero h1{
+        font-size:48px;
+    }
+
+    nav ul{
+        display:none;
+    }
+}
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<nav>
+    <div class="nav-container">
+        <div class="logo">Neo<span>RolePlay</span></div>
 
-<h1>Formularz Rekrutacyjny</h1>
+        <ul>
+            <li><a href="#about">O serwerze</a></li>
+            <li><a href="#news">Nowości</a></li>
+            <li><a href="#stats">Statystyki</a></li>
+            <li><a href="#apply">Rekrutacja</a></li>
+        </ul>
+    </div>
+</nav>
 
-<form id="rekrutacja">
+<section class="hero">
+    <div class="hero-content">
+        <h1>NeoRolePlay</h1>
+        <p>Nowoczesny świat RolePlay. Twórz historię swojej postaci i rozwijaj się razem z innymi graczami.</p>
 
-<label>Nick Discord</label>
-<input type="text" id="nick" required>
+        <div class="buttons">
+            <a class="btn" href="#apply">📋 Rekrutacja</a>
+            <a class="btn" href="#news">📰 Nowości</a>
+            <a class="btn" href="#stats">📊 Statystyki</a>
+        </div>
+    </div>
+</section>
 
-<label>Wiek</label>
-<input type="number" id="wiek" min="13" required>
+<section id="about">
+    <h2 class="section-title">O Serwerze</h2>
 
-<label>ID Discord</label>
-<input type="text" id="discordid" required>
+    <div class="cards">
+        <div class="card">
+            <h3>🚓 Frakcje</h3>
+            <p>Dołącz do służb mundurowych, medycznych lub innych organizacji.</p>
+        </div>
 
-<label>Dlaczego chcesz dołączyć?</label>
-<textarea id="powod" required></textarea>
+        <div class="card">
+            <h3>🏢 Biznesy</h3>
+            <p>Twórz własne firmy i buduj imperium ekonomiczne.</p>
+        </div>
 
-<label>Doświadczenie</label>
-<textarea id="doswiadczenie" required></textarea>
+        <div class="card">
+            <h3>🚗 Pojazdy</h3>
+            <p>Rozbudowany system pojazdów i modyfikacji.</p>
+        </div>
+    </div>
+</section>
 
-<button type="submit">
-Wyślij zgłoszenie
-</button>
+<section id="news">
+    <h2 class="section-title">Nowości</h2>
 
-</form>
+    <div class="cards">
+        <div class="card">
+            <h3>Aktualizacja 1.0</h3>
+            <p>Dodano nowe lokacje i system pracy.</p>
+        </div>
 
-<div id="status"></div>
+        <div class="card">
+            <h3>Nowe frakcje</h3>
+            <p>Uruchomiono dodatkowe organizacje dla graczy.</p>
+        </div>
 
-</div>
+        <div class="card">
+            <h3>Rekrutacja</h3>
+            <p>Otwarty nabór do administracji i supportu.</p>
+        </div>
+    </div>
+</section>
+
+<section id="stats">
+    <h2 class="section-title">Statystyki</h2>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-number">250+</div>
+            <p>Graczy</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number">12</div>
+            <p>Frakcji</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number">50+</div>
+            <p>Biznesów</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number">24/7</div>
+            <p>Online</p>
+        </div>
+    </div>
+</section>
+
+<section id="apply">
+    <h2 class="section-title">Formularz Rekrutacyjny</h2>
+
+    <div class="form-container">
+        <form id="rekrutacja">
+
+            <label>Nick Discord</label>
+            <input type="text" id="nick" required>
+
+            <label>Wiek</label>
+            <input type="number" id="wiek" required>
+
+            <label>ID Discord</label>
+            <input type="text" id="discordid" required>
+
+            <label>Dlaczego chcesz dołączyć?</label>
+            <textarea id="powod" required></textarea>
+
+            <label>Doświadczenie</label>
+            <textarea id="doswiadczenie" required></textarea>
+
+            <button type="submit">
+                Wyślij zgłoszenie
+            </button>
+
+        </form>
+
+        <div id="status"></div>
+    </div>
+</section>
+
+<footer>
+    © 2026 NeoRolePlay
+</footer>
 
 <script>
-
 const WEBHOOK_URL = "https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn";
 
 document.getElementById("rekrutacja").addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const nick = document.getElementById("nick").value;
-    const wiek = document.getElementById("wiek").value;
-    const discordid = document.getElementById("discordid").value;
-    const powod = document.getElementById("powod").value;
-    const doswiadczenie = document.getElementById("doswiadczenie").value;
+    if (WEBHOOK_URL === "https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn") {
+        document.getElementById("status").innerHTML =
+        "⚠️ Wstaw własny webhook w kodzie.";
+        return;
+    }
 
     const payload = {
-        username: "System Rekrutacji",
-        embeds: [{
-            title: "📨 Nowe zgłoszenie",
-            fields: [
+        embeds:[{
+            title:"Nowe zgłoszenie",
+            fields:[
                 {
-                    name: "Nick Discord",
-                    value: nick,
-                    inline: true
+                    name:"Nick Discord",
+                    value:document.getElementById("nick").value
                 },
                 {
-                    name: "Wiek",
-                    value: wiek,
-                    inline: true
+                    name:"Wiek",
+                    value:document.getElementById("wiek").value
                 },
                 {
-                    name: "ID Discord",
-                    value: discordid,
-                    inline: false
+                    name:"ID Discord",
+                    value:document.getElementById("discordid").value
                 },
                 {
-                    name: "Powód dołączenia",
-                    value: powod,
-                    inline: false
+                    name:"Powód",
+                    value:document.getElementById("powod").value
                 },
                 {
-                    name: "Doświadczenie",
-                    value: doswiadczenie,
-                    inline: false
+                    name:"Doświadczenie",
+                    value:document.getElementById("doswiadczenie").value
                 }
             ],
-            footer: {
-                text: "Formularz Rekrutacyjny"
-            },
-            timestamp: new Date().toISOString()
+            timestamp:new Date().toISOString()
         }]
     };
 
-    try {
-
-        const response = await fetch(WEBHOOK_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
+    try{
+        const response = await fetch(WEBHOOK_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
             },
-            body: JSON.stringify(payload)
+            body:JSON.stringify(payload)
         });
 
         if(response.ok){
             document.getElementById("status").innerHTML =
-                "✅ Zgłoszenie zostało wysłane!";
+            "✅ Zgłoszenie wysłane.";
             e.target.reset();
-        } else {
+        }else{
             document.getElementById("status").innerHTML =
-                "❌ Discord zwrócił błąd.";
+            "❌ Błąd wysyłania.";
         }
 
-    } catch(error) {
+    }catch(err){
         document.getElementById("status").innerHTML =
-            "❌ Nie udało się wysłać formularza.";
-        console.error(error);
+        "❌ Nie udało się połączyć.";
     }
-
 });
 </script>
 
