@@ -3,408 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emergency Hamburg - Community Hub</title>
-    <style>
-        :root {
-            --bg-dark: #0f111a;
-            --bg-card: #161925;
-            --blue-police: #0055ff;
-            --red-fire: #ff2222;
-            --yellow-adac: #ffcc00;
-            --text-main: #ffffff;
-            --text-muted: #a0a5b5;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Migające światła w tle (Klimat Emergency) */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--blue-police), var(--red-fire), var(--blue-police));
-            z-index: 9999;
-        }
-
-        /* Nawigacja */
-        header {
-            background-color: rgba(22, 25, 37, 0.95);
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-weight: 800;
-            font-size: 22px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .logo span {
-            color: var(--red-fire);
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            margin-left: 25px;
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--blue-police);
-        }
-
-        /* Sekcja Powitalna */
-        .hero {
-            height: 65vh;
-            background: linear-gradient(rgba(15, 17, 26, 0.85), var(--bg-dark)), url('https://picsum.photos/1920/1080?grayscale') no-repeat center center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            margin-top: 70px;
-        }
-
-        .hero h1 {
-            font-size: 52px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero h1 span {
-            color: var(--blue-police);
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--blue-police), #0033aa);
-            color: white;
-            padding: 14px 35px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(0, 85, 255, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 85, 255, 0.6);
-        }
-
-        /* Główny kontener */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-
-        section {
-            margin-bottom: 80px;
-        }
-
-        h2 {
-            font-size: 32px;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 40px;
-            letter-spacing: 1px;
-        }
-
-        /* Frakcje / Role */
-        .roles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .role-card {
-            background-color: var(--bg-card);
-            border-radius: 6px;
-            padding: 30px;
-            border-top: 4px solid var(--text-muted);
-            transition: transform 0.3s;
-        }
-
-        .role-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .role-card.police { border-top-color: var(--blue-police); }
-        .role-card.fire { border-top-color: var(--red-fire); }
-        .role-card.adac { border-top-color: var(--yellow-adac); }
-        .role-card.criminals { border-top-color: #2ecc71; }
-
-        .role-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .role-card p {
-            color: var(--text-muted);
-            font-size: 15px;
-        }
-
-        /* Jak dołączyć / Rekrutacja */
-        .join-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .step {
-            background-color: var(--bg-card);
-            padding: 25px;
-            border-radius: 6px;
-            position: relative;
-        }
-
-        .step-count {
-            font-size: 48px;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.05);
-            position: absolute;
-            top: 5px;
-            right: 15px;
-        }
-
-        .step h4 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: var(--blue-police);
-        }
-
-        .step p {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        /* Panel Statusu i Statystyk */
-        .status-panel {
-            background-color: var(--bg-card);
-            border-radius: 6px;
-            padding: 40px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background-color: rgba(46, 204, 113, 0.1);
-            color: #2ecc71;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-        }
-
-        .status-indicator::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #2ecc71;
-            border-radius: 50%;
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .stat-box h5 {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--text-main);
-        }
-
-        .stat-box p {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
-
-        /* Stopka */
-        footer {
-            background-color: #0a0b11;
-            padding: 30px;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 13px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Responsywność */
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-                flex-direction: column;
-                gap: 10px;
-            }
-            nav a {
-                margin: 0 10px;
-                font-size: 12px;
-            }
-            .hero h1 {
-                font-size: 32px;
-            }
-            .stats-grid {
-                flex-direction: column;
-                gap: 30px;
-            }
-        }
-    </style>
+    <title>Rekrutacja - Emergency Hamburg</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Menu górne -->
-    <header>
-        <div class="logo">Emergency <span>Hamburg</span></div>
-        <nav>
-            <a href="#frakcje">Frakcje</a>
-            <a href="#rekrutacja">Dołącz</a>
-            <a href="#status">Status</a>
-        </nav>
-    </header>
+    <div class="form-container">
+        <div class="form-header">
+            <h2>System Rekrutacji</h2>
+            <p>Wypełnij formularz, aby wysłać prośbę o dołączenie do struktur.</p>
+        </div>
 
-    <!-- Sekcja powitalna (Hero) -->
-    <div class="hero">
-        <h1>Patroluj ulice <span>Hamburga</span></h1>
-        <p>Wstąp w szeregi policji, zabezpieczaj miasto jako strażak, pomagaj kierowcom w ADAC lub twórz własne imperium przestępcze w jednej z najlepszych gier ratunkowych na Roblox.</p>
-        <a href="https://www.roblox.com/games/4991384013/Emergency-Hamburg" target="_blank" class="btn">Zagraj w grę</a>
+        <form id="recruitmentForm">
+            <!-- Nick z Roblox -->
+            <div class="form-group">
+                <label for="robloxNick">Nick z Roblox:</label>
+                <input type="text" id="robloxNick" placeholder="np. Janusz_Roblox" required>
+            </div>
+
+            <!-- Wiek -->
+            <div class="form-group">
+                <label for="userAge">Wiek:</label>
+                <input type="number" id="userAge" min="13" max="99" placeholder="np. 16" required>
+            </div>
+
+            <!-- Wybór Frakcji -->
+            <div class="form-group">
+                <label for="factionSelect">Wybierz Frakcję:</label>
+                <select id="factionSelect" required>
+                    <option value="" disabled selected>-- Wybierz strukturę --</option>
+                    <option value="Polizei (Policja)">Polizei (Policja)</option>
+                    <option value="Feuerwehr (Straż Pożarna/EMS)">Feuerwehr (Straż Pożarna/EMS)</option>
+                    <option value="ADAC (Pomoc Drogowa)">ADAC (Pomoc Drogowa)</option>
+                </select>
+            </div>
+
+            <!-- Coś o sobie / Motywacja -->
+            <div class="form-group">
+                <label for="userBio">Dlaczego chcesz dołączyć? (Min. 3 zdania):</label>
+                <textarea id="userBio" rows="5" placeholder="Napisz coś o swoim doświadczeniu w Emergency Hamburg..." required></textarea>
+            </div>
+
+            <!-- Przycisk wysyłania -->
+            <button type="submit" id="submitBtn">Wyślij zgłoszenie</button>
+        </form>
+        
+        <!-- Komunikat o statusie wysyłania -->
+        <div id="statusMessage" class="status-message"></div>
     </div>
 
-    <!-- Główna zawartość -->
-    <div class="container">
-
-        <!-- Sekcja Frakcji -->
-        <section id="frakcje">
-            <h2>Wybierz swoją stronę konfliktu</h2>
-            <div class="roles-grid">
-                <div class="role-card police">
-                    <h3>Polizei (Policja)</h3>
-                    <p>Dbaj o przestrzeganie prawa na ulicach Hamburga. Reaguj na zgłoszenia o kradzieżach, bierz udział w pościgach i dbaj o bezpieczeństwo mieszkańców miasta.</p>
-                </div>
-                <div class="role-card fire">
-                    <h3>Feuerwehr (Straż / EMS)</h3>
-                    <p>Walcz z niebezpiecznymi pożarami, neutralizuj skutki wypadków drogowych oraz udzielaj natychmiastowej pomocy medycznej jako wykwalifikowany ratownik.</p>
-                </div>
-                <div class="role-card adac (Pomoc drogowa)">
-                    <h3>ADAC (Pomoc Drogowa)</h3>
-                    <p>Zabezpieczaj uszkodzone pojazdy, holuj auta tarasujące ruch, naprawiaj sygnalizację świetlną i dbaj o to, by infrastruktura miejska działała bez zarzutu.</p>
-                </div>
-                <div class="role-card criminals">
-                    <h3>Kryminaliści / Obywatele</h3>
-                    <p>Pracuj legalnie na farmie czy w logistyce albo wejdź na ścieżkę bezprawia – organizuj napady na banki, salony jubilerskie i uciekaj przed czujnym okiem policji.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sekcja Rekrutacji -->
-        <section id="rekrutacja">
-            <h2>Jak dołączyć do naszej społeczności?</h2>
-            <div class="join-steps">
-                <div class="step">
-                    <div class="step-count">1</div>
-                    <h4>Discord</h4>
-                    <p>Wejdź na nasz oficjalny serwer Discord, gdzie koordynujemy wspólne patrole i akcje RP.</p>
-                </div>
-                <div class="step">
-                    <div class="step-count">2</div>
-                    <h4>Regulamin</h4>
-                    <p>Przeczytaj zasady zachowania na serwerze i podczas wspólnej rozgrywki, aby uniknąć kar.</p>
-                </div>
-                <div class="step">
-                    <div class="step-count">3</div>
-                    <h4>Wybór roli</h4>
-                    <p>Wybierz frakcję w sekcji ról na Discordzie i zgłoś się do odpowiedniej akademii treningowej.</p>
-                </div>
-                <div class="step">
-                    <div class="step-count">4</div>
-                    <h4>Wspólny patrol</h4>
-                    <p>Zaloguj się na serwer Roblox, odpal dyspozytornię i ruszaj w miasto z resztą ekipy!</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sekcja Statusu -->
-        <section id="status">
-            <h2>Statystyki i aktywność</h2>
-            <div class="status-panel">
-                <div class="status-indicator">Patrole Aktywne</div>
-                <div class="stats-grid">
-                    <div class="stat-box">
-                        <h5>A+</h5>
-                        <p>Poziom Imersji RP</p>
-                    </div>
-                    <div class="stat-box">
-                        <h5>24/7</h5>
-                        <p>Dostępność Discorda</p>
-                    </div>
-                    <div class="stat-box">
-                        <h5>Roblox</h5>
-                        <p>Platforma docelowa</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- Stopka -->
-    <footer>
-        <p>&copy; 2026 Emergency Hamburg Fan Community. Strona ma charakter społecznościowy i nie jest oficjalnie powiązana ze studiem wizualnym twórców gry na Roblox.</p>
-    </footer>
-
+    <script href="script.js"></script>
 </body>
 </html>
