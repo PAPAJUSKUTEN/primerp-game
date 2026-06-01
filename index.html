@@ -1,8 +1,126 @@
-<script>
-document.getElementById("rekrutacja").addEventListener("submit", async (e) => {
-    e.preventDefault();
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rekrutacja Serwera</title>
 
-    const webhookURL = "https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn";
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#5865F2,#2B2D31);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:700px;
+    background:#1e1f22;
+    border-radius:20px;
+    padding:30px;
+    color:white;
+    box-shadow:0 0 30px rgba(0,0,0,.4);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:5px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#2b2d31;
+    color:white;
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#5865F2;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+#status{
+    text-align:center;
+    margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Formularz Rekrutacyjny</h1>
+
+<form id="rekrutacja">
+
+<label>Nick Discord</label>
+<input type="text" id="nick" required>
+
+<label>Wiek</label>
+<input type="number" id="wiek" min="13" required>
+
+<label>ID Discord</label>
+<input type="text" id="discordid" required>
+
+<label>Dlaczego chcesz dołączyć?</label>
+<textarea id="powod" required></textarea>
+
+<label>Doświadczenie</label>
+<textarea id="doswiadczenie" required></textarea>
+
+<button type="submit">
+Wyślij zgłoszenie
+</button>
+
+</form>
+
+<div id="status"></div>
+
+</div>
+
+<script>
+
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn";
+
+document.getElementById("rekrutacja").addEventListener("submit", async (e) => {
+
+    e.preventDefault();
 
     const nick = document.getElementById("nick").value;
     const wiek = document.getElementById("wiek").value;
@@ -11,21 +129,46 @@ document.getElementById("rekrutacja").addEventListener("submit", async (e) => {
     const doswiadczenie = document.getElementById("doswiadczenie").value;
 
     const payload = {
+        username: "System Rekrutacji",
         embeds: [{
-            title: "Nowe zgłoszenie",
+            title: "📨 Nowe zgłoszenie",
             fields: [
-                { name: "Nick", value: nick },
-                { name: "Wiek", value: wiek },
-                { name: "ID Discord", value: discordid },
-                { name: "Powód", value: powod },
-                { name: "Doświadczenie", value: doswiadczenie }
+                {
+                    name: "Nick Discord",
+                    value: nick,
+                    inline: true
+                },
+                {
+                    name: "Wiek",
+                    value: wiek,
+                    inline: true
+                },
+                {
+                    name: "ID Discord",
+                    value: discordid,
+                    inline: false
+                },
+                {
+                    name: "Powód dołączenia",
+                    value: powod,
+                    inline: false
+                },
+                {
+                    name: "Doświadczenie",
+                    value: doswiadczenie,
+                    inline: false
+                }
             ],
+            footer: {
+                text: "Formularz Rekrutacyjny"
+            },
             timestamp: new Date().toISOString()
         }]
     };
 
     try {
-        const response = await fetch(webhookURL, {
+
+        const response = await fetch(WEBHOOK_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -33,18 +176,23 @@ document.getElementById("rekrutacja").addEventListener("submit", async (e) => {
             body: JSON.stringify(payload)
         });
 
-        if (response.ok) {
+        if(response.ok){
             document.getElementById("status").innerHTML =
-                "✅ Zgłoszenie wysłane.";
+                "✅ Zgłoszenie zostało wysłane!";
             e.target.reset();
         } else {
             document.getElementById("status").innerHTML =
-                "❌ Discord odrzucił zgłoszenie.";
+                "❌ Discord zwrócił błąd.";
         }
-    } catch (err) {
+
+    } catch(error) {
         document.getElementById("status").innerHTML =
-            "❌ Nie udało się połączyć z webhookiem.";
-        console.error(err);
+            "❌ Nie udało się wysłać formularza.";
+        console.error(error);
     }
+
 });
 </script>
+
+</body>
+</html>
