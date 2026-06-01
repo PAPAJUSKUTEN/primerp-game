@@ -3,55 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekrutacja - Emergency Hamburg</title>
-    <link rel="stylesheet" href="style.css">
+    <title>System Serwera</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1e1e2f;
+            color: white;
+            text-align: center;
+            margin: 0;
+        }
+
+        header {
+            padding: 40px;
+            background: #2b2b45;
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        a.button {
+            display: inline-block;
+            background: #5865F2;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Witamy w Systemie Serwera</h1>
+        <p>Dołącz do naszej społeczności.</p>
+    </header>
 
-    <div class="form-container">
-        <div class="form-header">
-            <h2>System Rekrutacji</h2>
-            <p>Wypełnij formularz, aby wysłać prośbę o dołączenie do struktur.</p>
-        </div>
-
-        <form id="recruitmentForm">
-            <!-- Nick z Roblox -->
-            <div class="form-group">
-                <label for="robloxNick">Nick z Roblox:</label>
-                <input type="text" id="robloxNick" placeholder="np. Janusz_Roblox" required>
-            </div>
-
-            <!-- Wiek -->
-            <div class="form-group">
-                <label for="userAge">Wiek:</label>
-                <input type="number" id="userAge" min="13" max="99" placeholder="np. 16" required>
-            </div>
-
-            <!-- Wybór Frakcji -->
-            <div class="form-group">
-                <label for="factionSelect">Wybierz Frakcję:</label>
-                <select id="factionSelect" required>
-                    <option value="" disabled selected>-- Wybierz strukturę --</option>
-                    <option value="Polizei (Policja)">Polizei (Policja)</option>
-                    <option value="Feuerwehr (Straż Pożarna/EMS)">Feuerwehr (Straż Pożarna/EMS)</option>
-                    <option value="ADAC (Pomoc Drogowa)">ADAC (Pomoc Drogowa)</option>
-                </select>
-            </div>
-
-            <!-- Coś o sobie / Motywacja -->
-            <div class="form-group">
-                <label for="userBio">Dlaczego chcesz dołączyć? (Min. 3 zdania):</label>
-                <textarea id="userBio" rows="5" placeholder="Napisz coś o swoim doświadczeniu w Emergency Hamburg..." required></textarea>
-            </div>
-
-            <!-- Przycisk wysyłania -->
-            <button type="submit" id="submitBtn">Wyślij zgłoszenie</button>
-        </form>
-        
-        <!-- Komunikat o statusie wysyłania -->
-        <div id="statusMessage" class="status-message"></div>
+    <div class="container">
+        <a href="formularz.html" class="button">Dołącz teraz</a>
     </div>
-
-    <script href="script.js"></script>
 </body>
 </html>
