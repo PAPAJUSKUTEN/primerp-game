@@ -1,428 +1,296 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeoRolePlay</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberCore: Neon Clicker</title>
+    <style>
+        /* --- RESET I BRYŁA GŁÓWNA --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Consolas', 'Courier New', monospace;
+            user-select: none;
+        }
 
-<style>
-:root{
-    --bg:#0f1117;
-    --card:#171a22;
-    --accent:#5865F2;
-    --accent2:#7289DA;
-    --text:#ffffff;
-    --muted:#b8b8b8;
-}
+        body {
+            background-color: #05050a;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(at 20% 20%, rgba(0, 240, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(255, 0, 127, 0.15) 0px, transparent 50%);
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
-}
+        /* --- BENTO GRID LAYOUT --- */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 300px);
+            grid-template-rows: repeat(2, 220px);
+            gap: 20px;
+            padding: 20px;
+        }
 
-html{
-    scroll-behavior:smooth;
-}
+        /* --- SZKLANY PANEL (GLASSMORPHISM) --- */
+        .bento-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
 
-body{
-    background:var(--bg);
-    color:var(--text);
-}
+        .bento-card:hover {
+            transform: translateY(-5px);
+        }
 
-nav{
-    position:fixed;
-    top:0;
-    width:100%;
-    backdrop-filter:blur(12px);
-    background:rgba(15,17,23,.85);
-    z-index:1000;
-    border-bottom:1px solid rgba(255,255,255,.08);
-}
+        /* Specyficzne układy kafelków Bento */
+        .card-main {
+            grid-row: span 2; /* Zajmuje 2 wiersze na wysokość */
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            border-color: rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+        }
 
-.nav-container{
-    max-width:1200px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px;
-}
+        /* --- ELEMENTY INTERFEJSU --- */
+        .neon-text-cyan {
+            color: #00f0ff;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+        }
 
-.logo{
-    font-size:24px;
-    font-weight:700;
-}
+        .neon-text-pink {
+            color: #ff007f;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-.logo span{
-    color:var(--accent);
-}
+        .stat-desc {
+            color: #8a9ba8;
+            font-size: 0.9rem;
+        }
 
-nav ul{
-    display:flex;
-    gap:20px;
-    list-style:none;
-}
+        /* --- RDZEŃ DO KLIKANIA --- */
+        .cyber-core {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #0b192c 0%, #05050a 100%);
+            border: 3px solid #00f0ff;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), inset 0 0 15px rgba(0, 240, 255, 0.2);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #00f0ff;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
 
-nav a{
-    text-decoration:none;
-    color:white;
-}
+        .cyber-core:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6), inset 0 0 5px rgba(0, 240, 255, 0.4);
+        }
 
-.hero{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:40px;
-    background:
-    linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.8)),
-    radial-gradient(circle at center,#2f3d85,#0f1117 60%);
-}
+        /* --- PRZYCISKI SKLEPU --- */
+        .upgrade-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
 
-.hero-content{
-    max-width:900px;
-}
+        .upgrade-btn:hover:not(:disabled) {
+            background: #ff007f;
+            border-color: #ff007f;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+            color: white;
+        }
 
-.hero h1{
-    font-size:72px;
-    margin-bottom:15px;
-}
-
-.hero p{
-    color:var(--muted);
-    font-size:20px;
-    margin-bottom:35px;
-}
-
-.buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:15px;
-}
-
-.btn{
-    background:var(--accent);
-    color:white;
-    padding:15px 28px;
-    border-radius:12px;
-    text-decoration:none;
-    transition:.2s;
-}
-
-.btn:hover{
-    transform:translateY(-3px);
-}
-
-section{
-    max-width:1200px;
-    margin:auto;
-    padding:90px 20px;
-}
-
-.section-title{
-    text-align:center;
-    margin-bottom:40px;
-    font-size:42px;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-}
-
-.card{
-    background:var(--card);
-    padding:25px;
-    border-radius:18px;
-}
-
-.card h3{
-    margin-bottom:10px;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:20px;
-}
-
-.stat{
-    background:var(--card);
-    text-align:center;
-    padding:30px;
-    border-radius:18px;
-}
-
-.stat-number{
-    font-size:42px;
-    color:var(--accent);
-    font-weight:bold;
-}
-
-.form-container{
-    background:var(--card);
-    border-radius:20px;
-    padding:30px;
-    max-width:700px;
-    margin:auto;
-}
-
-label{
-    display:block;
-    margin-top:15px;
-    margin-bottom:6px;
-}
-
-input,textarea{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#232733;
-    color:white;
-}
-
-textarea{
-    min-height:120px;
-}
-
-button{
-    width:100%;
-    margin-top:20px;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:var(--accent);
-    color:white;
-    cursor:pointer;
-    font-size:16px;
-}
-
-#status{
-    text-align:center;
-    margin-top:15px;
-}
-
-footer{
-    text-align:center;
-    padding:30px;
-    color:#8a8a8a;
-    border-top:1px solid rgba(255,255,255,.08);
-}
-
-@media(max-width:768px){
-    .hero h1{
-        font-size:48px;
-    }
-
-    nav ul{
-        display:none;
-    }
-}
-</style>
+        .upgrade-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
 
-<nav>
-    <div class="nav-container">
-        <div class="logo">Neo<span>RolePlay</span></div>
+    <div class="container">
+        
+        <!-- KAfelek 1: Główny Panel (Służy do klikania) -->
+        <div class="bento-card card-main">
+            <div id="credits-display" class="neon-text-cyan">0 KREDYTÓW</div>
+            <div id="cps-display" class="stat-desc">Generowanie: +0/s</div>
+            <div class="cyber-core" id="core-button">CORE</div>
+        </div>
 
-        <ul>
-            <li><a href="#about">O serwerze</a></li>
-            <li><a href="#news">Nowości</a></li>
-            <li><a href="#stats">Statystyki</a></li>
-            <li><a href="#apply">Rekrutacja</a></li>
-        </ul>
+        <!-- Kafelek 2: Sklep - Boty automatyczne -->
+        <div class="bento-card">
+            <div>
+                <div class="neon-text-pink">AUTOPILOT</div>
+                <div class="stat-desc" id="bot-count">Posiadane boty: 0</div>
+            </div>
+            <button class="upgrade-btn" id="buy-bot-btn">Kup Bota (Koszt: 10)</button>
+        </div>
+
+        <!-- Kafelek 3: Sklep - Siła Kliknięcia -->
+        <div class="bento-card">
+            <div>
+                <div class="neon-text-pink">UPGRADES</div>
+                <div class="stat-desc" id="click-power-display">Moc kliknięcia: 1</div>
+            </div>
+            <button class="upgrade-btn" id="buy-click-btn">Ulepsz Laser (Koszt: 25)</button>
+        </div>
+
+        <!-- Kafelek 4: System Rebirthów -->
+        <div class="bento-card">
+            <div>
+                <div class="neon-text-pink">REBIRTH</div>
+                <div class="stat-desc" id="rebirth-display">Poziom resetu: 0</div>
+            </div>
+            <button class="upgrade-btn" id="rebirth-btn" disabled>Kwantowy Reset (Koszt: 1000)</button>
+        </div>
+
+        <!-- Kafelek 5: Statystyki Ogólne -->
+        <div class="bento-card">
+            <div>
+                <div class="neon-text-pink">STATUS</div>
+                <div class="stat-desc" style="margin-top: 5px;">Mnożnik gry: <span id="multiplier-display" style="color: #fff;">1x</span></div>
+                <div class="stat-desc" style="margin-top: 5px;">Baza danych: <span style="color: #00f0ff;">ONLINE</span></div>
+            </div>
+        </div>
+
     </div>
-</nav>
 
-<section class="hero">
-    <div class="hero-content">
-        <h1>NeoRolePlay</h1>
-        <p>Nowoczesny świat RolePlay. Twórz historię swojej postaci i rozwijaj się razem z innymi graczami.</p>
+    <!-- --- LOGIKA GRY (JAVASCRIPT) --- -->
+    <script>
+        // Stan Gry
+        let credits = 0;
+        let creditsPerClick = 1;
+        let creditsPerSecond = 0;
+        
+        let botCost = 10;
+        let botCount = 0;
+        
+        let clickUpgradeCost = 25;
+        
+        let rebirths = 0;
+        let rebirthCost = 1000;
+        let gameMultiplier = 1;
 
-        <div class="buttons">
-            <a class="btn" href="#apply">📋 Rekrutacja</a>
-            <a class="btn" href="#news">📰 Nowości</a>
-            <a class="btn" href="#stats">📊 Statystyki</a>
-        </div>
-    </div>
-</section>
+        // Elementy DOM
+        const creditsDisplay = document.getElementById('credits-display');
+        const cpsDisplay = document.getElementById('cps-display');
+        const coreButton = document.getElementById('core-button');
+        
+        const botCountDisplay = document.getElementById('bot-count');
+        const buyBotBtn = document.getElementById('buy-bot-btn');
+        
+        const clickPowerDisplay = document.getElementById('click-power-display');
+        const buyClickBtn = document.getElementById('buy-click-btn');
+        
+        const rebirthDisplay = document.getElementById('rebirth-display');
+        const rebirthBtn = document.getElementById('rebirth-btn');
+        const multiplierDisplay = document.getElementById('multiplier-display');
 
-<section id="about">
-    <h2 class="section-title">O Serwerze</h2>
+        // Funkcja aktualizacji UI
+        function updateUI() {
+            creditsDisplay.innerText = `${credits} KREDYTÓW`;
+            cpsDisplay.innerText = `Generowanie: +${creditsPerSecond * gameMultiplier}/s`;
+            
+            botCountDisplay.innerText = `Posiadane boty: ${botCount}`;
+            buyBotBtn.innerText = `Kup Bota (Koszt: ${botCost})`;
+            buyBotBtn.disabled = credits < botCost;
+            
+            clickPowerDisplay.innerText = `Moc kliknięcia: ${creditsPerClick * gameMultiplier}`;
+            buyClickBtn.innerText = `Ulepsz Laser (Koszt: ${clickUpgradeCost})`;
+            buyClickBtn.disabled = credits < clickUpgradeCost;
 
-    <div class="cards">
-        <div class="card">
-            <h3>🚓 Frakcje</h3>
-            <p>Dołącz do służb mundurowych, medycznych lub innych organizacji.</p>
-        </div>
-
-        <div class="card">
-            <h3>🏢 Biznesy</h3>
-            <p>Twórz własne firmy i buduj imperium ekonomiczne.</p>
-        </div>
-
-        <div class="card">
-            <h3>🚗 Pojazdy</h3>
-            <p>Rozbudowany system pojazdów i modyfikacji.</p>
-        </div>
-    </div>
-</section>
-
-<section id="news">
-    <h2 class="section-title">Nowości</h2>
-
-    <div class="cards">
-        <div class="card">
-            <h3>Aktualizacja 1.0</h3>
-            <p>Dodano nowe lokacje i system pracy.</p>
-        </div>
-
-        <div class="card">
-            <h3>Nowe frakcje</h3>
-            <p>Uruchomiono dodatkowe organizacje dla graczy.</p>
-        </div>
-
-        <div class="card">
-            <h3>Rekrutacja</h3>
-            <p>Otwarty nabór do administracji i supportu.</p>
-        </div>
-    </div>
-</section>
-
-<section id="stats">
-    <h2 class="section-title">Statystyki</h2>
-
-    <div class="stats">
-        <div class="stat">
-            <div class="stat-number">250+</div>
-            <p>Graczy</p>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number">12</div>
-            <p>Frakcji</p>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number">50+</div>
-            <p>Biznesów</p>
-        </div>
-
-        <div class="stat">
-            <div class="stat-number">24/7</div>
-            <p>Online</p>
-        </div>
-    </div>
-</section>
-
-<section id="apply">
-    <h2 class="section-title">Formularz Rekrutacyjny</h2>
-
-    <div class="form-container">
-        <form id="rekrutacja">
-
-            <label>Nick Discord</label>
-            <input type="text" id="nick" required>
-
-            <label>Wiek</label>
-            <input type="number" id="wiek" required>
-
-            <label>ID Discord</label>
-            <input type="text" id="discordid" required>
-
-            <label>Dlaczego chcesz dołączyć?</label>
-            <textarea id="powod" required></textarea>
-
-            <label>Doświadczenie</label>
-            <textarea id="doswiadczenie" required></textarea>
-
-            <button type="submit">
-                Wyślij zgłoszenie
-            </button>
-
-        </form>
-
-        <div id="status"></div>
-    </div>
-</section>
-
-<footer>
-    © 2026 NeoRolePlay
-</footer>
-
-<script>
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn";
-
-document.getElementById("rekrutacja").addEventListener("submit", async (e) => {
-
-    e.preventDefault();
-
-    if (WEBHOOK_URL === "https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn") {
-        document.getElementById("status").innerHTML =
-        "⚠️ Wstaw własny webhook w kodzie.";
-        return;
-    }
-
-    const payload = {
-        embeds:[{
-            title:"Nowe zgłoszenie",
-            fields:[
-                {
-                    name:"Nick Discord",
-                    value:document.getElementById("nick").value
-                },
-                {
-                    name:"Wiek",
-                    value:document.getElementById("wiek").value
-                },
-                {
-                    name:"ID Discord",
-                    value:document.getElementById("discordid").value
-                },
-                {
-                    name:"Powód",
-                    value:document.getElementById("powod").value
-                },
-                {
-                    name:"Doświadczenie",
-                    value:document.getElementById("doswiadczenie").value
-                }
-            ],
-            timestamp:new Date().toISOString()
-        }]
-    };
-
-    try{
-        const response = await fetch(WEBHOOK_URL,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(payload)
-        });
-
-        if(response.ok){
-            document.getElementById("status").innerHTML =
-            "✅ Zgłoszenie wysłane.";
-            e.target.reset();
-        }else{
-            document.getElementById("status").innerHTML =
-            "❌ Błąd wysyłania.";
+            rebirthDisplay.innerText = `Poziom resetu: ${rebirths}`;
+            rebirthBtn.innerText = `Quantum Reset (Koszt: ${rebirthCost})`;
+            multiplierDisplay.innerText = `${gameMultiplier}x`;
+            rebirthBtn.disabled = credits < rebirthCost;
         }
 
-    }catch(err){
-        document.getElementById("status").innerHTML =
-        "❌ Nie udało się połączyć.";
-    }
-});
-</script>
+        // Kliknięcie w Rdzeń
+        coreButton.addEventListener('click', () => {
+            credits += creditsPerClick * gameMultiplier;
+            updateUI();
+        });
 
+        // Zakup bota automatycznego
+        buyBotBtn.addEventListener('click', () => {
+            if (credits >= botCost) {
+                credits -= botCost;
+                botCount++;
+                creditsPerSecond += 1;
+                botCost = Math.floor(botCost * 1.5);
+                updateUI();
+            }
+        });
+
+        // Zakup ulepszenia kliknięcia
+        buyClickBtn.addEventListener('click', () => {
+            if (credits >= clickUpgradeCost) {
+                credits -= clickUpgradeCost;
+                creditsPerClick += 1;
+                clickUpgradeCost = Math.floor(clickUpgradeCost * 1.6);
+                updateUI();
+            }
+        });
+
+        // Rebirth (Odrodzenie)
+        rebirthBtn.addEventListener('click', () => {
+            if (credits >= rebirthCost) {
+                rebirths++;
+                gameMultiplier = rebirths + 1;
+                rebirthCost = Math.floor(rebirthCost * 2.5);
+                
+                // Reset postępów
+                credits = 0;
+                creditsPerClick = 1;
+                creditsPerSecond = 0;
+                botCount = 0;
+                botCost = 10;
+                clickUpgradeCost = 25;
+                
+                updateUI();
+            }
+        });
+
+        // Pętla gry działająca co sekundę (dochód pasywny)
+        setInterval(() => {
+            if (creditsPerSecond > 0) {
+                credits += creditsPerSecond * gameMultiplier;
+                updateUI();
+            }
+        }, 1000);
+
+        // Pierwsze uruchomienie UI
+        updateUI();
+    </script>
 </body>
 </html>
