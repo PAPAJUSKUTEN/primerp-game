@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja strona | Nowoczesna wizytówka</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome (ikony) -->
+    <title>NeoCity RP | Najlepszy serwer role play</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -17,358 +16,469 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
-            color: #1e2a3e;
-            line-height: 1.5;
-            scroll-behavior: smooth;
+            background: #0a0c12;
+            color: #eef2ff;
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
+        /* Główne gradienty i efekty */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
 
-        /* header / nawigacja */
-        header {
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        /* Nawigacja */
+        nav {
+            background: rgba(10, 12, 18, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
-        nav {
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
             flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo {
+            font-family: 'Orbitron', monospace;
             font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(120deg, #2563eb, #7c3aed);
+            font-weight: 800;
+            background: linear-gradient(135deg, #0ff, #f0f);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: #0ff;
+            text-shadow: 0 0 8px cyan;
         }
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 2rem;
             list-style: none;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
             text-decoration: none;
+            color: #cbd5e6;
             font-weight: 500;
-            color: #1e2a3e;
-            transition: color 0.2s;
+            transition: 0.2s;
+            font-size: 1rem;
         }
 
-        .nav-links a:hover {
-            color: #2563eb;
+        .nav-links a:hover, .nav-links a.active {
+            color: #0ff;
+            text-shadow: 0 0 5px cyan;
         }
 
         /* przyciski */
-        .btn {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            padding: 12px 28px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.2s, background 0.2s;
+        .btn-cyber {
+            background: linear-gradient(90deg, #0ff, #f0f);
             border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: #0a0c12;
             cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Orbitron', monospace;
         }
 
-        .btn:hover {
-            background: #1d4ed8;
-            transform: scale(1.02);
+        .btn-cyber:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px cyan;
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #2563eb;
-            color: #2563eb;
-        }
-
-        .btn-outline:hover {
-            background: #2563eb;
-            color: white;
-        }
-
-        /* hero section */
+        /* Hero */
         .hero {
-            padding: 100px 0 80px;
+            background: linear-gradient(120deg, #0a0c12 0%, #111827 100%);
+            padding: 80px 20px;
             text-align: center;
+            border-bottom: 1px solid rgba(0,255,255,0.2);
         }
 
         .hero h1 {
             font-size: 3.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #1e2a3e, #2563eb);
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+        }
+
+        .hero .highlight {
+            background: linear-gradient(90deg, cyan, magenta);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin-bottom: 20px;
         }
 
         .hero p {
+            max-width: 700px;
+            margin: 0 auto 30px;
             font-size: 1.2rem;
-            max-width: 650px;
-            margin: 0 auto 32px;
-            color: #334155;
+            color: #b9c3d4;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
+        .status-badge {
+            display: inline-block;
+            background: #00ff8822;
+            border: 1px solid #0f0;
+            border-radius: 50px;
+            padding: 6px 18px;
+            margin-top: 20px;
+            font-size: 0.9rem;
         }
 
-        /* karty / usługi */
+        /* kategorie / sekcje */
         .section {
-            padding: 80px 0;
+            padding: 70px 20px;
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
         .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
             text-align: center;
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 48px;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
         }
 
-        .cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 32px;
-            justify-content: center;
-        }
-
-        .card {
-            background: white;
-            border-radius: 28px;
-            padding: 32px;
-            flex: 1 1 280px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            transition: all 0.25s;
-            text-align: center;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 40px rgba(0,0,0,0.1);
-        }
-
-        .card i {
-            font-size: 2.8rem;
-            color: #2563eb;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-        }
-
-        /* galeria / projekty */
-        .projects-grid {
+        .cards-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
             justify-content: center;
         }
 
-        .project-item {
-            background: white;
-            border-radius: 28px;
-            overflow: hidden;
-            width: 320px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        .rp-card {
+            background: #11151f;
+            border-radius: 20px;
+            padding: 30px 25px;
+            width: 280px;
+            text-align: center;
+            transition: 0.3s;
+            border: 1px solid #1e2a3a;
+        }
+
+        .rp-card:hover {
+            transform: translateY(-8px);
+            border-color: cyan;
+            box-shadow: 0 10px 30px rgba(0,255,255,0.1);
+        }
+
+        .rp-card i {
+            font-size: 2.8rem;
+            color: cyan;
+            margin-bottom: 20px;
+        }
+
+        .rp-card h3 {
+            margin-bottom: 12px;
+        }
+
+        /* lista newsów */
+        .news-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .news-item {
+            background: #0f121b;
+            border-left: 4px solid cyan;
+            padding: 20px 25px;
+            border-radius: 16px;
             transition: 0.2s;
         }
 
-        .project-img {
-            background: #d9e2ef;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #2563eb;
+        .news-date {
+            color: cyan;
+            font-size: 0.8rem;
+            font-family: monospace;
         }
 
-        .project-info {
-            padding: 24px;
+        /* zakładka logowania - ukrywana/ pokazywana */
+        .login-panel {
+            background: #0c0f17;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 40px;
+            border-radius: 32px;
+            border: 1px solid rgba(0,255,255,0.3);
+            box-shadow: 0 0 30px rgba(0,255,255,0.05);
+            display: none;
         }
 
-        /* stopka */
-        footer {
-            background: #0f172a;
-            color: #cbd5e1;
+        .login-panel.active {
+            display: block;
+        }
+
+        .login-panel h3 {
             text-align: center;
-            padding: 40px 0;
+            margin-bottom: 30px;
+            font-family: 'Orbitron', monospace;
         }
 
-        .social-icons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-        }
-
-        .social-icons a {
-            color: #cbd5e1;
-            font-size: 1.5rem;
-            transition: color 0.2s;
-        }
-
-        .social-icons a:hover {
+        .login-input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            background: #1a1f2c;
+            border: 1px solid #2a3346;
+            border-radius: 40px;
             color: white;
+            font-size: 1rem;
         }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.3rem; }
-            nav { flex-direction: column; gap: 15px; }
-            .nav-links { gap: 20px; }
+        /* dodatkowe sekcje (widoczne domyślnie, ale logowanie je ukrywa przy zmianie zakładki) */
+        .content-section {
+            transition: 0.2s;
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #1e2a3a;
+            margin-top: 40px;
+            color: #6c7a91;
+        }
+
+        @media (max-width: 750px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-container { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="container">
-        <nav>
-            <div class="logo">🌿 WebCraft</div>
-            <ul class="nav-links">
-                <li><a href="#">Start</a></li>
-                <li><a href="#uslugi">Usługi</a></li>
-                <li><a href="#projekty">Projekty</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-            </ul>
-        </nav>
+<nav>
+    <div class="nav-container">
+        <div class="logo">⚡ NEO<span>RP</span> ⚡</div>
+        <ul class="nav-links">
+            <li><a href="#" data-tab="home" class="active-tab">🏠 Strona główna</a></li>
+            <li><a href="#" data-tab="news">📰 Nowości</a></li>
+            <li><a href="#" data-tab="rules">📜 Regulamin</a></li>
+            <li><a href="#" data-tab="ranking">🏆 Ranking</a></li>
+            <li><a href="#" data-tab="login-tab">🔐 Logowanie</a></li>
+        </ul>
+        <div>
+            <span style="margin-right: 10px;">👥 124 online</span>
+            <button class="btn-cyber" id="quickConnect">GRAJ TERAZ</button>
+        </div>
     </div>
-</header>
+</nav>
 
 <main>
-    <div class="container">
+    <!-- GŁÓWNA TREŚĆ - tutaj będą dynamicznie wyświetlane sekcje -->
+    <div id="home-section" class="content-section">
         <div class="hero">
-            <h1>Tworzymy strony, które działają</h1>
-            <p>Nowoczesny design, szybkość i responsywność. Pomagam Ci zaistnieć w sieci – od prostych wizytówek po rozbudowane aplikacje webowe.</p>
-            <div class="hero-buttons">
-                <a href="#kontakt" class="btn">Rozpocznij projekt</a>
-                <a href="#projekty" class="btn btn-outline">Zobacz realizacje</a>
+            <h1>Wejdź do <span class="highlight">NeoCity RP</span></h1>
+            <p>Najlepsze doświadczenie role play. Realistyczna gospodarka, własne fabuły, aktywne wsparcie i unikalne eventy.</p>
+            <div class="status-badge">
+                🟢 SERWER ONLINE | Wersja 4.2 | Start: 10.04.2025
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🌆 Dlaczego NeoRP?</h2>
+            <div class="cards-grid">
+                <div class="rp-card">
+                    <i class="fas fa-users"></i>
+                    <h3>+500 aktywnych</h3>
+                    <p>Codziennie setki graczy, świetna społeczność bez toksyki.</p>
+                </div>
+                <div class="rp-card">
+                    <i class="fas fa-gavel"></i>
+                    <h3>Fair Play</h3>
+                    <p>Administracja 24/7, jasne zasady i wsparcie dla każdego.</div>
+                <div class="rp-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Ponad 300 pojazdów</h3>
+                    <p>auta, motory, łodzie i tuning pod własny styl.</p>
+                </div>
+                <div class="rp-card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>Legalne / nielegalne</h3>
+                    <p>Praca, gangi, policja, mafia – wybierz swoją ścieżkę.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <section id="uslugi" class="section">
-        <div class="container">
-            <h2 class="section-title">Co mogę dla Ciebie zrobić?</h2>
-            <div class="cards">
-                <div class="card">
-                    <i class="fas fa-code"></i>
-                    <h3>Frontend</h3>
-                    <p>HTML, CSS, JavaScript, React – nowoczesne i interaktywne interfejsy.</p>
+    <!-- NOWOŚCI -->
+    <div id="news-section" class="content-section hidden-section">
+        <div class="section">
+            <h2 class="section-title">📢 Ostatnie nowości i aktualizacje</h2>
+            <div class="news-list">
+                <div class="news-item">
+                    <div class="news-date">🔹 12 czerwca 2026</div>
+                    <h3>✅ Nowy system domków letniskowych</h3>
+                    <p>Dodano 15 działek z możliwością budowy i customizacji wnętrz.</p>
                 </div>
-                <div class="card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Responsywność</h3>
-                    <p>Strona idealna na telefon, tablet i komputer – bez kompromisów.</p>
+                <div class="news-item">
+                    <div class="news-date">🔹 5 czerwca 2026</div>
+                    <h3>🚔 Reforma policji + nowe radiowozy</h3>
+                    <p>Dodano procedury odcisków palców i 10 nowych pojazdów LSPD.</p>
                 </div>
-                <div class="card">
-                    <i class="fas fa-rocket"></i>
-                    <h3>Wydajność</h3>
-                    <p>Optymalizacja szybkości ładowania i SEO, aby Google Cię lubiło.</p>
+                <div class="news-item">
+                    <div class="news-date">🔹 28 maja 2026</div>
+                    <h3>🏁 Event wyścigów podziemnych</h3>
+                    <p>Nagrody: 500k $ i unikalny skin do auta. Zapisy w grze.</p>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">🔹 20 maja 2026</div>
+                    <h3>📱 Aplikacja mobilna NeoRP w fazie beta</h3>
+                    <p>Sprawdzaj stan serwera, oglądaj ranking i pisz na forum.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="projekty" class="section" style="background: #f8fafc;">
-        <div class="container">
-            <h2 class="section-title">Przykładowe realizacje</h2>
-            <div class="projects-grid">
-                <div class="project-item">
-                    <div class="project-img"><i class="fas fa-laptop-code"></i></div>
-                    <div class="project-info">
-                        <h3>Portfolio kreatywne</h3>
-                        <p>Strona dla grafika z galerią prac i animacjami.</p>
-                    </div>
-                </div>
-                <div class="project-item">
-                    <div class="project-img"><i class="fas fa-store"></i></div>
-                    <div class="project-info">
-                        <h3>Sklep internetowy</h3>
-                        <p>Wersja demo z koszykiem i integracją płatności.</p>
-                    </div>
-                </div>
-                <div class="project-item">
-                    <div class="project-img"><i class="fas fa-chart-line"></i></div>
-                    <div class="project-info">
-                        <h3>Aplikacja dashboard</h3>
-                        <p>Panel analityczny z wykresami i danymi na żywo.</p>
-                    </div>
-                </div>
+    <!-- REGULAMIN -->
+    <div id="rules-section" class="content-section hidden-section">
+        <div class="section">
+            <h2 class="section-title">📖 Regulamin serwera</h2>
+            <div style="background: #0f121b; border-radius: 28px; padding: 40px; max-width: 900px; margin: 0 auto;">
+                <ul style="list-style-type: none;">
+                    <li style="margin-bottom: 20px;">🔹 <strong>§1 Powergaming / Metagaming</strong> – zabronione. Trzymaj się realiów postaci.</li>
+                    <li style="margin-bottom: 20px;">🔹 <strong>§2 Fear RP</strong> – graj zgodnie z sytuacją (strach, groźba śmierci).</li>
+                    <li style="margin-bottom: 20px;">🔹 <strong>§3 Reklamy / cheatowanie</strong> – zero tolerancji, permaban.</li>
+                    <li style="margin-bottom: 20px;">🔹 <strong>§4 Wartość życia</strong> – nie możesz bez powodu narażać swojego avatara.</li>
+                    <li style="margin-bottom: 20px;">🔹 <strong>§5 Jakość RP</strong> – wymagany jest sensowny role play, bez "DM" (deathmatch).</li>
+                </ul>
+                <div class="status-badge" style="display: block; text-align: center;">Pełny regulamin dostępny po zalogowaniu na stronie / w grze.</div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="kontakt" class="section">
-        <div class="container">
-            <h2 class="section-title">Porozmawiajmy o Twoim pomyśle ✨</h2>
-            <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 32px; padding: 32px; box-shadow: 0 20px 35px rgba(0,0,0,0.05);">
-                <form action="#" method="post">
-                    <div style="margin-bottom: 20px;">
-                        <label for="name" style="display: block; font-weight: 600; margin-bottom: 6px;">Imię / Nazwa</label>
-                        <input type="text" id="name" name="name" style="width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ccc; font-family: inherit;" required>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label for="email" style="display: block; font-weight: 600; margin-bottom: 6px;">Email</label>
-                        <input type="email" id="email" name="email" style="width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ccc; font-family: inherit;" required>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label for="msg" style="display: block; font-weight: 600; margin-bottom: 6px;">Wiadomość</label>
-                        <textarea id="msg" name="message" rows="4" style="width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ccc; font-family: inherit;" required></textarea>
-                    </div>
-                    <div style="text-align: center;">
-                        <button type="submit" class="btn">Wyślij wiadomość</button>
-                    </div>
-                    <p style="font-size: 0.75rem; text-align: center; margin-top: 20px; color: #666;">(formularz demonstracyjny – na razie nie wysyła maila)</p>
-                </form>
+    <!-- RANKING -->
+    <div id="ranking-section" class="content-section hidden-section">
+        <div class="section">
+            <h2 class="section-title">🏅 TOP 10 graczy miesiąca</h2>
+            <div style="background: #0f121b; border-radius: 28px; padding: 20px; max-width: 700px; margin: 20px auto;">
+                <ol style="margin-left: 25px;">
+                    <li><strong>💎 Venom_Black</strong> - 3420 pkt RP</li>
+                    <li><strong>🔥 Mikey_Spades</strong> - 2980 pkt RP</li>
+                    <li><strong>👑 Lucy_Heart</strong> - 2750 pkt RP</li>
+                    <li><strong>🚔 Martin_Reid</strong> - 2430 pkt RP</li>
+                    <li><strong>💼 Scarface_Nero</strong> - 2105 pkt RP</li>
+                </ol>
+                <p style="margin-top: 30px; text-align: center;">⭐ Zdobądź punkty za aktywny role play, eventy i fabułę!</p>
             </div>
         </div>
-    </section>
+    </div>
+
+    <!-- LOGOWANIE (zakładka) -->
+    <div id="login-tab-section" class="content-section hidden-section">
+        <div class="login-panel active" id="loginFormContainer">
+            <h3><i class="fas fa-key"></i> Panel logowania</h3>
+            <input type="text" class="login-input" id="loginUser" placeholder="Nazwa użytkownika / login">
+            <input type="password" class="login-input" id="loginPass" placeholder="Hasło">
+            <button class="btn-cyber" id="doLoginBtn" style="width: 100%;">Zaloguj się →</button>
+            <p style="margin-top: 20px; font-size: 0.8rem; text-align: center;">Nie masz konta? <a href="#" id="fakeRegister" style="color: cyan;">Zarejestruj się</a> (demo)</p>
+            <p style="margin-top: 15px; font-size: 0.7rem; text-align: center; color: #7f8c8d;">🔐 Dane testowe: user: <strong>admin</strong> / hasło: <strong>rp123</strong></p>
+        </div>
+    </div>
 </main>
 
 <footer>
-    <div class="container">
-        <p>&copy; 2026 WebCraft | Nowoczesne strony internetowe</p>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-x-twitter"></i></a>
-        </div>
-    </div>
+    <p>© 2026 NeoCity Role Play | Wszystkie prawa zastrzeżone | Discord: .gg/neorproleplay</p>
+    <p style="margin-top: 10px; font-size: 0.8rem;">kontakt@neorolereplay.pl</p>
 </footer>
 
-<!-- mały skrypt (demonstracja alertu przy wysyłce formularza) -->
 <script>
-    const form = document.querySelector('form');
-    if(form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Dziękujemy! To jest wersja demonstracyjna. W prawdziwej stronie formularz wysyłałby email.');
-            form.reset();
+    // Obsługa przełączania zakładek
+    const sections = {
+        home: document.getElementById('home-section'),
+        news: document.getElementById('news-section'),
+        rules: document.getElementById('rules-section'),
+        ranking: document.getElementById('ranking-section'),
+        'login-tab': document.getElementById('login-tab-section')
+    };
+
+    function showTab(tabId) {
+        // ukryj wszystkie
+        for (let key in sections) {
+            sections[key].classList.add('hidden-section');
+        }
+        if (sections[tabId]) {
+            sections[tabId].classList.remove('hidden-section');
+        }
+
+        // zaznaczenie aktywnego linku
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.remove('active');
+            if(link.getAttribute('data-tab') === tabId) {
+                link.classList.add('active');
+            }
         });
     }
+
+    // nasłuchiwanie na linki
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tab = link.getAttribute('data-tab');
+            if(tab) showTab(tab);
+        });
+    });
+
+    // przycisk GRAJ TERAZ
+    document.getElementById('quickConnect').addEventListener('click', () => {
+        alert('🚀 Połączenie z serwerem: connect neoroleplay.pl\nWersja FiveM / GTA V RP');
+    });
+
+    // symulacja logowania (demo)
+    const loginBtn = document.getElementById('doLoginBtn');
+    if(loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            if(user === 'admin' && pass === 'rp123') {
+                alert('✅ Zalogowano pomyślnie! Witaj w panelu gracza NeoRP.');
+                // tutaj można zmienić zawartość po zalogowaniu, np pokazać panel gracza
+                const loginBox = document.getElementById('loginFormContainer');
+                loginBox.innerHTML = `<div style="text-align:center"><i class="fas fa-check-circle" style="font-size: 3rem; color:lime"></i><h3>Witaj, ${user}!</h3><p>Jesteś zalogowany. Pełny dostęp do twojej postaci i statystyk.</p><button class="btn-cyber" id="logoutDemo">Wyloguj</button></div>`;
+                const logoutBtn = document.getElementById('logoutDemo');
+                if(logoutBtn) {
+                    logoutBtn.addEventListener('click', () => {
+                        location.reload(); // prosty reset
+                    });
+                }
+            } else {
+                alert('❌ Błędny login lub hasło. Spróbuj admin / rp123');
+            }
+        });
+    }
+
+    // fake rejestracja
+    const fakeReg = document.getElementById('fakeRegister');
+    if(fakeReg) {
+        fakeReg.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('To tylko strona demo – rejestracja dostępna na serwerze Discord.');
+        });
+    }
+
+    // ustaw domyślnie widok home
+    showTab('home');
 </script>
 </body>
 </html>
