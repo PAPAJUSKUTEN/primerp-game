@@ -2,10 +2,10 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoCity RP | Najlepszy serwer role play</title>
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>FIFH Rekrutacja - Rebirth Champions Ultimate | Dołącz do elity</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -15,470 +15,630 @@
         }
 
         body {
+            background: #0a0c10;
             font-family: 'Inter', sans-serif;
-            background: #0a0c12;
             color: #eef2ff;
-            line-height: 1.6;
+            line-height: 1.5;
+            scroll-behavior: smooth;
         }
 
-        /* Główne gradienty i efekty */
-        .glow-text {
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-        }
-
-        /* Nawigacja */
-        nav {
-            background: rgba(10, 12, 18, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-            position: sticky;
+        /* tło z animacją i elementami cyberpunk */
+        .bg-cyber {
+            position: fixed;
             top: 0;
-            z-index: 1000;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 10% 20%, #0f172a, #03050b);
         }
 
-        .nav-container {
-            max-width: 1300px;
+        .bg-cyber::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.08"><path fill="none" stroke="%234f46e5" stroke-width="0.8" d="M0 400 L800 400 M400 0 L400 800 M200 200 L600 600 M600 200 L200 600"/><circle cx="400" cy="400" r="80" stroke="%238b5cf6" fill="none" stroke-width="1.2"/><polygon points="400,100 500,250 300,250" fill="none" stroke="%23a855f7" stroke-width="1"/></svg>');
+            background-repeat: repeat;
+            animation: drift 40s linear infinite;
+        }
+
+        @keyframes drift {
+            0% { background-position: 0 0; }
+            100% { background-position: 120px 120px; }
+        }
+
+        .container {
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 2;
         }
 
-        .logo {
+        /* neon główny */
+        .glow-text {
+            text-shadow: 0 0 6px #a855f7, 0 0 12px #7c3aed;
+        }
+
+        /* HEADER */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 4rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            margin-bottom: 3rem;
+        }
+
+        .clan-tag {
             font-family: 'Orbitron', monospace;
-            font-size: 1.8rem;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #c084fc, #7c3aed);
+            display: inline-block;
+            padding: 0.3rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 0 12px #a855f7;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.4rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #0ff, #f0f);
-            background-clip: text;
+            background: linear-gradient(135deg, #FFFFFF, #c084fc, #a855f7);
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
-            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
         }
 
-        .logo span {
-            color: #0ff;
-            text-shadow: 0 0 8px cyan;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #cbd5e6;
-            font-weight: 500;
-            transition: 0.2s;
-            font-size: 1rem;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: #0ff;
-            text-shadow: 0 0 5px cyan;
+        .sub {
+            font-size: 1.2rem;
+            color: #b9c7e6;
+            max-width: 680px;
+            margin: 0 auto;
+            backdrop-filter: blur(4px);
         }
 
         /* przyciski */
-        .btn-cyber {
-            background: linear-gradient(90deg, #0ff, #f0f);
-            border: none;
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: bold;
-            color: #0a0c12;
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(30, 27, 58, 0.7);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(139, 92, 246, 0.6);
+            padding: 0.75rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #f0eaff;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Orbitron', monospace;
         }
 
-        .btn-cyber:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px cyan;
+        .btn-primary {
+            background: linear-gradient(95deg, #7c3aed, #a855f7);
+            border: none;
+            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
         }
 
-        /* Hero */
-        .hero {
-            background: linear-gradient(120deg, #0a0c12 0%, #111827 100%);
-            padding: 80px 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(0,255,255,0.2);
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(139, 92, 246, 0.6);
+            background: linear-gradient(95deg, #8b5cf6, #c084fc);
         }
 
-        .hero h1 {
-            font-size: 3.2rem;
-            font-family: 'Orbitron', monospace;
-            margin-bottom: 20px;
+        .btn-outline:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #c084fc;
+            transform: translateY(-2px);
         }
 
-        .hero .highlight {
-            background: linear-gradient(90deg, cyan, magenta);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        .hero p {
-            max-width: 700px;
-            margin: 0 auto 30px;
-            font-size: 1.2rem;
-            color: #b9c3d4;
-        }
-
-        .status-badge {
-            display: inline-block;
-            background: #00ff8822;
-            border: 1px solid #0f0;
-            border-radius: 50px;
-            padding: 6px 18px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-
-        /* kategorie / sekcje */
-        .section {
-            padding: 70px 20px;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
+        /* karty */
         .section-title {
             font-family: 'Orbitron', monospace;
             font-size: 2rem;
-            text-align: center;
-            margin-bottom: 50px;
-            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid #a855f7;
+            padding-left: 1.2rem;
         }
 
         .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            padding: 1.8rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: #c084fc;
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.5);
+            background: rgba(20, 28, 48, 0.8);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: #c084fc;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.6rem;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 0.8rem;
+        }
+
+        .badge-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .badge-list li {
+            margin: 0.6rem 0;
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
-
-        .rp-card {
-            background: #11151f;
-            border-radius: 20px;
-            padding: 30px 25px;
-            width: 280px;
-            text-align: center;
-            transition: 0.3s;
-            border: 1px solid #1e2a3a;
-        }
-
-        .rp-card:hover {
-            transform: translateY(-8px);
-            border-color: cyan;
-            box-shadow: 0 10px 30px rgba(0,255,255,0.1);
-        }
-
-        .rp-card i {
-            font-size: 2.8rem;
-            color: cyan;
-            margin-bottom: 20px;
-        }
-
-        .rp-card h3 {
-            margin-bottom: 12px;
-        }
-
-        /* lista newsów */
-        .news-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .news-item {
-            background: #0f121b;
-            border-left: 4px solid cyan;
-            padding: 20px 25px;
-            border-radius: 16px;
-            transition: 0.2s;
-        }
-
-        .news-date {
-            color: cyan;
-            font-size: 0.8rem;
-            font-family: monospace;
-        }
-
-        /* zakładka logowania - ukrywana/ pokazywana */
-        .login-panel {
-            background: #0c0f17;
-            max-width: 500px;
-            margin: 40px auto;
-            padding: 40px;
-            border-radius: 32px;
-            border: 1px solid rgba(0,255,255,0.3);
-            box-shadow: 0 0 30px rgba(0,255,255,0.05);
-            display: none;
-        }
-
-        .login-panel.active {
-            display: block;
-        }
-
-        .login-panel h3 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-family: 'Orbitron', monospace;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 20px;
-            background: #1a1f2c;
-            border: 1px solid #2a3346;
-            border-radius: 40px;
-            color: white;
+        .badge-list li i {
             font-size: 1rem;
+            width: 1.4rem;
+            color: #a855f7;
         }
 
-        /* dodatkowe sekcje (widoczne domyślnie, ale logowanie je ukrywa przy zmianie zakładki) */
-        .content-section {
+        /* formularz */
+        .form-card {
+            background: rgba(10, 14, 23, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            border: 1px solid #4c1d95;
+            padding: 2rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: #111827;
+            border: 1px solid #334155;
+            padding: 0.9rem 1rem;
+            border-radius: 1.2rem;
+            font-size: 1rem;
+            color: #f1f5f9;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #cbd5e6;
+        }
+
+        .submit-btn {
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            border: none;
+            padding: 1rem 2rem;
+            width: 100%;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 3rem;
+            color: white;
+            cursor: pointer;
             transition: 0.2s;
+            margin-top: 0.8rem;
         }
 
-        .hidden-section {
-            display: none;
+        .submit-btn:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 15px #a855f7;
+        }
+
+        /* kontakt & discord */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2.5rem 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            background: #111827;
+            padding: 0.8rem 1.6rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            border: 1px solid #4c1d95;
+            transition: 0.2s;
+            text-decoration: none;
+            color: #e2e8f0;
+        }
+
+        .social-icon i {
+            font-size: 1.4rem;
+            color: #c084fc;
+        }
+        .social-icon:hover {
+            background: #2d1b69;
+            border-color: #a855f7;
         }
 
         footer {
             text-align: center;
-            padding: 40px;
-            border-top: 1px solid #1e2a3a;
-            margin-top: 40px;
-            color: #6c7a91;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #2d3a5e;
+            font-size: 0.85rem;
+            color: #7e8aa8;
         }
 
-        @media (max-width: 750px) {
-            .hero h1 { font-size: 2rem; }
-            .nav-container { flex-direction: column; }
+        @media (max-width: 720px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            h1 {
+                font-size: 2.4rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* powiadomienie toast */
+        #toast-msg {
+            visibility: hidden;
+            min-width: 260px;
+            background-color: #1e1b4b;
+            color: #f0eaff;
+            text-align: center;
+            border-radius: 40px;
+            padding: 12px 24px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            font-weight: 500;
+            backdrop-filter: blur(12px);
+            border: 1px solid #c084fc;
+            transition: visibility 0.2s, opacity 0.2s;
+            opacity: 0;
+            white-space: nowrap;
+        }
+        #toast-msg.show {
+            visibility: visible;
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-
-<nav>
-    <div class="nav-container">
-        <div class="logo">⚡ NEO<span>RP</span> ⚡</div>
-        <ul class="nav-links">
-            <li><a href="#" data-tab="home" class="active-tab">🏠 Strona główna</a></li>
-            <li><a href="#" data-tab="news">📰 Nowości</a></li>
-            <li><a href="#" data-tab="rules">📜 Regulamin</a></li>
-            <li><a href="#" data-tab="ranking">🏆 Ranking</a></li>
-            <li><a href="#" data-tab="login-tab">🔐 Logowanie</a></li>
-        </ul>
-        <div>
-            <span style="margin-right: 10px;">👥 124 online</span>
-            <button class="btn-cyber" id="quickConnect">GRAJ TERAZ</button>
-        </div>
-    </div>
-</nav>
-
-<main>
-    <!-- GŁÓWNA TREŚĆ - tutaj będą dynamicznie wyświetlane sekcje -->
-    <div id="home-section" class="content-section">
-        <div class="hero">
-            <h1>Wejdź do <span class="highlight">NeoCity RP</span></h1>
-            <p>Najlepsze doświadczenie role play. Realistyczna gospodarka, własne fabuły, aktywne wsparcie i unikalne eventy.</p>
-            <div class="status-badge">
-                🟢 SERWER ONLINE | Wersja 4.2 | Start: 10.04.2025
-            </div>
-        </div>
-
-        <div class="section">
-            <h2 class="section-title">🌆 Dlaczego NeoRP?</h2>
-            <div class="cards-grid">
-                <div class="rp-card">
-                    <i class="fas fa-users"></i>
-                    <h3>+500 aktywnych</h3>
-                    <p>Codziennie setki graczy, świetna społeczność bez toksyki.</p>
-                </div>
-                <div class="rp-card">
-                    <i class="fas fa-gavel"></i>
-                    <h3>Fair Play</h3>
-                    <p>Administracja 24/7, jasne zasady i wsparcie dla każdego.</div>
-                <div class="rp-card">
-                    <i class="fas fa-car"></i>
-                    <h3>Ponad 300 pojazdów</h3>
-                    <p>auta, motory, łodzie i tuning pod własny styl.</p>
-                </div>
-                <div class="rp-card">
-                    <i class="fas fa-briefcase"></i>
-                    <h3>Legalne / nielegalne</h3>
-                    <p>Praca, gangi, policja, mafia – wybierz swoją ścieżkę.</p>
-                </div>
-            </div>
+<div class="bg-cyber"></div>
+<div class="container">
+    <div class="hero">
+        <div class="clan-tag"><i class="fas fa-skull"></i> FIFH · LEGENDS NEVER DIE</div>
+        <h1>FIFH <span class="glow-text">REKRUTACJA</span></h1>
+        <p class="sub">Elitarny klan w Rebirth Champions Ultimate. Szukamy wojowników gotowych na podbój aren i turniejów. Stań się częścią dziedzictwa.</p>
+        <div class="btn-group">
+            <a href="#formularz" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Wypełnij ankietę</a>
+            <a href="#wymagania" class="btn btn-outline"><i class="fas fa-chart-line"></i> Wymagania</a>
+            <a href="#discord-link" class="btn btn-outline" id="discordMockBtn"><i class="fab fa-discord"></i> Discord</a>
         </div>
     </div>
 
-    <!-- NOWOŚCI -->
-    <div id="news-section" class="content-section hidden-section">
-        <div class="section">
-            <h2 class="section-title">📢 Ostatnie nowości i aktualizacje</h2>
-            <div class="news-list">
-                <div class="news-item">
-                    <div class="news-date">🔹 12 czerwca 2026</div>
-                    <h3>✅ Nowy system domków letniskowych</h3>
-                    <p>Dodano 15 działek z możliwością budowy i customizacji wnętrz.</p>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">🔹 5 czerwca 2026</div>
-                    <h3>🚔 Reforma policji + nowe radiowozy</h3>
-                    <p>Dodano procedury odcisków palców i 10 nowych pojazdów LSPD.</p>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">🔹 28 maja 2026</div>
-                    <h3>🏁 Event wyścigów podziemnych</h3>
-                    <p>Nagrody: 500k $ i unikalny skin do auta. Zapisy w grze.</p>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">🔹 20 maja 2026</div>
-                    <h3>📱 Aplikacja mobilna NeoRP w fazie beta</h3>
-                    <p>Sprawdzaj stan serwera, oglądaj ranking i pisz na forum.</p>
-                </div>
-            </div>
+    <!-- sekcja info -->
+    <div id="wymagania">
+        <div class="section-title">
+            <i class="fas fa-bolt"></i> 
+            <span>KIM JESTEŚMY & WYMAGANIA</span>
         </div>
-    </div>
-
-    <!-- REGULAMIN -->
-    <div id="rules-section" class="content-section hidden-section">
-        <div class="section">
-            <h2 class="section-title">📖 Regulamin serwera</h2>
-            <div style="background: #0f121b; border-radius: 28px; padding: 40px; max-width: 900px; margin: 0 auto;">
-                <ul style="list-style-type: none;">
-                    <li style="margin-bottom: 20px;">🔹 <strong>§1 Powergaming / Metagaming</strong> – zabronione. Trzymaj się realiów postaci.</li>
-                    <li style="margin-bottom: 20px;">🔹 <strong>§2 Fear RP</strong> – graj zgodnie z sytuacją (strach, groźba śmierci).</li>
-                    <li style="margin-bottom: 20px;">🔹 <strong>§3 Reklamy / cheatowanie</strong> – zero tolerancji, permaban.</li>
-                    <li style="margin-bottom: 20px;">🔹 <strong>§4 Wartość życia</strong> – nie możesz bez powodu narażać swojego avatara.</li>
-                    <li style="margin-bottom: 20px;">🔹 <strong>§5 Jakość RP</strong> – wymagany jest sensowny role play, bez "DM" (deathmatch).</li>
+        <div class="cards-grid">
+            <div class="card">
+                <i class="fas fa-trophy"></i>
+                <h3>Elita turniejowa</h3>
+                <p>FIFH to grono doświadczonych graczy Rebirth Champions Ultimate. Regularne scrimy, turnieje i wspólne rankedy. Celujemy w topowe lokaty.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-user-check"></i>
+                <h3>Wymagania</h3>
+                <ul class="badge-list">
+                    <li><i class="fas fa-check-circle"></i> Minimum 1000+ MMR / Ranga Diament+</li>
+                    <li><i class="fas fa-check-circle"></i> Aktywność min. 4 dni w tygodniu</li>
+                    <li><i class="fas fa-check-circle"></i> Mikrofon + komunikacja (Discord)</li>
+                    <li><i class="fas fa-check-circle"></i> Kultura i szacunek, brak toksyczności</li>
+                    <li><i class="fas fa-check-circle"></i> Znajomość mechanik RCU</li>
                 </ul>
-                <div class="status-badge" style="display: block; text-align: center;">Pełny regulamin dostępny po zalogowaniu na stronie / w grze.</div>
+            </div>
+            <div class="card">
+                <i class="fas fa-gem"></i>
+                <h3>Co oferujemy?</h3>
+                <ul class="badge-list">
+                    <li><i class="fas fa-chalkboard-user"></i> Analizy meczów i coaching</li>
+                    <li><i class="fas fa-calendar-week"></i> Organizowane turnieje clan wars</li>
+                    <li><i class="fas fa-hand-sparkles"></i> Przyjazna, zmotywowana ekipa</li>
+                    <li><i class="fas fa-robot"></i> BOT statystyk i eventy wewnętrzne</li>
+                    <li><i class="fas fa-crown"></i> Droga do profesjonalnej sceny</li>
+                </ul>
             </div>
         </div>
     </div>
 
-    <!-- RANKING -->
-    <div id="ranking-section" class="content-section hidden-section">
-        <div class="section">
-            <h2 class="section-title">🏅 TOP 10 graczy miesiąca</h2>
-            <div style="background: #0f121b; border-radius: 28px; padding: 20px; max-width: 700px; margin: 20px auto;">
-                <ol style="margin-left: 25px;">
-                    <li><strong>💎 Venom_Black</strong> - 3420 pkt RP</li>
-                    <li><strong>🔥 Mikey_Spades</strong> - 2980 pkt RP</li>
-                    <li><strong>👑 Lucy_Heart</strong> - 2750 pkt RP</li>
-                    <li><strong>🚔 Martin_Reid</strong> - 2430 pkt RP</li>
-                    <li><strong>💼 Scarface_Nero</strong> - 2105 pkt RP</li>
-                </ol>
-                <p style="margin-top: 30px; text-align: center;">⭐ Zdobądź punkty za aktywny role play, eventy i fabułę!</p>
-            </div>
+    <!-- FORMULARZ REKRUTACYJNY -->
+    <div id="formularz">
+        <div class="section-title">
+            <i class="fas fa-clipboard-list"></i>
+            <span>FORMULARZ REKRUTACYJNY</span>
+        </div>
+        <div class="form-card">
+            <form id="recruitmentForm">
+                <div class="form-grid">
+                    <div>
+                        <label><i class="fas fa-user-astronaut"></i> Nick w grze *</label>
+                        <input type="text" id="nick" placeholder="Twój nick (FIFH sprawdza)" required>
+                    </div>
+                    <div>
+                        <label><i class="fab fa-discord"></i> Discord (nazwa#tag) *</label>
+                        <input type="text" id="discord" placeholder="Przykład: rekrut#1234" required>
+                    </div>
+                    <div>
+                        <label><i class="fas fa-chart-simple"></i> Obecna ranga / MMR *</label>
+                        <select id="rank" required>
+                            <option value="">-- Wybierz --</option>
+                            <option value="Diament">Diament</option>
+                            <option value="Mistrz">Mistrz</option>
+                            <option value="Arcymistrz">Arcymistrz</option>
+                            <option value="Legend">Legend (Top 200)</option>
+                            <option value="Platyna">Platyna (tylko wyjątkowe przypadki)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label><i class="fas fa-clock"></i> Godziny aktywności (dziennie) *</label>
+                        <select id="activity" required>
+                            <option value="">-- Wybierz --</option>
+                            <option value="1-2h">1-2 godziny</option>
+                            <option value="2-4h">2-4 godziny</option>
+                            <option value="4h+">4+ godzin</option>
+                        </select>
+                    </div>
+                    <div class="full-width">
+                        <label><i class="fas fa-microphone-alt"></i> Doświadczenie / osiągnięcia (turnieje, poprzednie klany) *</label>
+                        <textarea rows="3" id="exp" placeholder="Opisz swoje osiągnięcia w Rebirth Champions Ultimate, udziały w turniejach, role itp." required></textarea>
+                    </div>
+                    <div class="full-width">
+                        <label><i class="fas fa-question-circle"></i> Dlaczego chcesz dołączyć do FIFH? *</label>
+                        <textarea rows="2" id="motivation" placeholder="Twoja motywacja, cele oraz co możesz wnieść do klanu" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
+                <p style="font-size: 0.75rem; margin-top: 1rem; text-align: center; color:#8e9dbb;"><i class="fas fa-lock"></i> Dane są bezpieczne. Po weryfikacji skontaktujemy się przez Discord.</p>
+            </form>
         </div>
     </div>
 
-    <!-- LOGOWANIE (zakładka) -->
-    <div id="login-tab-section" class="content-section hidden-section">
-        <div class="login-panel active" id="loginFormContainer">
-            <h3><i class="fas fa-key"></i> Panel logowania</h3>
-            <input type="text" class="login-input" id="loginUser" placeholder="Nazwa użytkownika / login">
-            <input type="password" class="login-input" id="loginPass" placeholder="Hasło">
-            <button class="btn-cyber" id="doLoginBtn" style="width: 100%;">Zaloguj się →</button>
-            <p style="margin-top: 20px; font-size: 0.8rem; text-align: center;">Nie masz konta? <a href="#" id="fakeRegister" style="color: cyan;">Zarejestruj się</a> (demo)</p>
-            <p style="margin-top: 15px; font-size: 0.7rem; text-align: center; color: #7f8c8d;">🔐 Dane testowe: user: <strong>admin</strong> / hasło: <strong>rp123</strong></p>
-        </div>
+    <!-- kontakt i discord -->
+    <div id="discord-link" class="social-links">
+        <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Dołącz na serwer FIFH</a>
+        <a href="#" class="social-icon" id="twitchLinkMock"><i class="fab fa-twitch"></i> Kanał FIFH</a>
+        <a href="#" class="social-icon" id="youtubeMock"><i class="fab fa-youtube"></i> Materiały RCU</a>
     </div>
-</main>
 
-<footer>
-    <p>© 2026 NeoCity Role Play | Wszystkie prawa zastrzeżone | Discord: .gg/neorproleplay</p>
-    <p style="margin-top: 10px; font-size: 0.8rem;">kontakt@neorolereplay.pl</p>
-</footer>
+    <footer>
+        <p>© 2025 FIFH Clan — Rebirth Champions Ultimate. Tylko najlepsi wchodzą do gry. <i class="fas fa-dragon"></i> Rise or Fall, we fight together.</p>
+        <p style="margin-top: 0.5rem;">Wypełnienie formularza jest pierwszym krokiem. Czekamy na Ciebie, Championie!</p>
+    </footer>
+</div>
+
+<div id="toast-msg"></div>
 
 <script>
-    // Obsługa przełączania zakładek
-    const sections = {
-        home: document.getElementById('home-section'),
-        news: document.getElementById('news-section'),
-        rules: document.getElementById('rules-section'),
-        ranking: document.getElementById('ranking-section'),
-        'login-tab': document.getElementById('login-tab-section')
-    };
-
-    function showTab(tabId) {
-        // ukryj wszystkie
-        for (let key in sections) {
-            sections[key].classList.add('hidden-section');
-        }
-        if (sections[tabId]) {
-            sections[tabId].classList.remove('hidden-section');
+    (function() {
+        // Pobieranie elementów DOM
+        const form = document.getElementById('recruitmentForm');
+        const toast = document.getElementById('toast-msg');
+        
+        function showToast(message, isError = false) {
+            toast.textContent = message;
+            toast.style.background = isError ? '#3b1e3a' : '#1e1b4b';
+            toast.style.borderColor = isError ? '#f43f5e' : '#c084fc';
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
         }
 
-        // zaznaczenie aktywnego linku
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.classList.remove('active');
-            if(link.getAttribute('data-tab') === tabId) {
-                link.classList.add('active');
+        // pomocnicza walidacja nicku discord (wzór)
+        function validateDiscord(discordTag) {
+            const regex = /^.{2,32}#[0-9]{4}$/;
+            return regex.test(discordTag);
+        }
+
+        // funkcja zapisu zgłoszenia do localStorage (demo rekrutacji) + symulacja wysyłki
+        function saveApplication(data) {
+            // pobierz istniejące zgłoszenia lub stwórz tablicę
+            let apps = [];
+            const stored = localStorage.getItem('fifh_applications');
+            if(stored) {
+                try {
+                    apps = JSON.parse(stored);
+                } catch(e) { apps = []; }
             }
-        });
-    }
+            const newId = Date.now();
+            const newApp = { id: newId, timestamp: new Date().toISOString(), ...data };
+            apps.push(newApp);
+            localStorage.setItem('fifh_applications', JSON.stringify(apps));
+            return newId;
+        }
 
-    // nasłuchiwanie na linki
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', (e) => {
+        // wyświetlenie komunikatu (symulacja wysłania na serwer)
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const tab = link.getAttribute('data-tab');
-            if(tab) showTab(tab);
+
+            // pobieranie wartości
+            const nick = document.getElementById('nick').value.trim();
+            const discord = document.getElementById('discord').value.trim();
+            const rank = document.getElementById('rank').value;
+            const activity = document.getElementById('activity').value;
+            const exp = document.getElementById('exp').value.trim();
+            const motivation = document.getElementById('motivation').value.trim();
+
+            // walidacje
+            if(!nick || nick.length < 3) {
+                showToast('❌ Podaj poprawny nick (min. 3 znaki)', true);
+                return;
+            }
+            if(!discord) {
+                showToast('❌ Wymagany Discord (nazwa#0000)', true);
+                return;
+            }
+            if(!validateDiscord(discord)) {
+                showToast('❌ Nieprawidłowy format Discorda! Przykład: Gracz#1234', true);
+                return;
+            }
+            if(!rank) {
+                showToast('❌ Wybierz swoją rangę / MMR', true);
+                return;
+            }
+            if(!activity) {
+                showToast('❌ Określ swoją aktywność godzinową', true);
+                return;
+            }
+            if(exp.length < 10) {
+                showToast('📝 Opisz swoje doświadczenie (min. 10 znaków)', true);
+                return;
+            }
+            if(motivation.length < 10) {
+                showToast('💪 Powiedz nam, dlaczego FIFH? (minimum 10 znaków)', true);
+                return;
+            }
+
+            // jeśli ranga platyna - dodatkowe ostrzeżenie, ale nie blokujemy (ale dla przykładu możemy zaakceptować z notką)
+            let warningMsg = '';
+            if(rank === 'Platyna') {
+                warningMsg = ' Uwaga: preferujemy wyższe rangi, ale Twoja aplikacja zostanie rozpatrzona indywidualnie.';
+            }
+
+            // zapisz aplikację
+            const appData = {
+                nick,
+                discord,
+                rank,
+                activity,
+                experience: exp,
+                motivation: motivation,
+            };
+            
+            try {
+                saveApplication(appData);
+                // symulacja sukcesu
+                showToast(`✅ Zgłoszenie wysłane! ${warningMsg} Skontaktujemy się przez Discord w ciągu 48h.`, false);
+                form.reset();
+                // opcjonalnie - dodatkowo przewiń do góry, ale niech użytkownik widzi toast.
+                // można też wyczyścić ale zostawiamy
+            } catch(err) {
+                showToast('⚠️ Błąd podczas zapisu, spróbuj ponownie', true);
+                console.error(err);
+            }
+
+            // DODATKOWO: można zrobić demo przekierowania na dummy endpoint, ale to tylko front-end demo
+            // wysyłka "fake" - nie ładujemy backendu, ale dajemy pełne wrażenie rekrutacji
+            // wyświetlamy też w konsoli dla rekrutera (symulacja)
+            console.log('Nowa aplikacja FIFH:', appData);
         });
-    });
 
-    // przycisk GRAJ TERAZ
-    document.getElementById('quickConnect').addEventListener('click', () => {
-        alert('🚀 Połączenie z serwerem: connect neoroleplay.pl\nWersja FiveM / GTA V RP');
-    });
+        // Obsługa przycisków społecznościowych (mockupy / komunikaty)
+        const discordBtn = document.getElementById('discordMockBtn');
+        const discordInvite = document.getElementById('discordInvite');
+        const twitchMock = document.getElementById('twitchLinkMock');
+        const youtubeMock = document.getElementById('youtubeMock');
 
-    // symulacja logowania (demo)
-    const loginBtn = document.getElementById('doLoginBtn');
-    if(loginBtn) {
-        loginBtn.addEventListener('click', () => {
-            const user = document.getElementById('loginUser').value.trim();
-            const pass = document.getElementById('loginPass').value.trim();
-            if(user === 'admin' && pass === 'rp123') {
-                alert('✅ Zalogowano pomyślnie! Witaj w panelu gracza NeoRP.');
-                // tutaj można zmienić zawartość po zalogowaniu, np pokazać panel gracza
-                const loginBox = document.getElementById('loginFormContainer');
-                loginBox.innerHTML = `<div style="text-align:center"><i class="fas fa-check-circle" style="font-size: 3rem; color:lime"></i><h3>Witaj, ${user}!</h3><p>Jesteś zalogowany. Pełny dostęp do twojej postaci i statystyk.</p><button class="btn-cyber" id="logoutDemo">Wyloguj</button></div>`;
-                const logoutBtn = document.getElementById('logoutDemo');
-                if(logoutBtn) {
-                    logoutBtn.addEventListener('click', () => {
-                        location.reload(); // prosty reset
-                    });
+        function mockSocial(platform) {
+            showToast(`🔗 Zaproszenie na serwer FIFH (Discord) - dołącz do społeczności! Link testowy: discord.gg/fifh-elite (symulacja)`, false);
+        }
+
+        if(discordBtn) {
+            discordBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                mockSocial('discord');
+            });
+        }
+        if(discordInvite) {
+            discordInvite.addEventListener('click', (e) => {
+                e.preventDefault();
+                mockSocial('discord');
+            });
+        }
+        if(twitchMock) {
+            twitchMock.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('🎮 Kanał Twitch FIFH: transmisje z treningów i turniejów RCU już wkrótce!', false);
+            });
+        }
+        if(youtubeMock) {
+            youtubeMock.addEventListener('click', (e) => {
+                e.preventDefault();
+                showToast('📺 Subskrybuj FIFH na YouTube - poradniki i najlepsze momenty z RCU', false);
+            });
+        }
+
+        // mała animacja dla smooth scroll (dla kotwic)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if(targetId === "#" || targetId === "") return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-            } else {
-                alert('❌ Błędny login lub hasło. Spróbuj admin / rp123');
-            }
+            });
         });
-    }
-
-    // fake rejestracja
-    const fakeReg = document.getElementById('fakeRegister');
-    if(fakeReg) {
-        fakeReg.addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('To tylko strona demo – rejestracja dostępna na serwerze Discord.');
-        });
-    }
-
-    // ustaw domyślnie widok home
-    showTab('home');
+    })();
 </script>
 </body>
 </html>
