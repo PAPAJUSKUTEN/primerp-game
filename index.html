@@ -58,41 +58,53 @@
         /* MODAL */
         .recruit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
         .recruit-modal.active { display: flex; }
-        .modal-content { background: #0f1222; border-radius: 2rem; max-width: 950px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid #a855f7; box-shadow: 0 0 40px rgba(168,85,247,0.4); position: relative; }
-        .modal-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); border-radius: 2rem 2rem 0 0; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(4px); }
+        .modal-content { background: #0f1222; border-radius: 2rem; max-width: 950px; width: 90%; max-height: 85vh; position: relative; border: 2px solid #a855f7; box-shadow: 0 0 40px rgba(168,85,247,0.4); display: flex; flex-direction: column; }
+        .modal-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); border-radius: 2rem 2rem 0 0; flex-shrink: 0; }
         .modal-header h2 { font-family: 'Orbitron', monospace; font-size: 1.5rem; color: #c084fc; }
         .close-modal { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #cbd5e6; transition: 0.2s; }
         .close-modal:hover { color: #f43f5e; }
-        .modal-body { padding: 1.8rem; }
+        .modal-body { padding: 1.8rem; overflow-y: auto; flex: 1; scroll-behavior: smooth; }
         
-        /* SUWAKI – przyciski przewijania w górę/dół */
-        .scroll-buttons {
-            position: sticky;
-            bottom: 20px;
-            left: 0;
-            right: 0;
+        /* ========== STYLIZACJA PRZYCISKÓW PRZEWIJANIA (SUWAKI) ========== */
+        .scroll-controls {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 0.5rem;
-            z-index: 15;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 20;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 10px 6px;
+            border-radius: 40px;
+            border: 1px solid #a855f7;
+            box-shadow: 0 0 15px rgba(168,85,247,0.4);
         }
         .scroll-btn {
-            background: #1e1b4b;
-            border: 1px solid #a855f7;
-            border-radius: 50px;
-            padding: 0.5rem 1.2rem;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: #c084fc;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
+            background: linear-gradient(135deg, #1e1b4b, #2d1b69);
+            border: 1px solid #c084fc;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #e9d5ff;
+            font-size: 1.4rem;
+            box-shadow: 0 0 5px #a855f7;
         }
-        .scroll-btn:hover { background: #2d1b69; transform: scale(1.02); }
+        .scroll-btn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border-color: #fff;
+            box-shadow: 0 0 18px #c084fc;
+            color: white;
+        }
+        .scroll-btn:active { transform: scale(0.95); }
         
         .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
         .full-width { grid-column: span 2; }
@@ -112,7 +124,7 @@
         footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2d3a5e; font-size: 0.8rem; color: #7e8aa8; }
         #toast-msg { visibility: hidden; min-width: 250px; background-color: #1e1b4b; color: #f0eaff; text-align: center; border-radius: 40px; padding: 10px 20px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1100; backdrop-filter: blur(12px); border: 1px solid #c084fc; transition: 0.2s; opacity: 0; font-size: 0.85rem; }
         #toast-msg.show { visibility: visible; opacity: 1; }
-        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .recruit-main-btn { font-size: 1rem; padding: 0.8rem 1.5rem; } }
+        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .recruit-main-btn { font-size: 1rem; padding: 0.8rem 1.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } }
     </style>
 </head>
 <body>
@@ -155,7 +167,7 @@
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
 
-<!-- MODAL REKRUTACJI Z SUWAKAMI (przyciskami przewijania) -->
+<!-- MODAL REKRUTACJI Z NEONOWYMI PRZYCISKAMI PRZEWIJANIA -->
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny BEST</h2><button class="close-modal" id="closeModalBtn">&times;</button></div>
@@ -181,11 +193,11 @@
                 </div>
                 <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
             </form>
-            <!-- SUWAKI / przyciski przewijania -->
-            <div class="scroll-buttons">
-                <button type="button" class="scroll-btn" id="scrollUpBtn"><i class="fas fa-arrow-up"></i> Przewiń w górę</button>
-                <button type="button" class="scroll-btn" id="scrollDownBtn"><i class="fas fa-arrow-down"></i> Przewiń w dół</button>
-            </div>
+        </div>
+        <!-- NEONOWE PRZYCISKI PRZEWIJANIA (SUWAKI) – DOPRACOWANE WIZUALNIE -->
+        <div class="scroll-controls">
+            <button type="button" class="scroll-btn" id="scrollUpBtn" title="Przewiń w górę"><i class="fas fa-chevron-up"></i></button>
+            <button type="button" class="scroll-btn" id="scrollDownBtn" title="Przewiń w dół"><i class="fas fa-chevron-down"></i></button>
         </div>
     </div>
 </div>
@@ -193,9 +205,9 @@
 
 <script>
     (function(){
-        // ================= NOWY TESTOWY WEBHOOK (podany przez użytkownika) =================
+        // ================= TESTOWY WEBHOOK (podany przez użytkownika) =================
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
-        // ====================================================================================
+        // =================================================================================
         
         // Definicje światów
         const worldsData = {
@@ -257,17 +269,17 @@
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         
-        // SUWAKI – przewijanie w górę/dół wewnątrz modala
-        const scrollUpBtn = document.getElementById('scrollUpBtn');
-        const scrollDownBtn = document.getElementById('scrollDownBtn');
-        if (scrollUpBtn) {
-            scrollUpBtn.addEventListener('click', () => {
-                modalBody.scrollBy({ top: -200, behavior: 'smooth' });
+        // ========== SUWAKI / PRZYCISKI PRZEWIJANIA ==========
+        const scrollUp = document.getElementById('scrollUpBtn');
+        const scrollDown = document.getElementById('scrollDownBtn');
+        if (scrollUp) {
+            scrollUp.addEventListener('click', () => {
+                modalBody.scrollBy({ top: -220, behavior: 'smooth' });
             });
         }
-        if (scrollDownBtn) {
-            scrollDownBtn.addEventListener('click', () => {
-                modalBody.scrollBy({ top: 200, behavior: 'smooth' });
+        if (scrollDown) {
+            scrollDown.addEventListener('click', () => {
+                modalBody.scrollBy({ top: 220, behavior: 'smooth' });
             });
         }
         
@@ -310,15 +322,9 @@
             };
             const payload = { username: "BEST Rekruter", avatar_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg", embeds: [embed], content: "📣 **Nowe zgłoszenie do BEST!**" };
             
-            // Wysyłka na podany webhook (testowy)
-            try {
-                const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                if(!response.ok) throw new Error(`HTTP ${response.status}`);
-                return true;
-            } catch (error) {
-                console.error("Błąd wysyłki webhook:", error);
-                throw error;
-            }
+            const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            if(!response.ok) throw new Error(`HTTP ${response.status}`);
+            return true;
         }
         
         const form = document.getElementById('recruitmentForm');
