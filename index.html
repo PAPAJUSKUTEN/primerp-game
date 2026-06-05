@@ -270,7 +270,13 @@
             margin-top: 0.8rem;
         }
 
-        .submit-btn:hover {
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn:hover:not(:disabled) {
             transform: scale(1.01);
             box-shadow: 0 0 15px #a855f7;
         }
@@ -334,7 +340,7 @@
         /* powiadomienie toast */
         #toast-msg {
             visibility: hidden;
-            min-width: 260px;
+            min-width: 280px;
             background-color: #1e1b4b;
             color: #f0eaff;
             text-align: center;
@@ -351,10 +357,14 @@
             transition: visibility 0.2s, opacity 0.2s;
             opacity: 0;
             white-space: nowrap;
+            font-size: 0.9rem;
         }
         #toast-msg.show {
             visibility: visible;
             opacity: 1;
+        }
+        @media (max-width: 600px) {
+            #toast-msg { white-space: normal; width: 80%; min-width: auto; }
         }
     </style>
 </head>
@@ -455,7 +465,7 @@
                         <textarea rows="2" id="motivation" placeholder="Twoja motywacja, cele oraz co możesz wnieść do klanu" required></textarea>
                     </div>
                 </div>
-                <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
+                <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
                 <p style="font-size: 0.75rem; margin-top: 1rem; text-align: center; color:#8e9dbb;"><i class="fas fa-lock"></i> Dane są bezpieczne. Po weryfikacji skontaktujemy się przez Discord.</p>
             </form>
         </div>
@@ -478,48 +488,107 @@
 
 <script>
     (function() {
-        // Pobieranie elementów DOM
+        // ================= KONFIGURACJA =================
+        // 🔴🔴🔴 URUCHOMIENIE NA ŻYWO: PODMIŃ PONIŻSZY URL NA SWÓJ WEBHOOK Z DISCORD 🔴🔴🔴
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
+        // ================================================
+        
         const form = document.getElementById('recruitmentForm');
+        const submitBtn = document.getElementById('submitBtn');
         const toast = document.getElementById('toast-msg');
         
-        function showToast(message, isError = false) {
+        function showToast(message, isError = false, duration = 4000) {
             toast.textContent = message;
             toast.style.background = isError ? '#3b1e3a' : '#1e1b4b';
             toast.style.borderColor = isError ? '#f43f5e' : '#c084fc';
             toast.classList.add('show');
             setTimeout(() => {
                 toast.classList.remove('show');
-            }, 3500);
+            }, duration);
         }
 
-        // pomocnicza walidacja nicku discord (wzór)
         function validateDiscord(discordTag) {
             const regex = /^.{2,32}#[0-9]{4}$/;
             return regex.test(discordTag);
         }
 
-        // funkcja zapisu zgłoszenia do localStorage (demo rekrutacji) + symulacja wysyłki
-        function saveApplication(data) {
-            // pobierz istniejące zgłoszenia lub stwórz tablicę
-            let apps = [];
-            const stored = localStorage.getItem('fifh_applications');
-            if(stored) {
-                try {
-                    apps = JSON.parse(stored);
-                } catch(e) { apps = []; }
+        // Funkcja wysyłająca dane do Discorda
+        async function sendToDiscord(applicationData) {
+            const embed = {
+                title: "📝 NOWE ZGŁOSZENIE DO FIFH",
+                color: 0xa855f7, // fioletowy
+                thumbnail: {
+                    url: "https://cdn-icons-png.flaticon.com/512/4254/4254468.png" // ogólna ikona klanu
+                },
+                fields: [
+                    {
+                        name: "🎮 Nick w grze",
+                        value: applicationData.nick,
+                        inline: true
+                    },
+                    {
+                        name: "🔷 Discord",
+                        value: applicationData.discord,
+                        inline: true
+                    },
+                    {
+                        name: "🏆 Ranga / MMR",
+                        value: applicationData.rank,
+                        inline: true
+                    },
+                    {
+                        name: "⏱ Aktywność (dziennie)",
+                        value: applicationData.activity,
+                        inline: true
+                    },
+                    {
+                        name: "⚔️ Doświadczenie / Osiągnięcia",
+                        value: applicationData.experience.length > 1000 ? applicationData.experience.substring(0, 1000) + "..." : applicationData.experience,
+                        inline: false
+                    },
+                    {
+                        name: "💡 Motywacja",
+                        value: applicationData.motivation.length > 800 ? applicationData.motivation.substring(0, 800) + "..." : applicationData.motivation,
+                        inline: false
+                    }
+                ],
+                footer: {
+                    text: "FIFH Rekrutacja • Rebirth Champions Ultimate",
+                    icon_url: "https://cdn-icons-png.flaticon.com/512/4712/4712105.png"
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            const payload = {
+                username: "FIFH Rekruter",
+                avatar_url: "https://cdn-icons-png.flaticon.com/512/184/184514.png",
+                embeds: [embed],
+                content: `📣 **Nowy rekrut!** <@&role_rekruterzy> (jeśli chcesz pingować rekruterów, dodaj ID roli - opcjonalnie)`
+            };
+            
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Webhook odpowiedział: ${response.status} ${errorText}`);
+                }
+                return true;
+            } catch (error) {
+                console.error("Błąd wysyłki do Discorda:", error);
+                throw error;
             }
-            const newId = Date.now();
-            const newApp = { id: newId, timestamp: new Date().toISOString(), ...data };
-            apps.push(newApp);
-            localStorage.setItem('fifh_applications', JSON.stringify(apps));
-            return newId;
         }
-
-        // wyświetlenie komunikatu (symulacja wysłania na serwer)
-        form.addEventListener('submit', (e) => {
+        
+        // Obsługa wysyłki formularza
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // pobieranie wartości
+            // Pobieranie wartości
             const nick = document.getElementById('nick').value.trim();
             const discord = document.getElementById('discord').value.trim();
             const rank = document.getElementById('rank').value;
@@ -527,7 +596,7 @@
             const exp = document.getElementById('exp').value.trim();
             const motivation = document.getElementById('motivation').value.trim();
 
-            // walidacje
+            // Walidacje
             if(!nick || nick.length < 3) {
                 showToast('❌ Podaj poprawny nick (min. 3 znaki)', true);
                 return;
@@ -557,13 +626,7 @@
                 return;
             }
 
-            // jeśli ranga platyna - dodatkowe ostrzeżenie, ale nie blokujemy (ale dla przykładu możemy zaakceptować z notką)
-            let warningMsg = '';
-            if(rank === 'Platyna') {
-                warningMsg = ' Uwaga: preferujemy wyższe rangi, ale Twoja aplikacja zostanie rozpatrzona indywidualnie.';
-            }
-
-            // zapisz aplikację
+            // Przygotowanie danych
             const appData = {
                 nick,
                 discord,
@@ -572,33 +635,39 @@
                 experience: exp,
                 motivation: motivation,
             };
+
+            // Blokada przycisku podczas wysyłania
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie zgłoszenia...';
             
             try {
-                saveApplication(appData);
-                // symulacja sukcesu
-                showToast(`✅ Zgłoszenie wysłane! ${warningMsg} Skontaktujemy się przez Discord w ciągu 48h.`, false);
+                // Sprawdź czy webhook jest skonfigurowany
+                if (!WEBHOOK_URL || WEBHOOK_URL === 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N') {
+                    // To jest przykładowy webhook, w rzeczywistości użytkownik powinien go podmienić.
+                    // Dla celów demonstracyjnych webhook jest aktywny (symulacja). Aby uniknąć spamu, dodajemy ostrzeżenie w konsoli.
+                    console.warn("Używasz domyślnego webhooka demonstracyjnego. Aby działał na Twoim serwerze, podmień zmienną WEBHOOK_URL.");
+                }
+                
+                await sendToDiscord(appData);
+                showToast(`✅ Zgłoszenie wysłane! Rekruterzy FIFH skontaktują się przez Discord w ciągu 48h.`, false, 5000);
                 form.reset();
-                // opcjonalnie - dodatkowo przewiń do góry, ale niech użytkownik widzi toast.
-                // można też wyczyścić ale zostawiamy
-            } catch(err) {
-                showToast('⚠️ Błąd podczas zapisu, spróbuj ponownie', true);
-                console.error(err);
+            } catch (error) {
+                console.error(error);
+                showToast(`❌ Błąd wysyłki: ${error.message || 'Nie udało się wysłać zgłoszenia. Spróbuj ponownie później.'}`, true);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Wyślij zgłoszenie';
             }
-
-            // DODATKOWO: można zrobić demo przekierowania na dummy endpoint, ale to tylko front-end demo
-            // wysyłka "fake" - nie ładujemy backendu, ale dajemy pełne wrażenie rekrutacji
-            // wyświetlamy też w konsoli dla rekrutera (symulacja)
-            console.log('Nowa aplikacja FIFH:', appData);
         });
 
-        // Obsługa przycisków społecznościowych (mockupy / komunikaty)
+        // Obsługa przycisków społecznościowych (mockupy)
         const discordBtn = document.getElementById('discordMockBtn');
         const discordInvite = document.getElementById('discordInvite');
         const twitchMock = document.getElementById('twitchLinkMock');
         const youtubeMock = document.getElementById('youtubeMock');
 
         function mockSocial(platform) {
-            showToast(`🔗 Zaproszenie na serwer FIFH (Discord) - dołącz do społeczności! Link testowy: discord.gg/fifh-elite (symulacja)`, false);
+            showToast(`🔗 Zaproszenie na serwer FIFH (Discord) - dołącz do społeczności! Link dostępny na kanale #info`, false);
         }
 
         if(discordBtn) {
@@ -626,7 +695,7 @@
             });
         }
 
-        // mała animacja dla smooth scroll (dla kotwic)
+        // Smooth scroll dla kotwic
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
