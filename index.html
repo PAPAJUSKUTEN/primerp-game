@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="BEST – elitarny klan w grze Rebirth Champions Ultimate (RCU) na Roblox. Rekrutacja, wymagania, formularz zgłoszeniowy.">
+    <meta name="description" content="BEST – elitarny klan w grze Rebirth Champions Ultimate (RCU) na Roblox. Rekrutacja, wymagania, formularz zgłoszeniowy z GamePassami.">
     <title>BEST | Rebirth Champions Ultimate – Elitarny Klan RCU</title>
     
     <!-- FAVICON -->
@@ -56,7 +56,7 @@
         .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
         .recruit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
         .recruit-modal.active { display: flex; }
-        .modal-content { background: #0f1222; border-radius: 2rem; max-width: 900px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid #a855f7; box-shadow: 0 0 40px rgba(168,85,247,0.4); }
+        .modal-content { background: #0f1222; border-radius: 2rem; max-width: 950px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid #a855f7; box-shadow: 0 0 40px rgba(168,85,247,0.4); }
         .modal-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); border-radius: 2rem 2rem 0 0; }
         .modal-header h2 { font-family: 'Orbitron', monospace; font-size: 1.5rem; color: #c084fc; }
         .close-modal { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #cbd5e6; transition: 0.2s; }
@@ -67,6 +67,11 @@
         input, select, textarea { width: 100%; background: #111827; border: 1px solid #334155; padding: 0.8rem 1rem; border-radius: 1rem; font-size: 0.9rem; color: #f1f5f9; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: #a855f7; box-shadow: 0 0 0 2px rgba(168,85,247,0.3); }
         label { font-weight: 600; display: block; margin-bottom: 0.3rem; font-size: 0.85rem; color: #cbd5e6; }
+        .gamepass-group { background: #0f172a; border-radius: 1rem; padding: 1rem; margin-top: 0.5rem; border: 1px solid #334155; }
+        .gamepass-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-top: 0.5rem; }
+        .gamepass-check { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85rem; padding: 0.3rem; border-radius: 0.5rem; transition: 0.2s; }
+        .gamepass-check:hover { background: #1e293b; }
+        .gamepass-check input { width: 18px; height: 18px; margin-right: 5px; accent-color: #a855f7; }
         .submit-btn { background: linear-gradient(90deg, #7c3aed, #a855f7); border: none; padding: 0.8rem; width: 100%; font-weight: bold; border-radius: 2rem; color: white; cursor: pointer; margin-top: 1rem; }
         .submit-btn:disabled { opacity: 0.6; }
         .social-links { display: flex; justify-content: center; gap: 1.5rem; margin: 2rem 0; flex-wrap: wrap; }
@@ -75,7 +80,7 @@
         footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2d3a5e; font-size: 0.8rem; color: #7e8aa8; }
         #toast-msg { visibility: hidden; min-width: 250px; background-color: #1e1b4b; color: #f0eaff; text-align: center; border-radius: 40px; padding: 10px 20px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1100; backdrop-filter: blur(12px); border: 1px solid #c084fc; transition: 0.2s; opacity: 0; font-size: 0.85rem; }
         #toast-msg.show { visibility: visible; opacity: 1; }
-        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } h1 { font-size: 2.2rem; } .recruit-main-btn { font-size: 1rem; padding: 0.8rem 1.5rem; } }
+        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .recruit-main-btn { font-size: 1rem; padding: 0.8rem 1.5rem; } }
     </style>
 </head>
 <body>
@@ -118,7 +123,7 @@
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
 
-<!-- MODAL REKRUTACJI Z ROZBUDOWANYM FORMULARZEM ŚWIATÓW -->
+<!-- MODAL REKRUTACJI Z ROZBUDOWANYM FORMULARZEM (ŚWIATY + GAMEPASSY) -->
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny BEST</h2><button class="close-modal" id="closeModalBtn">&times;</button></div>
@@ -131,11 +136,21 @@
                     <div><label><i class="fas fa-clock"></i> Aktywność (godz./dzień) *</label><select id="activity" required><option value="">-- wybierz --</option><option value="1-2h">1-2 godziny</option><option value="2-4h">2-4 godziny</option><option value="4h+">4+ godzin</option></select></div>
                     <div><label><i class="fas fa-dragon"></i> Najlepszy zwierzak / Aura</label><input type="text" id="bestpet" placeholder="np. Smok Legendarny"></div>
                     
-                    <!-- WYBIERZ KATEGORIĘ ŚWIATA -->
+                    <!-- KATEGORIA ŚWIATA -->
                     <div><label><i class="fas fa-globe"></i> Kategoria świata *</label><select id="worldCategory" required><option value="">-- wybierz kategorię --</option><option value="Overworld">Overworld (Ziemia)</option><option value="Space">Space (Kosmos)</option><option value="Skylands">Skylands (Niebiańskie Wyspy)</option></select></div>
                     
-                    <!-- DYNAMICZNY WYBOR MAPY -->
+                    <!-- DYNAMICZNY WYBÓR MAPY -->
                     <div><label><i class="fas fa-map-marked-alt"></i> Najdalszy osiągnięty świat *</label><select id="worldMap" required><option value="">-- najpierw wybierz kategorię --</option></select></div>
+                    
+                    <!-- GAMEPASSY (wielokrotny wybór) -->
+                    <div class="full-width">
+                        <label><i class="fas fa-ticket-alt"></i> Posiadane GamePassy (zaznacz wszystkie które masz)</label>
+                        <div class="gamepass-group">
+                            <div class="gamepass-grid" id="gamepassGrid">
+                                <!-- Checkboxy będą generowane dynamicznie z JS -->
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="full-width"><label><i class="fas fa-scroll"></i> Doświadczenie / osiągnięcia *</label><textarea rows="2" id="exp" placeholder="Opisz swoje osiągnięcia w RCU..." required></textarea></div>
                     <div class="full-width"><label><i class="fas fa-heart"></i> Dlaczego BEST? *</label><textarea rows="2" id="motivation" placeholder="Twoja motywacja i cele" required></textarea></div>
@@ -153,7 +168,7 @@
         // WEBHOOK – PODMIEŃ NA SWÓJ
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N';
         
-        // Definicje światów według kategorii (dokładnie według Twojej listy)
+        // Definicje światów według kategorii
         const worldsData = {
             Overworld: [
                 "Spawn", "Farm", "Desert", "Nuclear", "Atlantis", "Kingdom", "City", "Cave", "Volcano", 
@@ -170,6 +185,30 @@
             ]
         };
         
+        // Lista GamePassów do wyświetlenia
+        const gamepassesList = [
+            "Auto Clicker", "Auto Rebirth", "+2 Pet Equip", "+3 Pet Equip", "Mega Luck", "Ultra Luck", 
+            "Faster Eggs Open", "Extra Egg", "Vip", "Magic Eggs", "Shiny Hunters", "Insane Farmer", 
+            "Secrets Hunter", "Mega Fragment Luck", "Insane Lumberjack", "Dungeon Coins", "Space Coins", 
+            "Divine Hunter", "Hive Capacity"
+        ];
+        
+        // Generowanie checkboxów GamePassów
+        const gamepassGrid = document.getElementById('gamepassGrid');
+        gamepassesList.forEach(gp => {
+            const label = document.createElement('label');
+            label.className = 'gamepass-check';
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.value = gp;
+            cb.name = 'gamepass';
+            cb.classList.add('gamepass-cb');
+            label.appendChild(cb);
+            label.appendChild(document.createTextNode(gp));
+            gamepassGrid.appendChild(label);
+        });
+        
+        // Dynamiczne światy
         const categorySelect = document.getElementById('worldCategory');
         const mapSelect = document.getElementById('worldMap');
         
@@ -187,7 +226,6 @@
                 mapSelect.innerHTML = '<option value="">-- najpierw wybierz kategorię --</option>';
             }
         }
-        
         categorySelect.addEventListener('change', updateWorldsList);
         
         // Modal
@@ -211,6 +249,12 @@
         
         function validateDiscord(tag){ return /^.{2,32}#[0-9]{4}$/.test(tag); }
         
+        // Pobranie zaznaczonych GamePassów
+        function getSelectedGamepasses() {
+            const checkboxes = document.querySelectorAll('.gamepass-cb:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+        
         async function sendToDiscord(data){
             const embed = {
                 title: "⚔️ NOWY REKRUT BEST | RCU",
@@ -224,8 +268,9 @@
                     { name: "🐉 Najlepszy pet/aura", value: data.bestpet || "brak", inline: true },
                     { name: "🌍 Kategoria świata", value: data.worldCategory, inline: true },
                     { name: "🗺️ Najdalszy świat", value: data.worldMap, inline: true },
-                    { name: "📜 Doświadczenie", value: data.experience.length > 700 ? data.experience.substring(0,700)+"..." : data.experience, inline: false },
-                    { name: "💡 Motywacja", value: data.motivation.length > 700 ? data.motivation.substring(0,700)+"..." : data.motivation, inline: false }
+                    { name: "🎫 Posiadane GamePassy", value: data.gamepasses.length ? data.gamepasses.join(", ") : "brak", inline: false },
+                    { name: "📜 Doświadczenie", value: data.experience.length > 600 ? data.experience.substring(0,600)+"..." : data.experience, inline: false },
+                    { name: "💡 Motywacja", value: data.motivation.length > 600 ? data.motivation.substring(0,600)+"..." : data.motivation, inline: false }
                 ],
                 footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
                 timestamp: new Date().toISOString()
@@ -253,6 +298,7 @@
             const worldMap = document.getElementById('worldMap').value;
             const exp = document.getElementById('exp').value.trim();
             const motivation = document.getElementById('motivation').value.trim();
+            const gamepasses = getSelectedGamepasses();
             
             if(!nick || nick.length < 3) { showToast("❌ Podaj poprawny nick (min.3 znaki)", true); return; }
             if(!discord || !validateDiscord(discord)) { showToast("❌ Nieprawidłowy Discord (nazwa#1234)", true); return; }
@@ -263,15 +309,17 @@
             if(exp.length < 10) { showToast("📝 Opisz swoje osiągnięcia (min. 10 znaków)", true); return; }
             if(motivation.length < 10) { showToast("💡 Napisz dlaczego chcesz dołączyć", true); return; }
             
-            const payloadData = { nick, discord, prestige, activity, bestpet, worldCategory, worldMap, experience: exp, motivation };
+            const payloadData = { nick, discord, prestige, activity, bestpet, worldCategory, worldMap, gamepasses, experience: exp, motivation };
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie...';
             try {
                 await sendToDiscord(payloadData);
                 showToast("✅ Zgłoszenie wysłane! Rekruterzy BEST skontaktują się przez Discord.", false);
                 form.reset();
+                // Resetuj dodatkowe pola
                 categorySelect.value = "";
                 mapSelect.innerHTML = '<option value="">-- najpierw wybierz kategorię --</option>';
+                document.querySelectorAll('.gamepass-cb').forEach(cb => cb.checked = false);
                 closeModal();
             } catch (err) {
                 showToast("❌ Błąd wysyłki. Spróbuj ponownie.", true);
