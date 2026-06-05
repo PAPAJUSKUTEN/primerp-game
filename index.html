@@ -3,406 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="FIFH – elitarny klan w grze Rebirth Champions Ultimate (RCU) na Roblox. Sprawdź nas i dołącz!">
-    <title>FIFH | Rebirth Champions Ultimate – Elitarny Klan</title>
+    <meta name="description" content="BEST – elitarny klan w grze Rebirth Champions Ultimate (RCU) na Roblox. Rekrutacja, wymagania, formularz zgłoszeniowy.">
+    <title>BEST | Rebirth Champions Ultimate – Elitarny Klan RCU</title>
     
-    <!-- FAVICON – Twoje zdjęcie z ImgBB -->
+    <!-- FAVICON -->
     <link rel="icon" type="image/jpeg" href="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg">
     <link rel="apple-touch-icon" href="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg">
     
-    <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #0a0c10;
-            font-family: 'Inter', sans-serif;
-            color: #eef2ff;
-            line-height: 1.5;
-            overflow-x: hidden;
-        }
-
-        /* tło cyberpunk */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0c10; font-family: 'Inter', sans-serif; color: #eef2ff; line-height: 1.5; overflow-x: hidden; }
         .bg-cyber {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
             background: radial-gradient(circle at 20% 30%, #0b1120, #02030a);
         }
         .bg-cyber::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            content: ""; position: absolute; width: 100%; height: 100%;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.06"><path fill="none" stroke="%237c3aed" stroke-width="0.8" d="M0 400 L800 400 M400 0 L400 800 M200 200 L600 600 M600 200 L200 600"/><circle cx="400" cy="400" r="80" stroke="%239b6eff" fill="none" stroke-width="1.2"/><polygon points="400,100 500,250 300,250" fill="none" stroke="%23a855f7" stroke-width="1"/></svg>');
-            background-repeat: repeat;
-            animation: drift 50s linear infinite;
+            background-repeat: repeat; animation: drift 50s linear infinite;
         }
-        @keyframes drift {
-            0% { background-position: 0 0; }
-            100% { background-position: 150px 150px; }
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* okrągłe logo */
-        .logo-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-        .clan-logo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #a855f7;
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .clan-logo:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.9);
-        }
-
-        .glow-text {
-            text-shadow: 0 0 8px #a855f7, 0 0 15px #7c3aed;
-        }
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-left: 5px solid #a855f7;
-            padding-left: 1.2rem;
-        }
-        .section-title i {
-            color: #c084fc;
-            font-size: 1.8rem;
-        }
-
-        /* header */
-        .hero {
-            text-align: center;
-            padding: 2rem 1rem 3rem;
-            border-bottom: 2px solid rgba(139, 92, 246, 0.4);
-            margin-bottom: 3rem;
-        }
-        .clan-tag {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, #c084fc, #6d28d9);
-            display: inline-block;
-            padding: 0.4rem 1.8rem;
-            border-radius: 60px;
-            font-weight: 800;
-            margin-bottom: 1.2rem;
-            box-shadow: 0 0 12px #a855f7;
-        }
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF, #d8b4fe, #a855f7);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-        }
-        .sub {
-            font-size: 1.15rem;
-            color: #cbd5e6;
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
-        /* przycisk rekrutacja - główny CTA */
-        .recruit-btn-container {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0 1rem;
-        }
-        .recruit-main-btn {
-            background: linear-gradient(95deg, #7c3aed, #a855f7);
-            border: none;
-            padding: 1rem 2.5rem;
-            border-radius: 60px;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 15px #a855f7;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'Orbitron', monospace;
-        }
-        .recruit-main-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 25px #c084fc;
-        }
-
-        /* karty informacyjne */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.8rem;
-            margin-bottom: 3rem;
-        }
-        .card {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 1.8rem;
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            padding: 1.6rem;
-            transition: 0.3s;
-        }
-        .card:hover { border-color: #c084fc; transform: translateY(-5px); background: rgba(25, 32, 55, 0.85); }
+        @keyframes drift { 0% { background-position: 0 0; } 100% { background-position: 150px 150px; } }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem 2rem; position: relative; z-index: 2; }
+        .logo-wrapper { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+        .clan-logo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #a855f7; box-shadow: 0 0 20px rgba(168,85,247,0.6); transition: 0.3s; }
+        .clan-logo:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(168,85,247,0.9); }
+        .glow-text { text-shadow: 0 0 8px #a855f7, 0 0 15px #7c3aed; }
+        .section-title { font-family: 'Orbitron', monospace; font-size: 2rem; font-weight: 700; margin-bottom: 1.8rem; display: flex; align-items: center; gap: 12px; border-left: 5px solid #a855f7; padding-left: 1.2rem; }
+        .section-title i { color: #c084fc; font-size: 1.8rem; }
+        .hero { text-align: center; padding: 2rem 1rem 3rem; border-bottom: 2px solid rgba(139,92,246,0.4); margin-bottom: 3rem; }
+        .clan-tag { font-family: 'Orbitron', monospace; font-size: 1.2rem; letter-spacing: 4px; background: linear-gradient(135deg, #c084fc, #6d28d9); display: inline-block; padding: 0.4rem 1.8rem; border-radius: 60px; font-weight: 800; margin-bottom: 1.2rem; box-shadow: 0 0 12px #a855f7; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, #FFFFFF, #d8b4fe, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1rem; }
+        .sub { font-size: 1.15rem; color: #cbd5e6; max-width: 750px; margin: 0 auto; }
+        .recruit-btn-container { display: flex; justify-content: center; margin: 2rem 0 1rem; }
+        .recruit-main-btn { background: linear-gradient(95deg, #7c3aed, #a855f7); border: none; padding: 1rem 2.5rem; border-radius: 60px; font-weight: 800; font-size: 1.3rem; color: white; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px #a855f7; display: inline-flex; align-items: center; gap: 12px; font-family: 'Orbitron', monospace; }
+        .recruit-main-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px #c084fc; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
+        .card { background: rgba(15,23,42,0.7); backdrop-filter: blur(8px); border-radius: 1.8rem; border: 1px solid rgba(139,92,246,0.4); padding: 1.6rem; transition: 0.3s; }
+        .card:hover { border-color: #c084fc; transform: translateY(-5px); }
         .card i { font-size: 2.3rem; color: #c084fc; margin-bottom: 0.8rem; }
         .card h3 { font-size: 1.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.6rem; }
-
-        /* wymagania – kafelki */
-        .requirements-wrapper {
-            background: linear-gradient(145deg, #0f1222, #0a0c18);
-            border-radius: 1.8rem;
-            padding: 0.2rem;
-            margin-bottom: 2rem;
-        }
-        .requirements-inner {
-            background: rgba(5, 7, 15, 0.7);
-            border-radius: 1.6rem;
-            padding: 1.8rem;
-            border: 1px solid #4c1d95;
-        }
-        .req-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 1.2rem;
-            margin-top: 1rem;
-        }
-        .req-item {
-            background: #111827;
-            border-radius: 1.2rem;
-            padding: 1rem;
-            border-left: 4px solid #a855f7;
-        }
+        .requirements-wrapper { background: linear-gradient(145deg, #0f1222, #0a0c18); border-radius: 1.8rem; padding: 0.2rem; margin-bottom: 2rem; }
+        .requirements-inner { background: rgba(5,7,15,0.7); border-radius: 1.6rem; padding: 1.8rem; border: 1px solid #4c1d95; }
+        .req-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
+        .req-item { background: #111827; border-radius: 1.2rem; padding: 1rem; border-left: 4px solid #a855f7; }
         .req-item i { font-size: 1.5rem; margin-bottom: 0.3rem; display: block; }
         .req-value { font-size: 1.2rem; font-weight: bold; color: #e9d5ff; font-family: 'Orbitron', monospace; }
-
-        /* statystyki */
-        .stats-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        .stat-circle {
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            border-radius: 1.8rem;
-            padding: 0.8rem 1.5rem;
-            text-align: center;
-            min-width: 130px;
-            border: 1px solid #a855f7;
-        }
+        .stats-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 2rem 0; }
+        .stat-circle { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); border-radius: 1.8rem; padding: 0.8rem 1.5rem; text-align: center; min-width: 130px; border: 1px solid #a855f7; }
         .stat-number { font-size: 2rem; font-weight: 800; font-family: 'Orbitron'; color: #c084fc; }
         .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* MODAL / PANEL REKRUTACJI (ukryty domyślnie) */
-        .recruit-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        .recruit-modal.active {
-            display: flex;
-        }
-        .modal-content {
-            background: #0f1222;
-            border-radius: 2rem;
-            max-width: 800px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            border: 2px solid #a855f7;
-            box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
-            position: relative;
-            animation: modalFadeIn 0.3s ease;
-        }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .modal-header {
-            padding: 1.2rem 1.8rem;
-            border-bottom: 1px solid #4c1d95;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.5);
-            border-radius: 2rem 2rem 0 0;
-        }
-        .modal-header h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.5rem;
-            color: #c084fc;
-        }
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #cbd5e6;
-            transition: 0.2s;
-        }
-        .close-modal:hover { color: #f43f5e; transform: scale(1.1); }
-        .modal-body {
-            padding: 1.8rem;
-        }
-        /* formularz wewnątrz modala */
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.2rem;
-        }
+        .recruit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
+        .recruit-modal.active { display: flex; }
+        .modal-content { background: #0f1222; border-radius: 2rem; max-width: 900px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid #a855f7; box-shadow: 0 0 40px rgba(168,85,247,0.4); }
+        .modal-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); border-radius: 2rem 2rem 0 0; }
+        .modal-header h2 { font-family: 'Orbitron', monospace; font-size: 1.5rem; color: #c084fc; }
+        .close-modal { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #cbd5e6; transition: 0.2s; }
+        .close-modal:hover { color: #f43f5e; }
+        .modal-body { padding: 1.8rem; }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
         .full-width { grid-column: span 2; }
-        input, select, textarea {
-            width: 100%;
-            background: #111827;
-            border: 1px solid #334155;
-            padding: 0.8rem 1rem;
-            border-radius: 1rem;
-            font-size: 0.9rem;
-            color: #f1f5f9;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #a855f7;
-            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.3);
-        }
+        input, select, textarea { width: 100%; background: #111827; border: 1px solid #334155; padding: 0.8rem 1rem; border-radius: 1rem; font-size: 0.9rem; color: #f1f5f9; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #a855f7; box-shadow: 0 0 0 2px rgba(168,85,247,0.3); }
         label { font-weight: 600; display: block; margin-bottom: 0.3rem; font-size: 0.85rem; color: #cbd5e6; }
-        .submit-btn {
-            background: linear-gradient(90deg, #7c3aed, #a855f7);
-            border: none;
-            padding: 0.8rem;
-            width: 100%;
-            font-weight: bold;
-            border-radius: 2rem;
-            color: white;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
+        .submit-btn { background: linear-gradient(90deg, #7c3aed, #a855f7); border: none; padding: 0.8rem; width: 100%; font-weight: bold; border-radius: 2rem; color: white; cursor: pointer; margin-top: 1rem; }
         .submit-btn:disabled { opacity: 0.6; }
-
-        /* social */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-        .social-icon {
-            background: #111827;
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            border: 1px solid #4c1d95;
-            transition: 0.2s;
-            text-decoration: none;
-            color: #e2e8f0;
-            font-size: 0.9rem;
-        }
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin: 2rem 0; flex-wrap: wrap; }
+        .social-icon { background: #111827; padding: 0.6rem 1.5rem; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; border: 1px solid #4c1d95; transition: 0.2s; text-decoration: none; color: #e2e8f0; font-size: 0.9rem; }
         .social-icon:hover { background: #2d1b69; border-color: #a855f7; }
         footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2d3a5e; font-size: 0.8rem; color: #7e8aa8; }
-        
-        #toast-msg {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #1e1b4b;
-            color: #f0eaff;
-            text-align: center;
-            border-radius: 40px;
-            padding: 10px 20px;
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1100;
-            backdrop-filter: blur(12px);
-            border: 1px solid #c084fc;
-            transition: 0.2s;
-            opacity: 0;
-            font-size: 0.85rem;
-        }
+        #toast-msg { visibility: hidden; min-width: 250px; background-color: #1e1b4b; color: #f0eaff; text-align: center; border-radius: 40px; padding: 10px 20px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1100; backdrop-filter: blur(12px); border: 1px solid #c084fc; transition: 0.2s; opacity: 0; font-size: 0.85rem; }
         #toast-msg.show { visibility: visible; opacity: 1; }
-        
-        @media (max-width: 720px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .full-width { grid-column: span 1; }
-            h1 { font-size: 2.2rem; }
-            .recruit-main-btn { font-size: 1rem; padding: 0.8rem 1.5rem; }
-        }
+        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } h1 { font-size: 2.2rem; } .recruit-main-btn { font-size: 1rem; padding: 0.8rem 1.5rem; } }
     </style>
 </head>
 <body>
 <div class="bg-cyber"></div>
 <div class="container">
     <div class="hero">
-        <div class="logo-wrapper">
-            <img src="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" alt="FIFH Clan Logo" class="clan-logo">
-        </div>
-        <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> FIFH · REBIRTH CHAMPIONS ULTIMATE</div>
-        <h1>FIFH <span class="glow-text">ELITE</span></h1>
+        <div class="logo-wrapper"><img src="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" alt="BEST Clan Logo" class="clan-logo"></div>
+        <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> BEST · REBIRTH CHAMPIONS ULTIMATE</div>
+        <h1>BEST <span class="glow-text">ELITE</span></h1>
         <p class="sub">Elitarna formacja w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów.</p>
-        
-        <!-- GŁÓWNY PRZYCISK REKRUTACJA - otwiera modal -->
-        <div class="recruit-btn-container">
-            <button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button>
-        </div>
+        <div class="recruit-btn-container"><button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button></div>
     </div>
-
-    <!-- STATYSTYKI -->
     <div class="stats-row">
         <div class="stat-circle"><div class="stat-number">150+</div><div class="stat-label">Łączny prestiż</div></div>
         <div class="stat-circle"><div class="stat-number">42</div><div class="stat-label">Aktywnych</div></div>
         <div class="stat-circle"><div class="stat-number">18</div><div class="stat-label">Aur rarity+</div></div>
         <div class="stat-circle"><div class="stat-number">∞</div><div class="stat-label">Odrodzenia</div></div>
     </div>
-
-    <!-- DLACZEGO FIFH? -->
     <div class="section-title"><i class="fas fa-crown"></i><span>DLACZEGO MY?</span></div>
     <div class="cards-grid">
         <div class="card"><i class="fas fa-chalkboard-user"></i><h3>Strategie</h3><p>Optymalne ścieżki rebirth i sekrety zdobywania klejnotów.</p></div>
@@ -410,41 +101,27 @@
         <div class="card"><i class="fas fa-trophy"></i><h3>Eventy</h3><p>Wewnętrzne rankingi, speedruny i nagrody dla aktywnych.</p></div>
         <div class="card"><i class="fas fa-robot"></i><h3>Boty i kody</h3><p>Bot na Discordzie z kodami i statystykami klanu.</p></div>
     </div>
-
-    <!-- WYMAGANIA -->
     <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA</span></div>
-    <div class="requirements-wrapper">
-        <div class="requirements-inner">
-            <div class="req-grid">
-                <div class="req-item"><i class="fas fa-chart-line"></i><span class="req-value">Prestiż 8+</span><br>Minimalny poziom prestiżu</div>
-                <div class="req-item"><i class="fas fa-clock"></i><span class="req-value">20h/tydzień</span><br>Regularna aktywność</div>
-                <div class="req-item"><i class="fas fa-dragon"></i><span class="req-value">LEGEND lub SECRET</span><br>Przynajmniej jeden legendarny zwierzak</div>
-                <div class="req-item"><i class="fas fa-gem"></i><span class="req-value">Świat: Atlantis+</span><br>Odblokowany świat Atlantis lub dalej</div>
-                <div class="req-item"><i class="fab fa-discord"></i><span class="req-value">Discord + mikrofon</span><br>Komunikacja głosowa</div>
-                <div class="req-item"><i class="fas fa-hand-peace"></i><span class="req-value">Fair play</span><br>Zero toksyczności</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SOCIAL LINKS -->
+    <div class="requirements-wrapper"><div class="requirements-inner"><div class="req-grid">
+        <div class="req-item"><i class="fas fa-chart-line"></i><span class="req-value">Prestiż 8+</span><br>Minimalny poziom prestiżu</div>
+        <div class="req-item"><i class="fas fa-clock"></i><span class="req-value">20h/tydzień</span><br>Regularna aktywność</div>
+        <div class="req-item"><i class="fas fa-dragon"></i><span class="req-value">LEGEND lub SECRET</span><br>Legendarny zwierzak</div>
+        <div class="req-item"><i class="fas fa-gem"></i><span class="req-value">Świat: Atlantis+</span><br>Odblokowany świat</div>
+        <div class="req-item"><i class="fab fa-discord"></i><span class="req-value">Discord + mikrofon</span><br>Komunikacja głosowa</div>
+        <div class="req-item"><i class="fas fa-hand-peace"></i><span class="req-value">Fair play</span><br>Zero toksyczności</div>
+    </div></div></div>
     <div class="social-links">
-        <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Serwer FIFH</a>
+        <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Serwer BEST</a>
         <a href="#" class="social-icon" id="robloxGroupBtn"><i class="fab fa-fort-awesome"></i> Grupa Roblox</a>
         <a href="#" class="social-icon" id="rcuCodes"><i class="fas fa-code"></i> Kody RCU</a>
     </div>
-
-    <footer>
-        <p>© 2025 FIFH Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p>
-    </footer>
+    <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
 
-<!-- MODAL / PANEL REKRUTACYJNY (ukryty, pojawia się po kliknięciu) -->
+<!-- MODAL REKRUTACJI Z ROZBUDOWANYM FORMULARZEM ŚWIATÓW -->
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny FIFH</h2>
-            <button class="close-modal" id="closeModalBtn">&times;</button>
-        </div>
+        <div class="modal-header"><h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny BEST</h2><button class="close-modal" id="closeModalBtn">&times;</button></div>
         <div class="modal-body">
             <form id="recruitmentForm">
                 <div class="form-grid">
@@ -453,50 +130,77 @@
                     <div><label><i class="fas fa-chart-simple"></i> Prestiż / Poziom *</label><select id="prestige" required><option value="">-- wybierz --</option><option value="Prestiż 1-7">Prestiż 1-7</option><option value="Prestiż 8-15">Prestiż 8-15</option><option value="Prestiż 16+">Prestiż 16+</option><option value="Master Prestige">Master Prestige</option></select></div>
                     <div><label><i class="fas fa-clock"></i> Aktywność (godz./dzień) *</label><select id="activity" required><option value="">-- wybierz --</option><option value="1-2h">1-2 godziny</option><option value="2-4h">2-4 godziny</option><option value="4h+">4+ godzin</option></select></div>
                     <div><label><i class="fas fa-dragon"></i> Najlepszy zwierzak / Aura</label><input type="text" id="bestpet" placeholder="np. Smok Legendarny"></div>
-                    <div><label><i class="fas fa-globe"></i> Najdalszy świat</label><select id="world"><option value="">-- wybierz --</option><option value="Spawn Area">Spawn Area</option><option value="Desert">Pustynia</option><option value="Nuclear World">Świat Nuklearny</option><option value="Atlantis">Atlantyda</option><option value="Heaven World">Niebiański Świat</option><option value="Magic World">Magiczny Świat</option></select></div>
+                    
+                    <!-- WYBIERZ KATEGORIĘ ŚWIATA -->
+                    <div><label><i class="fas fa-globe"></i> Kategoria świata *</label><select id="worldCategory" required><option value="">-- wybierz kategorię --</option><option value="Overworld">Overworld (Ziemia)</option><option value="Space">Space (Kosmos)</option><option value="Skylands">Skylands (Niebiańskie Wyspy)</option></select></div>
+                    
+                    <!-- DYNAMICZNY WYBOR MAPY -->
+                    <div><label><i class="fas fa-map-marked-alt"></i> Najdalszy osiągnięty świat *</label><select id="worldMap" required><option value="">-- najpierw wybierz kategorię --</option></select></div>
+                    
                     <div class="full-width"><label><i class="fas fa-scroll"></i> Doświadczenie / osiągnięcia *</label><textarea rows="2" id="exp" placeholder="Opisz swoje osiągnięcia w RCU..." required></textarea></div>
-                    <div class="full-width"><label><i class="fas fa-heart"></i> Dlaczego FIFH? *</label><textarea rows="2" id="motivation" placeholder="Twoja motywacja i cele" required></textarea></div>
+                    <div class="full-width"><label><i class="fas fa-heart"></i> Dlaczego BEST? *</label><textarea rows="2" id="motivation" placeholder="Twoja motywacja i cele" required></textarea></div>
                 </div>
                 <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
-                <p style="font-size:0.7rem; text-align:center; margin-top:0.8rem"><i class="fas fa-shield-alt"></i> Dane trafią do rekruterów FIFH na Discord.</p>
+                <p style="font-size:0.7rem; text-align:center; margin-top:0.8rem"><i class="fas fa-shield-alt"></i> Dane trafią do rekruterów BEST na Discord.</p>
             </form>
         </div>
     </div>
 </div>
-
 <div id="toast-msg"></div>
 
 <script>
     (function(){
-        // Webhook URL – PODMIEŃ NA SWÓJ
+        // WEBHOOK – PODMIEŃ NA SWÓJ
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N';
         
-        // Elementy modala
+        // Definicje światów według kategorii
+        const worldsData = {
+            Overworld: [
+                "Spawn", "Farm", "Desert", "Nuclear", "Atlantis", "Kingdom City", "Cave", "Volcano", "Heaven", "Magic", "Circus", 
+                "Jungle", "Steampunk", "Sakura", "Lab"
+            ],
+            Space: [
+                "Moon", "Alien Tech City", "Neluba Forest", "Void", "Spaceship", "Space Warzone", "Comet", "Starfactory", 
+                "Glacier", "Moon Mars Colony", "Starfall Valley", "Black Hole"
+            ],
+            Skylands: [
+                "Skylands", "Sky Garden", "Cloudy World", "Ashwind Realm", "Frozen Forest", "Ancient Ruins", "Monochrome World", 
+                "Wild West", "Bee World", "Neon World", "Thunder Isles", "Sunken Temple", "Swamp World", "Crystal Island", 
+                "Blossom Clouds", "Aurora World"
+            ]
+        };
+        
+        const categorySelect = document.getElementById('worldCategory');
+        const mapSelect = document.getElementById('worldMap');
+        
+        function updateWorldsList() {
+            const category = categorySelect.value;
+            mapSelect.innerHTML = '<option value="">-- wybierz świat --</option>';
+            if (category && worldsData[category]) {
+                worldsData[category].forEach(world => {
+                    const option = document.createElement('option');
+                    option.value = world;
+                    option.textContent = world;
+                    mapSelect.appendChild(option);
+                });
+            } else {
+                mapSelect.innerHTML = '<option value="">-- najpierw wybierz kategorię --</option>';
+            }
+        }
+        
+        categorySelect.addEventListener('change', updateWorldsList);
+        
+        // Modal
         const modal = document.getElementById('recruitModal');
         const openBtn = document.getElementById('openRecruitModalBtn');
         const closeBtn = document.getElementById('closeModalBtn');
-        
-        // Otwieranie modala
-        openBtn.addEventListener('click', () => {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        // Zamykanie modala
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
+        openBtn.addEventListener('click', () => { modal.classList.add('active'); document.body.style.overflow = 'hidden'; });
+        function closeModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
         closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if(e.target === modal) closeModal();
-        });
+        modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         
-        // Formularz i toast
-        const form = document.getElementById('recruitmentForm');
-        const submitBtn = document.getElementById('submitBtn');
+        // Toast
         const toast = document.getElementById('toast-msg');
-        
         function showToast(message, isError = false, duration = 4000){
             toast.textContent = message;
             toast.style.background = isError ? '#3b1e3a' : '#1e1b4b';
@@ -505,13 +209,11 @@
             setTimeout(()=> toast.classList.remove('show'), duration);
         }
         
-        function validateDiscord(tag){
-            return /^.{2,32}#[0-9]{4}$/.test(tag);
-        }
+        function validateDiscord(tag){ return /^.{2,32}#[0-9]{4}$/.test(tag); }
         
         async function sendToDiscord(data){
             const embed = {
-                title: "⚔️ NOWY REKRUT FIFH | RCU",
+                title: "⚔️ NOWY REKRUT BEST | RCU",
                 color: 0xa55eff,
                 thumbnail: { url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
                 fields: [
@@ -520,15 +222,15 @@
                     { name: "📈 Prestiż", value: data.prestige, inline: true },
                     { name: "⏱ Aktywność", value: data.activity, inline: true },
                     { name: "🐉 Najlepszy pet/aura", value: data.bestpet || "brak", inline: true },
-                    { name: "🌍 Świat", value: data.world || "nie podano", inline: true },
-                    { name: "📜 Doświadczenie", value: data.experience.length > 800 ? data.experience.substring(0,800)+"..." : data.experience, inline: false },
+                    { name: "🌍 Kategoria świata", value: data.worldCategory, inline: true },
+                    { name: "🗺️ Najdalszy świat", value: data.worldMap, inline: true },
+                    { name: "📜 Doświadczenie", value: data.experience.length > 700 ? data.experience.substring(0,700)+"..." : data.experience, inline: false },
                     { name: "💡 Motywacja", value: data.motivation.length > 700 ? data.motivation.substring(0,700)+"..." : data.motivation, inline: false }
                 ],
-                footer: { text: "FIFH Rekrutacja • RCU", icon_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
+                footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
                 timestamp: new Date().toISOString()
             };
-            const payload = { username: "FIFH Rekruter", avatar_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg", embeds: [embed], content: "📣 **Nowe zgłoszenie do FIFH!**" };
-            
+            const payload = { username: "BEST Rekruter", avatar_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg", embeds: [embed], content: "📣 **Nowe zgłoszenie do BEST!**" };
             if(WEBHOOK_URL === 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn'){
                 console.log("DEMO: aplikacja (symulacja). Podmień WEBHOOK_URL.", data);
                 return true;
@@ -538,6 +240,8 @@
             return true;
         }
         
+        const form = document.getElementById('recruitmentForm');
+        const submitBtn = document.getElementById('submitBtn');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const nick = document.getElementById('nick').value.trim();
@@ -545,7 +249,8 @@
             const prestige = document.getElementById('prestige').value;
             const activity = document.getElementById('activity').value;
             const bestpet = document.getElementById('bestpet').value.trim();
-            const world = document.getElementById('world').value;
+            const worldCategory = document.getElementById('worldCategory').value;
+            const worldMap = document.getElementById('worldMap').value;
             const exp = document.getElementById('exp').value.trim();
             const motivation = document.getElementById('motivation').value.trim();
             
@@ -553,17 +258,21 @@
             if(!discord || !validateDiscord(discord)) { showToast("❌ Nieprawidłowy Discord (nazwa#1234)", true); return; }
             if(!prestige) { showToast("❌ Wybierz poziom prestiżu", true); return; }
             if(!activity) { showToast("❌ Wybierz aktywność", true); return; }
+            if(!worldCategory) { showToast("❌ Wybierz kategorię świata", true); return; }
+            if(!worldMap) { showToast("❌ Wybierz najdalszy osiągnięty świat", true); return; }
             if(exp.length < 10) { showToast("📝 Opisz swoje osiągnięcia (min. 10 znaków)", true); return; }
             if(motivation.length < 10) { showToast("💡 Napisz dlaczego chcesz dołączyć", true); return; }
             
-            const payloadData = { nick, discord, prestige, activity, bestpet, world, experience: exp, motivation };
+            const payloadData = { nick, discord, prestige, activity, bestpet, worldCategory, worldMap, experience: exp, motivation };
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie...';
             try {
                 await sendToDiscord(payloadData);
-                showToast("✅ Zgłoszenie wysłane! Rekruterzy skontaktują się przez Discord.", false);
+                showToast("✅ Zgłoszenie wysłane! Rekruterzy BEST skontaktują się przez Discord.", false);
                 form.reset();
-                closeModal(); // po wysłaniu zamknij modal
+                categorySelect.value = "";
+                mapSelect.innerHTML = '<option value="">-- najpierw wybierz kategorię --</option>';
+                closeModal();
             } catch (err) {
                 showToast("❌ Błąd wysyłki. Spróbuj ponownie.", true);
             } finally {
@@ -572,9 +281,9 @@
             }
         });
         
-        // Przyciski social (mock)
-        document.getElementById('discordInvite')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer FIFH – dołącz do nas!", false); });
-        document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: FIFH Champions – graj razem z nami!", false); });
+        // Social mocki
+        document.getElementById('discordInvite')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer BEST – dołącz do nas!", false); });
+        document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: BEST Champions – graj razem z nami!", false); });
         document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false); });
     })();
 </script>
