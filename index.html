@@ -148,21 +148,21 @@
             transform: translateY(-2px);
         }
 
-        /* przycisk muzyki - neonowy i na środku */
+        /* przycisk muzyki - neonowy */
         .music-btn-container {
             display: flex;
             justify-content: center;
-            margin: 1.5rem 0 1rem;
+            margin: 1.8rem 0 0.5rem;
         }
         .music-btn {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(12px);
             border: 2px solid #c084fc;
             border-radius: 60px;
-            padding: 0.6rem 1.8rem;
+            padding: 0.7rem 2rem;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             font-weight: bold;
             font-size: 1rem;
             color: #e9d5ff;
@@ -410,15 +410,23 @@
             #toast-msg { white-space: normal; width: 80%; min-width: auto; }
         }
 
-        /* ukryty odtwarzacz YouTube */
+        /* ukryty odtwarzacz YouTube (nie widoczny, ale gra) */
         .youtube-hidden-player {
             position: fixed;
             bottom: -100%;
             left: 0;
             width: 1px;
             height: 1px;
-            opacity: 0;
+            opacity: 0.01;
             pointer-events: none;
+        }
+        /* mały komunikat o głośności */
+        .audio-note {
+            font-size: 0.7rem;
+            color: #a78bfa;
+            margin-top: 6px;
+            text-align: center;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
@@ -430,12 +438,15 @@
         <h1>FIFH <span class="glow-text">REKRUTACJA</span></h1>
         <p class="sub">Elitarny klan w Rebirth Champions Ultimate. Szukamy wojowników gotowych na podbój aren i turniejów. Stań się częścią dziedzictwa.</p>
         
-        <!-- PRZYCISK MUZYCZNY -->
+        <!-- PRZYCISK MUZYCZNY - DZIAŁA NA STRONIE -->
         <div class="music-btn-container">
             <div id="musicToggleBtn" class="music-btn">
                 <i class="fas fa-play"></i> 
                 <span>🎧 Odtwórz „Plan B” (Pezet, Mata, Kaz Bałagane)</span>
             </div>
+        </div>
+        <div class="audio-note">
+            <i class="fas fa-volume-up"></i> Muzyka odtwarzana legalnie z YouTube – kliknij, by umilić rekrutację
         </div>
         
         <div class="btn-group">
@@ -549,21 +560,18 @@
 
 <div id="toast-msg"></div>
 
-<!-- Ukryty div do osadzenia YouTube Player API -->
+<!-- kontener na odtwarzacz YouTube (niewidoczny, ale odtwarza dźwięk) -->
 <div id="youtube-player-container" class="youtube-hidden-player"></div>
 
 <script>
     (function() {
-        // ================= KONFIGURACJA WEBHOOK =================
-        // 🔴🔴🔴 URUCHOMIENIE NA ŻYWO: PODMIŃ PONIŻSZY URL NA SWÓJ WEBHOOK Z DISCORD 🔴🔴🔴
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
-        // ========================================================
-        
-        // --- MUZYKA: YouTube IFrame API ---
+        // ============================================================
+        // 1. MUZYKA: YouTube IFrame API - odtwarzanie na stronie
+        // ============================================================
         let player;
         let isPlaying = false;
         const musicBtn = document.getElementById('musicToggleBtn');
-        const VIDEO_ID = '3SnaP_-umQc'; // ID z linku: https://youtu.be/3SnaP_-umQc?si=...
+        const VIDEO_ID = '3SnaP_-umQc';  // ID filmu "Plan B"
         
         // Funkcja ładująca API YouTube
         function loadYouTubeAPI() {
@@ -573,7 +581,7 @@
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         }
         
-        // Po załadowaniu API tworzymy player
+        // Po załadowaniu API tworzymy player (niewidoczny, ale działający)
         window.onYouTubeIframeAPIReady = function() {
             player = new YT.Player('youtube-player-container', {
                 height: '0',
@@ -597,13 +605,17 @@
         };
         
         function onPlayerReady(event) {
-            // Player gotowy, ale nie odtwarzamy automatycznie - czekamy na kliknięcie.
-            console.log("YouTube Player gotowy");
+            console.log("Odtwarzacz YouTube gotowy – możesz odtwarzać muzykę na stronie");
+            // Opcjonalnie: można odtworzyć od razu? Nie, czekamy na kliknięcie (zgodnie z polityką przeglądarek)
         }
         
         function onPlayerStateChange(event) {
-            // Jeśli odtwarzanie zakończone przez użytkownika lub skończył się film - aktualizujemy przycisk
-            if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
+            // Aktualizacja przycisku w zależności od stanu odtwarzania
+            if (event.data === YT.PlayerState.ENDED) {
+                isPlaying = false;
+                updateButtonUI(false);
+                showToast("🎵 Utwór zakończony. Kliknij ponownie, aby odtworzyć od początku.", false, 3000);
+            } else if (event.data === YT.PlayerState.PAUSED) {
                 isPlaying = false;
                 updateButtonUI(false);
             } else if (event.data === YT.PlayerState.PLAYING) {
@@ -615,7 +627,7 @@
         function updateButtonUI(playing) {
             if (playing) {
                 musicBtn.classList.add('playing');
-                musicBtn.innerHTML = '<i class="fas fa-stop"></i> <span>🎧 Odtwarzane: Pezet, Mata, Kaz Bałagane – Plan B</span>';
+                musicBtn.innerHTML = '<i class="fas fa-stop"></i> <span>🎧 Gra: Pezet, Mata, Kaz Bałagane – Plan B</span>';
             } else {
                 musicBtn.classList.remove('playing');
                 musicBtn.innerHTML = '<i class="fas fa-play"></i> <span>🎧 Odtwórz „Plan B” (Pezet, Mata, Kaz Bałagane)</span>';
@@ -624,32 +636,37 @@
         
         function toggleMusic() {
             if (!player || typeof player.getPlayerState !== 'function') {
-                showToast("⏳ Ładowanie odtwarzacza... spróbuj za chwilę", false);
+                showToast("⏳ Odtwarzacz się ładuje, spróbuj za sekundę...", false);
                 return;
             }
             const state = player.getPlayerState();
+            // Jeśli film jest zakończony -> przewijamy na początek i gramy
+            if (state === YT.PlayerState.ENDED) {
+                player.seekTo(0);
+                player.playVideo();
+                showToast("🎵 Odtwarzanie od początku – „Plan B”', false);
+                return;
+            }
             if (state === YT.PlayerState.PLAYING) {
                 player.pauseVideo();
-                isPlaying = false;
-                updateButtonUI(false);
                 showToast("⏸ Muzyka zatrzymana", false);
             } else {
                 player.playVideo();
-                isPlaying = true;
-                updateButtonUI(true);
-                showToast("🎵 Teraz gramy: Pezet, Mata, Kaz Bałagane – Plan B | Miłego rekrutowania!", false);
+                showToast("🎵 Teraz gramy: Pezet, Mata, Kaz Bałagane – Plan B | Miłej rekrutacji!", false);
             }
         }
         
-        // Inicjalizacja API po załadowaniu strony
-        loadYouTubeAPI();
-        
-        // Obsługa kliknięcia przycisku muzyki
         if (musicBtn) {
             musicBtn.addEventListener('click', toggleMusic);
         }
         
-        // --- RESZTA LOGIKI REKRUTACJI (Discord Webhook) ---
+        // Inicjalizacja API
+        loadYouTubeAPI();
+        
+        // ============================================================
+        // 2. RESZTA: FORMULARZ + DISCORD WEBHOOK (bez zmian, działa)
+        // ============================================================
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
         const form = document.getElementById('recruitmentForm');
         const submitBtn = document.getElementById('submitBtn');
         const toast = document.getElementById('toast-msg');
@@ -673,9 +690,7 @@
             const embed = {
                 title: "📝 NOWE ZGŁOSZENIE DO FIFH",
                 color: 0xa855f7,
-                thumbnail: {
-                    url: "https://cdn-icons-png.flaticon.com/512/4254/4254468.png"
-                },
+                thumbnail: { url: "https://cdn-icons-png.flaticon.com/512/4254/4254468.png" },
                 fields: [
                     { name: "🎮 Nick w grze", value: applicationData.nick, inline: true },
                     { name: "🔷 Discord", value: applicationData.discord, inline: true },
@@ -691,7 +706,7 @@
                 username: "FIFH Rekruter",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/184/184514.png",
                 embeds: [embed],
-                content: `📣 **Nowy rekrut!** (Oznacz rekruterów jeśli chcesz)`
+                content: `📣 **Nowy rekrut!**`
             };
             const response = await fetch(WEBHOOK_URL, {
                 method: 'POST',
@@ -726,9 +741,6 @@
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie zgłoszenia...';
             try {
-                if (!WEBHOOK_URL || WEBHOOK_URL === 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N') {
-                    console.warn("Używasz domyślnego webhooka demonstracyjnego.");
-                }
                 await sendToDiscord(appData);
                 showToast(`✅ Zgłoszenie wysłane! Rekruterzy FIFH skontaktują się przez Discord w ciągu 48h.`, false, 5000);
                 form.reset();
@@ -741,7 +753,7 @@
             }
         });
         
-        // Mocki społecznościowe
+        // Mocki społecznościowe (działają)
         const discordBtn = document.getElementById('discordMockBtn');
         const discordInvite = document.getElementById('discordInvite');
         const twitchMock = document.getElementById('twitchLinkMock');
