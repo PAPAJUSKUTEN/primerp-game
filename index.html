@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Rekrutacja do elitarnego klanu FIFH w grze Rebirth Champions Ultimate (RCU) na Roblox. Sprawdź wymagania, dołącz do najlepszych graczy i rozwijaj się razem z nami.">
+    <meta name="description" content="Rekrutacja do elitarnego klanu FIFH w grze Rebirth Champions Ultimate (RCU) na Roblox. Dołącz do nas już dziś!">
     <title>FIFH Rekrutacja | Rebirth Champions Ultimate (RCU) – Roblox</title>
     <!-- Google Fonts & Font Awesome 6 -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
             scroll-behavior: smooth;
         }
 
-        /* tło z animacją grid */
+        /* tło cyberpunk */
         .bg-cyber {
             position: fixed;
             top: 0;
@@ -38,7 +38,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.06"><path fill="none" stroke="%237c3aed" stroke-width="0.8" d="M0 400 L800 400 M400 0 L400 800 M200 200 L600 600 M600 200 L200 600"/><circle cx="400" cy="400" r="80" stroke="%239b6eff" fill="none" stroke-width="1.2"/><polygon points="400,100 500,250 300,250" fill="none" stroke="%23a855f7" stroke-width="1"/><rect x="150" y="500" width="100" height="100" fill="none" stroke="%238b5cf6" stroke-width="0.8"/></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.06"><path fill="none" stroke="%237c3aed" stroke-width="0.8" d="M0 400 L800 400 M400 0 L400 800 M200 200 L600 600 M600 200 L200 600"/><circle cx="400" cy="400" r="80" stroke="%239b6eff" fill="none" stroke-width="1.2"/><polygon points="400,100 500,250 300,250" fill="none" stroke="%23a855f7" stroke-width="1"/></svg>');
             background-repeat: repeat;
             animation: drift 50s linear infinite;
         }
@@ -55,7 +55,26 @@
             z-index: 2;
         }
 
-        /* główne style */
+        /* okrągłe logo */
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .clan-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #a855f7;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .clan-logo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.9);
+        }
+
         .glow-text {
             text-shadow: 0 0 8px #a855f7, 0 0 15px #7c3aed;
         }
@@ -78,10 +97,9 @@
         /* header */
         .hero {
             text-align: center;
-            padding: 3rem 1rem 4rem;
+            padding: 1rem 1rem 3rem;
             border-bottom: 2px solid rgba(139, 92, 246, 0.4);
             margin-bottom: 3rem;
-            backdrop-filter: blur(2px);
         }
         .clan-tag {
             font-family: 'Orbitron', monospace;
@@ -145,7 +163,7 @@
         .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(139, 92, 246, 0.7); }
         .btn-outline:hover { background: rgba(139, 92, 246, 0.2); border-color: #c084fc; transform: translateY(-2px); }
 
-        /* karty ogólne */
+        /* karty */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -167,7 +185,7 @@
         .badge-list li { margin: 0.7rem 0; display: flex; align-items: center; gap: 12px; }
         .badge-list li i { font-size: 1.1rem; width: 1.4rem; color: #a855f7; }
 
-        /* wymagania – specjalna karta z edytowalnymi wartościami */
+        /* wymagania */
         .requirements-wrapper {
             background: linear-gradient(145deg, #0f1222, #0a0c18);
             border-radius: 2rem;
@@ -195,7 +213,7 @@
         .req-item i { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
         .req-value { font-size: 1.3rem; font-weight: bold; color: #e9d5ff; font-family: 'Orbitron', monospace; }
 
-        /* statystyki klanu */
+        /* statystyki */
         .stats-row {
             display: flex;
             flex-wrap: wrap;
@@ -295,6 +313,7 @@
         .social-icon:hover { background: #2d1b69; border-color: #a855f7; transform: scale(1.02); }
 
         footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #2d3a5e; font-size: 0.85rem; color: #7e8aa8; }
+        
         #toast-msg {
             visibility: hidden;
             min-width: 280px;
@@ -315,11 +334,13 @@
             font-size: 0.9rem;
         }
         #toast-msg.show { visibility: visible; opacity: 1; }
+        
         @media (max-width: 720px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
             h1 { font-size: 2.6rem; }
             .section-title { font-size: 1.6rem; }
+            .clan-logo { width: 110px; height: 110px; }
         }
     </style>
 </head>
@@ -327,6 +348,10 @@
 <div class="bg-cyber"></div>
 <div class="container">
     <div class="hero">
+        <!-- OKRĄGŁE LOGO Z TWOJEGO ZDJĘCIA -->
+        <div class="logo-wrapper">
+            <img src="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" alt="FIFH Clan Logo" class="clan-logo">
+        </div>
         <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> FIFH · REBIRTH CHAMPIONS ULTIMATE</div>
         <h1>REKRUTACJA <span class="glow-text">FIFH</span></h1>
         <p class="sub">Jesteśmy elitarną formacją w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów. Dołącz do nas i wejdź na szczyt rankingów!</p>
@@ -337,7 +362,7 @@
         </div>
     </div>
 
-    <!-- WYMAGANIA (łatwa edycja) -->
+    <!-- WYMAGANIA -->
     <div id="wymagania-sekcja">
         <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA REKRUTACYJNE</span></div>
         <div class="requirements-wrapper">
@@ -350,20 +375,20 @@
                     <div class="req-item"><i class="fab fa-discord"></i><span class="req-value">Discord + mikrofon</span><br>Komunikacja głosowa podczas ważnych akcji</div>
                     <div class="req-item"><i class="fas fa-hand-peace"></i><span class="req-value">Kultura i fair play</span><br>Zero toksyczności, pomoc innym</div>
                 </div>
-                <p class="sub" style="margin-top: 1.5rem; font-size:0.9rem"><i class="fas fa-edit"></i> * Pamiętaj, że wymagania mogą ulec zmianie – rekruterzy oceniają także zaangażowanie i potencjał.</p>
+                <p class="sub" style="margin-top: 1.5rem; font-size:0.9rem"><i class="fas fa-edit"></i> * Wymagania możesz dowolnie zmienić w kodzie (sekcja .req-value).</p>
             </div>
         </div>
     </div>
 
-    <!-- STATYSTYKI KLANU -->
+    <!-- STATYSTYKI -->
     <div class="stats-row">
-        <div class="stat-circle"><div class="stat-number">120+</div><div class="stat-label">Łączny prestiż</div></div>
-        <div class="stat-circle"><div class="stat-number">34</div><div class="stat-label">Aktywnych członków</div></div>
-        <div class="stat-circle"><div class="stat-number">15</div><div class="stat-label">Aur rarity+</div></div>
+        <div class="stat-circle"><div class="stat-number">150+</div><div class="stat-label">Łączny prestiż</div></div>
+        <div class="stat-circle"><div class="stat-number">42</div><div class="stat-label">Aktywnych członków</div></div>
+        <div class="stat-circle"><div class="stat-number">18</div><div class="stat-label">Aur rarity+</div></div>
         <div class="stat-circle"><div class="stat-number">∞</div><div class="stat-label">Wspólne odrodzenia</div></div>
     </div>
 
-    <!-- DLACZEGO FIFH? -->
+    <!-- DLACZEGO FIFH -->
     <div class="section-title"><i class="fas fa-crown"></i><span>DLACZEGO WARTO DOŁĄCZYĆ?</span></div>
     <div class="cards-grid">
         <div class="card"><i class="fas fa-chalkboard-user"></i><h3>Strategie i porady</h3><p>Optymalne ścieżki rebirth, kombinacje zwierzaków i sekrety zdobywania klejnotów.</p></div>
@@ -372,7 +397,7 @@
         <div class="card"><i class="fas fa-robot"></i><h3>Automatyzacja i boty</h3><p>Bot na Discordzie z kodami, przypomnieniami o dropach i statystykami klanu.</p></div>
     </div>
 
-    <!-- FORMULARZ REKRUTACYJNY -->
+    <!-- FORMULARZ -->
     <div id="formularz">
         <div class="section-title"><i class="fas fa-clipboard-list"></i><span>FORMULARZ ZGŁOSZENIOWY</span></div>
         <div class="form-card">
@@ -404,7 +429,7 @@
         </div>
     </div>
 
-    <!-- SOCIAL MEDIA (mock) -->
+    <!-- SOCIAL -->
     <div class="social-links">
         <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Serwer FIFH</a>
         <a href="#" class="social-icon" id="robloxGroupBtn"><i class="fab fa-fort-awesome"></i> Grupa Roblox</a>
@@ -413,7 +438,7 @@
 
     <footer>
         <p>© 2025 FIFH Clan — Rebirth Champions Ultimate. Wspólnie osiągamy wyższe poziomy prestiżu. <i class="fas fa-infinity"></i> Nie tylko gra, to społeczność.</p>
-        <p>Wymagania możesz edytować w sekcji HTML – łatwo dostosujesz wartości do własnych potrzeb.</p>
+        <p>Twoje logo zostało automatycznie przycięte do okręgu dzięki CSS (border-radius: 50%).</p>
     </footer>
 </div>
 
@@ -422,7 +447,7 @@
 <script>
     (function(){
         // ================= KONFIGURACJA WEBHOOK =================
-        // 🔴🔴🔴 PODMIEŃ TEN URL NA SWÓJ WEBHOOK Z DISCORD (KANAŁ REKRUTACYJNY) 🔴🔴🔴
+        // 🔴🔴🔴 PODMIEŃ TEN URL NA SWÓJ WEBHOOK Z DISCORD 🔴🔴🔴
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
         // ========================================================
         
@@ -446,7 +471,7 @@
             const embed = {
                 title: "⚔️ NOWY REKRUT FIFH | RCU",
                 color: 0xa55eff,
-                thumbnail: { url: "https://cdn-icons-png.flaticon.com/512/4254/4254468.png" },
+                thumbnail: { url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
                 fields: [
                     { name: "🎮 Nick Roblox", value: data.nick, inline: true },
                     { name: "🔷 Discord", value: data.discord, inline: true },
@@ -457,14 +482,13 @@
                     { name: "📜 Doświadczenie", value: data.experience.length > 950 ? data.experience.substring(0,950)+"..." : data.experience, inline: false },
                     { name: "💡 Motywacja", value: data.motivation.length > 800 ? data.motivation.substring(0,800)+"..." : data.motivation, inline: false }
                 ],
-                footer: { text: "FIFH Rekrutacja • Rebirth Champions Ultimate", icon_url: "https://cdn-icons-png.flaticon.com/512/4712/4712105.png" },
+                footer: { text: "FIFH Rekrutacja • Rebirth Champions Ultimate", icon_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
                 timestamp: new Date().toISOString()
             };
-            const payload = { username: "FIFH Rekruter", avatar_url: "https://cdn-icons-png.flaticon.com/512/184/184514.png", embeds: [embed], content: "📣 **Nowe zgłoszenie do FIFH!**" };
+            const payload = { username: "FIFH Rekruter", avatar_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg", embeds: [embed], content: "📣 **Nowe zgłoszenie do FIFH!**" };
             
-            // Jeśli webhook jest przykładowy, symulujemy sukces (demo)
             if(WEBHOOK_URL === 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N'){
-                console.log("DEMO: aplikacja nie została wysłana na prawdziwy Discord. Podmień WEBHOOK_URL w kodzie.", data);
+                console.log("DEMO: aplikacja (symulacja). Podmień WEBHOOK_URL w kodzie.", data);
                 return true;
             }
             const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -506,12 +530,10 @@
             }
         });
         
-        // Obsługa przycisków społecznościowych (mockupy)
         document.getElementById('discordInvite')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer FIFH (discord.gg/fifh) – dołącz do nas!", false); });
         document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: FIFH Champions – znajdź nas i graj razem!", false); });
         document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Aktualne kody RCU: RELEASE, SPOOKY, FROG, PUMPKIN – używaj szybko!", false); });
         
-        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e){
                 const targetId = this.getAttribute('href');
