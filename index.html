@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>FIFH Rekrutacja - Rebirth Champions Ultimate | Dołącz do elity</title>
+    <title>FIFH Rekrutacja | Rebirth Champions Ultimate (RCU) – Roblox</title>
     <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -22,7 +22,7 @@
             scroll-behavior: smooth;
         }
 
-        /* tło z animacją i elementami cyberpunk */
+        /* tło cyberpunk */
         .bg-cyber {
             position: fixed;
             top: 0;
@@ -56,7 +56,6 @@
             z-index: 2;
         }
 
-        /* neon główny */
         .glow-text {
             text-shadow: 0 0 6px #a855f7, 0 0 12px #7c3aed;
         }
@@ -67,7 +66,6 @@
             padding: 3rem 1rem 4rem;
             border-bottom: 2px solid rgba(139, 92, 246, 0.3);
             margin-bottom: 3rem;
-            position: relative;
         }
 
         .clan-tag {
@@ -103,7 +101,6 @@
             backdrop-filter: blur(4px);
         }
 
-        /* przyciski */
         .btn-group {
             display: flex;
             justify-content: center;
@@ -148,49 +145,6 @@
             transform: translateY(-2px);
         }
 
-        /* przycisk muzyki - neonowy */
-        .music-btn-container {
-            display: flex;
-            justify-content: center;
-            margin: 1.8rem 0 0.5rem;
-        }
-        .music-btn {
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(12px);
-            border: 2px solid #c084fc;
-            border-radius: 60px;
-            padding: 0.7rem 2rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            font-weight: bold;
-            font-size: 1rem;
-            color: #e9d5ff;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 0 8px #a855f7;
-            font-family: 'Orbitron', monospace;
-        }
-        .music-btn i {
-            font-size: 1.3rem;
-            color: #f0a3ff;
-        }
-        .music-btn:hover {
-            transform: scale(1.02);
-            background: #2d1b69;
-            border-color: #e9a8ff;
-            box-shadow: 0 0 18px #c084fc;
-        }
-        .music-btn.playing {
-            border-color: #10b981;
-            box-shadow: 0 0 14px #34d399;
-            color: #a7f3d0;
-        }
-        .music-btn.playing i {
-            color: #34d399;
-        }
-
-        /* karty */
         .section-title {
             font-family: 'Orbitron', monospace;
             font-size: 2rem;
@@ -252,6 +206,40 @@
             font-size: 1rem;
             width: 1.4rem;
             color: #a855f7;
+        }
+
+        /* Sekcja informacji o grze RCU */
+        .rcu-info {
+            background: rgba(10, 14, 23, 0.7);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 2rem 0 2rem;
+            border: 1px solid #4c1d95;
+        }
+        .rcu-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .stat-item {
+            background: #111827;
+            border-radius: 1.5rem;
+            padding: 0.8rem 1.2rem;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            border-left: 3px solid #a855f7;
+        }
+        .stat-item i {
+            font-size: 1.6rem;
+            color: #c084fc;
+        }
+        .stat-value {
+            font-weight: 800;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', monospace;
         }
 
         /* formularz */
@@ -324,7 +312,6 @@
             box-shadow: 0 0 15px #a855f7;
         }
 
-        /* kontakt & discord */
         .social-links {
             display: flex;
             justify-content: center;
@@ -380,7 +367,6 @@
             }
         }
 
-        /* powiadomienie toast */
         #toast-msg {
             visibility: hidden;
             min-width: 280px;
@@ -399,7 +385,6 @@
             border: 1px solid #c084fc;
             transition: visibility 0.2s, opacity 0.2s;
             opacity: 0;
-            white-space: nowrap;
             font-size: 0.9rem;
         }
         #toast-msg.show {
@@ -409,54 +394,23 @@
         @media (max-width: 600px) {
             #toast-msg { white-space: normal; width: 80%; min-width: auto; }
         }
-
-        /* ukryty odtwarzacz YouTube (nie widoczny, ale gra) */
-        .youtube-hidden-player {
-            position: fixed;
-            bottom: -100%;
-            left: 0;
-            width: 1px;
-            height: 1px;
-            opacity: 0.01;
-            pointer-events: none;
-        }
-        /* mały komunikat o głośności */
-        .audio-note {
-            font-size: 0.7rem;
-            color: #a78bfa;
-            margin-top: 6px;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
     </style>
 </head>
 <body>
 <div class="bg-cyber"></div>
 <div class="container">
     <div class="hero">
-        <div class="clan-tag"><i class="fas fa-skull"></i> FIFH · LEGENDS NEVER DIE</div>
+        <div class="clan-tag"><i class="fas fa-skull"></i> FIFH · REBIRTH CHAMPIONS ULTIMATE</div>
         <h1>FIFH <span class="glow-text">REKRUTACJA</span></h1>
-        <p class="sub">Elitarny klan w Rebirth Champions Ultimate. Szukamy wojowników gotowych na podbój aren i turniejów. Stań się częścią dziedzictwa.</p>
-        
-        <!-- PRZYCISK MUZYCZNY - DZIAŁA NA STRONIE -->
-        <div class="music-btn-container">
-            <div id="musicToggleBtn" class="music-btn">
-                <i class="fas fa-play"></i> 
-                <span>🎧 Odtwórz „Plan B” (Pezet, Mata, Kaz Bałagane)</span>
-            </div>
-        </div>
-        <div class="audio-note">
-            <i class="fas fa-volume-up"></i> Muzyka odtwarzana legalnie z YouTube – kliknij, by umilić rekrutację
-        </div>
-        
+        <p class="sub">Elitarny klan w RCU na Roblox. Łączymy doświadczonych graczy, którzy dążą do masterów, prestiżu i najrzadszych sekretów. Dołącz do nas i stań się legendą odrodzenia.</p>
         <div class="btn-group">
             <a href="#formularz" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Wypełnij ankietę</a>
             <a href="#wymagania" class="btn btn-outline"><i class="fas fa-chart-line"></i> Wymagania</a>
-            <a href="#discord-link" class="btn btn-outline" id="discordMockBtn"><i class="fab fa-discord"></i> Discord</a>
+            <a href="#rcu-info" class="btn btn-outline"><i class="fas fa-gamepad"></i> O grze RCU</a>
         </div>
     </div>
 
-    <!-- sekcja info -->
+    <!-- sekcja wymagania + oferta -->
     <div id="wymagania">
         <div class="section-title">
             <i class="fas fa-bolt"></i> 
@@ -465,31 +419,49 @@
         <div class="cards-grid">
             <div class="card">
                 <i class="fas fa-trophy"></i>
-                <h3>Elita turniejowa</h3>
-                <p>FIFH to grono doświadczonych graczy Rebirth Champions Ultimate. Regularne scrimy, turnieje i wspólne rankedy. Celujemy w topowe lokaty.</p>
+                <h3>Elita RCU</h3>
+                <p>FIFH to klan nastawiony na dominację w rankingach, wspólne odradzanie, wymianę aur i walkę o najlepsze zwierzaki. Organizujemy exped do światów takich jak Heaven, Nuclear czy Atlantis.</p>
             </div>
             <div class="card">
                 <i class="fas fa-user-check"></i>
                 <h3>Wymagania</h3>
                 <ul class="badge-list">
-                    <li><i class="fas fa-check-circle"></i> Minimum 1000+ MMR / Ranga Diament+</li>
+                    <li><i class="fas fa-check-circle"></i> Minimum 5 Prestiżu (Lub szybki progres)</li>
                     <li><i class="fas fa-check-circle"></i> Aktywność min. 4 dni w tygodniu</li>
+                    <li><i class="fas fa-check-circle"></i> Znajomość mechanik: Rebirth, Gems, Pets, Auras</li>
                     <li><i class="fas fa-check-circle"></i> Mikrofon + komunikacja (Discord)</li>
-                    <li><i class="fas fa-check-circle"></i> Kultura i szacunek, brak toksyczności</li>
-                    <li><i class="fas fa-check-circle"></i> Znajomość mechanik RCU</li>
+                    <li><i class="fas fa-check-circle"></i> Kultura i chęć wspólnego grania</li>
                 </ul>
             </div>
             <div class="card">
                 <i class="fas fa-gem"></i>
                 <h3>Co oferujemy?</h3>
                 <ul class="badge-list">
-                    <li><i class="fas fa-chalkboard-user"></i> Analizy meczów i coaching</li>
-                    <li><i class="fas fa-calendar-week"></i> Organizowane turnieje clan wars</li>
-                    <li><i class="fas fa-hand-sparkles"></i> Przyjazna, zmotywowana ekipa</li>
-                    <li><i class="fas fa-robot"></i> BOT statystyk i eventy wewnętrzne</li>
-                    <li><i class="fas fa-crown"></i> Droga do profesjonalnej sceny</li>
+                    <li><i class="fas fa-chalkboard-user"></i> Porady optymalnego rebirth i zdobywania klejnotów</li>
+                    <li><i class="fas fa-hand-sparkles"></i> Wspólne polowania na sekretne zwierzaki</li>
+                    <li><i class="fas fa-chart-line"></i> Wymiana aur i pomoc w mastery</li>
+                    <li><i class="fas fa-crown"></i> System rang i eventy wewnętrzne</li>
+                    <li><i class="fas fa-robot"></i> Bot z kodami i przypomnieniami o eventach</li>
                 </ul>
             </div>
+        </div>
+    </div>
+
+    <!-- informacje o grze Rebirth Champions Ultimate -->
+    <div id="rcu-info">
+        <div class="section-title">
+            <i class="fas fa-dragon"></i>
+            <span>O grze: Rebirth Champions Ultimate (RCU)</span>
+        </div>
+        <div class="rcu-info">
+            <p><strong>RCU</strong> to popularna gra na Roblox, w której kluczowe jest ciągłe odradzanie (rebirth), zbieranie klejnotów (gems), odblokowywanie nowych światów i zdobywanie unikalnych zwierzaków (pets) oraz aur. Im więcej prestiżu, tym potężniejsze bonusy. Gra oferuje również system mastery, hoverboardy i sekretne lokalizacje.</p>
+            <div class="rcu-stats">
+                <div class="stat-item"><i class="fas fa-chart-simple"></i><br><span class="stat-value">15+ Światów</span><br>od Spawn po Magic World</div>
+                <div class="stat-item"><i class="fas fa-paw"></i><br><span class="stat-value">>200 Zwierzaków</span><br>Legend, Secret, Event</div>
+                <div class="stat-item"><i class="fas fa-crown"></i><br><span class="stat-value">Prestiż ∞</span><br>Trwałe wzmocnienia</div>
+                <div class="stat-item"><i class="fas fa-code"></i><br><span class="stat-value">Aktywne kody</span><br>RELEASE, spooky, frog...</div>
+            </div>
+            <p style="margin-top: 1rem;"><i class="fas fa-info-circle"></i> W FIFH skupiamy się na maksymalizacji efektywności rebirth, wymianie rzadkich aur (Brilliant, Hell, Celestial) oraz wspólnym odblokowywaniu najwyższych mastery. Jeśli grasz w RCU i chcesz rozwijać się szybciej – trafiłeś idealnie.</p>
         </div>
     </div>
 
@@ -497,32 +469,31 @@
     <div id="formularz">
         <div class="section-title">
             <i class="fas fa-clipboard-list"></i>
-            <span>FORMULARZ REKRUTACYJNY</span>
+            <span>FORMULARZ REKRUTACYJNY DO FIFH</span>
         </div>
         <div class="form-card">
             <form id="recruitmentForm">
                 <div class="form-grid">
                     <div>
-                        <label><i class="fas fa-user-astronaut"></i> Nick w grze *</label>
-                        <input type="text" id="nick" placeholder="Twój nick (FIFH sprawdza)" required>
+                        <label><i class="fas fa-user-astronaut"></i> Nick w RCU *</label>
+                        <input type="text" id="nick" placeholder="Twój nick na Roblox" required>
                     </div>
                     <div>
                         <label><i class="fab fa-discord"></i> Discord (nazwa#tag) *</label>
                         <input type="text" id="discord" placeholder="Przykład: rekrut#1234" required>
                     </div>
                     <div>
-                        <label><i class="fas fa-chart-simple"></i> Obecna ranga / MMR *</label>
+                        <label><i class="fas fa-chart-simple"></i> Prestiż / Główny świat *</label>
                         <select id="rank" required>
                             <option value="">-- Wybierz --</option>
-                            <option value="Diament">Diament</option>
-                            <option value="Mistrz">Mistrz</option>
-                            <option value="Arcymistrz">Arcymistrz</option>
-                            <option value="Legend">Legend (Top 200)</option>
-                            <option value="Platyna">Platyna (tylko wyjątkowe przypadki)</option>
+                            <option value="Prestiż 1-5">Prestiż 1-5 (początkujący)</option>
+                            <option value="Prestiż 6-15">Prestiż 6-15 (zaawansowany)</option>
+                            <option value="Prestiż 16+">Prestiż 16+ (ekspert)</option>
+                            <option value="Master Prestige">Master Prestige (wieloetapowy)</option>
                         </select>
                     </div>
                     <div>
-                        <label><i class="fas fa-clock"></i> Godziny aktywności (dziennie) *</label>
+                        <label><i class="fas fa-clock"></i> Aktywność (godziny dziennie) *</label>
                         <select id="activity" required>
                             <option value="">-- Wybierz --</option>
                             <option value="1-2h">1-2 godziny</option>
@@ -531,142 +502,42 @@
                         </select>
                     </div>
                     <div class="full-width">
-                        <label><i class="fas fa-microphone-alt"></i> Doświadczenie / osiągnięcia (turnieje, poprzednie klany) *</label>
-                        <textarea rows="3" id="exp" placeholder="Opisz swoje osiągnięcia w Rebirth Champions Ultimate, udziały w turniejach, role itp." required></textarea>
+                        <label><i class="fas fa-microphone-alt"></i> Doświadczenie / osiągnięcia (najlepsze zwierzaki, aury, światy) *</label>
+                        <textarea rows="3" id="exp" placeholder="Np.: Posiadam aury Hell i Celestial, legendarnego smoka, przeszedłem Nuclear World, mastery 50+..." required></textarea>
                     </div>
                     <div class="full-width">
                         <label><i class="fas fa-question-circle"></i> Dlaczego chcesz dołączyć do FIFH? *</label>
-                        <textarea rows="2" id="motivation" placeholder="Twoja motywacja, cele oraz co możesz wnieść do klanu" required></textarea>
+                        <textarea rows="2" id="motivation" placeholder="Motywacja, cele w RCU, co możesz wnieść do klanu" required></textarea>
                     </div>
                 </div>
                 <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
-                <p style="font-size: 0.75rem; margin-top: 1rem; text-align: center; color:#8e9dbb;"><i class="fas fa-lock"></i> Dane są bezpieczne. Po weryfikacji skontaktujemy się przez Discord.</p>
+                <p style="font-size: 0.75rem; margin-top: 1rem; text-align: center; color:#8e9dbb;"><i class="fas fa-lock"></i> Dane trafią do rekruterów FIFH przez Discord Webhook. Odpowiemy w ciągu 48h.</p>
             </form>
         </div>
     </div>
 
     <!-- kontakt i discord -->
-    <div id="discord-link" class="social-links">
+    <div class="social-links">
         <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Dołącz na serwer FIFH</a>
-        <a href="#" class="social-icon" id="twitchLinkMock"><i class="fab fa-twitch"></i> Kanał FIFH</a>
-        <a href="#" class="social-icon" id="youtubeMock"><i class="fab fa-youtube"></i> Materiały RCU</a>
+        <a href="#" class="social-icon" id="robloxGroup"><i class="fab fa-fort-awesome"></i> Grupa Roblox FIFH</a>
+        <a href="#" class="social-icon" id="rcuWiki"><i class="fas fa-book-open"></i> Poradnik RCU</a>
     </div>
 
     <footer>
-        <p>© 2025 FIFH Clan — Rebirth Champions Ultimate. Tylko najlepsi wchodzą do gry. <i class="fas fa-dragon"></i> Rise or Fall, we fight together.</p>
-        <p style="margin-top: 0.5rem;">Wypełnienie formularza jest pierwszym krokiem. Czekamy na Ciebie, Championie!</p>
+        <p>© 2025 FIFH Clan — Rebirth Champions Ultimate (Roblox). <i class="fas fa-dragon"></i> Razem odradzamy się w chwale.</p>
+        <p style="margin-top: 0.5rem;">Wypełnij formularz i pokaż, że jesteś gotów na wyzwania RCU!</p>
     </footer>
 </div>
 
 <div id="toast-msg"></div>
 
-<!-- kontener na odtwarzacz YouTube (niewidoczny, ale odtwarza dźwięk) -->
-<div id="youtube-player-container" class="youtube-hidden-player"></div>
-
 <script>
     (function() {
-        // ============================================================
-        // 1. MUZYKA: YouTube IFrame API - odtwarzanie na stronie
-        // ============================================================
-        let player;
-        let isPlaying = false;
-        const musicBtn = document.getElementById('musicToggleBtn');
-        const VIDEO_ID = '3SnaP_-umQc';  // ID filmu "Plan B"
-        
-        // Funkcja ładująca API YouTube
-        function loadYouTubeAPI() {
-            const tag = document.createElement('script');
-            tag.src = 'https://www.youtube.com/iframe_api';
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        }
-        
-        // Po załadowaniu API tworzymy player (niewidoczny, ale działający)
-        window.onYouTubeIframeAPIReady = function() {
-            player = new YT.Player('youtube-player-container', {
-                height: '0',
-                width: '0',
-                videoId: VIDEO_ID,
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'disablekb': 1,
-                    'fs': 0,
-                    'loop': 0,
-                    'modestbranding': 1,
-                    'rel': 0,
-                    'showinfo': 0
-                },
-                events: {
-                    onReady: onPlayerReady,
-                    onStateChange: onPlayerStateChange
-                }
-            });
-        };
-        
-        function onPlayerReady(event) {
-            console.log("Odtwarzacz YouTube gotowy – możesz odtwarzać muzykę na stronie");
-            // Opcjonalnie: można odtworzyć od razu? Nie, czekamy na kliknięcie (zgodnie z polityką przeglądarek)
-        }
-        
-        function onPlayerStateChange(event) {
-            // Aktualizacja przycisku w zależności od stanu odtwarzania
-            if (event.data === YT.PlayerState.ENDED) {
-                isPlaying = false;
-                updateButtonUI(false);
-                showToast("🎵 Utwór zakończony. Kliknij ponownie, aby odtworzyć od początku.", false, 3000);
-            } else if (event.data === YT.PlayerState.PAUSED) {
-                isPlaying = false;
-                updateButtonUI(false);
-            } else if (event.data === YT.PlayerState.PLAYING) {
-                isPlaying = true;
-                updateButtonUI(true);
-            }
-        }
-        
-        function updateButtonUI(playing) {
-            if (playing) {
-                musicBtn.classList.add('playing');
-                musicBtn.innerHTML = '<i class="fas fa-stop"></i> <span>🎧 Gra: Pezet, Mata, Kaz Bałagane – Plan B</span>';
-            } else {
-                musicBtn.classList.remove('playing');
-                musicBtn.innerHTML = '<i class="fas fa-play"></i> <span>🎧 Odtwórz „Plan B” (Pezet, Mata, Kaz Bałagane)</span>';
-            }
-        }
-        
-        function toggleMusic() {
-            if (!player || typeof player.getPlayerState !== 'function') {
-                showToast("⏳ Odtwarzacz się ładuje, spróbuj za sekundę...", false);
-                return;
-            }
-            const state = player.getPlayerState();
-            // Jeśli film jest zakończony -> przewijamy na początek i gramy
-            if (state === YT.PlayerState.ENDED) {
-                player.seekTo(0);
-                player.playVideo();
-                showToast("🎵 Odtwarzanie od początku – „Plan B”', false);
-                return;
-            }
-            if (state === YT.PlayerState.PLAYING) {
-                player.pauseVideo();
-                showToast("⏸ Muzyka zatrzymana", false);
-            } else {
-                player.playVideo();
-                showToast("🎵 Teraz gramy: Pezet, Mata, Kaz Bałagane – Plan B | Miłej rekrutacji!", false);
-            }
-        }
-        
-        if (musicBtn) {
-            musicBtn.addEventListener('click', toggleMusic);
-        }
-        
-        // Inicjalizacja API
-        loadYouTubeAPI();
-        
-        // ============================================================
-        // 2. RESZTA: FORMULARZ + DISCORD WEBHOOK (bez zmian, działa)
-        // ============================================================
+        // ================= KONFIGURACJA WEBHOOK =================
+        // 🔴 Aby działało: wklej tutaj URL swojego webhooka z Discorda (kanał rekrutacyjny)
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
+        // ========================================================
+        
         const form = document.getElementById('recruitmentForm');
         const submitBtn = document.getElementById('submitBtn');
         const toast = document.getElementById('toast-msg');
@@ -688,13 +559,13 @@
         
         async function sendToDiscord(applicationData) {
             const embed = {
-                title: "📝 NOWE ZGŁOSZENIE DO FIFH",
+                title: "⚔️ NOWE ZGŁOSZENIE DO FIFH (RCU)",
                 color: 0xa855f7,
                 thumbnail: { url: "https://cdn-icons-png.flaticon.com/512/4254/4254468.png" },
                 fields: [
-                    { name: "🎮 Nick w grze", value: applicationData.nick, inline: true },
+                    { name: "🎮 Nick RCU", value: applicationData.nick, inline: true },
                     { name: "🔷 Discord", value: applicationData.discord, inline: true },
-                    { name: "🏆 Ranga / MMR", value: applicationData.rank, inline: true },
+                    { name: "🏆 Prestiż / poziom", value: applicationData.rank, inline: true },
                     { name: "⏱ Aktywność (dziennie)", value: applicationData.activity, inline: true },
                     { name: "⚔️ Doświadczenie / Osiągnięcia", value: applicationData.experience.length > 1000 ? applicationData.experience.substring(0, 1000) + "..." : applicationData.experience, inline: false },
                     { name: "💡 Motywacja", value: applicationData.motivation.length > 800 ? applicationData.motivation.substring(0, 800) + "..." : applicationData.motivation, inline: false }
@@ -706,18 +577,32 @@
                 username: "FIFH Rekruter",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/184/184514.png",
                 embeds: [embed],
-                content: `📣 **Nowy rekrut!**`
+                content: `📣 **Nowy rekrut w FIFH!**`
             };
-            const response = await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Webhook odpowiedział: ${response.status} ${errorText}`);
+            
+            if (!WEBHOOK_URL || WEBHOOK_URL === 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N') {
+                // demo – pokaż symulację
+                console.warn("Używasz przykładowego webhooka. Aby wysyłać na Discord, wklej swój URL w zmienną WEBHOOK_URL.");
+                showToast("✅ [TRYB DEMO] Zgłoszenie zapisane w konsoli. Podmień WEBHOOK_URL na swój link z Discorda.", false, 5000);
+                console.log("Aplikacja demo:", applicationData);
+                return true;
             }
-            return true;
+            
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Webhook odpowiedział: ${response.status} ${errorText}`);
+                }
+                return true;
+            } catch (error) {
+                console.error("Błąd wysyłki do Discorda:", error);
+                throw error;
+            }
         }
         
         form.addEventListener('submit', async (e) => {
@@ -729,13 +614,13 @@
             const exp = document.getElementById('exp').value.trim();
             const motivation = document.getElementById('motivation').value.trim();
             
-            if(!nick || nick.length < 3) { showToast('❌ Podaj poprawny nick (min. 3 znaki)', true); return; }
-            if(!discord) { showToast('❌ Wymagany Discord (nazwa#0000)', true); return; }
-            if(!validateDiscord(discord)) { showToast('❌ Nieprawidłowy format Discorda! Przykład: Gracz#1234', true); return; }
-            if(!rank) { showToast('❌ Wybierz swoją rangę / MMR', true); return; }
-            if(!activity) { showToast('❌ Określ swoją aktywność godzinową', true); return; }
-            if(exp.length < 10) { showToast('📝 Opisz swoje doświadczenie (min. 10 znaków)', true); return; }
-            if(motivation.length < 10) { showToast('💪 Powiedz nam, dlaczego FIFH? (minimum 10 znaków)', true); return; }
+            if (!nick || nick.length < 3) { showToast('❌ Podaj poprawny nick w RCU (min. 3 znaki)', true); return; }
+            if (!discord) { showToast('❌ Wymagany Discord (nazwa#0000)', true); return; }
+            if (!validateDiscord(discord)) { showToast('❌ Nieprawidłowy format Discorda! Przykład: Gracz#1234', true); return; }
+            if (!rank) { showToast('❌ Wybierz swój poziom Prestiżu / świat', true); return; }
+            if (!activity) { showToast('❌ Określ swoją aktywność godzinową', true); return; }
+            if (exp.length < 10) { showToast('📝 Opisz swoje osiągnięcia w RCU (min. 10 znaków)', true); return; }
+            if (motivation.length < 10) { showToast('💪 Powiedz nam, dlaczego FIFH? (minimum 10 znaków)', true); return; }
             
             const appData = { nick, discord, rank, activity, experience: exp, motivation };
             submitBtn.disabled = true;
@@ -745,7 +630,6 @@
                 showToast(`✅ Zgłoszenie wysłane! Rekruterzy FIFH skontaktują się przez Discord w ciągu 48h.`, false, 5000);
                 form.reset();
             } catch (error) {
-                console.error(error);
                 showToast(`❌ Błąd wysyłki: ${error.message || 'Spróbuj ponownie później.'}`, true);
             } finally {
                 submitBtn.disabled = false;
@@ -753,23 +637,34 @@
             }
         });
         
-        // Mocki społecznościowe (działają)
-        const discordBtn = document.getElementById('discordMockBtn');
+        // przyciski społecznościowe (mocki)
         const discordInvite = document.getElementById('discordInvite');
-        const twitchMock = document.getElementById('twitchLinkMock');
-        const youtubeMock = document.getElementById('youtubeMock');
-        function mockSocial() { showToast(`🔗 Zaproszenie na serwer FIFH (Discord) - dołącz do społeczności!`, false); }
-        if(discordBtn) discordBtn.addEventListener('click', (e) => { e.preventDefault(); mockSocial(); });
-        if(discordInvite) discordInvite.addEventListener('click', (e) => { e.preventDefault(); mockSocial(); });
-        if(twitchMock) twitchMock.addEventListener('click', (e) => { e.preventDefault(); showToast('🎮 Kanał Twitch FIFH: transmisje z treningów i turniejów RCU już wkrótce!', false); });
-        if(youtubeMock) youtubeMock.addEventListener('click', (e) => { e.preventDefault(); showToast('📺 Subskrybuj FIFH na YouTube - poradniki i najlepsze momenty z RCU', false); });
+        const robloxGroup = document.getElementById('robloxGroup');
+        const rcuWiki = document.getElementById('rcuWiki');
         
+        discordInvite.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast("🔗 Zaproszenie na serwer FIFH: discord.gg/fifh (symulacja) – dołącz do naszej społeczności RCU!", false);
+        });
+        robloxGroup.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast("🏆 Grupa Roblox FIFH – znajdziesz nas pod nazwą 'FIFH Champions', dołącz i graj z nami!", false);
+        });
+        rcuWiki.addEventListener('click', (e) => {
+            e.preventDefault();
+            showToast("📚 Poradnik RCU – najlepsze strategie rebirth, tier lista zwierzaków i kody. Podzielimy się na Discordzie!", false);
+        });
+        
+        // smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
-                if(targetId === "#" || targetId === "") return;
+                if (targetId === "#" || targetId === "") return;
                 const targetElement = document.querySelector(targetId);
-                if(targetElement) { e.preventDefault(); targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
         });
     })();
