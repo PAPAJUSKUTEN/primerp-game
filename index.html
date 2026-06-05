@@ -67,6 +67,7 @@
             padding: 3rem 1rem 4rem;
             border-bottom: 2px solid rgba(139, 92, 246, 0.3);
             margin-bottom: 3rem;
+            position: relative;
         }
 
         .clan-tag {
@@ -145,6 +146,48 @@
             background: rgba(139, 92, 246, 0.2);
             border-color: #c084fc;
             transform: translateY(-2px);
+        }
+
+        /* przycisk muzyki - neonowy i na środku */
+        .music-btn-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0 1rem;
+        }
+        .music-btn {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            border: 2px solid #c084fc;
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #e9d5ff;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 0 8px #a855f7;
+            font-family: 'Orbitron', monospace;
+        }
+        .music-btn i {
+            font-size: 1.3rem;
+            color: #f0a3ff;
+        }
+        .music-btn:hover {
+            transform: scale(1.02);
+            background: #2d1b69;
+            border-color: #e9a8ff;
+            box-shadow: 0 0 18px #c084fc;
+        }
+        .music-btn.playing {
+            border-color: #10b981;
+            box-shadow: 0 0 14px #34d399;
+            color: #a7f3d0;
+        }
+        .music-btn.playing i {
+            color: #34d399;
         }
 
         /* karty */
@@ -366,6 +409,17 @@
         @media (max-width: 600px) {
             #toast-msg { white-space: normal; width: 80%; min-width: auto; }
         }
+
+        /* ukryty odtwarzacz YouTube */
+        .youtube-hidden-player {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -375,6 +429,15 @@
         <div class="clan-tag"><i class="fas fa-skull"></i> FIFH · LEGENDS NEVER DIE</div>
         <h1>FIFH <span class="glow-text">REKRUTACJA</span></h1>
         <p class="sub">Elitarny klan w Rebirth Champions Ultimate. Szukamy wojowników gotowych na podbój aren i turniejów. Stań się częścią dziedzictwa.</p>
+        
+        <!-- PRZYCISK MUZYCZNY -->
+        <div class="music-btn-container">
+            <div id="musicToggleBtn" class="music-btn">
+                <i class="fas fa-play"></i> 
+                <span>🎧 Odtwórz „Plan B” (Pezet, Mata, Kaz Bałagane)</span>
+            </div>
+        </div>
+        
         <div class="btn-group">
             <a href="#formularz" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Wypełnij ankietę</a>
             <a href="#wymagania" class="btn btn-outline"><i class="fas fa-chart-line"></i> Wymagania</a>
@@ -486,13 +549,107 @@
 
 <div id="toast-msg"></div>
 
+<!-- Ukryty div do osadzenia YouTube Player API -->
+<div id="youtube-player-container" class="youtube-hidden-player"></div>
+
 <script>
     (function() {
-        // ================= KONFIGURACJA =================
+        // ================= KONFIGURACJA WEBHOOK =================
         // 🔴🔴🔴 URUCHOMIENIE NA ŻYWO: PODMIŃ PONIŻSZY URL NA SWÓJ WEBHOOK Z DISCORD 🔴🔴🔴
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
-        // ================================================
+        // ========================================================
         
+        // --- MUZYKA: YouTube IFrame API ---
+        let player;
+        let isPlaying = false;
+        const musicBtn = document.getElementById('musicToggleBtn');
+        const VIDEO_ID = '3SnaP_-umQc'; // ID z linku: https://youtu.be/3SnaP_-umQc?si=...
+        
+        // Funkcja ładująca API YouTube
+        function loadYouTubeAPI() {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+        
+        // Po załadowaniu API tworzymy player
+        window.onYouTubeIframeAPIReady = function() {
+            player = new YT.Player('youtube-player-container', {
+                height: '0',
+                width: '0',
+                videoId: VIDEO_ID,
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'disablekb': 1,
+                    'fs': 0,
+                    'loop': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0
+                },
+                events: {
+                    onReady: onPlayerReady,
+                    onStateChange: onPlayerStateChange
+                }
+            });
+        };
+        
+        function onPlayerReady(event) {
+            // Player gotowy, ale nie odtwarzamy automatycznie - czekamy na kliknięcie.
+            console.log("YouTube Player gotowy");
+        }
+        
+        function onPlayerStateChange(event) {
+            // Jeśli odtwarzanie zakończone przez użytkownika lub skończył się film - aktualizujemy przycisk
+            if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                updateButtonUI(false);
+            } else if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                updateButtonUI(true);
+            }
+        }
+        
+        function updateButtonUI(playing) {
+            if (playing) {
+                musicBtn.classList.add('playing');
+                musicBtn.innerHTML = '<i class="fas fa-stop"></i> <span>🎧 Odtwarzane: Pezet, Mata, Kaz Bałagane – Plan B</span>';
+            } else {
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '<i class="fas fa-play"></i> <span>🎧 Odtwórz „Plan B” (Pezet, Mata, Kaz Bałagane)</span>';
+            }
+        }
+        
+        function toggleMusic() {
+            if (!player || typeof player.getPlayerState !== 'function') {
+                showToast("⏳ Ładowanie odtwarzacza... spróbuj za chwilę", false);
+                return;
+            }
+            const state = player.getPlayerState();
+            if (state === YT.PlayerState.PLAYING) {
+                player.pauseVideo();
+                isPlaying = false;
+                updateButtonUI(false);
+                showToast("⏸ Muzyka zatrzymana", false);
+            } else {
+                player.playVideo();
+                isPlaying = true;
+                updateButtonUI(true);
+                showToast("🎵 Teraz gramy: Pezet, Mata, Kaz Bałagane – Plan B | Miłego rekrutowania!", false);
+            }
+        }
+        
+        // Inicjalizacja API po załadowaniu strony
+        loadYouTubeAPI();
+        
+        // Obsługa kliknięcia przycisku muzyki
+        if (musicBtn) {
+            musicBtn.addEventListener('click', toggleMusic);
+        }
+        
+        // --- RESZTA LOGIKI REKRUTACJI (Discord Webhook) ---
         const form = document.getElementById('recruitmentForm');
         const submitBtn = document.getElementById('submitBtn');
         const toast = document.getElementById('toast-msg');
@@ -511,200 +668,96 @@
             const regex = /^.{2,32}#[0-9]{4}$/;
             return regex.test(discordTag);
         }
-
-        // Funkcja wysyłająca dane do Discorda
+        
         async function sendToDiscord(applicationData) {
             const embed = {
                 title: "📝 NOWE ZGŁOSZENIE DO FIFH",
-                color: 0xa855f7, // fioletowy
+                color: 0xa855f7,
                 thumbnail: {
-                    url: "https://cdn-icons-png.flaticon.com/512/4254/4254468.png" // ogólna ikona klanu
+                    url: "https://cdn-icons-png.flaticon.com/512/4254/4254468.png"
                 },
                 fields: [
-                    {
-                        name: "🎮 Nick w grze",
-                        value: applicationData.nick,
-                        inline: true
-                    },
-                    {
-                        name: "🔷 Discord",
-                        value: applicationData.discord,
-                        inline: true
-                    },
-                    {
-                        name: "🏆 Ranga / MMR",
-                        value: applicationData.rank,
-                        inline: true
-                    },
-                    {
-                        name: "⏱ Aktywność (dziennie)",
-                        value: applicationData.activity,
-                        inline: true
-                    },
-                    {
-                        name: "⚔️ Doświadczenie / Osiągnięcia",
-                        value: applicationData.experience.length > 1000 ? applicationData.experience.substring(0, 1000) + "..." : applicationData.experience,
-                        inline: false
-                    },
-                    {
-                        name: "💡 Motywacja",
-                        value: applicationData.motivation.length > 800 ? applicationData.motivation.substring(0, 800) + "..." : applicationData.motivation,
-                        inline: false
-                    }
+                    { name: "🎮 Nick w grze", value: applicationData.nick, inline: true },
+                    { name: "🔷 Discord", value: applicationData.discord, inline: true },
+                    { name: "🏆 Ranga / MMR", value: applicationData.rank, inline: true },
+                    { name: "⏱ Aktywność (dziennie)", value: applicationData.activity, inline: true },
+                    { name: "⚔️ Doświadczenie / Osiągnięcia", value: applicationData.experience.length > 1000 ? applicationData.experience.substring(0, 1000) + "..." : applicationData.experience, inline: false },
+                    { name: "💡 Motywacja", value: applicationData.motivation.length > 800 ? applicationData.motivation.substring(0, 800) + "..." : applicationData.motivation, inline: false }
                 ],
-                footer: {
-                    text: "FIFH Rekrutacja • Rebirth Champions Ultimate",
-                    icon_url: "https://cdn-icons-png.flaticon.com/512/4712/4712105.png"
-                },
+                footer: { text: "FIFH Rekrutacja • Rebirth Champions Ultimate", icon_url: "https://cdn-icons-png.flaticon.com/512/4712/4712105.png" },
                 timestamp: new Date().toISOString()
             };
-            
             const payload = {
                 username: "FIFH Rekruter",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/184/184514.png",
                 embeds: [embed],
-                content: `📣 **Nowy rekrut!** <@&role_rekruterzy> (jeśli chcesz pingować rekruterów, dodaj ID roli - opcjonalnie)`
+                content: `📣 **Nowy rekrut!** (Oznacz rekruterów jeśli chcesz)`
             };
-            
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Webhook odpowiedział: ${response.status} ${errorText}`);
-                }
-                return true;
-            } catch (error) {
-                console.error("Błąd wysyłki do Discorda:", error);
-                throw error;
+            const response = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Webhook odpowiedział: ${response.status} ${errorText}`);
             }
+            return true;
         }
         
-        // Obsługa wysyłki formularza
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            // Pobieranie wartości
             const nick = document.getElementById('nick').value.trim();
             const discord = document.getElementById('discord').value.trim();
             const rank = document.getElementById('rank').value;
             const activity = document.getElementById('activity').value;
             const exp = document.getElementById('exp').value.trim();
             const motivation = document.getElementById('motivation').value.trim();
-
-            // Walidacje
-            if(!nick || nick.length < 3) {
-                showToast('❌ Podaj poprawny nick (min. 3 znaki)', true);
-                return;
-            }
-            if(!discord) {
-                showToast('❌ Wymagany Discord (nazwa#0000)', true);
-                return;
-            }
-            if(!validateDiscord(discord)) {
-                showToast('❌ Nieprawidłowy format Discorda! Przykład: Gracz#1234', true);
-                return;
-            }
-            if(!rank) {
-                showToast('❌ Wybierz swoją rangę / MMR', true);
-                return;
-            }
-            if(!activity) {
-                showToast('❌ Określ swoją aktywność godzinową', true);
-                return;
-            }
-            if(exp.length < 10) {
-                showToast('📝 Opisz swoje doświadczenie (min. 10 znaków)', true);
-                return;
-            }
-            if(motivation.length < 10) {
-                showToast('💪 Powiedz nam, dlaczego FIFH? (minimum 10 znaków)', true);
-                return;
-            }
-
-            // Przygotowanie danych
-            const appData = {
-                nick,
-                discord,
-                rank,
-                activity,
-                experience: exp,
-                motivation: motivation,
-            };
-
-            // Blokada przycisku podczas wysyłania
+            
+            if(!nick || nick.length < 3) { showToast('❌ Podaj poprawny nick (min. 3 znaki)', true); return; }
+            if(!discord) { showToast('❌ Wymagany Discord (nazwa#0000)', true); return; }
+            if(!validateDiscord(discord)) { showToast('❌ Nieprawidłowy format Discorda! Przykład: Gracz#1234', true); return; }
+            if(!rank) { showToast('❌ Wybierz swoją rangę / MMR', true); return; }
+            if(!activity) { showToast('❌ Określ swoją aktywność godzinową', true); return; }
+            if(exp.length < 10) { showToast('📝 Opisz swoje doświadczenie (min. 10 znaków)', true); return; }
+            if(motivation.length < 10) { showToast('💪 Powiedz nam, dlaczego FIFH? (minimum 10 znaków)', true); return; }
+            
+            const appData = { nick, discord, rank, activity, experience: exp, motivation };
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie zgłoszenia...';
-            
             try {
-                // Sprawdź czy webhook jest skonfigurowany
                 if (!WEBHOOK_URL || WEBHOOK_URL === 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N') {
-                    // To jest przykładowy webhook, w rzeczywistości użytkownik powinien go podmienić.
-                    // Dla celów demonstracyjnych webhook jest aktywny (symulacja). Aby uniknąć spamu, dodajemy ostrzeżenie w konsoli.
-                    console.warn("Używasz domyślnego webhooka demonstracyjnego. Aby działał na Twoim serwerze, podmień zmienną WEBHOOK_URL.");
+                    console.warn("Używasz domyślnego webhooka demonstracyjnego.");
                 }
-                
                 await sendToDiscord(appData);
                 showToast(`✅ Zgłoszenie wysłane! Rekruterzy FIFH skontaktują się przez Discord w ciągu 48h.`, false, 5000);
                 form.reset();
             } catch (error) {
                 console.error(error);
-                showToast(`❌ Błąd wysyłki: ${error.message || 'Nie udało się wysłać zgłoszenia. Spróbuj ponownie później.'}`, true);
+                showToast(`❌ Błąd wysyłki: ${error.message || 'Spróbuj ponownie później.'}`, true);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Wyślij zgłoszenie';
             }
         });
-
-        // Obsługa przycisków społecznościowych (mockupy)
+        
+        // Mocki społecznościowe
         const discordBtn = document.getElementById('discordMockBtn');
         const discordInvite = document.getElementById('discordInvite');
         const twitchMock = document.getElementById('twitchLinkMock');
         const youtubeMock = document.getElementById('youtubeMock');
-
-        function mockSocial(platform) {
-            showToast(`🔗 Zaproszenie na serwer FIFH (Discord) - dołącz do społeczności! Link dostępny na kanale #info`, false);
-        }
-
-        if(discordBtn) {
-            discordBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                mockSocial('discord');
-            });
-        }
-        if(discordInvite) {
-            discordInvite.addEventListener('click', (e) => {
-                e.preventDefault();
-                mockSocial('discord');
-            });
-        }
-        if(twitchMock) {
-            twitchMock.addEventListener('click', (e) => {
-                e.preventDefault();
-                showToast('🎮 Kanał Twitch FIFH: transmisje z treningów i turniejów RCU już wkrótce!', false);
-            });
-        }
-        if(youtubeMock) {
-            youtubeMock.addEventListener('click', (e) => {
-                e.preventDefault();
-                showToast('📺 Subskrybuj FIFH na YouTube - poradniki i najlepsze momenty z RCU', false);
-            });
-        }
-
-        // Smooth scroll dla kotwic
+        function mockSocial() { showToast(`🔗 Zaproszenie na serwer FIFH (Discord) - dołącz do społeczności!`, false); }
+        if(discordBtn) discordBtn.addEventListener('click', (e) => { e.preventDefault(); mockSocial(); });
+        if(discordInvite) discordInvite.addEventListener('click', (e) => { e.preventDefault(); mockSocial(); });
+        if(twitchMock) twitchMock.addEventListener('click', (e) => { e.preventDefault(); showToast('🎮 Kanał Twitch FIFH: transmisje z treningów i turniejów RCU już wkrótce!', false); });
+        if(youtubeMock) youtubeMock.addEventListener('click', (e) => { e.preventDefault(); showToast('📺 Subskrybuj FIFH na YouTube - poradniki i najlepsze momenty z RCU', false); });
+        
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
                 if(targetId === "#" || targetId === "") return;
                 const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    e.preventDefault();
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                if(targetElement) { e.preventDefault(); targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
             });
         });
     })();
