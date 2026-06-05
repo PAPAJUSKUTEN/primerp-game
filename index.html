@@ -54,14 +54,46 @@
         .stat-circle { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); border-radius: 1.8rem; padding: 0.8rem 1.5rem; text-align: center; min-width: 130px; border: 1px solid #a855f7; }
         .stat-number { font-size: 2rem; font-weight: 800; font-family: 'Orbitron'; color: #c084fc; }
         .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* MODAL */
         .recruit-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; }
         .recruit-modal.active { display: flex; }
-        .modal-content { background: #0f1222; border-radius: 2rem; max-width: 950px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid #a855f7; box-shadow: 0 0 40px rgba(168,85,247,0.4); }
-        .modal-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); border-radius: 2rem 2rem 0 0; }
+        .modal-content { background: #0f1222; border-radius: 2rem; max-width: 950px; width: 90%; max-height: 85vh; overflow-y: auto; border: 2px solid #a855f7; box-shadow: 0 0 40px rgba(168,85,247,0.4); position: relative; }
+        .modal-header { padding: 1.2rem 1.8rem; border-bottom: 1px solid #4c1d95; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.5); border-radius: 2rem 2rem 0 0; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(4px); }
         .modal-header h2 { font-family: 'Orbitron', monospace; font-size: 1.5rem; color: #c084fc; }
         .close-modal { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #cbd5e6; transition: 0.2s; }
         .close-modal:hover { color: #f43f5e; }
         .modal-body { padding: 1.8rem; }
+        
+        /* SUWAKI – przyciski przewijania w górę/dół */
+        .scroll-buttons {
+            position: sticky;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+            z-index: 15;
+        }
+        .scroll-btn {
+            background: #1e1b4b;
+            border: 1px solid #a855f7;
+            border-radius: 50px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #c084fc;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .scroll-btn:hover { background: #2d1b69; transform: scale(1.02); }
+        
         .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
         .full-width { grid-column: span 2; }
         input, select, textarea { width: 100%; background: #111827; border: 1px solid #334155; padding: 0.8rem 1rem; border-radius: 1rem; font-size: 0.9rem; color: #f1f5f9; }
@@ -123,11 +155,11 @@
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
 
-<!-- MODAL REKRUTACJI Z ROZBUDOWANYM FORMULARZEM (ŚWIATY + GAMEPASSY) -->
+<!-- MODAL REKRUTACJI Z SUWAKAMI (przyciskami przewijania) -->
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny BEST</h2><button class="close-modal" id="closeModalBtn">&times;</button></div>
-        <div class="modal-body">
+        <div class="modal-body" id="modalBody">
             <form id="recruitmentForm">
                 <div class="form-grid">
                     <div><label><i class="fab fa-roblox"></i> Nick w Roblox *</label><input type="text" id="nick" placeholder="Twoja nazwa" required></div>
@@ -136,28 +168,24 @@
                     <div><label><i class="fas fa-clock"></i> Aktywność (godz./dzień) *</label><select id="activity" required><option value="">-- wybierz --</option><option value="1-2h">1-2 godziny</option><option value="2-4h">2-4 godziny</option><option value="4h+">4+ godzin</option></select></div>
                     <div><label><i class="fas fa-dragon"></i> Najlepszy zwierzak / Aura</label><input type="text" id="bestpet" placeholder="np. Smok Legendarny"></div>
                     
-                    <!-- KATEGORIA ŚWIATA -->
                     <div><label><i class="fas fa-globe"></i> Kategoria świata *</label><select id="worldCategory" required><option value="">-- wybierz kategorię --</option><option value="Overworld">Overworld (Ziemia)</option><option value="Space">Space (Kosmos)</option><option value="Skylands">Skylands (Niebiańskie Wyspy)</option></select></div>
-                    
-                    <!-- DYNAMICZNY WYBÓR MAPY -->
                     <div><label><i class="fas fa-map-marked-alt"></i> Najdalszy osiągnięty świat *</label><select id="worldMap" required><option value="">-- najpierw wybierz kategorię --</option></select></div>
                     
-                    <!-- GAMEPASSY (wielokrotny wybór) -->
                     <div class="full-width">
                         <label><i class="fas fa-ticket-alt"></i> Posiadane GamePassy (zaznacz wszystkie które masz)</label>
-                        <div class="gamepass-group">
-                            <div class="gamepass-grid" id="gamepassGrid">
-                                <!-- Checkboxy będą generowane dynamicznie z JS -->
-                            </div>
-                        </div>
+                        <div class="gamepass-group"><div class="gamepass-grid" id="gamepassGrid"></div></div>
                     </div>
                     
                     <div class="full-width"><label><i class="fas fa-scroll"></i> Doświadczenie / osiągnięcia *</label><textarea rows="2" id="exp" placeholder="Opisz swoje osiągnięcia w RCU..." required></textarea></div>
                     <div class="full-width"><label><i class="fas fa-heart"></i> Dlaczego BEST? *</label><textarea rows="2" id="motivation" placeholder="Twoja motywacja i cele" required></textarea></div>
                 </div>
                 <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
-                <p style="font-size:0.7rem; text-align:center; margin-top:0.8rem"><i class="fas fa-shield-alt"></i> Dane trafią do rekruterów BEST na Discord.</p>
             </form>
+            <!-- SUWAKI / przyciski przewijania -->
+            <div class="scroll-buttons">
+                <button type="button" class="scroll-btn" id="scrollUpBtn"><i class="fas fa-arrow-up"></i> Przewiń w górę</button>
+                <button type="button" class="scroll-btn" id="scrollDownBtn"><i class="fas fa-arrow-down"></i> Przewiń w dół</button>
+            </div>
         </div>
     </div>
 </div>
@@ -165,27 +193,18 @@
 
 <script>
     (function(){
-        // WEBHOOK – PODMIEŃ NA SWÓJ
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N';
+        // ================= NOWY TESTOWY WEBHOOK (podany przez użytkownika) =================
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
+        // ====================================================================================
         
-        // Definicje światów według kategorii
+        // Definicje światów
         const worldsData = {
-            Overworld: [
-                "Spawn", "Farm", "Desert", "Nuclear", "Atlantis", "Kingdom", "City", "Cave", "Volcano", 
-                "Heaven", "Magic", "Circus", "Jungle", "Steampunk", "Sakura", "Lab"
-            ],
-            Space: [
-                "Moon", "Alien", "Tech City", "Neluba Forest", "Void", "Spaceship", "Space Warzone", "Comet", 
-                "Starfactory", "Glacier Moon", "Mars Colony", "Starfall Valley", "Black Hole"
-            ],
-            Skylands: [
-                "Skylands", "Sky Garden", "Cloudy World", "Ashwind Realm", "Frozen Forest", "Ancient Ruins", 
-                "Monochrome World", "Wild West", "Bee World", "Neon World", "Thunder Isles", "Sunken Temple", 
-                "Swamp World", "Crystal Island", "Blossom Clouds", "Aurora World"
-            ]
+            Overworld: ["Spawn", "Farm", "Desert", "Nuclear", "Atlantis", "Kingdom", "City", "Cave", "Volcano", "Heaven", "Magic", "Circus", "Jungle", "Steampunk", "Sakura", "Lab"],
+            Space: ["Moon", "Alien", "Tech City", "Neluba Forest", "Void", "Spaceship", "Space Warzone", "Comet", "Starfactory", "Glacier Moon", "Mars Colony", "Starfall Valley", "Black Hole"],
+            Skylands: ["Skylands", "Sky Garden", "Cloudy World", "Ashwind Realm", "Frozen Forest", "Ancient Ruins", "Monochrome World", "Wild West", "Bee World", "Neon World", "Thunder Isles", "Sunken Temple", "Swamp World", "Crystal Island", "Blossom Clouds", "Aurora World"]
         };
         
-        // Lista GamePassów do wyświetlenia
+        // GamePassy
         const gamepassesList = [
             "Auto Clicker", "Auto Rebirth", "+2 Pet Equip", "+3 Pet Equip", "Mega Luck", "Ultra Luck", 
             "Faster Eggs Open", "Extra Egg", "Vip", "Magic Eggs", "Shiny Hunters", "Insane Farmer", 
@@ -211,7 +230,6 @@
         // Dynamiczne światy
         const categorySelect = document.getElementById('worldCategory');
         const mapSelect = document.getElementById('worldMap');
-        
         function updateWorldsList() {
             const category = categorySelect.value;
             mapSelect.innerHTML = '<option value="">-- wybierz świat --</option>';
@@ -232,10 +250,26 @@
         const modal = document.getElementById('recruitModal');
         const openBtn = document.getElementById('openRecruitModalBtn');
         const closeBtn = document.getElementById('closeModalBtn');
+        const modalBody = document.getElementById('modalBody');
+        
         openBtn.addEventListener('click', () => { modal.classList.add('active'); document.body.style.overflow = 'hidden'; });
         function closeModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+        
+        // SUWAKI – przewijanie w górę/dół wewnątrz modala
+        const scrollUpBtn = document.getElementById('scrollUpBtn');
+        const scrollDownBtn = document.getElementById('scrollDownBtn');
+        if (scrollUpBtn) {
+            scrollUpBtn.addEventListener('click', () => {
+                modalBody.scrollBy({ top: -200, behavior: 'smooth' });
+            });
+        }
+        if (scrollDownBtn) {
+            scrollDownBtn.addEventListener('click', () => {
+                modalBody.scrollBy({ top: 200, behavior: 'smooth' });
+            });
+        }
         
         // Toast
         const toast = document.getElementById('toast-msg');
@@ -249,7 +283,6 @@
         
         function validateDiscord(tag){ return /^.{2,32}#[0-9]{4}$/.test(tag); }
         
-        // Pobranie zaznaczonych GamePassów
         function getSelectedGamepasses() {
             const checkboxes = document.querySelectorAll('.gamepass-cb:checked');
             return Array.from(checkboxes).map(cb => cb.value);
@@ -276,13 +309,16 @@
                 timestamp: new Date().toISOString()
             };
             const payload = { username: "BEST Rekruter", avatar_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg", embeds: [embed], content: "📣 **Nowe zgłoszenie do BEST!**" };
-            if(WEBHOOK_URL === 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn'){
-                console.log("DEMO: aplikacja (symulacja). Podmień WEBHOOK_URL.", data);
+            
+            // Wysyłka na podany webhook (testowy)
+            try {
+                const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                if(!response.ok) throw new Error(`HTTP ${response.status}`);
                 return true;
+            } catch (error) {
+                console.error("Błąd wysyłki webhook:", error);
+                throw error;
             }
-            const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            if(!response.ok) throw new Error(`HTTP ${response.status}`);
-            return true;
         }
         
         const form = document.getElementById('recruitmentForm');
@@ -316,7 +352,6 @@
                 await sendToDiscord(payloadData);
                 showToast("✅ Zgłoszenie wysłane! Rekruterzy BEST skontaktują się przez Discord.", false);
                 form.reset();
-                // Resetuj dodatkowe pola
                 categorySelect.value = "";
                 mapSelect.innerHTML = '<option value="">-- najpierw wybierz kategorię --</option>';
                 document.querySelectorAll('.gamepass-cb').forEach(cb => cb.checked = false);
