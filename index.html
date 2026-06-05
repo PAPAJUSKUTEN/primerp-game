@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Rekrutacja do elitarnego klanu FIFH w grze Rebirth Champions Ultimate (RCU) na Roblox. Sprawdź wymagania, dołącz do najlepszych graczy i rozwijaj się razem z nami.">
     <title>FIFH Rekrutacja | Rebirth Champions Ultimate (RCU) – Roblox</title>
-    <!-- Google Fonts & Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts & Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -22,7 +23,7 @@
             scroll-behavior: smooth;
         }
 
-        /* tło cyberpunk */
+        /* tło z animacją grid */
         .bg-cyber {
             position: fixed;
             top: 0;
@@ -30,263 +31,221 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            background: radial-gradient(circle at 10% 20%, #0f172a, #03050b);
+            background: radial-gradient(circle at 20% 30%, #0b1120, #02030a);
         }
-
         .bg-cyber::before {
             content: "";
             position: absolute;
             width: 100%;
             height: 100%;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.08"><path fill="none" stroke="%234f46e5" stroke-width="0.8" d="M0 400 L800 400 M400 0 L400 800 M200 200 L600 600 M600 200 L200 600"/><circle cx="400" cy="400" r="80" stroke="%238b5cf6" fill="none" stroke-width="1.2"/><polygon points="400,100 500,250 300,250" fill="none" stroke="%23a855f7" stroke-width="1"/></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.06"><path fill="none" stroke="%237c3aed" stroke-width="0.8" d="M0 400 L800 400 M400 0 L400 800 M200 200 L600 600 M600 200 L200 600"/><circle cx="400" cy="400" r="80" stroke="%239b6eff" fill="none" stroke-width="1.2"/><polygon points="400,100 500,250 300,250" fill="none" stroke="%23a855f7" stroke-width="1"/><rect x="150" y="500" width="100" height="100" fill="none" stroke="%238b5cf6" stroke-width="0.8"/></svg>');
             background-repeat: repeat;
-            animation: drift 40s linear infinite;
+            animation: drift 50s linear infinite;
         }
-
         @keyframes drift {
             0% { background-position: 0 0; }
-            100% { background-position: 120px 120px; }
+            100% { background-position: 150px 150px; }
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 2rem 2rem;
             position: relative;
             z-index: 2;
         }
 
+        /* główne style */
         .glow-text {
-            text-shadow: 0 0 6px #a855f7, 0 0 12px #7c3aed;
+            text-shadow: 0 0 8px #a855f7, 0 0 15px #7c3aed;
         }
-
-        /* HEADER */
-        .hero {
-            text-align: center;
-            padding: 3rem 1rem 4rem;
-            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
-            margin-bottom: 3rem;
-        }
-
-        .clan-tag {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, #c084fc, #7c3aed);
-            display: inline-block;
-            padding: 0.3rem 1.4rem;
-            border-radius: 40px;
-            font-weight: 700;
-            margin-bottom: 1.2rem;
-            box-shadow: 0 0 12px #a855f7;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #FFFFFF, #c084fc, #a855f7);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
-        }
-
-        .sub {
-            font-size: 1.2rem;
-            color: #b9c7e6;
-            max-width: 680px;
-            margin: 0 auto;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(30, 27, 58, 0.7);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(139, 92, 246, 0.6);
-            padding: 0.75rem 2rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #f0eaff;
-            transition: all 0.25s ease;
-            text-decoration: none;
-            font-family: 'Inter', sans-serif;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(95deg, #7c3aed, #a855f7);
-            border: none;
-            box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 22px rgba(139, 92, 246, 0.6);
-            background: linear-gradient(95deg, #8b5cf6, #c084fc);
-        }
-
-        .btn-outline:hover {
-            background: rgba(139, 92, 246, 0.2);
-            border-color: #c084fc;
-            transform: translateY(-2px);
-        }
-
         .section-title {
             font-family: 'Orbitron', monospace;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 12px;
-            border-left: 5px solid #a855f7;
+            gap: 14px;
+            border-left: 6px solid #a855f7;
             padding-left: 1.2rem;
         }
+        .section-title i {
+            color: #c084fc;
+            font-size: 2rem;
+        }
 
+        /* header */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 4rem;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.4);
+            margin-bottom: 3rem;
+            backdrop-filter: blur(2px);
+        }
+        .clan-tag {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            letter-spacing: 5px;
+            background: linear-gradient(135deg, #c084fc, #6d28d9);
+            display: inline-block;
+            padding: 0.4rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 800;
+            margin-bottom: 1.4rem;
+            box-shadow: 0 0 15px #a855f7;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #d8b4fe, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+        .sub {
+            font-size: 1.25rem;
+            color: #cbd5e6;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        /* przyciski */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 2.2rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: rgba(30, 27, 58, 0.8);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(139, 92, 246, 0.6);
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #f0eaff;
+            transition: 0.25s;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(95deg, #7c3aed, #a855f7);
+            border: none;
+            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.5);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(139, 92, 246, 0.7); }
+        .btn-outline:hover { background: rgba(139, 92, 246, 0.2); border-color: #c084fc; transform: translateY(-2px); }
+
+        /* karty ogólne */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-bottom: 3.5rem;
         }
-
         .card {
-            background: rgba(15, 23, 42, 0.65);
+            background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(8px);
             border-radius: 2rem;
             border: 1px solid rgba(139, 92, 246, 0.4);
             padding: 1.8rem;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
+        .card:hover { border-color: #c084fc; transform: translateY(-6px); background: rgba(25, 32, 55, 0.85); }
+        .card i { font-size: 2.6rem; color: #c084fc; margin-bottom: 1rem; }
+        .card h3 { font-size: 1.7rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.8rem; }
+        .badge-list { list-style: none; margin-top: 1rem; }
+        .badge-list li { margin: 0.7rem 0; display: flex; align-items: center; gap: 12px; }
+        .badge-list li i { font-size: 1.1rem; width: 1.4rem; color: #a855f7; }
 
-        .card:hover {
-            border-color: #c084fc;
-            transform: translateY(-6px);
-            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.5);
-            background: rgba(20, 28, 48, 0.8);
-        }
-
-        .card i {
-            font-size: 2.5rem;
-            color: #c084fc;
-            margin-bottom: 1rem;
-        }
-
-        .card h3 {
-            font-size: 1.6rem;
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 0.8rem;
-        }
-
-        .badge-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-        .badge-list li {
-            margin: 0.6rem 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .badge-list li i {
-            font-size: 1rem;
-            width: 1.4rem;
-            color: #a855f7;
-        }
-
-        /* Sekcja informacji o grze RCU */
-        .rcu-info {
-            background: rgba(10, 14, 23, 0.7);
+        /* wymagania – specjalna karta z edytowalnymi wartościami */
+        .requirements-wrapper {
+            background: linear-gradient(145deg, #0f1222, #0a0c18);
             border-radius: 2rem;
-            padding: 1.8rem;
-            margin: 2rem 0 2rem;
+            padding: 0.2rem;
+            margin-bottom: 2rem;
+        }
+        .requirements-inner {
+            background: rgba(5, 7, 15, 0.7);
+            border-radius: 1.8rem;
+            padding: 2rem;
             border: 1px solid #4c1d95;
         }
-        .rcu-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            justify-content: space-between;
+        .req-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
             margin-top: 1rem;
         }
-        .stat-item {
+        .req-item {
             background: #111827;
             border-radius: 1.5rem;
-            padding: 0.8rem 1.2rem;
-            flex: 1;
-            min-width: 150px;
+            padding: 1.2rem;
+            border-left: 4px solid #a855f7;
+        }
+        .req-item i { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
+        .req-value { font-size: 1.3rem; font-weight: bold; color: #e9d5ff; font-family: 'Orbitron', monospace; }
+
+        /* statystyki klanu */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .stat-circle {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 1rem 2rem;
             text-align: center;
-            border-left: 3px solid #a855f7;
+            min-width: 150px;
+            border: 1px solid #a855f7;
         }
-        .stat-item i {
-            font-size: 1.6rem;
-            color: #c084fc;
-        }
-        .stat-value {
-            font-weight: 800;
-            font-size: 1.2rem;
-            font-family: 'Orbitron', monospace;
-        }
+        .stat-number { font-size: 2.5rem; font-weight: 800; font-family: 'Orbitron'; color: #c084fc; }
+        .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
         /* formularz */
         .form-card {
-            background: rgba(10, 14, 23, 0.8);
+            background: rgba(10, 14, 23, 0.85);
             backdrop-filter: blur(12px);
             border-radius: 2rem;
-            border: 1px solid #4c1d95;
-            padding: 2rem;
+            border: 1px solid #6d28d9;
+            padding: 2.2rem;
             margin: 2rem 0 3rem;
         }
-
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            gap: 1.6rem;
         }
-
-        .full-width {
-            grid-column: span 2;
-        }
-
+        .full-width { grid-column: span 2; }
         input, select, textarea {
             width: 100%;
             background: #111827;
             border: 1px solid #334155;
-            padding: 0.9rem 1rem;
+            padding: 1rem 1rem;
             border-radius: 1.2rem;
             font-size: 1rem;
             color: #f1f5f9;
-            transition: all 0.2s;
-            font-family: 'Inter', sans-serif;
+            transition: 0.2s;
         }
-
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #a855f7;
             box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
         }
-
-        label {
-            font-weight: 500;
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #cbd5e6;
-        }
-
+        label { font-weight: 600; display: block; margin-bottom: 0.5rem; color: #cbd5e6; }
         .submit-btn {
             background: linear-gradient(90deg, #7c3aed, #a855f7);
             border: none;
@@ -298,31 +257,31 @@
             color: white;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 0.8rem;
         }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .submit-btn:hover:not(:disabled) { transform: scale(1.01); box-shadow: 0 0 18px #a855f7; }
 
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+        /* FAQ */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
+        .faq-item { background: #0f172ac9; border-radius: 1.5rem; padding: 1.2rem; border-left: 3px solid #c084fc; }
+        .faq-question { font-weight: 700; font-size: 1.1rem; display: flex; gap: 8px; align-items: center; }
 
-        .submit-btn:hover:not(:disabled) {
-            transform: scale(1.01);
-            box-shadow: 0 0 15px #a855f7;
-        }
-
+        /* social */
         .social-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin: 2.5rem 0 2rem;
+            margin: 2rem 0;
             flex-wrap: wrap;
         }
-
         .social-icon {
             background: #111827;
-            padding: 0.8rem 1.6rem;
+            padding: 0.7rem 1.8rem;
             border-radius: 50px;
             display: inline-flex;
             align-items: center;
@@ -333,40 +292,9 @@
             text-decoration: none;
             color: #e2e8f0;
         }
+        .social-icon:hover { background: #2d1b69; border-color: #a855f7; transform: scale(1.02); }
 
-        .social-icon i {
-            font-size: 1.4rem;
-            color: #c084fc;
-        }
-        .social-icon:hover {
-            background: #2d1b69;
-            border-color: #a855f7;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid #2d3a5e;
-            font-size: 0.85rem;
-            color: #7e8aa8;
-        }
-
-        @media (max-width: 720px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .full-width {
-                grid-column: span 1;
-            }
-            h1 {
-                font-size: 2.4rem;
-            }
-            .section-title {
-                font-size: 1.6rem;
-            }
-        }
-
+        footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #2d3a5e; font-size: 0.85rem; color: #7e8aa8; }
         #toast-msg {
             visibility: hidden;
             min-width: 280px;
@@ -380,19 +308,18 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            font-weight: 500;
             backdrop-filter: blur(12px);
             border: 1px solid #c084fc;
-            transition: visibility 0.2s, opacity 0.2s;
+            transition: 0.2s;
             opacity: 0;
             font-size: 0.9rem;
         }
-        #toast-msg.show {
-            visibility: visible;
-            opacity: 1;
-        }
-        @media (max-width: 600px) {
-            #toast-msg { white-space: normal; width: 80%; min-width: auto; }
+        #toast-msg.show { visibility: visible; opacity: 1; }
+        @media (max-width: 720px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            h1 { font-size: 2.6rem; }
+            .section-title { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -400,141 +327,102 @@
 <div class="bg-cyber"></div>
 <div class="container">
     <div class="hero">
-        <div class="clan-tag"><i class="fas fa-skull"></i> FIFH · REBIRTH CHAMPIONS ULTIMATE</div>
-        <h1>FIFH <span class="glow-text">REKRUTACJA</span></h1>
-        <p class="sub">Elitarny klan w RCU na Roblox. Łączymy doświadczonych graczy, którzy dążą do masterów, prestiżu i najrzadszych sekretów. Dołącz do nas i stań się legendą odrodzenia.</p>
+        <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> FIFH · REBIRTH CHAMPIONS ULTIMATE</div>
+        <h1>REKRUTACJA <span class="glow-text">FIFH</span></h1>
+        <p class="sub">Jesteśmy elitarną formacją w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów. Dołącz do nas i wejdź na szczyt rankingów!</p>
         <div class="btn-group">
             <a href="#formularz" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Wypełnij ankietę</a>
-            <a href="#wymagania" class="btn btn-outline"><i class="fas fa-chart-line"></i> Wymagania</a>
-            <a href="#rcu-info" class="btn btn-outline"><i class="fas fa-gamepad"></i> O grze RCU</a>
+            <a href="#wymagania-sekcja" class="btn btn-outline"><i class="fas fa-list-check"></i> Wymagania</a>
+            <a href="#faq" class="btn btn-outline"><i class="fas fa-question-circle"></i> FAQ</a>
         </div>
     </div>
 
-    <!-- sekcja wymagania + oferta -->
-    <div id="wymagania">
-        <div class="section-title">
-            <i class="fas fa-bolt"></i> 
-            <span>KIM JESTEŚMY & WYMAGANIA</span>
-        </div>
-        <div class="cards-grid">
-            <div class="card">
-                <i class="fas fa-trophy"></i>
-                <h3>Elita RCU</h3>
-                <p>FIFH to klan nastawiony na dominację w rankingach, wspólne odradzanie, wymianę aur i walkę o najlepsze zwierzaki. Organizujemy exped do światów takich jak Heaven, Nuclear czy Atlantis.</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-user-check"></i>
-                <h3>Wymagania</h3>
-                <ul class="badge-list">
-                    <li><i class="fas fa-check-circle"></i> Minimum 5 Prestiżu (Lub szybki progres)</li>
-                    <li><i class="fas fa-check-circle"></i> Aktywność min. 4 dni w tygodniu</li>
-                    <li><i class="fas fa-check-circle"></i> Znajomość mechanik: Rebirth, Gems, Pets, Auras</li>
-                    <li><i class="fas fa-check-circle"></i> Mikrofon + komunikacja (Discord)</li>
-                    <li><i class="fas fa-check-circle"></i> Kultura i chęć wspólnego grania</li>
-                </ul>
-            </div>
-            <div class="card">
-                <i class="fas fa-gem"></i>
-                <h3>Co oferujemy?</h3>
-                <ul class="badge-list">
-                    <li><i class="fas fa-chalkboard-user"></i> Porady optymalnego rebirth i zdobywania klejnotów</li>
-                    <li><i class="fas fa-hand-sparkles"></i> Wspólne polowania na sekretne zwierzaki</li>
-                    <li><i class="fas fa-chart-line"></i> Wymiana aur i pomoc w mastery</li>
-                    <li><i class="fas fa-crown"></i> System rang i eventy wewnętrzne</li>
-                    <li><i class="fas fa-robot"></i> Bot z kodami i przypomnieniami o eventach</li>
-                </ul>
+    <!-- WYMAGANIA (łatwa edycja) -->
+    <div id="wymagania-sekcja">
+        <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA REKRUTACYJNE</span></div>
+        <div class="requirements-wrapper">
+            <div class="requirements-inner">
+                <div class="req-grid">
+                    <div class="req-item"><i class="fas fa-chart-line"></i><span class="req-value">Prestiż 8+</span><br>Minimalny poziom prestiżu w grze</div>
+                    <div class="req-item"><i class="fas fa-clock"></i><span class="req-value">Aktywność: 20h/tydzień</span><br>Regularne logowania i udział w eventach</div>
+                    <div class="req-item"><i class="fas fa-dragon"></i><span class="req-value">Posiadanie LEGEND lub SECRET</span><br>Przynajmniej jednego legendarnego zwierzaka</div>
+                    <div class="req-item"><i class="fas fa-gem"></i><span class="req-value">Świat: Atlantis+</span><br>Odblokowany świat Atlantis lub dalej</div>
+                    <div class="req-item"><i class="fab fa-discord"></i><span class="req-value">Discord + mikrofon</span><br>Komunikacja głosowa podczas ważnych akcji</div>
+                    <div class="req-item"><i class="fas fa-hand-peace"></i><span class="req-value">Kultura i fair play</span><br>Zero toksyczności, pomoc innym</div>
+                </div>
+                <p class="sub" style="margin-top: 1.5rem; font-size:0.9rem"><i class="fas fa-edit"></i> * Pamiętaj, że wymagania mogą ulec zmianie – rekruterzy oceniają także zaangażowanie i potencjał.</p>
             </div>
         </div>
     </div>
 
-    <!-- informacje o grze Rebirth Champions Ultimate -->
-    <div id="rcu-info">
-        <div class="section-title">
-            <i class="fas fa-dragon"></i>
-            <span>O grze: Rebirth Champions Ultimate (RCU)</span>
-        </div>
-        <div class="rcu-info">
-            <p><strong>RCU</strong> to popularna gra na Roblox, w której kluczowe jest ciągłe odradzanie (rebirth), zbieranie klejnotów (gems), odblokowywanie nowych światów i zdobywanie unikalnych zwierzaków (pets) oraz aur. Im więcej prestiżu, tym potężniejsze bonusy. Gra oferuje również system mastery, hoverboardy i sekretne lokalizacje.</p>
-            <div class="rcu-stats">
-                <div class="stat-item"><i class="fas fa-chart-simple"></i><br><span class="stat-value">15+ Światów</span><br>od Spawn po Magic World</div>
-                <div class="stat-item"><i class="fas fa-paw"></i><br><span class="stat-value">>200 Zwierzaków</span><br>Legend, Secret, Event</div>
-                <div class="stat-item"><i class="fas fa-crown"></i><br><span class="stat-value">Prestiż ∞</span><br>Trwałe wzmocnienia</div>
-                <div class="stat-item"><i class="fas fa-code"></i><br><span class="stat-value">Aktywne kody</span><br>RELEASE, spooky, frog...</div>
-            </div>
-            <p style="margin-top: 1rem;"><i class="fas fa-info-circle"></i> W FIFH skupiamy się na maksymalizacji efektywności rebirth, wymianie rzadkich aur (Brilliant, Hell, Celestial) oraz wspólnym odblokowywaniu najwyższych mastery. Jeśli grasz w RCU i chcesz rozwijać się szybciej – trafiłeś idealnie.</p>
-        </div>
+    <!-- STATYSTYKI KLANU -->
+    <div class="stats-row">
+        <div class="stat-circle"><div class="stat-number">120+</div><div class="stat-label">Łączny prestiż</div></div>
+        <div class="stat-circle"><div class="stat-number">34</div><div class="stat-label">Aktywnych członków</div></div>
+        <div class="stat-circle"><div class="stat-number">15</div><div class="stat-label">Aur rarity+</div></div>
+        <div class="stat-circle"><div class="stat-number">∞</div><div class="stat-label">Wspólne odrodzenia</div></div>
+    </div>
+
+    <!-- DLACZEGO FIFH? -->
+    <div class="section-title"><i class="fas fa-crown"></i><span>DLACZEGO WARTO DOŁĄCZYĆ?</span></div>
+    <div class="cards-grid">
+        <div class="card"><i class="fas fa-chalkboard-user"></i><h3>Strategie i porady</h3><p>Optymalne ścieżki rebirth, kombinacje zwierzaków i sekrety zdobywania klejnotów.</p></div>
+        <div class="card"><i class="fas fa-handshake"></i><h3>Wymiana aur i handel</h3><p>Pomagamy zdobyć rzadkie aury (Hell, Celestial, Brilliant) i przedmioty eventowe.</p></div>
+        <div class="card"><i class="fas fa-trophy"></i><h3>Eventy i turnieje</h3><p>Wewnętrzne rankingi, wspólne speedruny do nowych światów, nagrody dla aktywnych.</p></div>
+        <div class="card"><i class="fas fa-robot"></i><h3>Automatyzacja i boty</h3><p>Bot na Discordzie z kodami, przypomnieniami o dropach i statystykami klanu.</p></div>
     </div>
 
     <!-- FORMULARZ REKRUTACYJNY -->
     <div id="formularz">
-        <div class="section-title">
-            <i class="fas fa-clipboard-list"></i>
-            <span>FORMULARZ REKRUTACYJNY DO FIFH</span>
-        </div>
+        <div class="section-title"><i class="fas fa-clipboard-list"></i><span>FORMULARZ ZGŁOSZENIOWY</span></div>
         <div class="form-card">
             <form id="recruitmentForm">
                 <div class="form-grid">
-                    <div>
-                        <label><i class="fas fa-user-astronaut"></i> Nick w RCU *</label>
-                        <input type="text" id="nick" placeholder="Twój nick na Roblox" required>
-                    </div>
-                    <div>
-                        <label><i class="fab fa-discord"></i> Discord (nazwa#tag) *</label>
-                        <input type="text" id="discord" placeholder="Przykład: rekrut#1234" required>
-                    </div>
-                    <div>
-                        <label><i class="fas fa-chart-simple"></i> Prestiż / Główny świat *</label>
-                        <select id="rank" required>
-                            <option value="">-- Wybierz --</option>
-                            <option value="Prestiż 1-5">Prestiż 1-5 (początkujący)</option>
-                            <option value="Prestiż 6-15">Prestiż 6-15 (zaawansowany)</option>
-                            <option value="Prestiż 16+">Prestiż 16+ (ekspert)</option>
-                            <option value="Master Prestige">Master Prestige (wieloetapowy)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label><i class="fas fa-clock"></i> Aktywność (godziny dziennie) *</label>
-                        <select id="activity" required>
-                            <option value="">-- Wybierz --</option>
-                            <option value="1-2h">1-2 godziny</option>
-                            <option value="2-4h">2-4 godziny</option>
-                            <option value="4h+">4+ godzin</option>
-                        </select>
-                    </div>
-                    <div class="full-width">
-                        <label><i class="fas fa-microphone-alt"></i> Doświadczenie / osiągnięcia (najlepsze zwierzaki, aury, światy) *</label>
-                        <textarea rows="3" id="exp" placeholder="Np.: Posiadam aury Hell i Celestial, legendarnego smoka, przeszedłem Nuclear World, mastery 50+..." required></textarea>
-                    </div>
-                    <div class="full-width">
-                        <label><i class="fas fa-question-circle"></i> Dlaczego chcesz dołączyć do FIFH? *</label>
-                        <textarea rows="2" id="motivation" placeholder="Motywacja, cele w RCU, co możesz wnieść do klanu" required></textarea>
-                    </div>
+                    <div><label><i class="fab fa-roblox"></i> Nick w Roblox (RCU) *</label><input type="text" id="nick" placeholder="Twoja nazwa użytkownika" required></div>
+                    <div><label><i class="fab fa-discord"></i> Discord (nazwa#tag) *</label><input type="text" id="discord" placeholder="przykład: gracz#1234" required></div>
+                    <div><label><i class="fas fa-chart-simple"></i> Obecny Prestiż / Poziom *</label><select id="prestige" required><option value="">-- wybierz --</option><option value="Prestiż 1-7">Prestiż 1-7 (początkujący)</option><option value="Prestiż 8-15">Prestiż 8-15 (średniozaawansowany)</option><option value="Prestiż 16+">Prestiż 16+ (ekspert)</option><option value="Master Prestige">Master Prestige (wysoki poziom)</option></select></div>
+                    <div><label><i class="fas fa-clock"></i> Aktywność (godz./dzień) *</label><select id="activity" required><option value="">-- wybierz --</option><option value="1-2h">1-2 godziny</option><option value="2-4h">2-4 godziny</option><option value="4h+">4+ godzin</option></select></div>
+                    <div><label><i class="fas fa-dragon"></i> Najlepszy zwierzak / Aura</label><input type="text" id="bestpet" placeholder="np. Smok Legendarny, Aura Hell"></div>
+                    <div><label><i class="fas fa-globe"></i> Najdalszy osiągnięty świat</label><select id="world"><option value="">-- wybierz --</option><option value="Spawn Area">Spawn Area</option><option value="Desert">Pustynia</option><option value="Nuclear World">Świat Nuklearny</option><option value="Atlantis">Atlantyda</option><option value="Heaven World">Niebiański Świat</option><option value="Magic World">Magiczny Świat</option></select></div>
+                    <div class="full-width"><label><i class="fas fa-scroll"></i> Doświadczenie / osiągnięcia *</label><textarea rows="3" id="exp" placeholder="Opisz swoje osiągnięcia: eventy, mastery, ilość rebirthów, udział w turniejach itp." required></textarea></div>
+                    <div class="full-width"><label><i class="fas fa-heart"></i> Dlaczego chcesz dołączyć do FIFH? *</label><textarea rows="2" id="motivation" placeholder="Twoja motywacja, cele w grze, co możesz wnieść do klanu" required></textarea></div>
                 </div>
                 <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
-                <p style="font-size: 0.75rem; margin-top: 1rem; text-align: center; color:#8e9dbb;"><i class="fas fa-lock"></i> Dane trafią do rekruterów FIFH przez Discord Webhook. Odpowiemy w ciągu 48h.</p>
+                <p style="font-size:0.75rem; text-align:center; margin-top:1rem"><i class="fas fa-shield-alt"></i> Zgłoszenie trafi do rekruterów FIFH na Discordzie. Odpowiemy w ciągu 48h.</p>
             </form>
         </div>
     </div>
 
-    <!-- kontakt i discord -->
+    <!-- FAQ -->
+    <div id="faq">
+        <div class="section-title"><i class="fas fa-question-circle"></i><span>NAJCZĘSTSZE PYTANIA</span></div>
+        <div class="faq-grid">
+            <div class="faq-item"><div class="faq-question"><i class="fas fa-arrow-right"></i> Jak długo trwa proces rekrutacji?</div><div>Zazwyczaj do 48h od wysłania formularza. Skontaktujemy się przez Discord.</div></div>
+            <div class="faq-item"><div class="faq-question"><i class="fas fa-arrow-right"></i> Czy wymagany jest mikrofon?</div><div>Tak, do udziału w ważniejszych eventach i komunikacji taktycznej.</div></div>
+            <div class="faq-item"><div class="faq-question"><i class="fas fa-arrow-right"></i> Czy mogę dołączyć jeśli jestem nowym graczem?</div><div>Preferujemy średniozaawansowanych, ale każdy z dużym zaangażowaniem jest rozpatrywany indywidualnie.</div></div>
+            <div class="faq-item"><div class="faq-question"><i class="fas fa-arrow-right"></i> Czy klan posiada własne kody/eventy?</div><div>Tak, organizujemy eventy wewnętrzne i dzielimy się kodami RCU jako pierwsi.</div></div>
+        </div>
+    </div>
+
+    <!-- SOCIAL MEDIA (mock) -->
     <div class="social-links">
-        <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Dołącz na serwer FIFH</a>
-        <a href="#" class="social-icon" id="robloxGroup"><i class="fab fa-fort-awesome"></i> Grupa Roblox FIFH</a>
-        <a href="#" class="social-icon" id="rcuWiki"><i class="fas fa-book-open"></i> Poradnik RCU</a>
+        <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Serwer FIFH</a>
+        <a href="#" class="social-icon" id="robloxGroupBtn"><i class="fab fa-fort-awesome"></i> Grupa Roblox</a>
+        <a href="#" class="social-icon" id="rcuCodes"><i class="fas fa-code"></i> Aktywne kody RCU</a>
     </div>
 
     <footer>
-        <p>© 2025 FIFH Clan — Rebirth Champions Ultimate (Roblox). <i class="fas fa-dragon"></i> Razem odradzamy się w chwale.</p>
-        <p style="margin-top: 0.5rem;">Wypełnij formularz i pokaż, że jesteś gotów na wyzwania RCU!</p>
+        <p>© 2025 FIFH Clan — Rebirth Champions Ultimate. Wspólnie osiągamy wyższe poziomy prestiżu. <i class="fas fa-infinity"></i> Nie tylko gra, to społeczność.</p>
+        <p>Wymagania możesz edytować w sekcji HTML – łatwo dostosujesz wartości do własnych potrzeb.</p>
     </footer>
 </div>
 
 <div id="toast-msg"></div>
 
 <script>
-    (function() {
+    (function(){
         // ================= KONFIGURACJA WEBHOOK =================
-        // 🔴 Aby działało: wklej tutaj URL swojego webhooka z Discorda (kanał rekrutacyjny)
+        // 🔴🔴🔴 PODMIEŃ TEN URL NA SWÓJ WEBHOOK Z DISCORD (KANAŁ REKRUTACYJNY) 🔴🔴🔴
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
         // ========================================================
         
@@ -542,129 +430,94 @@
         const submitBtn = document.getElementById('submitBtn');
         const toast = document.getElementById('toast-msg');
         
-        function showToast(message, isError = false, duration = 4000) {
+        function showToast(message, isError = false, duration = 4500){
             toast.textContent = message;
             toast.style.background = isError ? '#3b1e3a' : '#1e1b4b';
             toast.style.borderColor = isError ? '#f43f5e' : '#c084fc';
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
-        }
-
-        function validateDiscord(discordTag) {
-            const regex = /^.{2,32}#[0-9]{4}$/;
-            return regex.test(discordTag);
+            setTimeout(()=> toast.classList.remove('show'), duration);
         }
         
-        async function sendToDiscord(applicationData) {
+        function validateDiscord(tag){
+            return /^.{2,32}#[0-9]{4}$/.test(tag);
+        }
+        
+        async function sendToDiscord(data){
             const embed = {
-                title: "⚔️ NOWE ZGŁOSZENIE DO FIFH (RCU)",
-                color: 0xa855f7,
+                title: "⚔️ NOWY REKRUT FIFH | RCU",
+                color: 0xa55eff,
                 thumbnail: { url: "https://cdn-icons-png.flaticon.com/512/4254/4254468.png" },
                 fields: [
-                    { name: "🎮 Nick RCU", value: applicationData.nick, inline: true },
-                    { name: "🔷 Discord", value: applicationData.discord, inline: true },
-                    { name: "🏆 Prestiż / poziom", value: applicationData.rank, inline: true },
-                    { name: "⏱ Aktywność (dziennie)", value: applicationData.activity, inline: true },
-                    { name: "⚔️ Doświadczenie / Osiągnięcia", value: applicationData.experience.length > 1000 ? applicationData.experience.substring(0, 1000) + "..." : applicationData.experience, inline: false },
-                    { name: "💡 Motywacja", value: applicationData.motivation.length > 800 ? applicationData.motivation.substring(0, 800) + "..." : applicationData.motivation, inline: false }
+                    { name: "🎮 Nick Roblox", value: data.nick, inline: true },
+                    { name: "🔷 Discord", value: data.discord, inline: true },
+                    { name: "📈 Prestiż", value: data.prestige, inline: true },
+                    { name: "⏱ Aktywność", value: data.activity, inline: true },
+                    { name: "🐉 Najlepszy pet/aura", value: data.bestpet || "brak", inline: true },
+                    { name: "🌍 Świat", value: data.world || "nie podano", inline: true },
+                    { name: "📜 Doświadczenie", value: data.experience.length > 950 ? data.experience.substring(0,950)+"..." : data.experience, inline: false },
+                    { name: "💡 Motywacja", value: data.motivation.length > 800 ? data.motivation.substring(0,800)+"..." : data.motivation, inline: false }
                 ],
                 footer: { text: "FIFH Rekrutacja • Rebirth Champions Ultimate", icon_url: "https://cdn-icons-png.flaticon.com/512/4712/4712105.png" },
                 timestamp: new Date().toISOString()
             };
-            const payload = {
-                username: "FIFH Rekruter",
-                avatar_url: "https://cdn-icons-png.flaticon.com/512/184/184514.png",
-                embeds: [embed],
-                content: `📣 **Nowy rekrut w FIFH!**`
-            };
+            const payload = { username: "FIFH Rekruter", avatar_url: "https://cdn-icons-png.flaticon.com/512/184/184514.png", embeds: [embed], content: "📣 **Nowe zgłoszenie do FIFH!**" };
             
-            if (!WEBHOOK_URL || WEBHOOK_URL === 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N') {
-                // demo – pokaż symulację
-                console.warn("Używasz przykładowego webhooka. Aby wysyłać na Discord, wklej swój URL w zmienną WEBHOOK_URL.");
-                showToast("✅ [TRYB DEMO] Zgłoszenie zapisane w konsoli. Podmień WEBHOOK_URL na swój link z Discorda.", false, 5000);
-                console.log("Aplikacja demo:", applicationData);
+            // Jeśli webhook jest przykładowy, symulujemy sukces (demo)
+            if(WEBHOOK_URL === 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N'){
+                console.log("DEMO: aplikacja nie została wysłana na prawdziwy Discord. Podmień WEBHOOK_URL w kodzie.", data);
                 return true;
             }
-            
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Webhook odpowiedział: ${response.status} ${errorText}`);
-                }
-                return true;
-            } catch (error) {
-                console.error("Błąd wysyłki do Discorda:", error);
-                throw error;
-            }
+            const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            if(!response.ok) throw new Error(`HTTP ${response.status}`);
+            return true;
         }
         
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const nick = document.getElementById('nick').value.trim();
             const discord = document.getElementById('discord').value.trim();
-            const rank = document.getElementById('rank').value;
+            const prestige = document.getElementById('prestige').value;
             const activity = document.getElementById('activity').value;
+            const bestpet = document.getElementById('bestpet').value.trim();
+            const world = document.getElementById('world').value;
             const exp = document.getElementById('exp').value.trim();
             const motivation = document.getElementById('motivation').value.trim();
             
-            if (!nick || nick.length < 3) { showToast('❌ Podaj poprawny nick w RCU (min. 3 znaki)', true); return; }
-            if (!discord) { showToast('❌ Wymagany Discord (nazwa#0000)', true); return; }
-            if (!validateDiscord(discord)) { showToast('❌ Nieprawidłowy format Discorda! Przykład: Gracz#1234', true); return; }
-            if (!rank) { showToast('❌ Wybierz swój poziom Prestiżu / świat', true); return; }
-            if (!activity) { showToast('❌ Określ swoją aktywność godzinową', true); return; }
-            if (exp.length < 10) { showToast('📝 Opisz swoje osiągnięcia w RCU (min. 10 znaków)', true); return; }
-            if (motivation.length < 10) { showToast('💪 Powiedz nam, dlaczego FIFH? (minimum 10 znaków)', true); return; }
+            if(!nick || nick.length < 3) { showToast("❌ Podaj poprawny nick (min.3 znaki)", true); return; }
+            if(!discord || !validateDiscord(discord)) { showToast("❌ Nieprawidłowy format Discord (nazwa#1234)", true); return; }
+            if(!prestige) { showToast("❌ Wybierz poziom prestiżu", true); return; }
+            if(!activity) { showToast("❌ Wybierz swoją aktywność", true); return; }
+            if(exp.length < 10) { showToast("📝 Opisz swoje doświadczenie (min. 10 znaków)", true); return; }
+            if(motivation.length < 10) { showToast("💡 Napisz dlaczego chcesz dołączyć (min.10 znaków)", true); return; }
             
-            const appData = { nick, discord, rank, activity, experience: exp, motivation };
+            const payloadData = { nick, discord, prestige, activity, bestpet, world, experience: exp, motivation };
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie zgłoszenia...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie...';
             try {
-                await sendToDiscord(appData);
-                showToast(`✅ Zgłoszenie wysłane! Rekruterzy FIFH skontaktują się przez Discord w ciągu 48h.`, false, 5000);
+                await sendToDiscord(payloadData);
+                showToast("✅ Zgłoszenie wysłane! Rekruterzy FIFH skontaktują się przez Discord.", false, 5000);
                 form.reset();
-            } catch (error) {
-                showToast(`❌ Błąd wysyłki: ${error.message || 'Spróbuj ponownie później.'}`, true);
+            } catch (err) {
+                console.error(err);
+                showToast("❌ Błąd wysyłki. Spróbuj ponownie lub skontaktuj się z administratorem.", true);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Wyślij zgłoszenie';
             }
         });
         
-        // przyciski społecznościowe (mocki)
-        const discordInvite = document.getElementById('discordInvite');
-        const robloxGroup = document.getElementById('robloxGroup');
-        const rcuWiki = document.getElementById('rcuWiki');
+        // Obsługa przycisków społecznościowych (mockupy)
+        document.getElementById('discordInvite')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer FIFH (discord.gg/fifh) – dołącz do nas!", false); });
+        document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: FIFH Champions – znajdź nas i graj razem!", false); });
+        document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Aktualne kody RCU: RELEASE, SPOOKY, FROG, PUMPKIN – używaj szybko!", false); });
         
-        discordInvite.addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast("🔗 Zaproszenie na serwer FIFH: discord.gg/fifh (symulacja) – dołącz do naszej społeczności RCU!", false);
-        });
-        robloxGroup.addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast("🏆 Grupa Roblox FIFH – znajdziesz nas pod nazwą 'FIFH Champions', dołącz i graj z nami!", false);
-        });
-        rcuWiki.addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast("📚 Poradnik RCU – najlepsze strategie rebirth, tier lista zwierzaków i kody. Podzielimy się na Discordzie!", false);
-        });
-        
-        // smooth scroll
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function(e){
                 const targetId = this.getAttribute('href');
-                if (targetId === "#" || targetId === "") return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    e.preventDefault();
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                if(targetId === "#" || targetId === "") return;
+                const target = document.querySelector(targetId);
+                if(target){ e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
             });
         });
     })();
