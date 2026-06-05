@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Rekrutacja do elitarnego klanu FIFH w grze Rebirth Champions Ultimate (RCU) na Roblox. Dołącz do nas już dziś!">
-    <title>FIFH Rekrutacja | Rebirth Champions Ultimate – Roblox</title>
+    <meta name="description" content="FIFH – elitarny klan w grze Rebirth Champions Ultimate (RCU) na Roblox. Sprawdź nas i dołącz!">
+    <title>FIFH | Rebirth Champions Ultimate – Elitarny Klan</title>
     
-    <!-- FAVICON – ikonka na karcie przeglądarki (Twoje zdjęcie z ImgBB) -->
+    <!-- FAVICON – Twoje zdjęcie z ImgBB -->
     <link rel="icon" type="image/jpeg" href="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg">
     <link rel="apple-touch-icon" href="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg">
     
-    <!-- Google Fonts & Font Awesome 6 -->
+    <!-- Google Fonts & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -25,7 +25,7 @@
             font-family: 'Inter', sans-serif;
             color: #eef2ff;
             line-height: 1.5;
-            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         /* tło cyberpunk */
@@ -85,267 +85,295 @@
         }
         .section-title {
             font-family: 'Orbitron', monospace;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 2rem;
+            margin-bottom: 1.8rem;
             display: flex;
             align-items: center;
-            gap: 14px;
-            border-left: 6px solid #a855f7;
+            gap: 12px;
+            border-left: 5px solid #a855f7;
             padding-left: 1.2rem;
         }
         .section-title i {
             color: #c084fc;
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
 
         /* header */
         .hero {
             text-align: center;
-            padding: 1rem 1rem 3rem;
+            padding: 2rem 1rem 3rem;
             border-bottom: 2px solid rgba(139, 92, 246, 0.4);
             margin-bottom: 3rem;
         }
         .clan-tag {
             font-family: 'Orbitron', monospace;
-            font-size: 1.3rem;
-            letter-spacing: 5px;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
             background: linear-gradient(135deg, #c084fc, #6d28d9);
             display: inline-block;
             padding: 0.4rem 1.8rem;
             border-radius: 60px;
             font-weight: 800;
-            margin-bottom: 1.4rem;
-            box-shadow: 0 0 15px #a855f7;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 0 12px #a855f7;
         }
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, #FFFFFF, #d8b4fe, #a855f7);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 1rem;
-            letter-spacing: -1px;
         }
         .sub {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: #cbd5e6;
             max-width: 750px;
             margin: 0 auto;
         }
 
-        /* przyciski */
-        .btn-group {
+        /* przycisk rekrutacja - główny CTA */
+        .recruit-btn-container {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-top: 2.2rem;
+            margin: 2rem 0 1rem;
         }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            background: rgba(30, 27, 58, 0.8);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(139, 92, 246, 0.6);
-            padding: 0.8rem 2rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #f0eaff;
-            transition: 0.25s;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .btn-primary {
+        .recruit-main-btn {
             background: linear-gradient(95deg, #7c3aed, #a855f7);
             border: none;
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.5);
+            padding: 1rem 2.5rem;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 15px #a855f7;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Orbitron', monospace;
         }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(139, 92, 246, 0.7); }
-        .btn-outline:hover { background: rgba(139, 92, 246, 0.2); border-color: #c084fc; transform: translateY(-2px); }
+        .recruit-main-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px #c084fc;
+        }
 
-        /* karty */
+        /* karty informacyjne */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
         }
         .card {
             background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(8px);
-            border-radius: 2rem;
+            border-radius: 1.8rem;
             border: 1px solid rgba(139, 92, 246, 0.4);
-            padding: 1.8rem;
+            padding: 1.6rem;
             transition: 0.3s;
         }
-        .card:hover { border-color: #c084fc; transform: translateY(-6px); background: rgba(25, 32, 55, 0.85); }
-        .card i { font-size: 2.6rem; color: #c084fc; margin-bottom: 1rem; }
-        .card h3 { font-size: 1.7rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.8rem; }
-        .badge-list { list-style: none; margin-top: 1rem; }
-        .badge-list li { margin: 0.7rem 0; display: flex; align-items: center; gap: 12px; }
-        .badge-list li i { font-size: 1.1rem; width: 1.4rem; color: #a855f7; }
+        .card:hover { border-color: #c084fc; transform: translateY(-5px); background: rgba(25, 32, 55, 0.85); }
+        .card i { font-size: 2.3rem; color: #c084fc; margin-bottom: 0.8rem; }
+        .card h3 { font-size: 1.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.6rem; }
 
-        /* wymagania */
+        /* wymagania – kafelki */
         .requirements-wrapper {
             background: linear-gradient(145deg, #0f1222, #0a0c18);
-            border-radius: 2rem;
+            border-radius: 1.8rem;
             padding: 0.2rem;
             margin-bottom: 2rem;
         }
         .requirements-inner {
             background: rgba(5, 7, 15, 0.7);
-            border-radius: 1.8rem;
-            padding: 2rem;
+            border-radius: 1.6rem;
+            padding: 1.8rem;
             border: 1px solid #4c1d95;
         }
         .req-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem;
             margin-top: 1rem;
         }
         .req-item {
             background: #111827;
-            border-radius: 1.5rem;
-            padding: 1.2rem;
+            border-radius: 1.2rem;
+            padding: 1rem;
             border-left: 4px solid #a855f7;
         }
-        .req-item i { font-size: 1.8rem; margin-bottom: 0.5rem; display: block; }
-        .req-value { font-size: 1.3rem; font-weight: bold; color: #e9d5ff; font-family: 'Orbitron', monospace; }
+        .req-item i { font-size: 1.5rem; margin-bottom: 0.3rem; display: block; }
+        .req-value { font-size: 1.2rem; font-weight: bold; color: #e9d5ff; font-family: 'Orbitron', monospace; }
 
         /* statystyki */
         .stats-row {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             margin: 2rem 0;
         }
         .stat-circle {
             background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
-            border-radius: 2rem;
-            padding: 1rem 2rem;
+            border-radius: 1.8rem;
+            padding: 0.8rem 1.5rem;
             text-align: center;
-            min-width: 150px;
+            min-width: 130px;
             border: 1px solid #a855f7;
         }
-        .stat-number { font-size: 2.5rem; font-weight: 800; font-family: 'Orbitron'; color: #c084fc; }
-        .stat-label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-number { font-size: 2rem; font-weight: 800; font-family: 'Orbitron'; color: #c084fc; }
+        .stat-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* formularz */
-        .form-card {
-            background: rgba(10, 14, 23, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            border: 1px solid #6d28d9;
-            padding: 2.2rem;
-            margin: 2rem 0 3rem;
+        /* MODAL / PANEL REKRUTACJI (ukryty domyślnie) */
+        .recruit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
+        .recruit-modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #0f1222;
+            border-radius: 2rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-header {
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid #4c1d95;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            border-radius: 2rem 2rem 0 0;
+        }
+        .modal-header h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: #c084fc;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #cbd5e6;
+            transition: 0.2s;
+        }
+        .close-modal:hover { color: #f43f5e; transform: scale(1.1); }
+        .modal-body {
+            padding: 1.8rem;
+        }
+        /* formularz wewnątrz modala */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.6rem;
+            gap: 1.2rem;
         }
         .full-width { grid-column: span 2; }
         input, select, textarea {
             width: 100%;
             background: #111827;
             border: 1px solid #334155;
-            padding: 1rem 1rem;
-            border-radius: 1.2rem;
-            font-size: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
             color: #f1f5f9;
-            transition: 0.2s;
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: #a855f7;
-            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
+            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.3);
         }
-        label { font-weight: 600; display: block; margin-bottom: 0.5rem; color: #cbd5e6; }
+        label { font-weight: 600; display: block; margin-bottom: 0.3rem; font-size: 0.85rem; color: #cbd5e6; }
         .submit-btn {
             background: linear-gradient(90deg, #7c3aed, #a855f7);
             border: none;
-            padding: 1rem 2rem;
+            padding: 0.8rem;
             width: 100%;
             font-weight: bold;
-            font-size: 1.1rem;
-            border-radius: 3rem;
+            border-radius: 2rem;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
+            margin-top: 1rem;
         }
-        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .submit-btn:hover:not(:disabled) { transform: scale(1.01); box-shadow: 0 0 18px #a855f7; }
-
-        /* FAQ */
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        .faq-item { background: #0f172ac9; border-radius: 1.5rem; padding: 1.2rem; border-left: 3px solid #c084fc; }
-        .faq-question { font-weight: 700; font-size: 1.1rem; display: flex; gap: 8px; align-items: center; }
+        .submit-btn:disabled { opacity: 0.6; }
 
         /* social */
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             margin: 2rem 0;
             flex-wrap: wrap;
         }
         .social-icon {
             background: #111827;
-            padding: 0.7rem 1.8rem;
+            padding: 0.6rem 1.5rem;
             border-radius: 50px;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             font-weight: 600;
             border: 1px solid #4c1d95;
             transition: 0.2s;
             text-decoration: none;
             color: #e2e8f0;
+            font-size: 0.9rem;
         }
-        .social-icon:hover { background: #2d1b69; border-color: #a855f7; transform: scale(1.02); }
-
-        footer { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #2d3a5e; font-size: 0.85rem; color: #7e8aa8; }
+        .social-icon:hover { background: #2d1b69; border-color: #a855f7; }
+        footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2d3a5e; font-size: 0.8rem; color: #7e8aa8; }
         
         #toast-msg {
             visibility: hidden;
-            min-width: 280px;
+            min-width: 250px;
             background-color: #1e1b4b;
             color: #f0eaff;
             text-align: center;
             border-radius: 40px;
-            padding: 12px 24px;
+            padding: 10px 20px;
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 1000;
+            z-index: 1100;
             backdrop-filter: blur(12px);
             border: 1px solid #c084fc;
             transition: 0.2s;
             opacity: 0;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         #toast-msg.show { visibility: visible; opacity: 1; }
         
         @media (max-width: 720px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
-            h1 { font-size: 2.6rem; }
-            .section-title { font-size: 1.6rem; }
-            .clan-logo { width: 110px; height: 110px; }
+            h1 { font-size: 2.2rem; }
+            .recruit-main-btn { font-size: 1rem; padding: 0.8rem 1.5rem; }
         }
     </style>
 </head>
@@ -353,114 +381,123 @@
 <div class="bg-cyber"></div>
 <div class="container">
     <div class="hero">
-        <!-- OKRĄGŁE LOGO Z TWOJEGO ZDJĘCIA -->
         <div class="logo-wrapper">
             <img src="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" alt="FIFH Clan Logo" class="clan-logo">
         </div>
         <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> FIFH · REBIRTH CHAMPIONS ULTIMATE</div>
-        <h1>REKRUTACJA <span class="glow-text">FIFH</span></h1>
-        <p class="sub">Jesteśmy elitarną formacją w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów. Dołącz do nas i wejdź na szczyt rankingów!</p>
-        <div class="btn-group">
-            <a href="#formularz" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Wypełnij ankietę</a>
-            <a href="#wymagania-sekcja" class="btn btn-outline"><i class="fas fa-list-check"></i> Wymagania</a>
-            <a href="#faq" class="btn btn-outline"><i class="fas fa-question-circle"></i> FAQ</a>
-        </div>
-    </div>
-
-    <!-- WYMAGANIA -->
-    <div id="wymagania-sekcja">
-        <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA REKRUTACYJNE</span></div>
-        <div class="requirements-wrapper">
-            <div class="requirements-inner">
-                <div class="req-grid">
-                    <div class="req-item"><i class="fas fa-chart-line"></i><span class="req-value">Prestiż 8+</span><br>Minimalny poziom prestiżu w grze</div>
-                    <div class="req-item"><i class="fas fa-clock"></i><span class="req-value">Aktywność: 20h/tydzień</span><br>Regularne logowania i udział w eventach</div>
-                    <div class="req-item"><i class="fas fa-dragon"></i><span class="req-value">Posiadanie LEGEND lub SECRET</span><br>Przynajmniej jednego legendarnego zwierzaka</div>
-                    <div class="req-item"><i class="fas fa-gem"></i><span class="req-value">Świat: Atlantis+</span><br>Odblokowany świat Atlantis lub dalej</div>
-                    <div class="req-item"><i class="fab fa-discord"></i><span class="req-value">Discord + mikrofon</span><br>Komunikacja głosowa podczas ważnych akcji</div>
-                    <div class="req-item"><i class="fas fa-hand-peace"></i><span class="req-value">Kultura i fair play</span><br>Zero toksyczności, pomoc innym</div>
-                </div>
-                <p class="sub" style="margin-top: 1.5rem; font-size:0.9rem"><i class="fas fa-edit"></i> * Wymagania możesz dowolnie zmienić w kodzie (sekcja .req-value).</p>
-            </div>
+        <h1>FIFH <span class="glow-text">ELITE</span></h1>
+        <p class="sub">Elitarna formacja w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów.</p>
+        
+        <!-- GŁÓWNY PRZYCISK REKRUTACJA - otwiera modal -->
+        <div class="recruit-btn-container">
+            <button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button>
         </div>
     </div>
 
     <!-- STATYSTYKI -->
     <div class="stats-row">
         <div class="stat-circle"><div class="stat-number">150+</div><div class="stat-label">Łączny prestiż</div></div>
-        <div class="stat-circle"><div class="stat-number">42</div><div class="stat-label">Aktywnych członków</div></div>
+        <div class="stat-circle"><div class="stat-number">42</div><div class="stat-label">Aktywnych</div></div>
         <div class="stat-circle"><div class="stat-number">18</div><div class="stat-label">Aur rarity+</div></div>
-        <div class="stat-circle"><div class="stat-number">∞</div><div class="stat-label">Wspólne odrodzenia</div></div>
+        <div class="stat-circle"><div class="stat-number">∞</div><div class="stat-label">Odrodzenia</div></div>
     </div>
 
-    <!-- DLACZEGO FIFH -->
-    <div class="section-title"><i class="fas fa-crown"></i><span>DLACZEGO WARTO DOŁĄCZYĆ?</span></div>
+    <!-- DLACZEGO FIFH? -->
+    <div class="section-title"><i class="fas fa-crown"></i><span>DLACZEGO MY?</span></div>
     <div class="cards-grid">
-        <div class="card"><i class="fas fa-chalkboard-user"></i><h3>Strategie i porady</h3><p>Optymalne ścieżki rebirth, kombinacje zwierzaków i sekrety zdobywania klejnotów.</p></div>
-        <div class="card"><i class="fas fa-handshake"></i><h3>Wymiana aur i handel</h3><p>Pomagamy zdobyć rzadkie aury (Hell, Celestial, Brilliant) i przedmioty eventowe.</p></div>
-        <div class="card"><i class="fas fa-trophy"></i><h3>Eventy i turnieje</h3><p>Wewnętrzne rankingi, wspólne speedruny do nowych światów, nagrody dla aktywnych.</p></div>
-        <div class="card"><i class="fas fa-robot"></i><h3>Automatyzacja i boty</h3><p>Bot na Discordzie z kodami, przypomnieniami o dropach i statystykami klanu.</p></div>
+        <div class="card"><i class="fas fa-chalkboard-user"></i><h3>Strategie</h3><p>Optymalne ścieżki rebirth i sekrety zdobywania klejnotów.</p></div>
+        <div class="card"><i class="fas fa-handshake"></i><h3>Wymiana aur</h3><p>Pomagamy zdobyć rzadkie aury (Hell, Celestial, Brilliant).</p></div>
+        <div class="card"><i class="fas fa-trophy"></i><h3>Eventy</h3><p>Wewnętrzne rankingi, speedruny i nagrody dla aktywnych.</p></div>
+        <div class="card"><i class="fas fa-robot"></i><h3>Boty i kody</h3><p>Bot na Discordzie z kodami i statystykami klanu.</p></div>
     </div>
 
-    <!-- FORMULARZ -->
-    <div id="formularz">
-        <div class="section-title"><i class="fas fa-clipboard-list"></i><span>FORMULARZ ZGŁOSZENIOWY</span></div>
-        <div class="form-card">
-            <form id="recruitmentForm">
-                <div class="form-grid">
-                    <div><label><i class="fab fa-roblox"></i> Nick w Roblox (RCU) *</label><input type="text" id="nick" placeholder="Twoja nazwa użytkownika" required></div>
-                    <div><label><i class="fab fa-discord"></i> Discord (nazwa#tag) *</label><input type="text" id="discord" placeholder="przykład: gracz#1234" required></div>
-                    <div><label><i class="fas fa-chart-simple"></i> Obecny Prestiż / Poziom *</label><select id="prestige" required><option value="">-- wybierz --</option><option value="Prestiż 1-7">Prestiż 1-7 (początkujący)</option><option value="Prestiż 8-15">Prestiż 8-15 (średniozaawansowany)</option><option value="Prestiż 16+">Prestiż 16+ (ekspert)</option><option value="Master Prestige">Master Prestige (wysoki poziom)</option></select></div>
-                    <div><label><i class="fas fa-clock"></i> Aktywność (godz./dzień) *</label><select id="activity" required><option value="">-- wybierz --</option><option value="1-2h">1-2 godziny</option><option value="2-4h">2-4 godziny</option><option value="4h+">4+ godzin</option></select></div>
-                    <div><label><i class="fas fa-dragon"></i> Najlepszy zwierzak / Aura</label><input type="text" id="bestpet" placeholder="np. Smok Legendarny, Aura Hell"></div>
-                    <div><label><i class="fas fa-globe"></i> Najdalszy osiągnięty świat</label><select id="world"><option value="">-- wybierz --</option><option value="Spawn Area">Spawn Area</option><option value="Desert">Pustynia</option><option value="Nuclear World">Świat Nuklearny</option><option value="Atlantis">Atlantyda</option><option value="Heaven World">Niebiański Świat</option><option value="Magic World">Magiczny Świat</option></select></div>
-                    <div class="full-width"><label><i class="fas fa-scroll"></i> Doświadczenie / osiągnięcia *</label><textarea rows="3" id="exp" placeholder="Opisz swoje osiągnięcia: eventy, mastery, ilość rebirthów, udział w turniejach itp." required></textarea></div>
-                    <div class="full-width"><label><i class="fas fa-heart"></i> Dlaczego chcesz dołączyć do FIFH? *</label><textarea rows="2" id="motivation" placeholder="Twoja motywacja, cele w grze, co możesz wnieść do klanu" required></textarea></div>
-                </div>
-                <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
-                <p style="font-size:0.75rem; text-align:center; margin-top:1rem"><i class="fas fa-shield-alt"></i> Zgłoszenie trafi do rekruterów FIFH na Discordzie. Odpowiemy w ciągu 48h.</p>
-            </form>
+    <!-- WYMAGANIA -->
+    <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA</span></div>
+    <div class="requirements-wrapper">
+        <div class="requirements-inner">
+            <div class="req-grid">
+                <div class="req-item"><i class="fas fa-chart-line"></i><span class="req-value">Prestiż 8+</span><br>Minimalny poziom prestiżu</div>
+                <div class="req-item"><i class="fas fa-clock"></i><span class="req-value">20h/tydzień</span><br>Regularna aktywność</div>
+                <div class="req-item"><i class="fas fa-dragon"></i><span class="req-value">LEGEND lub SECRET</span><br>Przynajmniej jeden legendarny zwierzak</div>
+                <div class="req-item"><i class="fas fa-gem"></i><span class="req-value">Świat: Atlantis+</span><br>Odblokowany świat Atlantis lub dalej</div>
+                <div class="req-item"><i class="fab fa-discord"></i><span class="req-value">Discord + mikrofon</span><br>Komunikacja głosowa</div>
+                <div class="req-item"><i class="fas fa-hand-peace"></i><span class="req-value">Fair play</span><br>Zero toksyczności</div>
+            </div>
         </div>
     </div>
 
-    <!-- FAQ -->
-    <div id="faq">
-        <div class="section-title"><i class="fas fa-question-circle"></i><span>NAJCZĘSTSZE PYTANIA</span></div>
-        <div class="faq-grid">
-            <div class="faq-item"><div class="faq-question"><i class="fas fa-arrow-right"></i> Jak długo trwa proces rekrutacji?</div><div>Zazwyczaj do 48h od wysłania formularza. Skontaktujemy się przez Discord.</div></div>
-            <div class="faq-item"><div class="faq-question"><i class="fas fa-arrow-right"></i> Czy wymagany jest mikrofon?</div><div>Tak, do udziału w ważniejszych eventach i komunikacji taktycznej.</div></div>
-            <div class="faq-item"><div class="faq-question"><i class="fas fa-arrow-right"></i> Czy mogę dołączyć jeśli jestem nowym graczem?</div><div>Preferujemy średniozaawansowanych, ale każdy z dużym zaangażowaniem jest rozpatrywany indywidualnie.</div></div>
-            <div class="faq-item"><div class="faq-question"><i class="fas fa-arrow-right"></i> Czy klan posiada własne kody/eventy?</div><div>Tak, organizujemy eventy wewnętrzne i dzielimy się kodami RCU jako pierwsi.</div></div>
-        </div>
-    </div>
-
-    <!-- SOCIAL -->
+    <!-- SOCIAL LINKS -->
     <div class="social-links">
         <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Serwer FIFH</a>
         <a href="#" class="social-icon" id="robloxGroupBtn"><i class="fab fa-fort-awesome"></i> Grupa Roblox</a>
-        <a href="#" class="social-icon" id="rcuCodes"><i class="fas fa-code"></i> Aktywne kody RCU</a>
+        <a href="#" class="social-icon" id="rcuCodes"><i class="fas fa-code"></i> Kody RCU</a>
     </div>
 
     <footer>
-        <p>© 2025 FIFH Clan — Rebirth Champions Ultimate. Wspólnie osiągamy wyższe poziomy prestiżu. <i class="fas fa-infinity"></i> Nie tylko gra, to społeczność.</p>
-        <p>Logo zostało automatycznie przycięte do okręgu przez CSS (border-radius: 50%). Favicon pojawi się na karcie przeglądarki.</p>
+        <p>© 2025 FIFH Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p>
     </footer>
+</div>
+
+<!-- MODAL / PANEL REKRUTACYJNY (ukryty, pojawia się po kliknięciu) -->
+<div id="recruitModal" class="recruit-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny FIFH</h2>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="recruitmentForm">
+                <div class="form-grid">
+                    <div><label><i class="fab fa-roblox"></i> Nick w Roblox *</label><input type="text" id="nick" placeholder="Twoja nazwa" required></div>
+                    <div><label><i class="fab fa-discord"></i> Discord (nazwa#tag) *</label><input type="text" id="discord" placeholder="gracz#1234" required></div>
+                    <div><label><i class="fas fa-chart-simple"></i> Prestiż / Poziom *</label><select id="prestige" required><option value="">-- wybierz --</option><option value="Prestiż 1-7">Prestiż 1-7</option><option value="Prestiż 8-15">Prestiż 8-15</option><option value="Prestiż 16+">Prestiż 16+</option><option value="Master Prestige">Master Prestige</option></select></div>
+                    <div><label><i class="fas fa-clock"></i> Aktywność (godz./dzień) *</label><select id="activity" required><option value="">-- wybierz --</option><option value="1-2h">1-2 godziny</option><option value="2-4h">2-4 godziny</option><option value="4h+">4+ godzin</option></select></div>
+                    <div><label><i class="fas fa-dragon"></i> Najlepszy zwierzak / Aura</label><input type="text" id="bestpet" placeholder="np. Smok Legendarny"></div>
+                    <div><label><i class="fas fa-globe"></i> Najdalszy świat</label><select id="world"><option value="">-- wybierz --</option><option value="Spawn Area">Spawn Area</option><option value="Desert">Pustynia</option><option value="Nuclear World">Świat Nuklearny</option><option value="Atlantis">Atlantyda</option><option value="Heaven World">Niebiański Świat</option><option value="Magic World">Magiczny Świat</option></select></div>
+                    <div class="full-width"><label><i class="fas fa-scroll"></i> Doświadczenie / osiągnięcia *</label><textarea rows="2" id="exp" placeholder="Opisz swoje osiągnięcia w RCU..." required></textarea></div>
+                    <div class="full-width"><label><i class="fas fa-heart"></i> Dlaczego FIFH? *</label><textarea rows="2" id="motivation" placeholder="Twoja motywacja i cele" required></textarea></div>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
+                <p style="font-size:0.7rem; text-align:center; margin-top:0.8rem"><i class="fas fa-shield-alt"></i> Dane trafią do rekruterów FIFH na Discord.</p>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div id="toast-msg"></div>
 
 <script>
     (function(){
-        // ================= KONFIGURACJA WEBHOOK =================
-        // 🔴🔴🔴 PODMIEŃ TEN URL NA SWÓJ WEBHOOK Z DISCORD 🔴🔴🔴
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
-        // ========================================================
+        // Webhook URL – PODMIEŃ NA SWÓJ
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N';
         
+        // Elementy modala
+        const modal = document.getElementById('recruitModal');
+        const openBtn = document.getElementById('openRecruitModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        
+        // Otwieranie modala
+        openBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Zamykanie modala
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+        
+        // Formularz i toast
         const form = document.getElementById('recruitmentForm');
         const submitBtn = document.getElementById('submitBtn');
         const toast = document.getElementById('toast-msg');
         
-        function showToast(message, isError = false, duration = 4500){
+        function showToast(message, isError = false, duration = 4000){
             toast.textContent = message;
             toast.style.background = isError ? '#3b1e3a' : '#1e1b4b';
             toast.style.borderColor = isError ? '#f43f5e' : '#c084fc';
@@ -484,16 +521,16 @@
                     { name: "⏱ Aktywność", value: data.activity, inline: true },
                     { name: "🐉 Najlepszy pet/aura", value: data.bestpet || "brak", inline: true },
                     { name: "🌍 Świat", value: data.world || "nie podano", inline: true },
-                    { name: "📜 Doświadczenie", value: data.experience.length > 950 ? data.experience.substring(0,950)+"..." : data.experience, inline: false },
-                    { name: "💡 Motywacja", value: data.motivation.length > 800 ? data.motivation.substring(0,800)+"..." : data.motivation, inline: false }
+                    { name: "📜 Doświadczenie", value: data.experience.length > 800 ? data.experience.substring(0,800)+"..." : data.experience, inline: false },
+                    { name: "💡 Motywacja", value: data.motivation.length > 700 ? data.motivation.substring(0,700)+"..." : data.motivation, inline: false }
                 ],
-                footer: { text: "FIFH Rekrutacja • Rebirth Champions Ultimate", icon_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
+                footer: { text: "FIFH Rekrutacja • RCU", icon_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
                 timestamp: new Date().toISOString()
             };
             const payload = { username: "FIFH Rekruter", avatar_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg", embeds: [embed], content: "📣 **Nowe zgłoszenie do FIFH!**" };
             
-            if(WEBHOOK_URL === 'https://discord.com/api/webhooks/1329451197610397778/VcIfk1y9ZHS3C63j2qv1uO1v9QYtybxmc6I9i9TQFOweHnpHmpUJ0BVnE5T8F-TGZv_N'){
-                console.log("DEMO: aplikacja (symulacja). Podmień WEBHOOK_URL w kodzie.", data);
+            if(WEBHOOK_URL === 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn'){
+                console.log("DEMO: aplikacja (symulacja). Podmień WEBHOOK_URL.", data);
                 return true;
             }
             const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
@@ -513,40 +550,32 @@
             const motivation = document.getElementById('motivation').value.trim();
             
             if(!nick || nick.length < 3) { showToast("❌ Podaj poprawny nick (min.3 znaki)", true); return; }
-            if(!discord || !validateDiscord(discord)) { showToast("❌ Nieprawidłowy format Discord (nazwa#1234)", true); return; }
+            if(!discord || !validateDiscord(discord)) { showToast("❌ Nieprawidłowy Discord (nazwa#1234)", true); return; }
             if(!prestige) { showToast("❌ Wybierz poziom prestiżu", true); return; }
-            if(!activity) { showToast("❌ Wybierz swoją aktywność", true); return; }
-            if(exp.length < 10) { showToast("📝 Opisz swoje doświadczenie (min. 10 znaków)", true); return; }
-            if(motivation.length < 10) { showToast("💡 Napisz dlaczego chcesz dołączyć (min.10 znaków)", true); return; }
+            if(!activity) { showToast("❌ Wybierz aktywność", true); return; }
+            if(exp.length < 10) { showToast("📝 Opisz swoje osiągnięcia (min. 10 znaków)", true); return; }
+            if(motivation.length < 10) { showToast("💡 Napisz dlaczego chcesz dołączyć", true); return; }
             
             const payloadData = { nick, discord, prestige, activity, bestpet, world, experience: exp, motivation };
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie...';
             try {
                 await sendToDiscord(payloadData);
-                showToast("✅ Zgłoszenie wysłane! Rekruterzy FIFH skontaktują się przez Discord.", false, 5000);
+                showToast("✅ Zgłoszenie wysłane! Rekruterzy skontaktują się przez Discord.", false);
                 form.reset();
+                closeModal(); // po wysłaniu zamknij modal
             } catch (err) {
-                console.error(err);
-                showToast("❌ Błąd wysyłki. Spróbuj ponownie lub skontaktuj się z administratorem.", true);
+                showToast("❌ Błąd wysyłki. Spróbuj ponownie.", true);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Wyślij zgłoszenie';
             }
         });
         
-        document.getElementById('discordInvite')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer FIFH (discord.gg/fifh) – dołącz do nas!", false); });
-        document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: FIFH Champions – znajdź nas i graj razem!", false); });
-        document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Aktualne kody RCU: RELEASE, SPOOKY, FROG, PUMPKIN – używaj szybko!", false); });
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e){
-                const targetId = this.getAttribute('href');
-                if(targetId === "#" || targetId === "") return;
-                const target = document.querySelector(targetId);
-                if(target){ e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-            });
-        });
+        // Przyciski social (mock)
+        document.getElementById('discordInvite')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer FIFH – dołącz do nas!", false); });
+        document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: FIFH Champions – graj razem z nami!", false); });
+        document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false); });
     })();
 </script>
 </body>
