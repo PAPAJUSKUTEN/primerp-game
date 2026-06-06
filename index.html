@@ -85,41 +85,45 @@
         .recruit-main-btn { background: linear-gradient(95deg, #7c3aed, #a855f7); border: none; padding: 1rem 2.5rem; border-radius: 60px; font-weight: 800; font-size: 1.3rem; color: white; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px #a855f7; display: inline-flex; align-items: center; gap: 12px; font-family: 'Orbitron', monospace; }
         .recruit-main-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px #c084fc; }
         
-        /* CLAN BOOSTY – elegancka, nienachalna siatka */
+        /* ========== CLAN BOOSTY – dokładnie z Twojej listy ========== */
         .clan-boosts-section {
-            margin: 2rem 0 2.5rem;
+            margin: 1.5rem 0 2rem;
         }
         .boosts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-            gap: 0.6rem;
-            background: rgba(0,0,0,0.25);
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 0.7rem;
+            background: rgba(0,0,0,0.2);
             border-radius: 1.5rem;
             padding: 1rem;
-            backdrop-filter: blur(2px);
         }
         .boost-item {
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(15, 23, 42, 0.6);
             border-radius: 0.8rem;
-            padding: 0.3rem 0.2rem;
+            padding: 0.5rem 0.5rem;
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 500;
-            color: #b9c7e6;
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            color: #cbd5e6;
+            border: 1px solid rgba(139, 92, 246, 0.25);
             transition: all 0.2s ease;
-            font-family: 'Orbitron', monospace;
-            letter-spacing: 0.5px;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            overflow-x: auto;
+            text-overflow: ellipsis;
         }
         .boost-item:hover {
             background: rgba(139, 92, 246, 0.2);
             border-color: #a855f7;
             color: #e9d5ff;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        /* specjalne wyróżnienie dla pierwszych 10 */
-        .boost-item.early {
-            border-left: 2px solid #c084fc;
+        .boost-icon {
+            font-size: 0.8rem;
+            margin-right: 4px;
+            color: #c084fc;
         }
         
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
@@ -174,7 +178,7 @@
         footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2d3a5e; font-size: 0.8rem; color: #7e8aa8; }
         #toast-msg { visibility: hidden; min-width: 250px; background-color: #1e1b4b; color: #f0eaff; text-align: center; border-radius: 40px; padding: 10px 20px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1100; backdrop-filter: blur(12px); border: 1px solid #c084fc; transition: 0.2s; opacity: 0; font-size: 0.85rem; }
         #toast-msg.show { visibility: visible; opacity: 1; }
-        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .contest-widget { position: relative; top: 0; right: 0; margin-bottom: 1rem; width: fit-content; margin-left: auto; margin-right: auto; } .page-wrapper { padding-top: 0.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } .boosts-grid { gap: 0.4rem; } .boost-item { font-size: 0.6rem; padding: 0.2rem 0.1rem; } }
+        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .contest-widget { position: relative; top: 0; right: 0; margin-bottom: 1rem; width: fit-content; margin-left: auto; margin-right: auto; } .page-wrapper { padding-top: 0.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } .boosts-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } .boost-item { font-size: 0.65rem; white-space: normal; word-break: keep-all; } }
     </style>
 </head>
 <body>
@@ -202,10 +206,10 @@
         <div class="recruit-btn-container"><button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button></div>
     </div>
     
-    <!-- CLAN BOOSTY – przepisane z gry, tylko lista (bez nagłówka Current Boosts) -->
+    <!-- CLAN BOOSTY – dokładnie z Twojej listy -->
     <div class="clan-boosts-section">
         <div class="boosts-grid" id="boostsGrid">
-            <!-- boosty będą wstawione dynamicznie z JS -->
+            <!-- boosty wstawiane dynamicznie z JS -->
         </div>
     </div>
     
@@ -287,25 +291,58 @@
 
 <script>
     (function(){
-        // ================= GENEROWANIE CLAN BOOSTÓW (1st do 50th) =================
-        const boostsGrid = document.getElementById('boostsGrid');
-        const boostNumbers = [];
-        for (let i = 1; i <= 50; i++) {
-            let suffix = 'th';
-            if (i === 1) suffix = 'st';
-            else if (i === 2) suffix = 'nd';
-            else if (i === 3) suffix = 'rd';
-            else suffix = 'th';
-            boostNumbers.push(`${i}${suffix}`);
-        }
+        // ================= PRAWDZIWE BOOSTY Z RCU (TWOJA LISTA) =================
+        const clanBoosts = [
+            "+20% Divines Luck",
+            "+3% Egg Luck Combo",
+            "+40% Season XP",
+            "+64% Hatch Speed",
+            "+0.2% Toxic Pets Luck",
+            "+25% Global Lucky Egg Boost",
+            "+33% Secrets Luck",
+            "+181% Gems",
+            "+² Pets Equipped",
+            "+30% Aure Luck",
+            "+10% Ring Fragments Luck",
+            "+176% Clicks",
+            "+1 Meteorite Damage",
+            "+1 Eggs Open",
+            "+30% Space Coins Multiplier",
+            "+1.5% Golden Pets Luck",
+            "+3 More Wood",
+            "-0.13% Golden Tree Chance",
+            "+26% Extra Egg",
+            "+0.4% Shiny Pets Luck",
+            "+196% Luck",
+            "+15% Mastery XP"
+        ];
         
-        boostNumbers.forEach((boost, index) => {
-            const div = document.createElement('div');
-            div.className = 'boost-item';
-            if (index < 10) div.classList.add('early'); // pierwsze 10 wyróżnione
-            div.textContent = boost;
-            boostsGrid.appendChild(div);
-        });
+        const boostsGrid = document.getElementById('boostsGrid');
+        if (boostsGrid) {
+            clanBoosts.forEach(boost => {
+                const boostDiv = document.createElement('div');
+                boostDiv.className = 'boost-item';
+                
+                // Dodanie ikony w zależności od typu boosta
+                let icon = '<i class="fas fa-chart-line boost-icon"></i>';
+                if (boost.includes('Luck')) icon = '<i class="fas fa-clover boost-icon"></i>';
+                if (boost.includes('Gems')) icon = '<i class="fas fa-gem boost-icon"></i>';
+                if (boost.includes('Clicks')) icon = '<i class="fas fa-mouse-pointer boost-icon"></i>';
+                if (boost.includes('XP')) icon = '<i class="fas fa-star boost-icon"></i>';
+                if (boost.includes('Egg')) icon = '<i class="fas fa-egg boost-icon"></i>';
+                if (boost.includes('Pets')) icon = '<i class="fas fa-paw boost-icon"></i>';
+                if (boost.includes('Hatch')) icon = '<i class="fas fa-tachometer-alt boost-icon"></i>';
+                if (boost.includes('Meteorite')) icon = '<i class="fas fa-meteor boost-icon"></i>';
+                if (boost.includes('Wood')) icon = '<i class="fas fa-tree boost-icon"></i>';
+                if (boost.includes('Coins')) icon = '<i class="fas fa-coins boost-icon"></i>';
+                if (boost.includes('Space')) icon = '<i class="fas fa-rocket boost-icon"></i>';
+                if (boost.includes('Mastery')) icon = '<i class="fas fa-graduation-cap boost-icon"></i>';
+                if (boost.includes('Season')) icon = '<i class="fas fa-calendar-alt boost-icon"></i>';
+                
+                boostDiv.innerHTML = icon + ' ' + boost;
+                boostsGrid.appendChild(boostDiv);
+            });
+        }
         
         // ================= ODLICZANIE DO KONKURSU =================
         const contestDate = new Date(2025, 5, 10, 0, 0, 0);
@@ -339,17 +376,15 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // ================= WEBHOOK (testowy) =================
+        // ================= WEBHOOK =================
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
         
-        // Definicje światów
         const worldsData = {
             Overworld: ["Spawn", "Farm", "Desert", "Nuclear", "Atlantis", "Kingdom", "City", "Cave", "Volcano", "Heaven", "Magic", "Circus", "Jungle", "Steampunk", "Sakura", "Lab"],
             Space: ["Moon", "Alien", "Tech City", "Neluba Forest", "Void", "Spaceship", "Space Warzone", "Comet", "Starfactory", "Glacier Moon", "Mars Colony", "Starfall Valley", "Black Hole"],
             Skylands: ["Skylands", "Sky Garden", "Cloudy World", "Ashwind Realm", "Frozen Forest", "Ancient Ruins", "Monochrome World", "Wild West", "Bee World", "Neon World", "Thunder Isles", "Sunken Temple", "Swamp World", "Crystal Island", "Blossom Clouds", "Aurora World"]
         };
         
-        // GamePassy
         const gamepassesList = [
             "Auto Clicker", "Auto Rebirth", "+2 Pet Equip", "+3 Pet Equip", "Mega Luck", "Ultra Luck", 
             "Faster Eggs Open", "Extra Egg", "Vip", "Magic Eggs", "Shiny Hunters", "Insane Farmer", 
@@ -388,7 +423,6 @@
         }
         categorySelect.addEventListener('change', updateWorldsList);
         
-        // Modal
         const modal = document.getElementById('recruitModal');
         const openBtn = document.getElementById('openRecruitModalBtn');
         const closeBtn = document.getElementById('closeModalBtn');
