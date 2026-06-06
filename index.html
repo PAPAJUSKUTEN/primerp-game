@@ -44,12 +44,17 @@
         .card:hover { border-color: #c084fc; transform: translateY(-5px); }
         .card i { font-size: 2.3rem; color: #c084fc; margin-bottom: 0.8rem; }
         .card h3 { font-size: 1.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.6rem; }
+        
+        /* NOWE WYMAGANIA – zgodne z wytycznymi */
         .requirements-wrapper { background: linear-gradient(145deg, #0f1222, #0a0c18); border-radius: 1.8rem; padding: 0.2rem; margin-bottom: 2rem; }
         .requirements-inner { background: rgba(5,7,15,0.7); border-radius: 1.6rem; padding: 1.8rem; border: 1px solid #4c1d95; }
         .req-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
-        .req-item { background: #111827; border-radius: 1.2rem; padding: 1rem; border-left: 4px solid #a855f7; }
-        .req-item i { font-size: 1.5rem; margin-bottom: 0.3rem; display: block; }
+        .req-item { background: #111827; border-radius: 1.2rem; padding: 1rem; border-left: 4px solid #a855f7; transition: 0.2s; }
+        .req-item:hover { border-left-color: #c084fc; background: #1a1f2e; }
+        .req-item i { font-size: 1.5rem; margin-bottom: 0.3rem; display: block; color: #c084fc; }
         .req-value { font-size: 1.2rem; font-weight: bold; color: #e9d5ff; font-family: 'Orbitron', monospace; }
+        .req-desc { font-size: 0.75rem; color: #94a3b8; margin-top: 0.2rem; }
+        
         .stats-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 2rem 0; }
         .stat-circle { background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); border-radius: 1.8rem; padding: 0.8rem 1.5rem; text-align: center; min-width: 130px; border: 1px solid #a855f7; }
         .stat-number { font-size: 2rem; font-weight: 800; font-family: 'Orbitron'; color: #c084fc; }
@@ -138,9 +143,9 @@
         <div class="recruit-btn-container"><button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button></div>
     </div>
     <div class="stats-row">
-        <div class="stat-circle"><div class="stat-number">150+</div><div class="stat-label">Łączny prestiż</div></div>
-        <div class="stat-circle"><div class="stat-number">42</div><div class="stat-label">Aktywnych</div></div>
-        <div class="stat-circle"><div class="stat-number">18</div><div class="stat-label">Aur rarity+</div></div>
+        <div class="stat-circle"><div class="stat-number">200+</div><div class="stat-label">Łączny prestiż</div></div>
+        <div class="stat-circle"><div class="stat-number">35</div><div class="stat-label">Aktywnych</div></div>
+        <div class="stat-circle"><div class="stat-number">120M+</div><div class="stat-label">Jaj otwartych</div></div>
         <div class="stat-circle"><div class="stat-number">∞</div><div class="stat-label">Odrodzenia</div></div>
     </div>
     <div class="section-title"><i class="fas fa-crown"></i><span>DLACZEGO MY?</span></div>
@@ -150,15 +155,21 @@
         <div class="card"><i class="fas fa-trophy"></i><h3>Eventy</h3><p>Wewnętrzne rankingi, speedruny i nagrody dla aktywnych.</p></div>
         <div class="card"><i class="fas fa-robot"></i><h3>Boty i kody</h3><p>Bot na Discordzie z kodami i statystykami klanu.</p></div>
     </div>
-    <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA</span></div>
-    <div class="requirements-wrapper"><div class="requirements-inner"><div class="req-grid">
-        <div class="req-item"><i class="fas fa-chart-line"></i><span class="req-value">Prestiż 8+</span><br>Minimalny poziom prestiżu</div>
-        <div class="req-item"><i class="fas fa-clock"></i><span class="req-value">20h/tydzień</span><br>Regularna aktywność</div>
-        <div class="req-item"><i class="fas fa-dragon"></i><span class="req-value">LEGEND lub SECRET</span><br>Legendarny zwierzak</div>
-        <div class="req-item"><i class="fas fa-gem"></i><span class="req-value">Świat: Atlantis+</span><br>Odblokowany świat</div>
-        <div class="req-item"><i class="fab fa-discord"></i><span class="req-value">Discord + mikrofon</span><br>Komunikacja głosowa</div>
-        <div class="req-item"><i class="fas fa-hand-peace"></i><span class="req-value">Fair play</span><br>Zero toksyczności</div>
-    </div></div></div>
+    
+    <!-- NOWE WYMAGANIA – dokładnie według wytycznych -->
+    <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA REKRUTACYJNE</span></div>
+    <div class="requirements-wrapper"><div class="requirements-inner">
+        <div class="req-grid">
+            <div class="req-item"><i class="fas fa-paw"></i><span class="req-value">Pet Equip: 15+</span><div class="req-desc">Minimalny poziom wyposażenia zwierzaków</div></div>
+            <div class="req-item"><i class="fas fa-egg"></i><span class="req-value">5M+ Eggs opened</span><div class="req-desc">Co najmniej 5 milionów otwartych jaj</div></div>
+            <div class="req-item"><i class="fas fa-chart-line"></i><span class="req-value">Prestiż: 10+</span><div class="req-desc">Minimalny poziom prestiżu</div></div>
+            <div class="req-item"><i class="fas fa-sync-alt"></i><span class="req-value">Rebirth: 100N+</span><div class="req-desc">Co najmniej 100N odrodzeń</div></div>
+            <div class="req-item"><i class="fas fa-ticket-alt"></i><span class="req-value">GamePassy: 2+</span><div class="req-desc">Minimum dwa zakupione GamePassy</div></div>
+            <div class="req-item"><i class="fas fa-hourglass-half"></i><span class="req-value">240h+ w grze</span><div class="req-desc">Łączny czas gry minimum 240 godzin</div></div>
+        </div>
+        <p class="sub" style="margin-top: 1.5rem; font-size:0.85rem; text-align:center"><i class="fas fa-clipboard-check"></i> Spełniasz wszystkie wymagania? Wypełnij formularz i dołącz do BEST!</p>
+    </div></div>
+    
     <div class="social-links">
         <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Serwer BEST</a>
         <a href="#" class="social-icon" id="robloxGroupBtn"><i class="fab fa-fort-awesome"></i> Grupa Roblox</a>
@@ -167,7 +178,7 @@
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
 
-<!-- MODAL REKRUTACJI – ZMIENIONE POLE DISCORD (bez #tag) -->
+<!-- MODAL REKRUTACJI -->
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny BEST</h2><button class="close-modal" id="closeModalBtn">&times;</button></div>
@@ -175,27 +186,30 @@
             <form id="recruitmentForm">
                 <div class="form-grid">
                     <div><label><i class="fab fa-roblox"></i> Nick w Roblox *</label><input type="text" id="nick" placeholder="Twoja nazwa" required></div>
-                    <!-- ZMIANA: pole Discord bez wymaganego tagu -->
                     <div><label><i class="fab fa-discord"></i> Nazwa Discord *</label><input type="text" id="discord" placeholder="np. gracz123 lub gracz#1234" required></div>
-                    <div><label><i class="fas fa-chart-simple"></i> Prestiż / Poziom *</label><select id="prestige" required><option value="">-- wybierz --</option><option value="Prestiż 1-7">Prestiż 1-7</option><option value="Prestiż 8-15">Prestiż 8-15</option><option value="Prestiż 16+">Prestiż 16+</option><option value="Master Prestige">Master Prestige</option></select></div>
-                    <div><label><i class="fas fa-clock"></i> Aktywność (godz./dzień) *</label><select id="activity" required><option value="">-- wybierz --</option><option value="1-2h">1-2 godziny</option><option value="2-4h">2-4 godziny</option><option value="4h+">4+ godzin</option></select></div>
+                    <div><label><i class="fas fa-chart-simple"></i> Prestiż *</label><input type="number" id="prestige" placeholder="np. 10" min="0" step="1" required></div>
+                    <div><label><i class="fas fa-sync-alt"></i> Ilość Rebirthów (N) *</label><input type="text" id="rebirths" placeholder="np. 100N, 150N" required></div>
+                    <div><label><i class="fas fa-paw"></i> Pet Equip *</label><input type="number" id="petEquip" placeholder="np. 15" min="0" required></div>
+                    <div><label><i class="fas fa-egg"></i> Otwarte jaja (mln) *</label><input type="text" id="eggsOpened" placeholder="np. 5M, 7.2M" required></div>
+                    <div><label><i class="fas fa-ticket-alt"></i> Liczba GamePassów *</label><input type="number" id="gamepassCount" placeholder="np. 2" min="0" required></div>
+                    <div><label><i class="fas fa-hourglass-half"></i> Godziny w grze *</label><input type="number" id="hoursPlayed" placeholder="np. 240" min="0" required></div>
                     <div><label><i class="fas fa-dragon"></i> Najlepszy zwierzak / Aura</label><input type="text" id="bestpet" placeholder="np. Smok Legendarny"></div>
                     
-                    <div><label><i class="fas fa-globe"></i> Kategoria świata *</label><select id="worldCategory" required><option value="">-- wybierz kategorię --</option><option value="Overworld">Overworld (Ziemia)</option><option value="Space">Space (Kosmos)</option><option value="Skylands">Skylands (Niebiańskie Wyspy)</option></select></div>
-                    <div><label><i class="fas fa-map-marked-alt"></i> Najdalszy osiągnięty świat *</label><select id="worldMap" required><option value="">-- najpierw wybierz kategorię --</option></select></div>
+                    <div><label><i class="fas fa-globe"></i> Kategoria świata *</label><select id="worldCategory" required><option value="">-- wybierz --</option><option value="Overworld">Overworld (Ziemia)</option><option value="Space">Space (Kosmos)</option><option value="Skylands">Skylands (Niebiańskie Wyspy)</option></select></div>
+                    <div><label><i class="fas fa-map-marked-alt"></i> Najdalszy świat *</label><select id="worldMap" required><option value="">-- najpierw wybierz kategorię --</option></select></div>
                     
                     <div class="full-width">
-                        <label><i class="fas fa-ticket-alt"></i> Posiadane GamePassy (zaznacz wszystkie które masz)</label>
+                        <label><i class="fas fa-ticket-alt"></i> Jakie GamePassy posiadasz? (zaznacz wszystkie)</label>
                         <div class="gamepass-group"><div class="gamepass-grid" id="gamepassGrid"></div></div>
                     </div>
                     
-                    <div class="full-width"><label><i class="fas fa-scroll"></i> Doświadczenie / osiągnięcia *</label><textarea rows="2" id="exp" placeholder="Opisz swoje osiągnięcia w RCU..." required></textarea></div>
+                    <div class="full-width"><label><i class="fas fa-scroll"></i> Dodatkowe osiągnięcia / info *</label><textarea rows="2" id="exp" placeholder="Opisz swoje osiągnięcia w RCU..." required></textarea></div>
                     <div class="full-width"><label><i class="fas fa-heart"></i> Dlaczego BEST? *</label><textarea rows="2" id="motivation" placeholder="Twoja motywacja i cele" required></textarea></div>
                 </div>
                 <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
+                <p style="font-size:0.7rem; text-align:center; margin-top:0.8rem"><i class="fas fa-shield-alt"></i> Dane trafią do rekruterów BEST na Discord.</p>
             </form>
         </div>
-        <!-- NEONOWE PRZYCISKI PRZEWIJANIA -->
         <div class="scroll-controls">
             <button type="button" class="scroll-btn" id="scrollUpBtn" title="Przewiń w górę"><i class="fas fa-chevron-up"></i></button>
             <button type="button" class="scroll-btn" id="scrollDownBtn" title="Przewiń w dół"><i class="fas fa-chevron-down"></i></button>
@@ -206,9 +220,8 @@
 
 <script>
     (function(){
-        // ================= TESTOWY WEBHOOK =================
+        // WEBHOOK – testowy
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
-        // ====================================================
         
         // Definicje światów
         const worldsData = {
@@ -225,7 +238,7 @@
             "Divine Hunter", "Hive Capacity"
         ];
         
-        // Generowanie checkboxów GamePassów
+        // Generowanie checkboxów
         const gamepassGrid = document.getElementById('gamepassGrid');
         gamepassesList.forEach(gp => {
             const label = document.createElement('label');
@@ -233,7 +246,6 @@
             const cb = document.createElement('input');
             cb.type = 'checkbox';
             cb.value = gp;
-            cb.name = 'gamepass';
             cb.classList.add('gamepass-cb');
             label.appendChild(cb);
             label.appendChild(document.createTextNode(gp));
@@ -264,17 +276,14 @@
         const openBtn = document.getElementById('openRecruitModalBtn');
         const closeBtn = document.getElementById('closeModalBtn');
         const modalBody = document.getElementById('modalBody');
-        
         openBtn.addEventListener('click', () => { modal.classList.add('active'); document.body.style.overflow = 'hidden'; });
         function closeModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         
         // Przewijanie
-        const scrollUp = document.getElementById('scrollUpBtn');
-        const scrollDown = document.getElementById('scrollDownBtn');
-        if (scrollUp) scrollUp.addEventListener('click', () => modalBody.scrollBy({ top: -220, behavior: 'smooth' }));
-        if (scrollDown) scrollDown.addEventListener('click', () => modalBody.scrollBy({ top: 220, behavior: 'smooth' }));
+        document.getElementById('scrollUpBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: -220, behavior: 'smooth' }));
+        document.getElementById('scrollDownBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: 220, behavior: 'smooth' }));
         
         // Toast
         const toast = document.getElementById('toast-msg');
@@ -286,15 +295,8 @@
             setTimeout(()=> toast.classList.remove('show'), duration);
         }
         
-        // NOWA WALIDACJA DISCORDA – akceptuje zarówno nazwę jak i nazwę#tag (minimum 2 znaki)
-        function validateDiscord(name){
-            return name && name.trim().length >= 2;
-        }
-        
-        function getSelectedGamepasses() {
-            const checkboxes = document.querySelectorAll('.gamepass-cb:checked');
-            return Array.from(checkboxes).map(cb => cb.value);
-        }
+        function validateDiscord(name){ return name && name.trim().length >= 2; }
+        function getSelectedGamepasses() { return Array.from(document.querySelectorAll('.gamepass-cb:checked')).map(cb => cb.value); }
         
         async function sendToDiscord(data){
             const embed = {
@@ -305,19 +307,22 @@
                     { name: "🎮 Nick Roblox", value: data.nick, inline: true },
                     { name: "🔷 Discord", value: data.discord, inline: true },
                     { name: "📈 Prestiż", value: data.prestige, inline: true },
-                    { name: "⏱ Aktywność", value: data.activity, inline: true },
+                    { name: "🔄 Rebirthy", value: data.rebirths, inline: true },
+                    { name: "🐾 Pet Equip", value: data.petEquip, inline: true },
+                    { name: "🥚 Otwarte jaja", value: data.eggsOpened, inline: true },
+                    { name: "🎫 GamePassy (ilość)", value: data.gamepassCount, inline: true },
+                    { name: "⏱ Godziny gry", value: data.hoursPlayed, inline: true },
                     { name: "🐉 Najlepszy pet/aura", value: data.bestpet || "brak", inline: true },
                     { name: "🌍 Kategoria świata", value: data.worldCategory, inline: true },
                     { name: "🗺️ Najdalszy świat", value: data.worldMap, inline: true },
                     { name: "🎫 Posiadane GamePassy", value: data.gamepasses.length ? data.gamepasses.join(", ") : "brak", inline: false },
-                    { name: "📜 Doświadczenie", value: data.experience.length > 600 ? data.experience.substring(0,600)+"..." : data.experience, inline: false },
-                    { name: "💡 Motywacja", value: data.motivation.length > 600 ? data.motivation.substring(0,600)+"..." : data.motivation, inline: false }
+                    { name: "📜 Doświadczenie", value: data.experience.length > 500 ? data.experience.substring(0,500)+"..." : data.experience, inline: false },
+                    { name: "💡 Motywacja", value: data.motivation.length > 500 ? data.motivation.substring(0,500)+"..." : data.motivation, inline: false }
                 ],
                 footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
                 timestamp: new Date().toISOString()
             };
             const payload = { username: "BEST Rekruter", avatar_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg", embeds: [embed], content: "📣 **Nowe zgłoszenie do BEST!**" };
-            
             const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             if(!response.ok) throw new Error(`HTTP ${response.status}`);
             return true;
@@ -330,7 +335,11 @@
             const nick = document.getElementById('nick').value.trim();
             const discord = document.getElementById('discord').value.trim();
             const prestige = document.getElementById('prestige').value;
-            const activity = document.getElementById('activity').value;
+            const rebirths = document.getElementById('rebirths').value.trim();
+            const petEquip = document.getElementById('petEquip').value;
+            const eggsOpened = document.getElementById('eggsOpened').value.trim();
+            const gamepassCount = document.getElementById('gamepassCount').value;
+            const hoursPlayed = document.getElementById('hoursPlayed').value;
             const bestpet = document.getElementById('bestpet').value.trim();
             const worldCategory = document.getElementById('worldCategory').value;
             const worldMap = document.getElementById('worldMap').value;
@@ -339,15 +348,19 @@
             const gamepasses = getSelectedGamepasses();
             
             if(!nick || nick.length < 3) { showToast("❌ Podaj poprawny nick (min.3 znaki)", true); return; }
-            if(!validateDiscord(discord)) { showToast("❌ Podaj swoją nazwę Discord (min. 2 znaki)", true); return; }
-            if(!prestige) { showToast("❌ Wybierz poziom prestiżu", true); return; }
-            if(!activity) { showToast("❌ Wybierz aktywność", true); return; }
+            if(!validateDiscord(discord)) { showToast("❌ Podaj nazwę Discord", true); return; }
+            if(!prestige || prestige < 0) { showToast("❌ Podaj poziom prestiżu", true); return; }
+            if(!rebirths) { showToast("❌ Podaj ilość rebirthów", true); return; }
+            if(!petEquip || petEquip < 0) { showToast("❌ Podaj poziom Pet Equip", true); return; }
+            if(!eggsOpened) { showToast("❌ Podaj ilość otwartych jaj", true); return; }
+            if(!gamepassCount || gamepassCount < 0) { showToast("❌ Podaj liczbę GamePassów", true); return; }
+            if(!hoursPlayed || hoursPlayed < 0) { showToast("❌ Podaj liczbę godzin w grze", true); return; }
             if(!worldCategory) { showToast("❌ Wybierz kategorię świata", true); return; }
-            if(!worldMap) { showToast("❌ Wybierz najdalszy osiągnięty świat", true); return; }
+            if(!worldMap) { showToast("❌ Wybierz najdalszy świat", true); return; }
             if(exp.length < 10) { showToast("📝 Opisz swoje osiągnięcia (min. 10 znaków)", true); return; }
             if(motivation.length < 10) { showToast("💡 Napisz dlaczego chcesz dołączyć", true); return; }
             
-            const payloadData = { nick, discord, prestige, activity, bestpet, worldCategory, worldMap, gamepasses, experience: exp, motivation };
+            const payloadData = { nick, discord, prestige, rebirths, petEquip, eggsOpened, gamepassCount, hoursPlayed, bestpet, worldCategory, worldMap, gamepasses, experience: exp, motivation };
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Wysyłanie...';
             try {
