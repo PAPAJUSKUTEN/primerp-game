@@ -25,96 +25,102 @@
             background-repeat: repeat; animation: drift 50s linear infinite;
         }
         @keyframes drift { 0% { background-position: 0 0; } 100% { background-position: 150px 150px; } }
-        .container { max-width: 1400px; margin: 0 auto; padding: 2rem 2rem; position: relative; z-index: 2; }
+        
+        /* KONTENER GŁÓWNY Z WZGLĘDNĄ POZYCJĄ DLA WIDGETU */
+        .page-wrapper {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem;
+        }
+        
+        /* ========== KONKURS – WIDGET W PRAWYM GÓRNYM ROGU ========== */
+        .contest-widget {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #0f1222cc, #1a0b2ecc);
+            backdrop-filter: blur(12px);
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #c084fc;
+            box-shadow: 0 0 15px rgba(168,85,247,0.4);
+            z-index: 50;
+            min-width: 200px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .contest-widget:hover {
+            transform: scale(1.02);
+            border-color: #e9a8ff;
+            box-shadow: 0 0 20px #c084fc;
+        }
+        .contest-widget-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.75rem;
+            color: #c084fc;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+        .contest-widget-title i {
+            margin-right: 4px;
+        }
+        .contest-countdown {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 0.3rem 0;
+        }
+        .contest-time-box {
+            background: #111827;
+            border-radius: 0.6rem;
+            padding: 0.2rem 0.4rem;
+            min-width: 40px;
+            text-align: center;
+        }
+        .contest-time-number {
+            font-size: 1.1rem;
+            font-weight: 800;
+            font-family: 'Orbitron', monospace;
+            color: #e9d5ff;
+            line-height: 1.2;
+        }
+        .contest-time-label {
+            font-size: 0.55rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+        .contest-ended {
+            font-size: 0.7rem;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .contest-discord-link {
+            display: inline-block;
+            margin-top: 0.4rem;
+            font-size: 0.65rem;
+            color: #c084fc;
+            text-decoration: none;
+            background: #1e1b4b;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+        .contest-discord-link:hover {
+            background: #7c3aed;
+            color: white;
+        }
+        
         .logo-wrapper { display: flex; justify-content: center; margin-bottom: 1.5rem; }
         .clan-logo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #a855f7; box-shadow: 0 0 20px rgba(168,85,247,0.6); transition: 0.3s; }
         .clan-logo:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(168,85,247,0.9); }
         .glow-text { text-shadow: 0 0 8px #a855f7, 0 0 15px #7c3aed; }
         .section-title { font-family: 'Orbitron', monospace; font-size: 2rem; font-weight: 700; margin-bottom: 1.8rem; display: flex; align-items: center; gap: 12px; border-left: 5px solid #a855f7; padding-left: 1.2rem; }
         .section-title i { color: #c084fc; font-size: 1.8rem; }
-        .hero { text-align: center; padding: 2rem 1rem 3rem; border-bottom: 2px solid rgba(139,92,246,0.4); margin-bottom: 2rem; }
+        .hero { text-align: center; padding: 1rem 1rem 2rem; border-bottom: 2px solid rgba(139,92,246,0.4); margin-bottom: 2rem; }
         .clan-tag { font-family: 'Orbitron', monospace; font-size: 1.2rem; letter-spacing: 4px; background: linear-gradient(135deg, #c084fc, #6d28d9); display: inline-block; padding: 0.4rem 1.8rem; border-radius: 60px; font-weight: 800; margin-bottom: 1.2rem; box-shadow: 0 0 12px #a855f7; }
         h1 { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, #FFFFFF, #d8b4fe, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1rem; }
         .sub { font-size: 1.15rem; color: #cbd5e6; max-width: 750px; margin: 0 auto; }
-        
-        /* ========== KONKURS – ODLICZANIE ========== */
-        .contest-section {
-            background: linear-gradient(135deg, #0f1222, #1a0b2e);
-            border-radius: 2rem;
-            padding: 1.8rem;
-            margin: 2rem 0 2rem;
-            border: 2px solid #c084fc;
-            box-shadow: 0 0 25px rgba(168,85,247,0.3);
-            text-align: center;
-        }
-        .contest-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.6rem;
-            color: #f0eaff;
-            margin-bottom: 0.5rem;
-        }
-        .contest-title i {
-            color: #c084fc;
-            margin-right: 10px;
-        }
-        .contest-sub {
-            color: #94a3b8;
-            margin-bottom: 1.2rem;
-            font-size: 0.9rem;
-        }
-        .countdown-container {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin: 1rem 0;
-        }
-        .countdown-box {
-            background: #111827;
-            border-radius: 1.2rem;
-            padding: 0.8rem 1.2rem;
-            min-width: 90px;
-            border: 1px solid #a855f7;
-            box-shadow: 0 0 10px rgba(168,85,247,0.3);
-        }
-        .countdown-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            font-family: 'Orbitron', monospace;
-            color: #c084fc;
-            line-height: 1;
-        }
-        .countdown-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #94a3b8;
-            margin-top: 0.3rem;
-        }
-        .contest-ended {
-            font-size: 1.3rem;
-            color: #10b981;
-            font-family: 'Orbitron', monospace;
-            padding: 0.5rem;
-        }
-        .discord-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #5865F2;
-            padding: 0.6rem 1.5rem;
-            border-radius: 40px;
-            margin-top: 1rem;
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-        .discord-link-btn:hover {
-            background: #4752c4;
-            transform: scale(1.02);
-            box-shadow: 0 0 15px #5865F2;
-        }
         
         .recruit-btn-container { display: flex; justify-content: center; margin: 1.5rem 0 1rem; }
         .recruit-main-btn { background: linear-gradient(95deg, #7c3aed, #a855f7); border: none; padding: 1rem 2.5rem; border-radius: 60px; font-weight: 800; font-size: 1.3rem; color: white; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px #a855f7; display: inline-flex; align-items: center; gap: 12px; font-family: 'Orbitron', monospace; }
@@ -172,32 +178,26 @@
         footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2d3a5e; font-size: 0.8rem; color: #7e8aa8; }
         #toast-msg { visibility: hidden; min-width: 250px; background-color: #1e1b4b; color: #f0eaff; text-align: center; border-radius: 40px; padding: 10px 20px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1100; backdrop-filter: blur(12px); border: 1px solid #c084fc; transition: 0.2s; opacity: 0; font-size: 0.85rem; }
         #toast-msg.show { visibility: visible; opacity: 1; }
-        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .countdown-box { min-width: 70px; padding: 0.5rem; } .countdown-number { font-size: 1.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } }
+        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .contest-widget { position: relative; top: 0; right: 0; margin-bottom: 1rem; width: fit-content; margin-left: auto; margin-right: auto; } .page-wrapper { padding-top: 0.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } }
     </style>
 </head>
 <body>
 <div class="bg-cyber"></div>
-<div class="container">
+<div class="page-wrapper">
+    <!-- KONKURS – WIDGET W PRAWYM GÓRNYM ROGU -->
+    <div class="contest-widget" id="contestWidget">
+        <div class="contest-widget-title"><i class="fab fa-discord"></i> KONKURS BEST</div>
+        <div id="contestCountdownDisplay">
+            <!-- dynamiczne odliczanie -->
+        </div>
+        <a href="#" class="contest-discord-link" id="contestDiscordLink"><i class="fab fa-discord"></i> Dołącz na Discord</a>
+    </div>
+
     <div class="hero">
         <div class="logo-wrapper"><img src="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" alt="BEST Clan Logo" class="clan-logo"></div>
         <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> BEST · REBIRTH CHAMPIONS ULTIMATE</div>
         <h1>BEST <span class="glow-text">ELITE</span></h1>
         <p class="sub">Elitarna formacja w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów.</p>
-        
-        <!-- KONKURS Z ODLICZANIEM – start 10 czerwca na Discordzie -->
-        <div class="contest-section">
-            <div class="contest-title"><i class="fab fa-discord"></i> KONKURS NA DISCORDZIE</div>
-            <div class="contest-sub">🎁 Do wygrania ekskluzywne nagrody w RCU! Konkurs rozpoczyna się 10 czerwca 2025 na naszym serwerze.</div>
-            <div id="countdownContainer" class="countdown-container">
-                <!-- dynamiczne odliczanie -->
-                <div class="countdown-box"><div class="countdown-number" id="days">00</div><div class="countdown-label">Dni</div></div>
-                <div class="countdown-box"><div class="countdown-number" id="hours">00</div><div class="countdown-label">Godzin</div></div>
-                <div class="countdown-box"><div class="countdown-number" id="minutes">00</div><div class="countdown-label">Minut</div></div>
-                <div class="countdown-box"><div class="countdown-number" id="seconds">00</div><div class="countdown-label">Sekund</div></div>
-            </div>
-            <a href="#" class="discord-link-btn" id="contestDiscordLink"><i class="fab fa-discord"></i> Dołącz na serwer BEST</a>
-        </div>
-        
         <div class="recruit-btn-container"><button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button></div>
     </div>
     
@@ -216,7 +216,6 @@
         <div class="card"><i class="fas fa-robot"></i><h3>Boty i kody</h3><p>Bot na Discordzie z kodami i statystykami klanu.</p></div>
     </div>
     
-    <!-- WYMAGANIA -->
     <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA REKRUTACYJNE</span></div>
     <div class="requirements-wrapper"><div class="requirements-inner">
         <div class="req-grid">
@@ -281,23 +280,16 @@
 <script>
     (function(){
         // ODLICZANIE DO KONKURSU – start 10 czerwca 2025, godzina 00:00
-        const contestDate = new Date(2025, 5, 10, 0, 0, 0); // 10 czerwca 2025, 00:00:00 (miesiące 0-index: 5 = czerwiec)
+        const contestDate = new Date(2025, 5, 10, 0, 0, 0); // 10 czerwca 2025
+        const countdownDisplay = document.getElementById('contestCountdownDisplay');
         
         function updateCountdown() {
+            if (!countdownDisplay) return;
             const now = new Date();
             const diff = contestDate - now;
             
-            const daysEl = document.getElementById('days');
-            const hoursEl = document.getElementById('hours');
-            const minutesEl = document.getElementById('minutes');
-            const secondsEl = document.getElementById('seconds');
-            const container = document.getElementById('countdownContainer');
-            
             if (diff <= 0) {
-                // Konkurs już trwa lub się rozpoczął
-                if (container) {
-                    container.innerHTML = '<div class="contest-ended"><i class="fas fa-gift"></i> KONKURS ROZPOCZĘTY! Dołącz na Discord i bierz udział! 🎉</div>';
-                }
+                countdownDisplay.innerHTML = '<div class="contest-ended"><i class="fas fa-gift"></i> KONKURS ROZPOCZĘTY!<br>Dołącz i wygrywaj!</div>';
                 return;
             }
             
@@ -306,10 +298,15 @@
             const minutes = Math.floor((diff % 3600000) / 60000);
             const seconds = Math.floor((diff % 60000) / 1000);
             
-            if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
-            if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-            if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
-            if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+            countdownDisplay.innerHTML = `
+                <div class="contest-countdown">
+                    <div class="contest-time-box"><div class="contest-time-number">${days}</div><div class="contest-time-label">Dni</div></div>
+                    <div class="contest-time-box"><div class="contest-time-number">${hours}</div><div class="contest-time-label">Godz</div></div>
+                    <div class="contest-time-box"><div class="contest-time-number">${minutes}</div><div class="contest-time-label">Min</div></div>
+                    <div class="contest-time-box"><div class="contest-time-number">${seconds}</div><div class="contest-time-label">Sek</div></div>
+                </div>
+                <div style="font-size:0.6rem; margin-top:0.2rem;">do startu konkursu</div>
+            `;
         }
         
         updateCountdown();
