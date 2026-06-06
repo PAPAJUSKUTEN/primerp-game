@@ -32,20 +32,100 @@
         .glow-text { text-shadow: 0 0 8px #a855f7, 0 0 15px #7c3aed; }
         .section-title { font-family: 'Orbitron', monospace; font-size: 2rem; font-weight: 700; margin-bottom: 1.8rem; display: flex; align-items: center; gap: 12px; border-left: 5px solid #a855f7; padding-left: 1.2rem; }
         .section-title i { color: #c084fc; font-size: 1.8rem; }
-        .hero { text-align: center; padding: 2rem 1rem 3rem; border-bottom: 2px solid rgba(139,92,246,0.4); margin-bottom: 3rem; }
+        .hero { text-align: center; padding: 2rem 1rem 3rem; border-bottom: 2px solid rgba(139,92,246,0.4); margin-bottom: 2rem; }
         .clan-tag { font-family: 'Orbitron', monospace; font-size: 1.2rem; letter-spacing: 4px; background: linear-gradient(135deg, #c084fc, #6d28d9); display: inline-block; padding: 0.4rem 1.8rem; border-radius: 60px; font-weight: 800; margin-bottom: 1.2rem; box-shadow: 0 0 12px #a855f7; }
         h1 { font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, #FFFFFF, #d8b4fe, #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 1rem; }
         .sub { font-size: 1.15rem; color: #cbd5e6; max-width: 750px; margin: 0 auto; }
-        .recruit-btn-container { display: flex; justify-content: center; margin: 2rem 0 1rem; }
+        
+        /* ========== KONKURS – ODLICZANIE ========== */
+        .contest-section {
+            background: linear-gradient(135deg, #0f1222, #1a0b2e);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 2rem 0 2rem;
+            border: 2px solid #c084fc;
+            box-shadow: 0 0 25px rgba(168,85,247,0.3);
+            text-align: center;
+        }
+        .contest-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.6rem;
+            color: #f0eaff;
+            margin-bottom: 0.5rem;
+        }
+        .contest-title i {
+            color: #c084fc;
+            margin-right: 10px;
+        }
+        .contest-sub {
+            color: #94a3b8;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+        }
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        .countdown-box {
+            background: #111827;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1.2rem;
+            min-width: 90px;
+            border: 1px solid #a855f7;
+            box-shadow: 0 0 10px rgba(168,85,247,0.3);
+        }
+        .countdown-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            font-family: 'Orbitron', monospace;
+            color: #c084fc;
+            line-height: 1;
+        }
+        .countdown-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            margin-top: 0.3rem;
+        }
+        .contest-ended {
+            font-size: 1.3rem;
+            color: #10b981;
+            font-family: 'Orbitron', monospace;
+            padding: 0.5rem;
+        }
+        .discord-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #5865F2;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .discord-link-btn:hover {
+            background: #4752c4;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px #5865F2;
+        }
+        
+        .recruit-btn-container { display: flex; justify-content: center; margin: 1.5rem 0 1rem; }
         .recruit-main-btn { background: linear-gradient(95deg, #7c3aed, #a855f7); border: none; padding: 1rem 2.5rem; border-radius: 60px; font-weight: 800; font-size: 1.3rem; color: white; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px #a855f7; display: inline-flex; align-items: center; gap: 12px; font-family: 'Orbitron', monospace; }
         .recruit-main-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px #c084fc; }
+        
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
         .card { background: rgba(15,23,42,0.7); backdrop-filter: blur(8px); border-radius: 1.8rem; border: 1px solid rgba(139,92,246,0.4); padding: 1.6rem; transition: 0.3s; }
         .card:hover { border-color: #c084fc; transform: translateY(-5px); }
         .card i { font-size: 2.3rem; color: #c084fc; margin-bottom: 0.8rem; }
         .card h3 { font-size: 1.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 0.6rem; }
         
-        /* NOWE WYMAGANIA – zgodne z wytycznymi */
         .requirements-wrapper { background: linear-gradient(145deg, #0f1222, #0a0c18); border-radius: 1.8rem; padding: 0.2rem; margin-bottom: 2rem; }
         .requirements-inner { background: rgba(5,7,15,0.7); border-radius: 1.6rem; padding: 1.8rem; border: 1px solid #4c1d95; }
         .req-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
@@ -70,46 +150,9 @@
         .close-modal:hover { color: #f43f5e; }
         .modal-body { padding: 1.8rem; overflow-y: auto; flex: 1; scroll-behavior: smooth; }
         
-        /* NEONOWE PRZYCISKI PRZEWIJANIA */
-        .scroll-controls {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 20;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            padding: 10px 6px;
-            border-radius: 40px;
-            border: 1px solid #a855f7;
-            box-shadow: 0 0 15px rgba(168,85,247,0.4);
-        }
-        .scroll-btn {
-            background: linear-gradient(135deg, #1e1b4b, #2d1b69);
-            border: 1px solid #c084fc;
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #e9d5ff;
-            font-size: 1.4rem;
-            box-shadow: 0 0 5px #a855f7;
-        }
-        .scroll-btn:hover {
-            transform: scale(1.1);
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
-            border-color: #fff;
-            box-shadow: 0 0 18px #c084fc;
-            color: white;
-        }
-        .scroll-btn:active { transform: scale(0.95); }
+        .scroll-controls { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 20; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); padding: 10px 6px; border-radius: 40px; border: 1px solid #a855f7; box-shadow: 0 0 15px rgba(168,85,247,0.4); }
+        .scroll-btn { background: linear-gradient(135deg, #1e1b4b, #2d1b69); border: 1px solid #c084fc; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; color: #e9d5ff; font-size: 1.4rem; box-shadow: 0 0 5px #a855f7; }
+        .scroll-btn:hover { transform: scale(1.1); background: linear-gradient(135deg, #7c3aed, #a855f7); border-color: #fff; box-shadow: 0 0 18px #c084fc; color: white; }
         
         .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
         .full-width { grid-column: span 2; }
@@ -129,7 +172,7 @@
         footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2d3a5e; font-size: 0.8rem; color: #7e8aa8; }
         #toast-msg { visibility: hidden; min-width: 250px; background-color: #1e1b4b; color: #f0eaff; text-align: center; border-radius: 40px; padding: 10px 20px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1100; backdrop-filter: blur(12px); border: 1px solid #c084fc; transition: 0.2s; opacity: 0; font-size: 0.85rem; }
         #toast-msg.show { visibility: visible; opacity: 1; }
-        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .recruit-main-btn { font-size: 1rem; padding: 0.8rem 1.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } }
+        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .countdown-box { min-width: 70px; padding: 0.5rem; } .countdown-number { font-size: 1.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } }
     </style>
 </head>
 <body>
@@ -140,14 +183,31 @@
         <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> BEST · REBIRTH CHAMPIONS ULTIMATE</div>
         <h1>BEST <span class="glow-text">ELITE</span></h1>
         <p class="sub">Elitarna formacja w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów.</p>
+        
+        <!-- KONKURS Z ODLICZANIEM – start 10 czerwca na Discordzie -->
+        <div class="contest-section">
+            <div class="contest-title"><i class="fab fa-discord"></i> KONKURS NA DISCORDZIE</div>
+            <div class="contest-sub">🎁 Do wygrania ekskluzywne nagrody w RCU! Konkurs rozpoczyna się 10 czerwca 2025 na naszym serwerze.</div>
+            <div id="countdownContainer" class="countdown-container">
+                <!-- dynamiczne odliczanie -->
+                <div class="countdown-box"><div class="countdown-number" id="days">00</div><div class="countdown-label">Dni</div></div>
+                <div class="countdown-box"><div class="countdown-number" id="hours">00</div><div class="countdown-label">Godzin</div></div>
+                <div class="countdown-box"><div class="countdown-number" id="minutes">00</div><div class="countdown-label">Minut</div></div>
+                <div class="countdown-box"><div class="countdown-number" id="seconds">00</div><div class="countdown-label">Sekund</div></div>
+            </div>
+            <a href="#" class="discord-link-btn" id="contestDiscordLink"><i class="fab fa-discord"></i> Dołącz na serwer BEST</a>
+        </div>
+        
         <div class="recruit-btn-container"><button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button></div>
     </div>
+    
     <div class="stats-row">
         <div class="stat-circle"><div class="stat-number">200+</div><div class="stat-label">Łączny prestiż</div></div>
         <div class="stat-circle"><div class="stat-number">35</div><div class="stat-label">Aktywnych</div></div>
         <div class="stat-circle"><div class="stat-number">120M+</div><div class="stat-label">Jaj otwartych</div></div>
         <div class="stat-circle"><div class="stat-number">∞</div><div class="stat-label">Odrodzenia</div></div>
     </div>
+    
     <div class="section-title"><i class="fas fa-crown"></i><span>DLACZEGO MY?</span></div>
     <div class="cards-grid">
         <div class="card"><i class="fas fa-chalkboard-user"></i><h3>Strategie</h3><p>Optymalne ścieżki rebirth i sekrety zdobywania klejnotów.</p></div>
@@ -156,7 +216,7 @@
         <div class="card"><i class="fas fa-robot"></i><h3>Boty i kody</h3><p>Bot na Discordzie z kodami i statystykami klanu.</p></div>
     </div>
     
-    <!-- NOWE WYMAGANIA – dokładnie według wytycznych -->
+    <!-- WYMAGANIA -->
     <div class="section-title"><i class="fas fa-shield-halbed"></i><span>WYMAGANIA REKRUTACYJNE</span></div>
     <div class="requirements-wrapper"><div class="requirements-inner">
         <div class="req-grid">
@@ -186,7 +246,7 @@
             <form id="recruitmentForm">
                 <div class="form-grid">
                     <div><label><i class="fab fa-roblox"></i> Nick w Roblox *</label><input type="text" id="nick" placeholder="Twoja nazwa" required></div>
-                    <div><label><i class="fab fa-discord"></i> Nazwa Discord *</label><input type="text" id="discord" placeholder="np. gracz123 lub gracz#1234" required></div>
+                    <div><label><i class="fab fa-discord"></i> Nazwa Discord *</label><input type="text" id="discord" placeholder="np. gracz123" required></div>
                     <div><label><i class="fas fa-chart-simple"></i> Prestiż *</label><input type="number" id="prestige" placeholder="np. 10" min="0" step="1" required></div>
                     <div><label><i class="fas fa-sync-alt"></i> Ilość Rebirthów (N) *</label><input type="text" id="rebirths" placeholder="np. 100N, 150N" required></div>
                     <div><label><i class="fas fa-paw"></i> Pet Equip *</label><input type="number" id="petEquip" placeholder="np. 15" min="0" required></div>
@@ -211,8 +271,8 @@
             </form>
         </div>
         <div class="scroll-controls">
-            <button type="button" class="scroll-btn" id="scrollUpBtn" title="Przewiń w górę"><i class="fas fa-chevron-up"></i></button>
-            <button type="button" class="scroll-btn" id="scrollDownBtn" title="Przewiń w dół"><i class="fas fa-chevron-down"></i></button>
+            <button type="button" class="scroll-btn" id="scrollUpBtn"><i class="fas fa-chevron-up"></i></button>
+            <button type="button" class="scroll-btn" id="scrollDownBtn"><i class="fas fa-chevron-down"></i></button>
         </div>
     </div>
 </div>
@@ -220,7 +280,42 @@
 
 <script>
     (function(){
-        // WEBHOOK – testowy
+        // ODLICZANIE DO KONKURSU – start 10 czerwca 2025, godzina 00:00
+        const contestDate = new Date(2025, 5, 10, 0, 0, 0); // 10 czerwca 2025, 00:00:00 (miesiące 0-index: 5 = czerwiec)
+        
+        function updateCountdown() {
+            const now = new Date();
+            const diff = contestDate - now;
+            
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+            const container = document.getElementById('countdownContainer');
+            
+            if (diff <= 0) {
+                // Konkurs już trwa lub się rozpoczął
+                if (container) {
+                    container.innerHTML = '<div class="contest-ended"><i class="fas fa-gift"></i> KONKURS ROZPOCZĘTY! Dołącz na Discord i bierz udział! 🎉</div>';
+                }
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (86400000)) / (3600000));
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+            
+            if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+            if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+            if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+            if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // WEBHOOK
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
         
         // Definicje światów
@@ -238,7 +333,6 @@
             "Divine Hunter", "Hive Capacity"
         ];
         
-        // Generowanie checkboxów
         const gamepassGrid = document.getElementById('gamepassGrid');
         gamepassesList.forEach(gp => {
             const label = document.createElement('label');
@@ -252,7 +346,6 @@
             gamepassGrid.appendChild(label);
         });
         
-        // Dynamiczne światy
         const categorySelect = document.getElementById('worldCategory');
         const mapSelect = document.getElementById('worldMap');
         function updateWorldsList() {
@@ -281,11 +374,9 @@
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         
-        // Przewijanie
         document.getElementById('scrollUpBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: -220, behavior: 'smooth' }));
         document.getElementById('scrollDownBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: 220, behavior: 'smooth' }));
         
-        // Toast
         const toast = document.getElementById('toast-msg');
         function showToast(message, isError = false, duration = 4000){
             toast.textContent = message;
@@ -347,17 +438,17 @@
             const motivation = document.getElementById('motivation').value.trim();
             const gamepasses = getSelectedGamepasses();
             
-            if(!nick || nick.length < 3) { showToast("❌ Podaj poprawny nick (min.3 znaki)", true); return; }
+            if(!nick || nick.length < 3) { showToast("❌ Podaj poprawny nick", true); return; }
             if(!validateDiscord(discord)) { showToast("❌ Podaj nazwę Discord", true); return; }
             if(!prestige || prestige < 0) { showToast("❌ Podaj poziom prestiżu", true); return; }
             if(!rebirths) { showToast("❌ Podaj ilość rebirthów", true); return; }
             if(!petEquip || petEquip < 0) { showToast("❌ Podaj poziom Pet Equip", true); return; }
             if(!eggsOpened) { showToast("❌ Podaj ilość otwartych jaj", true); return; }
             if(!gamepassCount || gamepassCount < 0) { showToast("❌ Podaj liczbę GamePassów", true); return; }
-            if(!hoursPlayed || hoursPlayed < 0) { showToast("❌ Podaj liczbę godzin w grze", true); return; }
+            if(!hoursPlayed || hoursPlayed < 0) { showToast("❌ Podaj liczbę godzin", true); return; }
             if(!worldCategory) { showToast("❌ Wybierz kategorię świata", true); return; }
             if(!worldMap) { showToast("❌ Wybierz najdalszy świat", true); return; }
-            if(exp.length < 10) { showToast("📝 Opisz swoje osiągnięcia (min. 10 znaków)", true); return; }
+            if(exp.length < 10) { showToast("📝 Opisz swoje osiągnięcia", true); return; }
             if(motivation.length < 10) { showToast("💡 Napisz dlaczego chcesz dołączyć", true); return; }
             
             const payloadData = { nick, discord, prestige, rebirths, petEquip, eggsOpened, gamepassCount, hoursPlayed, bestpet, worldCategory, worldMap, gamepasses, experience: exp, motivation };
@@ -379,8 +470,8 @@
             }
         });
         
-        // Social mocki
         document.getElementById('discordInvite')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer BEST – dołącz do nas!", false); });
+        document.getElementById('contestDiscordLink')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer BEST – bądź gotowy na konkurs 10 czerwca!", false); });
         document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: BEST Champions – graj razem z nami!", false); });
         document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false); });
     })();
