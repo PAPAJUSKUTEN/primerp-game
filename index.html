@@ -65,7 +65,7 @@
         .close-modal:hover { color: #f43f5e; }
         .modal-body { padding: 1.8rem; overflow-y: auto; flex: 1; scroll-behavior: smooth; }
         
-        /* ========== STYLIZACJA PRZYCISKÓW PRZEWIJANIA (SUWAKI) ========== */
+        /* NEONOWE PRZYCISKI PRZEWIJANIA */
         .scroll-controls {
             position: absolute;
             right: 10px;
@@ -167,7 +167,7 @@
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
 
-<!-- MODAL REKRUTACJI Z NEONOWYMI PRZYCISKAMI PRZEWIJANIA -->
+<!-- MODAL REKRUTACJI – ZMIENIONE POLE DISCORD (bez #tag) -->
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny BEST</h2><button class="close-modal" id="closeModalBtn">&times;</button></div>
@@ -175,7 +175,8 @@
             <form id="recruitmentForm">
                 <div class="form-grid">
                     <div><label><i class="fab fa-roblox"></i> Nick w Roblox *</label><input type="text" id="nick" placeholder="Twoja nazwa" required></div>
-                    <div><label><i class="fab fa-discord"></i> Discord (nazwa#tag) *</label><input type="text" id="discord" placeholder="gracz#1234" required></div>
+                    <!-- ZMIANA: pole Discord bez wymaganego tagu -->
+                    <div><label><i class="fab fa-discord"></i> Nazwa Discord *</label><input type="text" id="discord" placeholder="np. gracz123 lub gracz#1234" required></div>
                     <div><label><i class="fas fa-chart-simple"></i> Prestiż / Poziom *</label><select id="prestige" required><option value="">-- wybierz --</option><option value="Prestiż 1-7">Prestiż 1-7</option><option value="Prestiż 8-15">Prestiż 8-15</option><option value="Prestiż 16+">Prestiż 16+</option><option value="Master Prestige">Master Prestige</option></select></div>
                     <div><label><i class="fas fa-clock"></i> Aktywność (godz./dzień) *</label><select id="activity" required><option value="">-- wybierz --</option><option value="1-2h">1-2 godziny</option><option value="2-4h">2-4 godziny</option><option value="4h+">4+ godzin</option></select></div>
                     <div><label><i class="fas fa-dragon"></i> Najlepszy zwierzak / Aura</label><input type="text" id="bestpet" placeholder="np. Smok Legendarny"></div>
@@ -194,7 +195,7 @@
                 <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
             </form>
         </div>
-        <!-- NEONOWE PRZYCISKI PRZEWIJANIA (SUWAKI) – DOPRACOWANE WIZUALNIE -->
+        <!-- NEONOWE PRZYCISKI PRZEWIJANIA -->
         <div class="scroll-controls">
             <button type="button" class="scroll-btn" id="scrollUpBtn" title="Przewiń w górę"><i class="fas fa-chevron-up"></i></button>
             <button type="button" class="scroll-btn" id="scrollDownBtn" title="Przewiń w dół"><i class="fas fa-chevron-down"></i></button>
@@ -205,9 +206,9 @@
 
 <script>
     (function(){
-        // ================= TESTOWY WEBHOOK (podany przez użytkownika) =================
+        // ================= TESTOWY WEBHOOK =================
         const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
-        // =================================================================================
+        // ====================================================
         
         // Definicje światów
         const worldsData = {
@@ -269,19 +270,11 @@
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
         
-        // ========== SUWAKI / PRZYCISKI PRZEWIJANIA ==========
+        // Przewijanie
         const scrollUp = document.getElementById('scrollUpBtn');
         const scrollDown = document.getElementById('scrollDownBtn');
-        if (scrollUp) {
-            scrollUp.addEventListener('click', () => {
-                modalBody.scrollBy({ top: -220, behavior: 'smooth' });
-            });
-        }
-        if (scrollDown) {
-            scrollDown.addEventListener('click', () => {
-                modalBody.scrollBy({ top: 220, behavior: 'smooth' });
-            });
-        }
+        if (scrollUp) scrollUp.addEventListener('click', () => modalBody.scrollBy({ top: -220, behavior: 'smooth' }));
+        if (scrollDown) scrollDown.addEventListener('click', () => modalBody.scrollBy({ top: 220, behavior: 'smooth' }));
         
         // Toast
         const toast = document.getElementById('toast-msg');
@@ -293,7 +286,10 @@
             setTimeout(()=> toast.classList.remove('show'), duration);
         }
         
-        function validateDiscord(tag){ return /^.{2,32}#[0-9]{4}$/.test(tag); }
+        // NOWA WALIDACJA DISCORDA – akceptuje zarówno nazwę jak i nazwę#tag (minimum 2 znaki)
+        function validateDiscord(name){
+            return name && name.trim().length >= 2;
+        }
         
         function getSelectedGamepasses() {
             const checkboxes = document.querySelectorAll('.gamepass-cb:checked');
@@ -343,7 +339,7 @@
             const gamepasses = getSelectedGamepasses();
             
             if(!nick || nick.length < 3) { showToast("❌ Podaj poprawny nick (min.3 znaki)", true); return; }
-            if(!discord || !validateDiscord(discord)) { showToast("❌ Nieprawidłowy Discord (nazwa#1234)", true); return; }
+            if(!validateDiscord(discord)) { showToast("❌ Podaj swoją nazwę Discord (min. 2 znaki)", true); return; }
             if(!prestige) { showToast("❌ Wybierz poziom prestiżu", true); return; }
             if(!activity) { showToast("❌ Wybierz aktywność", true); return; }
             if(!worldCategory) { showToast("❌ Wybierz kategorię świata", true); return; }
