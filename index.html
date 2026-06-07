@@ -156,10 +156,6 @@
             cursor: pointer;
         }
 
-        .logout-btn:hover {
-            opacity: 0.85;
-        }
-
         .contest-widget {
             position: absolute;
             top: 20px;
@@ -217,12 +213,6 @@
             font-size: 0.55rem;
             color: #94a3b8;
             text-transform: uppercase;
-        }
-
-        .contest-ended {
-            font-size: 0.7rem;
-            color: #10b981;
-            font-weight: bold;
         }
 
         .contest-discord-link {
@@ -329,8 +319,6 @@
         }
 
         .recruit-main-btn {
-            position: relative;
-            overflow: hidden;
             background: linear-gradient(95deg, #7c3aed, #a855f7);
             border: none;
             padding: 1rem 2.5rem;
@@ -339,7 +327,6 @@
             font-size: 1.3rem;
             color: white;
             cursor: pointer;
-            transition: 0.3s;
             box-shadow: 0 0 15px #a855f7;
             display: inline-flex;
             align-items: center;
@@ -1044,11 +1031,6 @@
             grid-column: span 2;
         }
 
-        .small-note {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
         @media (max-width: 900px) {
             .panel-grid,
             .profile-grid {
@@ -1074,13 +1056,6 @@
             .tabs-body { padding: 16px; }
             .tabs-header { gap: 8px; }
             .tab-btn { width: 100%; }
-            .profile-top {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .profile-top img {
-                margin: 0 auto;
-            }
         }
     </style>
 </head>
@@ -1099,7 +1074,7 @@
                 <p style="color:#cbd5e6; margin-bottom:10px;">Panel wewnętrzny klanu z zakładkami: nowości, ogłoszenia, zgłoszenia, pomoc i więcej.</p>
                 <div class="badge-row">
                     <span class="badge">Status: online</span>
-                    <span class="badge">Ranga: Test123</span>
+                    <span class="badge">Ranga: Klanowicz</span>
                     <span class="badge">Dostęp: pełny</span>
                 </div>
                 <button id="backToMainBtn" class="profile-btn">Wróć na stronę główną</button>
@@ -1155,7 +1130,7 @@
                         </div>
                         <div class="announce-item">
                             <b>Ogłoszenie #2</b>
-                            <div class="mini-muted">Po zalogowaniu konto Test123 może widzieć panel administracyjny i dodatkowe zakładki.</div>
+                            <div class="mini-muted">Po zalogowaniu konto Klanowicz ma widzieć panel profilu klanu.</div>
                         </div>
                         <div class="announce-item">
                             <b>Ogłoszenie #3</b>
@@ -1181,7 +1156,7 @@
                             <div class="panel-title">Ostatnie zgłoszenia</div>
                             <div id="submissionsList">
                                 <div class="submission-item">
-                                    <b>Test123</b>
+                                    <b>Klanowicz1</b>
                                     <div class="mini-muted">Zgłoszenie testowe do panelu klanu.</div>
                                 </div>
                             </div>
@@ -1197,8 +1172,8 @@
                             <div class="mini-muted">Przejdź do rekrutacji i wyślij formularz, jeśli spełniasz wymagania.</div>
                         </div>
                         <div class="help-item">
-                            <b>Jak działa logowanie Test123?</b>
-                            <div class="mini-muted">To konto pokazuje specjalny profil klanu zamiast strony głównej.</div>
+                            <b>Jak działa logowanie Klanowicz?</b>
+                            <div class="mini-muted">Każde konto Klanowicz 1-25 pokazuje panel klanu po zalogowaniu.</div>
                         </div>
                         <div class="help-item">
                             <b>Gdzie są ważne komunikaty?</b>
@@ -1210,18 +1185,9 @@
                 <div class="tab-panel" id="czlonkowie">
                     <div class="panel-card">
                         <div class="panel-title">Lista członków</div>
-                        <div class="member-item">
-                            <b>Test123</b> <span class="badge">Leader</span>
-                            <div class="mini-muted">Konto testowe z dostępem do panelu profilu klanu.</div>
-                        </div>
-                        <div class="member-item">
-                            <b>Member01</b> <span class="badge">Recruit</span>
-                            <div class="mini-muted">Przykładowy członek klanu.</div>
-                        </div>
-                        <div class="member-item">
-                            <b>Member02</b> <span class="badge">Support</span>
-                            <div class="mini-muted">Przykładowa rola wsparcia.</div>
-                        </div>
+                        <div class="member-item"><b>Klanowicz1</b> <span class="badge">Leader</span></div>
+                        <div class="member-item"><b>Klanowicz2</b> <span class="badge">Recruit</span></div>
+                        <div class="member-item"><b>Klanowicz3</b> <span class="badge">Support</span></div>
                     </div>
                 </div>
 
@@ -1235,11 +1201,7 @@
                             </div>
                             <div class="setting-item">
                                 <b>Panel administracyjny</b>
-                                <div class="mini-muted">Dostępny tylko dla Test123.</div>
-                            </div>
-                            <div class="setting-item">
-                                <b>Powiadomienia</b>
-                                <div class="mini-muted">Ogłoszenia, zgłoszenia i nowe wpisy.</div>
+                                <div class="mini-muted">Dostępny dla kont Klanowicz.</div>
                             </div>
                         </div>
                         <div class="panel-card">
@@ -1372,7 +1334,7 @@
                 <input type="password" id="loginPass" placeholder="Password" required>
             </div>
             <button type="submit" class="submit-btn">Zaloguj się</button>
-            <p class="login-hint">Dane testowe: Test123 / Test123</p>
+            <p class="login-hint">Dane testowe: Klanowicz1 / Klanowicz1 ... Klanowicz25 / Klanowicz25</p>
         </form>
     </div>
 </div>
@@ -1402,6 +1364,10 @@
 <script>
 (function(){
     const WEBHOOK_URL = 'https://discord.com/api/webhooks/1513004207966519326/FLqY_tAaj55zxBLhPMNeUHaPwqu3X-a4RD8GFDi10ugkUvvyGsMqiuHmr7b-FPpxl6Jb';
+    const clanAccounts = Array.from({length: 25}, (_, i) => {
+        const n = i + 1;
+        return { username: `Klanowicz${n}`, password: `Klanowicz${n}` };
+    });
 
     const openLoginModalBtn = document.getElementById('openLoginModalBtn');
     const loginModal = document.getElementById('loginModal');
@@ -1441,29 +1407,20 @@
 
     function checkLoginView() {
         const loggedInUser = localStorage.getItem('best_clan_user');
-        if (loggedInUser === 'Test123') showClanProfileView();
+        if (loggedInUser && clanAccounts.some(acc => acc.username === loggedInUser)) showClanProfileView();
         else showMainView();
     }
 
-    openLoginModalBtn?.addEventListener('click', () => {
-        loginModal.classList.add('active');
-    });
-
-    function closeLoginModal() {
-        loginModal.classList.remove('active');
-        loginForm.reset();
-    }
-
-    loginModal?.addEventListener('click', (e) => {
-        if (e.target === loginModal) closeLoginModal();
-    });
+    openLoginModalBtn?.addEventListener('click', () => loginModal.classList.add('active'));
+    function closeLoginModal() { loginModal.classList.remove('active'); loginForm.reset(); }
+    loginModal?.addEventListener('click', (e) => { if (e.target === loginModal) closeLoginModal(); });
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const user = loginUser.value.trim();
         const pass = loginPass.value.trim();
-
-        if (user === 'Test123' && pass === 'Test123') {
+        const found = clanAccounts.find(acc => acc.username === user && acc.password === pass);
+        if (found) {
             localStorage.setItem('best_clan_user', user);
             showToast('✅ Zalogowano jako klanowicz: ' + user, false);
             closeLoginModal();
@@ -1487,7 +1444,6 @@
 
     const tabs = document.querySelectorAll('.tab-btn');
     const panels = document.querySelectorAll('.tab-panel');
-
     tabs.forEach(btn => {
         btn.addEventListener('click', () => {
             tabs.forEach(b => b.classList.remove('active'));
@@ -1513,18 +1469,9 @@
 
     const membersModal = document.getElementById('membersModal');
     const closeMembersModalBtn = document.getElementById('closeMembersModalBtn');
-
-    loggedInfo?.addEventListener('click', () => {
-        membersModal.classList.add('active');
-    });
-
-    closeMembersModalBtn?.addEventListener('click', () => {
-        membersModal.classList.remove('active');
-    });
-
-    membersModal?.addEventListener('click', (e) => {
-        if (e.target === membersModal) membersModal.classList.remove('active');
-    });
+    loggedInfo?.addEventListener('click', () => membersModal.classList.add('active'));
+    closeMembersModalBtn?.addEventListener('click', () => membersModal.classList.remove('active'));
+    membersModal?.addEventListener('click', (e) => { if (e.target === membersModal) membersModal.classList.remove('active'); });
 
     const particlesBg = document.getElementById('particles-bg');
     function createParticles(count = 28) {
@@ -1545,15 +1492,7 @@
     }
     createParticles();
 
-    const clanBoosts = [
-        "+20% Divines Luck", "+3% Egg Luck Combo", "+40% Season XP", "+64% Hatch Speed",
-        "+0.2% Toxic Pets Luck", "+25% Global Lucky Egg Boost", "+33% Secrets Luck", "+181% Gems",
-        "+² Pets Equipped", "+30% Aure Luck", "+10% Ring Fragments Luck", "+176% Clicks",
-        "+1 Meteorite Damage", "+1 Eggs Open", "+30% Space Coins Multiplier", "+1.5% Golden Pets Luck",
-        "+3 More Wood", "-0.13% Golden Tree Chance", "+26% Extra Egg", "+0.4% Shiny Pets Luck",
-        "+196% Luck", "+15% Mastery XP"
-    ];
-
+    const clanBoosts = ["+20% Divines Luck", "+3% Egg Luck Combo", "+40% Season XP", "+64% Hatch Speed", "+0.2% Toxic Pets Luck", "+25% Global Lucky Egg Boost", "+33% Secrets Luck", "+181% Gems", "+² Pets Equipped", "+30% Aure Luck", "+10% Ring Fragments Luck", "+176% Clicks", "+1 Meteorite Damage", "+1 Eggs Open", "+30% Space Coins Multiplier", "+1.5% Golden Pets Luck", "+3 More Wood", "-0.13% Golden Tree Chance", "+26% Extra Egg", "+0.4% Shiny Pets Luck", "+196% Luck", "+15% Mastery XP"];
     const boostsGrid = document.getElementById('boostsGrid');
     if (boostsGrid) {
         clanBoosts.forEach(boost => {
@@ -1579,7 +1518,6 @@
 
     const contestDate = new Date(2025, 5, 10, 0, 0, 0);
     const countdownDisplay = document.getElementById('contestCountdownDisplay');
-
     function updateCountdown() {
         if (!countdownDisplay) return;
         const now = new Date();
@@ -1603,13 +1541,7 @@
         Skylands: ["Skylands", "Sky Garden", "Cloudy World", "Ashwind Realm", "Frozen Forest", "Ancient Ruins", "Monochrome World", "Wild West", "Bee World", "Neon World", "Thunder Isles", "Sunken Temple", "Swamp World", "Crystal Island", "Blossom Clouds", "Aurora World"]
     };
 
-    const gamepassesList = [
-        "Auto Clicker", "Auto Rebirth", "+2 Pet Equip", "+3 Pet Equip", "Mega Luck", "Ultra Luck",
-        "Faster Eggs Open", "Extra Egg", "Vip", "Magic Eggs", "Shiny Hunters", "Insane Farmer",
-        "Secrets Hunter", "Mega Fragment Luck", "Insane Lumberjack", "Dungeon Coins", "Space Coins",
-        "Divine Hunter", "Hive Capacity"
-    ];
-
+    const gamepassesList = ["Auto Clicker", "Auto Rebirth", "+2 Pet Equip", "+3 Pet Equip", "Mega Luck", "Ultra Luck", "Faster Eggs Open", "Extra Egg", "Vip", "Magic Eggs", "Shiny Hunters", "Insane Farmer", "Secrets Hunter", "Mega Fragment Luck", "Insane Lumberjack", "Dungeon Coins", "Space Coins", "Divine Hunter", "Hive Capacity"];
     const gamepassGrid = document.getElementById('gamepassGrid');
     if (gamepassGrid) {
         gamepassesList.forEach(gp => {
@@ -1627,7 +1559,6 @@
 
     const categorySelect = document.getElementById('worldCategory');
     const mapSelect = document.getElementById('worldMap');
-
     categorySelect?.addEventListener('change', () => {
         const category = categorySelect.value;
         mapSelect.innerHTML = '<option value="">-- wybierz świat --</option>';
@@ -1728,7 +1659,6 @@
 
     form?.addEventListener('submit', async (e) => {
         e.preventDefault();
-
         const nick = document.getElementById('nick').value.trim();
         const discord = document.getElementById('discord').value.trim();
         const prestige = document.getElementById('prestige').value;
@@ -1770,15 +1700,17 @@
         }
     });
 
-    document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast("🏆 Grupa Roblox: BEST Champions – graj razem z nami!", false);
-    });
+    document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: BEST Champions – graj razem z nami!", false); });
+    document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false); });
 
-    document.getElementById('rcuCodes')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false);
-    });
+    const membersTableBody = document.getElementById('membersTableBody');
+    if (membersTableBody) {
+        clanAccounts.forEach(acc => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${acc.username}</td><td>${acc.password}</td>`;
+            membersTableBody.appendChild(tr);
+        });
+    }
 
     updateLoginUI();
     checkLoginView();
