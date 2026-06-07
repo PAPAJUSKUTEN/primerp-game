@@ -134,10 +134,30 @@
         .logged-info {
             font-size: 0.85rem;
             color: #e9d5ff;
+            cursor: pointer;
+        }
+
+        .logged-info:hover {
+            color: #c084fc;
         }
 
         .logged-info b {
             color: #c084fc;
+        }
+
+        .logout-btn {
+            background: linear-gradient(90deg, #dc2626, #b91c1c);
+            border: none;
+            padding: 0.5rem 0.9rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            opacity: 0.85;
         }
 
         .contest-widget {
@@ -269,11 +289,12 @@
         .hero {
             text-align: center;
             padding: 1rem 1rem 2rem;
-            border-bottom: 2px solid rgba(139,92,246,0.4);
+            border-bottom: 2px solid rgba(139,92,
+
+246,0.4);
             margin-bottom: 2rem;
         }
-
-        .clan-tag {
+                .clan-tag {
             font-family: 'Orbitron', monospace;
             font-size: 1.2rem;
             letter-spacing: 4px;
@@ -507,8 +528,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
-        .recruit-modal {
+                .recruit-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -821,6 +841,87 @@
             text-align: center;
         }
 
+        /* ===== MODAL LISTY CZŁONKÓW KLANU ===== */
+        .members-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1200;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .members-modal.active {
+            display: flex;
+        }
+
+        .members-modal-content {
+            background: #0f1222;
+            border-radius: 2rem;
+            max-width: 900px;
+            width: 90%;
+            max-height: 80vh;
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 40px rgba(168,85,247,0.35);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .members-modal-header {
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid #4c1d95;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            border-radius: 2rem 2rem 0 0;
+            flex-shrink: 0;
+        }
+
+        .members-modal-header h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: #c084fc;
+        }
+
+        .members-modal-body {
+            padding: 1.8rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .members-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .members-table th,
+        .members-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+
+        .members-table th {
+            font-family: 'Orbitron', monospace;
+            color: #c084fc;
+            font-size: 0.95rem;
+        }
+
+        .members-table td {
+            color: #e9d5ff;
+            font-size: 0.9rem;
+        }
+
+        .members-table tr:hover {
+            background: rgba(168,85,247,0.1);
+        }
+
         @media (max-width: 720px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
@@ -930,7 +1031,6 @@
 
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
-
 <!-- MODAL REKRUTACJI -->
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
@@ -993,6 +1093,32 @@
     </div>
 </div>
 
+<!-- MODAL LISTY CZŁONKÓW KLANU (NA HASŁA) -->
+<div id="membersModal" class="members-modal">
+    <div class="members-modal-content">
+        <div class="members-modal-header">
+            <h2><i class="fas fa-users"></i> Oficjalne konta członków BEST</h2>
+            <button class="close-modal" id="closeMembersModalBtn">&times;</button>
+        </div>
+        <div class="members-modal-body">
+            <p style="color:#cbd5e6; font-size:0.9rem; margin-bottom:1rem;">Lista oficjalnych kont członków klanu (narazie pusta – dodaj dane w tabeli).</p>
+
+            <!-- PUSTA STRUKTURA TABELI -->
+            <table class="members-table">
+                <thead>
+                    <tr>
+                        <th>Login</th>
+                        <th>Hasło</th>
+                    </tr>
+                </thead>
+                <tbody id="membersTableBody">
+                    <!-- Tutaj później dodasz wiersze z kontami -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <div id="toast-msg"></div>
 
 <script>
@@ -1002,7 +1128,6 @@
     // ===== LOGOWANIE KLANOWICZA =====
     const openLoginModalBtn = document.getElementById('openLoginModalBtn');
     const loginModal = document.getElementById('loginModal');
-    const closeModalLogin = document.querySelector('#loginModal .close-modal');
     const loginForm = document.getElementById('loginForm');
     const loginUser = document.getElementById('loginUser');
     const loginPass = document.getElementById('loginPass');
@@ -1013,13 +1138,11 @@
     function updateLoginUI() {
         const loggedInUser = localStorage.getItem('best_clan_user');
         if (loggedInUser) {
-            // Zalogowany
             openLoginModalBtn.style.display = 'none';
             loggedInfo.style.display = 'inline';
             loggedUser.textContent = loggedInUser;
             logoutBtn.style.display = 'inline-block';
         } else {
-            // Niezalogowany
             openLoginModalBtn.style.display = 'inline-flex';
             loggedInfo.style.display = 'none';
             logoutBtn.style.display = 'none';
@@ -1037,18 +1160,6 @@
 
     loginModal?.addEventListener('click', (e) => {
         if (e.target === loginModal) closeLoginModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeLoginModal();
-            // zamknij też modal rekrutacyjny
-            const recruitModal = document.getElementById('recruitModal');
-            if (recruitModal.classList.contains('active')) {
-                recruitModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
     });
 
     loginForm.addEventListener('submit', (e) => {
@@ -1074,7 +1185,23 @@
         updateLoginUI();
     });
 
-    updateLoginUI();
+    // ===== MODAL LISTY CZŁONKÓW =====
+    const membersModal = document.getElementById('membersModal');
+    const closeMembersModalBtn = document.getElementById('closeMembersModalBtn');
+
+    loggedInfo?.addEventListener('click', () => {
+        membersModal.classList.add('active');
+    });
+
+    closeMembersModalBtn?.addEventListener('click', () => {
+        membersModal.classList.remove('active');
+    });
+
+    membersModal?.addEventListener('click', (e) => {
+        if (e.target === membersModal) {
+            membersModal.classList.remove('active');
+        }
+    });
 
     // ===== CZĄSTECZKI =====
     const particlesBg = document.getElementById('particles-bg');
@@ -1218,6 +1345,15 @@
     document.getElementById('scrollUpBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: -220, behavior: 'smooth' }));
     document.getElementById('scrollDownBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: 220, behavior: 'smooth' }));
 
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeLoginModal();
+            closeModal();
+            membersModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
     // ===== TOAST =====
     const toast = document.getElementById('toast-msg');
     function showToast(message, isError = false, duration = 4000) {
@@ -1253,7 +1389,7 @@
                 { name: "📜 Doświadczenie", value: data.experience.length > 500 ? data.experience.substring(0,500) + "..." : data.experience, inline: false },
                 { name: "💡 Motywacja", value: data.motivation.length > 500 ? data.motivation.substring(0,500) + "..." : data.motivation, inline: false }
             ],
-            footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.postimprove.png" },
+            footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" },
             timestamp: new Date().toISOString()
         };
 
@@ -1338,6 +1474,8 @@
         e.preventDefault();
         showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false);
     });
+
+    updateLoginUI();
 })();
 </script>
 </body>
