@@ -6,9 +6,9 @@
     <meta name="description" content="BEST – elitarny klan w grze Rebirth Champions Ultimate (RCU) na Roblox. Rekrutacja, wymagania, formularz zgłoszeniowy z GamePassami.">
     <title>BEST | Rebirth Champions Ultimate – Elitarny Klan RCU</title>
     
-    <!-- FAVICON -->
-    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg">
+    <!-- FAVICON (ikona na karcie przeglądarki) – nowe zdjęcie klanu -->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -85,10 +85,8 @@
         .recruit-main-btn { background: linear-gradient(95deg, #7c3aed, #a855f7); border: none; padding: 1rem 2.5rem; border-radius: 60px; font-weight: 800; font-size: 1.3rem; color: white; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px #a855f7; display: inline-flex; align-items: center; gap: 12px; font-family: 'Orbitron', monospace; }
         .recruit-main-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px #c084fc; }
         
-        /* ========== CLAN BOOSTY – dokładnie z Twojej listy ========== */
-        .clan-boosts-section {
-            margin: 1.5rem 0 2rem;
-        }
+        /* CLAN BOOSTY – lista z gry */
+        .clan-boosts-section { margin: 1.5rem 0 2rem; }
         .boosts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -108,10 +106,6 @@
             border: 1px solid rgba(139, 92, 246, 0.25);
             transition: all 0.2s ease;
             font-family: 'Inter', sans-serif;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
-            overflow-x: auto;
-            text-overflow: ellipsis;
         }
         .boost-item:hover {
             background: rgba(139, 92, 246, 0.2);
@@ -120,11 +114,7 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        .boost-icon {
-            font-size: 0.8rem;
-            margin-right: 4px;
-            color: #c084fc;
-        }
+        .boost-icon { font-size: 0.8rem; margin-right: 4px; color: #c084fc; }
         
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; margin-bottom: 3rem; }
         .card { background: rgba(15,23,42,0.7); backdrop-filter: blur(8px); border-radius: 1.8rem; border: 1px solid rgba(139,92,246,0.4); padding: 1.6rem; transition: 0.3s; }
@@ -178,7 +168,7 @@
         footer { text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #2d3a5e; font-size: 0.8rem; color: #7e8aa8; }
         #toast-msg { visibility: hidden; min-width: 250px; background-color: #1e1b4b; color: #f0eaff; text-align: center; border-radius: 40px; padding: 10px 20px; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1100; backdrop-filter: blur(12px); border: 1px solid #c084fc; transition: 0.2s; opacity: 0; font-size: 0.85rem; }
         #toast-msg.show { visibility: visible; opacity: 1; }
-        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .contest-widget { position: relative; top: 0; right: 0; margin-bottom: 1rem; width: fit-content; margin-left: auto; margin-right: auto; } .page-wrapper { padding-top: 0.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } .boosts-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } .boost-item { font-size: 0.65rem; white-space: normal; word-break: keep-all; } }
+        @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } .gamepass-grid { grid-template-columns: 1fr; } h1 { font-size: 2.2rem; } .contest-widget { position: relative; top: 0; right: 0; margin-bottom: 1rem; width: fit-content; margin-left: auto; margin-right: auto; } .page-wrapper { padding-top: 0.5rem; } .scroll-controls { right: 5px; } .scroll-btn { width: 40px; height: 40px; font-size: 1.2rem; } .boosts-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } .boost-item { font-size: 0.65rem; } }
     </style>
 </head>
 <body>
@@ -195,22 +185,22 @@
                 <div class="contest-time-box"><div class="contest-time-number">--</div><div class="contest-time-label">Sek</div></div>
             </div>
         </div>
-        <a href="#" class="contest-discord-link" id="contestDiscordLink"><i class="fab fa-discord"></i> Dołącz na Discord</a>
+        <a href="https://discord.gg/NQQyM7V5KH" class="contest-discord-link" id="contestDiscordLink" target="_blank"><i class="fab fa-discord"></i> Dołącz na Discord</a>
     </div>
 
     <div class="hero">
-        <div class="logo-wrapper"><img src="https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" alt="BEST Clan Logo" class="clan-logo"></div>
+        <div class="logo-wrapper">
+            <img src="https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" alt="BEST Clan Logo" class="clan-logo">
+        </div>
         <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> BEST · REBIRTH CHAMPIONS ULTIMATE</div>
         <h1>BEST <span class="glow-text">ELITE</span></h1>
         <p class="sub">Elitarna formacja w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów.</p>
         <div class="recruit-btn-container"><button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button></div>
     </div>
     
-    <!-- CLAN BOOSTY – dokładnie z Twojej listy -->
+    <!-- CLAN BOOSTY – lista z gry -->
     <div class="clan-boosts-section">
-        <div class="boosts-grid" id="boostsGrid">
-            <!-- boosty wstawiane dynamicznie z JS -->
-        </div>
+        <div class="boosts-grid" id="boostsGrid"></div>
     </div>
     
     <div class="stats-row">
@@ -242,7 +232,7 @@
     </div></div>
     
     <div class="social-links">
-        <a href="#" class="social-icon" id="discordInvite"><i class="fab fa-discord"></i> Serwer BEST</a>
+        <a href="https://discord.gg/NQQyM7V5KH" class="social-icon" id="discordInvite" target="_blank"><i class="fab fa-discord"></i> Serwer BEST</a>
         <a href="#" class="social-icon" id="robloxGroupBtn"><i class="fab fa-fort-awesome"></i> Grupa Roblox</a>
         <a href="#" class="social-icon" id="rcuCodes"><i class="fas fa-code"></i> Kody RCU</a>
     </div>
@@ -291,30 +281,17 @@
 
 <script>
     (function(){
-        // ================= PRAWDZIWE BOOSTY Z RCU (TWOJA LISTA) =================
+        // ================= NOWY WEBHOOK =================
+        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1513004207966519326/FLqY_tAaj55zxBLhPMNeUHaPwqu3X-a4RD8GFDi10ugkUvvyGsMqiuHmr7b-FPpxl6Jb';
+        
+        // ================= BOOSTY Z GRY =================
         const clanBoosts = [
-            "+20% Divines Luck",
-            "+3% Egg Luck Combo",
-            "+40% Season XP",
-            "+64% Hatch Speed",
-            "+0.2% Toxic Pets Luck",
-            "+25% Global Lucky Egg Boost",
-            "+33% Secrets Luck",
-            "+181% Gems",
-            "+² Pets Equipped",
-            "+30% Aure Luck",
-            "+10% Ring Fragments Luck",
-            "+176% Clicks",
-            "+1 Meteorite Damage",
-            "+1 Eggs Open",
-            "+30% Space Coins Multiplier",
-            "+1.5% Golden Pets Luck",
-            "+3 More Wood",
-            "-0.13% Golden Tree Chance",
-            "+26% Extra Egg",
-            "+0.4% Shiny Pets Luck",
-            "+196% Luck",
-            "+15% Mastery XP"
+            "+20% Divines Luck", "+3% Egg Luck Combo", "+40% Season XP", "+64% Hatch Speed",
+            "+0.2% Toxic Pets Luck", "+25% Global Lucky Egg Boost", "+33% Secrets Luck", "+181% Gems",
+            "+² Pets Equipped", "+30% Aure Luck", "+10% Ring Fragments Luck", "+176% Clicks",
+            "+1 Meteorite Damage", "+1 Eggs Open", "+30% Space Coins Multiplier", "+1.5% Golden Pets Luck",
+            "+3 More Wood", "-0.13% Golden Tree Chance", "+26% Extra Egg", "+0.4% Shiny Pets Luck",
+            "+196% Luck", "+15% Mastery XP"
         ];
         
         const boostsGrid = document.getElementById('boostsGrid');
@@ -322,8 +299,6 @@
             clanBoosts.forEach(boost => {
                 const boostDiv = document.createElement('div');
                 boostDiv.className = 'boost-item';
-                
-                // Dodanie ikony w zależności od typu boosta
                 let icon = '<i class="fas fa-chart-line boost-icon"></i>';
                 if (boost.includes('Luck')) icon = '<i class="fas fa-clover boost-icon"></i>';
                 if (boost.includes('Gems')) icon = '<i class="fas fa-gem boost-icon"></i>';
@@ -337,54 +312,39 @@
                 if (boost.includes('Coins')) icon = '<i class="fas fa-coins boost-icon"></i>';
                 if (boost.includes('Space')) icon = '<i class="fas fa-rocket boost-icon"></i>';
                 if (boost.includes('Mastery')) icon = '<i class="fas fa-graduation-cap boost-icon"></i>';
-                if (boost.includes('Season')) icon = '<i class="fas fa-calendar-alt boost-icon"></i>';
-                
                 boostDiv.innerHTML = icon + ' ' + boost;
                 boostsGrid.appendChild(boostDiv);
             });
         }
         
-        // ================= ODLICZANIE DO KONKURSU =================
+        // ================= ODLICZANIE DO KONKURSU (10.06.2025) =================
         const contestDate = new Date(2025, 5, 10, 0, 0, 0);
         const countdownDisplay = document.getElementById('contestCountdownDisplay');
-        
         function updateCountdown() {
             if (!countdownDisplay) return;
             const now = new Date();
             const diff = contestDate - now;
-            
             if (diff <= 0) {
                 countdownDisplay.innerHTML = '<div class="contest-ended"><i class="fas fa-gift"></i> KONKURS ROZPOCZĘTY!<br>Dołącz i wygrywaj!</div>';
                 return;
             }
-            
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (86400000)) / (3600000));
             const minutes = Math.floor((diff % 3600000) / 60000);
             const seconds = Math.floor((diff % 60000) / 1000);
-            
-            countdownDisplay.innerHTML = `
-                <div class="contest-countdown">
-                    <div class="contest-time-box"><div class="contest-time-number">${days}</div><div class="contest-time-label">Dni</div></div>
-                    <div class="contest-time-box"><div class="contest-time-number">${hours}</div><div class="contest-time-label">Godz</div></div>
-                    <div class="contest-time-box"><div class="contest-time-number">${minutes}</div><div class="contest-time-label">Min</div></div>
-                    <div class="contest-time-box"><div class="contest-time-number">${seconds}</div><div class="contest-time-label">Sek</div></div>
-                </div>
-                <div style="font-size:0.55rem; margin-top:0.2rem;">do startu konkursu</div>
-            `;
+            countdownDisplay.innerHTML = `<div class="contest-countdown"><div class="contest-time-box"><div class="contest-time-number">${days}</div><div class="contest-time-label">Dni</div></div><div class="contest-time-box"><div class="contest-time-number">${hours}</div><div class="contest-time-label">Godz</div></div><div class="contest-time-box"><div class="contest-time-number">${minutes}</div><div class="contest-time-label">Min</div></div><div class="contest-time-box"><div class="contest-time-number">${seconds}</div><div class="contest-time-label">Sek</div></div></div><div style="font-size:0.55rem; margin-top:0.2rem;">do startu konkursu</div>`;
         }
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // ================= WEBHOOK =================
-        const WEBHOOK_URL = 'https://discord.com/api/webhooks/1510830173698785280/-OwFcHZwOsoG6_UGKkGfFjXvV4vqcv7WKge6VpWjDTSYHU8u-vQn_rmQHAf6GHUY-Jyn';
-        
+        // ================= ŚWIATY =================
         const worldsData = {
             Overworld: ["Spawn", "Farm", "Desert", "Nuclear", "Atlantis", "Kingdom", "City", "Cave", "Volcano", "Heaven", "Magic", "Circus", "Jungle", "Steampunk", "Sakura", "Lab"],
             Space: ["Moon", "Alien", "Tech City", "Neluba Forest", "Void", "Spaceship", "Space Warzone", "Comet", "Starfactory", "Glacier Moon", "Mars Colony", "Starfall Valley", "Black Hole"],
             Skylands: ["Skylands", "Sky Garden", "Cloudy World", "Ashwind Realm", "Frozen Forest", "Ancient Ruins", "Monochrome World", "Wild West", "Bee World", "Neon World", "Thunder Isles", "Sunken Temple", "Swamp World", "Crystal Island", "Blossom Clouds", "Aurora World"]
         };
         
+        // ================= GAMEPASSY =================
         const gamepassesList = [
             "Auto Clicker", "Auto Rebirth", "+2 Pet Equip", "+3 Pet Equip", "Mega Luck", "Ultra Luck", 
             "Faster Eggs Open", "Extra Egg", "Vip", "Magic Eggs", "Shiny Hunters", "Insane Farmer", 
@@ -423,6 +383,7 @@
         }
         categorySelect.addEventListener('change', updateWorldsList);
         
+        // ================= MODAL =================
         const modal = document.getElementById('recruitModal');
         const openBtn = document.getElementById('openRecruitModalBtn');
         const closeBtn = document.getElementById('closeModalBtn');
@@ -435,6 +396,7 @@
         document.getElementById('scrollUpBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: -220, behavior: 'smooth' }));
         document.getElementById('scrollDownBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: 220, behavior: 'smooth' }));
         
+        // ================= TOAST =================
         const toast = document.getElementById('toast-msg');
         function showToast(message, isError = false, duration = 4000){
             toast.textContent = message;
@@ -447,11 +409,12 @@
         function validateDiscord(name){ return name && name.trim().length >= 2; }
         function getSelectedGamepasses() { return Array.from(document.querySelectorAll('.gamepass-cb:checked')).map(cb => cb.value); }
         
+        // ================= WYSYŁKA DO WEBHOOK =================
         async function sendToDiscord(data){
             const embed = {
                 title: "⚔️ NOWY REKRUT BEST | RCU",
                 color: 0xa55eff,
-                thumbnail: { url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
+                thumbnail: { url: "https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" },
                 fields: [
                     { name: "🎮 Nick Roblox", value: data.nick, inline: true },
                     { name: "🔷 Discord", value: data.discord, inline: true },
@@ -468,10 +431,10 @@
                     { name: "📜 Doświadczenie", value: data.experience.length > 500 ? data.experience.substring(0,500)+"..." : data.experience, inline: false },
                     { name: "💡 Motywacja", value: data.motivation.length > 500 ? data.motivation.substring(0,500)+"..." : data.motivation, inline: false }
                 ],
-                footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg" },
+                footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" },
                 timestamp: new Date().toISOString()
             };
-            const payload = { username: "BEST Rekruter", avatar_url: "https://i.ibb.co/H83Hxvh/Gemini-Generated-Image-ooou51ooou51ooou-modified.jpg", embeds: [embed], content: "📣 **Nowe zgłoszenie do BEST!**" };
+            const payload = { username: "BEST Rekruter", avatar_url: "https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png", embeds: [embed], content: "📣 **Nowe zgłoszenie do BEST!**" };
             const response = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             if(!response.ok) throw new Error(`HTTP ${response.status}`);
             return true;
@@ -528,8 +491,7 @@
             }
         });
         
-        document.getElementById('discordInvite')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer BEST – dołącz do nas!", false); });
-        document.getElementById('contestDiscordLink')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🔗 Zaproszenie na serwer BEST – bądź gotowy na konkurs 10 czerwca!", false); });
+        // Przyciski społecznościowe
         document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: BEST Champions – graj razem z nami!", false); });
         document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false); });
     })();
