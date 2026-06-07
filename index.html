@@ -23,6 +23,10 @@
             overflow-x: hidden;
         }
 
+        body.locked {
+            overflow: hidden;
+        }
+
         .bg-cyber {
             position: fixed;
             top: 0;
@@ -70,6 +74,54 @@
             from { transform: translateY(110vh) scale(0.6); opacity: 0; }
             10% { opacity: 1; }
             to { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+        }
+
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: linear-gradient(145deg, #111827, #0f1222);
+            border: 1px solid rgba(192, 132, 252, 0.5);
+            border-radius: 1.8rem;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.35);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            font-family: 'Orbitron', monospace;
+            color: #c084fc;
+            margin-bottom: 0.4rem;
+        }
+
+        .login-sub {
+            color: #cbd5e6;
+            font-size: 0.9rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .login-form {
+            display: grid;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .login-hint {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-align: center;
         }
 
         .page-wrapper {
@@ -757,6 +809,28 @@
 <div class="bg-cyber"></div>
 <div id="particles-bg"></div>
 
+<div id="loginOverlay" class="login-overlay">
+    <div class="login-box">
+        <h2><i class="fas fa-user-lock"></i> Logowanie do BEST</h2>
+        <p class="login-sub">Wpisz login i hasło, aby wejść na stronę.</p>
+
+        <form id="loginForm" class="login-form">
+            <div>
+                <label for="loginUser">Login</label>
+                <input type="text" id="loginUser" placeholder="Login" required>
+            </div>
+
+            <div>
+                <label for="loginPass">Password</label>
+                <input type="password" id="loginPass" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Zaloguj się</button>
+            <p class="login-hint">Dane testowe: Test123 / Test123</p>
+        </form>
+    </div>
+</div>
+
 <div class="page-wrapper">
     <div class="top-status-bar">
         <span class="dot"></span>
@@ -872,6 +946,36 @@
 <script>
 (function(){
     const WEBHOOK_URL = 'https://discord.com/api/webhooks/1513004207966519326/FLqY_tAaj55zxBLhPMNeUHaPwqu3X-a4RD8GFDi10ugkUvvyGsMqiuHmr7b-FPpxl6Jb';
+
+    const loginOverlay = document.getElementById('loginOverlay');
+    const loginForm = document.getElementById('loginForm');
+    const loginUser = document.getElementById('loginUser');
+    const loginPass = document.getElementById('loginPass');
+
+    function unlockSite() {
+        loginOverlay.style.display = 'none';
+        document.body.classList.remove('locked');
+        localStorage.setItem('best_logged_in', '1');
+    }
+
+    document.body.classList.add('locked');
+
+    if (localStorage.getItem('best_logged_in') === '1') {
+        unlockSite();
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const user = loginUser.value.trim();
+        const pass = loginPass.value.trim();
+        if (user === 'Test123' && pass === 'Test123') {
+            unlockSite();
+        } else {
+            showToast('❌ Zły login lub hasło', true);
+            loginPass.value = '';
+            loginPass.focus();
+        }
+    });
 
     const particlesBg = document.getElementById('particles-bg');
     function createParticles(count = 28) {
