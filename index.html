@@ -23,10 +23,6 @@
             overflow-x: hidden;
         }
 
-        body.locked {
-            overflow: hidden;
-        }
-
         .bg-cyber {
             position: fixed;
             top: 0;
@@ -76,54 +72,6 @@
             to { transform: translateY(-20vh) scale(1.2); opacity: 0; }
         }
 
-        .login-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 5000;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .login-box {
-            width: 100%;
-            max-width: 420px;
-            background: linear-gradient(145deg, #111827, #0f1222);
-            border: 1px solid rgba(192, 132, 252, 0.5);
-            border-radius: 1.8rem;
-            box-shadow: 0 0 40px rgba(168, 85, 247, 0.35);
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .login-box h2 {
-            font-family: 'Orbitron', monospace;
-            color: #c084fc;
-            margin-bottom: 0.4rem;
-        }
-
-        .login-sub {
-            color: #cbd5e6;
-            font-size: 0.9rem;
-            margin-bottom: 1.4rem;
-        }
-
-        .login-form {
-            display: grid;
-            gap: 1rem;
-            text-align: left;
-        }
-
-        .login-hint {
-            margin-top: 0.5rem;
-            font-size: 0.75rem;
-            color: #94a3b8;
-            text-align: center;
-        }
-
         .page-wrapper {
             position: relative;
             max-width: 1400px;
@@ -146,6 +94,7 @@
             font-size: 0.85rem;
             box-shadow: 0 0 18px rgba(168,85,247,0.18);
             backdrop-filter: blur(10px);
+            position: relative;
         }
 
         .top-status-bar .dot {
@@ -155,6 +104,40 @@
             background: #22c55e;
             box-shadow: 0 0 12px #22c55e;
             flex: 0 0 auto;
+        }
+
+        .login-status-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .login-btn {
+            background: linear-gradient(95deg, #7c3aed, #a855f7);
+            border: none;
+            padding: 0.5rem 1.1rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 10px #a855f7;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 18px #c084fc;
+        }
+
+        .logged-info {
+            font-size: 0.85rem;
+            color: #e9d5ff;
+        }
+
+        .logged-info b {
+            color: #c084fc;
         }
 
         .contest-widget {
@@ -783,6 +766,61 @@
             opacity: 1;
         }
 
+        /* ===== MODAL LOGOWANIA KLANOWICZA ===== */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-modal-content {
+            background: #0f1222;
+            border-radius: 1.8rem;
+            max-width: 420px;
+            width: 90%;
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 40px rgba(168,85,247,0.35);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .login-modal-content h2 {
+            font-family: 'Orbitron', monospace;
+            color: #c084fc;
+            margin-bottom: 0.6rem;
+        }
+
+        .login-modal-content p {
+            color: #cbd5e6;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .login-form {
+            display: grid;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .login-hint {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+
         @media (max-width: 720px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
@@ -809,32 +847,22 @@
 <div class="bg-cyber"></div>
 <div id="particles-bg"></div>
 
-<div id="loginOverlay" class="login-overlay">
-    <div class="login-box">
-        <h2><i class="fas fa-user-lock"></i> Logowanie do BEST</h2>
-        <p class="login-sub">Wpisz login i hasło, aby wejść na stronę.</p>
-
-        <form id="loginForm" class="login-form">
-            <div>
-                <label for="loginUser">Login</label>
-                <input type="text" id="loginUser" placeholder="Login" required>
-            </div>
-
-            <div>
-                <label for="loginPass">Password</label>
-                <input type="password" id="loginPass" placeholder="Password" required>
-            </div>
-
-            <button type="submit" class="submit-btn">Zaloguj się</button>
-            <p class="login-hint">Dane testowe: Test123 / Test123</p>
-        </form>
-    </div>
-</div>
-
 <div class="page-wrapper">
     <div class="top-status-bar">
         <span class="dot"></span>
         <span>Rekrutacja BEST jest otwarta • Discord aktywny • wysyłka zgłoszeń online</span>
+
+        <div class="login-status-wrapper">
+            <span id="loggedInfo" class="logged-info" style="display:none;">
+                Klanowicz: <b id="loggedUser">?</b>
+            </span>
+            <button id="openLoginModalBtn" class="login-btn">
+                <i class="fas fa-user-lock"></i> Logowanie klanowicza
+            </button>
+            <button id="logoutBtn" class="logout-btn" style="display:none;">
+                <i class="fas fa-sign-out-alt"></i> Wyloguj
+            </button>
+        </div>
     </div>
 
     <div class="contest-widget" id="contestWidget">
@@ -903,6 +931,7 @@
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
 
+<!-- MODAL REKRUTACJI -->
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny BEST</h2><button class="close-modal" id="closeModalBtn">&times;</button></div>
@@ -941,35 +970,97 @@
     </div>
 </div>
 
+<!-- MODAL LOGOWANIA KLANOWICZA -->
+<div id="loginModal" class="login-modal">
+    <div class="login-modal-content">
+        <h2><i class="fas fa-user-lock"></i> Logowanie klanowicza</h2>
+        <p>Wpisz login i hasło, aby zalogować się jako klanowicz BEST.</p>
+
+        <form id="loginForm" class="login-form">
+            <div>
+                <label for="loginUser">Login</label>
+                <input type="text" id="loginUser" placeholder="Login" required>
+            </div>
+
+            <div>
+                <label for="loginPass">Password</label>
+                <input type="password" id="loginPass" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Zaloguj się</button>
+            <p class="login-hint">Dane testowe: Test123 / Test123</p>
+        </form>
+    </div>
+</div>
+
 <div id="toast-msg"></div>
 
 <script>
 (function(){
     const WEBHOOK_URL = 'https://discord.com/api/webhooks/1513004207966519326/FLqY_tAaj55zxBLhPMNeUHaPwqu3X-a4RD8GFDi10ugkUvvyGsMqiuHmr7b-FPpxl6Jb';
 
-    const loginOverlay = document.getElementById('loginOverlay');
+    // ===== LOGOWANIE KLANOWICZA =====
+    const openLoginModalBtn = document.getElementById('openLoginModalBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeModalLogin = document.querySelector('#loginModal .close-modal');
     const loginForm = document.getElementById('loginForm');
     const loginUser = document.getElementById('loginUser');
     const loginPass = document.getElementById('loginPass');
+    const loggedInfo = document.getElementById('loggedInfo');
+    const loggedUser = document.getElementById('loggedUser');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-    function unlockSite() {
-        loginOverlay.style.display = 'none';
-        document.body.classList.remove('locked');
-        localStorage.setItem('best_logged_in', '1');
+    function updateLoginUI() {
+        const loggedInUser = localStorage.getItem('best_clan_user');
+        if (loggedInUser) {
+            // Zalogowany
+            openLoginModalBtn.style.display = 'none';
+            loggedInfo.style.display = 'inline';
+            loggedUser.textContent = loggedInUser;
+            logoutBtn.style.display = 'inline-block';
+        } else {
+            // Niezalogowany
+            openLoginModalBtn.style.display = 'inline-flex';
+            loggedInfo.style.display = 'none';
+            logoutBtn.style.display = 'none';
+        }
     }
 
-    document.body.classList.add('locked');
+    openLoginModalBtn?.addEventListener('click', () => {
+        loginModal.classList.add('active');
+    });
 
-    if (localStorage.getItem('best_logged_in') === '1') {
-        unlockSite();
+    function closeLoginModal() {
+        loginModal.classList.remove('active');
+        loginForm.reset();
     }
+
+    loginModal?.addEventListener('click', (e) => {
+        if (e.target === loginModal) closeLoginModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeLoginModal();
+            // zamknij też modal rekrutacyjny
+            const recruitModal = document.getElementById('recruitModal');
+            if (recruitModal.classList.contains('active')) {
+                recruitModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    });
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const user = loginUser.value.trim();
         const pass = loginPass.value.trim();
+
         if (user === 'Test123' && pass === 'Test123') {
-            unlockSite();
+            localStorage.setItem('best_clan_user', user);
+            showToast('✅ Zalogowano jako klanowicz: ' + user, false);
+            closeLoginModal();
+            updateLoginUI();
         } else {
             showToast('❌ Zły login lub hasło', true);
             loginPass.value = '';
@@ -977,6 +1068,15 @@
         }
     });
 
+    logoutBtn?.addEventListener('click', () => {
+        localStorage.removeItem('best_clan_user');
+        showToast('❌ Wylogowano', false);
+        updateLoginUI();
+    });
+
+    updateLoginUI();
+
+    // ===== CZĄSTECZKI =====
     const particlesBg = document.getElementById('particles-bg');
     function createParticles(count = 28) {
         if (!particlesBg) return;
@@ -996,6 +1096,7 @@
     }
     createParticles();
 
+    // ===== BOOSTY =====
     const clanBoosts = [
         "+20% Divines Luck", "+3% Egg Luck Combo", "+40% Season XP", "+64% Hatch Speed",
         "+0.2% Toxic Pets Luck", "+25% Global Lucky Egg Boost", "+33% Secrets Luck", "+181% Gems",
@@ -1028,6 +1129,7 @@
         });
     }
 
+    // ===== KONKURS =====
     const contestDate = new Date(2025, 5, 10, 0, 0, 0);
     const countdownDisplay = document.getElementById('contestCountdownDisplay');
     function updateCountdown() {
@@ -1047,6 +1149,7 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
+    // ===== ŚWIATY =====
     const worldsData = {
         Overworld: ["Spawn", "Farm", "Desert", "Nuclear", "Atlantis", "Kingdom", "City", "Cave", "Volcano", "Heaven", "Magic", "Circus", "Jungle", "Steampunk", "Sakura", "Lab"],
         Space: ["Moon", "Alien", "Tech City", "Neluba Forest", "Void", "Spaceship", "Space Warzone", "Comet", "Starfactory", "Glacier Moon", "Mars Colony", "Starfall Valley", "Black Hole"],
@@ -1093,6 +1196,7 @@
     }
     categorySelect?.addEventListener('change', updateWorldsList);
 
+    // ===== MODAL REKRUTACJI =====
     const modal = document.getElementById('recruitModal');
     const openBtn = document.getElementById('openRecruitModalBtn');
     const closeBtn = document.getElementById('closeModalBtn');
@@ -1114,10 +1218,7 @@
     document.getElementById('scrollUpBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: -220, behavior: 'smooth' }));
     document.getElementById('scrollDownBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: 220, behavior: 'smooth' }));
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
-    });
-
+    // ===== TOAST =====
     const toast = document.getElementById('toast-msg');
     function showToast(message, isError = false, duration = 4000) {
         toast.textContent = message;
@@ -1152,7 +1253,7 @@
                 { name: "📜 Doświadczenie", value: data.experience.length > 500 ? data.experience.substring(0,500) + "..." : data.experience, inline: false },
                 { name: "💡 Motywacja", value: data.motivation.length > 500 ? data.motivation.substring(0,500) + "..." : data.motivation, inline: false }
             ],
-            footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" },
+            footer: { text: "BEST Rekrutacja • RCU", icon_url: "https://i.postimprove.png" },
             timestamp: new Date().toISOString()
         };
 
