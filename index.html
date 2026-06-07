@@ -190,8 +190,6 @@
             margin-bottom: 0.3rem;
         }
 
-        .contest-widget-title i { margin-right: 4px; }
-
         .contest-countdown {
             display: flex;
             gap: 8px;
@@ -289,12 +287,11 @@
         .hero {
             text-align: center;
             padding: 1rem 1rem 2rem;
-            border-bottom: 2px solid rgba(139,92,
-
-246,0.4);
+            border-bottom: 2px solid rgba(139,92,246,0.4);
             margin-bottom: 2rem;
         }
-                .clan-tag {
+
+        .clan-tag {
             font-family: 'Orbitron', monospace;
             font-size: 1.2rem;
             letter-spacing: 4px;
@@ -528,7 +525,8 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-                .recruit-modal {
+
+        .recruit-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -786,7 +784,6 @@
             opacity: 1;
         }
 
-        /* ===== MODAL LOGOWANIA KLANOWICZA ===== */
         .login-modal {
             display: none;
             position: fixed;
@@ -841,7 +838,6 @@
             text-align: center;
         }
 
-        /* ===== MODAL LISTY CZŁONKÓW KLANU ===== */
         .members-modal {
             display: none;
             position: fixed;
@@ -922,6 +918,43 @@
             background: rgba(168,85,247,0.1);
         }
 
+        #clanProfileView {
+            display: none;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            background: #0f1222;
+            border: 2px solid #a855f7;
+            border-radius: 24px;
+            padding: 30px;
+            color: #eef2ff;
+        }
+
+        .profile-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .profile-box {
+            background: #111827;
+            padding: 18px;
+            border-radius: 16px;
+        }
+
+        .profile-btn {
+            margin-top: 24px;
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 999px;
+            cursor: pointer;
+        }
+
         @media (max-width: 720px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
@@ -947,6 +980,19 @@
 <body>
 <div class="bg-cyber"></div>
 <div id="particles-bg"></div>
+
+<div id="clanProfileView">
+    <div class="profile-card">
+        <h1 style="font-family:'Orbitron', monospace; color:#c084fc; margin-bottom:10px;">Profil Klanu BEST</h1>
+        <p style="margin-bottom:20px;">Witaj w panelu klanu. To jest widok dostępny po zalogowaniu na konto Test123.</p>
+        <div class="profile-grid">
+            <div class="profile-box">Nazwa klanu: <b>BEST</b></div>
+            <div class="profile-box">Ranga: <b>Profil specjalny</b></div>
+            <div class="profile-box">Status: <b>Zalogowano</b></div>
+        </div>
+        <button id="backToMainBtn" class="profile-btn">Wróć na stronę główną</button>
+    </div>
+</div>
 
 <div class="page-wrapper">
     <div class="top-status-bar">
@@ -1031,7 +1077,7 @@
 
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
 </div>
-<!-- MODAL REKRUTACJI -->
+
 <div id="recruitModal" class="recruit-modal">
     <div class="modal-content">
         <div class="modal-header"><h2><i class="fas fa-paper-plane"></i> Formularz rekrutacyjny BEST</h2><button class="close-modal" id="closeModalBtn">&times;</button></div>
@@ -1070,30 +1116,25 @@
     </div>
 </div>
 
-<!-- MODAL LOGOWANIA KLANOWICZA -->
 <div id="loginModal" class="login-modal">
     <div class="login-modal-content">
         <h2><i class="fas fa-user-lock"></i> Logowanie klanowicza</h2>
         <p>Wpisz login i hasło, aby zalogować się jako klanowicz BEST.</p>
-
         <form id="loginForm" class="login-form">
             <div>
                 <label for="loginUser">Login</label>
                 <input type="text" id="loginUser" placeholder="Login" required>
             </div>
-
             <div>
                 <label for="loginPass">Password</label>
                 <input type="password" id="loginPass" placeholder="Password" required>
             </div>
-
             <button type="submit" class="submit-btn">Zaloguj się</button>
             <p class="login-hint">Dane testowe: Test123 / Test123</p>
         </form>
     </div>
 </div>
 
-<!-- MODAL LISTY CZŁONKÓW KLANU (NA HASŁA) -->
 <div id="membersModal" class="members-modal">
     <div class="members-modal-content">
         <div class="members-modal-header">
@@ -1102,8 +1143,6 @@
         </div>
         <div class="members-modal-body">
             <p style="color:#cbd5e6; font-size:0.9rem; margin-bottom:1rem;">Lista oficjalnych kont członków klanu (narazie pusta – dodaj dane w tabeli).</p>
-
-            <!-- PUSTA STRUKTURA TABELI -->
             <table class="members-table">
                 <thead>
                     <tr>
@@ -1111,9 +1150,7 @@
                         <th>Hasło</th>
                     </tr>
                 </thead>
-                <tbody id="membersTableBody">
-                    <!-- Tutaj później dodasz wiersze z kontami -->
-                </tbody>
+                <tbody id="membersTableBody"></tbody>
             </table>
         </div>
     </div>
@@ -1125,7 +1162,6 @@
 (function(){
     const WEBHOOK_URL = 'https://discord.com/api/webhooks/1513004207966519326/FLqY_tAaj55zxBLhPMNeUHaPwqu3X-a4RD8GFDi10ugkUvvyGsMqiuHmr7b-FPpxl6Jb';
 
-    // ===== LOGOWANIE KLANOWICZA =====
     const openLoginModalBtn = document.getElementById('openLoginModalBtn');
     const loginModal = document.getElementById('loginModal');
     const loginForm = document.getElementById('loginForm');
@@ -1134,6 +1170,19 @@
     const loggedInfo = document.getElementById('loggedInfo');
     const loggedUser = document.getElementById('loggedUser');
     const logoutBtn = document.getElementById('logoutBtn');
+    const mainPage = document.querySelector('.page-wrapper');
+    const clanProfileView = document.getElementById('clanProfileView');
+    const backToMainBtn = document.getElementById('backToMainBtn');
+
+    function showClanProfileView() {
+        if (mainPage) mainPage.style.display = 'none';
+        if (clanProfileView) clanProfileView.style.display = 'block';
+    }
+
+    function showMainView() {
+        if (mainPage) mainPage.style.display = 'block';
+        if (clanProfileView) clanProfileView.style.display = 'none';
+    }
 
     function updateLoginUI() {
         const loggedInUser = localStorage.getItem('best_clan_user');
@@ -1147,6 +1196,12 @@
             loggedInfo.style.display = 'none';
             logoutBtn.style.display = 'none';
         }
+    }
+
+    function checkLoginView() {
+        const loggedInUser = localStorage.getItem('best_clan_user');
+        if (loggedInUser === 'Test123') showClanProfileView();
+        else showMainView();
     }
 
     openLoginModalBtn?.addEventListener('click', () => {
@@ -1172,6 +1227,7 @@
             showToast('✅ Zalogowano jako klanowicz: ' + user, false);
             closeLoginModal();
             updateLoginUI();
+            checkLoginView();
         } else {
             showToast('❌ Zły login lub hasło', true);
             loginPass.value = '';
@@ -1183,9 +1239,11 @@
         localStorage.removeItem('best_clan_user');
         showToast('❌ Wylogowano', false);
         updateLoginUI();
+        checkLoginView();
     });
 
-    // ===== MODAL LISTY CZŁONKÓW =====
+    backToMainBtn?.addEventListener('click', showMainView);
+
     const membersModal = document.getElementById('membersModal');
     const closeMembersModalBtn = document.getElementById('closeMembersModalBtn');
 
@@ -1203,7 +1261,6 @@
         }
     });
 
-    // ===== CZĄSTECZKI =====
     const particlesBg = document.getElementById('particles-bg');
     function createParticles(count = 28) {
         if (!particlesBg) return;
@@ -1223,7 +1280,6 @@
     }
     createParticles();
 
-    // ===== BOOSTY =====
     const clanBoosts = [
         "+20% Divines Luck", "+3% Egg Luck Combo", "+40% Season XP", "+64% Hatch Speed",
         "+0.2% Toxic Pets Luck", "+25% Global Lucky Egg Boost", "+33% Secrets Luck", "+181% Gems",
@@ -1256,9 +1312,9 @@
         });
     }
 
-    // ===== KONKURS =====
     const contestDate = new Date(2025, 5, 10, 0, 0, 0);
     const countdownDisplay = document.getElementById('contestCountdownDisplay');
+
     function updateCountdown() {
         if (!countdownDisplay) return;
         const now = new Date();
@@ -1276,7 +1332,6 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // ===== ŚWIATY =====
     const worldsData = {
         Overworld: ["Spawn", "Farm", "Desert", "Nuclear", "Atlantis", "Kingdom", "City", "Cave", "Volcano", "Heaven", "Magic", "Circus", "Jungle", "Steampunk", "Sakura", "Lab"],
         Space: ["Moon", "Alien", "Tech City", "Neluba Forest", "Void", "Spaceship", "Space Warzone", "Comet", "Starfactory", "Glacier Moon", "Mars Colony", "Starfall Valley", "Black Hole"],
@@ -1307,6 +1362,7 @@
 
     const categorySelect = document.getElementById('worldCategory');
     const mapSelect = document.getElementById('worldMap');
+
     function updateWorldsList() {
         const category = categorySelect.value;
         mapSelect.innerHTML = '<option value="">-- wybierz świat --</option>';
@@ -1321,9 +1377,9 @@
             mapSelect.innerHTML = '<option value="">-- najpierw wybierz kategorię --</option>';
         }
     }
+
     categorySelect?.addEventListener('change', updateWorldsList);
 
-    // ===== MODAL REKRUTACJI =====
     const modal = document.getElementById('recruitModal');
     const openBtn = document.getElementById('openRecruitModalBtn');
     const closeBtn = document.getElementById('closeModalBtn');
@@ -1354,8 +1410,8 @@
         }
     });
 
-    // ===== TOAST =====
     const toast = document.getElementById('toast-msg');
+
     function showToast(message, isError = false, duration = 4000) {
         toast.textContent = message;
         toast.style.background = isError ? '#3b1e3a' : '#1e1b4b';
@@ -1476,6 +1532,7 @@
     });
 
     updateLoginUI();
+    checkLoginView();
 })();
 </script>
 </body>
