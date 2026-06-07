@@ -156,6 +156,10 @@
             cursor: pointer;
         }
 
+        .logout-btn:hover {
+            opacity: 0.85;
+        }
+
         .contest-widget {
             position: absolute;
             top: 20px;
@@ -169,6 +173,13 @@
             z-index: 50;
             min-width: 200px;
             text-align: center;
+            transition: 0.3s;
+        }
+
+        .contest-widget:hover {
+            transform: scale(1.02);
+            border-color: #e9a8ff;
+            box-shadow: 0 0 20px #c084fc;
         }
 
         .contest-widget-title {
@@ -208,6 +219,12 @@
             text-transform: uppercase;
         }
 
+        .contest-ended {
+            font-size: 0.7rem;
+            color: #10b981;
+            font-weight: bold;
+        }
+
         .contest-discord-link {
             display: inline-block;
             margin-top: 0.4rem;
@@ -217,12 +234,17 @@
             background: #1e1b4b;
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
+            transition: 0.2s;
         }
 
-        .hero {
-            text-align: center;
-            padding: 1rem 1rem 2rem;
-            border-bottom: 2px solid rgba(139,92,246,0.4);
+        .contest-discord-link:hover {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
             margin-bottom: 1.5rem;
         }
 
@@ -233,7 +255,40 @@
             object-fit: cover;
             border: 3px solid #a855f7;
             box-shadow: 0 0 20px rgba(168,85,247,0.6);
-            margin-bottom: 1rem;
+            transition: 0.3s;
+        }
+
+        .clan-logo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(168,85,247,0.9);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 8px #a855f7, 0 0 15px #7c3aed;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 5px solid #a855f7;
+            padding-left: 1.2rem;
+        }
+
+        .section-title i {
+            color: #c084fc;
+            font-size: 1.8rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 1rem 1rem 2rem;
+            border-bottom: 2px solid rgba(139,92,246,0.4);
+            margin-bottom: 2rem;
         }
 
         .clan-tag {
@@ -267,7 +322,15 @@
             margin: 0 auto;
         }
 
+        .recruit-btn-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0 1rem;
+        }
+
         .recruit-main-btn {
+            position: relative;
+            overflow: hidden;
             background: linear-gradient(95deg, #7c3aed, #a855f7);
             border: none;
             padding: 1rem 2.5rem;
@@ -276,18 +339,596 @@
             font-size: 1.3rem;
             color: white;
             cursor: pointer;
+            transition: 0.3s;
             box-shadow: 0 0 15px #a855f7;
             display: inline-flex;
             align-items: center;
             gap: 12px;
             font-family: 'Orbitron', monospace;
-            margin-top: 1.5rem;
+        }
+
+        .recruit-main-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px #c084fc;
+        }
+
+        .clan-boosts-section {
+            margin: 1.5rem 0 2rem;
+        }
+
+        .boosts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 0.7rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 1.5rem;
+            padding: 1rem;
+        }
+
+        .boost-item {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 0.8rem;
+            padding: 0.5rem 0.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #cbd5e6;
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .boost-item:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #a855f7;
+            color: #e9d5ff;
+            transform: translateY(-2px);
+        }
+
+        .boost-icon {
+            font-size: 0.8rem;
+            margin-right: 4px;
+            color: #c084fc;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: rgba(15,23,42,0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            border: 1px solid rgba(139,92,246,0.4);
+            padding: 1.6rem;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #c084fc;
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 2.3rem;
+            color: #c084fc;
+            margin-bottom: 0.8rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 0.6rem;
+        }
+
+        .requirements-wrapper {
+            background: linear-gradient(145deg, #0f1222, #0a0c18);
+            border-radius: 1.8rem;
+            padding: 0.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .requirements-inner {
+            background: rgba(5,7,15,0.7);
+            border-radius: 1.6rem;
+            padding: 1.8rem;
+            border: 1px solid #4c1d95;
+        }
+
+        .req-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .req-item {
+            background: #111827;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            border-left: 4px solid #a855f7;
+            transition: 0.2s;
+        }
+
+        .req-item:hover {
+            border-left-color: #c084fc;
+            background: #1a1f2e;
+        }
+
+        .req-item i {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+            display: block;
+            color: #c084fc;
+        }
+
+        .req-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e9d5ff;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .req-desc {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-top: 0.2rem;
+        }
+
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-circle {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 1.8rem;
+            padding: 0.8rem 1.5rem;
+            text-align: center;
+            min-width: 130px;
+            border: 1px solid #a855f7;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: 'Orbitron';
+            color: #c084fc;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .recruit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .recruit-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #0f1222;
+            border-radius: 2rem;
+            max-width: 950px;
+            width: 90%;
+            max-height: 85vh;
+            position: relative;
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 40px rgba(168,85,247,0.4);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid #4c1d95;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            border-radius: 2rem 2rem 0 0;
+            flex-shrink: 0;
+        }
+
+        .modal-header h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: #c084fc;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #cbd5e6;
+        }
+
+        .close-modal:hover {
+            color: #f43f5e;
+        }
+
+        .modal-body {
+            padding: 1.8rem;
+            overflow-y: auto;
+            flex: 1;
+            scroll-behavior: smooth;
+        }
+
+        .scroll-controls {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 20;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 10px 6px;
+            border-radius: 40px;
+            border: 1px solid #a855f7;
+        }
+
+        .scroll-btn {
+            background: linear-gradient(135deg, #1e1b4b, #2d1b69);
+            border: 1px solid #c084fc;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #e9d5ff;
+            font-size: 1.4rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: #111827;
+            border: 1px solid #334155;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            color: #f1f5f9;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 2px rgba(168,85,247,0.3);
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+            color: #cbd5e6;
+        }
+
+        .gamepass-group {
+            background: #0f172a;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border: 1px solid #334155;
+        }
+
+        .gamepass-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .gamepass-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 0.3rem;
+            border-radius: 0.5rem;
+        }
+
+        .gamepass-check:hover {
+            background: #1e293b;
+        }
+
+        .gamepass-check input {
+            width: 18px;
+            height: 18px;
+            margin-right: 5px;
+            accent-color: #a855f7;
+        }
+
+        .submit-btn {
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            border: none;
+            padding: 0.8rem;
+            width: 100%;
+            font-weight: bold;
+            border-radius: 2rem;
+            color: white;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            background: #111827;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            border: 1px solid #4c1d95;
+            transition: 0.2s;
+            text-decoration: none;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .social-icon:hover {
+            background: #2d1b69;
+            border-color: #a855f7;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #2d3a5e;
+            font-size: 0.8rem;
+            color: #7e8aa8;
+        }
+
+        #toast-msg {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #1e1b4b;
+            color: #f0eaff;
+            text-align: center;
+            border-radius: 40px;
+            padding: 10px 20px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1100;
+            backdrop-filter: blur(12px);
+            border: 1px solid #c084fc;
+            transition: 0.2s;
+            opacity: 0;
+            font-size: 0.85rem;
+        }
+
+        #toast-msg.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-modal-content {
+            background: #0f1222;
+            border-radius: 1.8rem;
+            max-width: 420px;
+            width: 90%;
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 40px rgba(168,85,247,0.35);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .login-modal-content h2 {
+            font-family: 'Orbitron', monospace;
+            color: #c084fc;
+            margin-bottom: 0.6rem;
+        }
+
+        .login-modal-content p {
+            color: #cbd5e6;
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .login-form {
+            display: grid;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .login-hint {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        .members-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1200;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .members-modal.active {
+            display: flex;
+        }
+
+        .members-modal-content {
+            background: #0f1222;
+            border-radius: 2rem;
+            max-width: 900px;
+            width: 90%;
+            max-height: 80vh;
+            border: 2px solid #a855f7;
+            box-shadow: 0 0 40px rgba(168,85,247,0.35);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .members-modal-header {
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid #4c1d95;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            border-radius: 2rem 2rem 0 0;
+            flex-shrink: 0;
+        }
+
+        .members-modal-header h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: #c084fc;
+        }
+
+        .members-modal-body {
+            padding: 1.8rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .members-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .members-table th,
+        .members-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+
+        .members-table th {
+            font-family: 'Orbitron', monospace;
+            color: #c084fc;
+            font-size: 0.95rem;
+        }
+
+        .members-table td {
+            color: #e9d5ff;
+            font-size: 0.9rem;
+        }
+
+        .members-table tr:hover {
+            background: rgba(168,85,247,0.1);
+        }
+
+        #clanProfileView {
+            display: none;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            background: #0f1222;
+            border: 2px solid #a855f7;
+            border-radius: 24px;
+            padding: 30px;
+            color: #eef2ff;
+        }
+
+        .profile-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .profile-box {
+            background: #111827;
+            padding: 18px;
+            border-radius: 16px;
+        }
+
+        .profile-btn {
+            margin-top: 24px;
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 999px;
+            cursor: pointer;
         }
 
         .tabs-shell {
+            margin-top: 24px;
             background: rgba(8,10,18,0.92);
             border: 1px solid rgba(168,85,247,0.35);
-            box-shadow: 0 0 25px rgba(168,85,247,0.12);
             border-radius: 24px;
             overflow: hidden;
         }
@@ -313,17 +954,10 @@
             font-size: 0.9rem;
         }
 
-        .tab-btn:hover {
-            transform: translateY(-1px);
-            border-color: #a855f7;
-            color: white;
-        }
-
         .tab-btn.active {
             background: linear-gradient(90deg, #7c3aed, #a855f7);
             border-color: #c084fc;
             color: white;
-            box-shadow: 0 0 14px rgba(168,85,247,0.3);
         }
 
         .tabs-body {
@@ -332,16 +966,10 @@
 
         .tab-panel {
             display: none;
-            animation: fadeIn 0.2s ease;
         }
 
         .tab-panel.active {
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .panel-grid {
@@ -406,7 +1034,7 @@
             margin-top: 4px;
         }
 
-        .form-grid {
+        .quick-form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
@@ -416,260 +1044,15 @@
             grid-column: span 2;
         }
 
-        input, textarea, select {
-            width: 100%;
-            background: #111827;
-            border: 1px solid #334155;
-            padding: 0.85rem 1rem;
-            border-radius: 1rem;
-            font-size: 0.9rem;
-            color: #f1f5f9;
-        }
-
-        .submit-btn {
-            background: linear-gradient(90deg, #7c3aed, #a855f7);
-            border: none;
-            padding: 0.85rem 1rem;
-            width: 100%;
-            font-weight: bold;
-            border-radius: 2rem;
-            color: white;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-left: 5px solid #a855f7;
-            padding-left: 1.2rem;
-        }
-
-        #toast-msg {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #1e1b4b;
-            color: #f0eaff;
-            text-align: center;
-            border-radius: 40px;
-            padding: 10px 20px;
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1100;
-            backdrop-filter: blur(12px);
-            border: 1px solid #c084fc;
-            transition: 0.2s;
-            opacity: 0;
-            font-size: 0.85rem;
-        }
-
-        #toast-msg.show {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .login-modal, .recruit-modal, .members-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 1200;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-modal.active, .recruit-modal.active, .members-modal.active {
-            display: flex;
-        }
-
-        .login-modal-content, .modal-content, .members-modal-content {
-            background: #0f1222;
-            border-radius: 1.8rem;
-            width: 92%;
-            max-width: 950px;
-            border: 2px solid #a855f7;
-            box-shadow: 0 0 40px rgba(168,85,247,0.35);
-        }
-
-        .login-modal-content {
-            max-width: 420px;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .modal-header, .members-modal-header {
-            padding: 1.2rem 1.8rem;
-            border-bottom: 1px solid #4c1d95;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.5);
-            border-radius: 1.8rem 1.8rem 0 0;
-        }
-
-        .modal-body, .members-modal-body {
-            padding: 1.8rem;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #cbd5e6;
-        }
-
-        .close-modal:hover {
-            color: #f43f5e;
-        }
-
-        .gamepass-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
-            margin-top: 0.5rem;
-        }
-
-        .gamepass-check {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 0.3rem;
-            border-radius: 0.5rem;
-        }
-
-        .gamepass-check input {
-            width: 18px;
-            height: 18px;
-            accent-color: #a855f7;
-        }
-
-        .members-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .members-table th,
-        .members-table td {
-            padding: 0.8rem;
-            text-align: left;
-            border-bottom: 1px solid #334155;
-        }
-
-        .members-table th {
-            font-family: 'Orbitron', monospace;
-            color: #c084fc;
-            font-size: 0.95rem;
-        }
-
-        .members-table td {
-            color: #e9d5ff;
-            font-size: 0.9rem;
-        }
-
-        .members-table tr:hover {
-            background: rgba(168,85,247,0.1);
-        }
-
-        #clanProfileView {
-            display: none;
-            padding: 40px 0 10px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .profile-shell {
-            background: rgba(8,10,18,0.92);
-            border: 1px solid rgba(168,85,247,0.35);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 0 28px rgba(168,85,247,0.12);
-        }
-
-        .profile-top {
-            padding: 22px;
-            display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: 20px;
-            align-items: center;
-            border-bottom: 1px solid rgba(168,85,247,0.18);
-            background: rgba(0,0,0,0.22);
-        }
-
-        .profile-top img {
-            width: 180px;
-            height: 180px;
-            border-radius: 24px;
-            object-fit: cover;
-            border: 2px solid #a855f7;
-            box-shadow: 0 0 18px rgba(168,85,247,0.25);
-        }
-
-        .profile-meta h2 {
-            font-family: 'Orbitron', monospace;
-            color: #c084fc;
-            font-size: 2rem;
-            margin-bottom: 8px;
-        }
-
-        .profile-meta p {
-            color: #cbd5e6;
-            margin-bottom: 10px;
-        }
-
-        .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        .profile-stat {
-            background: rgba(17,24,39,0.95);
-            border: 1px solid rgba(168,85,247,0.18);
-            border-radius: 16px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .profile-stat b {
-            display: block;
-            font-family: 'Orbitron', monospace;
-            color: #c084fc;
-            font-size: 1.1rem;
-            margin-bottom: 4px;
-        }
-
         .small-note {
             font-size: 0.8rem;
             color: #94a3b8;
         }
 
-        .logout-top {
-            margin-top: 12px;
-            display: inline-block;
-        }
-
         @media (max-width: 900px) {
-            .panel-grid, .profile-top {
+            .panel-grid,
+            .profile-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .profile-top img {
-                width: 120px;
-                height: 120px;
             }
         }
 
@@ -691,6 +1074,13 @@
             .tabs-body { padding: 16px; }
             .tabs-header { gap: 8px; }
             .tab-btn { width: 100%; }
+            .profile-top {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .profile-top img {
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
@@ -699,18 +1089,20 @@
 <div id="particles-bg"></div>
 
 <div id="clanProfileView">
-    <div class="profile-shell">
-        <div class="profile-top">
-            <img src="https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" alt="BEST Logo">
-            <div class="profile-meta">
-                <h2>Profil Klanu BEST</h2>
-                <p>Panel wewnętrzny klanu z zakładkami: nowości, ogłoszenia, zgłoszenia, pomoc i więcej.</p>
+    <div class="profile-card">
+        <div class="profile-grid">
+            <div>
+                <img src="https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" alt="BEST Logo" style="width:180px;height:180px;border-radius:24px;object-fit:cover;border:2px solid #a855f7;box-shadow:0 0 18px rgba(168,85,247,0.25);">
+            </div>
+            <div>
+                <h2 style="font-family:'Orbitron', monospace; color:#c084fc; font-size:2rem; margin-bottom:8px;">Profil Klanu BEST</h2>
+                <p style="color:#cbd5e6; margin-bottom:10px;">Panel wewnętrzny klanu z zakładkami: nowości, ogłoszenia, zgłoszenia, pomoc i więcej.</p>
                 <div class="badge-row">
                     <span class="badge">Status: online</span>
                     <span class="badge">Ranga: Test123</span>
                     <span class="badge">Dostęp: pełny</span>
                 </div>
-                <button id="backToMainBtn" class="profile-btn logout-top">Wróć na stronę główną</button>
+                <button id="backToMainBtn" class="profile-btn">Wróć na stronę główną</button>
             </div>
         </div>
 
@@ -777,7 +1169,7 @@
                         <div class="panel-card">
                             <div class="panel-title">Nowe zgłoszenie</div>
                             <form id="quickSubmissionForm">
-                                <div class="form-grid">
+                                <div class="quick-form-grid">
                                     <div><label>Nick</label><input type="text" id="qsNick" placeholder="Nick w Roblox" required></div>
                                     <div><label>Discord</label><input type="text" id="qsDiscord" placeholder="Nazwa Discord" required></div>
                                     <div class="full-width"><label>Treść zgłoszenia</label><textarea id="qsText" rows="4" placeholder="Napisz zgłoszenie..." required></textarea></div>
@@ -883,11 +1275,53 @@
     </div>
 
     <div class="hero">
-        <img src="https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" alt="BEST Clan Logo" class="clan-logo">
+        <div class="logo-wrapper">
+            <img src="https://i.postimg.cc/bNfzTfDT/Gemini-Generated-Image-1uggsq1uggsq1ugg.png" alt="BEST Clan Logo" class="clan-logo">
+        </div>
         <div class="clan-tag"><i class="fas fa-skull-crossbones"></i> BEST · REBIRTH CHAMPIONS ULTIMATE</div>
         <h1>BEST <span class="glow-text">ELITE</span></h1>
         <p class="sub">Elitarna formacja w RCU — grze na Roblox, gdzie liczy się strategia, nieustanne odradzanie i zdobywanie legendarnych przedmiotów.</p>
         <div class="recruit-btn-container"><button class="recruit-main-btn" id="openRecruitModalBtn"><i class="fas fa-user-plus"></i> REKRUTACJA</button></div>
+    </div>
+
+    <div class="clan-boosts-section">
+        <div class="boosts-grid" id="boostsGrid"></div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-circle"><div class="stat-number">200+</div><div class="stat-label">Łączny prestiż</div></div>
+        <div class="stat-circle"><div class="stat-number">35</div><div class="stat-label">Aktywnych</div></div>
+        <div class="stat-circle"><div class="stat-number">120M+</div><div class="stat-label">Jaj otwartych</div></div>
+        <div class="stat-circle"><div class="stat-number">∞</div><div class="stat-label">Odrodzenia</div></div>
+    </div>
+
+    <div class="section-title"><i class="fas fa-crown"></i><span>DLACZEGO MY?</span></div>
+    <div class="cards-grid">
+        <div class="card"><i class="fas fa-chalkboard-user"></i><h3>Strategie</h3><p>Optymalne ścieżki rebirth i sekrety zdobywania klejnotów.</p></div>
+        <div class="card"><i class="fas fa-handshake"></i><h3>Wymiana aur</h3><p>Pomagamy zdobyć rzadkie aury (Hell, Celestial, Brilliant).</p></div>
+        <div class="card"><i class="fas fa-trophy"></i><h3>Eventy</h3><p>Wewnętrzne rankingi, speedruny i nagrody dla aktywnych.</p></div>
+        <div class="card"><i class="fas fa-robot"></i><h3>Boty i kody</h3><p>Bot na Discordzie z kodami i statystykami klanu.</p></div>
+    </div>
+
+    <div class="section-title"><i class="fas fa-shield-halved"></i><span>WYMAGANIA REKRUTACYJNE</span></div>
+    <div class="requirements-wrapper">
+        <div class="requirements-inner">
+            <div class="req-grid">
+                <div class="req-item"><i class="fas fa-paw"></i><span class="req-value">Pet Equip: 15+</span><div class="req-desc">Minimalny poziom wyposażenia zwierzaków</div></div>
+                <div class="req-item"><i class="fas fa-egg"></i><span class="req-value">5M+ Eggs opened</span><div class="req-desc">Co najmniej 5 milionów otwartych jaj</div></div>
+                <div class="req-item"><i class="fas fa-chart-line"></i><span class="req-value">Prestiż: 10+</span><div class="req-desc">Minimalny poziom prestiżu</div></div>
+                <div class="req-item"><i class="fas fa-sync-alt"></i><span class="req-value">Rebirth: 100N+</span><div class="req-desc">Co najmniej 100N odrodzeń</div></div>
+                <div class="req-item"><i class="fas fa-ticket-alt"></i><span class="req-value">GamePassy: 2+</span><div class="req-desc">Minimum dwa zakupione GamePassy</div></div>
+                <div class="req-item"><i class="fas fa-hourglass-half"></i><span class="req-value">240h+ w grze</span><div class="req-desc">Łączny czas gry minimum 240 godzin</div></div>
+            </div>
+            <p class="sub" style="margin-top: 1.5rem; font-size:0.85rem; text-align:center"><i class="fas fa-clipboard-check"></i> Spełniasz wszystkie wymagania? Wypełnij formularz i dołącz do BEST!</p>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="https://discord.gg/NQQyM7V5KH" class="social-icon" id="discordInvite" target="_blank"><i class="fab fa-discord"></i> Serwer BEST</a>
+        <a href="#" class="social-icon" id="robloxGroupBtn"><i class="fab fa-fort-awesome"></i> Grupa Roblox</a>
+        <a href="#" class="social-icon" id="rcuCodes"><i class="fas fa-code"></i> Kody RCU</a>
     </div>
 
     <footer><p>© 2025 BEST Clan — Rebirth Champions Ultimate. Razem osiągamy wyższe poziomy prestiżu.</p></footer>
@@ -917,6 +1351,29 @@
                 <button type="submit" class="submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Wyślij zgłoszenie</button>
             </form>
         </div>
+        <div class="scroll-controls">
+            <button type="button" class="scroll-btn" id="scrollUpBtn"><i class="fas fa-chevron-up"></i></button>
+            <button type="button" class="scroll-btn" id="scrollDownBtn"><i class="fas fa-chevron-down"></i></button>
+        </div>
+    </div>
+</div>
+
+<div id="loginModal" class="login-modal">
+    <div class="login-modal-content">
+        <h2><i class="fas fa-user-lock"></i> Logowanie klanowicza</h2>
+        <p>Wpisz login i hasło, aby zalogować się jako klanowicz BEST.</p>
+        <form id="loginForm" class="login-form">
+            <div>
+                <label for="loginUser">Login</label>
+                <input type="text" id="loginUser" placeholder="Login" required>
+            </div>
+            <div>
+                <label for="loginPass">Password</label>
+                <input type="password" id="loginPass" placeholder="Password" required>
+            </div>
+            <button type="submit" class="submit-btn">Zaloguj się</button>
+            <p class="login-hint">Dane testowe: Test123 / Test123</p>
+        </form>
     </div>
 </div>
 
@@ -958,8 +1415,16 @@
     const clanProfileView = document.getElementById('clanProfileView');
     const backToMainBtn = document.getElementById('backToMainBtn');
 
-    function showClanProfileView() { if (mainPage) mainPage.style.display = 'none'; if (clanProfileView) clanProfileView.style.display = 'block'; }
-    function showMainView() { if (mainPage) mainPage.style.display = 'block'; if (clanProfileView) clanProfileView.style.display = 'none'; }
+    function showClanProfileView() {
+        if (mainPage) mainPage.style.display = 'none';
+        if (clanProfileView) clanProfileView.style.display = 'block';
+    }
+
+    function showMainView() {
+        if (mainPage) mainPage.style.display = 'block';
+        if (clanProfileView) clanProfileView.style.display = 'none';
+    }
+
     function updateLoginUI() {
         const loggedInUser = localStorage.getItem('best_clan_user');
         if (loggedInUser) {
@@ -973,20 +1438,31 @@
             logoutBtn.style.display = 'none';
         }
     }
+
     function checkLoginView() {
         const loggedInUser = localStorage.getItem('best_clan_user');
         if (loggedInUser === 'Test123') showClanProfileView();
         else showMainView();
     }
 
-    openLoginModalBtn?.addEventListener('click', () => loginModal.classList.add('active'));
-    function closeLoginModal() { loginModal.classList.remove('active'); loginForm.reset(); }
-    loginModal?.addEventListener('click', (e) => { if (e.target === loginModal) closeLoginModal(); });
+    openLoginModalBtn?.addEventListener('click', () => {
+        loginModal.classList.add('active');
+    });
+
+    function closeLoginModal() {
+        loginModal.classList.remove('active');
+        loginForm.reset();
+    }
+
+    loginModal?.addEventListener('click', (e) => {
+        if (e.target === loginModal) closeLoginModal();
+    });
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const user = loginUser.value.trim();
         const pass = loginPass.value.trim();
+
         if (user === 'Test123' && pass === 'Test123') {
             localStorage.setItem('best_clan_user', user);
             showToast('✅ Zalogowano jako klanowicz: ' + user, false);
@@ -1011,6 +1487,7 @@
 
     const tabs = document.querySelectorAll('.tab-btn');
     const panels = document.querySelectorAll('.tab-panel');
+
     tabs.forEach(btn => {
         btn.addEventListener('click', () => {
             tabs.forEach(b => b.classList.remove('active'));
@@ -1036,9 +1513,18 @@
 
     const membersModal = document.getElementById('membersModal');
     const closeMembersModalBtn = document.getElementById('closeMembersModalBtn');
-    loggedInfo?.addEventListener('click', () => membersModal.classList.add('active'));
-    closeMembersModalBtn?.addEventListener('click', () => membersModal.classList.remove('active'));
-    membersModal?.addEventListener('click', (e) => { if (e.target === membersModal) membersModal.classList.remove('active'); });
+
+    loggedInfo?.addEventListener('click', () => {
+        membersModal.classList.add('active');
+    });
+
+    closeMembersModalBtn?.addEventListener('click', () => {
+        membersModal.classList.remove('active');
+    });
+
+    membersModal?.addEventListener('click', (e) => {
+        if (e.target === membersModal) membersModal.classList.remove('active');
+    });
 
     const particlesBg = document.getElementById('particles-bg');
     function createParticles(count = 28) {
@@ -1059,7 +1545,15 @@
     }
     createParticles();
 
-    const clanBoosts = ["+20% Divines Luck", "+3% Egg Luck Combo", "+40% Season XP", "+64% Hatch Speed", "+0.2% Toxic Pets Luck", "+25% Global Lucky Egg Boost", "+33% Secrets Luck", "+181% Gems", "+² Pets Equipped", "+30% Aure Luck", "+10% Ring Fragments Luck", "+176% Clicks", "+1 Meteorite Damage", "+1 Eggs Open", "+30% Space Coins Multiplier", "+1.5% Golden Pets Luck", "+3 More Wood", "-0.13% Golden Tree Chance", "+26% Extra Egg", "+0.4% Shiny Pets Luck", "+196% Luck", "+15% Mastery XP"];
+    const clanBoosts = [
+        "+20% Divines Luck", "+3% Egg Luck Combo", "+40% Season XP", "+64% Hatch Speed",
+        "+0.2% Toxic Pets Luck", "+25% Global Lucky Egg Boost", "+33% Secrets Luck", "+181% Gems",
+        "+² Pets Equipped", "+30% Aure Luck", "+10% Ring Fragments Luck", "+176% Clicks",
+        "+1 Meteorite Damage", "+1 Eggs Open", "+30% Space Coins Multiplier", "+1.5% Golden Pets Luck",
+        "+3 More Wood", "-0.13% Golden Tree Chance", "+26% Extra Egg", "+0.4% Shiny Pets Luck",
+        "+196% Luck", "+15% Mastery XP"
+    ];
+
     const boostsGrid = document.getElementById('boostsGrid');
     if (boostsGrid) {
         clanBoosts.forEach(boost => {
@@ -1085,6 +1579,7 @@
 
     const contestDate = new Date(2025, 5, 10, 0, 0, 0);
     const countdownDisplay = document.getElementById('contestCountdownDisplay');
+
     function updateCountdown() {
         if (!countdownDisplay) return;
         const now = new Date();
@@ -1108,7 +1603,13 @@
         Skylands: ["Skylands", "Sky Garden", "Cloudy World", "Ashwind Realm", "Frozen Forest", "Ancient Ruins", "Monochrome World", "Wild West", "Bee World", "Neon World", "Thunder Isles", "Sunken Temple", "Swamp World", "Crystal Island", "Blossom Clouds", "Aurora World"]
     };
 
-    const gamepassesList = ["Auto Clicker", "Auto Rebirth", "+2 Pet Equip", "+3 Pet Equip", "Mega Luck", "Ultra Luck", "Faster Eggs Open", "Extra Egg", "Vip", "Magic Eggs", "Shiny Hunters", "Insane Farmer", "Secrets Hunter", "Mega Fragment Luck", "Insane Lumberjack", "Dungeon Coins", "Space Coins", "Divine Hunter", "Hive Capacity"];
+    const gamepassesList = [
+        "Auto Clicker", "Auto Rebirth", "+2 Pet Equip", "+3 Pet Equip", "Mega Luck", "Ultra Luck",
+        "Faster Eggs Open", "Extra Egg", "Vip", "Magic Eggs", "Shiny Hunters", "Insane Farmer",
+        "Secrets Hunter", "Mega Fragment Luck", "Insane Lumberjack", "Dungeon Coins", "Space Coins",
+        "Divine Hunter", "Hive Capacity"
+    ];
+
     const gamepassGrid = document.getElementById('gamepassGrid');
     if (gamepassGrid) {
         gamepassesList.forEach(gp => {
@@ -1126,6 +1627,7 @@
 
     const categorySelect = document.getElementById('worldCategory');
     const mapSelect = document.getElementById('worldMap');
+
     categorySelect?.addEventListener('change', () => {
         const category = categorySelect.value;
         mapSelect.innerHTML = '<option value="">-- wybierz świat --</option>';
@@ -1157,6 +1659,9 @@
     closeBtn?.addEventListener('click', closeModal);
     modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
+    document.getElementById('scrollUpBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: -220, behavior: 'smooth' }));
+    document.getElementById('scrollDownBtn')?.addEventListener('click', () => modalBody.scrollBy({ top: 220, behavior: 'smooth' }));
+
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeLoginModal();
@@ -1167,16 +1672,13 @@
     });
 
     const toast = document.getElementById('toast-msg');
+
     function showToast(message, isError = false, duration = 4000) {
         toast.textContent = message;
         toast.style.background = isError ? '#3b1e3a' : '#1e1b4b';
         toast.style.borderColor = isError ? '#f43f5e' : '#c084fc';
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), duration);
-    }
-
-    function getSelectedGamepasses() {
-        return Array.from(document.querySelectorAll('.gamepass-cb:checked')).map(cb => cb.value);
     }
 
     async function sendToDiscord(data) {
@@ -1226,6 +1728,7 @@
 
     form?.addEventListener('submit', async (e) => {
         e.preventDefault();
+
         const nick = document.getElementById('nick').value.trim();
         const discord = document.getElementById('discord').value.trim();
         const prestige = document.getElementById('prestige').value;
@@ -1239,9 +1742,12 @@
         const worldMap = document.getElementById('worldMap').value;
         const exp = document.getElementById('exp').value.trim();
         const motivation = document.getElementById('motivation').value.trim();
-        const gamepasses = getSelectedGamepasses();
+        const gamepasses = Array.from(document.querySelectorAll('.gamepass-cb:checked')).map(cb => cb.value);
 
-        if (!nick || !discord || !exp || !motivation) return;
+        if (!nick || !discord || !exp || !motivation) {
+            showToast("❌ Uzupełnij wymagane pola", true);
+            return;
+        }
 
         const payloadData = { nick, discord, prestige, rebirths, petEquip, eggsOpened, gamepassCount, hoursPlayed, bestpet, worldCategory, worldMap, gamepasses, experience: exp, motivation };
 
@@ -1264,8 +1770,15 @@
         }
     });
 
-    document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🏆 Grupa Roblox: BEST Champions – graj razem z nami!", false); });
-    document.getElementById('rcuCodes')?.addEventListener('click', (e) => { e.preventDefault(); showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false); });
+    document.getElementById('robloxGroupBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast("🏆 Grupa Roblox: BEST Champions – graj razem z nami!", false);
+    });
+
+    document.getElementById('rcuCodes')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast("🎁 Kody RCU: RELEASE, SPOOKY, FROG – używaj szybko!", false);
+    });
 
     updateLoginUI();
     checkLoginView();
