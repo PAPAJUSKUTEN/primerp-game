@@ -201,35 +201,35 @@
     }
     .profile-container {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: 240px 1fr;
       min-height: 100vh;
     }
     @media (max-width: 800px) {
       .profile-container { grid-template-columns: 1fr; }
     }
 
-    /* Sidebar zakładek po lewo */
+    /* Sidebar zakładek po lewo (mniejsze) */
     .profile-sidebar {
       background: var(--bg-card);
       border-right: 1px solid rgba(255,255,255,0.06);
-      padding: 16px;
-      display: grid; gap: 6px;
+      padding: 12px;
+      display: grid; gap: 4px;
       overflow-y: auto;
     }
     .profile-sidebar-header {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      padding: 8px 6px; margin-bottom: 12px;
+      padding: 6px 6px; margin-bottom: 8px;
     }
-    .profile-sidebar-title { font-weight: 700; font-size: 16px; }
+    .profile-sidebar-title { font-weight: 700; font-size: 14px; }
     .profile-sidebar-close {
-      padding: 6px 8px; border-radius: 6px; font-size: 12px; font-weight: 700;
+      padding: 4px 6px; border-radius: 6px; font-size: 11px; font-weight: 700;
       background: rgba(255,255,255,0.06); cursor: pointer; border: 1px solid rgba(255,255,255,0.08);
     }
     .profile-tab {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 12px; border-radius: 8px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 10px; border-radius: 6px;
       background: transparent; border: none; cursor: pointer;
-      color: var(--mute); font-size: 14px; font-weight: 600;
+      color: var(--mute); font-size: 13px; font-weight: 600;
       text-align: left;
     }
     .profile-tab:hover { background: rgba(255,255,255,0.06); color: var(--text); }
@@ -238,31 +238,31 @@
       color: #071018;
     }
     .profile-tab-icon {
-      width: 18px; height: 18px; border-radius: 4px;
+      width: 16px; height: 16px; border-radius: 3px;
       background: rgba(255,255,255,0.08);
     }
 
     /* Główna treść profilu */
     .profile-content {
-      padding: 20px; display: grid; gap: 16px;
+      padding: 16px; display: grid; gap: 14px;
     }
     .profile-header {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       margin-bottom: 8px;
     }
-    .profile-user-title { font-weight: 700; font-size: 26px; }
+    .profile-user-title { font-weight: 700; font-size: 22px; }
     .profile-card-full {
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 12px; padding: 16px;
       display: grid; gap: 12px;
     }
-    .profile-card-full h3 { font-size: 18px; margin: 0; }
+    .profile-card-full h3 { font-size: 16px; margin: 0; }
     .profile-line { font-size: 14px; display: flex; gap: 8px; }
     .profile-line strong { color: var(--text); }
     .profile-line span { color: var(--mute); }
     .profile-coins {
-      font-size: 32px; font-weight: 700; color: var(--accent); margin: 4px 0;
+      font-size: 28px; font-weight: 700; color: var(--accent); margin: 4px 0;
     }
     .profile-grid-2 {
       display: grid; gap: 14px; grid-template-columns: 1fr 1fr;
@@ -272,8 +272,42 @@
       background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
       border-radius: 10px; padding: 12px; display: grid; gap: 6px;
     }
-    .profile-mini-card h4 { font-size: 14px; margin: 0; color: var(--mute); }
-    .profile-mini-card .val { font-size: 20px; font-weight: 700; }
+    .profile-mini-card h4 { font-size: 13px; margin: 0; color: var(--mute); }
+    .profile-mini-card .val { font-size: 18px; font-weight: 700; }
+
+    /* Moje Dane - zdjęcie profilowe + dane */
+    .moje-dane-grid {
+      display: grid; gap: 16px; grid-template-columns: 1fr 1.4fr;
+    }
+    @media (max-width: 800px) { .moje-dane-grid { grid-template-columns: 1fr; } }
+    .profile-photo {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 12px;
+      display: grid; gap: 8px;
+      text-align: center;
+    }
+    .profile-photo-img {
+      width: 140px; height: 140px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      margin: 0 auto;
+      display: grid; place-items: center;
+      font-size: 42px; font-weight: 700; color: #071018;
+    }
+    .profile-photo-btn {
+      padding: 8px 10px; border-radius: 6px; font-size: 13px; font-weight: 600;
+      background: rgba(255,255,255,0.06); cursor: pointer; border: 1px solid rgba(255,255,255,0.08); color: var(--text);
+    }
+    .profile-data {
+      display: grid; gap: 10px;
+    }
+    .profile-data-line {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 6px;
+      padding: 8px 6px; border-radius: 6px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    }
+    .profile-data-label { font-size: 13px; color: var(--mute); }
+    .profile-data-value { font-size: 14px; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -448,7 +482,7 @@
     </div>
   </div>
 
-  <!-- PROFIL OBYWATELA (na całe okno, sidebar po lewo) -->
+  <!-- PROFIL OBYWATELA (na całe okno, sidebar mniejszy) -->
   <div id="profileOverlay" class="profile-overlay">
     <div class="profile-container">
       <!-- Sidebar zakładek -->
@@ -501,14 +535,44 @@
           <div class="profile-user-title">Moje Dane</div>
         </div>
 
-        <div class="profile-card-full">
-          <h3>Podstawowe informacje</h3>
-          <div class="profile-line"><strong>Username:</strong> <span id="pName"></span></div>
-          <div class="profile-line"><strong>Ranga:</strong> <span id="pRank">Obywatel</span></div>
-          <div class="profile-line"><strong>Status:</strong> <span id="pStatus">Aktywny</span></div>
-          <div class="profile-line"><strong>Data rejestracji:</strong> <span>01.01.2026</span></div>
+        <!-- Moje Dane: zdjęcie + dane obywatela -->
+        <div class="moje-dane-grid">
+          <!-- Zdjęcie profilowe -->
+          <div class="profile-photo">
+            <div class="profile-photo-img" id="rpPhoto">RP</div>
+            <button class="profile-photo-btn" onclick="changePhoto()">Zmień zdjęcie</button>
+          </div>
+
+          <!-- Dane obywatela -->
+          <div class="profile-data">
+            <div class="profile-data-line">
+              <div class="profile-data-label">RP Pesel</div>
+              <div class="profile-data-value" id="rpPesel">85031200456</div>
+            </div>
+            <div class="profile-data-line">
+              <div class="profile-data-label">Imię</div>
+              <div class="profile-data-value" id="rpName">Jan</div>
+            </div>
+            <div class="profile-data-line">
+              <div class="profile-data-label">Nazwisko</div>
+              <div class="profile-data-value" id="rpSurname">Kowalski</div>
+            </div>
+            <div class="profile-data-line">
+              <div class="profile-data-label">Data urodzenia</div>
+              <div class="profile-data-value" id="rpBirth">12.03.1985</div>
+            </div>
+            <div class="profile-data-line">
+              <div class="profile-data-label">Obywatelstwo</div>
+              <div class="profile-data-value" id="rpCitizenship">Polskie</div>
+            </div>
+            <div class="profile-data-line">
+              <div class="profile-data-label">Status</div>
+              <div class="profile-data-value" id="rpStatus">Cywil</div>
+            </div>
+          </div>
         </div>
 
+        <!-- Finanse i statystyki -->
         <div class="profile-grid-2">
           <div class="profile-card-full">
             <h3>Finanse</h3>
@@ -532,6 +596,7 @@
           </div>
         </div>
 
+        <!-- Akcje -->
         <div class="profile-card-full">
           <h3>Akcje</h3>
           <div style="display:flex; gap:8px;">
@@ -578,10 +643,19 @@
         closeLogin();
 
         // Ustaw dane profilu
-        document.getElementById('pName').textContent = username;
-        document.getElementById('pRank').textContent = 'Obywatel';
-        document.getElementById('pStatus').textContent = 'Aktywny';
         document.getElementById('pCoins').textContent = '0';
+
+        // Przykładowe dane obywatela
+        document.getElementById('rpPesel').textContent = '85031200456';
+        document.getElementById('rpName').textContent = 'Jan';
+        document.getElementById('rpSurname').textContent = 'Kowalski';
+        document.getElementById('rpBirth').textContent = '12.03.1985';
+        document.getElementById('rpCitizenship').textContent = 'Polskie';
+        document.getElementById('rpStatus').textContent = 'Cywil';
+
+        // Zdjęcie: pierwsze 2 litery username
+        const initials = username.slice(0,2).toUpperCase();
+        document.getElementById('rpPhoto').textContent = initials;
 
         // Pokaż profil na całe okno
         document.getElementById('profileOverlay').style.display = 'block';
@@ -595,7 +669,7 @@
       document.getElementById('profileOverlay').style.display = 'none';
     }
 
-    // Zmiana zakładek (aktywna + tytuł)
+    // Zmiana zakładki (aktywna + tytuł)
     function switchTab(tab) {
       document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
@@ -604,6 +678,22 @@
       const title = tab.textContent.trim();
       const titleEl = document.querySelector('.profile-user-title');
       titleEl.textContent = title;
+
+      // Dla Moje Dane pokazujemy grid, dla innych pokazujemy placeholder
+      const grid = document.querySelector('.moje-dane-grid');
+      if (title === 'Moje Dane') {
+        grid.style.display = 'grid';
+      } else {
+        grid.style.display = 'none';
+      }
+    }
+
+    // Zmiana zdjęcia (placeholder)
+    function changePhoto() {
+      const newPhoto = prompt('Wpisz napis na zdjęciu (np. JP):');
+      if (newPhoto && newPhoto.trim()) {
+        document.getElementById('rpPhoto').textContent = newPhoto.trim().slice(0,2).toUpperCase();
+      }
     }
   </script>
 </body>
