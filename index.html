@@ -53,11 +53,12 @@
       box-shadow: 0 0 14px var(--shadow);
     }
     .nav-links { display: flex; gap: 18px; }
-    .nav-links a {
+    .nav-links a, .nav-links button {
       color: var(--text); font-size: 14px;
       padding: 6px 8px; border-radius: 6px;
+      background: transparent; border: none; cursor: pointer;
     }
-    .nav-links a:hover { background: rgba(255,255,255,0.06); text-decoration: none; }
+    .nav-links a:hover, .nav-links button:hover { background: rgba(255,255,255,0.06); text-decoration: none; }
 
     /* HERO */
     .hero {
@@ -163,48 +164,65 @@
     /* FOOTER */
     .footer { padding: 24px 0; color: var(--mute); font-size: 13px; text-align: center; }
 
-    /* LOGIN PANEL */
-    .login-panel {
+    /* LOGIN MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 100;
+      display: none; align-items: center; justify-content: center;
+      background: rgba(7,10,14,0.8); backdrop-filter: blur(6px);
+    }
+    .modal {
+      width: min(420px, 92%);
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px; padding: 16px;
-      display: grid; gap: 10px;
-      max-width: 360px;
+      border-radius: 14px; padding: 16px;
     }
-    .login-panel label {
-      font-size: 13px; color: var(--mute);
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px;
     }
-    .login-panel input {
-      width: 100%;
-      padding: 10px 12px;
-      margin-top: 6px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      font-size: 14px;
+    .modal-title { font-weight: 700; font-size: 18px; }
+    .modal-close {
+      padding: 6px 8px; border-radius: 6px; font-size: 12px; font-weight: 700;
+      background: rgba(255,255,255,0.06); cursor: pointer; border: 1px solid rgba(255,255,255,0.08);
     }
-    .login-error {
-      color: var(--danger);
-      font-size: 13px;
-      margin-top: 4px;
-      display: none;
+    .login-form { display: grid; gap: 10px; }
+    .login-form label { font-size: 13px; color: var(--mute); }
+    .login-form input {
+      width: 100%; padding: 10px 12px; margin-top: 6px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); color: var(--text); font-size: 14px;
     }
-    .user-info {
-      display: grid; gap: 6px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 8px;
-      padding: 12px;
+    .login-error { color: var(--danger); font-size: 13px; margin-top: 4px; display: none; }
+    .login-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+
+    /* PROFIL OBYWATELA (zakrywa główny ekran) */
+    .profile-overlay {
+      position: fixed; inset: 0; z-index: 90;
+      display: none; background: rgba(7,10,14,0.95);
+      overflow: auto;
     }
-    .user-info .line {
-      font-size: 13px;
+    .profile-content {
+      width: min(900px, 92%); margin: 40px auto; padding: 20px;
+      background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px;
     }
-    .user-info .line strong {
-      color: var(--text);
+    .profile-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px;
     }
-    .user-info .line span {
-      color: var(--mute);
+    .profile-title { font-weight: 700; font-size: 22px; }
+    .profile-close {
+      padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      background: rgba(255,255,255,0.06); cursor: pointer; border: 1px solid rgba(255,255,255,0.08); color: var(--text);
+    }
+    .profile-grid { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 800px) { .profile-grid { grid-template-columns: 1fr; } }
+    .profile-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 14px; display: grid; gap: 8px;
+    }
+    .profile-card h3 { font-size: 16px; margin: 0; }
+    .profile-line { font-size: 14px; display: flex; gap: 8px; }
+    .profile-line strong { color: var(--text); }
+    .profile-line span { color: var(--mute); }
+    .profile-coins {
+      font-size: 28px; font-weight: 700; color: var(--accent); margin: 4px 0;
     }
   </style>
 </head>
@@ -219,10 +237,10 @@
         <div class="nav-links">
           <a href="#serwer">Serwer</a>
           <a href="#frakcje">Frakcje</a>
-          <a href="#panel">Panel obywatela</a>
           <a href="#regulamin">Regulamin</a>
           <a href="#statystyki">Statystyki</a>
           <a href="#discord">Discord</a>
+          <button onclick="openLogin()">Logowanie</button>
         </div>
       </div>
     </div>
@@ -247,39 +265,6 @@
         </div>
         <div style="font-size:12px; color:var(--mute);">
           Wklej kod w SAMP Launcher lub w aplikacji Roblox, aby dołączyć do APEX RP [web:26].
-        </div>
-      </div>
-    </section>
-
-    <!-- PANEL OBYWATELA (LOGOWANIE) -->
-    <section class="section" id="panel">
-      <h2>Panel obywatela</h2>
-      <p style="color:var(--mute); margin:0 0 14px;">
-        Zaloguj się na swoje konto obywatela, aby zobaczyć profil, rangę, coins i status [web:12].
-      </p>
-
-      <div style="display:grid; gap:14px; grid-template-columns: 1fr 1fr;">
-        <!-- Formularz logowania -->
-        <div class="login-panel" id="loginFormPanel">
-          <div style="font-weight:700; font-size:16px; margin-bottom:4px;">Logowanie</div>
-          <label>Username</label>
-          <input type="text" id="username" placeholder="Test123" />
-          <label>Password</label>
-          <input type="password" id="password" placeholder="Test123" />
-          <div class="login-error" id="loginError">Nieprawidłowy username lub password</div>
-          <button class="btn btn-primary" type="button" onclick="login()">Zaloguj</button>
-        </div>
-
-        <!-- Informacja po zalogowaniu -->
-        <div class="login-panel" id="userInfoPanel" style="display:none;">
-          <div style="font-weight:700; font-size:16px; margin-bottom:4px;">Profil obywatela</div>
-          <div class="user-info">
-            <div class="line"><strong>Username:</strong> <span id="UserInfoName"></span></div>
-            <div class="line"><strong>Ranga:</strong> <span id="UserInfoRank">Obywatel</span></div>
-            <div class="line"><strong>Coins:</strong> <span id="UserInfoCoins">0</span></div>
-            <div class="line"><strong>Status:</strong> <span id="UserInfoStatus">Aktywny</span></div>
-          </div>
-          <button class="btn" type="button" onclick="logout()" style="margin-top:6px;">Wyloguj</button>
         </div>
       </div>
     </section>
@@ -390,6 +375,63 @@
     </footer>
   </div>
 
+  <!-- LOGIN MODAL -->
+  <div id="loginModal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Logowanie</div>
+        <button class="modal-close" onclick="closeLogin()">X</button>
+      </div>
+      <form id="loginForm" onsubmit="loginSubmit(event)">
+        <div class="login-form">
+          <label>Username</label>
+          <input type="text" id="username" placeholder="Test123" required />
+          <label>Password</label>
+          <input type="password" id="password" placeholder="Test123" required />
+          <div class="login-error" id="loginError">Nieprawidłowy username lub password</div>
+          <div class="login-actions">
+            <button class="modal-close" type="button" onclick="closeLogin()">Zamknij</button>
+            <button class="btn btn-primary" type="submit">Zaloguj</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PROFIL OBYWATELA (zakrywa główny ekran) -->
+  <div id="profileOverlay" class="profile-overlay">
+    <div class="profile-content">
+      <div class="profile-header">
+        <div class="profile-title">Profil Obywatela</div>
+        <button class="profile-close" onclick="closeProfile()">Zamknij</button>
+      </div>
+      <div class="profile-grid">
+        <div class="profile-card">
+          <h3>Podstawowe informacje</h3>
+          <div class="profile-line"><strong>Username:</strong> <span id="pName"></span></div>
+          <div class="profile-line"><strong>Ranga:</strong> <span id="pRank">Obywatel</span></div>
+          <div class="profile-line"><strong>Status:</strong> <span id="pStatus">Aktywny</span></div>
+        </div>
+        <div class="profile-card">
+          <h3>Finanse</h3>
+          <div class="profile-line"><strong>Coins:</strong></div>
+          <div class="profile-coins" id="pCoins">0</div>
+        </div>
+        <div class="profile-card">
+          <h3>Statystyki</h3>
+          <div class="profile-line"><strong>Godziny gry:</strong> <span>0</span></div>
+          <div class="profile-line"><strong>Aktywne biznesy:</strong> <span>0</span></div>
+        </div>
+        <div class="profile-card">
+          <h3>Akcje</h3>
+          <button class="btn" type="button">Edytuj profil</button>
+          <button class="btn" type="button">Historia transakcji</button>
+          <button class="btn btn-primary" type="button" onclick="closeProfile()">Wyloguj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     function copyIp() {
       const t = document.getElementById('ipText').textContent;
@@ -400,34 +442,45 @@
       navigator.clipboard.writeText(t).then(() => alert('Link skopiowany: ' + t));
     }
 
-    // TESTOWE KONTO: Test123 / Test123
-    function login() {
+    // LOGIN MODAL
+    function openLogin() {
+      document.getElementById('loginModal').style.display = 'flex';
+      document.getElementById('loginError').style.display = 'none';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+    function closeLogin() {
+      document.getElementById('loginModal').style.display = 'none';
+    }
+
+    // LOGIN
+    function loginSubmit(e) {
+      e.preventDefault();
       const username = document.getElementById('username').value.trim();
       const password = document.getElementById('password').value.trim();
       const error = document.getElementById('loginError');
 
+      // TESTOWE KONTO: Test123 / Test123
       if (username === 'Test123' && password === 'Test123') {
-        // Udało się
         error.style.display = 'none';
-        document.getElementById('loginFormPanel').style.display = 'none';
-        document.getElementById('userInfoPanel').style.display = 'block';
+        closeLogin();
 
-        // Ustaw dane w profilu
-        document.getElementById('UserInfoName').textContent = username;
-        document.getElementById('UserInfoRank').textContent = 'Obywatel';
-        document.getElementById('UserInfoCoins').textContent = '0';
-        document.getElementById('UserInfoStatus').textContent = 'Aktywny';
+        // Ustaw dane profilu
+        document.getElementById('pName').textContent = username;
+        document.getElementById('pRank').textContent = 'Obywatel';
+        document.getElementById('pStatus').textContent = 'Aktywny';
+        document.getElementById('pCoins').textContent = '0';
+
+        // Pokaż profil (zakrywa główny ekran)
+        document.getElementById('profileOverlay').style.display = 'block';
       } else {
         error.style.display = 'block';
       }
     }
 
-    function logout() {
-      document.getElementById('loginFormPanel').style.display = 'grid';
-      document.getElementById('userInfoPanel').style.display = 'none';
-      document.getElementById('username').value = '';
-      document.getElementById('password').value = '';
-      document.getElementById('loginError').style.display = 'none';
+    // PROFIL
+    function closeProfile() {
+      document.getElementById('profileOverlay').style.display = 'none';
     }
   </script>
 </body>
