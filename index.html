@@ -175,6 +175,7 @@
         <div class="nav-links">
           <a href="#serwer">Serwer</a>
           <a href="#frakcje">Frakcje</a>
+          <a href="#rekrutacja">Rekrutacja</a>
           <a href="#regulamin">Regulamin</a>
           <a href="#statystyki">Statystyki</a>
           <a href="#discord">Discord</a>
@@ -240,6 +241,18 @@
           <p>Naprawiaj pojazdy, ciągnij uszkodzone auta, dostarczaj towary [web:12].</p>
           <span class="tag">rola</span>
         </div>
+      </div>
+    </section>
+
+    <!-- REKRUTACJA -->
+    <section class="section" id="rekrutacja">
+      <h2>Rekrutacja — Policja</h2>
+      <p style="color:var(--mute); margin:0 0 14px;">
+        Zostanij członkiem policji na APEX RP. Wybierz rolę i wypełnij krótki formularz [web:11][web:29].
+      </p>
+      <div class="cta">
+        <button class="btn btn-primary" onclick="openRecruit()">Rekrutacja</button>
+        <a class="btn" href="#discord">Discord</a>
       </div>
     </section>
 
@@ -312,6 +325,71 @@
     </footer>
   </div>
 
+  <!-- Modal Rekrutacja -->
+  <div id="recruitModal" style="
+    position:fixed; inset:0; z-index:100;
+    display:none; align-items:center; justify-content:center;
+    background:rgba(7,10,14,0.75); backdrop-filter:blur(6px);
+  ">
+    <div style="
+      width:min(620px,92%); max-height:90vh; overflow:auto;
+      background:var(--bg-card); border:1px solid rgba(255,255,255,0.06);
+      border-radius:14px; padding:16px;
+    ">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
+        <div style="font-weight:700; font-size:18px;">Rekrutacja — Policja APEX RP</div>
+        <button class="copy" onclick="closeRecruit()">X</button>
+      </div>
+
+      <form id="recruitForm" onsubmit="submitRecruit(event)">
+        <div style="display:grid; gap:10px;">
+          <div>
+            <label style="font-size:13px; color:var(--mute);">Imię i nazwisko (awatar)</label>
+            <input required name="name" type="text"
+              style="width:100%; padding:10px 12px; margin-top:6px; border-radius:8px;
+              border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:var(--text);" />
+          </div>
+
+          <div>
+            <label style="font-size:13px; color:var(--mute);">Discord</label>
+            <input required name="discord" type="text" placeholder="nazwa@user"
+              style="width:100%; padding:10px 12px; margin-top:6px; border-radius:8px;
+              border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:var(--text);" />
+          </div>
+
+          <div>
+            <label style="font-size:13px; color:var(--mute);">Rola w policji</label>
+            <select required name="role" style="width:100%; padding:10px 12px; margin-top:6px; border-radius:8px;
+              border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:var(--text);">
+              <option value="" disabled selected>Wybierz rolę</option>
+              <option value="Policja">Policja</option>
+              <option value="Policja Patrolowa">Policja Patrolowa</option>
+              <option value="Jednostka Specjalna">Jednostka Specjalna</option>
+              <option value="Wywiad">Wywiad</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size:13px; color:var(--mute);">Dlaczego chcesz do policji?</label>
+            <textarea required name="why" rows="4" placeholder="Krótka motywacja..."
+              style="width:100%; padding:10px 12px; margin-top:6px; border-radius:8px;
+              border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:var(--text);"></textarea>
+          </div>
+
+          <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:4px;">
+            <button class="copy" type="button" onclick="closeRecruit()">Zamknij</button>
+            <button class="btn btn-primary" type="submit">Zgłoś się</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="recruitSuccess" style="display:none; margin-top:12px; padding:10px 12px; border-radius:8px;
+        background:rgba(46,213,115,0.12); border:1px solid rgba(46,213,115,0.35); color:var(--success); font-size:14px;">
+        Dziękujemy! Twoja zgłoszenie zostało wysłane. administracja zweryfikuje je na Discordzie.
+      </div>
+    </div>
+  </div>
+
   <script>
     function copyIp() {
       const t = document.getElementById('ipText').textContent;
@@ -320,6 +398,29 @@
     function copyDc() {
       const t = document.getElementById('dcLink').textContent;
       navigator.clipboard.writeText(t).then(() => alert('Link skopiowany: ' + t));
+    }
+
+    function openRecruit() {
+      document.getElementById('recruitModal').style.display = 'flex';
+      document.getElementById('recruitSuccess').style.display = 'none';
+      document.getElementById('recruitForm').reset();
+    }
+    function closeRecruit() {
+      document.getElementById('recruitModal').style.display = 'none';
+    }
+    function submitRecruit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const role = form.role.value;
+      const name = form.name.value;
+      const discord = form.discord.value;
+      const why = form.why.value;
+
+      // Tutaj możesz wysłać dane np. do Discord webhooka / backendu
+      // Na razie pokazuję sukces lokalnie:
+      console.log('Zgłoszenie:', { name, discord, role, why });
+      closeRecruit();
+      document.getElementById('recruitSuccess').style.display = 'block';
     }
   </script>
 </body>
