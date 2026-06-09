@@ -201,7 +201,7 @@
     }
     .profile-container {
       display: grid;
-      grid-template-columns: 260px 1fr;
+      grid-template-columns: 280px 1fr;
       min-height: 100vh;
     }
     @media (max-width: 800px) {
@@ -214,6 +214,7 @@
       border-right: 1px solid rgba(255,255,255,0.06);
       padding: 16px;
       display: grid; gap: 6px;
+      overflow-y: auto;
     }
     .profile-sidebar-header {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
@@ -229,6 +230,7 @@
       padding: 10px 12px; border-radius: 8px;
       background: transparent; border: none; cursor: pointer;
       color: var(--mute); font-size: 14px; font-weight: 600;
+      text-align: left;
     }
     .profile-tab:hover { background: rgba(255,255,255,0.06); color: var(--text); }
     .profile-tab.active {
@@ -457,38 +459,46 @@
         </div>
         <button class="profile-tab active" onclick="switchTab(this)">
           <div class="profile-tab-icon"></div>
-          Profil
+          Moje Dane
         </button>
         <button class="profile-tab" onclick="switchTab(this)">
           <div class="profile-tab-icon"></div>
-          Coins
+          Urząd Miasta
         </button>
         <button class="profile-tab" onclick="switchTab(this)">
           <div class="profile-tab-icon"></div>
-          Biznesy
+          Bankowość
         </button>
         <button class="profile-tab" onclick="switchTab(this)">
           <div class="profile-tab-icon"></div>
-          Pojazdy
+          Garaż
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Sklep Internetowy
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          V-Coins
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Rekrutacja
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Urząd Pracy
         </button>
         <button class="profile-tab" onclick="switchTab(this)">
           <div class="profile-tab-icon"></div>
           Nieruchomości
-        </button>
-        <button class="profile-tab" onclick="switchTab(this)">
-          <div class="profile-tab-icon"></div>
-          Historia
-        </button>
-        <button class="profile-tab" onclick="switchTab(this)">
-          <div class="profile-tab-icon"></div>
-          Ustawienia
         </button>
       </div>
 
       <!-- Treść profilu -->
       <div class="profile-content">
         <div class="profile-header">
-          <div class="profile-user-title">Profil Obywatela</div>
+          <div class="profile-user-title">Moje Dane</div>
         </div>
 
         <div class="profile-card-full">
@@ -502,7 +512,7 @@
         <div class="profile-grid-2">
           <div class="profile-card-full">
             <h3>Finanse</h3>
-            <div class="profile-line"><strong>Coins:</strong></div>
+            <div class="profile-line"><strong>V-Coins:</strong></div>
             <div class="profile-coins" id="pCoins">0</div>
           </div>
           <div class="profile-card-full">
@@ -512,11 +522,11 @@
               <div class="val">0</div>
             </div>
             <div class="profile-mini-card" style="margin-top:8px;">
-              <h4>Aktywne biznesy</h4>
+              <h4>Garaż</h4>
               <div class="val">0</div>
             </div>
             <div class="profile-mini-card" style="margin-top:8px;">
-              <h4>Pojazdy</h4>
+              <h4>Nieruchomości</h4>
               <div class="val">0</div>
             </div>
           </div>
@@ -585,10 +595,15 @@
       document.getElementById('profileOverlay').style.display = 'none';
     }
 
-    // Zmiana zakładek (aktywna)
+    // Zmiana zakładek (aktywna + tytuł)
     function switchTab(tab) {
       document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
+
+      // Zmień tytuł w zależności od zakładki
+      const title = tab.textContent.trim();
+      const titleEl = document.querySelector('.profile-user-title');
+      titleEl.textContent = title;
     }
   </script>
 </body>
