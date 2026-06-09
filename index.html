@@ -193,37 +193,85 @@
     .login-error { color: var(--danger); font-size: 13px; margin-top: 4px; display: none; }
     .login-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
 
-    /* PROFIL OBYWATELA (zakrywa główny ekran) */
+    /* PROFIL OBYWATELA (na całe okno) */
     .profile-overlay {
       position: fixed; inset: 0; z-index: 90;
-      display: none; background: rgba(7,10,14,0.95);
+      display: none; background: var(--bg);
       overflow: auto;
     }
+    .profile-container {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+    @media (max-width: 800px) {
+      .profile-container { grid-template-columns: 1fr; }
+    }
+
+    /* Sidebar zakładek po lewo */
+    .profile-sidebar {
+      background: var(--bg-card);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding: 16px;
+      display: grid; gap: 6px;
+    }
+    .profile-sidebar-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 8px 6px; margin-bottom: 12px;
+    }
+    .profile-sidebar-title { font-weight: 700; font-size: 16px; }
+    .profile-sidebar-close {
+      padding: 6px 8px; border-radius: 6px; font-size: 12px; font-weight: 700;
+      background: rgba(255,255,255,0.06); cursor: pointer; border: 1px solid rgba(255,255,255,0.08);
+    }
+    .profile-tab {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 8px;
+      background: transparent; border: none; cursor: pointer;
+      color: var(--mute); font-size: 14px; font-weight: 600;
+    }
+    .profile-tab:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+    .profile-tab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #071018;
+    }
+    .profile-tab-icon {
+      width: 18px; height: 18px; border-radius: 4px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* Główna treść profilu */
     .profile-content {
-      width: min(900px, 92%); margin: 40px auto; padding: 20px;
-      background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px;
+      padding: 20px; display: grid; gap: 16px;
     }
     .profile-header {
-      display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      margin-bottom: 8px;
     }
-    .profile-title { font-weight: 700; font-size: 22px; }
-    .profile-close {
-      padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 14px;
-      background: rgba(255,255,255,0.06); cursor: pointer; border: 1px solid rgba(255,255,255,0.08); color: var(--text);
+    .profile-user-title { font-weight: 700; font-size: 26px; }
+    .profile-card-full {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 16px;
+      display: grid; gap: 12px;
     }
-    .profile-grid { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
-    @media (max-width: 800px) { .profile-grid { grid-template-columns: 1fr; } }
-    .profile-card {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px; padding: 14px; display: grid; gap: 8px;
-    }
-    .profile-card h3 { font-size: 16px; margin: 0; }
+    .profile-card-full h3 { font-size: 18px; margin: 0; }
     .profile-line { font-size: 14px; display: flex; gap: 8px; }
     .profile-line strong { color: var(--text); }
     .profile-line span { color: var(--mute); }
     .profile-coins {
-      font-size: 28px; font-weight: 700; color: var(--accent); margin: 4px 0;
+      font-size: 32px; font-weight: 700; color: var(--accent); margin: 4px 0;
     }
+    .profile-grid-2 {
+      display: grid; gap: 14px; grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 800px) { .profile-grid-2 { grid-template-columns: 1fr; } }
+    .profile-mini-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px; padding: 12px; display: grid; gap: 6px;
+    }
+    .profile-mini-card h4 { font-size: 14px; margin: 0; color: var(--mute); }
+    .profile-mini-card .val { font-size: 20px; font-weight: 700; }
   </style>
 </head>
 <body>
@@ -398,35 +446,89 @@
     </div>
   </div>
 
-  <!-- PROFIL OBYWATELA (zakrywa główny ekran) -->
+  <!-- PROFIL OBYWATELA (na całe okno, sidebar po lewo) -->
   <div id="profileOverlay" class="profile-overlay">
-    <div class="profile-content">
-      <div class="profile-header">
-        <div class="profile-title">Profil Obywatela</div>
-        <button class="profile-close" onclick="closeProfile()">Zamknij</button>
+    <div class="profile-container">
+      <!-- Sidebar zakładek -->
+      <div class="profile-sidebar">
+        <div class="profile-sidebar-header">
+          <div class="profile-sidebar-title">Profil Obywatela</div>
+          <button class="profile-sidebar-close" onclick="closeProfile()">X</button>
+        </div>
+        <button class="profile-tab active" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Profil
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Coins
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Biznesy
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Pojazdy
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Nieruchomości
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Historia
+        </button>
+        <button class="profile-tab" onclick="switchTab(this)">
+          <div class="profile-tab-icon"></div>
+          Ustawienia
+        </button>
       </div>
-      <div class="profile-grid">
-        <div class="profile-card">
+
+      <!-- Treść profilu -->
+      <div class="profile-content">
+        <div class="profile-header">
+          <div class="profile-user-title">Profil Obywatela</div>
+        </div>
+
+        <div class="profile-card-full">
           <h3>Podstawowe informacje</h3>
           <div class="profile-line"><strong>Username:</strong> <span id="pName"></span></div>
           <div class="profile-line"><strong>Ranga:</strong> <span id="pRank">Obywatel</span></div>
           <div class="profile-line"><strong>Status:</strong> <span id="pStatus">Aktywny</span></div>
+          <div class="profile-line"><strong>Data rejestracji:</strong> <span>01.01.2026</span></div>
         </div>
-        <div class="profile-card">
-          <h3>Finanse</h3>
-          <div class="profile-line"><strong>Coins:</strong></div>
-          <div class="profile-coins" id="pCoins">0</div>
+
+        <div class="profile-grid-2">
+          <div class="profile-card-full">
+            <h3>Finanse</h3>
+            <div class="profile-line"><strong>Coins:</strong></div>
+            <div class="profile-coins" id="pCoins">0</div>
+          </div>
+          <div class="profile-card-full">
+            <h3>Statystyki</h3>
+            <div class="profile-mini-card">
+              <h4>Godziny gry</h4>
+              <div class="val">0</div>
+            </div>
+            <div class="profile-mini-card" style="margin-top:8px;">
+              <h4>Aktywne biznesy</h4>
+              <div class="val">0</div>
+            </div>
+            <div class="profile-mini-card" style="margin-top:8px;">
+              <h4>Pojazdy</h4>
+              <div class="val">0</div>
+            </div>
+          </div>
         </div>
-        <div class="profile-card">
-          <h3>Statystyki</h3>
-          <div class="profile-line"><strong>Godziny gry:</strong> <span>0</span></div>
-          <div class="profile-line"><strong>Aktywne biznesy:</strong> <span>0</span></div>
-        </div>
-        <div class="profile-card">
+
+        <div class="profile-card-full">
           <h3>Akcje</h3>
-          <button class="btn" type="button">Edytuj profil</button>
-          <button class="btn" type="button">Historia transakcji</button>
-          <button class="btn btn-primary" type="button" onclick="closeProfile()">Wyloguj</button>
+          <div style="display:flex; gap:8px;">
+            <button class="btn">Edytuj profil</button>
+            <button class="btn">Historia transakcji</button>
+            <button class="btn btn-primary" onclick="closeProfile()">Wyloguj</button>
+          </div>
         </div>
       </div>
     </div>
@@ -471,7 +573,7 @@
         document.getElementById('pStatus').textContent = 'Aktywny';
         document.getElementById('pCoins').textContent = '0';
 
-        // Pokaż profil (zakrywa główny ekran)
+        // Pokaż profil na całe okno
         document.getElementById('profileOverlay').style.display = 'block';
       } else {
         error.style.display = 'block';
@@ -481,6 +583,12 @@
     // PROFIL
     function closeProfile() {
       document.getElementById('profileOverlay').style.display = 'none';
+    }
+
+    // Zmiana zakładek (aktywna)
+    function switchTab(tab) {
+      document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
     }
   </script>
 </body>
