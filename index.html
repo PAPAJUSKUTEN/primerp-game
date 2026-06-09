@@ -162,6 +162,50 @@
 
     /* FOOTER */
     .footer { padding: 24px 0; color: var(--mute); font-size: 13px; text-align: center; }
+
+    /* LOGIN PANEL */
+    .login-panel {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 16px;
+      display: grid; gap: 10px;
+      max-width: 360px;
+    }
+    .login-panel label {
+      font-size: 13px; color: var(--mute);
+    }
+    .login-panel input {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 14px;
+    }
+    .login-error {
+      color: var(--danger);
+      font-size: 13px;
+      margin-top: 4px;
+      display: none;
+    }
+    .user-info {
+      display: grid; gap: 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .user-info .line {
+      font-size: 13px;
+    }
+    .user-info .line strong {
+      color: var(--text);
+    }
+    .user-info .line span {
+      color: var(--mute);
+    }
   </style>
 </head>
 <body>
@@ -175,7 +219,7 @@
         <div class="nav-links">
           <a href="#serwer">Serwer</a>
           <a href="#frakcje">Frakcje</a>
-          <a href="#rekrutacja">Rekrutacja</a>
+          <a href="#panel">Panel obywatela</a>
           <a href="#regulamin">Regulamin</a>
           <a href="#statystyki">Statystyki</a>
           <a href="#discord">Discord</a>
@@ -203,6 +247,39 @@
         </div>
         <div style="font-size:12px; color:var(--mute);">
           Wklej kod w SAMP Launcher lub w aplikacji Roblox, aby dołączyć do APEX RP [web:26].
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL OBYWATELA (LOGOWANIE) -->
+    <section class="section" id="panel">
+      <h2>Panel obywatela</h2>
+      <p style="color:var(--mute); margin:0 0 14px;">
+        Zaloguj się na swoje konto obywatela, aby zobaczyć profil, rangę, coins i status [web:12].
+      </p>
+
+      <div style="display:grid; gap:14px; grid-template-columns: 1fr 1fr;">
+        <!-- Formularz logowania -->
+        <div class="login-panel" id="loginFormPanel">
+          <div style="font-weight:700; font-size:16px; margin-bottom:4px;">Logowanie</div>
+          <label>Username</label>
+          <input type="text" id="username" placeholder="Test123" />
+          <label>Password</label>
+          <input type="password" id="password" placeholder="Test123" />
+          <div class="login-error" id="loginError">Nieprawidłowy username lub password</div>
+          <button class="btn btn-primary" type="button" onclick="login()">Zaloguj</button>
+        </div>
+
+        <!-- Informacja po zalogowaniu -->
+        <div class="login-panel" id="userInfoPanel" style="display:none;">
+          <div style="font-weight:700; font-size:16px; margin-bottom:4px;">Profil obywatela</div>
+          <div class="user-info">
+            <div class="line"><strong>Username:</strong> <span id="UserInfoName"></span></div>
+            <div class="line"><strong>Ranga:</strong> <span id="UserInfoRank">Obywatel</span></div>
+            <div class="line"><strong>Coins:</strong> <span id="UserInfoCoins">0</span></div>
+            <div class="line"><strong>Status:</strong> <span id="UserInfoStatus">Aktywny</span></div>
+          </div>
+          <button class="btn" type="button" onclick="logout()" style="margin-top:6px;">Wyloguj</button>
         </div>
       </div>
     </section>
@@ -241,18 +318,6 @@
           <p>Naprawiaj pojazdy, ciągnij uszkodzone auta, dostarczaj towary [web:12].</p>
           <span class="tag">rola</span>
         </div>
-      </div>
-    </section>
-
-    <!-- REKRUTACJA -->
-    <section class="section" id="rekrutacja">
-      <h2>Rekrutacja — Policja</h2>
-      <p style="color:var(--mute); margin:0 0 14px;">
-        Zostanij członkiem policji na APEX RP. Wybierz rolę i wypełnij krótki formularz [web:11][web:29].
-      </p>
-      <div class="cta">
-        <button class="btn btn-primary" onclick="openRecruit()">Rekrutacja</button>
-        <a class="btn" href="#discord">Discord</a>
       </div>
     </section>
 
@@ -325,71 +390,6 @@
     </footer>
   </div>
 
-  <!-- Modal Rekrutacja -->
-  <div id="recruitModal" style="
-    position:fixed; inset:0; z-index:100;
-    display:none; align-items:center; justify-content:center;
-    background:rgba(7,10,14,0.75); backdrop-filter:blur(6px);
-  ">
-    <div style="
-      width:min(620px,92%); max-height:90vh; overflow:auto;
-      background:var(--bg-card); border:1px solid rgba(255,255,255,0.06);
-      border-radius:14px; padding:16px;
-    ">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;">
-        <div style="font-weight:700; font-size:18px;">Rekrutacja — Policja APEX RP</div>
-        <button class="copy" onclick="closeRecruit()">X</button>
-      </div>
-
-      <form id="recruitForm" onsubmit="submitRecruit(event)">
-        <div style="display:grid; gap:10px;">
-          <div>
-            <label style="font-size:13px; color:var(--mute);">Imię i nazwisko (awatar)</label>
-            <input required name="name" type="text"
-              style="width:100%; padding:10px 12px; margin-top:6px; border-radius:8px;
-              border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:var(--text);" />
-          </div>
-
-          <div>
-            <label style="font-size:13px; color:var(--mute);">Discord</label>
-            <input required name="discord" type="text" placeholder="nazwa@user"
-              style="width:100%; padding:10px 12px; margin-top:6px; border-radius:8px;
-              border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:var(--text);" />
-          </div>
-
-          <div>
-            <label style="font-size:13px; color:var(--mute);">Rola w policji</label>
-            <select required name="role" style="width:100%; padding:10px 12px; margin-top:6px; border-radius:8px;
-              border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:var(--text);">
-              <option value="" disabled selected>Wybierz rolę</option>
-              <option value="Policja">Policja</option>
-              <option value="Policja Patrolowa">Policja Patrolowa</option>
-              <option value="Jednostka Specjalna">Jednostka Specjalna</option>
-              <option value="Wywiad">Wywiad</option>
-            </select>
-          </div>
-
-          <div>
-            <label style="font-size:13px; color:var(--mute);">Dlaczego chcesz do policji?</label>
-            <textarea required name="why" rows="4" placeholder="Krótka motywacja..."
-              style="width:100%; padding:10px 12px; margin-top:6px; border-radius:8px;
-              border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.04); color:var(--text);"></textarea>
-          </div>
-
-          <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:4px;">
-            <button class="copy" type="button" onclick="closeRecruit()">Zamknij</button>
-            <button class="btn btn-primary" type="submit">Zgłoś się</button>
-          </div>
-        </div>
-      </form>
-
-      <div id="recruitSuccess" style="display:none; margin-top:12px; padding:10px 12px; border-radius:8px;
-        background:rgba(46,213,115,0.12); border:1px solid rgba(46,213,115,0.35); color:var(--success); font-size:14px;">
-        Dziękujemy! Twoja zgłoszenie zostało wysłane. administracja zweryfikuje je na Discordzie.
-      </div>
-    </div>
-  </div>
-
   <script>
     function copyIp() {
       const t = document.getElementById('ipText').textContent;
@@ -400,27 +400,34 @@
       navigator.clipboard.writeText(t).then(() => alert('Link skopiowany: ' + t));
     }
 
-    function openRecruit() {
-      document.getElementById('recruitModal').style.display = 'flex';
-      document.getElementById('recruitSuccess').style.display = 'none';
-      document.getElementById('recruitForm').reset();
-    }
-    function closeRecruit() {
-      document.getElementById('recruitModal').style.display = 'none';
-    }
-    function submitRecruit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const role = form.role.value;
-      const name = form.name.value;
-      const discord = form.discord.value;
-      const why = form.why.value;
+    // TESTOWE KONTO: Test123 / Test123
+    function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const error = document.getElementById('loginError');
 
-      // Tutaj możesz wysłać dane np. do Discord webhooka / backendu
-      // Na razie pokazuję sukces lokalnie:
-      console.log('Zgłoszenie:', { name, discord, role, why });
-      closeRecruit();
-      document.getElementById('recruitSuccess').style.display = 'block';
+      if (username === 'Test123' && password === 'Test123') {
+        // Udało się
+        error.style.display = 'none';
+        document.getElementById('loginFormPanel').style.display = 'none';
+        document.getElementById('userInfoPanel').style.display = 'block';
+
+        // Ustaw dane w profilu
+        document.getElementById('UserInfoName').textContent = username;
+        document.getElementById('UserInfoRank').textContent = 'Obywatel';
+        document.getElementById('UserInfoCoins').textContent = '0';
+        document.getElementById('UserInfoStatus').textContent = 'Aktywny';
+      } else {
+        error.style.display = 'block';
+      }
+    }
+
+    function logout() {
+      document.getElementById('loginFormPanel').style.display = 'grid';
+      document.getElementById('userInfoPanel').style.display = 'none';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('loginError').style.display = 'none';
     }
   </script>
 </body>
