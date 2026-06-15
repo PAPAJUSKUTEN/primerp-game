@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brawl Clan</title>
+  <title>Aura RP | Roblox Roleplay</title>
   <style>
     :root{
-      --bg:#0b0b10;
-      --bg2:#141420;
-      --card:#1a1a2a;
-      --card2:#202033;
-      --text:#f5f7ff;
-      --muted:#a8b0c7;
-      --accent:#ff8a00;
-      --accent2:#ffb347;
+      --bg:#07070c;
+      --bg2:#11111a;
+      --card:#161625;
+      --card2:#1c1c2e;
+      --text:#f7f8ff;
+      --muted:#a9aec5;
+      --accent:#8b5cf6;
+      --accent2:#22d3ee;
       --line:rgba(255,255,255,.08);
-      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --shadow:0 22px 60px rgba(0,0,0,.35);
       --radius:22px;
       --max:1180px;
     }
@@ -27,8 +27,9 @@
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at top, rgba(255,138,0,.18), transparent 28%),
-        linear-gradient(180deg, #09090f 0%, #11111a 100%);
+        radial-gradient(circle at top, rgba(139,92,246,.22), transparent 26%),
+        radial-gradient(circle at 80% 20%, rgba(34,211,238,.12), transparent 24%),
+        linear-gradient(180deg, #06060a 0%, #10111a 100%);
     }
 
     a{color:inherit;text-decoration:none}
@@ -36,7 +37,7 @@
 
     header{
       position:sticky; top:0; z-index:20;
-      background:rgba(9,9,15,.8);
+      background:rgba(7,7,12,.78);
       backdrop-filter:blur(14px);
       border-bottom:1px solid var(--line);
     }
@@ -47,23 +48,20 @@
     }
 
     .brand{
-      display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.4px;
+      display:flex; align-items:center; gap:12px; font-weight:800;
     }
 
-    .badge{
-      width:40px; height:40px; border-radius:14px;
+    .logo{
+      width:42px; height:42px; border-radius:14px;
       background:linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow:0 10px 24px rgba(255,138,0,.25);
+      box-shadow:0 10px 24px rgba(139,92,246,.25);
     }
 
     nav{display:flex; flex-wrap:wrap; gap:14px}
     nav a{color:var(--muted)}
     nav a:hover{color:var(--accent2)}
 
-    .hero{
-      padding:72px 0 34px;
-    }
-
+    .hero{padding:78px 0 36px}
     .hero-grid{
       display:grid;
       grid-template-columns:1.15fr .85fr;
@@ -72,7 +70,7 @@
     }
 
     h1{
-      font-size:clamp(2.4rem, 5vw, 4.8rem);
+      font-size:clamp(2.5rem, 5vw, 5rem);
       line-height:1.02;
       margin:0 0 16px;
     }
@@ -85,7 +83,6 @@
     }
 
     .buttons{display:flex; gap:12px; flex-wrap:wrap}
-
     .btn{
       display:inline-block;
       padding:13px 18px;
@@ -94,19 +91,18 @@
       border:1px solid transparent;
     }
 
-    .btn.primary{
+    .primary{
       background:linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#1b1205;
+      color:#0b0b10;
     }
 
-    .btn.secondary{
+    .secondary{
       border-color:rgba(255,255,255,.14);
-      color:var(--text);
       background:rgba(255,255,255,.03);
     }
 
     .panel{
-      background:linear-gradient(180deg, rgba(32,32,51,.95), rgba(20,20,32,.95));
+      background:linear-gradient(180deg, rgba(28,28,46,.96), rgba(18,18,28,.96));
       border:1px solid var(--line);
       border-radius:var(--radius);
       padding:24px;
@@ -129,7 +125,7 @@
 
     .stat strong{
       display:block;
-      font-size:1.4rem;
+      font-size:1.35rem;
       color:var(--accent2);
       margin-bottom:4px;
     }
@@ -156,29 +152,50 @@
     .card h3{margin:0 0 10px}
     .card p{margin:0; color:var(--muted)}
 
-    .roster{
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .list{
+      display:grid;
+      gap:12px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .list li{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 16px;
+      color:var(--muted);
+    }
+
+    .roles{
       display:grid;
       grid-template-columns:repeat(4, 1fr);
       gap:14px;
     }
 
-    .member{
+    .role{
       background:rgba(255,255,255,.03);
       border:1px solid var(--line);
       border-radius:18px;
       padding:16px;
     }
 
-    .avatar{
-      width:52px; height:52px; border-radius:16px;
-      background:linear-gradient(135deg, #2f2f4a, #11111a);
-      border:1px solid rgba(255,255,255,.08);
-      margin-bottom:12px;
-      display:flex; align-items:center; justify-content:center;
-      font-weight:800; color:var(--accent2);
+    .role span{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(139,92,246,.16);
+      color:#d8ccff;
+      margin-bottom:10px;
+      font-size:.85rem;
     }
-
-    .member span{display:block; color:var(--muted); font-size:.92rem; margin-top:4px}
 
     .contact{
       display:grid;
@@ -192,7 +209,7 @@
       padding:13px 14px;
       border-radius:14px;
       border:1px solid rgba(255,255,255,.1);
-      background:#0e0e16;
+      background:#0d0d15;
       color:var(--text);
       font:inherit;
     }
@@ -205,14 +222,14 @@
       padding:26px 0 40px;
     }
 
-    .notice{
+    .note{
       color:var(--muted);
-      font-size:.95rem;
       line-height:1.6;
+      font-size:.95rem;
     }
 
     @media (max-width: 900px){
-      .hero-grid, .grid, .contact, .roster{grid-template-columns:1fr}
+      .hero-grid, .grid, .split, .contact, .roles{grid-template-columns:1fr}
       .nav{flex-direction:column; align-items:flex-start}
     }
   </style>
@@ -221,14 +238,14 @@
   <header>
     <div class="container nav">
       <div class="brand">
-        <div class="badge"></div>
-        <div>Brawl Clan</div>
+        <div class="logo"></div>
+        <div>Aura RP</div>
       </div>
       <nav>
-        <a href="#o-klanie">O klanie</a>
+        <a href="#o-serwerze">O serwerze</a>
+        <a href="#frakcje">Frakcje</a>
+        <a href="#zasady">Zasady RP</a>
         <a href="#rekrutacja">Rekrutacja</a>
-        <a href="#rangi">Rangi</a>
-        <a href="#czlonkowie">Członkowie</a>
         <a href="#kontakt">Kontakt</a>
       </nav>
     </div>
@@ -238,60 +255,105 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <h1>Dołącz do mocnego klanu w Brawl Stars</h1>
+          <h1>Aura RP — roleplay w stylu Emergency Hamburg</h1>
           <p class="lead">
-            Strona dla społeczności graczy, którzy chcą grać razem, zdobywać puchary,
-            brać udział w turniejach i rozwijać aktywny klub.
+            Tworzymy serwer Roblox RP z naciskiem na klimat, porządek, realistyczną zabawę
+            i aktywną społeczność. To miejsce dla graczy, którzy chcą grać serio i wspólnie
+            budować historię miasta.
           </p>
           <div class="buttons">
-            <a class="btn primary" href="#rekrutacja">Aplikuj do klanu</a>
-            <a class="btn secondary" href="#czlonkowie">Zobacz skład</a>
+            <a class="btn primary" href="#rekrutacja">Dołącz do RP</a>
+            <a class="btn secondary" href="#zasady">Poznaj zasady</a>
           </div>
         </div>
 
         <div class="panel">
-          <h2>Statystyki klanu</h2>
-          <p class="notice">
-            Poniższe dane możesz łatwo zmienić na swoje. To dobry blok do pokazania
-            siły i aktywności klanu.
+          <h2>Panel serwera</h2>
+          <p class="note">
+            Ten blok możesz podmienić na status rekrutacji, link do Discorda, datę otwarcia
+            albo licznik aktywnych graczy.
           </p>
           <div class="stats">
             <div class="stat">
-              <strong>100+</strong>
-              <div>Maks. członków</div>
+              <strong>RP</strong>
+              <div>Realistyczna gra</div>
             </div>
             <div class="stat">
               <strong>24/7</strong>
-              <div>Aktywność</div>
+              <div>Aktywna społeczność</div>
             </div>
             <div class="stat">
-              <strong>CLAN</strong>
-              <div>Turnieje i eventy</div>
+              <strong>FRAKCJE</strong>
+              <div>Policja, EMS, cywil</div>
             </div>
             <div class="stat">
-              <strong>TOP</strong>
-              <div>Wspólna gra</div>
+              <strong>DISCORD</strong>
+              <div>Rekrutacja i eventy</div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="o-klanie">
+    <section id="o-serwerze">
       <div class="container">
-        <h2 class="section-title">O klanie</h2>
+        <h2 class="section-title">O serwerze</h2>
         <div class="grid">
           <article class="card">
-            <h3>Styl gry</h3>
-            <p>Dodaj opis, czy klan jest casualowy, try-hard, turniejowy czy mieszany.</p>
+            <h3>Klimat RP</h3>
+            <p>Stawiamy na immersję, sensowne scenariusze i współpracę między graczami.</p>
           </article>
           <article class="card">
-            <h3>Cel drużyny</h3>
-            <p>Wpisz, czy chcecie wbijać trofea, dominować w Power League czy grać dla funu.</p>
+            <h3>System miasta</h3>
+            <p>Role, frakcje i stanowiska pomagają utrzymać porządek oraz rozwijać fabułę.</p>
           </article>
           <article class="card">
-            <h3>Atmosfera</h3>
-            <p>Opisz zasady: brak toksyczności, aktywność, kultura i wspólne granie.</p>
+            <h3>Aktywność</h3>
+            <p>Organizujemy patrole, eventy, akcje ratunkowe, spotkania i rekrutacje.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="frakcje">
+      <div class="container split">
+        <div class="panel">
+          <h2 class="section-title">Frakcje</h2>
+          <ul class="list">
+            <li>Policja — interwencje, pościgi, kontrola porządku.</li>
+            <li>EMS / medycy — pomoc medyczna i akcje ratunkowe.</li>
+            <li>Cywile — praca, biznes, życie miasta i interakcje RP.</li>
+            <li>Administracja — moderacja, eventy i wsparcie graczy.</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <h2 class="section-title">Co wyróżnia Aura RP</h2>
+          <ul class="list">
+            <li>Przejrzyste zasady i brak chaosu.</li>
+            <li>Nowoczesny wygląd strony i Discorda.</li>
+            <li>Możliwość rozwoju pod większy projekt RP.</li>
+            <li>Możliwość łatwej rozbudowy o formularze, rankingi i panel logowania.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="zasady">
+      <div class="container">
+        <h2 class="section-title">Zasady RP</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>Szanuj klimat</h3>
+            <p>Nie psuj rozgrywki, nie trolluj i nie ignoruj sytuacji fabularnych.</p>
+          </article>
+          <article class="card">
+            <h3>Graj realistycznie</h3>
+            <p>Unikaj zachowań, które niszczą immersję i sens roleplayu.</p>
+          </article>
+          <article class="card">
+            <h3>Trzymaj kulturę</h3>
+            <p>Współpraca i komunikacja są ważniejsze niż konflikt poza RP.</p>
           </article>
         </div>
       </div>
@@ -300,51 +362,11 @@
     <section id="rekrutacja">
       <div class="container">
         <h2 class="section-title">Rekrutacja</h2>
-        <div class="grid">
-          <article class="card">
-            <h3>Wymagania</h3>
-            <p>Przykład: minimum 10k trofeów, aktywność co tydzień i Discord obowiązkowy.</p>
-          </article>
-          <article class="card">
-            <h3>Jak dołączyć</h3>
-            <p>Wyślij wiadomość, dołącz do Discorda albo wypełnij formularz na stronie.</p>
-          </article>
-          <article class="card">
-            <h3>Co oferujemy</h3>
-            <p>Wspólne pushowanie, sparingi, turnieje, pomoc dla nowych i fajną ekipę.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="rangi">
-      <div class="container">
-        <h2 class="section-title">Rangi</h2>
-        <div class="grid">
-          <article class="card">
-            <h3>Lider</h3>
-            <p>Decyduje o składzie, zasadach i kierunku rozwoju klanu.</p>
-          </article>
-          <article class="card">
-            <h3>Co-Lider</h3>
-            <p>Zarządza rekrutacją, eventami i aktywnością członków.</p>
-          </article>
-          <article class="card">
-            <h3>Członek</h3>
-            <p>Aktywnie gra, uczestniczy w wydarzeniach i rozwija konto.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="czlonkowie">
-      <div class="container">
-        <h2 class="section-title">Członkowie</h2>
-        <div class="roster">
-          <div class="member"><div class="avatar">L</div><strong>LeaderName</strong><span>Lider</span></div>
-          <div class="member"><div class="avatar">1</div><strong>PlayerOne</strong><span>Co-Lider</span></div>
-          <div class="member"><div class="avatar">2</div><strong>PlayerTwo</strong><span>Członek</span></div>
-          <div class="member"><div class="avatar">3</div><strong>PlayerThree</strong><span>Członek</span></div>
+        <div class="roles">
+          <div class="role"><span>Nowy gracz</span><strong>Start</strong><p class="note">Dla osób, które chcą wejść do RP i poznać zasady serwera.</p></div>
+          <div class="role"><span>Frakcje</span><strong>Dołącz</strong><p class="note">Aplikacje do policji, EMS i innych grup będą tutaj publikowane.</p></div>
+          <div class="role"><span>Administracja</span><strong>Wsparcie</strong><p class="note">Pomoc w organizacji, moderacji i eventach.</p></div>
+          <div class="role"><span>Discord</span><strong>Kontakt</strong><p class="note">Najprostsza droga do zgłoszeń i informacji o starcie serwera.</p></div>
         </div>
       </div>
     </section>
@@ -353,22 +375,22 @@
       <div class="container contact">
         <div class="panel">
           <h2 class="section-title">Kontakt</h2>
-          <p class="notice">
-            Tu możesz podać Discord, tag klanu, link do rekrutacji lub formularz zgłoszeń.
-            To dobra sekcja, jeśli chcesz zbierać nowych graczy.
+          <p class="note">
+            Podaj tutaj link do Discorda, nazwę grupy Roblox, datę otwarcia i inne ważne informacje.
+            To też dobre miejsce na ogłoszenia o whitelistach i testach.
           </p>
-          <p class="notice">
-            Przykład: Discord: twojserwer | Tag klanu: #ABC123 | Rekrutacja: otwarta.
+          <p class="note">
+            Przykład: Discord: aura-rp | Start serwera: wkrótce | Rejestracja: otwarta.
           </p>
         </div>
 
         <div class="panel">
-          <h2 class="section-title">Formularz</h2>
+          <h2 class="section-title">Formularz zgłoszenia</h2>
           <form>
-            <input type="text" placeholder="Nick w grze" />
-            <input type="text" placeholder="Trofea / doświadczenie" />
-            <textarea placeholder="Napisz coś o sobie"></textarea>
-            <a class="btn primary" href="mailto:klan@example.com">Wyślij zgłoszenie</a>
+            <input type="text" placeholder="Nick Roblox" />
+            <input type="text" placeholder="Wiek / doświadczenie RP" />
+            <textarea placeholder="Dlaczego chcesz dołączyć do Aura RP?"></textarea>
+            <a class="btn primary" href="mailto:kontakt@aurarp.pl">Wyślij zgłoszenie</a>
           </form>
         </div>
       </div>
@@ -377,7 +399,7 @@
 
   <footer>
     <div class="container">
-      © 2026 Brawl Clan. Strona fanowska społeczności graczy.
+      © 2026 Aura RP. Fanowska strona serwera roleplay w Roblox.
     </div>
   </footer>
 </body>
