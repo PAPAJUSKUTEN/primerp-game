@@ -1,406 +1,694 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aura RP | Roblox Roleplay</title>
+  <meta charset="UTF-8">
+  <title>Aura RP | Emergency Hamburg Roblox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aura RP – polski serwer roleplay w grze Emergency Hamburg na Roblox. Dołącz do realistycznej rozgrywki jako policjant, strażak, medyk, kierowca czy cywil.">
   <style>
-    :root{
-      --bg:#07070c;
-      --bg2:#11111a;
-      --card:#161625;
-      --card2:#1c1c2e;
-      --text:#f7f8ff;
-      --muted:#a9aec5;
-      --accent:#8b5cf6;
-      --accent2:#22d3ee;
-      --line:rgba(255,255,255,.08);
-      --shadow:0 22px 60px rgba(0,0,0,.35);
-      --radius:22px;
-      --max:1180px;
+    :root {
+      --bg-main: #050510;
+      --bg-sidebar: #08081a;
+      --bg-card: #0f0f26;
+      --accent-primary: #7b5cff;
+      --accent-secondary: #03c9ff;
+      --accent-danger: #ff4b6b;
+      --text-main: #f3f3ff;
+      --text-muted: #a3a3c2;
+      --border-soft: rgba(255, 255, 255, 0.06);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(139,92,246,.22), transparent 26%),
-        radial-gradient(circle at 80% 20%, rgba(34,211,238,.12), transparent 24%),
-        linear-gradient(180deg, #06060a 0%, #10111a 100%);
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    a{color:inherit;text-decoration:none}
-    .container{width:min(100% - 32px, var(--max)); margin:0 auto}
-
-    header{
-      position:sticky; top:0; z-index:20;
-      background:rgba(7,7,12,.78);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid var(--line);
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #15152f 0, #050510 45%, #000008 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      gap: 24px;
+      padding: 24px;
     }
 
-    .nav{
-      display:flex; justify-content:space-between; align-items:center;
-      padding:16px 0; gap:16px;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .brand{
-      display:flex; align-items:center; gap:12px; font-weight:800;
+    /* Sidebar */
+
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(160deg, #08081a 0, #060615 40%, #050510 100%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 24px;
+      height: calc(100vh - 48px);
     }
 
-    .logo{
-      width:42px; height:42px; border-radius:14px;
-      background:linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow:0 10px 24px rgba(139,92,246,.25);
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
-    nav{display:flex; flex-wrap:wrap; gap:14px}
-    nav a{color:var(--muted)}
-    nav a:hover{color:var(--accent2)}
-
-    .hero{padding:78px 0 36px}
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:22px;
-      align-items:center;
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: conic-gradient(from 220deg, #03c9ff, #7b5cff, #ff4b6b, #03c9ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: 0 0 24px rgba(123, 92, 255, 0.7);
     }
 
-    h1{
-      font-size:clamp(2.5rem, 5vw, 5rem);
-      line-height:1.02;
-      margin:0 0 16px;
+    .brand-text-title {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: var(--accent-secondary);
     }
 
-    .lead{
-      color:var(--muted);
-      font-size:1.05rem;
-      max-width:62ch;
-      margin:0 0 26px;
+    .brand-text-sub {
+      font-size: 11px;
+      color: var(--text-muted);
     }
 
-    .buttons{display:flex; gap:12px; flex-wrap:wrap}
-    .btn{
-      display:inline-block;
-      padding:13px 18px;
-      border-radius:999px;
-      font-weight:700;
-      border:1px solid transparent;
+    .online-pill {
+      margin-left: auto;
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(3, 201, 255, 0.12);
+      color: #7ee7ff;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    .primary{
-      background:linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#0b0b10;
+    .online-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #20ff80;
+      box-shadow: 0 0 9px rgba(32, 255, 128, 0.9);
     }
 
-    .secondary{
-      border-color:rgba(255,255,255,.14);
-      background:rgba(255,255,255,.03);
+    .sidebar-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
     }
 
-    .panel{
-      background:linear-gradient(180deg, rgba(28,28,46,.96), rgba(18,18,28,.96));
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:24px;
-      box-shadow:var(--shadow);
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(2, 1fr);
-      gap:14px;
-      margin-top:16px;
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: 150ms ease;
+      cursor: pointer;
+      border: 1px solid transparent;
     }
 
-    .stat{
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text-main);
+      background: radial-gradient(circle at left, rgba(123, 92, 255, 0.24), transparent 65%);
+      border-color: rgba(123, 92, 255, 0.5);
     }
 
-    .stat strong{
-      display:block;
-      font-size:1.35rem;
-      color:var(--accent2);
-      margin-bottom:4px;
+    .nav-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
     }
 
-    section{padding:26px 0 64px}
-    .section-title{
-      font-size:1.8rem;
-      margin:0 0 16px;
+    .nav-link.active .nav-dot {
+      background: var(--accent-primary);
+      box-shadow: 0 0 10px rgba(123, 92, 255, 0.9);
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:18px;
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .card{
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:22px;
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(123, 92, 255, 0.16);
+      color: #d3c8ff;
+      font-size: 11px;
+      border: 1px solid rgba(123, 92, 255, 0.45);
     }
 
-    .card h3{margin:0 0 10px}
-    .card p{margin:0; color:var(--muted)}
+    /* Główny layout */
 
-    .split{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
 
-    .list{
-      display:grid;
-      gap:12px;
-      margin:0;
-      padding:0;
-      list-style:none;
+    .hero {
+      background: radial-gradient(circle at top left, rgba(123, 92, 255, 0.45), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(3, 201, 255, 0.3), transparent 60%),
+                  #050510;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 24px 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(260px, 1.2fr);
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .list li{
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px 16px;
-      color:var(--muted);
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 55%);
+      opacity: 0.4;
+      mix-blend-mode: soft-light;
     }
 
-    .roles{
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:14px;
+    .hero-left,
+    .hero-right {
+      position: relative;
+      z-index: 1;
     }
 
-    .role{
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(3, 201, 255, 0.6);
+      background: rgba(3, 201, 255, 0.08);
+      font-size: 11px;
+      color: #caf6ff;
+      margin-bottom: 12px;
     }
 
-    .role span{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(139,92,246,.16);
-      color:#d8ccff;
-      margin-bottom:10px;
-      font-size:.85rem;
+    .hero-pill span {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: var(--radius-pill);
+      background: rgba(3, 201, 255, 0.18);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
     }
 
-    .contact{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
+    .hero-title {
+      font-size: clamp(26px, 3vw, 30px);
+      line-height: 1.15;
+      margin-bottom: 10px;
     }
 
-    form{display:grid; gap:12px}
-    input, textarea{
-      width:100%;
-      padding:13px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.1);
-      background:#0d0d15;
-      color:var(--text);
-      font:inherit;
+    .hero-title span {
+      color: var(--accent-secondary);
+      text-shadow: 0 0 13px rgba(3, 201, 255, 0.75);
     }
 
-    textarea{min-height:140px; resize:vertical}
-
-    footer{
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      padding:26px 0 40px;
+    .hero-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin-bottom: 18px;
     }
 
-    .note{
-      color:var(--muted);
-      line-height:1.6;
-      font-size:.95rem;
+    .hero-meta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
     }
 
-    @media (max-width: 900px){
-      .hero-grid, .grid, .split, .contact, .roles{grid-template-columns:1fr}
-      .nav{flex-direction:column; align-items:flex-start}
+    .meta-pill {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(5, 5, 22, 0.8);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #20ff80;
+      box-shadow: 0 0 8px rgba(32, 255, 128, 0.9);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      padding: 9px 18px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: 160ms ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7b5cff, #03c9ff);
+      color: #ffffff;
+      box-shadow: 0 12px 32px rgba(3, 201, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: rgba(5, 5, 22, 0.85);
+      color: var(--text-muted);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(3, 201, 255, 0.7);
+      color: var(--accent-secondary);
+    }
+
+    .hero-right-card {
+      background: rgba(5, 5, 22, 0.8);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(123, 92, 255, 0.45);
+      padding: 14px 14px 12px;
+      backdrop-filter: blur(14px);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hero-right-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: rgba(32, 255, 128, 0.12);
+      color: #a4ffcf;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid rgba(32, 255, 128, 0.6);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .stat-card {
+      background: radial-gradient(circle at top, rgba(123, 92, 255, 0.2), transparent 70%);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 9px 10px;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 9px;
+    }
+
+    .stat-value {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .stat-hint {
+      font-size: 10px;
+      color: var(--accent-secondary);
+    }
+
+    .hero-footer-note {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    /* Sekcje */
+
+    .sections {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1.1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .card-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(3, 201, 255, 0.7);
+      color: #8ee9ff;
+      background: rgba(3, 201, 255, 0.09);
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-body p {
+      line-height: 1.5;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mini-pill {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+    }
+
+    .mini-pill.highlight {
+      border-color: rgba(123, 92, 255, 0.8);
+      color: #d4c8ff;
+      background: rgba(123, 92, 255, 0.14);
+    }
+
+    .list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .list-item-bullet {
+      width: 5px;
+      margin-top: 6px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(123, 92, 255, 0.7);
+      box-shadow: 0 0 8px rgba(123, 92, 255, 0.9);
+    }
+
+    .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .flex-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .factions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .faction-card {
+      background: radial-gradient(circle at top, rgba(3, 201, 255, 0.12), transparent 70%);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 9px 10px;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .faction-title {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .faction-tag {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .rules-highlight {
+      background: rgba(255, 75, 107, 0.08);
+      border: 1px solid rgba(255, 75, 107, 0.6);
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-size: 11px;
+      color: #ffc8d3;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr);
+      gap: 8px;
+    }
+
+    .link-card {
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: radial-gradient(circle at left, rgba(3, 201, 255, 0.14), transparent 70%);
+      cursor: pointer;
+      transition: 150ms ease;
+    }
+
+    .link-card:hover {
+      border-color: rgba(3, 201, 255, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(3, 201, 255, 0.25);
+    }
+
+    .link-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 13px;
+    }
+
+    .link-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .link-chevron {
+      font-size: 16px;
+      color: var(--accent-secondary);
+    }
+
+    .requirements-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .req-pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+    }
+
+    .req-pill.good {
+      border-style: solid;
+      border-color: rgba(32, 255, 128, 0.7);
+      color: #b9ffd9;
+      background: rgba(32, 255, 128, 0.12);
+    }
+
+    .tiny {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 980px) {
+      body {
+        flex-direction: column;
+        padding: 18px;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+      }
+      .sidebar-main {
+        flex: 1;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+      .sidebar-nav-wrapper {
+        display: flex;
+        gap: 10px;
+      }
+      .nav-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .nav-link {
+        font-size: 12px;
+        padding: 6px 9px;
+      }
+      .sidebar-footer {
+        display: none;
+      }
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .sections {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+      .hero {
+        padding: 18px 16px;
+      }
+      .card {
+        padding: 16px 14px;
+      }
+      .factions-grid,
+      .requirements-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-main">
       <div class="brand">
-        <div class="logo"></div>
-        <div>Aura RP</div>
-      </div>
-      <nav>
-        <a href="#o-serwerze">O serwerze</a>
-        <a href="#frakcje">Frakcje</a>
-        <a href="#zasady">Zasady RP</a>
-        <a href="#rekrutacja">Rekrutacja</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
+        <div class="brand-logo">A</div>
         <div>
-          <h1>Aura RP — roleplay w stylu Emergency Hamburg</h1>
-          <p class="lead">
-            Tworzymy serwer Roblox RP z naciskiem na klimat, porządek, realistyczną zabawę
-            i aktywną społeczność. To miejsce dla graczy, którzy chcą grać serio i wspólnie
-            budować historię miasta.
-          </p>
-          <div class="buttons">
-            <a class="btn primary" href="#rekrutacja">Dołącz do RP</a>
-            <a class="btn secondary" href="#zasady">Poznaj zasady</a>
-          </div>
+          <div class="brand-text-title">Aura RP</div>
+          <div class="brand-text-sub">Emergency Hamburg • Roblox</div>
         </div>
-
-        <div class="panel">
-          <h2>Panel serwera</h2>
-          <p class="note">
-            Ten blok możesz podmienić na status rekrutacji, link do Discorda, datę otwarcia
-            albo licznik aktywnych graczy.
-          </p>
-          <div class="stats">
-            <div class="stat">
-              <strong>RP</strong>
-              <div>Realistyczna gra</div>
-            </div>
-            <div class="stat">
-              <strong>24/7</strong>
-              <div>Aktywna społeczność</div>
-            </div>
-            <div class="stat">
-              <strong>FRAKCJE</strong>
-              <div>Policja, EMS, cywil</div>
-            </div>
-            <div class="stat">
-              <strong>DISCORD</strong>
-              <div>Rekrutacja i eventy</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="o-serwerze">
-      <div class="container">
-        <h2 class="section-title">O serwerze</h2>
-        <div class="grid">
-          <article class="card">
-            <h3>Klimat RP</h3>
-            <p>Stawiamy na immersję, sensowne scenariusze i współpracę między graczami.</p>
-          </article>
-          <article class="card">
-            <h3>System miasta</h3>
-            <p>Role, frakcje i stanowiska pomagają utrzymać porządek oraz rozwijać fabułę.</p>
-          </article>
-          <article class="card">
-            <h3>Aktywność</h3>
-            <p>Organizujemy patrole, eventy, akcje ratunkowe, spotkania i rekrutacje.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="frakcje">
-      <div class="container split">
-        <div class="panel">
-          <h2 class="section-title">Frakcje</h2>
-          <ul class="list">
-            <li>Policja — interwencje, pościgi, kontrola porządku.</li>
-            <li>EMS / medycy — pomoc medyczna i akcje ratunkowe.</li>
-            <li>Cywile — praca, biznes, życie miasta i interakcje RP.</li>
-            <li>Administracja — moderacja, eventy i wsparcie graczy.</li>
-          </ul>
-        </div>
-
-        <div class="panel">
-          <h2 class="section-title">Co wyróżnia Aura RP</h2>
-          <ul class="list">
-            <li>Przejrzyste zasady i brak chaosu.</li>
-            <li>Nowoczesny wygląd strony i Discorda.</li>
-            <li>Możliwość rozwoju pod większy projekt RP.</li>
-            <li>Możliwość łatwej rozbudowy o formularze, rankingi i panel logowania.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="zasady">
-      <div class="container">
-        <h2 class="section-title">Zasady RP</h2>
-        <div class="grid">
-          <article class="card">
-            <h3>Szanuj klimat</h3>
-            <p>Nie psuj rozgrywki, nie trolluj i nie ignoruj sytuacji fabularnych.</p>
-          </article>
-          <article class="card">
-            <h3>Graj realistycznie</h3>
-            <p>Unikaj zachowań, które niszczą immersję i sens roleplayu.</p>
-          </article>
-          <article class="card">
-            <h3>Trzymaj kulturę</h3>
-            <p>Współpraca i komunikacja są ważniejsze niż konflikt poza RP.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="rekrutacja">
-      <div class="container">
-        <h2 class="section-title">Rekrutacja</h2>
-        <div class="roles">
-          <div class="role"><span>Nowy gracz</span><strong>Start</strong><p class="note">Dla osób, które chcą wejść do RP i poznać zasady serwera.</p></div>
-          <div class="role"><span>Frakcje</span><strong>Dołącz</strong><p class="note">Aplikacje do policji, EMS i innych grup będą tutaj publikowane.</p></div>
-          <div class="role"><span>Administracja</span><strong>Wsparcie</strong><p class="note">Pomoc w organizacji, moderacji i eventach.</p></div>
-          <div class="role"><span>Discord</span><strong>Kontakt</strong><p class="note">Najprostsza droga do zgłoszeń i informacji o starcie serwera.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="kontakt">
-      <div class="container contact">
-        <div class="panel">
-          <h2 class="section-title">Kontakt</h2>
-          <p class="note">
-            Podaj tutaj link do Discorda, nazwę grupy Roblox, datę otwarcia i inne ważne informacje.
-            To też dobre miejsce na ogłoszenia o whitelistach i testach.
-          </p>
-          <p class="note">
-            Przykład: Discord: aura-rp | Start serwera: wkrótce | Rejestracja: otwarta.
-          </p>
-        </div>
-
-        <div class="panel">
-          <h2 class="section-title">Formularz zgłoszenia</h2>
-          <form>
-            <input type="text" placeholder="Nick Roblox" />
-            <input type="text" placeholder="Wiek / doświadczenie RP" />
-            <textarea placeholder="Dlaczego chcesz dołączyć do Aura RP?"></textarea>
-            <a class="btn primary" href="mailto:kontakt@aurarp.pl">Wyślij zgłoszenie</a>
-          </form>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      © 2026 Aura RP. Fanowska strona serwera roleplay w Roblox.
-    </div>
-  </footer>
-</body>
-</html>
+        <div class="online-pill">
+          <span class="online-dot"></span>
+          LIVE 
