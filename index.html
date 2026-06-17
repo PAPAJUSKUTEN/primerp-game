@@ -6,17 +6,16 @@
   <title>SOP Venus RP</title>
   <style>
     :root{
-      --bg:#070b10;
-      --panel:#0f1520;
-      --panel2:#121b28;
-      --line:#223044;
-      --text:#edf2f7;
-      --muted:#9aa7b8;
-      --accent:#d8a63f;
-      --accent2:#5bbcff;
-      --danger:#c64a4a;
-      --shadow:0 18px 60px rgba(0,0,0,.35);
-      --radius:22px;
+      --bg:#f6f8fc;
+      --panel:#ffffff;
+      --panel2:#f1f5ff;
+      --text:#122033;
+      --muted:#66738a;
+      --line:#e3e8f2;
+      --accent:#4f7cff;
+      --accent2:#ffb84d;
+      --shadow:0 20px 50px rgba(17, 34, 68, .08);
+      --radius:24px;
     }
 
     *{box-sizing:border-box}
@@ -24,35 +23,36 @@
     body{
       font-family: Inter, Arial, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(216,166,63,.12), transparent 26%),
-        radial-gradient(circle at bottom right, rgba(91,188,255,.09), transparent 30%),
+        radial-gradient(circle at top left, rgba(79,124,255,.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(255,184,77,.14), transparent 24%),
         var(--bg);
       color:var(--text);
       min-height:100vh;
     }
 
-    .app{
-      min-height:100vh;
+    .page{
+      width:min(1200px, calc(100% - 32px));
+      margin:16px auto;
       display:grid;
-      grid-template-columns: 1fr 330px;
+      grid-template-columns: 1.15fr .85fr;
+      gap:20px;
     }
 
-    .main{
-      padding:28px;
-    }
-
-    .topbar{
+    .header{
+      grid-column:1 / -1;
+      background:rgba(255,255,255,.75);
+      backdrop-filter: blur(12px);
+      border:1px solid rgba(227,232,242,.9);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:18px 20px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:16px 18px;
-      box-shadow:var(--shadow);
-      margin-bottom:22px;
-      backdrop-filter: blur(10px);
+      position:sticky;
+      top:12px;
+      z-index:10;
     }
 
     .brand{
@@ -64,7 +64,7 @@
     .brand h1{
       margin:0;
       font-size:22px;
-      letter-spacing:1px;
+      letter-spacing:.4px;
     }
 
     .brand span{
@@ -74,103 +74,148 @@
 
     .login-btn{
       border:none;
-      cursor:pointer;
       padding:13px 18px;
-      border-radius:14px;
-      background:linear-gradient(135deg, var(--accent), #f0cf77);
-      color:#151515;
-      font-weight:800;
+      border-radius:999px;
+      cursor:pointer;
+      background:linear-gradient(135deg, var(--accent), #7f9dff);
+      color:#fff;
+      font-weight:700;
+      box-shadow:0 12px 25px rgba(79,124,255,.22);
       transition:.2s ease;
-      box-shadow:0 12px 28px rgba(216,166,63,.2);
       white-space:nowrap;
     }
 
-    .login-btn:hover{transform:translateY(-1px)}
+    .login-btn:hover{
+      transform:translateY(-1px);
+    }
 
     .hero{
-      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent), var(--panel);
+      background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.78));
       border:1px solid var(--line);
-      border-radius:28px;
+      border-radius:32px;
       box-shadow:var(--shadow);
-      padding:32px;
-      margin-bottom:22px;
-      position:relative;
+      padding:34px;
       overflow:hidden;
+      position:relative;
     }
 
     .hero::after{
       content:"";
       position:absolute;
-      inset:auto -120px -120px auto;
-      width:320px;
-      height:320px;
-      background:radial-gradient(circle, rgba(216,166,63,.16), transparent 60%);
-      pointer-events:none;
+      right:-60px;
+      top:-60px;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(79,124,255,.16), transparent 65%);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:var(--panel2);
+      color:var(--accent);
+      font-weight:700;
+      font-size:13px;
+      margin-bottom:18px;
     }
 
     .hero h2{
-      margin:0 0 12px;
-      font-size:38px;
-      line-height:1.1;
+      margin:0 0 14px;
+      font-size:clamp(30px, 5vw, 48px);
+      line-height:1.05;
     }
 
     .hero p{
       margin:0;
-      max-width:920px;
       color:var(--muted);
-      line-height:1.75;
       font-size:16px;
+      line-height:1.8;
+      max-width:720px;
     }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      margin-top:22px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      padding:13px 18px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:700;
+      transition:.2s ease;
+    }
+
+    .btn.primary{
+      background:linear-gradient(135deg, var(--accent), #7f9dff);
+      color:#fff;
+    }
+
+    .btn.ghost{
+      background:#eef3ff;
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .btn:hover{transform:translateY(-1px)}
 
     .stats{
       display:grid;
       grid-template-columns:repeat(3, 1fr);
-      gap:16px;
-      margin-bottom:22px;
+      gap:14px;
+      margin-top:20px;
     }
 
     .stat{
-      background:rgba(255,255,255,.03);
+      background:rgba(255,255,255,.85);
       border:1px solid var(--line);
-      border-radius:20px;
+      border-radius:22px;
       padding:18px;
       box-shadow:var(--shadow);
     }
 
     .stat strong{
       display:block;
-      font-size:22px;
-      color:var(--accent);
+      font-size:20px;
       margin-bottom:8px;
+      color:var(--accent);
     }
 
     .stat span{
       color:var(--muted);
       font-size:14px;
-      line-height:1.6;
+      line-height:1.65;
     }
 
-    .sections{
+    .section-grid{
       display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:18px;
+      grid-template-columns:repeat(2, 1fr);
+      gap:14px;
+      margin-top:20px;
     }
 
     .card{
-      background:rgba(255,255,255,.03);
+      background:rgba(255,255,255,.85);
       border:1px solid var(--line);
       border-radius:22px;
-      padding:22px;
+      padding:20px;
       box-shadow:var(--shadow);
     }
 
     .card h3{
       margin:0 0 10px;
-      color:var(--accent);
       font-size:18px;
+      color:#203254;
     }
 
-    .card p, .card li{
+    .card p,.card li{
       color:var(--muted);
       line-height:1.7;
       font-size:15px;
@@ -182,90 +227,73 @@
     }
 
     .side{
-      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent), var(--panel2);
-      border-left:1px solid var(--line);
-      padding:24px;
       display:flex;
       flex-direction:column;
-      gap:18px;
+      gap:14px;
     }
 
-    .panel{
-      background:rgba(255,255,255,.03);
+    .side-card{
+      background:rgba(255,255,255,.88);
       border:1px solid var(--line);
-      border-radius:22px;
+      border-radius:24px;
       padding:20px;
       box-shadow:var(--shadow);
     }
 
-    .panel h3{
+    .side-card h3{
       margin:0 0 12px;
       font-size:18px;
-      color:var(--accent);
+      color:#203254;
     }
 
-    .menu{
-      display:flex;
-      flex-direction:column;
+    .side-links{
+      display:grid;
       gap:10px;
     }
 
-    .menu button{
+    .side-links button{
       border:none;
-      width:100%;
-      text-align:left;
+      background:#f4f7ff;
+      color:var(--text);
       padding:14px 15px;
       border-radius:14px;
       cursor:pointer;
-      background:#101826;
-      color:var(--text);
+      text-align:left;
       transition:.2s ease;
       border:1px solid transparent;
     }
 
-    .menu button:hover{
-      transform:translateX(3px);
-      border-color:rgba(91,188,255,.35);
-      background:#152033;
+    .side-links button:hover{
+      border-color:rgba(79,124,255,.25);
+      transform:translateX(2px);
+      background:#edf2ff;
     }
 
-    .menu button.active{
-      border-color:rgba(216,166,63,.45);
-      background:linear-gradient(135deg, rgba(216,166,63,.18), rgba(91,188,255,.10));
-    }
-
-    .side-note{
+    .mini{
       color:var(--muted);
+      line-height:1.75;
       font-size:14px;
-      line-height:1.7;
-    }
-
-    .section-page{display:none}
-    .section-page.active{display:block; animation:fade .18s ease}
-
-    @keyframes fade{
-      from{opacity:.4; transform:translateY(8px)}
-      to{opacity:1; transform:translateY(0)}
     }
 
     .modal{
       position:fixed;
       inset:0;
-      background:rgba(0,0,0,.72);
+      background:rgba(18,32,51,.45);
+      backdrop-filter: blur(6px);
       display:none;
       align-items:center;
       justify-content:center;
-      padding:20px;
-      z-index:999;
+      padding:18px;
+      z-index:1000;
     }
 
     .modal.active{display:flex}
 
     .modal-box{
-      width:min(440px,100%);
-      background:linear-gradient(180deg, rgba(255,255,255,.04), transparent), var(--panel);
+      width:min(430px, 100%);
+      background:rgba(255,255,255,.95);
       border:1px solid var(--line);
-      border-radius:24px;
+      border-radius:28px;
       padding:24px;
       box-shadow:var(--shadow);
       position:relative;
@@ -275,38 +303,60 @@
       position:absolute;
       top:14px;
       right:14px;
-      border:none;
       width:36px;
       height:36px;
+      border:none;
       border-radius:50%;
-      background:#111a27;
-      color:var(--text);
-      border:1px solid var(--line);
       cursor:pointer;
+      background:#eef3ff;
+      color:var(--text);
     }
 
-    .modal-box h3{margin:0 0 8px; font-size:24px}
-    .modal-box p{margin:0 0 18px; color:var(--muted); line-height:1.6}
+    .modal-box h3{
+      margin:0 0 8px;
+      font-size:24px;
+    }
 
-    .field{margin-bottom:14px}
-    .field label{display:block; margin-bottom:7px; font-size:14px}
+    .modal-box p{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    .field label{
+      display:block;
+      margin-bottom:7px;
+      font-size:14px;
+      color:var(--text);
+      font-weight:600;
+    }
+
     .field input{
       width:100%;
-      padding:13px 14px;
-      border-radius:14px;
       border:1px solid var(--line);
-      background:#0c121c;
+      background:#f8faff;
       color:var(--text);
+      border-radius:14px;
+      padding:13px 14px;
       outline:none;
     }
 
-    .actions{
+    .field input:focus{
+      border-color:rgba(79,124,255,.5);
+      box-shadow:0 0 0 4px rgba(79,124,255,.08);
+    }
+
+    .modal-actions{
       display:flex;
       gap:10px;
       margin-top:18px;
     }
 
-    .primary,.secondary{
+    .primary, .secondary{
       flex:1;
       border:none;
       padding:13px 16px;
@@ -316,12 +366,12 @@
     }
 
     .primary{
-      background:linear-gradient(135deg, var(--accent), #f0cf77);
-      color:#141414;
+      background:linear-gradient(135deg, var(--accent), #7f9dff);
+      color:#fff;
     }
 
     .secondary{
-      background:#111a27;
+      background:#eef3ff;
       color:var(--text);
       border:1px solid var(--line);
     }
@@ -329,76 +379,79 @@
     .result{
       margin-top:14px;
       min-height:20px;
-      color:#f0cf77;
       font-size:14px;
+      color:var(--accent);
     }
 
-    @media (max-width: 1100px){
-      .app{grid-template-columns:1fr}
-      .side{border-left:none; border-top:1px solid var(--line)}
-      .sections{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr}
+    @media (max-width: 980px){
+      .page{grid-template-columns:1fr}
+      .section-grid,.stats{grid-template-columns:1fr}
     }
 
-    @media (max-width: 700px){
-      .main{padding:16px}
-      .hero h2{font-size:30px}
-      .topbar{flex-direction:column; align-items:flex-start}
+    @media (max-width: 640px){
+      .page{width:min(100% - 18px, 1200px); margin:9px auto}
+      .header{padding:14px 15px; position:relative; top:auto}
       .hero{padding:24px}
+      .hero h2{font-size:30px}
+      .brand h1{font-size:20px}
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <main class="main">
-      <div class="topbar">
-        <div class="brand">
-          <h1>SOP Venus RP</h1>
-          <span>Strona główna jednostki — informacje, struktura i dostęp do logowania.</span>
-        </div>
-        <button class="login-btn" onclick="openLogin()">Logowanie</button>
+  <div class="page">
+    <header class="header">
+      <div class="brand">
+        <h1>SOP Venus RP</h1>
+        <span>Nowoczesna strona główna jednostki z szybkim logowaniem</span>
+      </div>
+      <button class="login-btn" onclick="openLogin()">Logowanie</button>
+    </header>
+
+    <main class="hero">
+      <div class="badge">Jednostka SOP • Venus RP</div>
+      <h2>Elegancka strona główna dla waszej jednostki</h2>
+      <p>
+        Tu jest miejsce na opis waszej jednostki, misji, stylu działania i tego, dlaczego gracze
+        mają do was dołączyć. Układ jest lekki, jasny i nowoczesny, a logowanie jest dostępne
+        jednym kliknięciem.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn primary" onclick="openLogin()">Wejdź do panelu</button>
+        <button class="btn ghost" onclick="setSection('about')">Poznaj nas</button>
       </div>
 
-      <section class="hero">
-        <h2>Oficjalna strona jednostki SOP</h2>
-        <p>
-          Witaj na stronie głównej SOP Venus RP. To tutaj znajdziesz najważniejsze informacje o nas,
-          naszej roli na serwerze, sposobie działania i możliwościach dołączenia do jednostki.
-          Przyciskiem „Logowanie” wejdziesz do panelu członka lub administracji.
-        </p>
-      </section>
+      <div class="stats">
+        <div class="stat">
+          <strong>Misja</strong>
+          <span>Ochrona, eskorty i porządek w klimacie RP.</span>
+        </div>
+        <div class="stat">
+          <strong>Styl</strong>
+          <span>Jasny, nowoczesny i przyjazny dla oka.</span>
+        </div>
+        <div class="stat">
+          <strong>Wejście</strong>
+          <span>Przycisk logowania do panelu członka.</span>
+        </div>
+      </div>
 
-      <section class="stats">
-        <div class="stat">
-          <strong>Profesjonalizm</strong>
-          <span>Działamy według procedur, komunikacji i jasnej hierarchii.</span>
-        </div>
-        <div class="stat">
-          <strong>RP</strong>
-          <span>Dbamy o klimat, immersję i sensowne odgrywanie służby.</span>
-        </div>
-        <div class="stat">
-          <strong>Rekrutacja</strong>
-          <span>Nowi gracze mogą aplikować i przejść szkolenie.</span>
-        </div>
-      </section>
-
-      <section class="sections">
-        <div class="card">
+      <div class="section-grid">
+        <div class="card" id="about">
           <h3>O nas</h3>
           <p>
-            SOP to jednostka ochrony odpowiedzialna za bezpieczeństwo, eskorty i zabezpieczanie
-            ważnych wydarzeń. Na Venus RP stawiamy na porządek, kulturę i realne odgrywanie służby.
+            SOP to jednostka odpowiedzialna za bezpieczeństwo, eskorty oraz wsparcie ważnych
+            wydarzeń. Stawiamy na profesjonalizm, dobrą organizację i klimat roleplay.
           </p>
         </div>
 
         <div class="card">
           <h3>Co robimy</h3>
           <ul>
-            <li>Ochrona VIP i ważnych obiektów.</li>
+            <li>Ochrona VIP i stref specjalnych.</li>
             <li>Eskorty i działania zabezpieczające.</li>
-            <li>Kontrola stref i porządku podczas eventów.</li>
-            <li>Szkolenie nowych członków jednostki.</li>
+            <li>Wsparcie podczas eventów RP.</li>
+            <li>Szkolenie nowych członków.</li>
           </ul>
         </div>
 
@@ -409,52 +462,27 @@
 
         <div class="card">
           <h3>Kontakt</h3>
-          <p>Dodaj tutaj Discord, link do grupy Roblox albo formularz zgłoszeniowy.</p>
+          <p>Wstaw tutaj Discord, grupę Roblox lub formularz kontaktowy.</p>
         </div>
-      </section>
+      </div>
     </main>
 
     <aside class="side">
-      <div class="panel">
-        <h3>Nawigacja</h3>
-        <div class="menu">
-          <button class="active" onclick="setTab(this, 'info')">Informacje</button>
-          <button onclick="setTab(this, 'squad')">O jednostce</button>
-          <button onclick="setTab(this, 'rules')">Zasady</button>
-          <button onclick="setTab(this, 'apply')">Rekrutacja</button>
+      <div class="side-card">
+        <h3>Skróty</h3>
+        <div class="side-links">
+          <button onclick="setSection('about')">O nas</button>
+          <button onclick="setSection('tasks')">Nasze zadania</button>
+          <button onclick="setSection('ranks')">Hierarchia</button>
+          <button onclick="setSection('contact')">Kontakt</button>
         </div>
       </div>
 
-      <div class="panel">
-        <h3>Panel boczny</h3>
-        <div class="section-page active" id="info">
-          <p class="side-note">
-            Strona jest zaprojektowana jako nowoczesna baza dla społeczności RP.
-            Główna część służy do prezentacji, a prawy panel do szybkich akcji i nawigacji.
-          </p>
-        </div>
-        <div class="section-page" id="squad">
-          <p class="side-note">
-            SOP działa formalnie i z naciskiem na współpracę.
-            To miejsce na opis dowództwa, oddziałów i specjalizacji.
-          </p>
-        </div>
-        <div class="section-page" id="rules">
-          <p class="side-note">
-            W tej sekcji możesz wstawić regulamin służby, wymagania i zakazy.
-          </p>
-        </div>
-        <div class="section-page" id="apply">
-          <p class="side-note">
-            Rekrutacja może prowadzić do formularza, Discorda lub panelu logowania.
-          </p>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h3>Skrót</h3>
-        <p class="side-note">
-          W menu po prawej możesz szybko przełączać treści, a logowanie jest dostępne z góry strony.
+      <div class="side-card">
+        <h3>Opis panelu</h3>
+        <p class="mini">
+          Prawa kolumna działa jako szybki panel. Możesz tu dodać status, ogłoszenia albo linki
+          do rekrutacji.
         </p>
       </div>
     </aside>
@@ -467,49 +495,43 @@
       <p>Zaloguj się do panelu SOP Venus RP.</p>
 
       <div class="field">
-        <label for="u">Login</label>
-        <input id="u" type="text" placeholder="Wpisz login" />
+        <label for="user">Login</label>
+        <input id="user" type="text" placeholder="Wpisz login" />
       </div>
 
       <div class="field">
-        <label for="p">Hasło</label>
-        <input id="p" type="password" placeholder="Wpisz hasło" />
+        <label for="pass">Hasło</label>
+        <input id="pass" type="password" placeholder="Wpisz hasło" />
       </div>
 
-      <div class="actions">
+      <div class="modal-actions">
         <button class="primary" onclick="login()">Zaloguj</button>
         <button class="secondary" onclick="closeLogin()">Anuluj</button>
       </div>
 
-      <div class="result" id="res"></div>
+      <div class="result" id="result"></div>
     </div>
   </div>
 
   <script>
     function openLogin(){ document.getElementById('loginModal').classList.add('active'); }
     function closeLogin(){ document.getElementById('loginModal').classList.remove('active'); }
-
     function login(){
-      const u = document.getElementById('u').value.trim();
-      const p = document.getElementById('p').value.trim();
-      const res = document.getElementById('res');
+      const u = document.getElementById('user').value.trim();
+      const p = document.getElementById('pass').value.trim();
+      const r = document.getElementById('result');
       if(!u || !p){
-        res.textContent = 'Uzupełnij login i hasło.';
+        r.textContent = 'Uzupełnij login i hasło.';
         return;
       }
-      res.textContent = 'Zalogowano testowo jako: ' + u + '. Tu możesz podpiąć prawdziwy panel.';
+      r.textContent = 'Zalogowano testowo jako: ' + u + '.';
     }
-
+    function setSection(id){
+      document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+    }
     document.getElementById('loginModal').addEventListener('click', e => {
       if(e.target.id === 'loginModal') closeLogin();
     });
-
-    function setTab(btn, id){
-      document.querySelectorAll('.section-page').forEach(x => x.classList.remove('active'));
-      document.querySelectorAll('.menu button').forEach(x => x.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      btn.classList.add('active');
-    }
   </script>
 </body>
 </html>
