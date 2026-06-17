@@ -216,12 +216,25 @@ intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# --- EVENT: WITANIE NOWYCH UŻYTKOWNIKÓW ---
+# --- EVENT: WITANIE I AUTOMATYCZNE RANGOWANIE NOWYCH UŻYTKOWNIKÓW ---
 @bot.event
 async def on_member_join(member: discord.Member):
+    ROLA_STARTOWA_ID = 1516750545807868065
     KANAL_POWITAN_ID = 1516747421902704711
-    channel = member.guild.get_channel(KANAL_POWITAN_ID)
     
+    # KROK 1: Automatyczne nadanie roli nowemu członkowi
+    try:
+        role = member.guild.get_role(ROLA_STARTOWA_ID)
+        if role:
+            await member.add_roles(role)
+            print(f"[Auto-Role] Pomyslnie nadano role {role.name} dla {member.name}")
+        else:
+            print(f"[Auto-Role] Blad: Nie znaleziono roli o ID {ROLA_STARTOWA_ID}")
+    except Exception as e:
+        print(f"[Auto-Role] Nie udalo sie nadac roli: {e}")
+
+    # KROK 2: Wysłanie embedu powitalnego
+    channel = member.guild.get_channel(KANAL_POWITAN_ID)
     if channel:
         embed = discord.Embed(
             title="👋 Witamy na serwerze!",
@@ -331,7 +344,6 @@ async def concepts_command(interaction: discord.Interaction):
         color=discord.Color.orange()
     )
     
-    # Podział pojęć na czytelne bloki wewnątrz Embed
     embed.add_field(name="🌐 Podstawy Świata", value=(
         "**[IC] In Character** – świat naszej postaci, wszystko dotyczy rozgrywki.\n"
         "**[OOC] Out of Character** – Wszystko, co nie jest związane z naszą postacią."
@@ -354,7 +366,7 @@ async def concepts_command(interaction: discord.Interaction):
         "**[MG] Meta Gaming** – wykorzystanie informacji OOC w IC.\n"
         "**[CL] Combat Log** – wylogowanie się podczas akcji IC.\n"
         "**[FRP] Fail RP** – Błędne odegranie akcji RP.\n"
-        "**[SS] Stream Sniping** – rodzaj MG polegający na wykorzystywaniu informacji z transmisji innego gracza na jakiejkolwiek platformie."
+        "**[SS] Stream Sniping** – rodzaj MG polegający na wykorzystywaniu informacji z transmisji innego gracza na jakiejkoľwiek platformie."
     ), inline=False)
 
     embed.add_field(name="🚗 Pojazdy i Prowokacje", value=(
@@ -369,11 +381,10 @@ async def concepts_command(interaction: discord.Interaction):
     ), inline=False)
 
     embed.set_footer(text="Zarząd Frakcji SOP • Venus RP")
-    
     await interaction.response.send_message(embed=embed)
 
 # ==========================================
-# 6. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
+# 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
 # ==========================================
 async def main():
     port = int(os.environ.get("PORT", 10000))
