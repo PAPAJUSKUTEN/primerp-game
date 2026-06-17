@@ -6,166 +6,168 @@
   <title>SOP Venus RP</title>
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:#111823;
-      --panel-2:#0f151f;
-      --line:#243041;
-      --text:#e7edf5;
+      --bg:#070b10;
+      --panel:#0f1520;
+      --panel2:#121b28;
+      --line:#223044;
+      --text:#edf2f7;
       --muted:#9aa7b8;
       --accent:#d8a63f;
-      --accent-2:#c43d3d;
-      --shadow:0 20px 60px rgba(0,0,0,.35);
-      --radius:18px;
+      --accent2:#5bbcff;
+      --danger:#c64a4a;
+      --shadow:0 18px 60px rgba(0,0,0,.35);
+      --radius:22px;
     }
 
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
-      font-family:Arial, Helvetica, sans-serif;
+      font-family: Inter, Arial, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(216,166,63,.12), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(196,61,61,.10), transparent 30%),
+        radial-gradient(circle at top left, rgba(216,166,63,.12), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(91,188,255,.09), transparent 30%),
         var(--bg);
       color:var(--text);
       min-height:100vh;
     }
 
-    .layout{
-      display:grid;
-      grid-template-columns:280px 1fr;
+    .app{
       min-height:100vh;
+      display:grid;
+      grid-template-columns: 1fr 330px;
     }
 
-    .sidebar{
-      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent), var(--panel-2);
-      border-right:1px solid var(--line);
-      padding:24px 18px;
-      position:sticky;
-      top:0;
-      height:100vh;
+    .main{
+      padding:28px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+      backdrop-filter: blur(10px);
     }
 
     .brand{
-      padding:18px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      margin-bottom:18px;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
     }
 
     .brand h1{
       margin:0;
-      font-size:24px;
+      font-size:22px;
       letter-spacing:1px;
     }
 
-    .brand p{
-      margin:8px 0 0;
+    .brand span{
       color:var(--muted);
-      font-size:14px;
-      line-height:1.5;
-    }
-
-    .tabs{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .tab{
-      width:100%;
-      text-align:left;
-      border:none;
-      padding:14px 16px;
-      border-radius:14px;
-      cursor:pointer;
-      background:#121a26;
-      color:var(--text);
-      border:1px solid transparent;
-      transition:.2s ease;
-      font-size:15px;
-    }
-
-    .tab:hover{
-      transform:translateX(3px);
-      border-color:rgba(216,166,63,.35);
-      background:#162030;
-    }
-
-    .tab.active{
-      background:linear-gradient(135deg, rgba(216,166,63,.20), rgba(196,61,61,.10));
-      border-color:rgba(216,166,63,.45);
-      box-shadow:0 10px 25px rgba(216,166,63,.08);
-    }
-
-    .login-top{
-      margin-top:14px;
-      display:flex;
-      justify-content:stretch;
+      font-size:13px;
     }
 
     .login-btn{
-      width:100%;
       border:none;
-      border-radius:14px;
-      padding:14px 16px;
       cursor:pointer;
-      background:linear-gradient(135deg, var(--accent), #f0c96d);
-      color:#111;
-      font-weight:700;
+      padding:13px 18px;
+      border-radius:14px;
+      background:linear-gradient(135deg, var(--accent), #f0cf77);
+      color:#151515;
+      font-weight:800;
       transition:.2s ease;
-      box-shadow:0 12px 24px rgba(216,166,63,.18);
+      box-shadow:0 12px 28px rgba(216,166,63,.2);
+      white-space:nowrap;
     }
 
-    .login-btn:hover{
-      transform:translateY(-1px);
-    }
-
-    .content{
-      padding:28px;
-    }
+    .login-btn:hover{transform:translateY(-1px)}
 
     .hero{
       background:linear-gradient(180deg, rgba(255,255,255,.03), transparent), var(--panel);
       border:1px solid var(--line);
-      border-radius:24px;
+      border-radius:28px;
       box-shadow:var(--shadow);
-      padding:28px;
+      padding:32px;
       margin-bottom:22px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto -120px -120px auto;
+      width:320px;
+      height:320px;
+      background:radial-gradient(circle, rgba(216,166,63,.16), transparent 60%);
+      pointer-events:none;
     }
 
     .hero h2{
-      margin:0 0 10px;
-      font-size:32px;
+      margin:0 0 12px;
+      font-size:38px;
+      line-height:1.1;
     }
 
     .hero p{
       margin:0;
+      max-width:920px;
       color:var(--muted);
-      max-width:900px;
-      line-height:1.7;
+      line-height:1.75;
+      font-size:16px;
     }
 
-    .grid{
+    .stats{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
-      gap:18px;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
       margin-bottom:22px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:22px;
+      color:var(--accent);
+      margin-bottom:8px;
+    }
+
+    .stat span{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .sections{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:18px;
     }
 
     .card{
       background:rgba(255,255,255,.03);
       border:1px solid var(--line);
-      border-radius:20px;
-      padding:20px;
+      border-radius:22px;
+      padding:22px;
       box-shadow:var(--shadow);
     }
 
     .card h3{
       margin:0 0 10px;
-      font-size:18px;
       color:var(--accent);
+      font-size:18px;
     }
 
     .card p, .card li{
@@ -174,29 +176,76 @@
       font-size:15px;
     }
 
-    .section{
-      display:none;
-    }
-
-    .section.active{
-      display:block;
-      animation:fade .2s ease;
-    }
-
-    @keyframes fade{
-      from{opacity:.4; transform:translateY(8px)}
-      to{opacity:1; transform:translateY(0)}
-    }
-
-    .info-list{
+    .card ul{
       margin:0;
       padding-left:18px;
     }
 
-    .footer-note{
-      margin-top:18px;
+    .side{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), transparent), var(--panel2);
+      border-left:1px solid var(--line);
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .panel{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+
+    .panel h3{
+      margin:0 0 12px;
+      font-size:18px;
+      color:var(--accent);
+    }
+
+    .menu{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .menu button{
+      border:none;
+      width:100%;
+      text-align:left;
+      padding:14px 15px;
+      border-radius:14px;
+      cursor:pointer;
+      background:#101826;
+      color:var(--text);
+      transition:.2s ease;
+      border:1px solid transparent;
+    }
+
+    .menu button:hover{
+      transform:translateX(3px);
+      border-color:rgba(91,188,255,.35);
+      background:#152033;
+    }
+
+    .menu button.active{
+      border-color:rgba(216,166,63,.45);
+      background:linear-gradient(135deg, rgba(216,166,63,.18), rgba(91,188,255,.10));
+    }
+
+    .side-note{
       color:var(--muted);
-      font-size:13px;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .section-page{display:none}
+    .section-page.active{display:block; animation:fade .18s ease}
+
+    @keyframes fade{
+      from{opacity:.4; transform:translateY(8px)}
+      to{opacity:1; transform:translateY(0)}
     }
 
     .modal{
@@ -207,299 +256,260 @@
       align-items:center;
       justify-content:center;
       padding:20px;
-      z-index:1000;
+      z-index:999;
     }
 
-    .modal.active{
-      display:flex;
-    }
+    .modal.active{display:flex}
 
     .modal-box{
-      width:min(420px, 100%);
+      width:min(440px,100%);
       background:linear-gradient(180deg, rgba(255,255,255,.04), transparent), var(--panel);
       border:1px solid var(--line);
       border-radius:24px;
-      box-shadow:var(--shadow);
       padding:24px;
+      box-shadow:var(--shadow);
       position:relative;
     }
 
-    .modal-box h3{
-      margin:0 0 8px;
-      font-size:24px;
-    }
-
-    .modal-box p{
-      margin:0 0 18px;
-      color:var(--muted);
-      line-height:1.6;
-    }
-
-    .field{
-      margin-bottom:14px;
-    }
-
-    .field label{
-      display:block;
-      margin-bottom:7px;
-      font-size:14px;
+    .close{
+      position:absolute;
+      top:14px;
+      right:14px;
+      border:none;
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      background:#111a27;
       color:var(--text);
+      border:1px solid var(--line);
+      cursor:pointer;
     }
 
+    .modal-box h3{margin:0 0 8px; font-size:24px}
+    .modal-box p{margin:0 0 18px; color:var(--muted); line-height:1.6}
+
+    .field{margin-bottom:14px}
+    .field label{display:block; margin-bottom:7px; font-size:14px}
     .field input{
       width:100%;
       padding:13px 14px;
       border-radius:14px;
       border:1px solid var(--line);
-      background:#0d131c;
+      background:#0c121c;
       color:var(--text);
       outline:none;
     }
 
-    .field input:focus{
-      border-color:rgba(216,166,63,.6);
-      box-shadow:0 0 0 3px rgba(216,166,63,.12);
-    }
-
-    .modal-actions{
+    .actions{
       display:flex;
       gap:10px;
       margin-top:18px;
     }
 
-    .primary{
+    .primary,.secondary{
       flex:1;
       border:none;
-      border-radius:14px;
       padding:13px 16px;
+      border-radius:14px;
       cursor:pointer;
-      background:linear-gradient(135deg, var(--accent), #f0c96d);
-      color:#111;
       font-weight:700;
     }
 
+    .primary{
+      background:linear-gradient(135deg, var(--accent), #f0cf77);
+      color:#141414;
+    }
+
     .secondary{
-      border:1px solid var(--line);
-      background:#121a26;
+      background:#111a27;
       color:var(--text);
-      border-radius:14px;
-      padding:13px 16px;
-      cursor:pointer;
-    }
-
-    .close-x{
-      position:absolute;
-      top:14px;
-      right:14px;
-      width:36px;
-      height:36px;
-      border:none;
-      border-radius:50%;
-      background:#121a26;
-      color:var(--text);
-      cursor:pointer;
       border:1px solid var(--line);
     }
 
-    .login-result{
+    .result{
       margin-top:14px;
-      font-size:14px;
-      color:#f3c86b;
       min-height:20px;
+      color:#f0cf77;
+      font-size:14px;
     }
 
-    @media (max-width: 900px){
-      .layout{grid-template-columns:1fr}
-      .sidebar{
-        position:relative;
-        height:auto;
-      }
+    @media (max-width: 1100px){
+      .app{grid-template-columns:1fr}
+      .side{border-left:none; border-top:1px solid var(--line)}
+      .sections{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 700px){
+      .main{padding:16px}
+      .hero h2{font-size:30px}
+      .topbar{flex-direction:column; align-items:flex-start}
+      .hero{padding:24px}
     }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="brand">
-        <h1>SOP Venus RP</h1>
-        <p>Jednostka ochrony, porządek, procedury i oficjalny styl dla serwera roleplay.</p>
-      </div>
-
-      <div class="tabs">
-        <button class="tab active" onclick="showSection('start', this)">Start</button>
-        <button class="tab" onclick="showSection('o-nas', this)">O nas</button>
-        <button class="tab" onclick="showSection('zadania', this)">Co robimy</button>
-        <button class="tab" onclick="showSection('rangi', this)">Rangi</button>
-        <button class="tab" onclick="showSection('kontakt', this)">Kontakt</button>
-      </div>
-
-      <div class="login-top">
+  <div class="app">
+    <main class="main">
+      <div class="topbar">
+        <div class="brand">
+          <h1>SOP Venus RP</h1>
+          <span>Strona główna jednostki — informacje, struktura i dostęp do logowania.</span>
+        </div>
         <button class="login-btn" onclick="openLogin()">Logowanie</button>
       </div>
-    </aside>
 
-    <main class="content">
-      <section id="start" class="section active">
-        <div class="hero">
-          <h2>Witamy w SOP Venus RP</h2>
-          <p>
-            Oficjalna strona jednostki SOP na serwerze Venus RP. Znajdziesz tutaj informacje o naszej strukturze,
-            zadaniach, rekrutacji i kontakcie z dowództwem.
-          </p>
+      <section class="hero">
+        <h2>Oficjalna strona jednostki SOP</h2>
+        <p>
+          Witaj na stronie głównej SOP Venus RP. To tutaj znajdziesz najważniejsze informacje o nas,
+          naszej roli na serwerze, sposobie działania i możliwościach dołączenia do jednostki.
+          Przyciskiem „Logowanie” wejdziesz do panelu członka lub administracji.
+        </p>
+      </section>
+
+      <section class="stats">
+        <div class="stat">
+          <strong>Profesjonalizm</strong>
+          <span>Działamy według procedur, komunikacji i jasnej hierarchii.</span>
         </div>
-
-        <div class="grid">
-          <div class="card">
-            <h3>Misja</h3>
-            <p>Ochrona ważnych osób, obiektów i wydarzeń, przy zachowaniu pełnego profesjonalizmu.</p>
-          </div>
-          <div class="card">
-            <h3>Styl pracy</h3>
-            <p>Procedury, dyscyplina, komunikacja i działanie zgodne z zasadami RP.</p>
-          </div>
-          <div class="card">
-            <h3>Aktualny status</h3>
-            <p>Rekrutacja: otwarta. Wydarzenia: w toku. Szkolenia: regularne.</p>
-          </div>
+        <div class="stat">
+          <strong>RP</strong>
+          <span>Dbamy o klimat, immersję i sensowne odgrywanie służby.</span>
+        </div>
+        <div class="stat">
+          <strong>Rekrutacja</strong>
+          <span>Nowi gracze mogą aplikować i przejść szkolenie.</span>
         </div>
       </section>
 
-      <section id="o-nas" class="section">
-        <div class="hero">
-          <h2>O nas</h2>
+      <section class="sections">
+        <div class="card">
+          <h3>O nas</h3>
           <p>
-            SOP to jednostka odpowiedzialna za ochronę kluczowych osób i stref. Na Venus RP stawiamy na porządek,
-            komunikację i realne odgrywanie służby w klimacie roleplay.
+            SOP to jednostka ochrony odpowiedzialna za bezpieczeństwo, eskorty i zabezpieczanie
+            ważnych wydarzeń. Na Venus RP stawiamy na porządek, kulturę i realne odgrywanie służby.
           </p>
         </div>
 
         <div class="card">
-          <h3>Nasze założenia</h3>
-          <ul class="info-list">
-            <li>Profesjonalna ochrona i eskorty.</li>
-            <li>Obsługa wydarzeń i stref specjalnych.</li>
-            <li>Współpraca z innymi służbami RP.</li>
+          <h3>Co robimy</h3>
+          <ul>
+            <li>Ochrona VIP i ważnych obiektów.</li>
+            <li>Eskorty i działania zabezpieczające.</li>
+            <li>Kontrola stref i porządku podczas eventów.</li>
             <li>Szkolenie nowych członków jednostki.</li>
           </ul>
         </div>
-      </section>
 
-      <section id="zadania" class="section">
-        <div class="hero">
-          <h2>Co robimy</h2>
-          <p>Ta sekcja pokazuje podstawowe obowiązki SOP w serwerze Venus RP.</p>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <h3>Ochrona VIP</h3>
-            <p>Eskortujemy i zabezpieczamy ważne postacie oraz wydarzenia oficjalne.</p>
-          </div>
-          <div class="card">
-            <h3>Kontrola obiektu</h3>
-            <p>Sprawdzamy wejścia, strefy bezpieczeństwa i zapewniamy porządek.</p>
-          </div>
-          <div class="card">
-            <h3>Wsparcie operacyjne</h3>
-            <p>Pomagamy przy akcjach, zabezpieczeniach i komunikacji wewnętrznej.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="rangi" class="section">
-        <div class="hero">
-          <h2>Rangi</h2>
-          <p>Przykładowa hierarchia, którą możesz łatwo zmienić według własnego systemu.</p>
-        </div>
-
-        <div class="grid">
-          <div class="card"><h3>Rekrut</h3><p>Nowy członek jednostki w trakcie szkolenia.</p></div>
-          <div class="card"><h3>Funkcjonariusz</h3><p>Pełnoprawny członek wykonujący zadania SOP.</p></div>
-          <div class="card"><h3>Starszy Funkcjonariusz</h3><p>Doświadczony członek wspierający młodszych.</p></div>
-          <div class="card"><h3>Dowódca</h3><p>Osoba zarządzająca jednostką i działaniami.</p></div>
-        </div>
-      </section>
-
-      <section id="kontakt" class="section">
-        <div class="hero">
-          <h2>Kontakt</h2>
-          <p>Wstaw tutaj swój Discord, link do grupy Roblox lub formularz aplikacyjny.</p>
+        <div class="card">
+          <h3>Rangi</h3>
+          <p>Rekrut, Funkcjonariusz, Starszy Funkcjonariusz, Dowódca.</p>
         </div>
 
         <div class="card">
-          <h3>Linki</h3>
-          <ul class="info-list">
-            <li>Discord: wstaw swój link.</li>
-            <li>Roblox: wstaw link do grupy.</li>
-            <li>Rekrutacja: wstaw kanał lub formularz.</li>
-          </ul>
+          <h3>Kontakt</h3>
+          <p>Dodaj tutaj Discord, link do grupy Roblox albo formularz zgłoszeniowy.</p>
         </div>
       </section>
-
-      <div class="footer-note">
-        SOP Venus RP — strona główna z informacjami o jednostce i przyciskiem logowania.
-      </div>
     </main>
+
+    <aside class="side">
+      <div class="panel">
+        <h3>Nawigacja</h3>
+        <div class="menu">
+          <button class="active" onclick="setTab(this, 'info')">Informacje</button>
+          <button onclick="setTab(this, 'squad')">O jednostce</button>
+          <button onclick="setTab(this, 'rules')">Zasady</button>
+          <button onclick="setTab(this, 'apply')">Rekrutacja</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Panel boczny</h3>
+        <div class="section-page active" id="info">
+          <p class="side-note">
+            Strona jest zaprojektowana jako nowoczesna baza dla społeczności RP.
+            Główna część służy do prezentacji, a prawy panel do szybkich akcji i nawigacji.
+          </p>
+        </div>
+        <div class="section-page" id="squad">
+          <p class="side-note">
+            SOP działa formalnie i z naciskiem na współpracę.
+            To miejsce na opis dowództwa, oddziałów i specjalizacji.
+          </p>
+        </div>
+        <div class="section-page" id="rules">
+          <p class="side-note">
+            W tej sekcji możesz wstawić regulamin służby, wymagania i zakazy.
+          </p>
+        </div>
+        <div class="section-page" id="apply">
+          <p class="side-note">
+            Rekrutacja może prowadzić do formularza, Discorda lub panelu logowania.
+          </p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Skrót</h3>
+        <p class="side-note">
+          W menu po prawej możesz szybko przełączać treści, a logowanie jest dostępne z góry strony.
+        </p>
+      </div>
+    </aside>
   </div>
 
   <div class="modal" id="loginModal">
     <div class="modal-box">
-      <button class="close-x" onclick="closeLogin()">✕</button>
+      <button class="close" onclick="closeLogin()">✕</button>
       <h3>Logowanie</h3>
       <p>Zaloguj się do panelu SOP Venus RP.</p>
 
       <div class="field">
-        <label for="loginUser">Login</label>
-        <input id="loginUser" type="text" placeholder="Wpisz login" />
+        <label for="u">Login</label>
+        <input id="u" type="text" placeholder="Wpisz login" />
       </div>
 
       <div class="field">
-        <label for="loginPass">Hasło</label>
-        <input id="loginPass" type="password" placeholder="Wpisz hasło" />
+        <label for="p">Hasło</label>
+        <input id="p" type="password" placeholder="Wpisz hasło" />
       </div>
 
-      <div class="modal-actions">
-        <button class="primary" onclick="doLogin()">Zaloguj</button>
+      <div class="actions">
+        <button class="primary" onclick="login()">Zaloguj</button>
         <button class="secondary" onclick="closeLogin()">Anuluj</button>
       </div>
 
-      <div class="login-result" id="loginResult"></div>
+      <div class="result" id="res"></div>
     </div>
   </div>
 
   <script>
-    function showSection(id, btn){
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    function openLogin(){ document.getElementById('loginModal').classList.add('active'); }
+    function closeLogin(){ document.getElementById('loginModal').classList.remove('active'); }
+
+    function login(){
+      const u = document.getElementById('u').value.trim();
+      const p = document.getElementById('p').value.trim();
+      const res = document.getElementById('res');
+      if(!u || !p){
+        res.textContent = 'Uzupełnij login i hasło.';
+        return;
+      }
+      res.textContent = 'Zalogowano testowo jako: ' + u + '. Tu możesz podpiąć prawdziwy panel.';
+    }
+
+    document.getElementById('loginModal').addEventListener('click', e => {
+      if(e.target.id === 'loginModal') closeLogin();
+    });
+
+    function setTab(btn, id){
+      document.querySelectorAll('.section-page').forEach(x => x.classList.remove('active'));
+      document.querySelectorAll('.menu button').forEach(x => x.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       btn.classList.add('active');
     }
-
-    function openLogin(){
-      document.getElementById('loginModal').classList.add('active');
-      document.getElementById('loginResult').textContent = '';
-    }
-
-    function closeLogin(){
-      document.getElementById('loginModal').classList.remove('active');
-    }
-
-    function doLogin(){
-      const u = document.getElementById('loginUser').value.trim();
-      const p = document.getElementById('loginPass').value.trim();
-      const result = document.getElementById('loginResult');
-
-      if(!u || !p){
-        result.textContent = 'Uzupełnij login i hasło.';
-        return;
-      }
-
-      result.textContent = 'Zalogowano testowo: ' + u + '. Tutaj możesz podpiąć prawdziwy panel.';
-    }
-
-    document.getElementById('loginModal').addEventListener('click', function(e){
-      if(e.target === this) closeLogin();
-    });
   </script>
 </body>
 </html>
