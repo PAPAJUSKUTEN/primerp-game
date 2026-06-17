@@ -65,7 +65,7 @@ class TicketButton(ui.View):
             color=discord.Color.blue()
         )
         await ticket_channel.send(embed=embed)
-        await interaction.response.send_message(f"Pomyslnie utworzono Twój ticket: {ticket_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"Pomyslnie utworzono Tworzenie ticketu: {ticket_channel.mention}", ephemeral=True)
 
 
 # --- SYSTEM REKRUTACJI (APLIKUJ) ---
@@ -113,7 +113,7 @@ class ApplyButton(ui.View):
         embed.set_footer(text="Po uzupelnieniu pytan, wyczekuj na werdykt Zarzadu SOP.")
         
         await app_channel.send(embed=embed)
-        await interaction.response.send_message(f"Pomyslnie utworzono Twój kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"Pomyslnie utworzono Twoj kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
 
 
 # ==========================================
@@ -132,35 +132,32 @@ async def on_ready():
     
     try:
         print("Usuwanie podwojnych komend i czyszczenie drzewa globalnego...")
-        
-        # 1. Czyszczenie starych komend globalnych, żeby usunąć dublowanie
         bot.tree.clear(guild=None)
         await bot.tree.sync(guild=None)
         
-        # 2. Rejestracja komend WYŁĄCZNIE lokalnie na Twoich serwerach
         for guild in bot.guilds:
             bot.tree.clear_commands(guild=guild)
             bot.tree.copy_global_to(guild=guild)
             await bot.tree.sync(guild=guild)
             
-        print("Koniec! Od teraz na liscie pojawi sie dokladnie 1x /ticket oraz 1x /aplikuj.")
+        print("Koniec! Zsynchronizowano komendy /ping, /ticket oraz /aplikuj.")
     except Exception as e:
-        print(f"Blad podczas czyszczenia dubli: {e}")
+        print(f"Blad podczas synchronizacji komend: {e}")
         
     bot.loop.create_task(self_ping())
 
-# Komenda tekstowa !ping
-@bot.command()
-async def ping(ctx):
+# 1. Komenda slash /ping (Wymaga roli SOP)
+@bot.tree.command(name="ping", description="Sprawdza czy bot dziala (Wymaga roli SOP)")
+async def ping_command(interaction: discord.Interaction):
     WYMAGANA_ROLA_ID = 1516825582002765894
-    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in ctx.author.roles)
+    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
     
     if ma_role:
-        await ctx.send('yoo jestem tu')
+        await interaction.response.send_message('yoo jestem tu')
     else:
-        await ctx.send('Nie masz odpowiedniej roli, aby uzyc tej komendy.', delete_after=5)
+        await interaction.response.send_message('Nie masz odpowiedniej roli, aby uzyc tej komendy.', ephemeral=True)
 
-# 1. Komenda /ticket (Tylko dla roli SOP)
+# 2. Komenda slash /ticket (Wymaga roli SOP)
 @bot.tree.command(name="ticket", description="Wysyla panel do tworzenia ticketow (Wymaga roli SOP)")
 async def ticket_command(interaction: discord.Interaction):
     WYMAGANA_ROLA_ID = 1516825582002765894
@@ -177,7 +174,7 @@ async def ticket_command(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed, view=TicketButton())
 
-# 2. Komenda /aplikuj (Dla każdego)
+# 3. Komenda slash /aplikuj (Dla kazdego użytkownika)
 @bot.tree.command(name="aplikuj", description="Wysyla panel rekrutacyjny do frakcji SOP")
 async def apply_command(interaction: discord.Interaction):
     embed = discord.Embed(
