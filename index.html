@@ -329,6 +329,66 @@
     margin-top:14px;font-size:12.5px;color:var(--text-muted);
     background:var(--surface-alt);padding:10px 12px;border-radius:8px;display:none;
   }
+  .modal-msg.error{background:rgba(178,58,46,0.1);color:#B23A2E;}
+
+  /* ---------- PROFILE OVERLAY (covers entire page) ---------- */
+  .profile-overlay{
+    position:fixed;inset:0;
+    background:var(--bg);
+    z-index:300;
+    display:none;
+    overflow-y:auto;
+  }
+  .profile-overlay.open{display:block;}
+  .profile-topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;
+    background:var(--surface);
+    border-bottom:1px solid var(--line);
+  }
+  .profile-topbar .brand h1{font-size:18px;}
+  .profile-main{max-width:560px;margin:56px auto;padding:0 24px;}
+  .profile-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow-lg);
+    padding:40px 32px;
+    text-align:center;
+  }
+  .profile-photo{
+    width:88px;height:88px;border-radius:50%;
+    background:var(--surface-alt);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 18px;
+  }
+  .profile-photo svg{width:42px;height:42px;color:var(--navy);opacity:0.55;}
+  .profile-name{font-family:'Oswald',sans-serif;font-size:26px;color:var(--navy);}
+  .profile-rank{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--gold);margin-top:6px;
+  }
+  .profile-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+    margin-top:30px;text-align:left;
+  }
+  .profile-field{background:var(--surface-alt);border-radius:10px;padding:12px 14px;}
+  .profile-field .label{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted);
+    text-transform:uppercase;letter-spacing:0.07em;
+  }
+  .profile-field .value{
+    font-family:'JetBrains Mono',monospace;font-size:14.5px;color:var(--navy);
+    margin-top:4px;font-weight:600;
+  }
+  .profile-status-pill{
+    display:inline-flex;align-items:center;gap:6px;margin-top:26px;
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.06em;
+    padding:6px 14px;border-radius:20px;background:rgba(47,125,79,0.12);color:var(--success);
+  }
+  @media (max-width:480px){
+    .profile-grid{grid-template-columns:1fr;}
+  }
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:860px){
@@ -452,7 +512,7 @@
         <span class="mono">1 240 członków</span>
       </div>
     </div>
-    <a href="https://discord.gg/TWOJ-LINK" target="_blank" rel="noopener" class="btn btn-discord btn-sm">Dołącz teraz</a>
+    <a href="https://discord.gg/Kjgfj5y6bP" target="_blank" rel="noopener" class="btn btn-discord btn-sm">Dołącz teraz</a>
   </div>
 </section>
 
@@ -581,7 +641,7 @@
   </div>
 
   <div class="recruit-cta">
-    <a href="https://discord.gg/TWOJ-LINK" target="_blank" rel="noopener" class="btn btn-primary">Złóż podanie na Discordzie</a>
+    <a href="https://discord.gg/Kjgfj5y6bP" target="_blank" rel="noopener" class="btn btn-primary">Złóż podanie na Discordzie</a>
   </div>
 </section>
 
@@ -613,18 +673,66 @@
     <button class="modal-close" id="modalClose" aria-label="Zamknij">✕</button>
     <h4>Zaloguj się</h4>
     <p class="sub">Panel funkcjonariusza SOP · Venus RP</p>
-    <form id="loginForm">
+    <form id="loginForm" autocomplete="off">
       <div class="field">
-        <label for="login-user">Nazwa użytkownika</label>
-        <input id="login-user" type="text" placeholder="np. j.kowalski" autocomplete="username">
+        <label for="login-user">Login</label>
+        <input id="login-user" type="text" autocomplete="off" spellcheck="false">
       </div>
       <div class="field">
         <label for="login-pass">Hasło</label>
-        <input id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+        <input id="login-pass" type="password" autocomplete="off">
       </div>
       <button type="submit" class="btn btn-primary" style="width:100%;">Zaloguj się</button>
-      <div class="modal-msg" id="modalMsg">To wersja demonstracyjna frontendu — podłącz tu swój backend logowania (np. Discord OAuth), aby przycisk zaczął faktycznie autoryzować funkcjonariuszy.</div>
+      <div class="modal-msg" id="modalMsg"></div>
     </form>
+  </div>
+</div>
+
+<!-- ========== PROFILE OVERLAY (shown after login, covers whole page) ========== -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-topbar">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 64 64" fill="none">
+        <path d="M32 4 L56 14 V32 C56 46 46 56 32 60 C18 56 8 46 8 32 V14 Z" fill="#0F2A4A" stroke="#B8902E" stroke-width="2"/>
+        <path d="M32 16 L32 40 M22 28 L42 28" stroke="#E6C878" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <h1>SOP</h1>
+        <span>PANEL FUNKCJONARIUSZA</span>
+      </div>
+    </div>
+    <button class="btn btn-outline btn-sm" id="logoutBtn">Wyloguj się</button>
+  </div>
+
+  <div class="profile-main">
+    <div class="profile-card">
+      <div class="profile-photo">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg>
+      </div>
+      <div class="profile-name" id="pName">—</div>
+      <div class="profile-rank" id="pRank">—</div>
+
+      <div class="profile-grid">
+        <div class="profile-field">
+          <div class="label">Numer odznaki</div>
+          <div class="value" id="pBadge">—</div>
+        </div>
+        <div class="profile-field">
+          <div class="label">Dywizja</div>
+          <div class="value" id="pDivision">—</div>
+        </div>
+        <div class="profile-field">
+          <div class="label">Data wstąpienia</div>
+          <div class="value" id="pJoined">—</div>
+        </div>
+        <div class="profile-field">
+          <div class="label">Login</div>
+          <div class="value" id="pLogin">—</div>
+        </div>
+      </div>
+
+      <div class="profile-status-pill" id="pStatus">● AKTYWNY</div>
+    </div>
   </div>
 </div>
 
@@ -637,16 +745,68 @@
 
   // login modal
   const loginModal = document.getElementById('loginModal');
-  const openLogin = () => loginModal.classList.add('open');
+  const openLogin = () => {
+    loginModal.classList.add('open');
+    const msg = document.getElementById('modalMsg');
+    msg.style.display = 'none';
+    msg.classList.remove('error');
+  };
   const closeLogin = () => loginModal.classList.remove('open');
   document.getElementById('loginBtnNav').addEventListener('click', openLogin);
   document.getElementById('loginBtnHero').addEventListener('click', openLogin);
   document.getElementById('modalClose').addEventListener('click', closeLogin);
   loginModal.addEventListener('click', (e) => { if(e.target === loginModal) closeLogin(); });
 
+  // ---------- KONTA FUNKCJONARIUSZY (8 kont demo) ----------
+  // Przechowywane wprost w kodzie strony — każdy, kto otworzy źródło strony,
+  // może je odczytać. Dla realnej ochrony kont podłącz prawdziwy backend / Discord OAuth.
+  const accounts = [
+    { login:'k.mazur',      pass:'Sop001!Orzel',     name:'Katarzyna Mazur',   rank:'Komendant II Składu',     badge:'#001', division:'Dowództwo SOP',          joined:'03.2024' },
+    { login:'j.kowalski',   pass:'Sop002!Granat',    name:'Jan Kowalski',      rank:'St. Strażnik',            badge:'#002', division:'II Skład Operacyjny',    joined:'06.2024' },
+    { login:'t.krawczyk',   pass:'Sop003!Bastion',   name:'Tomasz Krawczyk',   rank:'Zastępca Komendanta',     badge:'#003', division:'Dowództwo SOP',          joined:'04.2024' },
+    { login:'a.nowak',      pass:'Sop005!Cyklon',    name:'Adam Nowak',        rank:'Strażnik',                badge:'#005', division:'II Skład Operacyjny',    joined:'08.2024' },
+    { login:'a.duda',       pass:'Sop007!Tarcza',    name:'Aleksandra Duda',   rank:'Oficer Szkoleniowy',       badge:'#007', division:'Sekcja Szkoleń',         joined:'09.2024' },
+    { login:'p.wisniewski', pass:'Sop011!Feniks',    name:'Piotr Wiśniewski',  rank:'Specjalista',             badge:'#011', division:'II Skład Operacyjny',    joined:'11.2024' },
+    { login:'m.zielinski',  pass:'Sop014!Cytadela',  name:'Marek Zieliński',   rank:'Dowódca Sekcji',          badge:'#014', division:'II Skład Operacyjny',    joined:'01.2025' },
+    { login:'m.sikora',     pass:'Sop099!Straznica', name:'Michał Sikora',     rank:'Administrator Systemu',   badge:'#099', division:'Wsparcie Techniczne',    joined:'02.2025' }
+  ];
+
+  const profileOverlay = document.getElementById('profileOverlay');
+
+  function showProfile(account){
+    document.getElementById('pName').textContent = account.name;
+    document.getElementById('pRank').textContent = account.rank;
+    document.getElementById('pBadge').textContent = account.badge;
+    document.getElementById('pDivision').textContent = account.division;
+    document.getElementById('pJoined').textContent = account.joined;
+    document.getElementById('pLogin').textContent = account.login;
+    profileOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    closeLogin();
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    profileOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('loginForm').reset();
+  });
+
   document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    document.getElementById('modalMsg').style.display = 'block';
+    const login = document.getElementById('login-user').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    const match = accounts.find(a => a.login === login && a.pass === pass);
+    const msg = document.getElementById('modalMsg');
+
+    if(match){
+      msg.classList.remove('error');
+      msg.style.display = 'none';
+      showProfile(match);
+    } else {
+      msg.textContent = 'Nieprawidłowy login lub hasło.';
+      msg.classList.add('error');
+      msg.style.display = 'block';
+    }
   });
 </script>
 
