@@ -35,14 +35,13 @@ async def self_ping():
 # 3. WIDOKI I LOGIKA PRZYCISKÓW (Zgłoszenia, Podania, Regulamin)
 # ==========================================
 
-# --- SYSTEM REGULAMINU (DOKŁADNY TWÓJ TEKST) ---
+# --- SYSTEM REGULAMINU ---
 class RulesButton(ui.View):
     def __init__(self):
         super().__init__(timeout=None)
 
     @ui.button(label="regulamin", style=discord.ButtonStyle.secondary, custom_id="show_rules_btn", emoji="📜")
     async def show_rules(self, interaction: discord.Interaction, button: ui.Button):
-        # NATYCHMIASTOWA ODPOWIEDŹ DLA DISCORDA (ZAPOBIEGA BŁĘDOWI INTERAKCJI)
         await interaction.response.defer(ephemeral=True)
         
         rules_text = (
@@ -63,7 +62,6 @@ class RulesButton(ui.View):
             "4. Członek komisji ma obowiązek zachować pełną kulturę osobistą podczas wykonywania swoich obowiązków.\n"
             "5. Wynoszenie informacji z kanałów administracyjnych/komisyjnych skutkuje natychmiastowym wydaleniem oraz czarną listą."
         )
-        # WYSYŁAMY TWÓJ REGULAMIN JAKO WIADOMOŚĆ UKRYTĄ (EPHEMERAL)
         await interaction.followup.send(rules_text, ephemeral=True)
 
 
@@ -210,11 +208,36 @@ class ApplyButton(ui.View):
 
 
 # ==========================================
-# 4. KONFIGURACJA BOTA DISCORDA
+# 4. KONFIGURACJA BOTA DISCORDA & INTENTS
 # ==========================================
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True  # WYMAGANE DO WYKRYWANIA NOWYCH CZŁONKÓW SERWERA
+
 bot = commands.Bot(command_prefix="!", intents=intents)
+
+# --- EVENT: WITANIE NOWYCH UŻYTKOWNIKÓW ---
+@bot.event
+async def on_member_join(member: discord.Member):
+    KANAL_POWITAN_ID = 1516747421902704711
+    channel = member.guild.get_channel(KANAL_POWITAN_ID)
+    
+    if channel:
+        embed = discord.Embed(
+            title="👋 Witamy na serwerze!",
+            description=f"Witaj {member.mention} (**{member.name}**) na naszym serwerze Discord frakcji SOP!",
+            color=discord.Color.blue()
+        )
+        # Pobiera awatar użytkownika, jeśli go ma
+        if member.avatar:
+            embed.set_thumbnail(url=member.avatar.url)
+            
+        embed.add_field(name="📋 Rekrutacja", value="Jeśli chcesz złożyć podanie, przejdź na odpowiedni kanał i użyj komendy `/aplikuj`.", inline=False)
+        embed.add_field(name="📜 Regulamin", value="Zapoznaj się z zasadami panującymi w strukturach przy użyciu `/regulamin`.", inline=False)
+        embed.set_footer(text=f"Jesteś naszym {member.guild.member_count} członkiem!")
+        
+        await channel.send(content=member.mention, embed=embed)
+
 
 @bot.event
 async def on_ready():
