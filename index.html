@@ -19,8 +19,8 @@
     }
 
     *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
     body{
-      margin:0;
       font-family:Arial, Helvetica, sans-serif;
       background:
         radial-gradient(circle at top, rgba(216,166,63,.12), transparent 35%),
@@ -97,6 +97,29 @@
       background:linear-gradient(135deg, rgba(216,166,63,.20), rgba(196,61,61,.10));
       border-color:rgba(216,166,63,.45);
       box-shadow:0 10px 25px rgba(216,166,63,.08);
+    }
+
+    .login-top{
+      margin-top:14px;
+      display:flex;
+      justify-content:stretch;
+    }
+
+    .login-btn{
+      width:100%;
+      border:none;
+      border-radius:14px;
+      padding:14px 16px;
+      cursor:pointer;
+      background:linear-gradient(135deg, var(--accent), #f0c96d);
+      color:#111;
+      font-weight:700;
+      transition:.2s ease;
+      box-shadow:0 12px 24px rgba(216,166,63,.18);
+    }
+
+    .login-btn:hover{
+      transform:translateY(-1px);
     }
 
     .content{
@@ -176,6 +199,115 @@
       font-size:13px;
     }
 
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.72);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:1000;
+    }
+
+    .modal.active{
+      display:flex;
+    }
+
+    .modal-box{
+      width:min(420px, 100%);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), transparent), var(--panel);
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:24px;
+      position:relative;
+    }
+
+    .modal-box h3{
+      margin:0 0 8px;
+      font-size:24px;
+    }
+
+    .modal-box p{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    .field label{
+      display:block;
+      margin-bottom:7px;
+      font-size:14px;
+      color:var(--text);
+    }
+
+    .field input{
+      width:100%;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#0d131c;
+      color:var(--text);
+      outline:none;
+    }
+
+    .field input:focus{
+      border-color:rgba(216,166,63,.6);
+      box-shadow:0 0 0 3px rgba(216,166,63,.12);
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .primary{
+      flex:1;
+      border:none;
+      border-radius:14px;
+      padding:13px 16px;
+      cursor:pointer;
+      background:linear-gradient(135deg, var(--accent), #f0c96d);
+      color:#111;
+      font-weight:700;
+    }
+
+    .secondary{
+      border:1px solid var(--line);
+      background:#121a26;
+      color:var(--text);
+      border-radius:14px;
+      padding:13px 16px;
+      cursor:pointer;
+    }
+
+    .close-x{
+      position:absolute;
+      top:14px;
+      right:14px;
+      width:36px;
+      height:36px;
+      border:none;
+      border-radius:50%;
+      background:#121a26;
+      color:var(--text);
+      cursor:pointer;
+      border:1px solid var(--line);
+    }
+
+    .login-result{
+      margin-top:14px;
+      font-size:14px;
+      color:#f3c86b;
+      min-height:20px;
+    }
+
     @media (max-width: 900px){
       .layout{grid-template-columns:1fr}
       .sidebar{
@@ -196,10 +328,13 @@
       <div class="tabs">
         <button class="tab active" onclick="showSection('start', this)">Start</button>
         <button class="tab" onclick="showSection('o-nas', this)">O nas</button>
+        <button class="tab" onclick="showSection('zadania', this)">Co robimy</button>
         <button class="tab" onclick="showSection('rangi', this)">Rangi</button>
-        <button class="tab" onclick="showSection('rekrutacja', this)">Rekrutacja</button>
-        <button class="tab" onclick="showSection('zasady', this)">Zasady</button>
         <button class="tab" onclick="showSection('kontakt', this)">Kontakt</button>
+      </div>
+
+      <div class="login-top">
+        <button class="login-btn" onclick="openLogin()">Logowanie</button>
       </div>
     </aside>
 
@@ -208,23 +343,23 @@
         <div class="hero">
           <h2>Witamy w SOP Venus RP</h2>
           <p>
-            Oficjalna strona jednostki SOP na serwerze Venus RP. Znajdziesz tutaj informacje o strukturze,
-            zasadach służby, rekrutacji oraz kontakt do dowództwa.
+            Oficjalna strona jednostki SOP na serwerze Venus RP. Znajdziesz tutaj informacje o naszej strukturze,
+            zadaniach, rekrutacji i kontakcie z dowództwem.
           </p>
         </div>
 
         <div class="grid">
           <div class="card">
-            <h3>Cel jednostki</h3>
-            <p>Ochrona, kontrola dostępu, wsparcie operacyjne i utrzymanie porządku w strefach kluczowych RP.</p>
+            <h3>Misja</h3>
+            <p>Ochrona ważnych osób, obiektów i wydarzeń, przy zachowaniu pełnego profesjonalizmu.</p>
           </div>
           <div class="card">
             <h3>Styl pracy</h3>
-            <p>Formalne procedury, dyscyplina, komunikacja radiowa i działanie zgodne z regulaminem serwera.</p>
+            <p>Procedury, dyscyplina, komunikacja i działanie zgodne z zasadami RP.</p>
           </div>
           <div class="card">
-            <h3>Status</h3>
-            <p>Rekrutacja otwarta / zamknięta — możesz tu podmienić według aktualnej sytuacji jednostki.</p>
+            <h3>Aktualny status</h3>
+            <p>Rekrutacja: otwarta. Wydarzenia: w toku. Szkolenia: regularne.</p>
           </div>
         </div>
       </section>
@@ -233,91 +368,103 @@
         <div class="hero">
           <h2>O nas</h2>
           <p>
-            SOP to jednostka odpowiedzialna za ochronę ważnych osób, obiektów i stref specjalnych.
-            Na Venus RP stawiamy na profesjonalizm, porządek oraz realne odgrywanie procedur.
+            SOP to jednostka odpowiedzialna za ochronę kluczowych osób i stref. Na Venus RP stawiamy na porządek,
+            komunikację i realne odgrywanie służby w klimacie roleplay.
           </p>
         </div>
 
         <div class="card">
-          <h3>Zakres działań</h3>
+          <h3>Nasze założenia</h3>
           <ul class="info-list">
-            <li>Ochrona VIP i wydarzeń specjalnych.</li>
-            <li>Kontrola wejść i punktów bezpieczeństwa.</li>
-            <li>Eskorty oficjalne i wsparcie organizacyjne.</li>
-            <li>Reakcja na zagrożenia oraz współpraca z innymi służbami.</li>
+            <li>Profesjonalna ochrona i eskorty.</li>
+            <li>Obsługa wydarzeń i stref specjalnych.</li>
+            <li>Współpraca z innymi służbami RP.</li>
+            <li>Szkolenie nowych członków jednostki.</li>
           </ul>
+        </div>
+      </section>
+
+      <section id="zadania" class="section">
+        <div class="hero">
+          <h2>Co robimy</h2>
+          <p>Ta sekcja pokazuje podstawowe obowiązki SOP w serwerze Venus RP.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Ochrona VIP</h3>
+            <p>Eskortujemy i zabezpieczamy ważne postacie oraz wydarzenia oficjalne.</p>
+          </div>
+          <div class="card">
+            <h3>Kontrola obiektu</h3>
+            <p>Sprawdzamy wejścia, strefy bezpieczeństwa i zapewniamy porządek.</p>
+          </div>
+          <div class="card">
+            <h3>Wsparcie operacyjne</h3>
+            <p>Pomagamy przy akcjach, zabezpieczeniach i komunikacji wewnętrznej.</p>
+          </div>
         </div>
       </section>
 
       <section id="rangi" class="section">
         <div class="hero">
           <h2>Rangi</h2>
-          <p>Przykładowa hierarchia, którą możesz łatwo zmienić pod swój serwer.</p>
+          <p>Przykładowa hierarchia, którą możesz łatwo zmienić według własnego systemu.</p>
         </div>
 
         <div class="grid">
-          <div class="card"><h3>Rekrut</h3><p>Nowy członek w trakcie szkolenia i oceny.</p></div>
-          <div class="card"><h3>Funkcjonariusz</h3><p>Pełnoprawny członek służby wykonujący zadania SOP.</p></div>
+          <div class="card"><h3>Rekrut</h3><p>Nowy członek jednostki w trakcie szkolenia.</p></div>
+          <div class="card"><h3>Funkcjonariusz</h3><p>Pełnoprawny członek wykonujący zadania SOP.</p></div>
           <div class="card"><h3>Starszy Funkcjonariusz</h3><p>Doświadczony członek wspierający młodszych.</p></div>
-          <div class="card"><h3>Dowódca</h3><p>Osoba zarządzająca zespołem i organizująca działania.</p></div>
-        </div>
-      </section>
-
-      <section id="rekrutacja" class="section">
-        <div class="hero">
-          <h2>Rekrutacja</h2>
-          <p>
-            Chcesz dołączyć do SOP Venus RP? Przygotuj się na pytania o RP, komunikację i znajomość zasad serwera.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Wymagania</h3>
-          <ul class="info-list">
-            <li>Aktywność na serwerze.</li>
-            <li>Dobra kultura osobista.</li>
-            <li>Znajomość podstawowych zasad RP.</li>
-            <li>Gotowość do szkolenia i współpracy w zespole.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section id="zasady" class="section">
-        <div class="hero">
-          <h2>Zasady</h2>
-          <p>Krótki zestaw reguł, który możesz rozbudować o własny regulamin wewnętrzny.</p>
-        </div>
-
-        <div class="card">
-          <ul class="info-list">
-            <li>Przestrzegaj hierarchii i poleceń przełożonych.</li>
-            <li>Nie nadużywaj uprawnień i zachowuj profesjonalizm.</li>
-            <li>Nie łam zasad serwera ani zasad RP.</li>
-            <li>W razie wątpliwości zgłaszaj problem do dowództwa.</li>
-          </ul>
+          <div class="card"><h3>Dowódca</h3><p>Osoba zarządzająca jednostką i działaniami.</p></div>
         </div>
       </section>
 
       <section id="kontakt" class="section">
         <div class="hero">
           <h2>Kontakt</h2>
-          <p>Tu możesz wstawić Discord, formularz aplikacyjny albo link do serwera.</p>
+          <p>Wstaw tutaj swój Discord, link do grupy Roblox lub formularz aplikacyjny.</p>
         </div>
 
         <div class="card">
           <h3>Linki</h3>
           <ul class="info-list">
             <li>Discord: wstaw swój link.</li>
-            <li>Roblox: wstaw link do grupy lub serwera.</li>
-            <li>Rekrutacja: wstaw formularz lub kanał kontaktowy.</li>
+            <li>Roblox: wstaw link do grupy.</li>
+            <li>Rekrutacja: wstaw kanał lub formularz.</li>
           </ul>
         </div>
       </section>
 
       <div class="footer-note">
-        SOP Venus RP — strona fanowska / organizacyjna dla jednostki roleplay.
+        SOP Venus RP — strona główna z informacjami o jednostce i przyciskiem logowania.
       </div>
     </main>
+  </div>
+
+  <div class="modal" id="loginModal">
+    <div class="modal-box">
+      <button class="close-x" onclick="closeLogin()">✕</button>
+      <h3>Logowanie</h3>
+      <p>Zaloguj się do panelu SOP Venus RP.</p>
+
+      <div class="field">
+        <label for="loginUser">Login</label>
+        <input id="loginUser" type="text" placeholder="Wpisz login" />
+      </div>
+
+      <div class="field">
+        <label for="loginPass">Hasło</label>
+        <input id="loginPass" type="password" placeholder="Wpisz hasło" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="primary" onclick="doLogin()">Zaloguj</button>
+        <button class="secondary" onclick="closeLogin()">Anuluj</button>
+      </div>
+
+      <div class="login-result" id="loginResult"></div>
+    </div>
   </div>
 
   <script>
@@ -327,6 +474,32 @@
       document.getElementById(id).classList.add('active');
       btn.classList.add('active');
     }
+
+    function openLogin(){
+      document.getElementById('loginModal').classList.add('active');
+      document.getElementById('loginResult').textContent = '';
+    }
+
+    function closeLogin(){
+      document.getElementById('loginModal').classList.remove('active');
+    }
+
+    function doLogin(){
+      const u = document.getElementById('loginUser').value.trim();
+      const p = document.getElementById('loginPass').value.trim();
+      const result = document.getElementById('loginResult');
+
+      if(!u || !p){
+        result.textContent = 'Uzupełnij login i hasło.';
+        return;
+      }
+
+      result.textContent = 'Zalogowano testowo: ' + u + '. Tutaj możesz podpiąć prawdziwy panel.';
+    }
+
+    document.getElementById('loginModal').addEventListener('click', function(e){
+      if(e.target === this) closeLogin();
+    });
   </script>
 </body>
 </html>
