@@ -15,7 +15,7 @@ from werkzeug.serving import make_server
 # KONFIGURACJA
 # --------------------------------------------------
 
-GUILD_ID = 1516847056210366645          # ID serwera (Venus RP – wstaw swój, jeśli inny)
+GUILD_ID = 1516744630975074314          # ID serwera (Venus RP – wstaw swój, jeśli inny)
 CATEGORY_ID = 1516847056210366645       # ID kategorii dla ticket/podanie
 REQUIRED_ROLE_ID = 1516825582002765894  # ID roli wymaganej do !ping
 
