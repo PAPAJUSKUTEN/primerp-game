@@ -227,24 +227,24 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f'Zalogowano pomyslnie jako: {bot.user.name}')
     
-    # Rejestracja widoków przycisków, aby nie psuły się po restarcie
+    # Rejestracja widoków dla trwałych przycisków
     bot.add_view(TicketButton())
     bot.add_view(ApplyButton())
     bot.add_view(RulesButton())
     bot.add_view(ApplicationManageButtons(applicant_mention="", applicant_name=""))
     
     try:
-        print("Trwa synchronizacja polecen slash bezpośrednio z serwerami...")
-        # Kopiujemy polecenia globalne do każdego serwera, na którym jest bot
+        print("Usuwanie zdublowanych komend z pamieci gildii...")
+        # KROK 1: Całkowicie czyścimy lokalne komendy z każdego serwera, aby zapobiec duplikatom
         for guild in bot.guilds:
-            bot.tree.copy_global_to(guild=guild)
+            bot.tree.clear_commands(guild=guild)
             await bot.tree.sync(guild=guild)
         
-        # Opcjonalnie synchronizujemy też globalnie
+        # KROK 2: Synchronizujemy komendy wyłącznie jako globalne
         await bot.tree.sync()
-        print("Koniec! Wszystkie komendy (/ping, /ticket, /aplikuj, /regulamin) zostały pomyślnie wymuszone.")
+        print("Sukces! Zsynchronizowano czyste 4 komendy (/ping, /ticket, /aplikuj, /regulamin).")
     except Exception as e:
-        print(f"Blad podczas synchronizacji komend: {e}")
+        print(f"Blad podczas oczyszczania i synchronizacji drzewa komend: {e}")
         
     bot.loop.create_task(self_ping())
 
