@@ -212,7 +212,7 @@ class ApplyButton(ui.View):
 # ==========================================
 intents = discord.Intents.default()
 intents.message_content = True
-intents.members = True  # WYMAGANE DO WYKRYWANIA NOWYCH CZŁONKÓW SERWERA
+intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -228,7 +228,6 @@ async def on_member_join(member: discord.Member):
             description=f"Witaj {member.mention} (**{member.name}**) na naszym serwerze Discord frakcji SOP!",
             color=discord.Color.blue()
         )
-        # Pobiera awatar użytkownika, jeśli go ma
         if member.avatar:
             embed.set_thumbnail(url=member.avatar.url)
             
@@ -243,7 +242,6 @@ async def on_member_join(member: discord.Member):
 async def on_ready():
     print(f'Zalogowano pomyslnie jako: {bot.user.name}')
     
-    # Rejestracja widoków dla trwałych przycisków
     bot.add_view(TicketButton())
     bot.add_view(ApplyButton())
     bot.add_view(RulesButton())
@@ -317,8 +315,65 @@ async def regulamin_command(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed, view=RulesButton())
 
+# 5. Komenda slash /pojęcia
+@bot.tree.command(name="pojęcia", description="Wysyła zestawienie podstawowych pojęć RP (Wymaga roli SOP)")
+async def concepts_command(interaction: discord.Interaction):
+    WYMAGANA_ROLA_ID = 1516825582002765894
+    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
+    
+    if not ma_role:
+        await interaction.response.send_message("Nie masz odpowiedniej roli, aby uzyc tej komendy.", ephemeral=True)
+        return
+
+    embed = discord.Embed(
+        title="📚 Słownik Podstawowych Pojęć Roleplay",
+        description="Oto zestawienie najważniejszych pojęć i skrótów obowiązujących podczas rozgrywki RP:",
+        color=discord.Color.orange()
+    )
+    
+    # Podział pojęć na czytelne bloki wewnątrz Embed
+    embed.add_field(name="🌐 Podstawy Świata", value=(
+        "**[IC] In Character** – świat naszej postaci, wszystko dotyczy rozgrywki.\n"
+        "**[OOC] Out of Character** – Wszystko, co nie jest związane z naszą postacią."
+    ), inline=False)
+
+    embed.add_field(name="💀 Uśmiercanie Postaci", value=(
+        "**[CK] Character Kill** – uśmiercenie postaci.\n"
+        "**[FCK] Force Character Kill** – uśmiercenie postaci bez zgody jej właściciela."
+    ), inline=False)
+
+    embed.add_field(name="⚔️ Walka i Eliminacja", value=(
+        "**[RK] Revenge Kill** – występuje gdy po swojej śmierci wracasz do osoby która cię zabija, aby się na niej zemścić.\n"
+        "**[RDM] Random Deathmatch** – zabijanie innych graczy bez powodu do BW lub bez odegrania stosownej akcji.\n"
+        "**[VDM] Vehicle Deathmatch** – zabijanie za pomocą wszystkich pojazdów.\n"
+        "**[BW] Brutally Wounded** – Brak przytomności postaci."
+    ), inline=False)
+
+    embed.add_field(name="🚫 Naruszenia Zasad Gry", value=(
+        "**[PG] Power Gaming** – zmuszanie kogoś do akcji RP, bez możliwości reakcji.\n"
+        "**[MG] Meta Gaming** – wykorzystanie informacji OOC w IC.\n"
+        "**[CL] Combat Log** – wylogowanie się podczas akcji IC.\n"
+        "**[FRP] Fail RP** – Błędne odegranie akcji RP.\n"
+        "**[SS] Stream Sniping** – rodzaj MG polegający na wykorzystywaniu informacji z transmisji innego gracza na jakiejkolwiek platformie."
+    ), inline=False)
+
+    embed.add_field(name="🚗 Pojazdy i Prowokacje", value=(
+        "**[FD] Fail Driving** – Jazda pojazdem nieprzystosowanym do danego rodzaju nawierzchni.\n"
+        "**[DB] DriveBy** – Strzelanie z jakiegokolwiek pojazdu.\n"
+        "**[NJ] Ninja Jacking** – wyrzucenie osoby z pojazdu przy użyciu kajdanek bez odegrania i odjechanie nim.\n"
+        "**[CB] Cop Baiting** – prowokowanie służb porządkowych do pościgu lub ciągłe celowe przeszkadzanie w interwencji."
+    ), inline=False)
+
+    embed.add_field(name="👤 Tożsamość", value=(
+        "**[CN] Celebrity Name** – Dane sławnych osób, takie postacie są od razu usuwane."
+    ), inline=False)
+
+    embed.set_footer(text="Zarząd Frakcji SOP • Venus RP")
+    
+    await interaction.response.send_message(embed=embed)
+
 # ==========================================
-# 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
+# 6. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
 # ==========================================
 async def main():
     port = int(os.environ.get("PORT", 10000))
