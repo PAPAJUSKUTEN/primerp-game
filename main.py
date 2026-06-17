@@ -32,7 +32,7 @@ async def self_ping():
         await asyncio.sleep(600)
 
 # ==========================================
-# 3. WIDOKI I LOGIKA DLA SYSTEMU TICKETÓW I REKRUTACJI
+# 3. WIDOKI I LOGIKA PRZYCISKÓW (Zgłoszenia i Podania)
 # ==========================================
 
 # --- SYSTEM TICKETÓW ---
@@ -65,10 +65,64 @@ class TicketButton(ui.View):
             color=discord.Color.blue()
         )
         await ticket_channel.send(embed=embed)
-        await interaction.response.send_message(f"Pomyslnie utworzono Tworzenie ticketu: {ticket_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"Pomyslnie utworzono Twoje zgloszenie: {ticket_channel.mention}", ephemeral=True)
 
 
-# --- SYSTEM REKRUTACJI (APLIKUJ) ---
+# --- PRZYCISKI ZARZĄDZANIA PODANIEM (DLA ZARZĄDU) ---
+class ApplicationManageButtons(ui.View):
+    def __init__(self, applicant_mention, applicant_name):
+        super().__init__(timeout=None)
+        self.applicant_mention = applicant_mention
+        self.applicant_name = applicant_name
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        WYMAGANA_ROLA_ID = 1516747254021754920
+        ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
+        if not ma_role:
+            await interaction.response.send_message("Nie masz uprawnien (wymaganej roli) do zarzadzania tym podaniem!", ephemeral=True)
+            return False
+        return True
+
+    @ui.button(label="Przyjmij", style=discord.ButtonStyle.green, custom_id="app_accept_btn", emoji="🟢")
+    async def accept_application(self, interaction: discord.Interaction, button: ui.Button):
+        KANAL_SUKCESU_ID = 1516747178020966421
+        channel = interaction.guild.get_channel(KANAL_SUKCESU_ID)
+        
+        embed = discord.Embed(
+            title="💚 Podanie Przyjete!",
+            description=f"Uzytkownik {self.applicant_mention} (**{self.applicant_name}**) pomyślnie przeszedl etap rekrutacji do SOP!",
+            color=discord.Color.green()
+        )
+        embed.set_footer(text=f"Zaakceptowane przez: {interaction.user.name}")
+        
+        if channel:
+            await channel.send(embed=embed)
+        await interaction.response.send_message("Oznaczono podanie jako: **PRZYJĘTE**. Komunikat zostal wyslany.", ephemeral=False)
+
+    @ui.button(label="Odrzuc", style=discord.ButtonStyle.red, custom_id="app_reject_btn", emoji="🔴")
+    async def reject_application(self, interaction: discord.Interaction, button: ui.Button):
+        KANAL_ODRZUCENIA_ID = 1516747254021754920
+        channel = interaction.guild.get_channel(KANAL_ODRZUCENIA_ID)
+        
+        embed = discord.Embed(
+            title="💔 Podanie Odrzucone",
+            description=f"Uzytkownik {self.applicant_mention} (**{self.applicant_name}**) nie zostal przyjety do frakcji SOP w obecnej rekrutacji.",
+            color=discord.Color.red()
+        )
+        embed.set_footer(text=f"Rozpatrzone przez: {interaction.user.name}")
+        
+        if channel:
+            await channel.send(embed=embed)
+        await interaction.response.send_message("Oznaczono podanie jako: **ODRZUCONE**. Komunikat zostal wyslany.", ephemeral=False)
+
+    @ui.button(label="Zamknij", style=discord.ButtonStyle.secondary, custom_id="app_close_btn", emoji="🔒")
+    async def close_application(self, interaction: discord.Interaction, button: ui.Button):
+        await interaction.response.send_message("Kanal zostanie zamkniety za 5 sekund...")
+        await asyncio.sleep(5)
+        await interaction.channel.delete()
+
+
+# --- SYSTEM STARTOWY REKRUTACJI (APLIKUJ) ---
 class ApplyButton(ui.View):
     def __init__(self):
         super().__init__(timeout=None)
@@ -92,7 +146,7 @@ class ApplyButton(ui.View):
 
         app_channel = await guild.create_text_channel(name=channel_name, category=category, overwrites=overwrites)
         
-        embed = discord.Embed(
+        embed_questions = discord.Embed(
             title="📋 Formularz Rekrutacyjny do SOP",
             description=(
                 f"Witaj {interaction.user.mention} w swoim kanale rekrutacyjnym!\n"
@@ -110,9 +164,18 @@ class ApplyButton(ui.View):
             ),
             color=discord.Color.gold()
         )
-        embed.set_footer(text="Po uzupelnieniu pytan, wyczekuj na werdykt Zarzadu SOP.")
+        embed_questions.set_footer(text="Po uzupelnieniu pytan, wyczekuj na werdykt Zarzadu SOP.")
+        await app_channel.send(embed=embed_questions)
         
-        await app_channel.send(embed=embed)
+        # Panel Zarządzania wysyłany od razu na dole kanału dla rekruterów
+        embed_manage = discord.Embed(
+            title="🛠️ Panel Zarzadzania Rekrutacja",
+            description="Sekcja przeznaczona wylacznie dla Zarzadu SOP. Uzyj przyciskow po przeanalizowaniu podania gracza.",
+            color=discord.Color.dark_grey()
+        )
+        # Przekazujemy wzmiankę i nick kandydata, żeby przyciski wiedziały kogo oznaczyć w logach
+        await app_channel.send(embed=embed_manage, view=ApplicationManageButtons(interaction.user.mention, interaction.user.name))
+        
         await interaction.response.send_message(f"Pomyslnie utworzono Twoj kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
 
 
@@ -129,6 +192,8 @@ async def on_ready():
     
     bot.add_view(TicketButton())
     bot.add_view(ApplyButton())
+    # Rejestrujemy pusty szablon widoku do nasłuchiwania przycisków po restarcie
+    bot.add_view(ApplicationManageButtons(applicant_mention="", applicant_name=""))
     
     try:
         print("Usuwanie podwojnych komend i czyszczenie drzewa globalnego...")
@@ -146,7 +211,7 @@ async def on_ready():
         
     bot.loop.create_task(self_ping())
 
-# 1. Komenda slash /ping (Wymaga roli SOP)
+# 1. Komenda slash /ping
 @bot.tree.command(name="ping", description="Sprawdza czy bot dziala (Wymaga roli SOP)")
 async def ping_command(interaction: discord.Interaction):
     WYMAGANA_ROLA_ID = 1516825582002765894
@@ -157,7 +222,7 @@ async def ping_command(interaction: discord.Interaction):
     else:
         await interaction.response.send_message('Nie masz odpowiedniej roli, aby uzyc tej komendy.', ephemeral=True)
 
-# 2. Komenda slash /ticket (Wymaga roli SOP)
+# 2. Komenda slash /ticket
 @bot.tree.command(name="ticket", description="Wysyla panel do tworzenia ticketow (Wymaga roli SOP)")
 async def ticket_command(interaction: discord.Interaction):
     WYMAGANA_ROLA_ID = 1516825582002765894
@@ -174,7 +239,7 @@ async def ticket_command(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed, view=TicketButton())
 
-# 3. Komenda slash /aplikuj (Dla kazdego użytkownika)
+# 3. Komenda slash /aplikuj
 @bot.tree.command(name="aplikuj", description="Wysyla panel rekrutacyjny do frakcji SOP")
 async def apply_command(interaction: discord.Interaction):
     embed = discord.Embed(
