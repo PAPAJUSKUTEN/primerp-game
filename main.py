@@ -207,6 +207,73 @@ class ApplyButton(ui.View):
         await interaction.response.send_message(f"Pomyslnie utworzono Twoj kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
 
 
+# --- NOWE INTERAKTYWNE MENU DO WYBORU UPRAWNIEŃ ---
+class PermissionSelectView(ui.View):
+    def __init__(self, target_role: discord.Role):
+        super().__init__(timeout=60)
+        self.target_role = target_role
+
+    @ui.select(
+        placeholder="Wybierz uprawnienia, które chcesz włączyć...",
+        min_values=1,
+        max_values=7,
+        options=[
+            discord.SelectOption(label="Wyświetlanie kanału", value="view_channel", description="Pozwala widzieć kanał", emoji="👁️"),
+            discord.SelectOption(label="Wysyłanie wiadomości", value="send_messages", description="Pozwala pisać na kanale", emoji="💬"),
+            discord.SelectOption(label="Czytanie historii wiadomości", value="read_message_history", description="Pozwala widzieć stare wiadomości", emoji="📜"),
+            discord.SelectOption(label="Wysyłanie linków", value="embed_links", description="Pozwala na wrzucanie linków", emoji="🔗"),
+            discord.SelectOption(label="Wysyłanie plików i zdjęć", value="attach_files", description="Pozwala wysyłać grafiki", emoji="📁"),
+            discord.SelectOption(label="Dodawanie reakcji", value="add_reactions", description="Pozwala klikać reakcje pod tekstem", emoji="⭐"),
+            discord.SelectOption(label="Wiadomości głosowe", value="send_voice_messages", description="Pozwala na dyktafon", emoji="🎙️")
+        ]
+    )
+    async def select_callback(self, interaction: discord.Interaction, select: ui.Select):
+        # Definiujemy wyczyszczoną paczkę uprawnień (wszystko bazowo na False)
+        overwrites_dict = {
+            "view_channel": False,
+            "send_messages": False,
+            "read_message_history": False,
+            "embed_links": False,
+            "attach_files": False,
+            "add_reactions": False,
+            "send_voice_messages": False,
+            "create_instant_invite": False,
+            "mention_everyone": False,
+            "manage_messages": False
+        }
+
+        # Włączamy na True tylko te opcje, które wybrałeś z listy
+        for choice in select.values:
+            overwrites_dict[choice] = True
+
+        overwrite = discord.PermissionOverwrite(**overwrites_dict)
+
+        try:
+            # Nadpisujemy uprawnienia na obecnym kanale
+            await interaction.channel.set_permissions(self.target_role, overwrite=overwrite)
+            
+            # Tworzymy ładny opis sukcesu
+            wlaczone = ", ".join([f"`{c}`" for c in select.values])
+            
+            embed = discord.Embed(
+                title="⚙️ Zaktualizowano uprawnienia kanału!",
+                description=f"Pomyślnie skonfigurowano kanał {interaction.channel.mention} dla roli **{self.target_role.name}**.",
+                color=discord.Color.green()
+            )
+            embed.add_field(name="✅ Włączone (Zezwolono):", value=wlaczone, inline=False)
+            embed.add_field(name="❌ Pozostałe uprawnienia:", value="Zostały automatycznie zablokowane.", inline=False)
+            embed.set_footer(text=f"Konfigurację wykonał: {interaction.user.name}")
+            
+            # Wyłączamy menu po udanej akcji
+            select.disabled = True
+            await interaction.response.edit_message(embed=embed, view=self)
+            
+        except discord.Forbidden:
+            await interaction.response.send_message("❌ Błąd: Bot nie posiada uprawnień do zarządzania rolami/kanałem!", ephemeral=True)
+        except Exception as e:
+            await interaction.response.send_message(f"❌ Wystąpił nieoczekiwany błąd: {e}", ephemeral=True)
+
+
 # ==========================================
 # 4. KONFIGURACJA BOTA DISCORDA & INTENTS
 # ==========================================
@@ -222,7 +289,6 @@ async def on_member_join(member: discord.Member):
     ROLA_STARTOWA_ID = 1516750545807868065
     KANAL_POWITAN_ID = 1516747421902704711
     
-    # KROK 1: Automatyczne nadanie roli nowemu członkowi
     try:
         role = member.guild.get_role(ROLA_STARTOWA_ID)
         if role:
@@ -233,7 +299,6 @@ async def on_member_join(member: discord.Member):
     except Exception as e:
         print(f"[Auto-Role] Nie udalo sie nadac roli: {e}")
 
-    # KROK 2: Wysłanie embedu powitalnego
     channel = member.guild.get_channel(KANAL_POWITAN_ID)
     if channel:
         embed = discord.Embed(
@@ -366,7 +431,7 @@ async def concepts_command(interaction: discord.Interaction):
         "**[MG] Meta Gaming** – wykorzystanie informacji OOC w IC.\n"
         "**[CL] Combat Log** – wylogowanie się podczas akcji IC.\n"
         "**[FRP] Fail RP** – Błędne odegranie akcji RP.\n"
-        "**[SS] Stream Sniping** – rodzaj MG polegający na wykorzystywaniu informacji z transmisji innego gracza na jakiejkoľwiek platformie."
+        "**[SS] Stream Sniping** – rodzaj MG polegający na wykorzystywaniu informacji z transmisji innego gracza na jakiejkolwiek platformie."
     ), inline=False)
 
     embed.add_field(name="🚗 Pojazdy i Prowokacje", value=(
@@ -382,6 +447,30 @@ async def concepts_command(interaction: discord.Interaction):
 
     embed.set_footer(text="Zarząd Frakcji SOP • Venus RP")
     await interaction.response.send_message(embed=embed)
+
+
+# 6. Komenda slash /konfiguruj-kanał (Z INTERAKTYWNYM WYBOREM)
+@bot.tree.command(name="konfiguruj-kanał", description="Ustawia wybrane uprawnienia dla roli na tym kanale (Wymaga roli SOP)")
+@app_commands.describe(rola_do_ustawienia="Wybierz rolę, której konfigurujesz uprawnienia")
+async def configure_channel_command(interaction: discord.Interaction, rola_do_ustawienia: discord.Role):
+    WYMAGANA_ROLA_ID = 1516825582002765894
+    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
+    
+    if not ma_role:
+        await interaction.response.send_message("Nie masz odpowiedniej roli, aby uzyc tej komendy.", ephemeral=True)
+        return
+
+    # Tworzymy panel z menu wyboru
+    embed = discord.Embed(
+        title="🛠️ Panel Uprawnień Kanału",
+        description=f"Wybierz z poniższej listy rozwijanej uprawnienia, które **CHCESZ WŁĄCZYĆ** na tym kanale dla roli **{rola_do_ustawienia.name}**.\n\n"
+                    "*Wszystkie niewybrane opcje zostaną automatycznie zablokowane.*",
+        color=discord.Color.blue()
+    )
+    
+    view = PermissionSelectView(target_role=rola_do_ustawienia)
+    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+
 
 # ==========================================
 # 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
