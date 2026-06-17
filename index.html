@@ -390,6 +390,39 @@
     .profile-grid{grid-template-columns:1fr;}
   }
 
+  /* ---------- PROFILE TABS ---------- */
+  .profile-tabs{
+    display:flex;gap:6px;justify-content:center;
+    margin-top:26px;border-bottom:1px solid var(--line);
+  }
+  .profile-tab{
+    background:none;border:none;cursor:pointer;
+    padding:10px 18px;margin-bottom:-1px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
+    color:var(--text-muted);
+    border-bottom:2px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .profile-tab:hover{color:var(--navy);}
+  .profile-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
+  .profile-tab-panel{margin-top:24px;text-align:left;}
+
+  /* ---------- SŁUŻBA (DUTY TIMER) ---------- */
+  .duty-display{text-align:center;}
+  .duty-label{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;
+    letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);
+  }
+  .duty-timer{
+    font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:600;
+    color:var(--navy);margin-top:8px;
+  }
+  .duty-display.duty-active .duty-label,
+  .duty-display.duty-active .duty-timer{color:var(--success);}
+  .duty-note{margin-top:14px;font-size:12px;color:var(--text-muted);min-height:16px;text-align:center;}
+  .duty-note.success{color:var(--success);}
+  .duty-note.error{color:#B23A2E;}
+
   /* ---------- RESPONSIVE ---------- */
   @media (max-width:860px){
     .roster-grid{grid-template-columns:repeat(2,1fr);}
@@ -712,26 +745,43 @@
       <div class="profile-name" id="pName">—</div>
       <div class="profile-rank" id="pRank">—</div>
 
-      <div class="profile-grid">
-        <div class="profile-field">
-          <div class="label">Numer odznaki</div>
-          <div class="value" id="pBadge">—</div>
+      <div class="profile-tabs">
+        <button class="profile-tab active" data-tab="profil">Profil</button>
+        <button class="profile-tab" data-tab="sluzba">Służba</button>
+      </div>
+
+      <div class="profile-tab-panel" id="tabProfil">
+        <div class="profile-grid">
+          <div class="profile-field">
+            <div class="label">Numer odznaki</div>
+            <div class="value" id="pBadge">—</div>
+          </div>
+          <div class="profile-field">
+            <div class="label">Dywizja</div>
+            <div class="value" id="pDivision">—</div>
+          </div>
+          <div class="profile-field">
+            <div class="label">Data wstąpienia</div>
+            <div class="value" id="pJoined">—</div>
+          </div>
+          <div class="profile-field">
+            <div class="label">Login</div>
+            <div class="value" id="pLogin">—</div>
+          </div>
         </div>
-        <div class="profile-field">
-          <div class="label">Dywizja</div>
-          <div class="value" id="pDivision">—</div>
-        </div>
-        <div class="profile-field">
-          <div class="label">Data wstąpienia</div>
-          <div class="value" id="pJoined">—</div>
-        </div>
-        <div class="profile-field">
-          <div class="label">Login</div>
-          <div class="value" id="pLogin">—</div>
+        <div style="text-align:center;">
+          <div class="profile-status-pill" id="pStatus">● AKTYWNY</div>
         </div>
       </div>
 
-      <div class="profile-status-pill" id="pStatus">● AKTYWNY</div>
+      <div class="profile-tab-panel" id="tabSluzba" style="display:none;">
+        <div class="duty-display" id="dutyDisplay">
+          <div class="duty-label" id="dutyState">Poza służbą</div>
+          <div class="duty-timer" id="dutyTimer">00:00:00</div>
+        </div>
+        <button class="btn btn-primary" id="dutyBtn" style="width:100%;margin-top:20px;">Rozpocznij służbę</button>
+        <div class="duty-note" id="dutyNote"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -772,20 +822,129 @@
   ];
 
   const profileOverlay = document.getElementById('profileOverlay');
+  let currentAccount = null;
 
   function showProfile(account){
+    currentAccount = account;
     document.getElementById('pName').textContent = account.name;
     document.getElementById('pRank').textContent = account.rank;
     document.getElementById('pBadge').textContent = account.badge;
     document.getElementById('pDivision').textContent = account.division;
     document.getElementById('pJoined').textContent = account.joined;
     document.getElementById('pLogin').textContent = account.login;
+    resetDutyUI();
+    switchTab('profil');
     profileOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
     closeLogin();
   }
 
+  function switchTab(name){
+    document.querySelectorAll('.profile-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    document.getElementById('tabProfil').style.display = name === 'profil' ? 'block' : 'none';
+    document.getElementById('tabSluzba').style.display = name === 'sluzba' ? 'block' : 'none';
+  }
+  document.querySelectorAll('.profile-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+  });
+
+  // ---------- ZAKŁADKA "SŁUŻBA" — LICZNIK CZASU + WEBHOOK DISCORD ----------
+  // Uwaga: adres webhooka jest widoczny w kodzie źródłowym strony dla każdego
+  // odwiedzającego. Każdy, kto go skopiuje, może wysyłać wiadomości na ten
+  // kanał Discord. Jeśli to problem, przenieś wywołanie webhooka na własny
+  // mini-backend i wołaj go z tej strony zamiast Discorda bezpośrednio.
+  const DUTY_WEBHOOK_URL = 'https://discord.com/api/webhooks/1516904193254883478/ev7-NCHvFgK9IBpkXiVoDJ32iTWaCCE1LwwRZNSQWpaJ5LApRuAuanAoH_yLvptA3GKe';
+
+  const dutyState = { active:false, startTime:null, intervalId:null };
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function formatDuration(ms){
+    const totalSec = Math.floor(ms/1000);
+    return `${pad(Math.floor(totalSec/3600))}:${pad(Math.floor((totalSec%3600)/60))}:${pad(totalSec%60)}`;
+  }
+  function formatClock(date){
+    return date.toLocaleString('pl-PL', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  }
+  function setDutyNote(text, type){
+    const note = document.getElementById('dutyNote');
+    note.textContent = text;
+    note.classList.remove('success','error');
+    if(type) note.classList.add(type);
+  }
+  function resetDutyUI(){
+    if(dutyState.intervalId) clearInterval(dutyState.intervalId);
+    dutyState.active = false;
+    dutyState.startTime = null;
+    dutyState.intervalId = null;
+    document.getElementById('dutyDisplay').classList.remove('duty-active');
+    document.getElementById('dutyState').textContent = 'Poza służbą';
+    document.getElementById('dutyTimer').textContent = '00:00:00';
+    document.getElementById('dutyBtn').textContent = 'Rozpocznij służbę';
+    setDutyNote('', null);
+  }
+  function tickDutyTimer(){
+    document.getElementById('dutyTimer').textContent = formatDuration(Date.now() - dutyState.startTime);
+  }
+  function sendDutyWebhook(embed){
+    return fetch(DUTY_WEBHOOK_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ username:'SOP — Rejestr Służby', embeds:[embed] })
+    });
+  }
+  function startDuty(){
+    dutyState.active = true;
+    dutyState.startTime = Date.now();
+    document.getElementById('dutyDisplay').classList.add('duty-active');
+    document.getElementById('dutyState').textContent = 'Na służbie od ' + formatClock(new Date(dutyState.startTime));
+    document.getElementById('dutyBtn').textContent = 'Zakończ służbę';
+    dutyState.intervalId = setInterval(tickDutyTimer, 1000);
+    tickDutyTimer();
+
+    sendDutyWebhook({
+      title:'🟢 Rozpoczęcie służby',
+      color:3066993,
+      fields:[
+        { name:'Funkcjonariusz', value: currentAccount.name, inline:true },
+        { name:'Odznaka', value: currentAccount.badge, inline:true },
+        { name:'Start', value: formatClock(new Date(dutyState.startTime)), inline:false }
+      ]
+    }).then(r => setDutyNote(r.ok ? 'Wysłano start służby na Discord.' : 'Discord odrzucił webhook (status ' + r.status + ').', r.ok ? 'success' : 'error'))
+      .catch(() => setDutyNote('Nie udało się połączyć z Discordem.', 'error'));
+  }
+  function endDuty(){
+    if(!dutyState.active) return;
+    clearInterval(dutyState.intervalId);
+    const startTime = dutyState.startTime;
+    const endTime = Date.now();
+    const account = currentAccount;
+
+    sendDutyWebhook({
+      title:'🔴 Zakończenie służby',
+      color:15158332,
+      fields:[
+        { name:'Funkcjonariusz', value: account.name, inline:true },
+        { name:'Odznaka', value: account.badge, inline:true },
+        { name:'Start', value: formatClock(new Date(startTime)), inline:false },
+        { name:'Koniec', value: formatClock(new Date(endTime)), inline:false },
+        { name:'Czas trwania', value: formatDuration(endTime - startTime), inline:false }
+      ]
+    }).then(r => setDutyNote(r.ok ? 'Wysłano podsumowanie służby na Discord.' : 'Discord odrzucił webhook (status ' + r.status + ').', r.ok ? 'success' : 'error'))
+      .catch(() => setDutyNote('Nie udało się połączyć z Discordem.', 'error'));
+
+    dutyState.active = false;
+    dutyState.startTime = null;
+    document.getElementById('dutyDisplay').classList.remove('duty-active');
+    document.getElementById('dutyState').textContent = 'Poza służbą';
+    document.getElementById('dutyTimer').textContent = '00:00:00';
+    document.getElementById('dutyBtn').textContent = 'Rozpocznij służbę';
+  }
+  document.getElementById('dutyBtn').addEventListener('click', () => {
+    dutyState.active ? endDuty() : startDuty();
+  });
+
   document.getElementById('logoutBtn').addEventListener('click', () => {
+    if(dutyState.active) endDuty();
     profileOverlay.classList.remove('open');
     document.body.style.overflow = '';
     document.getElementById('loginForm').reset();
