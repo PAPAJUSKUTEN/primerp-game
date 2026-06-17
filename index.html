@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOP Venus RP</title>
+  <title>Służba Ochrony Państwa – Venus RP</title>
   <style>
     :root{
       --bg:#f6f8fc;
@@ -35,7 +35,6 @@
       height:100vh;
       display:grid;
       grid-template-rows:auto 1fr auto;
-      grid-template-columns:100%;
     }
 
     /* HEADER */
@@ -45,8 +44,8 @@
     }
 
     .header{
-      background:rgba(255,255,255,.9);
-      backdrop-filter: blur(12px);
+      background:rgba(255,255,255,.95);
+      backdrop-filter: blur(10px);
       border:1px solid rgba(227,232,242,.9);
       border-radius:28px;
       box-shadow:var(--shadow);
@@ -115,6 +114,16 @@
       transform:translateY(-1px);
     }
 
+    .btn.outline{
+      background:#ffffff;
+      color:var(--accent);
+      border:1px solid rgba(79,124,255,.4);
+    }
+
+    .btn.outline:hover{
+      background:#eef3ff;
+    }
+
     /* MAIN */
 
     .main{
@@ -123,13 +132,14 @@
     }
 
     .hero{
-      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.9));
+      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.9));
       border:1px solid var(--line);
       border-radius:32px;
       box-shadow:var(--shadow);
       padding:28px;
       position:relative;
       overflow:hidden;
+      margin-bottom:18px;
     }
 
     .hero::after{
@@ -186,7 +196,7 @@
     }
 
     .stat{
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.98);
       border:1px solid var(--line);
       border-radius:20px;
       padding:16px;
@@ -206,15 +216,16 @@
       line-height:1.6;
     }
 
+    /* SEKCJE POD HERO */
+
     .sections{
-      margin-top:18px;
       display:grid;
       grid-template-columns:2fr 1.4fr;
       gap:16px;
     }
 
     .card{
-      background:rgba(255,255,255,.96);
+      background:rgba(255,255,255,.98);
       border:1px solid var(--line);
       border-radius:22px;
       padding:20px;
@@ -239,17 +250,45 @@
       padding-left:18px;
     }
 
+    .news-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    .news-item{
+      padding:10px 12px;
+      border-radius:14px;
+      background:#f7f9ff;
+      border:1px solid var(--line);
+    }
+
+    .news-title{
+      font-size:14px;
+      font-weight:600;
+      color:var(--text);
+      margin-bottom:4px;
+    }
+
+    .news-meta{
+      font-size:11px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.04em;
+    }
+
     .two-col{
       display:grid;
       grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-      gap:12px;
-      margin-top:12px;
+      gap:10px;
+      margin-top:8px;
     }
 
     .tag-list{
       display:flex;
       flex-wrap:wrap;
-      gap:8px;
+      gap:6px;
       margin-top:6px;
     }
 
@@ -262,40 +301,10 @@
       border:1px solid var(--line);
     }
 
-    /* PSEUDO PANEL PO ZALOGOWANIU */
-
-    .panel-grid{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
-      gap:12px;
-    }
-
-    .panel-tile{
-      border-radius:18px;
-      padding:14px 16px;
-      border:1px solid var(--line);
-      background:#f8f9ff;
-    }
-
-    .panel-label{
-      font-size:12px;
+    .mini{
+      font-size:13px;
       color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:.04em;
-      margin-bottom:4px;
-    }
-
-    .panel-value{
-      font-size:15px;
-      font-weight:600;
-      color:var(--text);
-    }
-
-    .panel-small{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:4px;
+      line-height:1.7;
     }
 
     /* FOOTER */
@@ -448,14 +457,16 @@
     <div class="header-wrap">
       <header class="header">
         <div class="brand">
-          <h1>SOP Venus RP</h1>
-          <span>Nowoczesna strona główna jednostki – informacje + logowanie</span>
+          <h1>Służba Ochrony Państwa</h1>
+          <span>Jednostka SOP na serwerze Venus RP</span>
         </div>
         <nav class="nav-actions">
           <button class="btn nav" onclick="scrollToSection('about')">O nas</button>
-          <button class="btn nav" onclick="scrollToSection('tasks')">Zadania</button>
-          <button class="btn nav" onclick="scrollToSection('ranks')">Rangi</button>
-          <button class="btn nav" onclick="scrollToSection('contact')">Kontakt</button>
+          <button class="btn nav" onclick="scrollToSection('news')">Nowości</button>
+          <button class="btn nav" onclick="scrollToSection('team')">Skład</button>
+          <button class="btn nav" onclick="scrollToSection('server')">Serwer</button>
+          <button class="btn nav" onclick="scrollToSection('discord')">Discord</button>
+          <button class="btn outline" onclick="scrollToSection('recruit')">Rekrutacja</button>
           <button class="btn primary" onclick="openLogin()">Logowanie</button>
         </nav>
       </header>
@@ -464,121 +475,147 @@
     <!-- MAIN -->
     <main class="main">
       <section class="hero" id="about">
-        <div class="badge">Jednostka SOP • Venus RP</div>
-        <h2>Strona główna SOP z lekkim nowoczesnym układem</h2>
+        <div class="badge">SOP • Venus RP</div>
+        <h2>Służba Ochrony Państwa na Venus RP</h2>
         <p>
-          Ten widok służy jako wizytówka jednostki SOP na serwerze Venus RP. Opisz tu, czym się
-          zajmujecie, jaki macie styl RP i jak do was dołączyć. Przycisk „Logowanie” w nagłówku
-          prowadzi do panelu członka lub administracji.
+          Oficjalna strona jednostki SOP działającej na serwerze Venus RP. Tutaj znajdziesz informacje o nas,
+          aktualne nowości, skład jednostki, serwer na którym gramy oraz nasze centrum komunikacji Discord.
         </p>
 
         <div class="hero-cta">
-          <button class="btn primary" onclick="openLogin()">Wejdź do panelu</button>
-          <button class="btn nav" onclick="scrollToSection('tasks')">Zobacz, co robimy</button>
+          <button class="btn primary" onclick="scrollToSection('recruit')">Złóż aplikację</button>
+          <button class="btn nav" onclick="scrollToSection('server')">Zobacz serwer, na którym gramy</button>
         </div>
 
         <div class="stats">
           <div class="stat">
-            <strong>Profesjonalizm</strong>
-            <span>Działanie według procedur i czytelnej hierarchii.</span>
+            <strong>O nas</strong>
+            <span>SOP odpowiada za ochronę VIP, obiektów i wsparcie wydarzeń w RP.</span>
           </div>
           <div class="stat">
-            <strong>RP klimat</strong>
-            <span>Nacisk na odgrywanie i immersję na Venus RP.</span>
+            <strong>Venus RP</strong>
+            <span>Gramy na serwerze Venus RP – stąd nasze procedury i klimat RP.</span>
           </div>
           <div class="stat">
-            <strong>Rekrutacja</strong>
-            <span>Możesz łatwo dodać tu aktualny status naboru.</span>
+            <strong>Discord</strong>
+            <span>Cały kontakt, rekrutacja i ogłoszenia prowadzimy przez serwer DC.</span>
           </div>
         </div>
 
         <div class="sections">
-          <!-- LEWA KOLUMNA: główne info -->
-          <div class="card">
-            <h3 id="tasks">Nasze zadania</h3>
-            <div class="two-col">
-              <div>
-                <p>
-                  SOP odpowiada za ochronę VIP, ważnych obiektów oraz wsparcie wydarzeń
-                  organizowanych na serwerze. Współpracuje z innymi służbami RP, dbając o
-                  porządek i bezpieczeństwo.
-                </p>
-              </div>
-              <div>
-                <ul>
-                  <li>Ochrona VIP i stref specjalnych.</li>
-                  <li>Eskorty konwojów i wydarzeń.</li>
-                  <li>Kontrola wstępu i dostępu.</li>
-                  <li>Wsparcie organizacyjne eventów.</li>
-                </ul>
-              </div>
-            </div>
-
-            <h3 id="ranks" style="margin-top:18px;">Rangi w jednostce</h3>
-            <p>
-              Przykładowa hierarchia – możesz dostosować do własnego systemu:
+          <!-- LEWA: info + nowości -->
+          <div class="card" id="news">
+            <h3>Nowości</h3>
+            <p class="mini">
+              W tym miejscu możesz wpisywać krótkie ogłoszenia o zmianach w składzie, rekrutacji i zasadach.
             </p>
-            <div class="tag-list">
-              <span class="tag">Rekrut</span>
-              <span class="tag">Funkcjonariusz</span>
-              <span class="tag">Starszy Funkcjonariusz</span>
-              <span class="tag">Dowódca</span>
+            <div class="news-list">
+              <div class="news-item">
+                <div class="news-title">Start jednostki SOP na Venus RP</div>
+                <div class="news-meta">PRZYKŁAD • Uzupełnij własnymi informacjami</div>
+              </div>
+              <div class="news-item">
+                <div class="news-title">Rekrutacja do SOP – otwarta</div>
+                <div class="news-meta">PRZYKŁAD • Podaj wymagania i link do formularza</div>
+              </div>
+              <div class="news-item">
+                <div class="news-title">Aktualizacja składu dowództwa</div>
+                <div class="news-meta">PRZYKŁAD • Wypisz nowe osoby w składzie</div>
+              </div>
             </div>
           </div>
 
-          <!-- PRAWA KOLUMNA: mini "panel po zalogowaniu" / info -->
-          <div class="card">
-            <h3>Panel (widok po zalogowaniu – demo)</h3>
+          <!-- PRAWA: serwer + Discord -->
+          <div class="card" id="server">
+            <h3>Serwer, na którym gramy</h3>
             <p>
-              Ten blok udaje prosty panel po zalogowaniu. Możesz go później podmienić na
-              prawdziwe dane z backendu.
+              Jednostka SOP funkcjonuje na serwerze roleplay:
             </p>
+            <ul>
+              <li><strong>Serwer RP:</strong> Venus RP (wpisz dokładną nazwę / link według potrzeb).</li>
+              <li><strong>Platforma:</strong> podaj platformę (np. Roblox / FiveM / inna).</li>
+              <li><strong>Tryb:</strong> pełne RP – zasady serwera obowiązują również SOP.</li>
+            </ul>
 
-            <div class="panel-grid">
-              <div class="panel-tile">
-                <div class="panel-label">Status konta</div>
-                <div class="panel-value">Zalogowany (demo)</div>
-                <div class="panel-small">Po podłączeniu backendu pojawią się tu prawdziwe dane.</div>
+            <h3 id="discord" style="margin-top:14px;">Nasz Discord</h3>
+            <p class="mini">
+              Wstaw tu zaproszenie do waszego serwera DC. To miejsce na ogłoszenia, rekrutację, zgłoszenia
+              i komunikację SOP.
+            </p>
+            <div class="two-col">
+              <div>
+                <ul>
+                  <li>Link do serwera Discord (zaproszenie).</li>
+                  <li>Kanał z regulaminem SOP.</li>
+                </ul>
               </div>
-              <div class="panel-tile">
-                <div class="panel-label">Ranga</div>
-                <div class="panel-value">Funkcjonariusz (przykład)</div>
-                <div class="panel-small">Możesz podmienić na rangi z serwera.</div>
-              </div>
-              <div class="panel-tile">
-                <div class="panel-label">Zgłoszenia</div>
-                <div class="panel-value">0 nowych</div>
-                <div class="panel-small">Tu może być licznik raportów / ticketów.</div>
-              </div>
-              <div class="panel-tile">
-                <div class="panel-label">Służby</div>
-                <div class="panel-value">Następna służba: brak</div>
-                <div class="panel-small">Dodaj plan służb SOP, jeśli go używacie.</div>
+              <div>
+                <ul>
+                  <li>Kanał z ogłoszeniami i nowościami.</li>
+                  <li>Kanał rekrutacyjny dla kandydatów.</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Kontakt / info niżej w tej samej karcie -->
-        <div class="card" style="margin-top:18px;" id="contact">
-          <h3>Kontakt z SOP</h3>
-          <p>
-            W tym miejscu możesz wkleić link do Discorda, grupy Roblox, forum serwera
-            lub formularza zgłoszeniowego do SOP.
-          </p>
-          <div class="two-col">
-            <div>
-              <ul>
-                <li>Discord: wstaw zaproszenie na serwer / kanał SOP.</li>
-                <li>Roblox: wstaw link do grupy lub miejsca serwera.</li>
-              </ul>
+        <!-- SKŁAD + REKRUTACJA niżej -->
+        <div class="sections" style="margin-top:16px;">
+          <div class="card" id="team">
+            <h3>Skład SOP</h3>
+            <p class="mini">
+              Tu wpisz osoby, które tworzą jednostkę SOP na Venus RP. Poniżej masz przykładowy układ,
+              który możesz zamienić na realne nicki z serwera.
+            </p>
+            <div class="two-col">
+              <div>
+                <strong>Dowództwo</strong>
+                <ul>
+                  <li>Dowódca SOP – [nick]</li>
+                  <li>Zastępca Dowódcy – [nick]</li>
+                </ul>
+              </div>
+              <div>
+                <strong>Skład operacyjny</strong>
+                <ul>
+                  <li>Funkcjonariusz – [nick]</li>
+                  <li>Funkcjonariusz – [nick]</li>
+                  <li>Rekrut – [nick]</li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <ul>
-                <li>Formularz: Google Forms / własny panel zgłoszeń.</li>
-                <li>Kontakt IC/OOC: według zasad Venus RP.</li>
-              </ul>
+            <p class="mini" style="margin-top:8px;">
+              Możesz dodać więcej kolumn, np. podział na zmiany, sekcje lub specjalizacje.
+            </p>
+          </div>
+
+          <div class="card" id="recruit">
+            <h3>Rekrutacja do SOP</h3>
+            <p>
+              Jeżeli chcesz dołączyć do Służby Ochrony Państwa na Venus RP, zapoznaj się z wymaganiami,
+              a następnie wypełnij formularz lub zgłoś się na Discordzie.
+            </p>
+            <div class="two-col">
+              <div>
+                <strong>Wymagania – przykładowe</strong>
+                <ul>
+                  <li>Aktywność na serwerze.</li>
+                  <li>Kultura i umiejętność odgrywania RP.</li>
+                  <li>Znajomość regulaminu serwera i SOP.</li>
+                </ul>
+              </div>
+              <div>
+                <strong>Jak aplikować</strong>
+                <ul>
+                  <li>Wejdź na nasz Discord.</li>
+                  <li>Otwórz kanał rekrutacyjny.</li>
+                  <li>Wypełnij formularz / wzór podania.</li>
+                </ul>
+              </div>
             </div>
+            <button class="btn primary" style="margin-top:12px;">
+              Przejdź do rekrutacji (wstaw link)
+            </button>
           </div>
         </div>
       </section>
@@ -586,18 +623,18 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-      SOP Venus RP – fanowska strona jednostki roleplay. Podmień treści na swoje opisy, rangi i linki.
+      Służba Ochrony Państwa – jednostka SOP na Venus RP. Podmień treści na swoje opisy, skład i linki.
     </footer>
   </div>
 
-  <!-- MODAL LOGOWANIA -->
+  <!-- MODAL LOGOWANIA (BEZ PROPONOWANYCH LOGINÓW) -->
   <div class="modal" id="loginModal">
     <div class="modal-box">
       <button class="close" onclick="closeLogin()">✕</button>
       <h3>Logowanie</h3>
       <p>
-        Zaloguj się do panelu SOP Venus RP. Poniższy formularz to demo – podłącz prawdziwy system
-        logowania po stronie serwera.
+        Formularz logowania do panelu SOP. Ten widok jest tylko front-endem – prawdziwe logowanie
+        podłącz po stronie serwera.
       </p>
 
       <div class="field">
@@ -638,7 +675,8 @@
         r.textContent = 'Uzupełnij login i hasło.';
         return;
       }
-      r.textContent = 'Demo: zalogowano jako „' + u + '”. Tu podepniesz prawdziwy panel.';
+      // Brak proponowanych danych – tylko komunikat demo
+      r.textContent = 'Demo front-end: logowanie obsłuż przez backend.';
     }
 
     function scrollToSection(id){
