@@ -35,46 +35,35 @@ async def self_ping():
 # 3. WIDOKI I LOGIKA PRZYCISKÓW (Zgłoszenia, Podania, Regulamin)
 # ==========================================
 
-# --- SYSTEM REGULAMINU ---
+# --- SYSTEM REGULAMINU (DOKŁADNY TWÓJ TEKST) ---
 class RulesButton(ui.View):
     def __init__(self):
         super().__init__(timeout=None)
 
     @ui.button(label="regulamin", style=discord.ButtonStyle.secondary, custom_id="show_rules_btn", emoji="📜")
     async def show_rules(self, interaction: discord.Interaction, button: ui.Button):
-        # NATYCHMIASTOWA ODPOWIEDŹ DLA DISCORDA (ZAPOBIEGA "TA CZYNNOSC SIE NIE POWIODLA")
+        # NATYCHMIASTOWA ODPOWIEDŹ DLA DISCORDA (ZAPOBIEGA BŁĘDOWI INTERAKCJI)
         await interaction.response.defer(ephemeral=True)
         
         rules_text = (
-            "📑 **REGULAMIN WEWNĘTRZNY FORMACJI SŁUŻBY OCHRONY PAŃSTWA (SOP)**\n\n"
-            "**I. POSTANOWIENIA OGÓLNE**\n"
-            "1. Każdy funkcjonariusz SOP ma obowiązek znać i bezwzględnie przestrzegać niniejszego regulaminu oraz regulaminu głównego serwera.\n"
-            "2. Głównym zadaniem SOP jest ochrona najważniejszych osób w państwie (VIP), obiektów rządowych oraz zabezpieczanie kolumn dyplomatycznych.\n"
-            "3. Nieznajomość regulaminu nie zwalnia z odpowiedzialności dyscyplinarnej.\n"
-            "4. Najwyższą władzą decyzyjną na serwerze/w formacji jest Komendant Główny SOP oraz Zarząd.\n\n"
-            "**II. ZASADY ROLEPLAY & ZACHOWANIE (RP)**\n"
-            "1. *Profesjonalizm*: Funkcjonariusz na służbie musi reprezentować formację z najwyższym szacunkiem. Zakazuje się toxic zachowań, wyzwisk (OOC) oraz prowokacji.\n"
-            "2. *Kultura osobista*: Wobec obywateli, innych frakcji (np. Policji, Wojska) oraz innych funkcjonariuszy należy zachować pełną kulturę i dystans służbowy.\n"
-            "3. *Poszanowanie życia*: Życie VIP-a oraz Twoje własne jest najwyższą wartością. W sytuacjach zakładniczych lub strzelanin, priorytetem jest ewakuacja VIP-a, a nie eliminacja zagrożenia.\n"
-            "4. *Powergaming (PG) & FearRP*: Kategorycznie zakazuje się zmuszania innych do akcji RP bez możliwości wyboru oraz ignorowania strachu w sytuacjach zagrożenia życia (chyba że sytuacja bezpośrednio wymaga zasłonięcia VIP-a własnym ciałem).\n\n"
-            "**III. OBOWIĄZKI FUNKCJONARIUSZA**\n"
-            "1. *Dyscyplina i hierarchia*: Słuchanie i wykonywanie rozkazów wyższych stopni bezdyskusyjnie. Ewentualne skargi na przełożonego można zgłosić do Zarządu po zakończeniu akcji.\n"
-            "2. *Gotowość do służby*: Przystępując do służby, funkcjonariusz ma obowiązek zalogować się na odpowiednim kanale głosowym (np. Discord / TeamSpeak / Radio) oraz pobrać przepisowe wyposażenie.\n"
-            "3. *Tajemnica państwowa*: Zakazuje się wynoszenia informacji wewnętrznych (taktyki, plany tras VIP-ów, bazy danych, hasła do radia) poza strukturę SOP.\n"
-            "4. *Raportowanie*: Każdy funkcjonariusz ma obowiązek zgłaszania rozpoczęcia, zakończenia służby oraz wszelkich incydentów w wyznaczonych do tego miejscach (np. panel MDT / kanał Discord).\n\n"
-            "**IV. ZASADY UŻYWANIA POJAZDÓW I WYPOSAŻENIA**\n"
-            "1. *Pojazdy służbowe*: Pojazdy mogą być używane wyłącznie do celów służbowych. Zakazuje się używania ich do celów prywatnych (nawet poza służbą).\n"
-            "2. *Jazda alarmowa (LPR / Kod 3)*: Używanie sygnałów świetlnych i dźwiękowych jest dozwolone wyłącznie podczas: eskorty VIP-a, dojazdu na zgłoszenie alarmowe (wsparcie, napad, zagrożenie życia), rozkazu od wyższego stopnia.\n"
-            "3. *Broń palna i ŚPB*: Użycie środków przymusu bezpośredniego (taser, pałka) oraz broni ostrej musi być adekwatne do zagrożenia. Broń ostra to ostateczność (gdy zagrożone jest życie VIP-a lub funkcjonariusza).\n\n"
-            "**V. KARY DYSCYPLINARNE**\n"
-            "Za łamanie regulaminu, działanie na szkodę formacji lub niewykonywanie rozkazów, Zarząd SOP może nałożyć następujące kary:\n"
-            "▫️ Upomnienie / Ostrzeżenie słowne (czarna kropka)\n"
-            "▫️ Nagana wpisana do akt\n"
-            "▫️ Zawieszenie w prawach funkcjonariusza (na określony czas)\n"
-            "▫️ Degradacja (obniżenie stopnia służbowego)\n"
-            "▫️ Dyscyplinarne zwolnienie z formacji (z możliwością wpisania na czarną listę - BL)"
+            "⚖️ **REGULAMIN SERWERA**\n"
+            "1. Nieznajomość regulaminu nie zwalnia z jego przestrzegania.\n"
+            "2. Administracja ma prawo ukarać gracza za czyn, który nie został uwzględniony w regulaminie, jeżeli zostanie uznany za szkodliwy dla serwera.\n"
+            "3. Zakaz prowokowania i wyzywania innych graczy na kanałach tekstowych oraz głosowych.\n"
+            "4. Zakaz pingowania administracji bez wyraźnego powodu.\n"
+            "5. Zakaz wysyłania jakichkolwiek linków (zaproszenia na inne serwery discord, linki do wirusów itp.).\n"
+            "6. Wszelkie błędy bota należy zgłaszać administracji.\n"
+            "7. Handel przedmiotami/rangami z gry za realne pieniądze jest surowo zakazany.\n"
+            "8. Zakaz szerzenia nienawiści, rasizmu, faszyzmu oraz toksycznego zachowania.\n"
+            "9. Zakaz udostępniania danych osobowych innych użytkowników serwera bez ich zgody.\n\n"
+            "🛡️ **REGULAMIN KOMISJI**\n"
+            "1. Każdy członek komisji musi godnie reprezentować serwer.\n"
+            "2. Zakaz faworyzacji graczy/znajomych przy rozpatrywaniu skarg lub podań.\n"
+            "3. Każda decyzja podjęta przez wyższą rangę komisji jest ostateczna, chyba że zarząd postanowi inaczej.\n"
+            "4. Członek komisji ma obowiązek zachować pełną kulturę osobistą podczas wykonywania swoich obowiązków.\n"
+            "5. Wynoszenie informacji z kanałów administracyjnych/komisyjnych skutkuje natychmiastowym wydaleniem oraz czarną listą."
         )
-        # WYSYŁAMY WIADOMOŚĆ KORZYSTAJĄC Z FOLLOWUP (BO ZROBILIŚMY DEFER)
+        # WYSYŁAMY TWÓJ REGULAMIN JAKO WIADOMOŚĆ UKRYTĄ (EPHEMERAL)
         await interaction.followup.send(rules_text, ephemeral=True)
 
 
@@ -244,7 +233,7 @@ async def on_ready():
             await bot.tree.sync(guild=guild)
         
         await bot.tree.sync()
-        print("Sukces! Zsynchronizowano czyste 4 komendy (/ping, /ticket, /aplikuj, /regulamin).")
+        print("Sukces! Zsynchronizowano czyste komendy.")
     except Exception as e:
         print(f"Blad podczas oczyszczania i synchronizacji drzewa komend: {e}")
         
@@ -273,7 +262,7 @@ async def ticket_command(interaction: discord.Interaction):
         
     embed = discord.Embed(
         title="🤖 System Zgloszen (SOP)",
-        description="Potrzebujesz pomocy administracji? Chcesz zglosic problem?\nKliknij ponizszy przycisk, aby otworzyc prywatny kanal kontaktu.",
+        description="Potrzebujesz pomocy administracji? Chcesz zglosic problem?\nKliknij ponizszy przycisk, aby otworzyc privatny kanal kontaktu.",
         color=discord.Color.green()
     )
     await interaction.response.send_message(embed=embed, view=TicketButton())
