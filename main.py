@@ -32,8 +32,48 @@ async def self_ping():
         await asyncio.sleep(600)
 
 # ==========================================
-# 3. WIDOKI I LOGIKA PRZYCISKÓW (Zgłoszenia i Podania)
+# 3. WIDOKI I LOGIKA PRZYCISKÓW (Zgłoszenia, Podania, Regulamin)
 # ==========================================
+
+# --- SYSTEM REGULAMINU ---
+class RulesButton(ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @ui.button(label="regulamin", style=discord.ButtonStyle.secondary, custom_id="show_rules_btn", emoji="📜")
+    async def show_rules(self, interaction: discord.Interaction, button: ui.Button):
+        # Treść regulaminu wysyłana jako wiadomość efemeryczna (widoczna tylko dla klikającego)
+        rules_text = (
+            "📑 **REGULAMIN WEWNĘTRZNY FORMACJI SŁUŻBY OCHRONY PAŃSTWA (SOP)**\n\n"
+            "**I. POSTANOWIENIA OGÓLNE**\n"
+            "1. Każdy funkcjonariusz SOP ma obowiązek znać i bezwzględnie przestrzegać niniejszego regulaminu oraz regulaminu głównego serwera.\n"
+            "2. Głównym zadaniem SOP jest ochrona najważniejszych osób w państwie (VIP), obiektów rządowych oraz zabezpieczanie kolumn dyplomatycznych.\n"
+            "3. Nieznajomość regulaminu nie zwalnia z odpowiedzialności dyscyplinarnej.\n"
+            "4. Najwyższą władzą decyzyjną na serwerze/w formacji jest Komendant Główny SOP oraz Zarząd.\n\n"
+            "**II. ZASADY ROLEPLAY & ZACHOWANIE (RP)**\n"
+            "1. *Profesjonalizm*: Funkcjonariusz na służbie musi reprezentować formację z najwyższym szacunkiem. Zakazuje się toxic zachowań, wyzwisk (OOC) oraz prowokacji.\n"
+            "2. *Kultura osobista*: Wobec obywateli, innych frakcji (np. Policji, Wojska) oraz innych funkcjonariuszy należy zachować pełną kulturę i dystans służbowy.\n"
+            "3. *Poszanowanie życia*: Życie VIP-a oraz Twoje własne jest najwyższą wartością. W sytuacjach zakładniczych lub strzelanin, priorytetem jest ewakuacja VIP-a, a nie eliminacja zagrożenia.\n"
+            "4. *Powergaming (PG) & FearRP*: Kategorycznie zakazuje się zmuszania innych do akcji RP bez możliwości wyboru oraz ignorowania strachu w sytuacjach zagrożenia życia (chyba że sytuacja bezpośrednio wymaga zasłonięcia VIP-a własnym ciałem).\n\n"
+            "**III. OBOWIĄZKI FUNKCJONARIUSZA**\n"
+            "1. *Dyscyplina i hierarchia*: Słuchanie i wykonywanie rozkazów wyższych stopni bezdyskusyjnie. Ewentualne skargi na przełożonego można zgłosić do Zarządu po zakończeniu akcji.\n"
+            "2. *Gotowość do służby*: Przystępując do służby, funkcjonariusz ma obowiązek zalogować się na odpowiednim kanale głosowym (np. Discord / TeamSpeak / Radio) oraz pobrać przepisowe wyposażenie.\n"
+            "3. *Tajemnica państwowa*: Zakazuje się wynoszenia informacji wewnętrznych (taktyki, plany tras VIP-ów, bazy danych, hasła do radia) poza strukturę SOP.\n"
+            "4. *Raportowanie*: Każdy funkcjonariusz ma obowiązek zgłaszania rozpoczęcia, zakończenia służby oraz wszelkich incydentów w wyznaczonych do tego miejscach (np. panel MDT / kanał Discord).\n\n"
+            "**IV. ZASADY UŻYWANIA POJAZDÓW I WYPOSAŻENIA**\n"
+            "1. *Pojazdy służbowe*: Pojazdy mogą być używane wyłącznie do celów służbowych. Zakazuje się używania ich do celów prywatnych (nawet poza służbą).\n"
+            "2. *Jazda alarmowa (LPR / Kod 3)*: Używanie sygnałów świetlnych i dźwiękowych jest dozwolone wyłącznie podczas: eskorty VIP-a, dojazdu na zgłoszenie alarmowe (wsparcie, napad, zagrożenie życia), rozkazu od wyższego stopnia.\n"
+            "3. *Broń palna i ŚPB*: Użycie środków przymusu bezpośredniego (taser, pałka) oraz broni ostrej musi być adekwatne do zagrożenia. Broń ostra to ostateczność (gdy zagrożone jest życie VIP-a lub funkcjonariusza).\n\n"
+            "**V. KARY DYSCYPLINARNE**\n"
+            "Za łamanie regulaminu, działanie na szkodę formacji lub niewykonywanie rozkazów, Zarząd SOP może nałożyć następujące kary:\n"
+            "▫️ Upomnienie / Ostrzeżenie słowne (czarna kropka)\n"
+            "▫️ Nagana wpisana do akt\n"
+            "▫️ Zawieszenie w prawach funkcjonariusza (na określony czas)\n"
+            "▫️ Degradacja (obniżenie stopnia służbowego)\n"
+            "▫️ Dyscyplinarne zwolnienie z formacji (z możliwością wpisania na czarną listę - BL)"
+        )
+        await interaction.response.send_message(rules_text, ephemeral=True)
+
 
 # --- SYSTEM TICKETÓW ---
 class TicketButton(ui.View):
@@ -61,7 +101,7 @@ class TicketButton(ui.View):
         
         embed = discord.Embed(
             title="🎫 Nowy Ticket",
-            description=f"Witaj {interaction.user.mention}!\nNapisz w czym mozemy Ci pomoc. Administracja zajmie sie Twoim zgloszeniem tak快速, jak to mozliwe.",
+            description=f"Witaj {interaction.user.mention}!\nNapisz w czym mozemy Ci pomoc. Administracja zajmie sie Twoim zgloszeniem tak szybko, jak to mozliwe.",
             color=discord.Color.blue()
         )
         await ticket_channel.send(embed=embed)
@@ -76,7 +116,6 @@ class ApplicationManageButtons(ui.View):
         self.applicant_name = applicant_name
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
-        # POPRAWIONE ID ROLI UPRAWNIONEJ
         WYMAGANA_ROLA_ID = 1516825582002765894
         ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
         if not ma_role:
@@ -156,7 +195,7 @@ class ApplyButton(ui.View):
                 "**2.** Ile masz lat?\n"
                 "**3.** Dlaczego chcesz dolaczyc wlasnie do SOP?\n"
                 "**4.** Czy grales juz na Venus RP? Jak dlugo?\n"
-                "**5.** Czy miales wczesniej doswiadczenie w mundurowce / frakcjach ochronnych? (jesli tak – jakie)\n"
+                "**5.** Czy miales wczesniej doswierdzenie w mundurowce / frakcjach ochronnych? (jesli tak – jakie)\n"
                 "**6.** Jak rozumiesz role SOP na serwerze?\n"
                 "**7.** Czy posiadasz mikrofon i jestes w stanie uzywac go podczas sluzby?\n"
                 "**8.** Ile czasu w tygodniu jestes w stanie poswiecic na sluzbe?\n"
@@ -191,6 +230,7 @@ async def on_ready():
     
     bot.add_view(TicketButton())
     bot.add_view(ApplyButton())
+    bot.add_view(RulesButton())
     bot.add_view(ApplicationManageButtons(applicant_mention="", applicant_name=""))
     
     try:
@@ -203,7 +243,7 @@ async def on_ready():
             bot.tree.copy_global_to(guild=guild)
             await bot.tree.sync(guild=guild)
             
-        print("Koniec! Zsynchronizowano komendy /ping, /ticket oraz /aplikuj.")
+        print("Koniec! Zsynchronizowano komendy /ping, /ticket, /aplikuj oraz /regulamin.")
     except Exception as e:
         print(f"Blad podczas synchronizacji komend: {e}")
         
@@ -246,6 +286,23 @@ async def apply_command(interaction: discord.Interaction):
         color=discord.Color.blurple()
     )
     await interaction.response.send_message(embed=embed, view=ApplyButton())
+
+# 4. Komenda slash /regulamin (Wymaga roli SOP)
+@bot.tree.command(name="regulamin", description="Wysyla panel z oficjalnym regulaminem wewnetrznym SOP (Wymaga roli SOP)")
+async def regulamin_command(interaction: discord.Interaction):
+    WYMAGANA_ROLA_ID = 1516825582002765894
+    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
+    
+    if not ma_role:
+        await interaction.response.send_message("Nie masz odpowiedniej roli, aby uzyc tej komendy.", ephemeral=True)
+        return
+        
+    embed = discord.Embed(
+        title="📜 Regulamin Frakcyjny SOP",
+        description="Pobierz oficjalny i obowiazujacy zestaw zasad Służby Ochrony Państwa.\nKliknij ponizszy przycisk, aby wyswietlic pelna tresc regulaminu.",
+        color=discord.Color.blue()
+    )
+    await interaction.response.send_message(embed=embed, view=RulesButton())
 
 # ==========================================
 # 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
