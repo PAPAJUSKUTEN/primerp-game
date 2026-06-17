@@ -11,7 +11,7 @@ from discord import app_commands, ui
 # --- SYSTEM TICKETÓW ---
 class TicketButton(ui.View):
     def __init__(self):
-        super().__init__(timeout=None) # Przycisk działa zawsze, nawet po restarcie bota
+        super().__init__(timeout=None)
 
     @ui.button(label="Stwórz Ticket", style=discord.ButtonStyle.green, custom_id="create_ticket_btn", emoji="📩")
     async def create_ticket(self, interaction: discord.Interaction, button: ui.Button):
@@ -100,11 +100,9 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f'Zalogowano pomyślnie jako: {bot.user.name}')
     
-    # Rejestracja widoków przycisków w pamięci podręcznej bota
     bot.add_view(TicketButton())
     bot.add_view(ApplyButton())
     
-    # Błyskawiczna synchronizacja komend slash na serwerach
     try:
         for guild in bot.guilds:
             bot.tree.copy_global_to(guild=guild)
@@ -145,7 +143,6 @@ async def apply_command(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed, view=ApplyButton())
 
-# Uruchomienie bota
 if __name__ == "__main__":
     TOKEN = os.environ.get("TOKEN")
     if not TOKEN:
