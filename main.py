@@ -42,6 +42,9 @@ class RulesButton(ui.View):
 
     @ui.button(label="regulamin", style=discord.ButtonStyle.secondary, custom_id="show_rules_btn", emoji="📜")
     async def show_rules(self, interaction: discord.Interaction, button: ui.Button):
+        # NATYCHMIASTOWA ODPOWIEDŹ DLA DISCORDA (ZAPOBIEGA "TA CZYNNOSC SIE NIE POWIODLA")
+        await interaction.response.defer(ephemeral=True)
+        
         rules_text = (
             "📑 **REGULAMIN WEWNĘTRZNY FORMACJI SŁUŻBY OCHRONY PAŃSTWA (SOP)**\n\n"
             "**I. POSTANOWIENIA OGÓLNE**\n"
@@ -71,7 +74,8 @@ class RulesButton(ui.View):
             "▫️ Degradacja (obniżenie stopnia służbowego)\n"
             "▫️ Dyscyplinarne zwolnienie z formacji (z możliwością wpisania na czarną listę - BL)"
         )
-        await interaction.response.send_message(rules_text, ephemeral=True)
+        # WYSYŁAMY WIADOMOŚĆ KORZYSTAJĄC Z FOLLOWUP (BO ZROBILIŚMY DEFER)
+        await interaction.followup.send(rules_text, ephemeral=True)
 
 
 # --- SYSTEM TICKETÓW ---
@@ -235,12 +239,10 @@ async def on_ready():
     
     try:
         print("Usuwanie zdublowanych komend z pamieci gildii...")
-        # KROK 1: Całkowicie czyścimy lokalne komendy z każdego serwera, aby zapobiec duplikatom
         for guild in bot.guilds:
             bot.tree.clear_commands(guild=guild)
             await bot.tree.sync(guild=guild)
         
-        # KROK 2: Synchronizujemy komendy wyłącznie jako globalne
         await bot.tree.sync()
         print("Sukces! Zsynchronizowano czyste 4 komendy (/ping, /ticket, /aplikuj, /regulamin).")
     except Exception as e:
