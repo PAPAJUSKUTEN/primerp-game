@@ -61,7 +61,7 @@ class TicketButton(ui.View):
         
         embed = discord.Embed(
             title="🎫 Nowy Ticket",
-            description=f"Witaj {interaction.user.mention}!\nNapisz w czym mozemy Ci pomoc. Administracja zajmie sie Twoim zgloszeniem tak szybko, jak to mozliwe.",
+            description=f"Witaj {interaction.user.mention}!\nNapisz w czym mozemy Ci pomoc. Administracja zajmie sie Twoim zgloszeniem tak快速, jak to mozliwe.",
             color=discord.Color.blue()
         )
         await ticket_channel.send(embed=embed)
@@ -76,10 +76,11 @@ class ApplicationManageButtons(ui.View):
         self.applicant_name = applicant_name
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
-        WYMAGANA_ROLA_ID = 1516747254021754920
+        # POPRAWIONE ID ROLI UPRAWNIONEJ
+        WYMAGANA_ROLA_ID = 1516825582002765894
         ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
         if not ma_role:
-            await interaction.response.send_message("Nie masz uprawnien (wymaganej roli) do zarzadzania tym podaniem!", ephemeral=True)
+            await interaction.response.send_message("Nie masz uprawnien (wymaganej roli SOP) do zarzadzania tym podaniem!", ephemeral=True)
             return False
         return True
 
@@ -90,7 +91,7 @@ class ApplicationManageButtons(ui.View):
         
         embed = discord.Embed(
             title="💚 Podanie Przyjete!",
-            description=f"Uzytkownik {self.applicant_mention} (**{self.applicant_name}**) pomyślnie przeszedl etap rekrutacji do SOP!",
+            description=f"Uzytkownik {self.applicant_mention} (**{self.applicant_name}**) pomyslnie przeszedl etap rekrutacji do SOP!",
             color=discord.Color.green()
         )
         embed.set_footer(text=f"Zaakceptowane przez: {interaction.user.name}")
@@ -167,13 +168,11 @@ class ApplyButton(ui.View):
         embed_questions.set_footer(text="Po uzupelnieniu pytan, wyczekuj na werdykt Zarzadu SOP.")
         await app_channel.send(embed=embed_questions)
         
-        # Panel Zarządzania wysyłany od razu na dole kanału dla rekruterów
         embed_manage = discord.Embed(
             title="🛠️ Panel Zarzadzania Rekrutacja",
             description="Sekcja przeznaczona wylacznie dla Zarzadu SOP. Uzyj przyciskow po przeanalizowaniu podania gracza.",
             color=discord.Color.dark_grey()
         )
-        # Przekazujemy wzmiankę i nick kandydata, żeby przyciski wiedziały kogo oznaczyć w logach
         await app_channel.send(embed=embed_manage, view=ApplicationManageButtons(interaction.user.mention, interaction.user.name))
         
         await interaction.response.send_message(f"Pomyslnie utworzono Twoj kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
@@ -192,7 +191,6 @@ async def on_ready():
     
     bot.add_view(TicketButton())
     bot.add_view(ApplyButton())
-    # Rejestrujemy pusty szablon widoku do nasłuchiwania przycisków po restarcie
     bot.add_view(ApplicationManageButtons(applicant_mention="", applicant_name=""))
     
     try:
