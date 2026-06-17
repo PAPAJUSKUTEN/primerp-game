@@ -60,7 +60,7 @@ class RulesButton(ui.View):
             "2. Zakaz faworyzacji graczy/znajomych przy rozpatrywaniu skarg lub podań.\n"
             "3. Każda decyzja podjęta przez wyższą rangę komisji jest ostateczna, chyba że zarząd postanowi inaczej.\n"
             "4. Członek komisji ma obowiązek zachować pełną kulturę osobistą podczas wykonywania swoich obowiązków.\n"
-            "5. Wynoszenie informacji z kanałów administracyjnych/komisyjnych skutkuje natychmiastowym wydaleniem oraz czarną listą."
+            "5. Wynoszenie informacji z kanałów administracyjnych/komisyjnych skutkuje natychmatowym wydaleniem oraz czarną listą."
         )
         await interaction.followup.send(rules_text, ephemeral=True)
 
@@ -207,7 +207,7 @@ class ApplyButton(ui.View):
         await interaction.response.send_message(f"Pomyslnie utworzono Twoj kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
 
 
-# --- NOWE INTERAKTYWNE MENU DO WYBORU UPRAWNIEŃ ---
+# --- INTERAKTYWNE MENU DO BEZWZGLĘDNEGO CZYSZCZENIA UPRAWNIEŃ ---
 class PermissionSelectView(ui.View):
     def __init__(self, target_role: discord.Role):
         super().__init__(timeout=60)
@@ -228,48 +228,68 @@ class PermissionSelectView(ui.View):
         ]
     )
     async def select_callback(self, interaction: discord.Interaction, select: ui.Select):
-        # Definiujemy wyczyszczoną paczkę uprawnień (wszystko bazowo na False)
+        # 1. Tworzymy kompletną paczkę blokady - WYŁĄCZAMY ABSOLUTNIE WSZYSTKIE MOŻLIWE PERMISJE DISCORDA (na False)
         overwrites_dict = {
             "view_channel": False,
             "send_messages": False,
-            "read_message_history": False,
+            "send_tts_messages": False,
+            "manage_messages": False,
             "embed_links": False,
             "attach_files": False,
-            "add_reactions": False,
-            "send_voice_messages": False,
-            "create_instant_invite": False,
+            "read_message_history": False,
             "mention_everyone": False,
-            "manage_messages": False
+            "use_external_emojis": False,
+            "add_reactions": False,
+            "create_instant_invite": False,
+            "manage_channels": False,
+            "manage_permissions": False,
+            "manage_webhooks": False,
+            "use_application_commands": False,
+            "send_voice_messages": False,
+            "use_external_stickers": False,
+            "send_polls": False,
+            # Permisje głosowe / wątkowe (na wypadek gdyby kanał był sprawdzany pod ich kątem)
+            "connect": False,
+            "speak": False,
+            "stream": False,
+            "use_embedded_activities": False,
+            "use_soundboard": False,
+            "use_external_sounds": False,
+            "mute_members": False,
+            "deafen_members": False,
+            "move_members": False,
+            "manage_threads": False,
+            "create_public_threads": False,
+            "create_private_threads": False,
+            "send_messages_in_threads": False
         }
 
-        # Włączamy na True tylko te opcje, które wybrałeś z listy
+        # 2. Tylko wybrane opcje z menu przestawiamy na True (Zezwól)
         for choice in select.values:
             overwrites_dict[choice] = True
 
         overwrite = discord.PermissionOverwrite(**overwrites_dict)
 
         try:
-            # Nadpisujemy uprawnienia na obecnym kanale
+            # 3. Zgłaszamy pełne nadpisanie uprawnień do Discorda
             await interaction.channel.set_permissions(self.target_role, overwrite=overwrite)
             
-            # Tworzymy ładny opis sukcesu
             wlaczone = ", ".join([f"`{c}`" for c in select.values])
             
             embed = discord.Embed(
-                title="⚙️ Zaktualizowano uprawnienia kanału!",
-                description=f"Pomyślnie skonfigurowano kanał {interaction.channel.mention} dla roli **{self.target_role.name}**.",
+                title="🛡️ Bezwzględna czystka uprawnień zakończona!",
+                description=f"Pomyślnie zmodyfikowano kanał {interaction.channel.mention} dla roli **{self.target_role.name}**.",
                 color=discord.Color.green()
             )
             embed.add_field(name="✅ Włączone (Zezwolono):", value=wlaczone, inline=False)
-            embed.add_field(name="❌ Pozostałe uprawnienia:", value="Zostały automatycznie zablokowane.", inline=False)
-            embed.set_footer(text=f"Konfigurację wykonał: {interaction.user.name}")
+            embed.add_field(name="⛔ Status pozostałych uprawnień:", value="Wszystkie pozostałe istniejące uprawnienia zostały permanentnie **ZABLOKOWANE (na NIE)**.", inline=False)
+            embed.set_footer(text=f"Wymuszone przez: {interaction.user.name}")
             
-            # Wyłączamy menu po udanej akcji
             select.disabled = True
             await interaction.response.edit_message(embed=embed, view=self)
             
         except discord.Forbidden:
-            await interaction.response.send_message("❌ Błąd: Bot nie posiada uprawnień do zarządzania rolami/kanałem!", ephemeral=True)
+            await interaction.response.send_message("❌ Błąd: Bot nie posiada wystarczających uprawnień (Zarządzanie Rolami/Kanałami) lub jego rola jest zbyt nisko!", ephemeral=True)
         except Exception as e:
             await interaction.response.send_message(f"❌ Wystąpił nieoczekiwany błąd: {e}", ephemeral=True)
 
@@ -449,8 +469,8 @@ async def concepts_command(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed)
 
 
-# 6. Komenda slash /konfiguruj-kanał (Z INTERAKTYWNYM WYBOREM)
-@bot.tree.command(name="konfiguruj-kanał", description="Ustawia wybrane uprawnienia dla roli na tym kanale (Wymaga roli SOP)")
+# 6. Komenda slash /konfiguruj-kanał (Z ABSOLUTNYM CZYSZCZENIEM)
+@bot.tree.command(name="konfiguruj-kanał", description="Bezwzględnie ustawia wybrane uprawnienia, blokując całą resztę (Wymaga roli SOP)")
 @app_commands.describe(rola_do_ustawienia="Wybierz rolę, której konfigurujesz uprawnienia")
 async def configure_channel_command(interaction: discord.Interaction, rola_do_ustawienia: discord.Role):
     WYMAGANA_ROLA_ID = 1516825582002765894
@@ -460,12 +480,11 @@ async def configure_channel_command(interaction: discord.Interaction, rola_do_us
         await interaction.response.send_message("Nie masz odpowiedniej roli, aby uzyc tej komendy.", ephemeral=True)
         return
 
-    # Tworzymy panel z menu wyboru
     embed = discord.Embed(
-        title="🛠️ Panel Uprawnień Kanału",
-        description=f"Wybierz z poniższej listy rozwijanej uprawnienia, które **CHCESZ WŁĄCZYĆ** na tym kanale dla roli **{rola_do_ustawienia.name}**.\n\n"
-                    "*Wszystkie niewybrane opcje zostaną automatycznie zablokowane.*",
-        color=discord.Color.blue()
+        title="🛡️ Panel Ścisłej Kontroli Uprawnień",
+        description=f"Wybierz z listy uprawnienia, które chcesz **WŁĄCZYĆ** roli **{rola_do_ustawienia.name}** na tym kanale.\n\n"
+                    "⚠️ **UWAGA:** Każda niewybrana funkcja (zarządzanie wiadomościami, tworzenie ankiet, wątki, pingi, wzmianki itp.) zostanie **całkowicie zablokowana na NIE**.",
+        color=discord.Color.red()
     )
     
     view = PermissionSelectView(target_role=rola_do_ustawienia)
