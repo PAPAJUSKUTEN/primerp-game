@@ -1,208 +1,321 @@
 import os
 import asyncio
-import urllib.request
-from flask import Flask, request, jsonify
+import threading
+import logging
+
 import discord
+from discord import app_commands
 from discord.ext import commands
-from discord import app_commands, ui
 
-# ==========================================
-# 1. KONFIGURACJA STRONY WWW (Flask)
-# ==========================================
+from flask import Flask, request, jsonify
+import requests
+from werkzeug.serving import make_server
+
+# --------------------------------------------------
+# KONFIGURACJA POD TWÓJ SERWER
+# --------------------------------------------------
+
+GUILD_ID = 1516847056210366645          # ID serwera Venus RP (przykład – wstaw swoje)
+CATEGORY_ID = 1516847056210366645       # ID kategorii dla ticket/podanie
+REQUIRED_ROLE_ID = 1516825582002765894  # ID roli wymaganej do !ping
+
+TOKEN = os.getenv("TOKEN")
+RENDER_EXTERNAL_URL = os.getenv("RENDER_EXTERNAL_URL")
+
+if not TOKEN:
+    raise RuntimeError("Brak zmiennej środowiskowej TOKEN")
+
+# --------------------------------------------------
+# LOGOWANIE (przydatne na Render)
+# --------------------------------------------------
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("venus-sop-bot")
+
+# --------------------------------------------------
+# FLASK – WEB SERWER I ENDPOINT /wyslij-wiadomosc
+# --------------------------------------------------
+
 app = Flask(__name__)
-CHANNEL_ID = 123456789012345678  
 
-@app.route('/')
-def home():
-    return "<h1>Bot SOP działa i jest utrzymywany przy życiu!</h1>"
+@app.route("/")
+def index():
+    return "Bot Venus SOP działa", 200
 
-@app.route('/wyslij-wiadomosc', methods=['POST'])
-def send_from_web():
-    data = request.json
-    tekst = data.get("wiadomosc")
-    if tekst:
-        bot.loop.create_task(ogloszenie_na_dc(tekst))
-        return jsonify({"status": "sukces", "info": "Wysłano na Discorda!"}), 200
-    return jsonify({"status": "error", "info": "Brak tekstu"}), 400
+@app.route("/wyslij-wiadomosc", methods=["POST"])
+def wyslij_wiadomosc():
+    """
+    Oczekuje JSON:
+    {
+      "channel_id": 1234567890,
+      "content": "Treść wiadomości"
+    }
+    """
+    data = request.get_json(force=True, silent=True) or {}
+    channel_id = data.get("channel_id")
+    content = data.get("content")
 
-async def ogloszenie_na_dc(tekst):
-    channel = bot.get_channel(CHANNEL_ID)
-    if channel:
-        await channel.send(f"📢 **Komunikat ze strony:** {tekst}")
+    if not channel_id or not content:
+        return jsonify({"error": "Brak channel_id lub content"}), 400
 
-# ==========================================
-# 2. WEWNĘTRZNY SYSTEM KEEP-ALIVE (Self-Ping)
-# ==========================================
-async def self_ping():
-    await asyncio.sleep(30)
-    while True:
-        try:
-            url = os.environ.get("RENDER_EXTERNAL_URL", "http://localhost:5000")
-            req = urllib.request.Request(url, headers={'User-Agent': 'SOP-KeepAlive-Bot'})
-            with urllib.request.urlopen(req) as response:
-                response.read()
-            print("[Keep-Alive] Pomyślnie wysłano ping do samego siebie.")
-        except Exception as e:
-            print(f"[Keep-Alive] Nie udało się wysłać pingu: {e}")
-        await asyncio.sleep(600)
+    channel = bot.get_channel(int(channel_id))
+    if channel is None:
+        return jsonify({"error": "Nie znaleziono kanału"}), 404
 
-# ==========================================
-# 3. WIDOKI I LOGIKA DLA SYSTEMU TICKETÓW I REKRUTACJI
-# ==========================================
-
-# --- SYSTEM TICKETÓW ---
-class TicketButton(ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
-
-    @ui.button(label="Stwórz Ticket", style=discord.ButtonStyle.green, custom_id="create_ticket_btn", emoji="📩")
-    async def create_ticket(self, interaction: discord.Interaction, button: ui.Button):
-        KATEGORIA_ID = 1516847056210366645
-        guild = interaction.guild
-        category = discord.utils.get(guild.categories, id=KATEGORIA_ID)
-        
-        if not category:
-            await interaction.response.send_message("Błąd: Nie znaleziono podanej kategorii ticketów.", ephemeral=True)
-            return
-
-        channel_name = f"ticket-{interaction.user.name}"
-        overwrites = {
-            guild.default_role: discord.PermissionOverwrite(read_messages=False),
-            interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages=True, embed_links=True, attach_files=True),
-            guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True)
-        }
-
-        ticket_channel = await guild.create_text_channel(name=channel_name, category=category, overwrites=overwrites)
-        
-        embed = discord.Embed(
-            title="🎫 Nowy Ticket",
-            description=f"Witaj {interaction.user.mention}!\nNapisz w czym możemy Ci pomóc. Administracja zajmie się Twoim zgłoszeniem tak szybko, jak to możliwe.",
-            color=discord.Color.blue()
-        )
-        await ticket_channel.send(embed=embed)
-        await interaction.response.send_message(f"Pomyślnie utworzono Twój ticket: {ticket_channel.mention}", ephemeral=True)
-
-
-# --- SYSTEM REKRUTACJI (APLIKUJ) ---
-class ApplyButton(ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
-
-    @ui.button(label="Złóż Podanie do SOP", style=discord.ButtonStyle.blurple, custom_id="apply_sop_btn", emoji="📝")
-    async def create_application(self, interaction: discord.Interaction, button: ui.Button):
-        # Korzystamy z tej samej kategorii co tickety
-        KATEGORIA_ID = 1516847056210366645
-        guild = interaction.guild
-        category = discord.utils.get(guild.categories, id=KATEGORIA_ID)
-        
-        if not category:
-            await interaction.response.send_message("Błąd: Nie znaleziono kategorii rekrutacyjnej na serwerze.", ephemeral=True)
-            return
-
-        channel_name = f"podanie-{interaction.user.name}"
-        overwrites = {
-            guild.default_role: discord.PermissionOverwrite(read_messages=False),
-            interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages=True, embed_links=True, attach_files=True),
-            guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True)
-        }
-
-        app_channel = await guild.create_text_channel(name=channel_name, category=category, overwrites=overwrites)
-        
-        # Tworzenie estetycznego formularza rekrutacyjnego
-        embed = discord.Embed(
-            title="📋 Formularz Rekrutacyjny do SOP",
-            description=(
-                f"Witaj {interaction.user.mention} w swoim kanale rekrutacyjnym!\n"
-                "Odpowiedz na poniższe pytania starannie i w jednej wiadomości (lub punkt po punkcie):\n\n"
-                "**1.** Jak masz na imię (nick IG)?\n"
-                "**2.** Ile masz lat?\n"
-                "**3.** Dlaczego chcesz dołączyć właśnie do SOP?\n"
-                "**4.** Czy grałeś już na Venus RP? Jak długo?\n"
-                "**5.** Czy miałeś wcześniej doświadczenie w mundurówce / frakcjach ochronnych? (jeśli tak – jakie)\n"
-                "**6.** Jak rozumiesz rolę SOP na serwerze?\n"
-                "**7.** Czy posiadasz mikrofon i jesteś w stanie używać go podczas służby?\n"
-                "**8.** Ile czasu w tygodniu jesteś w stanie poświęcić na służbę?\n"
-                "**9.** Czy zapoznałeś się z regulaminem serwera Venus RP oraz regulaminem SOP?\n"
-                "**10.** Czy jesteś w stanie przestrzegać zasad i podporządkować się dowództwu?"
-            ),
-            color=discord.Color.gold()
-        )
-        embed.set_footer(text="Po uzupełnieniu pytań, wyczekuj na werdykt Zarządu SOP.")
-        
-        await app_channel.send(embed=embed)
-        await interaction.response.send_message(f"Pomyślnie utworzono Twój kanał rekrutacyjny: {app_channel.mention}", ephemeral=True)
-
-# ==========================================
-# 4. KONFIGURACJA BOTA DISCORDA
-# ==========================================
-intents = discord.Intents.default()
-intents.message_content = True
-bot = commands.Bot(command_prefix="!", intents=intents)
-
-@bot.event
-async def on_ready():
-    print(f'Zalogowano pomyślnie jako: {bot.user.name}')
-    
-    # Rejestrujemy oba widoki przycisków, aby działały bezterminowo
-    bot.add_view(TicketButton())
-    bot.add_view(ApplyButton())
-    
+    # wysyłanie z poziomu event loop bota
+    fut = asyncio.run_coroutine_threadsafe(
+        channel.send(content),
+        bot.loop
+    )
     try:
-        synced = await bot.tree.sync()
-        print(f"Zsynchronizowano {len(synced)} komend slash.")
+        fut.result(timeout=10)
     except Exception as e:
-        print(f"Błąd synchronizacji komend: {e}")
-        
-    bot.loop.create_task(self_ping())
+        logger.exception("Błąd przy wysyłaniu wiadomości z /wyslij-wiadomosc")
+        return jsonify({"error": str(e)}), 500
 
-# Komenda !ping
-@bot.command()
-async def ping(ctx):
-    WYMAGANA_ROLA_ID = 1516825582002765894
-    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in ctx.author.roles)
-    
-    if ma_role:
-        await ctx.send('yoo jestem tu')
-    else:
-        await ctx.send('Nie masz odpowiedniej roli, aby użyć tej komendy.', delete_after=5)
+    return jsonify({"status": "ok"}), 200
 
-# Komenda /ticket
-@bot.tree.command(name="ticket", description="Wysyła panel do tworzenia ticketów")
-async def ticket_command(interaction: discord.Interaction):
-    embed = discord.Embed(
-        title="🤖 System Zgłoszeń (SOP)",
-        description="Potrzebujesz pomocy administracji? Chcesz zgłosić problem?\nKliknij poniższy przycisk, aby otworzyć prywatny kanał kontaktu.",
-        color=discord.Color.green()
-    )
-    await interaction.response.send_message(embed=embed, view=TicketButton())
 
-# Nowa komenda /aplikuj
-@bot.tree.command(name="aplikuj", description="Wysyła panel rekrutacyjny do frakcji SOP")
-async def apply_command(interaction: discord.Interaction):
-    embed = discord.Embed(
-        title="🦅 Rekrutacja do System Operational Protocols (SOP)",
-        description="Chcesz zasilić szeregi naszej frakcji na serwerze Venus RP?\nKliknij niebieski przycisk poniżej, aby otworzyć swój osobisty kwestionariusz rekrutacyjny.",
-        color=discord.Color.brand_lesser()
-    )
-    await interaction.response.send_message(embed=embed, view=ApplyButton())
+class FlaskServerThread(threading.Thread):
+    def __init__(self, app, host="0.0.0.0", port=None):
+        threading.Thread.__init__(self)
+        self.daemon = True
+        if port is None:
+            port = int(os.environ.get("PORT", 8000))
+        self.srv = make_server(host, port, app)
+        self.ctx = app.app_context()
+        self.ctx.push()
 
-# ==========================================
-# 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
-# ==========================================
-async def main():
-    port = int(os.environ.get("PORT", 5000))
-    
-    import werkzeug.serving
-    loop = asyncio.get_event_loop()
-    loop.run_in_executor(None, lambda: werkzeug.serving.run_simple('0.0.0.0', port, app, use_debugger=False, use_reloader=False))
-    
-    TOKEN = os.environ.get("TOKEN")
-    if not TOKEN:
-        print("BŁĄD: Brak zmiennej TOKEN w ustawieniach środowiskowych Rendera!")
+    def run(self):
+        logger.info("Startuję serwer Flask")
+        self.srv.serve_forever()
+
+    def shutdown(self):
+        self.srv.shutdown()
+
+
+# --------------------------------------------------
+# DISCORD BOT
+# --------------------------------------------------
+
+intents = discord.Intents.default()
+intents.message_content = True  # wymagane dla !ping
+intents.guilds = True
+intents.members = True
+
+class VenusSOPBot(commands.Bot):
+    def __init__(self):
+        super().__init__(
+            command_prefix="!",
+            intents=intents,
+            application_id=None  # możesz wpisać ID aplikacji, jeśli chcesz szybciej sync
+        )
+        self.flask_thread = None
+
+    async def setup_hook(self):
+        # Sync slash komend na starcie bota
+        try:
+            guild = discord.Object(id=GUILD_ID)
+            # Rejestrujemy komendy jako GUILD-owe (szybszy propagacja)
+            self.tree.copy_global_to(guild=guild)
+            synced = await self.tree.sync(guild=guild)
+            logger.info("Zsynchronizowano %s komend (guild) dla GUILD_ID=%s", len(synced), GUILD_ID)
+        except Exception as e:
+            logger.exception("Błąd podczas tree.sync()")
+
+        # Self ping – startujemy jako background task
+        self.loop.create_task(self.self_ping_loop())
+
+    async def on_ready(self):
+        logger.info("Zalogowano jako %s (%s)", self.user, self.user.id)
+
+    async def self_ping_loop(self):
+        """
+        Co 10 minut wysyła request do RENDER_EXTERNAL_URL,
+        aby utrzymać usługę przy życiu.
+        """
+        if not RENDER_EXTERNAL_URL:
+            logger.warning("Brak RENDER_EXTERNAL_URL – self ping wyłączony")
+            return
+
+        await self.wait_until_ready()
+        logger.info("Startuję self_ping_loop z URL: %s", RENDER_EXTERNAL_URL)
+
+        while not self.is_closed():
+            try:
+                url = RENDER_EXTERNAL_URL.rstrip("/")
+                r = requests.get(url, timeout=10)
+                logger.info("Self-ping %s -> %s", url, r.status_code)
+            except Exception as e:
+                logger.warning("Błąd podczas self ping: %s", e)
+            await asyncio.sleep(600)  # 10 minut
+
+
+bot = VenusSOPBot()
+
+# --------------------------------------------------
+# KOMENDA TEKSTOWA !ping
+# --------------------------------------------------
+
+@bot.command(name="ping")
+async def ping(ctx: commands.Context):
+    # sprawdzenie roli
+    role = ctx.guild.get_role(REQUIRED_ROLE_ID)
+    if role not in ctx.author.roles:
+        await ctx.reply("Nie masz wymaganej roli, aby użyć tej komendy.")
         return
 
-    async with bot:
-        await bot.start(TOKEN)
+    await ctx.reply("Pong! Bot działa poprawnie.")
+
+
+# --------------------------------------------------
+# SLASH: /ticket – tworzy kanał ticket-nazwa
+# --------------------------------------------------
+
+@bot.tree.command(name="ticket", description="Utwórz kanał ticket dla gracza.")
+@app_commands.describe(nazwa="Nick lub identyfikator gracza")
+async def ticket(
+    interaction: discord.Interaction,
+    nazwa: str
+):
+    guild = interaction.guild
+    if guild is None:
+        await interaction.response.send_message(
+            "Ta komenda może być używana tylko na serwerze.",
+            ephemeral=True
+        )
+        return
+
+    category = guild.get_channel(CATEGORY_ID)
+    if category is None or not isinstance(category, discord.CategoryChannel):
+        await interaction.response.send_message(
+            "Nie mogę znaleźć kategorii ticketów. Skontaktuj się z administracją.",
+            ephemeral=True
+        )
+        return
+
+    channel_name = f"ticket-{nazwa}".lower().replace(" ", "-")
+    overwrites = {
+        guild.default_role: discord.PermissionOverwrite(view_channel=False),
+        interaction.user: discord.PermissionOverwrite(
+            view_channel=True,
+            send_messages=True,
+            read_message_history=True
+        )
+    }
+
+    channel = await guild.create_text_channel(
+        name=channel_name,
+        category=category,
+        overwrites=overwrites,
+        reason=f"Ticket utworzony przez {interaction.user} ({interaction.user.id})"
+    )
+
+    await interaction.response.send_message(
+        f"Utworzono kanał {channel.mention} dla {nazwa}.",
+        ephemeral=True
+    )
+
+    await channel.send(
+        f"Witaj, {interaction.user.mention}! Opisz swój problem, a administracja wkrótce się tobą zajmie."
+    )
+
+
+# --------------------------------------------------
+# SLASH: /aplikuj – tworzy kanał podanie-nazwa + 10 pytań
+# --------------------------------------------------
+
+@bot.tree.command(name="aplikuj", description="Złóż podanie do frakcji SOP.")
+@app_commands.describe(nazwa="Twój nick / identyfikator na Venus RP")
+async def aplikuj(
+    interaction: discord.Interaction,
+    nazwa: str
+):
+    guild = interaction.guild
+    if guild is None:
+        await interaction.response.send_message(
+            "Ta komenda może być używana tylko na serwerze.",
+            ephemeral=True
+        )
+        return
+
+    category = guild.get_channel(CATEGORY_ID)
+    if category is None or not isinstance(category, discord.CategoryChannel):
+        await interaction.response.send_message(
+            "Nie mogę znaleźć kategorii podań SOP. Skontaktuj się z administracją.",
+            ephemeral=True
+        )
+        return
+
+    channel_name = f"podanie-{nazwa}".lower().replace(" ", "-")
+    overwrites = {
+        guild.default_role: discord.PermissionOverwrite(view_channel=False),
+        interaction.user: discord.PermissionOverwrite(
+            view_channel=True,
+            send_messages=True,
+            read_message_history=True
+        )
+    }
+
+    channel = await guild.create_text_channel(
+        name=channel_name,
+        category=category,
+        overwrites=overwrites,
+        reason=f"Podanie SOP utworzone przez {interaction.user} ({interaction.user.id})"
+    )
+
+    await interaction.response.send_message(
+        f"Utworzono kanał {channel.mention} dla twojego podania do SOP.",
+        ephemeral=True
+    )
+
+    # 10 pytań rekrutacyjnych – dostosuj do SOP
+    pytania = [
+        "1. Podaj swój nick na Venus RP oraz wiek.",
+        "2. Od jak dawna grasz na Venus RP?",
+        "3. Czy miałeś już doświadczenie w frakcjach porządkowych? Jeśli tak – jakich?",
+        "4. Dlaczego chcesz dołączyć do frakcji SOP?",
+        "5. Jakie są twoje najmocniejsze strony przydatne w SOP?",
+        "6. Jakie są twoje słabe strony, nad którymi chcesz pracować?",
+        "7. Opisz krótko swoją znajomość regulaminu frakcji SOP.",
+        "8. Jak reagujesz na stresujące sytuacje podczas akcji RP?",
+        "9. Opisz przykładową akcję RP, w której SOP bierze udział.",
+        "10. Czy posiadasz sprawny mikrofon i możliwość częstej gry? W jakich godzinach jesteś zwykle dostępny?"
+    ]
+
+    embed = discord.Embed(
+        title=f"Podanie do SOP – {nazwa}",
+        description=(
+            "Odpowiedz na poniższe pytania w osobnych wiadomościach.\n"
+            "Administracja SOP przeanalizuje twoje zgłoszenie."
+        ),
+        color=discord.Color.dark_gold()
+    )
+
+    for q in pytania:
+        embed.add_field(name="\u200b", value=q, inline=False)
+
+    embed.set_footer(text=f"Wysłane przez: {interaction.user}")
+
+    await channel.send(content=interaction.user.mention, embed=embed)
+
+
+# --------------------------------------------------
+# START FLASKA I BOTA
+# --------------------------------------------------
+
+def main():
+    # Start Flask w osobnym wątku
+    flask_thread = FlaskServerThread(app=app)
+    flask_thread.start()
+
+    # Uruchom bota (blokujące)
+    try:
+        bot.flask_thread = flask_thread
+        bot.run(TOKEN)
+    finally:
+        flask_thread.shutdown()
+
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
