@@ -32,8 +32,10 @@ async def self_ping():
         await asyncio.sleep(600) # Pinguj sie co 10 minut
 
 # ==========================================
-# 3. WIDOK I LOGIKA PRZYCISKU TICKETÓW
+# 3. WIDOKI I LOGIKA DLA SYSTEMU TICKETÓW I REKRUTACJI
 # ==========================================
+
+# --- SYSTEM TICKETÓW ---
 class TicketButton(ui.View):
     def __init__(self):
         super().__init__(timeout=None) # Przycisk dziala wiecznie
@@ -45,11 +47,10 @@ class TicketButton(ui.View):
         category = discord.utils.get(guild.categories, id=KATEGORIA_ID)
         
         if not category:
-            await interaction.response.send_message("Blad: Nie znaleziono podanej kategorii ticketow na serwerze.", ephemeral=True)
+            await interaction.response.send_message("Blad: Nie znaleziono podanej kategorii ticketow.", ephemeral=True)
             return
 
         channel_name = f"ticket-{interaction.user.name}"
-        
         overwrites = {
             guild.default_role: discord.PermissionOverwrite(read_messages=False),
             interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages=True, embed_links=True, attach_files=True),
@@ -66,6 +67,55 @@ class TicketButton(ui.View):
         await ticket_channel.send(embed=embed)
         await interaction.response.send_message(f"Pomyslnie utworzono Twoj ticket: {ticket_channel.mention}", ephemeral=True)
 
+
+# --- SYSTEM REKRUTACJI (APLIKUJ) ---
+class ApplyButton(ui.View):
+    def __init__(self):
+        super().__init__(timeout=None) # Przycisk dziala wiecznie
+
+    @ui.button(label="Zloz Podanie do SOP", style=discord.ButtonStyle.blurple, custom_id="apply_sop_btn", emoji="📝")
+    async def create_application(self, interaction: discord.Interaction, button: ui.Button):
+        KATEGORIA_ID = 1516847056210366645
+        guild = interaction.guild
+        category = discord.utils.get(guild.categories, id=KATEGORIA_ID)
+        
+        if not category:
+            await interaction.response.send_message("Blad: Nie znaleziono kategorii rekrutacyjnej na serwerze.", ephemeral=True)
+            return
+
+        channel_name = f"podanie-{interaction.user.name}"
+        overwrites = {
+            guild.default_role: discord.PermissionOverwrite(read_messages=False),
+            interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages=True, embed_links=True, attach_files=True),
+            guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True)
+        }
+
+        app_channel = await guild.create_text_channel(name=channel_name, category=category, overwrites=overwrites)
+        
+        embed = discord.Embed(
+            title="📋 Formularz Rekrutacyjny do SOP",
+            description=(
+                f"Witaj {interaction.user.mention} w swoim kanale rekrutacyjnym!\n"
+                "Odpowiedz na ponizsze pytania starannie i w jednej wiadomosci (lub punkt po punkcie):\n\n"
+                "**1.** Jak masz na imie (nick IG)?\n"
+                "**2.** Ile masz lat?\n"
+                "**3.** Dlaczego chcesz dolaczyc wlasnie do SOP?\n"
+                "**4.** Czy grales juz na Venus RP? Jak dlugo?\n"
+                "**5.** Czy miales wczesniej doswiadczenie w mundurowce / frakcjach ochronnych? (jesli tak – jakie)\n"
+                "**6.** Jak rozumiesz role SOP na serwerze?\n"
+                "**7.** Czy posiadasz mikrofon i jestes w stanie uzywac go podczas sluzby?\n"
+                "**8.** Ile czasu w tygodniu jestes w stanie poswiecic na sluzbe?\n"
+                "**9.** Czy zapoznales sie z regulaminem serwera Venus RP oraz regulaminem SOP?\n"
+                "**10.** Czy jestes w stanie przestrzegac zasad i podporzadkowac sie dowodztwu?"
+            ),
+            color=discord.Color.gold()
+        )
+        embed.set_footer(text="Po uzupelnieniu pytan, wyczekuj na werdykt Zarzadu SOP.")
+        
+        await app_channel.send(embed=embed)
+        await interaction.response.send_message(f"Pomyslnie utworzono Twoj kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
+
+
 # ==========================================
 # 4. KONFIGURACJA BOTA DISCORDA
 # ==========================================
@@ -77,23 +127,36 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f'Zalogowano pomyslnie jako: {bot.user.name}')
     
+    # Rejestracja obu przyciskow w pamieci bota
     bot.add_view(TicketButton())
+    bot.add_view(ApplyButton())
     
-    # Naprawa CommandSignatureMismatch - czyszczenie starego drzewa i pelna synchronizacja lokalna
+    # Czyszczenie starych konfliktowych podpisow i pelna nowa synchronizacja
     try:
         print("Rozpoczynanie czyszczenia i synchronizacji komend...")
         for guild in bot.guilds:
-            bot.tree.clear_commands(guild=guild) # Czysci stare, bledne podpisy komend
+            bot.tree.clear_commands(guild=guild) # Usuwa błąd CommandSignatureMismatch
             bot.tree.copy_global_to(guild=guild)
             await bot.tree.sync(guild=guild)
         await bot.tree.sync()
-        print("Pomyslnie rozwiazano konflikty i zsynchronizowano komende /ticket!")
+        print("Pomyslnie zsynchronizowano 1 komende /ticket oraz 1 komende /aplikuj!")
     except Exception as e:
         print(f"Blad synchronizacji komend: {e}")
         
     bot.loop.create_task(self_ping())
 
-# Komenda /ticket zabezpieczona ID roli
+# Komenda tekstowa !ping
+@bot.command()
+async def ping(ctx):
+    WYMAGANA_ROLA_ID = 1516825582002765894
+    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in ctx.author.roles)
+    
+    if ma_role:
+        await ctx.send('yoo jestem tu')
+    else:
+        await ctx.send('Nie masz odpowiedniej roli, aby uzyc tej komendy.', delete_after=5)
+
+# 1. Komenda /ticket (Zabezpieczona Twoją rolą)
 @bot.tree.command(name="ticket", description="Wysyla panel do tworzenia ticketow (Wymaga roli SOP)")
 async def ticket_command(interaction: discord.Interaction):
     WYMAGANA_ROLA_ID = 1516825582002765894
@@ -110,11 +173,21 @@ async def ticket_command(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed, view=TicketButton())
 
+# 2. Komenda /aplikuj (Dla każdego użytkownika)
+@bot.tree.command(name="aplikuj", description="Wysyla panel rekrutacyjny do frakcji SOP")
+async def apply_command(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="🦅 Rekrutacja do System Operational Protocols (SOP)",
+        description="Chcesz zasilic szeregi naszej frakcji na serwerze Venus RP?\nKliknij niebieski przycisk ponizzej, aby otworzyc swoj osobisty kwestionariusz rekrutacyjny.",
+        color=discord.Color.blurple()
+    )
+    await interaction.response.send_message(embed=embed, view=ApplyButton())
+
 # ==========================================
 # 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
 # ==========================================
 async def main():
-    # Render domyslnie oczekuje portu 10000 dla Web Services, jesli zmienna PORT nie jest ustawiona
+    # Ustawienie portu 10000 zapobiega bledom "No open ports detected" na Renderze
     port = int(os.environ.get("PORT", 10000))
     
     import werkzeug.serving
