@@ -42,7 +42,6 @@ class RulesButton(ui.View):
 
     @ui.button(label="regulamin", style=discord.ButtonStyle.secondary, custom_id="show_rules_btn", emoji="📜")
     async def show_rules(self, interaction: discord.Interaction, button: ui.Button):
-        # Treść regulaminu wysyłana jako wiadomość efemeryczna (widoczna tylko dla klikającego)
         rules_text = (
             "📑 **REGULAMIN WEWNĘTRZNY FORMACJI SŁUŻBY OCHRONY PAŃSTWA (SOP)**\n\n"
             "**I. POSTANOWIENIA OGÓLNE**\n"
@@ -108,7 +107,7 @@ class TicketButton(ui.View):
         await interaction.response.send_message(f"Pomyslnie utworzono Twoje zgloszenie: {ticket_channel.mention}", ephemeral=True)
 
 
-# --- PRZYCISKI ZARZĄDZANIA PODANIEM (DLA ZARZĄDU) ---
+# --- PRZYCISKI ZARZĄDZANIA PODANIEM ---
 class ApplicationManageButtons(ui.View):
     def __init__(self, applicant_mention, applicant_name):
         super().__init__(timeout=None)
@@ -195,7 +194,7 @@ class ApplyButton(ui.View):
                 "**2.** Ile masz lat?\n"
                 "**3.** Dlaczego chcesz dolaczyc wlasnie do SOP?\n"
                 "**4.** Czy grales juz na Venus RP? Jak dlugo?\n"
-                "**5.** Czy miales wczesniej doswierdzenie w mundurowce / frakcjach ochronnych? (jesli tak – jakie)\n"
+                "**5.** Czy miales wczesniej doswiadczenie w mundurowce / frakcjach ochronnych? (jesli tak – jakie)\n"
                 "**6.** Jak rozumiesz role SOP na serwerze?\n"
                 "**7.** Czy posiadasz mikrofon i jestes w stanie uzywac go podczas sluzby?\n"
                 "**8.** Ile czasu w tygodniu jestes w stanie poswiecic na sluzbe?\n"
@@ -228,22 +227,22 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f'Zalogowano pomyslnie jako: {bot.user.name}')
     
+    # Rejestracja widoków przycisków, aby nie psuły się po restarcie
     bot.add_view(TicketButton())
     bot.add_view(ApplyButton())
     bot.add_view(RulesButton())
     bot.add_view(ApplicationManageButtons(applicant_mention="", applicant_name=""))
     
     try:
-        print("Usuwanie podwojnych komend i czyszczenie drzewa globalnego...")
-        bot.tree.clear(guild=None)
-        await bot.tree.sync(guild=None)
-        
+        print("Trwa synchronizacja polecen slash bezpośrednio z serwerami...")
+        # Kopiujemy polecenia globalne do każdego serwera, na którym jest bot
         for guild in bot.guilds:
-            bot.tree.clear_commands(guild=guild)
             bot.tree.copy_global_to(guild=guild)
             await bot.tree.sync(guild=guild)
-            
-        print("Koniec! Zsynchronizowano komendy /ping, /ticket, /aplikuj oraz /regulamin.")
+        
+        # Opcjonalnie synchronizujemy też globalnie
+        await bot.tree.sync()
+        print("Koniec! Wszystkie komendy (/ping, /ticket, /aplikuj, /regulamin) zostały pomyślnie wymuszone.")
     except Exception as e:
         print(f"Blad podczas synchronizacji komend: {e}")
         
@@ -287,7 +286,7 @@ async def apply_command(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed, view=ApplyButton())
 
-# 4. Komenda slash /regulamin (Wymaga roli SOP)
+# 4. Komenda slash /regulamin
 @bot.tree.command(name="regulamin", description="Wysyla panel z oficjalnym regulaminem wewnetrznym SOP (Wymaga roli SOP)")
 async def regulamin_command(interaction: discord.Interaction):
     WYMAGANA_ROLA_ID = 1516825582002765894
