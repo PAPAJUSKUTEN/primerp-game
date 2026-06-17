@@ -47,47 +47,90 @@ async def self_ping():
         await asyncio.sleep(600)
 
 # ==========================================
-# 3. WIDOK I LOGIKA DIALOGU TICKETÓW (UI)
+# 3. WIDOKI I LOGIKA DLA SYSTEMU TICKETÓW I REKRUTACJI
 # ==========================================
+
+# --- SYSTEM TICKETÓW ---
 class TicketButton(ui.View):
     def __init__(self):
-        super().__init__(timeout=None) # timeout=None sprawia, że przycisk działa zawsze, nawet po restarcie bota
+        super().__init__(timeout=None)
 
     @ui.button(label="Stwórz Ticket", style=discord.ButtonStyle.green, custom_id="create_ticket_btn", emoji="📩")
     async def create_ticket(self, interaction: discord.Interaction, button: ui.Button):
-        # ID kategorii, w której mają tworzyć się tickety
         KATEGORIA_ID = 1516847056210366645
-        
         guild = interaction.guild
         category = discord.utils.get(guild.categories, id=KATEGORIA_ID)
         
         if not category:
-            await interaction.response.send_message("Błąd: Nie znaleziono podanej kategorii ticketów na serwerze.", ephemeral=True)
+            await interaction.response.send_message("Błąd: Nie znaleziono podanej kategorii ticketów.", ephemeral=True)
             return
 
-        # Nazwa nowego kanału (np. ticket-janek)
         channel_name = f"ticket-{interaction.user.name}"
-        
-        # Ustawienia uprawnień: tylko autor i administracja widzą kanał
         overwrites = {
             guild.default_role: discord.PermissionOverwrite(read_messages=False),
             interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages=True, embed_links=True, attach_files=True),
             guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True)
         }
 
-        # Tworzenie kanału w wybranej kategorii
         ticket_channel = await guild.create_text_channel(name=channel_name, category=category, overwrites=overwrites)
         
-        # Wysłanie powitania w nowym tickecie
         embed = discord.Embed(
             title="🎫 Nowy Ticket",
             description=f"Witaj {interaction.user.mention}!\nNapisz w czym możemy Ci pomóc. Administracja zajmie się Twoim zgłoszeniem tak szybko, jak to możliwe.",
             color=discord.Color.blue()
         )
         await ticket_channel.send(embed=embed)
-        
-        # Ukryta odpowiedź dla klikającego, że kanał został utworzony
         await interaction.response.send_message(f"Pomyślnie utworzono Twój ticket: {ticket_channel.mention}", ephemeral=True)
+
+
+# --- SYSTEM REKRUTACJI (APLIKUJ) ---
+class ApplyButton(ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
+    @ui.button(label="Złóż Podanie do SOP", style=discord.ButtonStyle.blurple, custom_id="apply_sop_btn", emoji="📝")
+    async def create_application(self, interaction: discord.Interaction, button: ui.Button):
+        # Korzystamy z tej samej kategorii co tickety
+        KATEGORIA_ID = 1516847056210366645
+        guild = interaction.guild
+        category = discord.utils.get(guild.categories, id=KATEGORIA_ID)
+        
+        if not category:
+            await interaction.response.send_message("Błąd: Nie znaleziono kategorii rekrutacyjnej na serwerze.", ephemeral=True)
+            return
+
+        channel_name = f"podanie-{interaction.user.name}"
+        overwrites = {
+            guild.default_role: discord.PermissionOverwrite(read_messages=False),
+            interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages=True, embed_links=True, attach_files=True),
+            guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True)
+        }
+
+        app_channel = await guild.create_text_channel(name=channel_name, category=category, overwrites=overwrites)
+        
+        # Tworzenie estetycznego formularza rekrutacyjnego
+        embed = discord.Embed(
+            title="📋 Formularz Rekrutacyjny do SOP",
+            description=(
+                f"Witaj {interaction.user.mention} w swoim kanale rekrutacyjnym!\n"
+                "Odpowiedz na poniższe pytania starannie i w jednej wiadomości (lub punkt po punkcie):\n\n"
+                "**1.** Jak masz na imię (nick IG)?\n"
+                "**2.** Ile masz lat?\n"
+                "**3.** Dlaczego chcesz dołączyć właśnie do SOP?\n"
+                "**4.** Czy grałeś już na Venus RP? Jak długo?\n"
+                "**5.** Czy miałeś wcześniej doświadczenie w mundurówce / frakcjach ochronnych? (jeśli tak – jakie)\n"
+                "**6.** Jak rozumiesz rolę SOP na serwerze?\n"
+                "**7.** Czy posiadasz mikrofon i jesteś w stanie używać go podczas służby?\n"
+                "**8.** Ile czasu w tygodniu jesteś w stanie poświęcić na służbę?\n"
+                "**9.** Czy zapoznałeś się z regulaminem serwera Venus RP oraz regulaminem SOP?\n"
+                "**10.** Czy jesteś w stanie przestrzegać zasad i podporządkować się dowództwu?"
+            ),
+            color=discord.Color.gold()
+        )
+        embed.set_footer(text="Po uzupełnieniu pytań, wyczekuj na werdykt Zarządu SOP.")
+        
+        await app_channel.send(embed=embed)
+        await interaction.response.send_message(f"Pomyślnie utworzono Twój kanał rekrutacyjny: {app_channel.mention}", ephemeral=True)
 
 # ==========================================
 # 4. KONFIGURACJA BOTA DISCORDA
@@ -100,10 +143,10 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f'Zalogowano pomyślnie jako: {bot.user.name}')
     
-    # Rejestrujemy przycisk w bocie, aby działał po restarcie bota (Persistent View)
+    # Rejestrujemy oba widoki przycisków, aby działały bezterminowo
     bot.add_view(TicketButton())
+    bot.add_view(ApplyButton())
     
-    # Synchronizacja komend Slash z Discordem
     try:
         synced = await bot.tree.sync()
         print(f"Zsynchronizowano {len(synced)} komend slash.")
@@ -112,7 +155,7 @@ async def on_ready():
         
     bot.loop.create_task(self_ping())
 
-# Tradycyjna komenda tekstowa !ping (z blokadą roli)
+# Komenda !ping
 @bot.command()
 async def ping(ctx):
     WYMAGANA_ROLA_ID = 1516825582002765894
@@ -123,18 +166,25 @@ async def ping(ctx):
     else:
         await ctx.send('Nie masz odpowiedniej roli, aby użyć tej komendy.', delete_after=5)
 
-# Nowoczesna komenda ukośnika /ticket do wysyłania wiadomości z przyciskiem
+# Komenda /ticket
 @bot.tree.command(name="ticket", description="Wysyła panel do tworzenia ticketów")
 async def ticket_command(interaction: discord.Interaction):
-    # Możesz dostosować wygląd tej głównej wiadomości z przyciskiem
     embed = discord.Embed(
         title="🤖 System Zgłoszeń (SOP)",
-        description="Potrzebujesz pomocy administracji? Chcesz zgłosić problem lub złożyć podanie?\nKliknij poniższy przycisk, aby otworzyć prywatny kanał kontaktu.",
+        description="Potrzebujesz pomocy administracji? Chcesz zgłosić problem?\nKliknij poniższy przycisk, aby otworzyć prywatny kanał kontaktu.",
         color=discord.Color.green()
     )
-    
-    # Wysyłamy embed razem z naszym przyciskiem na kanał, gdzie wpisano komendę
     await interaction.response.send_message(embed=embed, view=TicketButton())
+
+# Nowa komenda /aplikuj
+@bot.tree.command(name="aplikuj", description="Wysyła panel rekrutacyjny do frakcji SOP")
+async def apply_command(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="🦅 Rekrutacja do System Operational Protocols (SOP)",
+        description="Chcesz zasilić szeregi naszej frakcji na serwerze Venus RP?\nKliknij niebieski przycisk poniżej, aby otworzyć swój osobisty kwestionariusz rekrutacyjny.",
+        color=discord.Color.brand_lesser()
+    )
+    await interaction.response.send_message(embed=embed, view=ApplyButton())
 
 # ==========================================
 # 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
