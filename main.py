@@ -19,7 +19,7 @@ def home():
 # 2. WEWNĘTRZNY SYSTEM SELF-PING (Keep-Alive)
 # ==========================================
 async def self_ping():
-    await asyncio.sleep(30) # Poczekaj na pelne uruchomienie bota i Flaska
+    await asyncio.sleep(30)
     while True:
         try:
             url = os.environ.get("RENDER_EXTERNAL_URL", "http://localhost:10000")
@@ -29,7 +29,7 @@ async def self_ping():
             print("[Keep-Alive] Pomyslnie wyslano ping do samego siebie.")
         except Exception as e:
             print(f"[Keep-Alive] Nie udalo sie wyslac pingu: {e}")
-        await asyncio.sleep(600) # Pinguj sie co 10 minut
+        await asyncio.sleep(600)
 
 # ==========================================
 # 3. WIDOKI I LOGIKA DLA SYSTEMU TICKETÓW I REKRUTACJI
@@ -38,7 +38,7 @@ async def self_ping():
 # --- SYSTEM TICKETÓW ---
 class TicketButton(ui.View):
     def __init__(self):
-        super().__init__(timeout=None) # Przycisk dziala wiecznie
+        super().__init__(timeout=None)
 
     @ui.button(label="Stworz Ticket", style=discord.ButtonStyle.green, custom_id="create_ticket_btn", emoji="📩")
     async def create_ticket(self, interaction: discord.Interaction, button: ui.Button):
@@ -65,13 +65,13 @@ class TicketButton(ui.View):
             color=discord.Color.blue()
         )
         await ticket_channel.send(embed=embed)
-        await interaction.response.send_message(f"Pomyslnie utworzono Twoj ticket: {ticket_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"Pomyslnie utworzono Twój ticket: {ticket_channel.mention}", ephemeral=True)
 
 
 # --- SYSTEM REKRUTACJI (APLIKUJ) ---
 class ApplyButton(ui.View):
     def __init__(self):
-        super().__init__(timeout=None) # Przycisk dziala wiecznie
+        super().__init__(timeout=None)
 
     @ui.button(label="Zloz Podanie do SOP", style=discord.ButtonStyle.blurple, custom_id="apply_sop_btn", emoji="📝")
     async def create_application(self, interaction: discord.Interaction, button: ui.Button):
@@ -113,7 +113,7 @@ class ApplyButton(ui.View):
         embed.set_footer(text="Po uzupelnieniu pytan, wyczekuj na werdykt Zarzadu SOP.")
         
         await app_channel.send(embed=embed)
-        await interaction.response.send_message(f"Pomyslnie utworzono Twoj kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"Pomyslnie utworzono Twój kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
 
 
 # ==========================================
@@ -127,21 +127,25 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f'Zalogowano pomyslnie jako: {bot.user.name}')
     
-    # Rejestracja obu przyciskow w pamieci bota
     bot.add_view(TicketButton())
     bot.add_view(ApplyButton())
     
-    # Czyszczenie starych konfliktowych podpisow i pelna nowa synchronizacja
     try:
-        print("Rozpoczynanie czyszczenia i synchronizacji komend...")
+        print("Usuwanie podwojnych komend i czyszczenie drzewa globalnego...")
+        
+        # 1. Czyszczenie starych komend globalnych, żeby usunąć dublowanie
+        bot.tree.clear(guild=None)
+        await bot.tree.sync(guild=None)
+        
+        # 2. Rejestracja komend WYŁĄCZNIE lokalnie na Twoich serwerach
         for guild in bot.guilds:
-            bot.tree.clear_commands(guild=guild) # Usuwa błąd CommandSignatureMismatch
+            bot.tree.clear_commands(guild=guild)
             bot.tree.copy_global_to(guild=guild)
             await bot.tree.sync(guild=guild)
-        await bot.tree.sync()
-        print("Pomyslnie zsynchronizowano 1 komende /ticket oraz 1 komende /aplikuj!")
+            
+        print("Koniec! Od teraz na liscie pojawi sie dokladnie 1x /ticket oraz 1x /aplikuj.")
     except Exception as e:
-        print(f"Blad synchronizacji komend: {e}")
+        print(f"Blad podczas czyszczenia dubli: {e}")
         
     bot.loop.create_task(self_ping())
 
@@ -156,7 +160,7 @@ async def ping(ctx):
     else:
         await ctx.send('Nie masz odpowiedniej roli, aby uzyc tej komendy.', delete_after=5)
 
-# 1. Komenda /ticket (Zabezpieczona Twoją rolą)
+# 1. Komenda /ticket (Tylko dla roli SOP)
 @bot.tree.command(name="ticket", description="Wysyla panel do tworzenia ticketow (Wymaga roli SOP)")
 async def ticket_command(interaction: discord.Interaction):
     WYMAGANA_ROLA_ID = 1516825582002765894
@@ -173,7 +177,7 @@ async def ticket_command(interaction: discord.Interaction):
     )
     await interaction.response.send_message(embed=embed, view=TicketButton())
 
-# 2. Komenda /aplikuj (Dla każdego użytkownika)
+# 2. Komenda /aplikuj (Dla każdego)
 @bot.tree.command(name="aplikuj", description="Wysyla panel rekrutacyjny do frakcji SOP")
 async def apply_command(interaction: discord.Interaction):
     embed = discord.Embed(
@@ -187,7 +191,6 @@ async def apply_command(interaction: discord.Interaction):
 # 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
 # ==========================================
 async def main():
-    # Ustawienie portu 10000 zapobiega bledom "No open ports detected" na Renderze
     port = int(os.environ.get("PORT", 10000))
     
     import werkzeug.serving
