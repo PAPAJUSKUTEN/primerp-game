@@ -1,639 +1,331 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOP | Strona Główna RP</title>
-  <style>
-    :root{
-      --bg:#07090d;
-      --bg2:#0c1118;
-      --card:#111823;
-      --card2:#0f141d;
-      --text:#e8eef7;
-      --muted:#9aa6b7;
-      --accent:#f59e0b;
-      --accent2:#f97316;
-      --line:rgba(255,255,255,.08);
-      --success:#22c55e;
-      --danger:#ef4444;
-      --shadow:0 18px 50px rgba(0,0,0,.45);
-      --radius:18px;
+import os
+import asyncio
+import threading
+import logging
+
+import discord
+from discord import app_commands
+from discord.ext import commands
+
+from flask import Flask, request, jsonify
+import requests
+from werkzeug.serving import make_server
+
+# --------------------------------------------------
+# KONFIGURACJA
+# --------------------------------------------------
+
+GUILD_ID = 1516847056210366645          # ID serwera (Venus RP – wstaw swój, jeśli inny)
+CATEGORY_ID = 1516847056210366645       # ID kategorii dla ticket/podanie
+REQUIRED_ROLE_ID = 1516825582002765894  # ID roli wymaganej do !ping
+
+TOKEN = os.getenv("TOKEN")
+RENDER_EXTERNAL_URL = os.getenv("RENDER_EXTERNAL_URL")
+
+if not TOKEN:
+    raise RuntimeError("Brak zmiennej środowiskowej TOKEN")
+
+# --------------------------------------------------
+# LOGOWANIE
+# --------------------------------------------------
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("venus-sop-bot")
+
+# --------------------------------------------------
+# FLASK – WEB SERWER I ENDPOINT /wyslij-wiadomosc
+# --------------------------------------------------
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return "Bot Venus SOP działa", 200
+
+@app.route("/wyslij-wiadomosc", methods=["POST"])
+def wyslij_wiadomosc():
+    """
+    JSON:
+    {
+      "channel_id": 1234567890,
+      "content": "Treść wiadomości"
+    }
+    """
+    data = request.get_json(force=True, silent=True) or {}
+    channel_id = data.get("channel_id")
+    content = data.get("content")
+
+    if not channel_id or not content:
+        return jsonify({"error": "Brak channel_id lub content"}), 400
+
+    channel = bot.get_channel(int(channel_id))
+    if channel is None:
+        return jsonify({"error": "Nie znaleziono kanału"}), 404
+
+    fut = asyncio.run_coroutine_threadsafe(
+        channel.send(content),
+        bot.loop
+    )
+    try:
+        fut.result(timeout=10)
+    except Exception as e:
+        logger.exception("Błąd przy wysyłaniu wiadomości z /wyslij-wiadomosc")
+        return jsonify({"error": str(e)}), 500
+
+    return jsonify({"status": "ok"}), 200
+
+
+class FlaskServerThread(threading.Thread):
+    def __init__(self, app, host="0.0.0.0", port=None):
+        threading.Thread.__init__(self)
+        self.daemon = True
+        if port is None:
+            port = int(os.environ.get("PORT", 8000))
+        self.srv = make_server(host, port, app)
+        self.ctx = app.app_context()
+        self.ctx.push()
+
+    def run(self):
+        logger.info("Startuję serwer Flask")
+        self.srv.serve_forever()
+
+    def shutdown(self):
+        self.srv.shutdown()
+
+# --------------------------------------------------
+# DISCORD BOT
+# --------------------------------------------------
+
+intents = discord.Intents.default()
+intents.message_content = True
+intents.guilds = True
+intents.members = True
+
+class VenusSOPBot(commands.Bot):
+    def __init__(self):
+        super().__init__(
+            command_prefix="!",
+            intents=intents,
+            application_id=None
+        )
+        self.flask_thread = None
+
+    async def setup_hook(self):
+        # Sync slash komend na starcie (guild – szybsza propagacja)
+        try:
+            guild = discord.Object(id=GUILD_ID)
+            self.tree.copy_global_to(guild=guild)
+            synced = await self.tree.sync(guild=guild)
+            logger.info(
+                "Zsynchronizowano %s komend (guild) dla GUILD_ID=%s",
+                len(synced),
+                GUILD_ID
+            )
+        except Exception:
+            logger.exception("Błąd podczas tree.sync()")
+
+        # Self ping jako task
+        self.loop.create_task(self.self_ping_loop())
+
+    async def on_ready(self):
+        logger.info("Zalogowano jako %s (%s)", self.user, self.user.id)
+
+    async def self_ping_loop(self):
+        if not RENDER_EXTERNAL_URL:
+            logger.warning("Brak RENDER_EXTERNAL_URL – self ping wyłączony")
+            return
+
+        await self.wait_until_ready()
+        logger.info("Startuję self_ping_loop z URL: %s", RENDER_EXTERNAL_URL)
+
+        while not self.is_closed():
+            try:
+                url = RENDER_EXTERNAL_URL.rstrip("/")
+                r = requests.get(url, timeout=10)
+                logger.info("Self-ping %s -> %s", url, r.status_code)
+            except Exception as e:
+                logger.warning("Błąd podczas self ping: %s", e)
+            await asyncio.sleep(600)  # 10 minut
+
+bot = VenusSOPBot()
+
+# --------------------------------------------------
+# KOMENDA TEKSTOWA !ping
+# --------------------------------------------------
+
+@bot.command(name="ping")
+async def ping(ctx: commands.Context):
+    role = ctx.guild.get_role(REQUIRED_ROLE_ID)
+    if role not in ctx.author.roles:
+        await ctx.reply("Nie masz wymaganej roli, aby użyć tej komendy.")
+        return
+
+    await ctx.reply("Pong! Bot działa poprawnie.")
+
+# --------------------------------------------------
+# SLASH: /ticket – tworzy kanał ticket-nazwa
+# --------------------------------------------------
+
+@bot.tree.command(name="ticket", description="Utwórz kanał ticket dla gracza.")
+@app_commands.describe(nazwa="Nick lub identyfikator gracza")
+async def ticket(
+    interaction: discord.Interaction,
+    nazwa: str
+):
+    # Defer – żeby nie było „aplikacja nie reaguje”
+    await interaction.response.defer(ephemeral=True)
+
+    guild = interaction.guild
+    if guild is None:
+        await interaction.followup.send(
+            "Ta komenda może być używana tylko na serwerze.",
+            ephemeral=True
+        )
+        return
+
+    category = guild.get_channel(CATEGORY_ID)
+    if category is None or not isinstance(category, discord.CategoryChannel):
+        await interaction.followup.send(
+            "Nie mogę znaleźć kategorii ticketów. Skontaktuj się z administracją.",
+            ephemeral=True
+        )
+        return
+
+    channel_name = f"ticket-{nazwa}".lower().replace(" ", "-")
+    overwrites = {
+        guild.default_role: discord.PermissionOverwrite(view_channel=False),
+        interaction.user: discord.PermissionOverwrite(
+            view_channel=True,
+            send_messages=True,
+            read_message_history=True
+        )
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,Segoe UI,Arial,sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(245,158,11,.12), transparent 28%),
-        linear-gradient(180deg, #05070b 0%, var(--bg) 100%);
-      color:var(--text);
+    try:
+        channel = await guild.create_text_channel(
+            name=channel_name,
+            category=category,
+            overwrites=overwrites,
+            reason=f"Ticket utworzony przez {interaction.user} ({interaction.user.id})"
+        )
+    except Exception as e:
+        await interaction.followup.send(
+            f"Wystąpił błąd przy tworzeniu kanału: `{e}`",
+            ephemeral=True
+        )
+        return
+
+    await interaction.followup.send(
+        f"Utworzono kanał {channel.mention} dla {nazwa}.",
+        ephemeral=True
+    )
+
+    await channel.send(
+        f"Witaj, {interaction.user.mention}! Opisz swój problem, "
+        f"a administracja wkrótce się tobą zajmie."
+    )
+
+# --------------------------------------------------
+# SLASH: /aplikuj – kanał podanie-nazwa + 10 pytań
+# --------------------------------------------------
+
+@bot.tree.command(name="aplikuj", description="Złóż podanie do frakcji SOP.")
+@app_commands.describe(nazwa="Twój nick / identyfikator na Venus RP")
+async def aplikuj(
+    interaction: discord.Interaction,
+    nazwa: str
+):
+    # Defer, żeby uniknąć timeoutu
+    await interaction.response.defer(ephemeral=True)
+
+    guild = interaction.guild
+    if guild is None:
+        await interaction.followup.send(
+            "Ta komenda może być używana tylko na serwerze.",
+            ephemeral=True
+        )
+        return
+
+    category = guild.get_channel(CATEGORY_ID)
+    if category is None or not isinstance(category, discord.CategoryChannel):
+        await interaction.followup.send(
+            "Nie mogę znaleźć kategorii podań SOP. Skontaktuj się z administracją.",
+            ephemeral=True
+        )
+        return
+
+    channel_name = f"podanie-{nazwa}".lower().replace(" ", "-")
+    overwrites = {
+        guild.default_role: discord.PermissionOverwrite(view_channel=False),
+        interaction.user: discord.PermissionOverwrite(
+            view_channel=True,
+            send_messages=True,
+            read_message_history=True
+        )
     }
 
-    a{color:inherit;text-decoration:none}
-    .container{
-      width:min(1180px, calc(100% - 32px));
-      margin:0 auto;
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter:blur(12px);
-      background:rgba(6,8,12,.7);
-      border-bottom:1px solid var(--line);
-    }
-
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:14px 0;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:800;
-      letter-spacing:.5px;
-    }
-
-    .brand-badge{
-      width:42px;height:42px;
-      display:grid;place-items:center;
-      border-radius:12px;
-      background:linear-gradient(135deg, rgba(245,158,11,.25), rgba(249,115,22,.15));
-      border:1px solid rgba(245,158,11,.25);
-      box-shadow:var(--shadow);
-      font-size:20px;
-    }
-
-    .navlinks{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .navlinks a{
-      padding:10px 14px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(255,255,255,.02);
-      color:var(--muted);
-      transition:.2s ease;
-      font-size:14px;
-    }
-    .navlinks a:hover{
-      color:var(--text);
-      border-color:rgba(245,158,11,.4);
-      background:rgba(245,158,11,.08);
-    }
-
-    .hero{
-      padding:32px 0 24px;
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.35fr .85fr;
-      gap:20px;
-      align-items:stretch;
-    }
-
-    .hero-banner{
-      min-height:560px;
-      position:relative;
-      overflow:hidden;
-      border-radius:28px;
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      background:
-        linear-gradient(180deg, rgba(4,6,10,.12), rgba(4,6,10,.88)),
-        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-    }
-
-    .hero-overlay{
-      position:absolute; inset:0;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.40) 55%, rgba(0,0,0,.82) 100%);
-    }
-
-    .hero-content{
-      position:relative;
-      z-index:1;
-      padding:34px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      min-height:560px;
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      width:fit-content;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.1);
-      color:#f5d28a;
-      font-size:13px;
-      letter-spacing:.4px;
-      text-transform:uppercase;
-    }
-
-    .hero h1{
-      margin:16px 0 12px;
-      font-size:clamp(2.2rem, 5vw, 4.8rem);
-      line-height:1;
-      max-width:10ch;
-      text-shadow:0 8px 30px rgba(0,0,0,.65);
-    }
-
-    .hero p{
-      max-width:680px;
-      color:#d5dde8;
-      font-size:1.02rem;
-      line-height:1.7;
-      margin:0;
-    }
-
-    .hero-quote{
-      margin-top:18px;
-      padding:16px 18px;
-      border-left:4px solid var(--accent);
-      background:rgba(255,255,255,.06);
-      border-radius:14px;
-      max-width:720px;
-      color:#fff;
-    }
-
-    .hero-footer{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      align-items:center;
-      margin-top:24px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:14px 18px;
-      border-radius:14px;
-      border:1px solid transparent;
-      font-weight:700;
-      transition:.2s ease;
-    }
-
-    .btn-primary{
-      background:linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#111;
-      box-shadow:0 12px 30px rgba(245,158,11,.25);
-    }
-
-    .btn-primary:hover{transform:translateY(-1px)}
-    .btn-ghost{
-      background:rgba(255,255,255,.05);
-      border-color:var(--line);
-      color:var(--text);
-    }
-
-    .status-card{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      padding:24px;
-      border-radius:28px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(9,13,20,.95));
-      box-shadow:var(--shadow);
-    }
-
-    .status-box{
-      padding:18px;
-      border-radius:20px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-    }
-
-    .status-title{
-      color:var(--muted);
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.4px;
-      margin-bottom:8px;
-    }
-
-    .status-open{color:var(--success); font-weight:800}
-    .status-closed{color:var(--danger); font-weight:800}
-
-    .card-list{
-      display:grid;
-      gap:14px;
-      margin-top:4px;
-    }
-
-    .small-card{
-      padding:16px;
-      border-radius:18px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      color:var(--muted);
-      line-height:1.6;
-    }
-
-    .section{
-      padding:22px 0;
-    }
-
-    .section-title{
-      display:flex;
-      justify-content:space-between;
-      align-items:end;
-      gap:16px;
-      margin-bottom:16px;
-    }
-
-    .section-title h2{
-      margin:0;
-      font-size:1.7rem;
-    }
-
-    .section-title span{
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:18px;
-    }
-
-    .info-card{
-      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(10,14,20,.95));
-      border:1px solid var(--line);
-      border-radius:22px;
-      padding:22px;
-      box-shadow:var(--shadow);
-    }
-
-    .info-card h3{
-      margin:0 0 10px;
-      font-size:1.05rem;
-    }
-
-    .info-card p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .icon{
-      width:48px;height:48px;
-      display:grid;place-items:center;
-      border-radius:14px;
-      background:rgba(245,158,11,.1);
-      border:1px solid rgba(245,158,11,.25);
-      margin-bottom:14px;
-      font-size:22px;
-    }
-
-    .two-col{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-    }
-
-    .leaders{
-      display:grid;
-      gap:12px;
-      margin-top:12px;
-    }
-
-    .leader{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px 16px;
-      border-radius:16px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      color:var(--muted);
-    }
-
-    .leader strong{color:var(--text)}
-    .news-item{
-      padding:16px 0;
-      border-bottom:1px solid var(--line);
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .news-item:last-child{border-bottom:none;padding-bottom:0}
-
-    .requirements{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-    .req-box{
-      padding:18px;
-      border-radius:18px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-    }
-
-    .req-box h4{margin:0 0 10px}
-    .req-box ul{
-      margin:0;
-      padding-left:18px;
-      color:var(--muted);
-      line-height:1.8;
-    }
-
-    .footer{
-      margin-top:24px;
-      padding:22px 0 34px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-    }
-
-    .footer-links{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin:12px 0;
-    }
-
-    .footer-links a{
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-    }
-
-    @media (max-width: 980px){
-      .hero-grid,.grid-3,.two-col,.requirements{grid-template-columns:1fr}
-      .hero-banner,.hero-content{min-height:auto}
-      .hero-content{padding:24px}
-      .hero h1{max-width:none}
-      .section-title{flex-direction:column;align-items:flex-start}
-    }
-  </style>
-</head>
-<body>
-  <header class="topbar">
-    <div class="container nav">
-      <div class="brand">
-        <div class="brand-badge">🛡️</div>
-        <div>SOP | STRONA GŁÓWNA RP</div>
-      </div>
-      <nav class="navlinks">
-        <a href="#onas">O nas</a>
-        <a href="#kierownictwo">Kierownictwo</a>
-        <a href="#news">News</a>
-        <a href="#rekrutacja">Rekrutacja</a>
-        <a href="#ochrona">Ochrona</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-banner">
-          <div class="hero-overlay"></div>
-          <div class="hero-content">
-            <div>
-              <div class="eyebrow">🖤 Elitarna ochrona VIP • RP Server</div>
-              <h1>Profesjonalizm. Dyskrecja. Bezpieczeństwo State VIP.</h1>
-              <p>
-                Służba Ochrony Państwa to formacja odpowiedzialna za zabezpieczenie najważniejszych osób w stanie,
-                konwojów rządowych oraz wydarzeń o najwyższym priorytecie bezpieczeństwa.
-              </p>
-              <div class="hero-quote">
-                Chronimy tych, którzy rządzą stanem — z precyzją, honorem i pełną gotowością operacyjną.
-              </div>
-            </div>
-            <div class="hero-footer">
-              <a class="btn btn-primary" href="#rekrutacja">📝 Złóż podanie</a>
-              <a class="btn btn-ghost" href="#onas">Poznaj SOP</a>
-            </div>
-          </div>
-        </div>
-
-        <aside class="status-card">
-          <div class="status-box">
-            <div class="status-title">Status rekrutacji</div>
-            <div class="status-closed">🔴 REKRUTACJA: ZAMKNIĘTA</div>
-            <p style="color:var(--muted);margin:10px 0 0;line-height:1.6;">
-              W przypadku otwarcia rekrutacji przycisk poniżej można podpiąć pod Google Forms lub system forum.
-            </p>
-          </div>
-
-          <div class="status-box">
-            <div class="status-title">Szybki kontakt</div>
-            <div style="line-height:1.8;color:var(--text);">
-              Discord: <strong>@sop.command</strong><br />
-              OOC: <strong>Kontakt przez kanał rekrutacyjny</strong><br />
-              Status służby: <strong>Aktywna</strong>
-            </div>
-          </div>
-
-          <div class="card-list">
-            <div class="small-card">🎯 Ochrona osobista VIP, prewencja zagrożeń, eskorty i zabezpieczenia strategicznych punktów.</div>
-            <div class="small-card">🚓 Konwoje rządowe, koordynacja kolumn pojazdów uprzywilejowanych i procedury ewakuacyjne.</div>
-            <div class="small-card">📡 Rozpoznanie tras, sprawdzanie obiektów i wsparcie podczas eventów IC.</div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section id="onas" class="section">
-      <div class="section-title">
-        <h2>O nas i nasza misja</h2>
-        <span>Kim jesteśmy w lore frakcji</span>
-      </div>
-
-      <div class="grid-3">
-        <article class="info-card">
-          <div class="icon">🛡️</div>
-          <h3>Kim jesteśmy</h3>
-          <p>
-            Służba Ochrony Państwa to elitarna formacja podległa pod Departament Sprawiedliwości / Rząd,
-            której głównym zadaniem jest zapewnienie najwyższego poziomu bezpieczeństwa Gubernatorowi,
-            Prezydentowi Miasta oraz delegacjom zagranicznym odwiedzającym nasz stan.
-          </p>
-        </article>
-
-        <article class="info-card">
-          <div class="icon">👤</div>
-          <h3>Ochrona osobista</h3>
-          <p>
-            Bezpośrednia asysta i ochrona fizyczna najważniejszych osób w państwie, szybka reakcja na incydenty
-            oraz utrzymanie pełnej kontroli nad strefą VIP.
-          </p>
-        </article>
-
-        <article class="info-card">
-          <div class="icon">🚨</div>
-          <h3>Rozpoznanie i zabezpieczenie</h3>
-          <p>
-            Sprawdzanie tras przejazdów, budynków i eliminacja zagrożeń bombowych przed przybyciem VIP-a,
-            a także wsparcie podczas czynności operacyjnych i ewakuacyjnych.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section id="kierownictwo" class="section">
-      <div class="section-title">
-        <h2>Biuro komendanta</h2>
-        <span>Oficjalny zarząd frakcji</span>
-      </div>
-
-      <div class="two-col">
-        <div class="info-card">
-          <h3>Zarząd frakcji</h3>
-          <div class="leaders">
-            <div class="leader"><span><strong>Komendant SOP</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
-            <div class="leader"><span><strong>Zastępca Komendanta</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
-            <div class="leader"><span><strong>Oficer Operacyjny</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
-          </div>
-        </div>
-
-        <div class="info-card">
-          <h3>Słowo od komendanta</h3>
-          <p>
-            Witam wszystkich zainteresowanych służbą w szeregach SOP. Nasza formacja stawia na dyscyplinę,
-            profesjonalizm i kulturę pracy, dlatego szukamy osób odpowiedzialnych, opanowanych i gotowych działać
-            zespołowo. Jeśli cenisz porządek, taktykę i klimat realnej ochrony VIP, możesz znaleźć u nas swoje miejsce.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="news" class="section">
-      <div class="section-title">
-        <h2>Centrum prasowe</h2>
-        <span>Wydarzenia z serwera</span>
-      </div>
-
-      <div class="info-card">
-        <div class="news-item">
-          <strong>18.06.</strong> Funkcjonariusze SOP z powodzeniem zabezpieczyli wizytę delegacji z Los Santos.
-          Przejazd kolumny odbył się bez zakłóceń.
-        </div>
-        <div class="news-item">
-          <strong>16.06.</strong> Zakończyliśmy wspólne szkolenie z LSPD z zakresu jazdy defensywnej i odbijania zakładnika z pojazdu.
-        </div>
-        <div class="news-item">
-          <strong>14.06.</strong> Jednostka rozpoznawcza przeprowadziła kontrolę trasy pod planowany przejazd VIP na teren portu.
-        </div>
-      </div>
-    </section>
-
-    <section id="rekrutacja" class="section">
-      <div class="section-title">
-        <h2>Zakładka rekrutacji</h2>
-        <span>Serce strony RP</span>
-      </div>
-
-      <div class="two-col">
-        <div class="info-card">
-          <h3>Wymagania IC</h3>
-          <div class="requirements">
-            <div class="req-box">
-              <h4>W grze</h4>
-              <ul>
-                <li>Czysta kartoteka karna.</li>
-                <li>Prawo jazdy kat. B, mile widziane C.</li>
-                <li>Licencja na broń.</li>
-                <li>Wiek powyżej 21 lat.</li>
-                <li>Nienaganna kultura osobista.</li>
-              </ul>
-            </div>
-            <div class="req-box">
-              <h4>Poza grą</h4>
-              <ul>
-                <li>Sprawny mikrofon i Discord.</li>
-                <li>Znajomość regulaminu serwera.</li>
-                <li>Wysoki poziom znajomości RP.</li>
-                <li>Dyspozycyjność min. 5 godzin tygodniowo.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-card">
-          <h3>Złóż podanie</h3>
-          <p>
-            Tutaj możesz podpiąć formularz Google Forms albo system podań na forum. Przycisk poniżej prowadzi
-            do zewnętrznego formularza rekrutacyjnego.
-          </p>
-          <div style="margin-top:18px;">
-            <a class="btn btn-primary" href="https://forms.google.com" target="_blank" rel="noopener noreferrer">ZŁÓŻ PODANIE</a>
-          </div>
-          <p style="margin-top:16px;color:var(--muted);">
-            Wzór odpowiedzi może zawierać: imię postaci, wiek, doświadczenie RP, godziny aktywności i motywację.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="ochrona" class="section">
-      <div class="section-title">
-        <h2>Ochrona komercyjna</h2>
-        <span>Usługi dla obywateli i eventów</span>
-      </div>
-
-      <div class="two-col">
-        <div class="info-card">
-          <h3>Co oferujemy</h3>
-          <p>
-            SOP może zostać wynajęta do zabezpieczania imprez masowych, koncertów, otwarć biznesów, licytacji
-            komorniczych i innych wydarzeń wymagających profesjonalnej obstawy. To dobry mechanizm do budowania
-            interakcji z biznesami, organizacjami i innymi grupami na serwerze.
-          </p>
-        </div>
-
-        <div class="info-card">
-          <h3>Wniosek zgłoszeniowy</h3>
-          <p>
-            Chcesz wynająć ochronę na event? Wypełnij poniższy wniosek minimum 24h przed wydarzeniem.
-          </p>
-          <a class="btn btn-ghost" href="#kontakt" style="margin-top:10px;">Przejdź do kontaktu</a>
-        </div>
-      </div>
-    </section>
-
-    <footer id="kontakt" class="footer">
-      <div class="section-title" style="margin-bottom:10px;">
-        <h2 style="font-size:1.3rem;margin:0;">Stopka i kontakt</h2>
-      </div>
-      <div class="footer-links">
-        <a href="https://discord.com" target="_blank" rel="noopener noreferrer">Discord frakcyjny</a>
-        <a href="#">Regulamin SOP</a>
-        <a href="#">Forum / Podania</a>
-      </div>
-      <div>
-        Strona stworzona na potrzeby rozgrywki Roleplay na serwerze [Nazwa Serwera]. Przedstawione postacie i wydarzenia są fikcyjne.
-      </div>
-    </footer>
-  </main>
-</body>
-</html>
+    try:
+        channel = await guild.create_text_channel(
+            name=channel_name,
+            category=category,
+            overwrites=overwrites,
+            reason=f"Podanie SOP utworzone przez {interaction.user} ({interaction.user.id})"
+        )
+    except Exception as e:
+        await interaction.followup.send(
+            f"Wystąpił błąd przy tworzeniu kanału z podaniem: `{e}`",
+            ephemeral=True
+        )
+        return
+
+    pytania = [
+        "1. Podaj swój nick na Venus RP oraz wiek.",
+        "2. Od jak dawna grasz na Venus RP?",
+        "3. Czy miałeś już doświadczenie w frakcjach porządkowych? Jeśli tak – jakich?",
+        "4. Dlaczego chcesz dołączyć do frakcji SOP?",
+        "5. Jakie są twoje najmocniejsze strony przydatne w SOP?",
+        "6. Jakie są twoje słabe strony, nad którymi chcesz pracować?",
+        "7. Opisz krótko swoją znajomość regulaminu frakcji SOP.",
+        "8. Jak reagujesz na stresujące sytuacje podczas akcji RP?",
+        "9. Opisz przykładową akcję RP, w której SOP bierze udział.",
+        "10. Czy posiadasz sprawny mikrofon i możliwość częstej gry? "
+        "W jakich godzinach jesteś zwykle dostępny?"
+    ]
+
+    embed = discord.Embed(
+        title=f"Podanie do SOP – {nazwa}",
+        description=(
+            "Odpowiedz na poniższe pytania w osobnych wiadomościach.\n"
+            "Administracja SOP przeanalizuje twoje zgłoszenie."
+        ),
+        color=discord.Color.dark_gold()
+    )
+
+    for q in pytania:
+        embed.add_field(name="\u200b", value=q, inline=False)
+
+    embed.set_footer(text=f"Wysłane przez: {interaction.user}")
+
+    await interaction.followup.send(
+        f"Utworzono kanał {channel.mention} dla twojego podania do SOP.",
+        ephemeral=True
+    )
+
+    await channel.send(content=interaction.user.mention, embed=embed)
+
+# --------------------------------------------------
+# START FLASKA I BOTA
+# --------------------------------------------------
+
+def main():
+    flask_thread = FlaskServerThread(app=app)
+    flask_thread.start()
+
+    try:
+        bot.flask_thread = flask_thread
+        bot.run(TOKEN)
+    finally:
+        flask_thread.shutdown()
+
+if __name__ == "__main__":
+    main()
