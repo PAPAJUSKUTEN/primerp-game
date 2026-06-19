@@ -1,973 +1,639 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SOP — Służby Ochrony Państwa | Venus RP</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#F4F6F8;
-    --surface:#FFFFFF;
-    --surface-alt:#EAF1F8;
-    --line:#D8E1E9;
-    --navy:#0F2A4A;
-    --navy-deep:#091D34;
-    --blurple:#5865F2;
-    --blurple-deep:#4752C4;
-    --gold:#B8902E;
-    --gold-light:#E6C878;
-    --success:#2F7D4F;
-    --text:#16202C;
-    --text-muted:#5B6573;
-    --radius:10px;
-    --shadow:0 8px 24px rgba(15,42,74,0.08);
-    --shadow-lg:0 16px 40px rgba(15,42,74,0.14);
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3{font-family:'Oswald',sans-serif;letter-spacing:0.02em;color:var(--navy);}
-  .mono{font-family:'JetBrains Mono',monospace;}
-  a{color:inherit;text-decoration:none;}
-  img{display:block;max-width:100%;}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
-  .eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12.5px;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    color:var(--gold);
-    font-weight:600;
-  }
-  :focus-visible{outline:3px solid var(--gold-light);outline-offset:2px;}
-
-  /* ---------- BUTTONS ---------- */
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:10px;
-    padding:14px 26px;
-    border-radius:8px;
-    font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:15px;
-    border:1.5px solid transparent;
-    cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-    white-space:nowrap;
-  }
-  .btn:hover{transform:translateY(-2px);}
-  .btn-primary{background:var(--navy);color:#fff;box-shadow:0 6px 18px rgba(15,42,74,0.25);}
-  .btn-primary:hover{background:var(--navy-deep);}
-  .btn-discord{background:var(--blurple);color:#fff;box-shadow:0 6px 18px rgba(88,101,242,0.3);}
-  .btn-discord:hover{background:var(--blurple-deep);}
-  .btn-outline{background:transparent;color:var(--navy);border-color:var(--navy);}
-  .btn-outline:hover{background:var(--navy);color:#fff;}
-  .btn-sm{padding:10px 18px;font-size:13.5px;}
-
-  /* ---------- NAVBAR ---------- */
-  .navbar{
-    position:sticky;top:0;z-index:50;
-    background:rgba(255,255,255,0.92);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav-inner{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:14px 24px;
-    max-width:1180px;margin:0 auto;
-  }
-  .brand{display:flex;align-items:center;gap:12px;}
-  .brand-text h1{font-size:18px;line-height:1.1;margin:0;}
-  .brand-text span{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:0.08em;}
-  .nav-links{display:flex;align-items:center;gap:30px;}
-  .nav-links a{font-size:14.5px;font-weight:500;color:var(--text);position:relative;padding:4px 0;}
-  .nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--gold);transition:width .2s ease;}
-  .nav-links a:hover::after{width:100%;}
-  .nav-actions{display:flex;align-items:center;gap:12px;}
-  .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;}
-  .nav-toggle span{display:block;width:22px;height:2px;background:var(--navy);margin:5px 0;border-radius:2px;}
-
-  /* ---------- HERO ---------- */
-  .hero{
-    position:relative;
-    overflow:hidden;
-    background:
-      radial-gradient(circle at 18% 20%, rgba(184,144,46,0.10), transparent 40%),
-      radial-gradient(circle at 82% 75%, rgba(88,101,242,0.08), transparent 45%),
-      linear-gradient(180deg, #FFFFFF 0%, var(--surface-alt) 100%);
-    padding:90px 24px 70px;
-    text-align:center;
-  }
-  .hero::before{
-    content:"";
-    position:absolute;inset:0;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:46px 46px;
-    opacity:0.35;
-    mask-image:radial-gradient(circle at 50% 30%, black, transparent 70%);
-  }
-  .hero-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;}
-  .emblem{width:96px;height:auto;margin:0 auto 26px;}
-  .hero h2{
-    font-size:clamp(32px,5vw,52px);
-    font-weight:700;
-    margin-bottom:10px;
-    color:var(--navy);
-  }
-  .hero .tagline{
-    font-family:'JetBrains Mono',monospace;
-    color:var(--gold);
-    font-size:14px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    margin-bottom:22px;
-  }
-  .hero p.desc{
-    color:var(--text-muted);
-    font-size:16.5px;
-    max-width:560px;
-    margin:0 auto 36px;
-  }
-  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
-
-  /* entrance animation */
-  @media (prefers-reduced-motion: no-preference){
-    .reveal{opacity:0;transform:translateY(16px);animation:rise .7s ease forwards;}
-    .reveal-1{animation-delay:.05s;}
-    .reveal-2{animation-delay:.18s;}
-    .reveal-3{animation-delay:.30s;}
-    .reveal-4{animation-delay:.42s;}
-    @keyframes rise{to{opacity:1;transform:translateY(0);}}
-  }
-
-  /* ---------- LETTERHEAD STRIP ---------- */
-  .letterhead{
-    background:var(--surface-alt);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-  }
-  .letterhead-inner{
-    max-width:1180px;margin:0 auto;padding:18px 24px;
-    display:grid;grid-template-columns:repeat(3,1fr);
-    text-align:center;
-  }
-  .letterhead-item{padding:6px 18px;border-left:1px solid var(--line);}
-  .letterhead-item:first-child{border-left:none;}
-  .letterhead-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--text-muted);text-transform:uppercase;}
-  .letterhead-value{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;color:var(--navy);margin-top:4px;}
-  .letterhead-value .dot{color:var(--success);}
-
-  /* ---------- SECTION GENERIC ---------- */
-  .section{padding:84px 24px;}
-  .section-head{max-width:640px;margin:0 auto 48px;text-align:center;}
-  .section-head h3{font-size:clamp(26px,3.4vw,36px);margin-top:8px;}
-  .section-head p{color:var(--text-muted);margin-top:12px;font-size:15.5px;}
-
-  /* ---------- DISCORD SECTION ---------- */
-  .discord-card{
-    max-width:760px;margin:0 auto;
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:16px;
-    box-shadow:var(--shadow);
-    padding:34px;
-    display:flex;align-items:center;gap:26px;
-    flex-wrap:wrap;
-  }
-  .discord-icon{
-    width:64px;height:64px;border-radius:14px;
-    background:var(--blurple);
-    display:flex;align-items:center;justify-content:center;
-    flex-shrink:0;
-  }
-  .discord-icon svg{width:32px;height:32px;fill:#fff;}
-  .discord-info{flex:1;min-width:200px;}
-  .discord-info h4{font-family:'Oswald',sans-serif;font-size:20px;color:var(--navy);margin-bottom:4px;}
-  .discord-status{display:flex;gap:18px;font-size:13.5px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
-  .discord-status b{color:var(--text);}
-  .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);margin-right:6px;}
-
-  /* ---------- ROSTER ---------- */
-  .roster-meta{
-    display:flex;justify-content:center;gap:8px;margin-bottom:8px;
-    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-muted);
-  }
-  .roster-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-    max-width:1100px;margin:0 auto;
-  }
-  .badge-card{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
-  .badge-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
-  .badge-top{
-    background:var(--navy);
-    color:#fff;
-    padding:10px 14px;
-    display:flex;justify-content:space-between;align-items:center;
-    font-family:'JetBrains Mono',monospace;
-    font-size:11.5px;letter-spacing:0.06em;
-  }
-  .badge-top .num{color:var(--gold-light);}
-  .badge-photo{
-    height:96px;
-    background:var(--surface-alt);
-    display:flex;align-items:center;justify-content:center;
-  }
-  .badge-photo svg{width:46px;height:46px;color:var(--navy);opacity:0.55;}
-  .badge-body{padding:14px;text-align:center;}
-  .badge-body .name{font-family:'Oswald',sans-serif;font-size:16px;color:var(--navy);}
-  .badge-body .rank{font-size:12.5px;color:var(--text-muted);margin-top:2px;}
-  .badge-status{
-    margin-top:10px;display:inline-flex;align-items:center;gap:6px;
-    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;
-    padding:4px 10px;border-radius:20px;background:rgba(47,125,79,0.12);color:var(--success);
-  }
-
-  .badge-card.vacant{
-    background:transparent;
-    border:1.5px dashed var(--line);
-    box-shadow:none;
-  }
-  .badge-card.vacant:hover{transform:none;box-shadow:none;border-color:var(--gold);}
-  .badge-card.vacant .badge-top{background:var(--surface-alt);color:var(--text-muted);}
-  .badge-card.vacant .badge-top .num{color:var(--text-muted);}
-  .badge-card.vacant .badge-photo{background:transparent;}
-  .badge-card.vacant .badge-photo svg{opacity:0.25;}
-  .badge-card.vacant .name{color:var(--text-muted);font-weight:500;}
-  .badge-card.vacant .badge-status{background:rgba(184,144,46,0.12);color:var(--gold);}
-
-  /* ---------- RECRUITMENT ---------- */
-  .steps{
-    max-width:880px;margin:0 auto;
-    display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
-  }
-  .step{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:24px 18px;
-    text-align:left;
-  }
-  .step .step-num{
-    font-family:'JetBrains Mono',monospace;
-    font-size:13px;color:var(--gold);font-weight:600;
-  }
-  .step h5{font-family:'Oswald',sans-serif;font-size:16px;color:var(--navy);margin:8px 0 6px;}
-  .step p{font-size:13.5px;color:var(--text-muted);}
-  .recruit-cta{text-align:center;margin-top:40px;}
-
-  /* ---------- FOOTER ---------- */
-  footer{
-    background:var(--navy);
-    color:rgba(255,255,255,0.78);
-    padding:46px 24px 30px;
-  }
-  .footer-inner{
-    max-width:1180px;margin:0 auto;
-    display:flex;justify-content:space-between;align-items:flex-start;
-    flex-wrap:wrap;gap:24px;
-  }
-  .footer-brand{display:flex;align-items:center;gap:10px;}
-  .footer-brand span{color:#fff;font-family:'Oswald',sans-serif;font-size:17px;}
-  .footer-links{display:flex;gap:24px;flex-wrap:wrap;font-size:13.5px;}
-  .footer-links a:hover{color:var(--gold-light);}
-  .footer-note{
-    max-width:1180px;margin:24px auto 0;
-    border-top:1px solid rgba(255,255,255,0.12);
-    padding-top:18px;
-    font-size:12px;color:rgba(255,255,255,0.5);
-  }
-
-  /* ---------- LOGIN MODAL ---------- */
-  .modal-overlay{
-    position:fixed;inset:0;background:rgba(9,29,52,0.55);
-    display:none;align-items:center;justify-content:center;
-    z-index:100;padding:20px;
-  }
-  .modal-overlay.open{display:flex;}
-  .modal-box{
-    background:var(--surface);
-    border-radius:14px;
-    width:100%;max-width:380px;
-    padding:30px;
-    box-shadow:var(--shadow-lg);
-    position:relative;
-  }
-  .modal-close{
-    position:absolute;top:14px;right:16px;
-    background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);
-  }
-  .modal-box h4{font-size:20px;margin-bottom:4px;}
-  .modal-box .sub{font-size:13px;color:var(--text-muted);margin-bottom:22px;}
-  .field{margin-bottom:16px;}
-  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:6px;}
-  .field input{
-    width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:8px;
-    font-family:'Inter',sans-serif;font-size:14px;
-  }
-  .field input:focus{border-color:var(--navy);outline:none;}
-  .modal-msg{
-    margin-top:14px;font-size:12.5px;color:var(--text-muted);
-    background:var(--surface-alt);padding:10px 12px;border-radius:8px;display:none;
-  }
-  .modal-msg.error{background:rgba(178,58,46,0.1);color:#B23A2E;}
-
-  /* ---------- PROFILE OVERLAY (covers entire page) ---------- */
-  .profile-overlay{
-    position:fixed;inset:0;
-    background:var(--bg);
-    z-index:300;
-    display:none;
-    overflow-y:auto;
-  }
-  .profile-overlay.open{display:block;}
-  .profile-topbar{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:16px 24px;
-    background:var(--surface);
-    border-bottom:1px solid var(--line);
-  }
-  .profile-topbar .brand h1{font-size:18px;}
-  .profile-main{max-width:560px;margin:56px auto;padding:0 24px;}
-  .profile-card{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:16px;
-    box-shadow:var(--shadow-lg);
-    padding:40px 32px;
-    text-align:center;
-  }
-  .profile-photo{
-    width:88px;height:88px;border-radius:50%;
-    background:var(--surface-alt);
-    display:flex;align-items:center;justify-content:center;
-    margin:0 auto 18px;
-  }
-  .profile-photo svg{width:42px;height:42px;color:var(--navy);opacity:0.55;}
-  .profile-name{font-family:'Oswald',sans-serif;font-size:26px;color:var(--navy);}
-  .profile-rank{
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.1em;
-    text-transform:uppercase;color:var(--gold);margin-top:6px;
-  }
-  .profile-grid{
-    display:grid;grid-template-columns:1fr 1fr;gap:14px;
-    margin-top:30px;text-align:left;
-  }
-  .profile-field{background:var(--surface-alt);border-radius:10px;padding:12px 14px;}
-  .profile-field .label{
-    font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted);
-    text-transform:uppercase;letter-spacing:0.07em;
-  }
-  .profile-field .value{
-    font-family:'JetBrains Mono',monospace;font-size:14.5px;color:var(--navy);
-    margin-top:4px;font-weight:600;
-  }
-  .profile-status-pill{
-    display:inline-flex;align-items:center;gap:6px;margin-top:26px;
-    font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.06em;
-    padding:6px 14px;border-radius:20px;background:rgba(47,125,79,0.12);color:var(--success);
-  }
-  @media (max-width:480px){
-    .profile-grid{grid-template-columns:1fr;}
-  }
-
-  /* ---------- PROFILE TABS ---------- */
-  .profile-tabs{
-    display:flex;gap:6px;justify-content:center;
-    margin-top:26px;border-bottom:1px solid var(--line);
-  }
-  .profile-tab{
-    background:none;border:none;cursor:pointer;
-    padding:10px 18px;margin-bottom:-1px;
-    font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
-    color:var(--text-muted);
-    border-bottom:2px solid transparent;
-    transition:color .15s ease, border-color .15s ease;
-  }
-  .profile-tab:hover{color:var(--navy);}
-  .profile-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
-  .profile-tab-panel{margin-top:24px;text-align:left;}
-
-  /* ---------- SŁUŻBA (DUTY TIMER) ---------- */
-  .duty-display{text-align:center;}
-  .duty-label{
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;
-    letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);
-  }
-  .duty-timer{
-    font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:600;
-    color:var(--navy);margin-top:8px;
-  }
-  .duty-display.duty-active .duty-label,
-  .duty-display.duty-active .duty-timer{color:var(--success);}
-  .duty-note{margin-top:14px;font-size:12px;color:var(--text-muted);min-height:16px;text-align:center;}
-  .duty-note.success{color:var(--success);}
-  .duty-note.error{color:#B23A2E;}
-
-  /* ---------- RESPONSIVE ---------- */
-  @media (max-width:860px){
-    .roster-grid{grid-template-columns:repeat(2,1fr);}
-    .steps{grid-template-columns:repeat(2,1fr);}
-    .letterhead-inner{grid-template-columns:1fr;gap:14px;}
-    .letterhead-item{border-left:none;border-top:1px solid var(--line);padding-top:14px;}
-    .letterhead-item:first-child{border-top:none;padding-top:6px;}
-  }
-  @media (max-width:680px){
-    .nav-links{
-      position:absolute;top:100%;left:0;right:0;
-      background:#fff;border-bottom:1px solid var(--line);
-      flex-direction:column;align-items:flex-start;
-      padding:18px 24px;gap:16px;
-      display:none;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOP | Strona Główna RP</title>
+  <style>
+    :root{
+      --bg:#07090d;
+      --bg2:#0c1118;
+      --card:#111823;
+      --card2:#0f141d;
+      --text:#e8eef7;
+      --muted:#9aa6b7;
+      --accent:#f59e0b;
+      --accent2:#f97316;
+      --line:rgba(255,255,255,.08);
+      --success:#22c55e;
+      --danger:#ef4444;
+      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --radius:18px;
     }
-    .nav-links.open{display:flex;}
-    .nav-toggle{display:block;}
-    .nav-actions .btn-outline.nav-only-desktop{display:none;}
-  }
-  @media (max-width:560px){
-    .roster-grid{grid-template-columns:1fr 1fr;}
-    .steps{grid-template-columns:1fr;}
-    .discord-card{flex-direction:column;text-align:center;}
-    .hero-actions{flex-direction:column;align-items:stretch;}
-  }
-</style>
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(245,158,11,.12), transparent 28%),
+        linear-gradient(180deg, #05070b 0%, var(--bg) 100%);
+      color:var(--text);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(12px);
+      background:rgba(6,8,12,.7);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.5px;
+    }
+
+    .brand-badge{
+      width:42px;height:42px;
+      display:grid;place-items:center;
+      border-radius:12px;
+      background:linear-gradient(135deg, rgba(245,158,11,.25), rgba(249,115,22,.15));
+      border:1px solid rgba(245,158,11,.25);
+      box-shadow:var(--shadow);
+      font-size:20px;
+    }
+
+    .navlinks{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .navlinks a{
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.02);
+      color:var(--muted);
+      transition:.2s ease;
+      font-size:14px;
+    }
+    .navlinks a:hover{
+      color:var(--text);
+      border-color:rgba(245,158,11,.4);
+      background:rgba(245,158,11,.08);
+    }
+
+    .hero{
+      padding:32px 0 24px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.35fr .85fr;
+      gap:20px;
+      align-items:stretch;
+    }
+
+    .hero-banner{
+      min-height:560px;
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(4,6,10,.12), rgba(4,6,10,.88)),
+        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    }
+
+    .hero-overlay{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.40) 55%, rgba(0,0,0,.82) 100%);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:1;
+      padding:34px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:560px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:fit-content;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.1);
+      color:#f5d28a;
+      font-size:13px;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
+
+    .hero h1{
+      margin:16px 0 12px;
+      font-size:clamp(2.2rem, 5vw, 4.8rem);
+      line-height:1;
+      max-width:10ch;
+      text-shadow:0 8px 30px rgba(0,0,0,.65);
+    }
+
+    .hero p{
+      max-width:680px;
+      color:#d5dde8;
+      font-size:1.02rem;
+      line-height:1.7;
+      margin:0;
+    }
+
+    .hero-quote{
+      margin-top:18px;
+      padding:16px 18px;
+      border-left:4px solid var(--accent);
+      background:rgba(255,255,255,.06);
+      border-radius:14px;
+      max-width:720px;
+      color:#fff;
+    }
+
+    .hero-footer{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      margin-top:24px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 18px;
+      border-radius:14px;
+      border:1px solid transparent;
+      font-weight:700;
+      transition:.2s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#111;
+      box-shadow:0 12px 30px rgba(245,158,11,.25);
+    }
+
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-ghost{
+      background:rgba(255,255,255,.05);
+      border-color:var(--line);
+      color:var(--text);
+    }
+
+    .status-card{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      padding:24px;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(9,13,20,.95));
+      box-shadow:var(--shadow);
+    }
+
+    .status-box{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+    }
+
+    .status-title{
+      color:var(--muted);
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      margin-bottom:8px;
+    }
+
+    .status-open{color:var(--success); font-weight:800}
+    .status-closed{color:var(--danger); font-weight:800}
+
+    .card-list{
+      display:grid;
+      gap:14px;
+      margin-top:4px;
+    }
+
+    .small-card{
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .section{
+      padding:22px 0;
+    }
+
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-size:1.7rem;
+    }
+
+    .section-title span{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+
+    .info-card{
+      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(10,14,20,.95));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .info-card h3{
+      margin:0 0 10px;
+      font-size:1.05rem;
+    }
+
+    .info-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .icon{
+      width:48px;height:48px;
+      display:grid;place-items:center;
+      border-radius:14px;
+      background:rgba(245,158,11,.1);
+      border:1px solid rgba(245,158,11,.25);
+      margin-bottom:14px;
+      font-size:22px;
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .leaders{
+      display:grid;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .leader{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      color:var(--muted);
+    }
+
+    .leader strong{color:var(--text)}
+    .news-item{
+      padding:16px 0;
+      border-bottom:1px solid var(--line);
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .news-item:last-child{border-bottom:none;padding-bottom:0}
+
+    .requirements{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .req-box{
+      padding:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+    }
+
+    .req-box h4{margin:0 0 10px}
+    .req-box ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .footer{
+      margin-top:24px;
+      padding:22px 0 34px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:12px 0;
+    }
+
+    .footer-links a{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,.grid-3,.two-col,.requirements{grid-template-columns:1fr}
+      .hero-banner,.hero-content{min-height:auto}
+      .hero-content{padding:24px}
+      .hero h1{max-width:none}
+      .section-title{flex-direction:column;align-items:flex-start}
+    }
+  </style>
 </head>
 <body>
-
-<!-- ========== NAVBAR ========== -->
-<nav class="navbar">
-  <div class="nav-inner">
-    <div class="brand">
-      <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
-        <path d="M32 4 L56 14 V32 C56 46 46 56 32 60 C18 56 8 46 8 32 V14 Z" fill="#0F2A4A" stroke="#B8902E" stroke-width="2"/>
-        <path d="M32 16 L32 40 M22 28 L42 28" stroke="#E6C878" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-      <div class="brand-text">
-        <h1>SOP</h1>
-        <span>VENUS RP · II SKŁAD</span>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge">🛡️</div>
+        <div>SOP | STRONA GŁÓWNA RP</div>
       </div>
+      <nav class="navlinks">
+        <a href="#onas">O nas</a>
+        <a href="#kierownictwo">Kierownictwo</a>
+        <a href="#news">News</a>
+        <a href="#rekrutacja">Rekrutacja</a>
+        <a href="#ochrona">Ochrona</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
     </div>
+  </header>
 
-    <button class="nav-toggle" id="navToggle" aria-label="Otwórz menu">
-      <span></span><span></span><span></span>
-    </button>
-
-    <div class="nav-links" id="navLinks">
-      <a href="#start">Strona główna</a>
-      <a href="#discord">Discord</a>
-      <a href="#sklad">Skład</a>
-      <a href="#rekrutacja">Rekrutacja</a>
-    </div>
-
-    <div class="nav-actions">
-      <button class="btn btn-outline btn-sm nav-only-desktop" id="loginBtnNav">Zaloguj się</button>
-    </div>
-  </div>
-</nav>
-
-<!-- ========== HERO ========== -->
-<header class="hero" id="start">
-  <div class="hero-inner">
-    <svg class="emblem reveal reveal-1" viewBox="0 0 64 64" fill="none">
-      <path d="M32 4 L56 14 V32 C56 46 46 56 32 60 C18 56 8 46 8 32 V14 Z" fill="#0F2A4A" stroke="#B8902E" stroke-width="2"/>
-      <path d="M32 16 L32 40 M22 28 L42 28" stroke="#E6C878" stroke-width="3" stroke-linecap="round"/>
-    </svg>
-    <p class="tagline reveal reveal-2">Venus RP — Roleplay</p>
-    <h2 class="reveal reveal-2">Służby Ochrony Państwa</h2>
-    <p class="desc reveal reveal-3">
-      Oficjalna formacja porządkowa serwera Venus RP. Pilnujemy bezpieczeństwa, szkolimy
-      nowych funkcjonariuszy i budujemy społeczność, w której roleplay traktujemy serio.
-    </p>
-    <div class="hero-actions reveal reveal-4">
-      <a href="#rekrutacja" class="btn btn-primary">Dołącz do rekrutacji</a>
-      <a href="#discord" class="btn btn-discord">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3c-.211.379-.444.888-.608 1.292a18.27 18.27 0 0 0-5.9 0A12.6 12.6 0 0 0 9.442 3a19.74 19.74 0 0 0-3.76 1.369C2.917 8.07 2.17 11.69 2.43 15.258a19.95 19.95 0 0 0 6.02 3.044c.245-.336.46-.692.645-1.064a12.9 12.9 0 0 1-1.016-.49c.085-.063.169-.128.25-.196 3.927 1.8 8.18 1.8 12.064 0 .082.07.166.133.25.196-.327.18-.665.343-1.016.49.185.372.4.728.645 1.064a19.9 19.9 0 0 0 6.02-3.044c.305-4.135-.65-7.726-2.795-10.889ZM9.692 13.978c-.97 0-1.764-.886-1.764-1.978 0-1.09.78-1.978 1.764-1.978.99 0 1.78.894 1.764 1.978 0 1.092-.78 1.978-1.764 1.978Zm6.62 0c-.97 0-1.764-.886-1.764-1.978 0-1.09.78-1.978 1.764-1.978.99 0 1.78.894 1.764 1.978 0 1.092-.774 1.978-1.764 1.978Z"/></svg>
-        Nasz Discord
-      </a>
-      <button class="btn btn-outline" id="loginBtnHero">Zaloguj się</button>
-    </div>
-  </div>
-</header>
-
-<!-- ========== LETTERHEAD STRIP ========== -->
-<div class="letterhead">
-  <div class="letterhead-inner">
-    <div class="letterhead-item">
-      <div class="letterhead-label">Serwer</div>
-      <div class="letterhead-value">VENUS RP</div>
-    </div>
-    <div class="letterhead-item">
-      <div class="letterhead-label">Discord</div>
-      <div class="letterhead-value"><span class="dot">●</span> 87 / 1 240</div>
-    </div>
-    <div class="letterhead-item">
-      <div class="letterhead-label">II Skład</div>
-      <div class="letterhead-value">4 / 8 obsadzonych</div>
-    </div>
-  </div>
-</div>
-
-<!-- ========== DISCORD ========== -->
-<section class="section" id="discord">
-  <div class="section-head">
-    <p class="eyebrow">Komunikacja</p>
-    <h3>Gramy razem na Discordzie</h3>
-    <p>Cały skład koordynuje służby, szkolenia i rekrutację na jednym serwerze Discord.</p>
-  </div>
-
-  <div class="discord-card">
-    <div class="discord-icon">
-      <svg viewBox="0 0 24 24"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3c-.211.379-.444.888-.608 1.292a18.27 18.27 0 0 0-5.9 0A12.6 12.6 0 0 0 9.442 3a19.74 19.74 0 0 0-3.76 1.369C2.917 8.07 2.17 11.69 2.43 15.258a19.95 19.95 0 0 0 6.02 3.044c.245-.336.46-.692.645-1.064a12.9 12.9 0 0 1-1.016-.49c.085-.063.169-.128.25-.196 3.927 1.8 8.18 1.8 12.064 0 .082.07.166.133.25.196-.327.18-.665.343-1.016.49.185.372.4.728.645 1.064a19.9 19.9 0 0 0 6.02-3.044c.305-4.135-.65-7.726-2.795-10.889ZM9.692 13.978c-.97 0-1.764-.886-1.764-1.978 0-1.09.78-1.978 1.764-1.978.99 0 1.78.894 1.764 1.978 0 1.092-.78 1.978-1.764 1.978Zm6.62 0c-.97 0-1.764-.886-1.764-1.978 0-1.09.78-1.978 1.764-1.978.99 0 1.78.894 1.764 1.978 0 1.092-.774 1.978-1.764 1.978Z"/></svg>
-    </div>
-    <div class="discord-info">
-      <h4>Venus RP — Służby Ochrony Państwa</h4>
-      <div class="discord-status">
-        <span><span class="pulse"></span><b>87</b> online</span>
-        <span class="mono">1 240 członków</span>
-      </div>
-    </div>
-    <a href="https://discord.gg/Kjgfj5y6bP" target="_blank" rel="noopener" class="btn btn-discord btn-sm">Dołącz teraz</a>
-  </div>
-</section>
-
-<!-- ========== ROSTER ========== -->
-<section class="section" id="sklad" style="background:var(--surface-alt);">
-  <div class="section-head">
-    <p class="eyebrow">Stan etatowy</p>
-    <h3>II Skład Operacyjny</h3>
-    <p>8 stanowisk w drugim składzie SOP. Aktualnie obsadzone 4 z 8 — pozostałe czekają na Was.</p>
-  </div>
-
-  <div class="roster-grid">
-
-    <div class="badge-card">
-      <div class="badge-top"><span>SOP</span><span class="num">#002</span></div>
-      <div class="badge-photo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg></div>
-      <div class="badge-body">
-        <div class="name">Jan Kowalski</div>
-        <div class="rank">St. Strażnik</div>
-        <span class="badge-status">● AKTYWNY</span>
-      </div>
-    </div>
-
-    <div class="badge-card">
-      <div class="badge-top"><span>SOP</span><span class="num">#005</span></div>
-      <div class="badge-photo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg></div>
-      <div class="badge-body">
-        <div class="name">Adam Nowak</div>
-        <div class="rank">Strażnik</div>
-        <span class="badge-status">● AKTYWNY</span>
-      </div>
-    </div>
-
-    <div class="badge-card">
-      <div class="badge-top"><span>SOP</span><span class="num">#011</span></div>
-      <div class="badge-photo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg></div>
-      <div class="badge-body">
-        <div class="name">Piotr Wiśniewski</div>
-        <div class="rank">Specjalista</div>
-        <span class="badge-status">● AKTYWNY</span>
-      </div>
-    </div>
-
-    <div class="badge-card">
-      <div class="badge-top"><span>SOP</span><span class="num">#014</span></div>
-      <div class="badge-photo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg></div>
-      <div class="badge-body">
-        <div class="name">Marek Zieliński</div>
-        <div class="rank">Dowódca Sekcji</div>
-        <span class="badge-status">● AKTYWNY</span>
-      </div>
-    </div>
-
-    <div class="badge-card vacant">
-      <div class="badge-top"><span>SOP</span><span class="num">#---</span></div>
-      <div class="badge-photo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg></div>
-      <div class="badge-body">
-        <div class="name">Wolne stanowisko</div>
-        <div class="rank">Brak funkcjonariusza</div>
-        <span class="badge-status">○ WOLNE</span>
-      </div>
-    </div>
-
-    <div class="badge-card vacant">
-      <div class="badge-top"><span>SOP</span><span class="num">#---</span></div>
-      <div class="badge-photo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg></div>
-      <div class="badge-body">
-        <div class="name">Wolne stanowisko</div>
-        <div class="rank">Brak funkcjonariusza</div>
-        <span class="badge-status">○ WOLNE</span>
-      </div>
-    </div>
-
-    <div class="badge-card vacant">
-      <div class="badge-top"><span>SOP</span><span class="num">#---</span></div>
-      <div class="badge-photo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg></div>
-      <div class="badge-body">
-        <div class="name">Wolne stanowisko</div>
-        <div class="rank">Brak funkcjonariusza</div>
-        <span class="badge-status">○ WOLNE</span>
-      </div>
-    </div>
-
-    <div class="badge-card vacant">
-      <div class="badge-top"><span>SOP</span><span class="num">#---</span></div>
-      <div class="badge-photo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg></div>
-      <div class="badge-body">
-        <div class="name">Wolne stanowisko</div>
-        <div class="rank">Brak funkcjonariusza</div>
-        <span class="badge-status">○ WOLNE</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ========== REKRUTACJA ========== -->
-<section class="section" id="rekrutacja">
-  <div class="section-head">
-    <p class="eyebrow">Zostań jednym z nas</p>
-    <h3>Jak wygląda rekrutacja</h3>
-    <p>Cztery kroki dzielą Cię od odznaki SOP w II Składzie.</p>
-  </div>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <h5>Dołącz na Discord</h5>
-      <p>Wejdź na nasz serwer i zapoznaj się z regulaminem formacji.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <h5>Wypełnij podanie</h5>
-      <p>Złóż podanie rekrutacyjne na kanale #rekrutacja.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <h5>Rozmowa kwalifikacyjna</h5>
-      <p>Krótka rozmowa głosowa z dowódcą sekcji, bez stresu.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">04</div>
-      <h5>Odznaka i szkolenie</h5>
-      <p>Otrzymujesz numer służbowy i wchodzisz na pierwsze szkolenie.</p>
-    </div>
-  </div>
-
-  <div class="recruit-cta">
-    <a href="https://discord.gg/Kjgfj5y6bP" target="_blank" rel="noopener" class="btn btn-primary">Złóż podanie na Discordzie</a>
-  </div>
-</section>
-
-<!-- ========== FOOTER ========== -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
-        <path d="M32 4 L56 14 V32 C56 46 46 56 32 60 C18 56 8 46 8 32 V14 Z" fill="#fff" stroke="#B8902E" stroke-width="2"/>
-        <path d="M32 16 L32 40 M22 28 L42 28" stroke="#0F2A4A" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-      <span>SOP · Venus RP</span>
-    </div>
-    <div class="footer-links">
-      <a href="#start">Strona główna</a>
-      <a href="#discord">Discord</a>
-      <a href="#sklad">Skład</a>
-      <a href="#rekrutacja">Rekrutacja</a>
-    </div>
-  </div>
-  <p class="footer-note">
-    Strona fanowska społeczności roleplay Venus RP. Wszystkie nazwy, stopnie i dane funkcjonariuszy są fikcyjne i służą wyłącznie celom gry.
-  </p>
-</footer>
-
-<!-- ========== LOGIN MODAL ========== -->
-<div class="modal-overlay" id="loginModal">
-  <div class="modal-box">
-    <button class="modal-close" id="modalClose" aria-label="Zamknij">✕</button>
-    <h4>Zaloguj się</h4>
-    <p class="sub">Panel funkcjonariusza SOP · Venus RP</p>
-    <form id="loginForm" autocomplete="off">
-      <div class="field">
-        <label for="login-user">Login</label>
-        <input id="login-user" type="text" autocomplete="off" spellcheck="false">
-      </div>
-      <div class="field">
-        <label for="login-pass">Hasło</label>
-        <input id="login-pass" type="password" autocomplete="off">
-      </div>
-      <button type="submit" class="btn btn-primary" style="width:100%;">Zaloguj się</button>
-      <div class="modal-msg" id="modalMsg"></div>
-    </form>
-  </div>
-</div>
-
-<!-- ========== PROFILE OVERLAY (shown after login, covers whole page) ========== -->
-<div class="profile-overlay" id="profileOverlay">
-  <div class="profile-topbar">
-    <div class="brand">
-      <svg width="30" height="30" viewBox="0 0 64 64" fill="none">
-        <path d="M32 4 L56 14 V32 C56 46 46 56 32 60 C18 56 8 46 8 32 V14 Z" fill="#0F2A4A" stroke="#B8902E" stroke-width="2"/>
-        <path d="M32 16 L32 40 M22 28 L42 28" stroke="#E6C878" stroke-width="3" stroke-linecap="round"/>
-      </svg>
-      <div class="brand-text">
-        <h1>SOP</h1>
-        <span>PANEL FUNKCJONARIUSZA</span>
-      </div>
-    </div>
-    <button class="btn btn-outline btn-sm" id="logoutBtn">Wyloguj się</button>
-  </div>
-
-  <div class="profile-main">
-    <div class="profile-card">
-      <div class="profile-photo">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5Z"/></svg>
-      </div>
-      <div class="profile-name" id="pName">—</div>
-      <div class="profile-rank" id="pRank">—</div>
-
-      <div class="profile-tabs">
-        <button class="profile-tab active" data-tab="profil">Profil</button>
-        <button class="profile-tab" data-tab="sluzba">Służba</button>
-      </div>
-
-      <div class="profile-tab-panel" id="tabProfil">
-        <div class="profile-grid">
-          <div class="profile-field">
-            <div class="label">Numer odznaki</div>
-            <div class="value" id="pBadge">—</div>
-          </div>
-          <div class="profile-field">
-            <div class="label">Dywizja</div>
-            <div class="value" id="pDivision">—</div>
-          </div>
-          <div class="profile-field">
-            <div class="label">Data wstąpienia</div>
-            <div class="value" id="pJoined">—</div>
-          </div>
-          <div class="profile-field">
-            <div class="label">Login</div>
-            <div class="value" id="pLogin">—</div>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-banner">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <div>
+              <div class="eyebrow">🖤 Elitarna ochrona VIP • RP Server</div>
+              <h1>Profesjonalizm. Dyskrecja. Bezpieczeństwo State VIP.</h1>
+              <p>
+                Służba Ochrony Państwa to formacja odpowiedzialna za zabezpieczenie najważniejszych osób w stanie,
+                konwojów rządowych oraz wydarzeń o najwyższym priorytecie bezpieczeństwa.
+              </p>
+              <div class="hero-quote">
+                Chronimy tych, którzy rządzą stanem — z precyzją, honorem i pełną gotowością operacyjną.
+              </div>
+            </div>
+            <div class="hero-footer">
+              <a class="btn btn-primary" href="#rekrutacja">📝 Złóż podanie</a>
+              <a class="btn btn-ghost" href="#onas">Poznaj SOP</a>
+            </div>
           </div>
         </div>
-        <div style="text-align:center;">
-          <div class="profile-status-pill" id="pStatus">● AKTYWNY</div>
-        </div>
+
+        <aside class="status-card">
+          <div class="status-box">
+            <div class="status-title">Status rekrutacji</div>
+            <div class="status-closed">🔴 REKRUTACJA: ZAMKNIĘTA</div>
+            <p style="color:var(--muted);margin:10px 0 0;line-height:1.6;">
+              W przypadku otwarcia rekrutacji przycisk poniżej można podpiąć pod Google Forms lub system forum.
+            </p>
+          </div>
+
+          <div class="status-box">
+            <div class="status-title">Szybki kontakt</div>
+            <div style="line-height:1.8;color:var(--text);">
+              Discord: <strong>@sop.command</strong><br />
+              OOC: <strong>Kontakt przez kanał rekrutacyjny</strong><br />
+              Status służby: <strong>Aktywna</strong>
+            </div>
+          </div>
+
+          <div class="card-list">
+            <div class="small-card">🎯 Ochrona osobista VIP, prewencja zagrożeń, eskorty i zabezpieczenia strategicznych punktów.</div>
+            <div class="small-card">🚓 Konwoje rządowe, koordynacja kolumn pojazdów uprzywilejowanych i procedury ewakuacyjne.</div>
+            <div class="small-card">📡 Rozpoznanie tras, sprawdzanie obiektów i wsparcie podczas eventów IC.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="onas" class="section">
+      <div class="section-title">
+        <h2>O nas i nasza misja</h2>
+        <span>Kim jesteśmy w lore frakcji</span>
       </div>
 
-      <div class="profile-tab-panel" id="tabSluzba" style="display:none;">
-        <div class="duty-display" id="dutyDisplay">
-          <div class="duty-label" id="dutyState">Poza służbą</div>
-          <div class="duty-timer" id="dutyTimer">00:00:00</div>
-        </div>
-        <button class="btn btn-primary" id="dutyBtn" style="width:100%;margin-top:20px;">Rozpocznij służbę</button>
-        <div class="duty-note" id="dutyNote"></div>
+      <div class="grid-3">
+        <article class="info-card">
+          <div class="icon">🛡️</div>
+          <h3>Kim jesteśmy</h3>
+          <p>
+            Służba Ochrony Państwa to elitarna formacja podległa pod Departament Sprawiedliwości / Rząd,
+            której głównym zadaniem jest zapewnienie najwyższego poziomu bezpieczeństwa Gubernatorowi,
+            Prezydentowi Miasta oraz delegacjom zagranicznym odwiedzającym nasz stan.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="icon">👤</div>
+          <h3>Ochrona osobista</h3>
+          <p>
+            Bezpośrednia asysta i ochrona fizyczna najważniejszych osób w państwie, szybka reakcja na incydenty
+            oraz utrzymanie pełnej kontroli nad strefą VIP.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="icon">🚨</div>
+          <h3>Rozpoznanie i zabezpieczenie</h3>
+          <p>
+            Sprawdzanie tras przejazdów, budynków i eliminacja zagrożeń bombowych przed przybyciem VIP-a,
+            a także wsparcie podczas czynności operacyjnych i ewakuacyjnych.
+          </p>
+        </article>
       </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<script>
-  // mobile nav toggle
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+    <section id="kierownictwo" class="section">
+      <div class="section-title">
+        <h2>Biuro komendanta</h2>
+        <span>Oficjalny zarząd frakcji</span>
+      </div>
 
-  // login modal
-  const loginModal = document.getElementById('loginModal');
-  const openLogin = () => {
-    loginModal.classList.add('open');
-    const msg = document.getElementById('modalMsg');
-    msg.style.display = 'none';
-    msg.classList.remove('error');
-  };
-  const closeLogin = () => loginModal.classList.remove('open');
-  document.getElementById('loginBtnNav').addEventListener('click', openLogin);
-  document.getElementById('loginBtnHero').addEventListener('click', openLogin);
-  document.getElementById('modalClose').addEventListener('click', closeLogin);
-  loginModal.addEventListener('click', (e) => { if(e.target === loginModal) closeLogin(); });
+      <div class="two-col">
+        <div class="info-card">
+          <h3>Zarząd frakcji</h3>
+          <div class="leaders">
+            <div class="leader"><span><strong>Komendant SOP</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
+            <div class="leader"><span><strong>Zastępca Komendanta</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
+            <div class="leader"><span><strong>Oficer Operacyjny</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
+          </div>
+        </div>
 
-  // ---------- KONTA FUNKCJONARIUSZY (8 kont demo) ----------
-  // Przechowywane wprost w kodzie strony — każdy, kto otworzy źródło strony,
-  // może je odczytać. Dla realnej ochrony kont podłącz prawdziwy backend / Discord OAuth.
-  const accounts = [
-    { login:'Kuba', pass:'PAPAJ2137', name:'Kuba',  rank:'Komendant II Składu',  badge:'001', division:'Dowództwo SOP',       joined:'—' },
-    { login:'SOP2', pass:'SOP2',      name:'SOP2',  rank:'Funkcjonariusz testowy', badge:'002', division:'II Skład Operacyjny', joined:'—' },
-    { login:'SOP3', pass:'SOP3',      name:'SOP3',  rank:'Funkcjonariusz testowy', badge:'003', division:'II Skład Operacyjny', joined:'—' },
-    { login:'SOP4', pass:'SOP4',      name:'SOP4',  rank:'Funkcjonariusz testowy', badge:'004', division:'II Skład Operacyjny', joined:'—' },
-    { login:'SOP5', pass:'SOP5',      name:'SOP5',  rank:'Funkcjonariusz testowy', badge:'005', division:'II Skład Operacyjny', joined:'—' },
-    { login:'SOP6', pass:'SOP6',      name:'SOP6',  rank:'Funkcjonariusz testowy', badge:'006', division:'II Skład Operacyjny', joined:'—' },
-    { login:'SOP7', pass:'SOP7',      name:'SOP7',  rank:'Funkcjonariusz testowy', badge:'007', division:'II Skład Operacyjny', joined:'—' },
-    { login:'SOP8', pass:'SOP8',      name:'SOP8',  rank:'Funkcjonariusz testowy', badge:'008', division:'II Skład Operacyjny', joined:'—' }
-  ];
+        <div class="info-card">
+          <h3>Słowo od komendanta</h3>
+          <p>
+            Witam wszystkich zainteresowanych służbą w szeregach SOP. Nasza formacja stawia na dyscyplinę,
+            profesjonalizm i kulturę pracy, dlatego szukamy osób odpowiedzialnych, opanowanych i gotowych działać
+            zespołowo. Jeśli cenisz porządek, taktykę i klimat realnej ochrony VIP, możesz znaleźć u nas swoje miejsce.
+          </p>
+        </div>
+      </div>
+    </section>
 
-  const profileOverlay = document.getElementById('profileOverlay');
-  let currentAccount = null;
+    <section id="news" class="section">
+      <div class="section-title">
+        <h2>Centrum prasowe</h2>
+        <span>Wydarzenia z serwera</span>
+      </div>
 
-  function showProfile(account){
-    currentAccount = account;
-    document.getElementById('pName').textContent = account.name;
-    document.getElementById('pRank').textContent = account.rank;
-    document.getElementById('pBadge').textContent = account.badge;
-    document.getElementById('pDivision').textContent = account.division;
-    document.getElementById('pJoined').textContent = account.joined;
-    document.getElementById('pLogin').textContent = account.login;
-    resetDutyUI();
-    switchTab('profil');
-    profileOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    closeLogin();
-  }
+      <div class="info-card">
+        <div class="news-item">
+          <strong>18.06.</strong> Funkcjonariusze SOP z powodzeniem zabezpieczyli wizytę delegacji z Los Santos.
+          Przejazd kolumny odbył się bez zakłóceń.
+        </div>
+        <div class="news-item">
+          <strong>16.06.</strong> Zakończyliśmy wspólne szkolenie z LSPD z zakresu jazdy defensywnej i odbijania zakładnika z pojazdu.
+        </div>
+        <div class="news-item">
+          <strong>14.06.</strong> Jednostka rozpoznawcza przeprowadziła kontrolę trasy pod planowany przejazd VIP na teren portu.
+        </div>
+      </div>
+    </section>
 
-  function switchTab(name){
-    document.querySelectorAll('.profile-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-    document.getElementById('tabProfil').style.display = name === 'profil' ? 'block' : 'none';
-    document.getElementById('tabSluzba').style.display = name === 'sluzba' ? 'block' : 'none';
-  }
-  document.querySelectorAll('.profile-tab').forEach(tab => {
-    tab.addEventListener('click', () => switchTab(tab.dataset.tab));
-  });
+    <section id="rekrutacja" class="section">
+      <div class="section-title">
+        <h2>Zakładka rekrutacji</h2>
+        <span>Serce strony RP</span>
+      </div>
 
-  // ---------- ZAKŁADKA "SŁUŻBA" — LICZNIK CZASU + WEBHOOK DISCORD ----------
-  // Uwaga: adres webhooka jest widoczny w kodzie źródłowym strony dla każdego
-  // odwiedzającego. Każdy, kto go skopiuje, może wysyłać wiadomości na ten
-  // kanał Discord. Jeśli to problem, przenieś wywołanie webhooka na własny
-  // mini-backend i wołaj go z tej strony zamiast Discorda bezpośrednio.
-  const DUTY_WEBHOOK_URL = 'https://discord.com/api/webhooks/1516904193254883478/ev7-NCHvFgK9IBpkXiVoDJ32iTWaCCE1LwwRZNSQWpaJ5LApRuAuanAoH_yLvptA3GKe';
+      <div class="two-col">
+        <div class="info-card">
+          <h3>Wymagania IC</h3>
+          <div class="requirements">
+            <div class="req-box">
+              <h4>W grze</h4>
+              <ul>
+                <li>Czysta kartoteka karna.</li>
+                <li>Prawo jazdy kat. B, mile widziane C.</li>
+                <li>Licencja na broń.</li>
+                <li>Wiek powyżej 21 lat.</li>
+                <li>Nienaganna kultura osobista.</li>
+              </ul>
+            </div>
+            <div class="req-box">
+              <h4>Poza grą</h4>
+              <ul>
+                <li>Sprawny mikrofon i Discord.</li>
+                <li>Znajomość regulaminu serwera.</li>
+                <li>Wysoki poziom znajomości RP.</li>
+                <li>Dyspozycyjność min. 5 godzin tygodniowo.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-  const dutyState = { active:false, startTime:null, intervalId:null };
+        <div class="info-card">
+          <h3>Złóż podanie</h3>
+          <p>
+            Tutaj możesz podpiąć formularz Google Forms albo system podań na forum. Przycisk poniżej prowadzi
+            do zewnętrznego formularza rekrutacyjnego.
+          </p>
+          <div style="margin-top:18px;">
+            <a class="btn btn-primary" href="https://forms.google.com" target="_blank" rel="noopener noreferrer">ZŁÓŻ PODANIE</a>
+          </div>
+          <p style="margin-top:16px;color:var(--muted);">
+            Wzór odpowiedzi może zawierać: imię postaci, wiek, doświadczenie RP, godziny aktywności i motywację.
+          </p>
+        </div>
+      </div>
+    </section>
 
-  function pad(n){ return String(n).padStart(2,'0'); }
-  function formatDuration(ms){
-    const totalSec = Math.floor(ms/1000);
-    return `${pad(Math.floor(totalSec/3600))}:${pad(Math.floor((totalSec%3600)/60))}:${pad(totalSec%60)}`;
-  }
-  function formatClock(date){
-    return date.toLocaleString('pl-PL', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' });
-  }
-  function setDutyNote(text, type){
-    const note = document.getElementById('dutyNote');
-    note.textContent = text;
-    note.classList.remove('success','error');
-    if(type) note.classList.add(type);
-  }
-  function resetDutyUI(){
-    if(dutyState.intervalId) clearInterval(dutyState.intervalId);
-    dutyState.active = false;
-    dutyState.startTime = null;
-    dutyState.intervalId = null;
-    document.getElementById('dutyDisplay').classList.remove('duty-active');
-    document.getElementById('dutyState').textContent = 'Poza służbą';
-    document.getElementById('dutyTimer').textContent = '00:00:00';
-    document.getElementById('dutyBtn').textContent = 'Rozpocznij służbę';
-    setDutyNote('', null);
-  }
-  function tickDutyTimer(){
-    document.getElementById('dutyTimer').textContent = formatDuration(Date.now() - dutyState.startTime);
-  }
-  function sendDutyWebhook(embed){
-    return fetch(DUTY_WEBHOOK_URL, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ username:'SOP — Rejestr Służby', embeds:[embed] })
-    });
-  }
-  function startDuty(){
-    dutyState.active = true;
-    dutyState.startTime = Date.now();
-    document.getElementById('dutyDisplay').classList.add('duty-active');
-    document.getElementById('dutyState').textContent = 'Na służbie od ' + formatClock(new Date(dutyState.startTime));
-    document.getElementById('dutyBtn').textContent = 'Zakończ służbę';
-    dutyState.intervalId = setInterval(tickDutyTimer, 1000);
-    tickDutyTimer();
+    <section id="ochrona" class="section">
+      <div class="section-title">
+        <h2>Ochrona komercyjna</h2>
+        <span>Usługi dla obywateli i eventów</span>
+      </div>
 
-    sendDutyWebhook({
-      title:'🟢 Rozpoczęcie służby',
-      color:3066993,
-      fields:[
-        { name:'Funkcjonariusz', value: currentAccount.name, inline:true },
-        { name:'Odznaka', value: currentAccount.badge, inline:true },
-        { name:'Start', value: formatClock(new Date(dutyState.startTime)), inline:false }
-      ]
-    }).then(r => setDutyNote(r.ok ? 'Wysłano start służby na Discord.' : 'Discord odrzucił webhook (status ' + r.status + ').', r.ok ? 'success' : 'error'))
-      .catch(() => setDutyNote('Nie udało się połączyć z Discordem.', 'error'));
-  }
-  function endDuty(){
-    if(!dutyState.active) return;
-    clearInterval(dutyState.intervalId);
-    const startTime = dutyState.startTime;
-    const endTime = Date.now();
-    const account = currentAccount;
+      <div class="two-col">
+        <div class="info-card">
+          <h3>Co oferujemy</h3>
+          <p>
+            SOP może zostać wynajęta do zabezpieczania imprez masowych, koncertów, otwarć biznesów, licytacji
+            komorniczych i innych wydarzeń wymagających profesjonalnej obstawy. To dobry mechanizm do budowania
+            interakcji z biznesami, organizacjami i innymi grupami na serwerze.
+          </p>
+        </div>
 
-    sendDutyWebhook({
-      title:'🔴 Zakończenie służby',
-      color:15158332,
-      fields:[
-        { name:'Funkcjonariusz', value: account.name, inline:true },
-        { name:'Odznaka', value: account.badge, inline:true },
-        { name:'Start', value: formatClock(new Date(startTime)), inline:false },
-        { name:'Koniec', value: formatClock(new Date(endTime)), inline:false },
-        { name:'Czas trwania', value: formatDuration(endTime - startTime), inline:false }
-      ]
-    }).then(r => setDutyNote(r.ok ? 'Wysłano podsumowanie służby na Discord.' : 'Discord odrzucił webhook (status ' + r.status + ').', r.ok ? 'success' : 'error'))
-      .catch(() => setDutyNote('Nie udało się połączyć z Discordem.', 'error'));
+        <div class="info-card">
+          <h3>Wniosek zgłoszeniowy</h3>
+          <p>
+            Chcesz wynająć ochronę na event? Wypełnij poniższy wniosek minimum 24h przed wydarzeniem.
+          </p>
+          <a class="btn btn-ghost" href="#kontakt" style="margin-top:10px;">Przejdź do kontaktu</a>
+        </div>
+      </div>
+    </section>
 
-    dutyState.active = false;
-    dutyState.startTime = null;
-    document.getElementById('dutyDisplay').classList.remove('duty-active');
-    document.getElementById('dutyState').textContent = 'Poza służbą';
-    document.getElementById('dutyTimer').textContent = '00:00:00';
-    document.getElementById('dutyBtn').textContent = 'Rozpocznij służbę';
-  }
-  document.getElementById('dutyBtn').addEventListener('click', () => {
-    dutyState.active ? endDuty() : startDuty();
-  });
-
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    if(dutyState.active) endDuty();
-    profileOverlay.classList.remove('open');
-    document.body.style.overflow = '';
-    document.getElementById('loginForm').reset();
-  });
-
-  document.getElementById('loginForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const login = document.getElementById('login-user').value.trim();
-    const pass = document.getElementById('login-pass').value;
-    const match = accounts.find(a => a.login === login && a.pass === pass);
-    const msg = document.getElementById('modalMsg');
-
-    if(match){
-      msg.classList.remove('error');
-      msg.style.display = 'none';
-      showProfile(match);
-    } else {
-      msg.textContent = 'Nieprawidłowy login lub hasło.';
-      msg.classList.add('error');
-      msg.style.display = 'block';
-    }
-  });
-</script>
-
+    <footer id="kontakt" class="footer">
+      <div class="section-title" style="margin-bottom:10px;">
+        <h2 style="font-size:1.3rem;margin:0;">Stopka i kontakt</h2>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.com" target="_blank" rel="noopener noreferrer">Discord frakcyjny</a>
+        <a href="#">Regulamin SOP</a>
+        <a href="#">Forum / Podania</a>
+      </div>
+      <div>
+        Strona stworzona na potrzeby rozgrywki Roleplay na serwerze [Nazwa Serwera]. Przedstawione postacie i wydarzenia są fikcyjne.
+      </div>
+    </footer>
+  </main>
 </body>
 </html>
