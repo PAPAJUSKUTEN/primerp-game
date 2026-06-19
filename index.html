@@ -522,12 +522,150 @@
       transform:translateY(-50%) scale(1);
     }
 
+    /* Krok 2 – panel logowania w modal */
+    .login-panel{
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+    }
+    .login-panel h4{
+      margin:0 0 8px;
+      font-size:1rem;
+    }
+    .login-panel label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:4px;
+    }
+    .login-panel input{
+      width:100%;
+      padding:10px 11px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.45);
+      color:var(--text);
+      font-size:14px;
+    }
+    .login-panel input:focus{
+      outline:none;
+      border-color:rgba(245,158,11,.7);
+    }
+    .login-panel .login-info{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    /* Pełnoekranowy system po zalogowaniu */
+    .system-overlay{
+      position:fixed;
+      inset:0;
+      background:radial-gradient(circle at top, rgba(245,158,11,.06), transparent 55%), #020309;
+      color:var(--text);
+      display:none;
+      z-index:100;
+    }
+    .system-overlay.show{
+      display:flex;
+    }
+    .system-inner{
+      width:100%;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+    }
+    .system-topbar{
+      padding:10px 20px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:rgba(3,5,10,.95);
+    }
+    .system-topbar span{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .system-main{
+      flex:1;
+      display:grid;
+      grid-template-columns:220px 1fr;
+      min-height:0;
+    }
+    .system-sidebar{
+      border-right:1px solid var(--line);
+      padding:16px 14px;
+      background:rgba(3,5,10,.96);
+    }
+    .system-sidebar h3{
+      margin:0 0 10px;
+      font-size:0.95rem;
+    }
+    .system-menu{
+      display:grid;
+      gap:6px;
+      font-size:14px;
+    }
+    .system-menu button{
+      width:100%;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid transparent;
+      background:transparent;
+      color:var(--muted);
+      text-align:left;
+      cursor:pointer;
+      transition:.15s ease;
+    }
+    .system-menu button:hover{
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+    }
+    .system-menu button.active{
+      background:rgba(245,158,11,.14);
+      border-color:rgba(245,158,11,.7);
+      color:var(--text);
+    }
+    .system-content{
+      padding:18px 20px;
+      overflow:auto;
+    }
+    .system-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .system-heading{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+    }
+    .system-heading h2{
+      margin:10px 0 4px;
+      font-size:1.5rem;
+    }
+    .system-note{
+      font-size:13px;
+      color:var(--muted);
+    }
+
     @media (max-width: 980px){
       .hero-grid,.grid-3,.two-col,.requirements{grid-template-columns:1fr}
       .hero-banner,.hero-content{min-height:auto}
       .hero-content{padding:24px}
       .hero h1{max-width:none}
       .section-title{flex-direction:column;align-items:flex-start}
+      .system-main{
+        grid-template-columns:1fr;
+      }
     }
   </style>
 </head>
@@ -774,7 +912,7 @@
     </footer>
   </main>
 
-  <!-- Modal logowania z wyborem stanowiska -->
+  <!-- Modal logowania z wyborem stanowiska + login -->
   <div id="loginModal" class="modal-backdrop">
     <div class="modal-panel" role="dialog" aria-modal="true">
       <div class="modal-header">
@@ -812,10 +950,59 @@
           </label>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
-          Wejdź do systemu
+        <!-- Krok 2 – logowanie zależne od roli -->
+        <div id="loginPanel" class="login-panel" style="display:none;">
+          <h4 id="loginTitle">Panel logowania</h4>
+          <label for="loginUser">Identyfikator</label>
+          <input id="loginUser" type="text" autocomplete="off" />
+          <label for="loginPass" style="margin-top:8px;">Hasło</label>
+          <input id="loginPass" type="password" />
+          <div class="login-info" id="loginHint"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:14px;">
+          Dalej
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- Pełnoekranowy panel systemu SOP -->
+  <div id="systemOverlay" class="system-overlay">
+    <div class="system-inner">
+      <div class="system-topbar">
+        <div>
+          <strong id="systemTitle">SOP – Panel</strong><br />
+          <span id="systemSub">Tryb: Funkcjonariusz SOP</span>
+        </div>
+        <span>ESC / F10 • Wyloguj się z panelu (front)</span>
+      </div>
+      <div class="system-main">
+        <aside class="system-sidebar">
+          <h3>Moduły</h3>
+          <div class="system-menu">
+            <button class="active">Pulpit operacyjny</button>
+            <button>Raporty służb</button>
+            <button>Konwoje VIP</button>
+            <button>Szkolenia</button>
+          </div>
+        </aside>
+        <section class="system-content">
+          <div class="system-heading">
+            <div>
+              <div class="system-tag" id="systemTag">
+                <span>🛡️ SOP</span>
+                <span>Funkcjonariusz</span>
+              </div>
+              <h2 id="systemHeading">Pulpit operacyjny</h2>
+            </div>
+          </div>
+          <p class="system-note" id="systemNote">
+            Witaj w panelu SOP. Obecny widok jest poglądowy – możesz tu wyświetlać aktywne konwoje, status jednostek,
+            ostatnie raporty lub listę zaplanowanych zabezpieczeń VIP.
+          </p>
+        </section>
+      </div>
     </div>
   </div>
 
@@ -825,37 +1012,111 @@
     const loginClose = document.getElementById('loginClose');
     const roleForm = document.getElementById('roleForm');
 
+    const loginPanel = document.getElementById('loginPanel');
+    const loginTitle = document.getElementById('loginTitle');
+    const loginHint = document.getElementById('loginHint');
+    const loginUser = document.getElementById('loginUser');
+    const loginPass = document.getElementById('loginPass');
+
+    const systemOverlay = document.getElementById('systemOverlay');
+    const systemTitle = document.getElementById('systemTitle');
+    const systemSub = document.getElementById('systemSub');
+    const systemTag = document.getElementById('systemTag');
+
+    let selectedRole = null;
+    let step = 1; // 1 = wybór roli, 2 = logowanie
+
+    function openModal() {
+      step = 1;
+      selectedRole = null;
+      loginPanel.style.display = 'none';
+      loginHint.textContent = '';
+      loginHint.style.color = '#9aa6b7';
+      loginUser.value = '';
+      loginPass.value = '';
+      loginModal.classList.add('is-open');
+    }
+
+    function closeModal() {
+      loginModal.classList.remove('is-open');
+    }
+
     if (loginBtn && loginModal) {
-      loginBtn.addEventListener('click', () => {
-        loginModal.classList.add('is-open');
-      });
+      loginBtn.addEventListener('click', openModal);
     }
 
     if (loginClose) {
-      loginClose.addEventListener('click', () => {
-        loginModal.classList.remove('is-open');
-      });
+      loginClose.addEventListener('click', closeModal);
     }
 
     loginModal?.addEventListener('click', (e) => {
       if (e.target === loginModal) {
-        loginModal.classList.remove('is-open');
+        closeModal();
       }
     });
 
     roleForm?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const selected = document.querySelector('input[name="role"]:checked');
-      if (!selected) return;
+      const roleInput = document.querySelector('input[name="role"]:checked');
 
-      const role = selected.value;
-      console.log('Zalogowano jako:', role);
+      // Krok 1 – wybór roli
+      if (step === 1) {
+        if (!roleInput) return;
+        selectedRole = roleInput.value;
 
-      // TODO: tutaj możesz zrobić redirect w zależności od roli:
-      // if (role === 'sop') window.location.href = 'panel-funkcjonariusz.html';
-      // if (role === 'tajna') window.location.href = 'panel-tajna.html';
+        if (selectedRole === 'sop') {
+          loginTitle.textContent = 'Logowanie – Funkcjonariusz SOP';
+          loginHint.textContent = 'Dane testowe: użytkownik SOP1, hasło SOP1.';
+          loginHint.style.color = '#9aa6b7';
+        } else {
+          loginTitle.textContent = 'Logowanie – Tajna Jednostka';
+          loginHint.textContent = 'Dane testowe: użytkownik SOP2, hasło SOP2.';
+          loginHint.style.color = '#9aa6b7';
+        }
 
-      loginModal.classList.remove('is-open');
+        loginPanel.style.display = 'block';
+        step = 2;
+        return;
+      }
+
+      // Krok 2 – logowanie
+      if (step === 2) {
+        const user = loginUser.value.trim();
+        const pass = loginPass.value.trim();
+
+        const validSop = selectedRole === 'sop' && user === 'SOP1' && pass === 'SOP1';
+        const validTajna = selectedRole === 'tajna' && user === 'SOP2' && pass === 'SOP2';
+
+        if (!validSop && !validTajna) {
+          loginHint.textContent = 'Nieprawidłowe dane logowania.';
+          loginHint.style.color = '#f97373';
+          return;
+        }
+
+        // Sukces – konfiguracja overlay
+        if (selectedRole === 'sop') {
+          systemTitle.textContent = 'SOP – Panel Funkcjonariusza';
+          systemSub.textContent = 'Tryb: Funkcjonariusz SOP';
+          systemTag.innerHTML = '<span>🛡️ SOP</span><span>Funkcjonariusz</span>';
+        } else {
+          systemTitle.textContent = 'SOP – Panel Tajnej Jednostki';
+          systemSub.textContent = 'Tryb: Tajna Jednostka';
+          systemTag.innerHTML = '<span>🕵️ Tajna</span><span>Jednostka</span>';
+        }
+
+        closeModal();
+        systemOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    // Wylogowanie – ESC lub F10 chowa overlay (front)
+    window.addEventListener('keydown', (e) => {
+      if (!systemOverlay.classList.contains('show')) return;
+      if (e.key === 'Escape' || e.key === 'F10') {
+        systemOverlay.classList.remove('show');
+        document.body.style.overflow = '';
+      }
     });
   </script>
 </body>
