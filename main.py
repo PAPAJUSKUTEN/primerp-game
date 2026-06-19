@@ -1,513 +1,639 @@
-import os
-import asyncio
-import urllib.request
-from flask import Flask
-import discord
-from discord.ext import commands
-from discord import app_commands, ui
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOP | Strona Główna RP</title>
+  <style>
+    :root{
+      --bg:#07090d;
+      --bg2:#0c1118;
+      --card:#111823;
+      --card2:#0f141d;
+      --text:#e8eef7;
+      --muted:#9aa6b7;
+      --accent:#f59e0b;
+      --accent2:#f97316;
+      --line:rgba(255,255,255,.08);
+      --success:#22c55e;
+      --danger:#ef4444;
+      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --radius:18px;
+    }
 
-# ==========================================
-# 1. KONFIGURACJA SERWERA FLASK (Keep-Alive)
-# ==========================================
-app = Flask(__name__)
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(245,158,11,.12), transparent 28%),
+        linear-gradient(180deg, #05070b 0%, var(--bg) 100%);
+      color:var(--text);
+    }
 
-@app.route('/')
-def home():
-    return "<h1>Bot SOP dziala i jest utrzymywany przy zyciu 24/7!</h1>"
+    a{color:inherit;text-decoration:none}
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+    }
 
-# ==========================================
-# 2. WEWNĘTRZNY SYSTEM SELF-PING (Keep-Alive)
-# ==========================================
-async def self_ping():
-    await asyncio.sleep(30)
-    while True:
-        try:
-            url = os.environ.get("RENDER_EXTERNAL_URL", "http://localhost:10000")
-            req = urllib.request.Request(url, headers={'User-Agent': 'SOP-KeepAlive-Bot'})
-            with urllib.request.urlopen(req) as response:
-                response.read()
-            print("[Keep-Alive] Pomyslnie wyslano ping do samego siebie.")
-        except Exception as e:
-            print(f"[Keep-Alive] Nie udalo sie wyslac pingu: {e}")
-        await asyncio.sleep(600)
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(12px);
+      background:rgba(6,8,12,.7);
+      border-bottom:1px solid var(--line);
+    }
 
-# ==========================================
-# 3. WIDOKI I LOGIKA PRZYCISKÓW (Zgłoszenia, Podania, Regulamin)
-# ==========================================
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
 
-# --- SYSTEM REGULAMINU ---
-class RulesButton(ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.5px;
+    }
 
-    @ui.button(label="regulamin", style=discord.ButtonStyle.secondary, custom_id="show_rules_btn", emoji="📜")
-    async def show_rules(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.defer(ephemeral=True)
-        
-        rules_text = (
-            "⚖️ **REGULAMIN SERWERA**\n"
-            "1. Nieznajomość regulaminu nie zwalnia z jego przestrzegania.\n"
-            "2. Administracja ma prawo ukarać gracza za czyn, który nie został uwzględniony w regulaminie, jeżeli zostanie uznany za szkodliwy dla serwera.\n"
-            "3. Zakaz prowokowania i wyzywania innych graczy na kanałach tekstowych oraz głosowych.\n"
-            "4. Zakaz pingowania administracji bez wyraźnego powodu.\n"
-            "5. Zakaz wysyłania jakichkolwiek linków (zaproszenia na inne serwery discord, linki do wirusów itp.).\n"
-            "6. Wszelkie błędy bota należy zgłaszać administracji.\n"
-            "7. Handel przedmiotami/rangami z gry za realne pieniądze jest surowo zakazany.\n"
-            "8. Zakaz szerzenia nienawiści, rasizmu, faszyzmu oraz toksycznego zachowania.\n"
-            "9. Zakaz udostępniania danych osobowych innych użytkowników serwera bez ich zgody.\n\n"
-            "🛡️ **REGULAMIN KOMISJI**\n"
-            "1. Każdy członek komisji musi godnie reprezentować serwer.\n"
-            "2. Zakaz faworyzacji graczy/znajomych przy rozpatrywaniu skarg lub podań.\n"
-            "3. Każda decyzja podjęta przez wyższą rangę komisji jest ostateczna, chyba że zarząd postanowi inaczej.\n"
-            "4. Członek komisji ma obowiązek zachować pełną kulturę osobistą podczas wykonywania swoich obowiązków.\n"
-            "5. Wynoszenie informacji z kanałów administracyjnych/komisyjnych skutkuje natychmatowym wydaleniem oraz czarną listą."
-        )
-        await interaction.followup.send(rules_text, ephemeral=True)
+    .brand-badge{
+      width:42px;height:42px;
+      display:grid;place-items:center;
+      border-radius:12px;
+      background:linear-gradient(135deg, rgba(245,158,11,.25), rgba(249,115,22,.15));
+      border:1px solid rgba(245,158,11,.25);
+      box-shadow:var(--shadow);
+      font-size:20px;
+    }
 
+    .navlinks{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
 
-# --- SYSTEM TICKETÓW ---
-class TicketButton(ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
+    .navlinks a{
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.02);
+      color:var(--muted);
+      transition:.2s ease;
+      font-size:14px;
+    }
+    .navlinks a:hover{
+      color:var(--text);
+      border-color:rgba(245,158,11,.4);
+      background:rgba(245,158,11,.08);
+    }
 
-    @ui.button(label="Stworz Ticket", style=discord.ButtonStyle.green, custom_id="create_ticket_btn", emoji="📩")
-    async def create_ticket(self, interaction: discord.Interaction, button: ui.Button):
-        KATEGORIA_ID = 1516847056210366645
-        guild = interaction.guild
-        category = discord.utils.get(guild.categories, id=KATEGORIA_ID)
-        
-        if not category:
-            await interaction.response.send_message("Blad: Nie znaleziono podanej kategorii ticketow.", ephemeral=True)
-            return
+    .hero{
+      padding:32px 0 24px;
+    }
 
-        channel_name = f"ticket-{interaction.user.name}"
-        overwrites = {
-            guild.default_role: discord.PermissionOverwrite(read_messages=False),
-            interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages=True, embed_links=True, attach_files=True),
-            guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True)
-        }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.35fr .85fr;
+      gap:20px;
+      align-items:stretch;
+    }
 
-        ticket_channel = await guild.create_text_channel(name=channel_name, category=category, overwrites=overwrites)
-        
-        embed = discord.Embed(
-            title="🎫 Nowy Ticket",
-            description=f"Witaj {interaction.user.mention}!\nNapisz w czym mozemy Ci pomoc. Administracja zajmie sie Twoim zgloszeniem tak szybko, jak to mozliwe.",
-            color=discord.Color.blue()
-        )
-        await ticket_channel.send(embed=embed)
-        await interaction.response.send_message(f"Pomyslnie utworzono Twoje zgloszenie: {ticket_channel.mention}", ephemeral=True)
+    .hero-banner{
+      min-height:560px;
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(4,6,10,.12), rgba(4,6,10,.88)),
+        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    }
 
+    .hero-overlay{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.40) 55%, rgba(0,0,0,.82) 100%);
+    }
 
-# --- PRZYCISKI ZARZĄDZANIA PODANIEM ---
-class ApplicationManageButtons(ui.View):
-    def __init__(self, applicant_mention, applicant_name):
-        super().__init__(timeout=None)
-        self.applicant_mention = applicant_mention
-        self.applicant_name = applicant_name
+    .hero-content{
+      position:relative;
+      z-index:1;
+      padding:34px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:560px;
+    }
 
-    async def interaction_check(self, interaction: discord.Interaction) -> bool:
-        WYMAGANA_ROLA_ID = 1516825582002765894
-        ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
-        if not ma_role:
-            await interaction.response.send_message("Nie masz uprawnien (wymaganej roli SOP) do zarzadzania tym podaniem!", ephemeral=True)
-            return False
-        return True
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:fit-content;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.1);
+      color:#f5d28a;
+      font-size:13px;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
 
-    @ui.button(label="Przyjmij", style=discord.ButtonStyle.green, custom_id="app_accept_btn", emoji="🟢")
-    async def accept_application(self, interaction: discord.Interaction, button: ui.Button):
-        KANAL_SUKCESU_ID = 1516747178020966421
-        channel = interaction.guild.get_channel(KANAL_SUKCESU_ID)
-        
-        embed = discord.Embed(
-            title="💚 Podanie Przyjete!",
-            description=f"Uzytkownik {self.applicant_mention} (**{self.applicant_name}**) pomyslnie przeszedl etap rekrutacji do SOP!",
-            color=discord.Color.green()
-        )
-        embed.set_footer(text=f"Zaakceptowane przez: {interaction.user.name}")
-        
-        if channel:
-            await channel.send(embed=embed)
-        await interaction.response.send_message("Oznaczono podanie jako: **PRZYJĘTE**. Komunikat zostal wyslany.", ephemeral=False)
+    .hero h1{
+      margin:16px 0 12px;
+      font-size:clamp(2.2rem, 5vw, 4.8rem);
+      line-height:1;
+      max-width:10ch;
+      text-shadow:0 8px 30px rgba(0,0,0,.65);
+    }
 
-    @ui.button(label="Odrzuc", style=discord.ButtonStyle.red, custom_id="app_reject_btn", emoji="🔴")
-    async def reject_application(self, interaction: discord.Interaction, button: ui.Button):
-        KANAL_ODRZUCENIA_ID = 1516747254021754920
-        channel = interaction.guild.get_channel(KANAL_ODRZUCENIA_ID)
-        
-        embed = discord.Embed(
-            title="💔 Podanie Odrzucone",
-            description=f"Uzytkownik {self.applicant_mention} (**{self.applicant_name}**) nie zostal przyjety do frakcji SOP w obecnej rekrutacji.",
-            color=discord.Color.red()
-        )
-        embed.set_footer(text=f"Rozpatrzone przez: {interaction.user.name}")
-        
-        if channel:
-            await channel.send(embed=embed)
-        await interaction.response.send_message("Oznaczono podanie jako: **ODRZUCONE**. Komunikat zostal wyslany.", ephemeral=False)
+    .hero p{
+      max-width:680px;
+      color:#d5dde8;
+      font-size:1.02rem;
+      line-height:1.7;
+      margin:0;
+    }
 
-    @ui.button(label="Zamknij", style=discord.ButtonStyle.secondary, custom_id="app_close_btn", emoji="🔒")
-    async def close_application(self, interaction: discord.Interaction, button: ui.Button):
-        await interaction.response.send_message("Kanal zostanie zamkniety za 5 sekund...")
-        await asyncio.sleep(5)
-        await interaction.channel.delete()
+    .hero-quote{
+      margin-top:18px;
+      padding:16px 18px;
+      border-left:4px solid var(--accent);
+      background:rgba(255,255,255,.06);
+      border-radius:14px;
+      max-width:720px;
+      color:#fff;
+    }
 
+    .hero-footer{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      margin-top:24px;
+    }
 
-# --- SYSTEM STARTOWY REKRUTACJI (APLIKUJ) ---
-class ApplyButton(ui.View):
-    def __init__(self):
-        super().__init__(timeout=None)
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 18px;
+      border-radius:14px;
+      border:1px solid transparent;
+      font-weight:700;
+      transition:.2s ease;
+    }
 
-    @ui.button(label="Zloz Podanie do SOP", style=discord.ButtonStyle.blurple, custom_id="apply_sop_btn", emoji="📝")
-    async def create_application(self, interaction: discord.Interaction, button: ui.Button):
-        KATEGORIA_ID = 1516847056210366645
-        guild = interaction.guild
-        category = discord.utils.get(guild.categories, id=KATEGORIA_ID)
-        
-        if not category:
-            await interaction.response.send_message("Blad: Nie znaleziono kategorii rekrutacyjnej na serwerze.", ephemeral=True)
-            return
+    .btn-primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#111;
+      box-shadow:0 12px 30px rgba(245,158,11,.25);
+    }
 
-        channel_name = f"podanie-{interaction.user.name}"
-        overwrites = {
-            guild.default_role: discord.PermissionOverwrite(read_messages=False),
-            interaction.user: discord.PermissionOverwrite(read_messages=True, send_messages=True, embed_links=True, attach_files=True),
-            guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True)
-        }
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-ghost{
+      background:rgba(255,255,255,.05);
+      border-color:var(--line);
+      color:var(--text);
+    }
 
-        app_channel = await guild.create_text_channel(name=channel_name, category=category, overwrites=overwrites)
-        
-        embed_questions = discord.Embed(
-            title="📋 Formularz Rekrutacyjny do SOP",
-            description=(
-                f"Witaj {interaction.user.mention} w swoim kanale rekrutacyjnym!\n"
-                "Odpowiedz na ponizsze pytania starannie i w jednej wiadomosci (lub punkt po punkcie):\n\n"
-                "**1.** Jak masz na imie (nick IG)?\n"
-                "**2.** Ile masz lat?\n"
-                "**3.** Dlaczego chcesz dolaczyc wlasnie do SOP?\n"
-                "**4.** Czy grales juz na Venus RP? Jak dlugo?\n"
-                "**5.** Czy miales wczesniej doswiadczenie w mundurowce / frakcjach ochronnych? (jesli tak – jakie)\n"
-                "**6.** Jak rozumiesz role SOP na serwerze?\n"
-                "**7.** Czy posiadasz mikrofon i jestes w stanie uzywac go podczas sluzby?\n"
-                "**8.** Ile czasu w tygodniu jestes w stanie poswiecic na sluzbe?\n"
-                "**9.** Czy zapoznales sie z regulaminem serwera Venus RP oraz regulaminem SOP?\n"
-                "**10.** Czy jestes w stanie przestrzegac zasad i podporzadkowac sie dowodztwu?"
-            ),
-            color=discord.Color.gold()
-        )
-        embed_questions.set_footer(text="Po uzupelnieniu pytan, wyczekuj na werdykt Zarzadu SOP.")
-        await app_channel.send(embed=embed_questions)
-        
-        embed_manage = discord.Embed(
-            title="🛠️ Panel Zarzadzania Rekrutacja",
-            description="Sekcja przeznaczona wylacznie dla Zarzadu SOP. Uzyj przyciskow po przeanalizowaniu podania gracza.",
-            color=discord.Color.dark_grey()
-        )
-        await app_channel.send(embed=embed_manage, view=ApplicationManageButtons(interaction.user.mention, interaction.user.name))
-        
-        await interaction.response.send_message(f"Pomyslnie utworzono Twoj kanal rekrutacyjny: {app_channel.mention}", ephemeral=True)
+    .status-card{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      padding:24px;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(9,13,20,.95));
+      box-shadow:var(--shadow);
+    }
 
+    .status-box{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+    }
 
-# --- INTERAKTYWNE MENU DO BEZWZGLĘDNEGO CZYSZCZENIA UPRAWNIEŃ ---
-class PermissionSelectView(ui.View):
-    def __init__(self, target_role: discord.Role):
-        super().__init__(timeout=60)
-        self.target_role = target_role
+    .status-title{
+      color:var(--muted);
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      margin-bottom:8px;
+    }
 
-    @ui.select(
-        placeholder="Wybierz uprawnienia, które chcesz włączyć...",
-        min_values=1,
-        max_values=7,
-        options=[
-            discord.SelectOption(label="Wyświetlanie kanału", value="view_channel", description="Pozwala widzieć kanał", emoji="👁️"),
-            discord.SelectOption(label="Wysyłanie wiadomości", value="send_messages", description="Pozwala pisać na kanale", emoji="💬"),
-            discord.SelectOption(label="Czytanie historii wiadomości", value="read_message_history", description="Pozwala widzieć stare wiadomości", emoji="📜"),
-            discord.SelectOption(label="Wysyłanie linków", value="embed_links", description="Pozwala na wrzucanie linków", emoji="🔗"),
-            discord.SelectOption(label="Wysyłanie plików i zdjęć", value="attach_files", description="Pozwala wysyłać grafiki", emoji="📁"),
-            discord.SelectOption(label="Dodawanie reakcji", value="add_reactions", description="Pozwala klikać reakcje pod tekstem", emoji="⭐"),
-            discord.SelectOption(label="Wiadomości głosowe", value="send_voice_messages", description="Pozwala na dyktafon", emoji="🎙️")
-        ]
-    )
-    async def select_callback(self, interaction: discord.Interaction, select: ui.Select):
-        # 1. Tworzymy kompletną paczkę blokady - WYŁĄCZAMY ABSOLUTNIE WSZYSTKIE MOŻLIWE PERMISJE DISCORDA (na False)
-        overwrites_dict = {
-            "view_channel": False,
-            "send_messages": False,
-            "send_tts_messages": False,
-            "manage_messages": False,
-            "embed_links": False,
-            "attach_files": False,
-            "read_message_history": False,
-            "mention_everyone": False,
-            "use_external_emojis": False,
-            "add_reactions": False,
-            "create_instant_invite": False,
-            "manage_channels": False,
-            "manage_permissions": False,
-            "manage_webhooks": False,
-            "use_application_commands": False,
-            "send_voice_messages": False,
-            "use_external_stickers": False,
-            "send_polls": False,
-            # Permisje głosowe / wątkowe (na wypadek gdyby kanał był sprawdzany pod ich kątem)
-            "connect": False,
-            "speak": False,
-            "stream": False,
-            "use_embedded_activities": False,
-            "use_soundboard": False,
-            "use_external_sounds": False,
-            "mute_members": False,
-            "deafen_members": False,
-            "move_members": False,
-            "manage_threads": False,
-            "create_public_threads": False,
-            "create_private_threads": False,
-            "send_messages_in_threads": False
-        }
+    .status-open{color:var(--success); font-weight:800}
+    .status-closed{color:var(--danger); font-weight:800}
 
-        # 2. Tylko wybrane opcje z menu przestawiamy na True (Zezwól)
-        for choice in select.values:
-            overwrites_dict[choice] = True
+    .card-list{
+      display:grid;
+      gap:14px;
+      margin-top:4px;
+    }
 
-        overwrite = discord.PermissionOverwrite(**overwrites_dict)
+    .small-card{
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      color:var(--muted);
+      line-height:1.6;
+    }
 
-        try:
-            # 3. Zgłaszamy pełne nadpisanie uprawnień do Discorda
-            await interaction.channel.set_permissions(self.target_role, overwrite=overwrite)
-            
-            wlaczone = ", ".join([f"`{c}`" for c in select.values])
-            
-            embed = discord.Embed(
-                title="🛡️ Bezwzględna czystka uprawnień zakończona!",
-                description=f"Pomyślnie zmodyfikowano kanał {interaction.channel.mention} dla roli **{self.target_role.name}**.",
-                color=discord.Color.green()
-            )
-            embed.add_field(name="✅ Włączone (Zezwolono):", value=wlaczone, inline=False)
-            embed.add_field(name="⛔ Status pozostałych uprawnień:", value="Wszystkie pozostałe istniejące uprawnienia zostały permanentnie **ZABLOKOWANE (na NIE)**.", inline=False)
-            embed.set_footer(text=f"Wymuszone przez: {interaction.user.name}")
-            
-            select.disabled = True
-            await interaction.response.edit_message(embed=embed, view=self)
-            
-        except discord.Forbidden:
-            await interaction.response.send_message("❌ Błąd: Bot nie posiada wystarczających uprawnień (Zarządzanie Rolami/Kanałami) lub jego rola jest zbyt nisko!", ephemeral=True)
-        except Exception as e:
-            await interaction.response.send_message(f"❌ Wystąpił nieoczekiwany błąd: {e}", ephemeral=True)
+    .section{
+      padding:22px 0;
+    }
 
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      margin-bottom:16px;
+    }
 
-# ==========================================
-# 4. KONFIGURACJA BOTA DISCORDA & INTENTS
-# ==========================================
-intents = discord.Intents.default()
-intents.message_content = True
-intents.members = True
+    .section-title h2{
+      margin:0;
+      font-size:1.7rem;
+    }
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+    .section-title span{
+      color:var(--muted);
+      font-size:14px;
+    }
 
-# --- EVENT: WITANIE I AUTOMATYCZNE RANGOWANIE NOWYCH UŻYTKOWNIKÓW ---
-@bot.event
-async def on_member_join(member: discord.Member):
-    ROLA_STARTOWA_ID = 1516750545807868065
-    KANAL_POWITAN_ID = 1516747421902704711
-    
-    try:
-        role = member.guild.get_role(ROLA_STARTOWA_ID)
-        if role:
-            await member.add_roles(role)
-            print(f"[Auto-Role] Pomyslnie nadano role {role.name} dla {member.name}")
-        else:
-            print(f"[Auto-Role] Blad: Nie znaleziono roli o ID {ROLA_STARTOWA_ID}")
-    except Exception as e:
-        print(f"[Auto-Role] Nie udalo sie nadac roli: {e}")
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
 
-    channel = member.guild.get_channel(KANAL_POWITAN_ID)
-    if channel:
-        embed = discord.Embed(
-            title="👋 Witamy na serwerze!",
-            description=f"Witaj {member.mention} (**{member.name}**) na naszym serwerze Discord frakcji SOP!",
-            color=discord.Color.blue()
-        )
-        if member.avatar:
-            embed.set_thumbnail(url=member.avatar.url)
-            
-        embed.add_field(name="📋 Rekrutacja", value="Jeśli chcesz złożyć podanie, przejdź na odpowiedni kanał i użyj komendy `/aplikuj`.", inline=False)
-        embed.add_field(name="📜 Regulamin", value="Zapoznaj się z zasadami panującymi w strukturach przy użyciu `/regulamin`.", inline=False)
-        embed.set_footer(text=f"Jesteś naszym {member.guild.member_count} członkiem!")
-        
-        await channel.send(content=member.mention, embed=embed)
+    .info-card{
+      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(10,14,20,.95));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
 
+    .info-card h3{
+      margin:0 0 10px;
+      font-size:1.05rem;
+    }
 
-@bot.event
-async def on_ready():
-    print(f'Zalogowano pomyslnie jako: {bot.user.name}')
-    
-    bot.add_view(TicketButton())
-    bot.add_view(ApplyButton())
-    bot.add_view(RulesButton())
-    bot.add_view(ApplicationManageButtons(applicant_mention="", applicant_name=""))
-    
-    try:
-        print("Usuwanie zdublowanych komend z pamieci gildii...")
-        for guild in bot.guilds:
-            bot.tree.clear_commands(guild=guild)
-            await bot.tree.sync(guild=guild)
-        
-        await bot.tree.sync()
-        print("Sukces! Zsynchronizowano czyste komendy.")
-    except Exception as e:
-        print(f"Blad podczas oczyszczania i synchronizacji drzewa komend: {e}")
-        
-    bot.loop.create_task(self_ping())
+    .info-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+    }
 
-# 1. Komenda slash /ping
-@bot.tree.command(name="ping", description="Sprawdza czy bot dziala (Wymaga roli SOP)")
-async def ping_command(interaction: discord.Interaction):
-    WYMAGANA_ROLA_ID = 1516825582002765894
-    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
-    
-    if ma_role:
-        await interaction.response.send_message('yoo jestem tu')
-    else:
-        await interaction.response.send_message('Nie masz odpowiedniej roli, aby uzyc tej komendy.', ephemeral=True)
+    .icon{
+      width:48px;height:48px;
+      display:grid;place-items:center;
+      border-radius:14px;
+      background:rgba(245,158,11,.1);
+      border:1px solid rgba(245,158,11,.25);
+      margin-bottom:14px;
+      font-size:22px;
+    }
 
-# 2. Komenda slash /ticket
-@bot.tree.command(name="ticket", description="Wysyla panel do tworzenia ticketow (Wymaga roli SOP)")
-async def ticket_command(interaction: discord.Interaction):
-    WYMAGANA_ROLA_ID = 1516825582002765894
-    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
-    
-    if not ma_role:
-        await interaction.response.send_message("Nie masz odpowiedniej roli, aby uzyc tej komendy.", ephemeral=True)
-        return
-        
-    embed = discord.Embed(
-        title="🤖 System Zgloszen (SOP)",
-        description="Potrzebujesz pomocy administracji? Chcesz zglosic problem?\nKliknij ponizszy przycisk, aby otworzyc privatny kanal kontaktu.",
-        color=discord.Color.green()
-    )
-    await interaction.response.send_message(embed=embed, view=TicketButton())
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
 
-# 3. Komenda slash /aplikuj
-@bot.tree.command(name="aplikuj", description="Wysyla panel rekrutacyjny do frakcji SOP")
-async def apply_command(interaction: discord.Interaction):
-    embed = discord.Embed(
-        title="🦅 Rekrutacja do System Operational Protocols (SOP)",
-        description="Chcesz zasilic szeregi naszej frakcji na serwerze Venus RP?\nKliknij niebieski przycisk ponizzej, aby otworzyc swoj osobisty kwestionariusz rekrutacyjny.",
-        color=discord.Color.blurple()
-    )
-    await interaction.response.send_message(embed=embed, view=ApplyButton())
+    .leaders{
+      display:grid;
+      gap:12px;
+      margin-top:12px;
+    }
 
-# 4. Komenda slash /regulamin
-@bot.tree.command(name="regulamin", description="Wysyla panel z oficjalnym regulaminem wewnetrznym SOP (Wymaga roli SOP)")
-async def regulamin_command(interaction: discord.Interaction):
-    WYMAGANA_ROLA_ID = 1516825582002765894
-    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
-    
-    if not ma_role:
-        await interaction.response.send_message("Nie masz odpowiedniej roli, aby uzyc tej komendy.", ephemeral=True)
-        return
-        
-    embed = discord.Embed(
-        title="📜 Regulamin Frakcyjny SOP",
-        description="Pobierz oficjalny i obowiazujacy zestaw zasad Służby Ochrony Państwa.\nKliknij ponizszy przycisk, aby wyswietlic pelna tresc regulaminu.",
-        color=discord.Color.blue()
-    )
-    await interaction.response.send_message(embed=embed, view=RulesButton())
+    .leader{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      color:var(--muted);
+    }
 
-# 5. Komenda slash /pojęcia
-@bot.tree.command(name="pojęcia", description="Wysyła zestawienie podstawowych pojęć RP (Wymaga roli SOP)")
-async def concepts_command(interaction: discord.Interaction):
-    WYMAGANA_ROLA_ID = 1516825582002765894
-    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
-    
-    if not ma_role:
-        await interaction.response.send_message("Nie masz odpowiedniej roli, aby uzyc tej komendy.", ephemeral=True)
-        return
+    .leader strong{color:var(--text)}
+    .news-item{
+      padding:16px 0;
+      border-bottom:1px solid var(--line);
+      color:var(--muted);
+      line-height:1.7;
+    }
 
-    embed = discord.Embed(
-        title="📚 Słownik Podstawowych Pojęć Roleplay",
-        description="Oto zestawienie najważniejszych pojęć i skrótów obowiązujących podczas rozgrywki RP:",
-        color=discord.Color.orange()
-    )
-    
-    embed.add_field(name="🌐 Podstawy Świata", value=(
-        "**[IC] In Character** – świat naszej postaci, wszystko dotyczy rozgrywki.\n"
-        "**[OOC] Out of Character** – Wszystko, co nie jest związane z naszą postacią."
-    ), inline=False)
+    .news-item:last-child{border-bottom:none;padding-bottom:0}
 
-    embed.add_field(name="💀 Uśmiercanie Postaci", value=(
-        "**[CK] Character Kill** – uśmiercenie postaci.\n"
-        "**[FCK] Force Character Kill** – uśmiercenie postaci bez zgody jej właściciela."
-    ), inline=False)
+    .requirements{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
 
-    embed.add_field(name="⚔️ Walka i Eliminacja", value=(
-        "**[RK] Revenge Kill** – występuje gdy po swojej śmierci wracasz do osoby która cię zabija, aby się na niej zemścić.\n"
-        "**[RDM] Random Deathmatch** – zabijanie innych graczy bez powodu do BW lub bez odegrania stosownej akcji.\n"
-        "**[VDM] Vehicle Deathmatch** – zabijanie za pomocą wszystkich pojazdów.\n"
-        "**[BW] Brutally Wounded** – Brak przytomności postaci."
-    ), inline=False)
+    .req-box{
+      padding:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+    }
 
-    embed.add_field(name="🚫 Naruszenia Zasad Gry", value=(
-        "**[PG] Power Gaming** – zmuszanie kogoś do akcji RP, bez możliwości reakcji.\n"
-        "**[MG] Meta Gaming** – wykorzystanie informacji OOC w IC.\n"
-        "**[CL] Combat Log** – wylogowanie się podczas akcji IC.\n"
-        "**[FRP] Fail RP** – Błędne odegranie akcji RP.\n"
-        "**[SS] Stream Sniping** – rodzaj MG polegający na wykorzystywaniu informacji z transmisji innego gracza na jakiejkolwiek platformie."
-    ), inline=False)
+    .req-box h4{margin:0 0 10px}
+    .req-box ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.8;
+    }
 
-    embed.add_field(name="🚗 Pojazdy i Prowokacje", value=(
-        "**[FD] Fail Driving** – Jazda pojazdem nieprzystosowanym do danego rodzaju nawierzchni.\n"
-        "**[DB] DriveBy** – Strzelanie z jakiegokolwiek pojazdu.\n"
-        "**[NJ] Ninja Jacking** – wyrzucenie osoby z pojazdu przy użyciu kajdanek bez odegrania i odjechanie nim.\n"
-        "**[CB] Cop Baiting** – prowokowanie służb porządkowych do pościgu lub ciągłe celowe przeszkadzanie w interwencji."
-    ), inline=False)
+    .footer{
+      margin-top:24px;
+      padding:22px 0 34px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
 
-    embed.add_field(name="👤 Tożsamość", value=(
-        "**[CN] Celebrity Name** – Dane sławnych osób, takie postacie są od razu usuwane."
-    ), inline=False)
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:12px 0;
+    }
 
-    embed.set_footer(text="Zarząd Frakcji SOP • Venus RP")
-    await interaction.response.send_message(embed=embed)
+    .footer-links a{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
 
+    @media (max-width: 980px){
+      .hero-grid,.grid-3,.two-col,.requirements{grid-template-columns:1fr}
+      .hero-banner,.hero-content{min-height:auto}
+      .hero-content{padding:24px}
+      .hero h1{max-width:none}
+      .section-title{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge">🛡️</div>
+        <div>SOP | STRONA GŁÓWNA RP</div>
+      </div>
+      <nav class="navlinks">
+        <a href="#onas">O nas</a>
+        <a href="#kierownictwo">Kierownictwo</a>
+        <a href="#news">News</a>
+        <a href="#rekrutacja">Rekrutacja</a>
+        <a href="#ochrona">Ochrona</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
 
-# 6. Komenda slash /konfiguruj-kanał (Z ABSOLUTNYM CZYSZCZENIEM)
-@bot.tree.command(name="konfiguruj-kanał", description="Bezwzględnie ustawia wybrane uprawnienia, blokując całą resztę (Wymaga roli SOP)")
-@app_commands.describe(rola_do_ustawienia="Wybierz rolę, której konfigurujesz uprawnienia")
-async def configure_channel_command(interaction: discord.Interaction, rola_do_ustawienia: discord.Role):
-    WYMAGANA_ROLA_ID = 1516825582002765894
-    ma_role = any(role.id == WYMAGANA_ROLA_ID for role in interaction.user.roles)
-    
-    if not ma_role:
-        await interaction.response.send_message("Nie masz odpowiedniej roli, aby uzyc tej komendy.", ephemeral=True)
-        return
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-banner">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <div>
+              <div class="eyebrow">🖤 Elitarna ochrona VIP • RP Server</div>
+              <h1>Profesjonalizm. Dyskrecja. Bezpieczeństwo State VIP.</h1>
+              <p>
+                Służba Ochrony Państwa to formacja odpowiedzialna za zabezpieczenie najważniejszych osób w stanie,
+                konwojów rządowych oraz wydarzeń o najwyższym priorytecie bezpieczeństwa.
+              </p>
+              <div class="hero-quote">
+                Chronimy tych, którzy rządzą stanem — z precyzją, honorem i pełną gotowością operacyjną.
+              </div>
+            </div>
+            <div class="hero-footer">
+              <a class="btn btn-primary" href="#rekrutacja">📝 Złóż podanie</a>
+              <a class="btn btn-ghost" href="#onas">Poznaj SOP</a>
+            </div>
+          </div>
+        </div>
 
-    embed = discord.Embed(
-        title="🛡️ Panel Ścisłej Kontroli Uprawnień",
-        description=f"Wybierz z listy uprawnienia, które chcesz **WŁĄCZYĆ** roli **{rola_do_ustawienia.name}** na tym kanale.\n\n"
-                    "⚠️ **UWAGA:** Każda niewybrana funkcja (zarządzanie wiadomościami, tworzenie ankiet, wątki, pingi, wzmianki itp.) zostanie **całkowicie zablokowana na NIE**.",
-        color=discord.Color.red()
-    )
-    
-    view = PermissionSelectView(target_role=rola_do_ustawienia)
-    await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+        <aside class="status-card">
+          <div class="status-box">
+            <div class="status-title">Status rekrutacji</div>
+            <div class="status-closed">🔴 REKRUTACJA: ZAMKNIĘTA</div>
+            <p style="color:var(--muted);margin:10px 0 0;line-height:1.6;">
+              W przypadku otwarcia rekrutacji przycisk poniżej można podpiąć pod Google Forms lub system forum.
+            </p>
+          </div>
 
+          <div class="status-box">
+            <div class="status-title">Szybki kontakt</div>
+            <div style="line-height:1.8;color:var(--text);">
+              Discord: <strong>@sop.command</strong><br />
+              OOC: <strong>Kontakt przez kanał rekrutacyjny</strong><br />
+              Status służby: <strong>Aktywna</strong>
+            </div>
+          </div>
 
-# ==========================================
-# 5. ASYNCHRONICZNE URUCHOMIENIE CAŁOŚCI
-# ==========================================
-async def main():
-    port = int(os.environ.get("PORT", 10000))
-    
-    import werkzeug.serving
-    loop = asyncio.get_event_loop()
-    loop.run_in_executor(None, lambda: werkzeug.serving.run_simple('0.0.0.0', port, app, use_debugger=False, use_reloader=False))
-    
-    TOKEN = os.environ.get("TOKEN")
-    if not TOKEN:
-        print("BLAD: Brak zmiennej TOKEN w ustawieniach srodowiskowych!")
-        return
+          <div class="card-list">
+            <div class="small-card">🎯 Ochrona osobista VIP, prewencja zagrożeń, eskorty i zabezpieczenia strategicznych punktów.</div>
+            <div class="small-card">🚓 Konwoje rządowe, koordynacja kolumn pojazdów uprzywilejowanych i procedury ewakuacyjne.</div>
+            <div class="small-card">📡 Rozpoznanie tras, sprawdzanie obiektów i wsparcie podczas eventów IC.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-    async with bot:
-        await bot.start(TOKEN)
+    <section id="onas" class="section">
+      <div class="section-title">
+        <h2>O nas i nasza misja</h2>
+        <span>Kim jesteśmy w lore frakcji</span>
+      </div>
 
-if __name__ == "__main__":
-    asyncio.run(main())
+      <div class="grid-3">
+        <article class="info-card">
+          <div class="icon">🛡️</div>
+          <h3>Kim jesteśmy</h3>
+          <p>
+            Służba Ochrony Państwa to elitarna formacja podległa pod Departament Sprawiedliwości / Rząd,
+            której głównym zadaniem jest zapewnienie najwyższego poziomu bezpieczeństwa Gubernatorowi,
+            Prezydentowi Miasta oraz delegacjom zagranicznym odwiedzającym nasz stan.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="icon">👤</div>
+          <h3>Ochrona osobista</h3>
+          <p>
+            Bezpośrednia asysta i ochrona fizyczna najważniejszych osób w państwie, szybka reakcja na incydenty
+            oraz utrzymanie pełnej kontroli nad strefą VIP.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <div class="icon">🚨</div>
+          <h3>Rozpoznanie i zabezpieczenie</h3>
+          <p>
+            Sprawdzanie tras przejazdów, budynków i eliminacja zagrożeń bombowych przed przybyciem VIP-a,
+            a także wsparcie podczas czynności operacyjnych i ewakuacyjnych.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="kierownictwo" class="section">
+      <div class="section-title">
+        <h2>Biuro komendanta</h2>
+        <span>Oficjalny zarząd frakcji</span>
+      </div>
+
+      <div class="two-col">
+        <div class="info-card">
+          <h3>Zarząd frakcji</h3>
+          <div class="leaders">
+            <div class="leader"><span><strong>Komendant SOP</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
+            <div class="leader"><span><strong>Zastępca Komendanta</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
+            <div class="leader"><span><strong>Oficer Operacyjny</strong><br />[Imię Nazwisko] (@discord)</span><span>IC / OOC</span></div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Słowo od komendanta</h3>
+          <p>
+            Witam wszystkich zainteresowanych służbą w szeregach SOP. Nasza formacja stawia na dyscyplinę,
+            profesjonalizm i kulturę pracy, dlatego szukamy osób odpowiedzialnych, opanowanych i gotowych działać
+            zespołowo. Jeśli cenisz porządek, taktykę i klimat realnej ochrony VIP, możesz znaleźć u nas swoje miejsce.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" class="section">
+      <div class="section-title">
+        <h2>Centrum prasowe</h2>
+        <span>Wydarzenia z serwera</span>
+      </div>
+
+      <div class="info-card">
+        <div class="news-item">
+          <strong>18.06.</strong> Funkcjonariusze SOP z powodzeniem zabezpieczyli wizytę delegacji z Los Santos.
+          Przejazd kolumny odbył się bez zakłóceń.
+        </div>
+        <div class="news-item">
+          <strong>16.06.</strong> Zakończyliśmy wspólne szkolenie z LSPD z zakresu jazdy defensywnej i odbijania zakładnika z pojazdu.
+        </div>
+        <div class="news-item">
+          <strong>14.06.</strong> Jednostka rozpoznawcza przeprowadziła kontrolę trasy pod planowany przejazd VIP na teren portu.
+        </div>
+      </div>
+    </section>
+
+    <section id="rekrutacja" class="section">
+      <div class="section-title">
+        <h2>Zakładka rekrutacji</h2>
+        <span>Serce strony RP</span>
+      </div>
+
+      <div class="two-col">
+        <div class="info-card">
+          <h3>Wymagania IC</h3>
+          <div class="requirements">
+            <div class="req-box">
+              <h4>W grze</h4>
+              <ul>
+                <li>Czysta kartoteka karna.</li>
+                <li>Prawo jazdy kat. B, mile widziane C.</li>
+                <li>Licencja na broń.</li>
+                <li>Wiek powyżej 21 lat.</li>
+                <li>Nienaganna kultura osobista.</li>
+              </ul>
+            </div>
+            <div class="req-box">
+              <h4>Poza grą</h4>
+              <ul>
+                <li>Sprawny mikrofon i Discord.</li>
+                <li>Znajomość regulaminu serwera.</li>
+                <li>Wysoki poziom znajomości RP.</li>
+                <li>Dyspozycyjność min. 5 godzin tygodniowo.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3>Złóż podanie</h3>
+          <p>
+            Tutaj możesz podpiąć formularz Google Forms albo system podań na forum. Przycisk poniżej prowadzi
+            do zewnętrznego formularza rekrutacyjnego.
+          </p>
+          <div style="margin-top:18px;">
+            <a class="btn btn-primary" href="https://forms.google.com" target="_blank" rel="noopener noreferrer">ZŁÓŻ PODANIE</a>
+          </div>
+          <p style="margin-top:16px;color:var(--muted);">
+            Wzór odpowiedzi może zawierać: imię postaci, wiek, doświadczenie RP, godziny aktywności i motywację.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="ochrona" class="section">
+      <div class="section-title">
+        <h2>Ochrona komercyjna</h2>
+        <span>Usługi dla obywateli i eventów</span>
+      </div>
+
+      <div class="two-col">
+        <div class="info-card">
+          <h3>Co oferujemy</h3>
+          <p>
+            SOP może zostać wynajęta do zabezpieczania imprez masowych, koncertów, otwarć biznesów, licytacji
+            komorniczych i innych wydarzeń wymagających profesjonalnej obstawy. To dobry mechanizm do budowania
+            interakcji z biznesami, organizacjami i innymi grupami na serwerze.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Wniosek zgłoszeniowy</h3>
+          <p>
+            Chcesz wynająć ochronę na event? Wypełnij poniższy wniosek minimum 24h przed wydarzeniem.
+          </p>
+          <a class="btn btn-ghost" href="#kontakt" style="margin-top:10px;">Przejdź do kontaktu</a>
+        </div>
+      </div>
+    </section>
+
+    <footer id="kontakt" class="footer">
+      <div class="section-title" style="margin-bottom:10px;">
+        <h2 style="font-size:1.3rem;margin:0;">Stopka i kontakt</h2>
+      </div>
+      <div class="footer-links">
+        <a href="https://discord.com" target="_blank" rel="noopener noreferrer">Discord frakcyjny</a>
+        <a href="#">Regulamin SOP</a>
+        <a href="#">Forum / Podania</a>
+      </div>
+      <div>
+        Strona stworzona na potrzeby rozgrywki Roleplay na serwerze [Nazwa Serwera]. Przedstawione postacie i wydarzenia są fikcyjne.
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
