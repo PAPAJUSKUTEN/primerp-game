@@ -201,7 +201,6 @@
       color:#111;
       box-shadow:0 12px 30px rgba(245,158,11,.25);
     }
-
     .btn-primary:hover{transform:translateY(-1px)}
     .btn-ghost{
       background:rgba(255,255,255,.05);
@@ -253,10 +252,7 @@
       line-height:1.6;
     }
 
-    .section{
-      padding:22px 0;
-    }
-
+    .section{padding:22px 0;}
     .section-title{
       display:flex;
       justify-content:space-between;
@@ -264,16 +260,8 @@
       gap:16px;
       margin-bottom:16px;
     }
-
-    .section-title h2{
-      margin:0;
-      font-size:1.7rem;
-    }
-
-    .section-title span{
-      color:var(--muted);
-      font-size:14px;
-    }
+    .section-title h2{margin:0;font-size:1.7rem;}
+    .section-title span{color:var(--muted);font-size:14px;}
 
     .grid-3{
       display:grid;
@@ -288,17 +276,8 @@
       padding:22px;
       box-shadow:var(--shadow);
     }
-
-    .info-card h3{
-      margin:0 0 10px;
-      font-size:1.05rem;
-    }
-
-    .info-card p{
-      margin:0;
-      color:var(--muted);
-      line-height:1.7;
-    }
+    .info-card h3{margin:0 0 10px;font-size:1.05rem;}
+    .info-card p{margin:0;color:var(--muted);line-height:1.7;}
 
     .icon{
       width:48px;height:48px;
@@ -316,12 +295,7 @@
       gap:18px;
     }
 
-    .leaders{
-      display:grid;
-      gap:12px;
-      margin-top:12px;
-    }
-
+    .leaders{display:grid;gap:12px;margin-top:12px;}
     .leader{
       display:flex;
       justify-content:space-between;
@@ -332,7 +306,6 @@
       border:1px solid var(--line);
       color:var(--muted);
     }
-
     .leader strong{color:var(--text)}
     .news-item{
       padding:16px 0;
@@ -340,7 +313,6 @@
       color:var(--muted);
       line-height:1.7;
     }
-
     .news-item:last-child{border-bottom:none;padding-bottom:0}
 
     .requirements{
@@ -348,14 +320,12 @@
       grid-template-columns:1fr 1fr;
       gap:14px;
     }
-
     .req-box{
       padding:18px;
       border-radius:18px;
       background:rgba(255,255,255,.03);
       border:1px solid var(--line);
     }
-
     .req-box h4{margin:0 0 10px}
     .req-box ul{
       margin:0;
@@ -372,14 +342,12 @@
       font-size:14px;
       line-height:1.7;
     }
-
     .footer-links{
       display:flex;
       flex-wrap:wrap;
       gap:10px;
       margin:12px 0;
     }
-
     .footer-links a{
       padding:10px 14px;
       border-radius:999px;
@@ -438,12 +406,7 @@
       gap:12px;
       margin-bottom:16px;
     }
-
-    .modal-title{
-      font-size:1.2rem;
-      font-weight:700;
-    }
-
+    .modal-title{font-size:1.2rem;font-weight:700;}
     .modal-close{
       width:32px;height:32px;
       display:grid;place-items:center;
@@ -454,16 +417,8 @@
       cursor:pointer;
     }
 
-    .role-options{
-      display:grid;
-      gap:10px;
-      margin:12px 0 18px;
-    }
-
-    .role-option{
-      position:relative;
-    }
-
+    .role-options{display:grid;gap:10px;margin:12px 0 18px;}
+    .role-option{position:relative;}
     .role-card{
       display:flex;
       flex-direction:column;
@@ -478,7 +433,6 @@
       font-size:14px;
     }
     .role-card strong{color:var(--text);font-size:14px}
-
     .role-radio{
       position:absolute;
       left:12px;
@@ -488,7 +442,6 @@
       height:16px;
       border-radius:999px;
       border:2px solid var(--muted);
-      box-sizing:border-box;
     }
     .role-card::after{
       content:'';
@@ -501,13 +454,11 @@
       background:var(--accent);
       transition:transform .18s ease;
     }
-
     .role-option input[type="radio"]{
       position:absolute;
       opacity:0;
       pointer-events:none;
     }
-
     .role-option input[type="radio"]:checked + .role-card{
       border-color:rgba(245,158,11,.8);
       background:rgba(245,158,11,.10);
@@ -525,10 +476,7 @@
       padding-top:14px;
       border-top:1px solid var(--line);
     }
-    .login-panel h4{
-      margin:0 0 8px;
-      font-size:1rem;
-    }
+    .login-panel h4{margin:0 0 8px;font-size:1rem;}
     .login-panel label{
       display:block;
       font-size:13px;
@@ -579,10 +527,7 @@
       align-items:center;
       background:rgba(3,5,10,.95);
     }
-    .system-topbar span{
-      font-size:13px;
-      color:var(--muted);
-    }
+    .system-topbar span{font-size:13px;color:var(--muted);}
     .system-main{
       flex:1;
       display:grid;
@@ -595,10 +540,7 @@
       background:rgba(3,5,10,.96);
       overflow:auto;
     }
-    .system-sidebar h3{
-      margin:0 0 10px;
-      font-size:0.95rem;
-    }
+    .system-sidebar h3{margin:0 0 10px;font-size:0.95rem;}
     .system-menu{
       display:grid;
       gap:6px;
@@ -654,36 +596,57 @@
       color:var(--muted);
     }
 
-    .system-panel{}
-
-    .report-table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:10px;
-      font-size:13px;
-    }
-    .report-table th,
-    .report-table td{
-      padding:8px 10px;
-      border-bottom:1px solid var(--line);
-      text-align:left;
-    }
-    .report-table th{
-      color:var(--muted);
-      font-weight:600;
+    .profile-card{
+      display:grid;
+      grid-template-columns:1.5fr 1fr;
+      gap:16px;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid var(--line);
       background:rgba(255,255,255,.02);
+      margin-bottom:16px;
     }
-    .report-status{
+    .profile-main h3{
+      margin:0 0 4px;
+      font-size:1.1rem;
+    }
+    .badge-pill{
       display:inline-flex;
       align-items:center;
       gap:6px;
-      padding:3px 8px;
+      padding:4px 10px;
       border-radius:999px;
-      font-size:11px;
-      border:1px solid var(--line);
+      border:1px solid rgba(245,158,11,.7);
+      font-size:12px;
+      color:#fed7aa;
+      margin-bottom:6px;
     }
-    .report-status.open{border-color:rgba(245,158,11,.7);color:#fed7aa;}
-    .report-status.closed{border-color:rgba(34,197,94,.7);color:#bbf7d0;}
+    .profile-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:6px 18px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .profile-label{
+      color:var(--muted);
+    }
+    .profile-value{
+      color:var(--text);
+      font-weight:500;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(34,197,94,.7);
+      font-size:12px;
+      color:#bbf7d0;
+      margin-bottom:6px;
+    }
 
     .hierarchy-list{
       list-style:none;
@@ -692,9 +655,7 @@
       font-size:13px;
       color:var(--muted);
     }
-    .hierarchy-list li{
-      padding:4px 0;
-    }
+    .hierarchy-list li{padding:4px 0;}
 
     @media (max-width: 980px){
       .hero-grid,.grid-3,.two-col,.requirements{grid-template-columns:1fr}
@@ -702,9 +663,8 @@
       .hero-content{padding:24px}
       .hero h1{max-width:none}
       .section-title{flex-direction:column;align-items:flex-start}
-      .system-main{
-        grid-template-columns:1fr;
-      }
+      .system-main{grid-template-columns:1fr;}
+      .profile-card{grid-template-columns:1fr;}
     }
   </style>
 </head>
@@ -728,8 +688,8 @@
   </header>
 
   <main class="container">
-    <!-- Strona główna identyczna jak wcześniej (hero, sekcje, stopka) – możesz wkleić swoją pełną wersję.
-         Dla skrócenia nie powtarzam wszystkich sekcji, bo nie zmieniamy ich treści. -->
+    <!-- Strona główna jak wcześniej, skrócona tu dla czytelności.
+         W praktyce wklej całą swoją wersję (O nas, Kierownictwo, News, Rekrutacja, Ochrona, Kontakt). -->
 
     <section class="hero">
       <div class="hero-grid">
@@ -781,7 +741,7 @@
       </div>
     </section>
 
-    <!-- tu wklej swoje sekcje: O nas, Kierownictwo, News, Rekrutacja, Ochrona, Kontakt -->
+    <!-- ...tu reszta sekcji strony głównej... -->
 
   </main>
 
@@ -877,71 +837,88 @@
             </div>
           </div>
 
+          <!-- PULPIT = PROFIL FUNKCJONARIUSZA -->
           <div id="panel-pulpit" class="system-panel">
+            <div class="profile-card">
+              <div class="profile-main">
+                <div class="badge-pill">
+                  <span>🔰 Odznaka</span>
+                  <span id="badgeNumber">SOP-000</span>
+                </div>
+                <h3 id="fullName">Imię Nazwisko</h3>
+                <div class="profile-grid">
+                  <div>
+                    <div class="profile-label">Login</div>
+                    <div class="profile-value" id="profileLogin">—</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Stopień</div>
+                    <div class="profile-value" id="rank">Funkcjonariusz SOP</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Data urodzenia</div>
+                    <div class="profile-value" id="dob">—</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Wiek</div>
+                    <div class="profile-value" id="age">—</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Jednostka</div>
+                    <div class="profile-value" id="unit">Sekcja Ochrony VIP</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Służb od</div>
+                    <div class="profile-value" id="serviceFrom">—</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="status-pill" id="dutyStatusPill">
+                  <span>🟢 Na służbie</span>
+                </div>
+                <p class="system-note">
+                  Status służby odzwierciedla, czy funkcjonariusz jest aktualnie na służbie RP.
+                  Możesz to później podpiąć pod system duty z serwera.
+                </p>
+              </div>
+            </div>
             <p class="system-note">
-              Witaj w panelu SOP. Obecny widok jest poglądowy – możesz tu wyświetlać aktywne konwoje, status jednostek,
-              ostatnie raporty lub listę zaplanowanych zabezpieczeń VIP.
+              Pulpit operacyjny wyświetla Twój profil jako funkcjonariusza SOP: dane osobowe, odznakę
+              i podstawowe informacje służbowe. Dane są pobierane na podstawie konta, którym się zalogujesz.
             </p>
           </div>
 
+          <!-- Pozostałe moduły jak wcześniej (skrócone opisy) -->
           <div id="panel-baza-danych" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Baza danych funkcjonariuszy i osób powiązanych z SOP.
-            </p>
+            <p class="system-note">Baza danych funkcjonariuszy i osób powiązanych z SOP.</p>
           </div>
-
           <div id="panel-baza-pojazdow" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Baza pojazdów SOP.
-            </p>
+            <p class="system-note">Baza pojazdów SOP.</p>
           </div>
-
           <div id="panel-zezwolenia" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Zezwolenia i licencje.
-            </p>
+            <p class="system-note">Zezwolenia i licencje.</p>
           </div>
-
           <div id="panel-szkolenia" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Moduł szkoleń SOP.
-            </p>
+            <p class="system-note">Moduł szkoleń SOP.</p>
           </div>
-
           <div id="panel-raporty" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Raporty służb SOP.
-            </p>
+            <p class="system-note">Raporty służb SOP.</p>
           </div>
-
           <div id="panel-konwoje" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Panel konwojów VIP.
-            </p>
+            <p class="system-note">Panel konwojów VIP.</p>
           </div>
-
           <div id="panel-listy-goncze" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Listy gończe: osoby poszukiwane przez SOP.
-            </p>
+            <p class="system-note">Listy gończe SOP.</p>
           </div>
-
           <div id="panel-sprawy-operacyjne" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Sprawy operacyjne SOP.
-            </p>
+            <p class="system-note">Sprawy operacyjne SOP.</p>
           </div>
-
           <div id="panel-archiwum" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Archiwum spraw SOP.
-            </p>
+            <p class="system-note">Archiwum spraw SOP.</p>
           </div>
-
           <div id="panel-hierarchia" class="system-panel" style="display:none;">
-            <p class="system-note">
-              Hierarchia SOP – struktura stopni.
-            </p>
+            <p class="system-note">Hierarchia SOP – struktura stopni.</p>
             <ul class="hierarchy-list">
               <li>1. Komendant SOP</li>
               <li>2. Zastępca Komendanta SOP</li>
@@ -957,19 +934,138 @@
   </div>
 
   <script>
-    // 10 kont – na razie po stronie frontu (demo!)
-    // role: 'sop' lub 'tajna' możesz sobie potem dowolnie poustawiać
+    // 10 kont – demo (prawdziwe przenieś kiedyś na backend)
     const users = [
-      { login: 'shadow_vortex92',  password: 'kX#7mP!aQ9_zT', role: 'sop' },
-      { login: 'cyber_pulse',      password: '3$vF@mK2xL#pW', role: 'sop' },
-      { login: 'pixel_forge26',    password: 'bN8&sY1*vR5_zQ', role: 'sop' },
-      { login: 'nexus_glitch',     password: 'hP4!mX9$kL2@tV', role: 'tajna' },
-      { login: 'quantum_echo',     password: '7#wB2%mZ9_xK1', role: 'tajna' },
-      { login: 'neon_matrix',      password: 'vF5&pQ3!sL8_zX', role: 'sop' },
-      { login: 'alpha_frost00',    password: 'kR9$mX2@tP6_vB', role: 'sop' },
-      { login: 'digital_phantom',  password: '3#vL9%kQ1!zW5', role: 'tajna' },
-      { login: 'cosmic_shifter',   password: 'hP2&mX8$kL4@vT', role: 'tajna' },
-      { login: 'hyper_nova',       password: '7$wB3%mZ9_xK2', role: 'sop' },
+      {
+        login: 'shadow_vortex92',
+        password: 'kX#7mP!aQ9_zT',
+        role: 'sop',
+        badge: 'SOP-101',
+        name: 'Alex Shadow',
+        dob: '1992-03-14',
+        age: 34,
+        rank: 'Starszy Funkcjonariusz SOP',
+        unit: 'Sekcja Ochrony VIP',
+        serviceFrom: '2020-05-01',
+        duty: 'on'
+      },
+      {
+        login: 'cyber_pulse',
+        password: '3$vF@mK2xL#pW',
+        role: 'sop',
+        badge: 'SOP-102',
+        name: 'Jordan Pulse',
+        dob: '1995-08-22',
+        age: 30,
+        rank: 'Funkcjonariusz SOP',
+        unit: 'Sekcja Rozpoznania',
+        serviceFrom: '2021-02-10',
+        duty: 'on'
+      },
+      {
+        login: 'pixel_forge26',
+        password: 'bN8&sY1*vR5_zQ',
+        role: 'sop',
+        badge: 'SOP-103',
+        name: 'Chris Forge',
+        dob: '1990-11-05',
+        age: 35,
+        rank: 'Funkcjonariusz SOP',
+        unit: 'Sekcja Logistyki',
+        serviceFrom: '2019-09-12',
+        duty: 'off'
+      },
+      {
+        login: 'nexus_glitch',
+        password: 'hP4!mX9$kL2@tV',
+        role: 'tajna',
+        badge: 'TS-201',
+        name: 'Morgan Nexus',
+        dob: '1989-01-30',
+        age: 37,
+        rank: 'Agent Specjalny',
+        unit: 'Tajna Jednostka',
+        serviceFrom: '2018-01-01',
+        duty: 'on'
+      },
+      {
+        login: 'quantum_echo',
+        password: '7#wB2%mZ9_xK1',
+        role: 'tajna',
+        badge: 'TS-202',
+        name: 'Taylor Echo',
+        dob: '1993-06-02',
+        age: 33,
+        rank: 'Agent',
+        unit: 'Tajna Jednostka',
+        serviceFrom: '2020-07-15',
+        duty: 'off'
+      },
+      {
+        login: 'neon_matrix',
+        password: 'vF5&pQ3!sL8_zX',
+        role: 'sop',
+        badge: 'SOP-104',
+        name: 'Jamie Matrix',
+        dob: '1994-09-09',
+        age: 31,
+        rank: 'Funkcjonariusz SOP',
+        unit: 'Sekcja Eskort',
+        serviceFrom: '2022-03-03',
+        duty: 'on'
+      },
+      {
+        login: 'alpha_frost00',
+        password: 'kR9$mX2@tP6_vB',
+        role: 'sop',
+        badge: 'SOP-105',
+        name: 'Robin Frost',
+        dob: '1991-12-12',
+        age: 34,
+        rank: 'Starszy Funkcjonariusz SOP',
+        unit: 'Sekcja Szkoleniowa',
+        serviceFrom: '2019-01-20',
+        duty: 'off'
+      },
+      {
+        login: 'digital_phantom',
+        password: '3#vL9%kQ1!zW5',
+        role: 'tajna',
+        badge: 'TS-203',
+        name: 'Sky Phantom',
+        dob: '1988-04-18',
+        age: 38,
+        rank: 'Agent Specjalny',
+        unit: 'Tajna Jednostka',
+        serviceFrom: '2017-06-06',
+        duty: 'on'
+      },
+      {
+        login: 'cosmic_shifter',
+        password: 'hP2&mX8$kL4@vT',
+        role: 'tajna',
+        badge: 'TS-204',
+        name: 'Riley Shifter',
+        dob: '1996-02-01',
+        age: 30,
+        rank: 'Agent',
+        unit: 'Tajna Jednostka',
+        serviceFrom: '2021-11-11',
+        duty: 'off'
+      },
+      {
+        login: 'hyper_nova',
+        password: '7$wB3%mZ9_xK2',
+        role: 'sop',
+        badge: 'SOP-106',
+        name: 'Casey Nova',
+        dob: '1993-10-25',
+        age: 32,
+        rank: 'Funkcjonariusz SOP',
+        unit: 'Sekcja Ochrony VIP',
+        serviceFrom: '2023-01-05',
+        duty: 'on'
+      },
     ];
 
     const loginBtn = document.getElementById('loginTrigger');
@@ -1005,6 +1101,17 @@
     };
     const systemHeading = document.getElementById('systemHeading');
 
+    // elementy profilu
+    const badgeNumber = document.getElementById('badgeNumber');
+    const fullName = document.getElementById('fullName');
+    const profileLogin = document.getElementById('profileLogin');
+    const rankEl = document.getElementById('rank');
+    const dobEl = document.getElementById('dob');
+    const ageEl = document.getElementById('age');
+    const unitEl = document.getElementById('unit');
+    const serviceFromEl = document.getElementById('serviceFrom');
+    const dutyStatusPill = document.getElementById('dutyStatusPill');
+
     let selectedRole = null;
     let step = 1;
     let currentUser = null;
@@ -1027,7 +1134,6 @@
 
     loginBtn?.addEventListener('click', openModal);
     loginClose?.addEventListener('click', closeModal);
-
     loginModal?.addEventListener('click', (e) => {
       if (e.target === loginModal) closeModal();
     });
@@ -1037,12 +1143,10 @@
         const m = btn.getAttribute('data-module');
         btn.classList.toggle('active', m === key);
       });
-
       Object.entries(panels).forEach(([name, el]) => {
         if (!el) return;
         el.style.display = name === key ? 'block' : 'none';
       });
-
       const titles = {
         'pulpit': 'Pulpit operacyjny',
         'baza-danych': 'Baza danych',
@@ -1065,6 +1169,27 @@
         showModule(key);
       });
     });
+
+    function fillProfile(user) {
+      badgeNumber.textContent = user.badge || 'SOP-000';
+      fullName.textContent = user.name || 'Imię Nazwisko';
+      profileLogin.textContent = user.login;
+      rankEl.textContent = user.rank || 'Funkcjonariusz SOP';
+      dobEl.textContent = user.dob || '—';
+      ageEl.textContent = user.age ?? '—';
+      unitEl.textContent = user.unit || 'Sekcja Ochrony VIP';
+      serviceFromEl.textContent = user.serviceFrom || '—';
+
+      if (user.duty === 'on') {
+        dutyStatusPill.innerHTML = '<span>🟢 Na służbie</span>';
+        dutyStatusPill.style.borderColor = 'rgba(34,197,94,.7)';
+        dutyStatusPill.style.color = '#bbf7d0';
+      } else {
+        dutyStatusPill.innerHTML = '<span>⚪ Poza służbą</span>';
+        dutyStatusPill.style.borderColor = 'rgba(148,163,184,.7)';
+        dutyStatusPill.style.color = '#e5e7eb';
+      }
+    }
 
     roleForm?.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -1105,6 +1230,7 @@
         }
 
         currentUser = found;
+        fillProfile(currentUser);
 
         if (selectedRole === 'sop') {
           systemTitle.textContent = 'SOP – Panel Funkcjonariusza';
