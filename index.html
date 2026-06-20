@@ -1,1241 +1,1912 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>Panel SOP</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        :root {
-            --bg-dark: #050608;
-            --bg-panel: #0b0d10;
-            --accent: #ff6b00;
-            --accent-soft: rgba(255, 107, 0, 0.15);
-            --text-main: #f5f5f5;
-            --text-muted: #9ca3af;
-            --border-subtle: #1f2933;
-            --danger: #ef4444;
-            --success: #10b981;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top left, #1f2933 0, #020308 55%, #000 100%);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 16px;
-        }
-
-        .app-container {
-            display: grid;
-            grid-template-columns: 280px minmax(0, 1fr);
-            gap: 16px;
-            width: 100%;
-            max-width: 1320px;
-            background: radial-gradient(circle at top, #111827 0, #020308 52%, #000 100%);
-            border-radius: 20px;
-            border: 1px solid rgba(148, 163, 184, 0.25);
-            box-shadow:
-                0 18px 45px rgba(0, 0, 0, 0.85),
-                0 0 0 1px rgba(15, 23, 42, 0.8);
-            overflow: hidden;
-        }
-
-        aside {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), #020308 32%, #000 100%);
-            border-right: 1px solid rgba(55, 65, 81, 0.75);
-            padding: 18px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            position: relative;
-        }
-
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 10px;
-            margin: -2px -4px 4px -2px;
-            border-radius: 999px;
-            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.09), transparent 62%);
-        }
-
-        .logo-mark {
-            width: 40px;
-            height: 40px;
-            border-radius: 999px;
-            background:
-                radial-gradient(circle at 30% 30%, #fff 0, transparent 55%),
-                conic-gradient(from 220deg, #ff6b00, #f97316, #fbbf24, #fb923c, #ff6b00);
-            box-shadow:
-                0 0 0 2px rgba(15, 23, 42, 0.9),
-                0 0 28px rgba(249, 115, 22, 0.7);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-mark::after {
-            content: "S";
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 20px;
-            color: #020617;
-            text-shadow: 0 1px 3px rgba(15, 23, 42, 0.75);
-        }
-
-        .logo-text-group {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .logo-title {
-            font-size: 19px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            font-weight: 800;
-            color: #f9fafb;
-        }
-
-        .logo-subtitle {
-            font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 0.02em;
-        }
-
-        .status-pill {
-            margin-left: auto;
-            font-size: 11px;
-            padding: 4px 9px;
-            border-radius: 999px;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #bbf7d0;
-            background: radial-gradient(circle at top left, rgba(22, 163, 74, 0.25), transparent 60%);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 999px;
-            background: #22c55e;
-            box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
-        }
-
-        .user-card {
-            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), #020617 60%, #000 100%);
-            border-radius: 16px;
-            padding: 10px 12px;
-            border: 1px solid rgba(55, 65, 81, 0.85);
-            box-shadow:
-                0 12px 25px rgba(0, 0, 0, 0.7),
-                0 0 0 1px rgba(15, 23, 42, 0.75);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .user-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 999px;
-            background: radial-gradient(circle at 30% 30%, #e5e7eb 0, #374151 48%, #020617 100%);
-            border: 1px solid rgba(148, 163, 184, 0.75);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 700;
-            color: #e5e7eb;
-        }
-
-        .user-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
-
-        .user-name {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .user-role {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .user-chip-row {
-            display: flex;
-            gap: 6px;
-            margin-top: 4px;
-        }
-
-        .chip {
-            font-size: 11px;
-            padding: 3px 7px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.5);
-            color: #e5e7eb;
-            background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.2), transparent 60%);
-        }
-
-        .chip.accent {
-            border-color: rgba(249, 115, 22, 0.7);
-            color: #fed7aa;
-            background: radial-gradient(circle at top left, rgba(248, 113, 22, 0.35), transparent 58%);
-        }
-
-        .nav-section-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.16em;
-            color: var(--text-muted);
-            margin: 10px 4px 4px;
-        }
-
-        .nav-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-top: 4px;
-        }
-
-        .nav-item {
-            border-radius: 999px;
-            overflow: hidden;
-        }
-
-        .nav-button {
-            width: 100%;
-            border: none;
-            outline: none;
-            background: transparent;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 7px 11px;
-            font-size: 13px;
-            border-radius: 999px;
-            cursor: pointer;
-            transition:
-                background 0.18s ease,
-                color 0.18s ease,
-                transform 0.12s ease,
-                box-shadow 0.18s ease;
-        }
-
-        .nav-button span.icon {
-            width: 26px;
-            height: 26px;
-            border-radius: 999px;
-            background: radial-gradient(circle at 30% 30%, rgba(249, 250, 251, 0.85), rgba(55, 65, 81, 0.2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #020617;
-        }
-
-        .nav-button span.label {
-            flex: 1;
-            text-align: left;
-        }
-
-        .nav-button span.badge {
-            font-size: 10px;
-            padding: 2px 7px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.6);
-            color: #e5e7eb;
-        }
-
-        .nav-button.active {
-            color: #f9fafb;
-            background:
-                linear-gradient(90deg, rgba(249, 115, 22, 0.3), transparent 65%),
-                radial-gradient(circle at top left, rgba(248, 250, 252, 0.09), transparent 65%);
-            box-shadow:
-                0 10px 22px rgba(0, 0, 0, 0.8),
-                0 0 0 1px rgba(148, 163, 184, 0.55);
-            transform: translateY(-1px);
-        }
-
-        .nav-button.active span.icon {
-            background: radial-gradient(circle at 30% 30%, #111827, #f97316);
-            color: #fef3c7;
-            box-shadow: 0 0 12px rgba(249, 115, 22, 0.7);
-        }
-
-        .nav-button:hover:not(.active) {
-            background: rgba(15, 23, 42, 0.9);
-            color: #e5e7eb;
-        }
-
-        .nav-footer {
-            margin-top: auto;
-            padding-top: 10px;
-            border-top: 1px dashed rgba(75, 85, 99, 0.75);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .nav-footer small {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .logout-button {
-            border-radius: 999px;
-            border: 1px solid rgba(248, 113, 22, 0.65);
-            background: radial-gradient(circle at top left, rgba(248, 113, 22, 0.28), transparent 65%);
-            color: #fed7aa;
-            padding: 6px 10px;
-            font-size: 12px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            cursor: pointer;
-        }
-
-        main.content {
-            padding: 16px 18px 16px 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .top-strip {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 12px;
-            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.94), rgba(3, 7, 18, 0.98));
-            border-radius: 12px;
-            border: 1px solid rgba(31, 41, 55, 0.9);
-            box-shadow:
-                0 12px 28px rgba(0, 0, 0, 0.82),
-                0 0 0 1px rgba(15, 23, 42, 0.7);
-        }
-
-        .top-strip-title {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .top-strip-title h1 {
-            font-size: 18px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .top-strip-title span {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .top-strip-indicators {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .indicator-pill {
-            font-size: 11px;
-            padding: 4px 9px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(75, 85, 99, 0.9);
-            color: #e5e7eb;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .indicator-pill strong {
-            color: #f9fafb;
-        }
-
-        .panel {
-            display: none;
-            background: radial-gradient(circle at top, #020617 0, #020308 50%, #000 100%);
-            border-radius: 18px;
-            border: 1px solid rgba(31, 41, 55, 0.9);
-            box-shadow:
-                0 18px 40px rgba(0, 0, 0, 0.9),
-                0 0 0 1px rgba(15, 23, 42, 0.8);
-            padding: 16px 16px 14px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .panel.active {
-            display: block;
-        }
-
-        .panel::before {
-            content: "";
-            position: absolute;
-            inset: -40%;
-            background:
-                radial-gradient(circle at top left, rgba(248, 113, 22, 0.15), transparent 50%),
-                radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.12), transparent 55%);
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .panel-inner {
-            position: relative;
-            z-index: 1;
-        }
-
-        .panel h2 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .panel-description {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-            gap: 14px;
-        }
-
-        .card {
-            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), rgba(3, 7, 18, 0.98));
-            border-radius: 14px;
-            border: 1px solid rgba(31, 41, 55, 0.9);
-            padding: 12px;
-            box-shadow:
-                0 12px 26px rgba(0, 0, 0, 0.86),
-                0 0 0 1px rgba(15, 23, 42, 0.9);
-        }
-
-        .card h3 {
-            font-size: 14px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .card p,
-        .card li {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 11px;
-            padding: 3px 7px;
-            border-radius: 999px;
-            border: 1px solid rgba(148, 163, 184, 0.7);
-            color: #e5e7eb;
-            background: rgba(15, 23, 42, 0.9);
-        }
-
-        .badge.orange {
-            border-color: rgba(249, 115, 22, 0.8);
-            background: rgba(30, 64, 175, 0.5);
-            color: #fed7aa;
-        }
-
-        .list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            margin-top: 4px;
-        }
-
-        .list li::before {
-            content: "•";
-            color: var(--accent);
-            margin-right: 6px;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            margin-top: 6px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: 5px 7px;
-            border-bottom: 1px solid rgba(31, 41, 55, 0.9);
-        }
-
-        .data-table thead {
-            background: linear-gradient(90deg, rgba(15, 23, 42, 0.96), rgba(3, 7, 18, 0.98));
-        }
-
-        .data-table tbody tr:nth-child(odd) {
-            background: rgba(15, 23, 42, 0.9);
-        }
-
-        .data-table tbody tr:nth-child(even) {
-            background: rgba(3, 7, 18, 0.98);
-        }
-
-        .data-table tbody tr:hover {
-            background: rgba(248, 113, 22, 0.15);
-        }
-
-        .form-row {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            margin-bottom: 8px;
-        }
-
-        .form-row label {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .form-row input,
-        .form-row select,
-        .form-row textarea {
-            background: rgba(15, 23, 42, 0.96);
-            border: 1px solid rgba(55, 65, 81, 0.9);
-            border-radius: 9px;
-            padding: 6px 8px;
-            font-size: 12px;
-            color: #e5e7eb;
-            outline: none;
-        }
-
-        .form-row input:focus,
-        .form-row select:focus,
-        .form-row textarea:focus {
-            border-color: rgba(249, 115, 22, 0.85);
-            box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.65);
-        }
-
-        .btn-primary {
-            border-radius: 999px;
-            border: 1px solid rgba(249, 115, 22, 0.9);
-            background: radial-gradient(circle at top left, rgba(249, 115, 22, 0.96), rgba(239, 68, 68, 0.92));
-            color: #111827;
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow:
-                0 12px 24px rgba(248, 113, 22, 0.7),
-                0 0 0 1px rgba(15, 23, 42, 0.8);
-        }
-
-        .btn-primary:hover {
-            filter: brightness(1.05);
-        }
-
-        .citizen-layout {
-            display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .citizen-list,
-        .citizen-details {
-            background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), rgba(3, 7, 18, 0.98));
-            border-radius: 12px;
-            border: 1px solid rgba(31, 41, 55, 0.95);
-            padding: 10px;
-        }
-
-        .citizen-details h3,
-        .citizen-list h3 {
-            font-size: 13px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .citizen-details p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        @media (max-width: 960px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
-            aside {
-                border-right: none;
-                border-bottom: 1px solid rgba(55, 65, 81, 0.75);
-            }
-        }
-
-        @media (max-width: 768px) {
-            main.content {
-                padding: 12px;
-            }
-            .citizen-layout,
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOP | Strona Główna RP</title>
+  <style>
+    :root{
+      --bg:#07090d;
+      --bg2:#0c1118;
+      --card:#111823;
+      --card2:#0f141d;
+      --text:#e8eef7;
+      --muted:#9aa6b7;
+      --accent:#f59e0b;
+      --accent2:#f97316;
+      --line:rgba(255,255,255,.08);
+      --success:#22c55e;
+      --danger:#ef4444;
+      --shadow:0 18px 50px rgba(0,0,0,.45);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(245,158,11,.12), transparent 28%),
+        linear-gradient(180deg, #05070b 0%, var(--bg) 100%);
+      color:var(--text);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{
+      width:min(1180px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(12px);
+      background:rgba(6,8,12,.7);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.5px;
+    }
+
+    .brand-badge{
+      width:42px;height:42px;
+      display:grid;place-items:center;
+      border-radius:12px;
+      background:linear-gradient(135deg, rgba(245,158,11,.25), rgba(249,115,22,.15));
+      border:1px solid rgba(245,158,11,.25);
+      box-shadow:var(--shadow);
+      font-size:20px;
+    }
+
+    .navlinks{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+
+    .navlinks a{
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.02);
+      color:var(--muted);
+      transition:.2s ease;
+      font-size:14px;
+    }
+    .navlinks a:hover{
+      color:var(--text);
+      border-color:rgba(245,158,11,.4);
+      background:rgba(245,158,11,.08);
+    }
+
+    .hero{
+      padding:32px 0 24px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.35fr .85fr;
+      gap:20px;
+      align-items:stretch;
+    }
+
+    .hero-banner{
+      min-height:560px;
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(4,6,10,.12), rgba(4,6,10,.88)),
+        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    }
+
+    .hero-overlay{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.40) 55%, rgba(0,0,0,.82) 100%);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:1;
+      padding:34px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:560px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:fit-content;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.1);
+      color:#f5d28a;
+      font-size:13px;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
+
+    .hero h1{
+      margin:16px 0 12px;
+      font-size:clamp(2.2rem, 5vw, 4.8rem);
+      line-height:1;
+      max-width:10ch;
+      text-shadow:0 8px 30px rgba(0,0,0,.65);
+    }
+
+    .hero p{
+      max-width:680px;
+      color:#d5dde8;
+      font-size:1.02rem;
+      line-height:1.7;
+      margin:0;
+    }
+
+    .hero-quote{
+      margin-top:18px;
+      padding:16px 18px;
+      border-left:4px solid var(--accent);
+      background:rgba(255,255,255,.06);
+      border-radius:14px;
+      max-width:720px;
+      color:#fff;
+    }
+
+    .hero-footer{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      margin-top:24px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:14px 18px;
+      border-radius:14px;
+      border:1px solid transparent;
+      font-weight:700;
+      transition:.2s ease;
+      cursor:pointer;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#111;
+      box-shadow:0 12px 30px rgba(245,158,11,.25);
+    }
+    .btn-primary:hover{transform:translateY(-1px)}
+    .btn-ghost{
+      background:rgba(255,255,255,.05);
+      border-color:var(--line);
+      color:var(--text);
+    }
+
+    .status-card{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      padding:24px;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(9,13,20,.95));
+      box-shadow:var(--shadow);
+    }
+
+    .status-box{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+    }
+
+    .status-title{
+      color:var(--muted);
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      margin-bottom:8px;
+    }
+
+    .status-open{color:var(--success); font-weight:800}
+    .status-closed{color:var(--danger); font-weight:800}
+
+    .card-list{
+      display:grid;
+      gap:14px;
+      margin-top:4px;
+    }
+
+    .small-card{
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .section{padding:28px 0;}
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      margin-bottom:16px;
+    }
+    .section-title h2{margin:0;font-size:1.7rem;}
+    .section-title span{color:var(--muted);font-size:14px;}
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:18px;
+    }
+
+    .info-card{
+      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(10,14,20,.95));
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .info-card h3{margin:0 0 10px;font-size:1.05rem;}
+    .info-card p{margin:0;color:var(--muted);line-height:1.7;}
+
+    .icon{
+      width:48px;height:48px;
+      display:grid;place-items:center;
+      border-radius:14px;
+      background:rgba(245,158,11,.1);
+      border:1px solid rgba(245,158,11,.25);
+      margin-bottom:14px;
+      font-size:22px;
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .leaders{display:grid;gap:12px;margin-top:12px;}
+    .leader{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      color:var(--muted);
+    }
+    .leader strong{color:var(--text)}
+    .news-item{
+      padding:16px 0;
+      border-bottom:1px solid var(--line);
+      color:var(--muted);
+      line-height:1.7;
+    }
+    .news-item:last-child{border-bottom:none;padding-bottom:0}
+
+    .requirements{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .req-box{
+      padding:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+    }
+    .req-box h4{margin:0 0 10px}
+    .req-box ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .footer{
+      margin-top:24px;
+      padding:22px 0 34px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+    .footer-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:12px 0;
+    }
+    .footer-links a{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+
+    .login-btn{
+      border-radius:999px;
+      padding:10px 16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .login-btn:hover{
+      border-color:rgba(245,158,11,.45);
+      background:rgba(245,158,11,.09);
+    }
+
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,.70);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease;
+      z-index:80;
+    }
+    .modal-backdrop.is-open{
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .modal-panel{
+      width:min(420px, 100% - 32px);
+      background:linear-gradient(180deg, #101522, #05070c);
+      border-radius:22px;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      padding:22px 22px 20px;
+    }
+
+    .modal-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:16px;
+    }
+    .modal-title{font-size:1.2rem;font-weight:700;}
+    .modal-close{
+      width:32px;height:32px;
+      display:grid;place-items:center;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      cursor:pointer;
+    }
+
+    .role-options{display:grid;gap:10px;margin:12px 0 18px;}
+    .role-option{position:relative;}
+    .role-card{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      padding:12px 12px 11px 40px;
+      border-radius:16px;
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--line);
+      color:var(--muted);
+      cursor:pointer;
+      transition:.18s ease;
+      font-size:14px;
+    }
+    .role-card strong{color:var(--text);font-size:14px}
+    .role-radio{
+      position:absolute;
+      left:12px;
+      top:50%;
+      transform:translateY(-50%);
+      width:16px;
+      height:16px;
+      border-radius:999px;
+      border:2px solid var(--muted);
+    }
+    .role-card::after{
+      content:'';
+      position:absolute;
+      left:15px;
+      top:50%;
+      transform:translateY(-50%) scale(.0);
+      width:10px;height:10px;
+      border-radius:999px;
+      background:var(--accent);
+      transition:transform .18s ease;
+    }
+    .role-option input[type="radio"]{
+      position:absolute;
+      opacity:0;
+      pointer-events:none;
+    }
+    .role-option input[type="radio"]:checked + .role-card{
+      border-color:rgba(245,158,11,.8);
+      background:rgba(245,158,11,.10);
+      color:var(--text);
+    }
+    .role-option input[type="radio"]:checked + .role-card .role-radio{
+      border-color:var(--accent);
+    }
+    .role-option input[type="radio"]:checked + .role-card::after{
+      transform:translateY(-50%) scale(1);
+    }
+
+    .login-panel{
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+    }
+    .login-panel h4{margin:0 0 8px;font-size:1rem;}
+    .login-panel label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:4px;
+    }
+    .login-panel input{
+      width:100%;
+      padding:10px 11px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.45);
+      color:var(--text);
+      font-size:14px;
+    }
+    .login-panel input:focus{
+      outline:none;
+      border-color:rgba(245,158,11,.7);
+    }
+    .login-panel .login-info{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    .system-overlay{
+      position:fixed;
+      inset:0;
+      background:radial-gradient(circle at top, rgba(245,158,11,.06), transparent 55%), #020309;
+      color:var(--text);
+      display:none;
+      z-index:100;
+    }
+    .system-overlay.show{
+      display:flex;
+    }
+    .system-inner{
+      width:100%;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+    }
+    .system-topbar{
+      padding:10px 20px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:rgba(3,5,10,.95);
+      gap:16px;
+    }
+    .system-topbar span{font-size:13px;color:var(--muted);}
+    .system-main{
+      flex:1;
+      display:grid;
+      grid-template-columns:230px 1fr;
+      min-height:0;
+    }
+    .system-sidebar{
+      border-right:1px solid var(--line);
+      padding:16px 14px;
+      background:rgba(3,5,10,.96);
+      overflow:auto;
+    }
+    .system-sidebar h3{margin:0 0 10px;font-size:0.95rem;}
+    .system-menu{
+      display:grid;
+      gap:6px;
+      font-size:14px;
+    }
+    .system-menu button{
+      width:100%;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid transparent;
+      background:transparent;
+      color:var(--muted);
+      text-align:left;
+      cursor:pointer;
+      transition:.15s ease;
+    }
+    .system-menu button:hover{
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+    }
+    .system-menu button.active{
+      background:rgba(245,158,11,.14);
+      border-color:rgba(245,158,11,.7);
+      color:var(--text);
+    }
+    .system-content{
+      padding:18px 20px;
+      overflow:auto;
+    }
+    .system-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .system-heading{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+    }
+    .system-heading h2{
+      margin:10px 0 4px;
+      font-size:1.5rem;
+    }
+    .system-note{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* PROFIL – pełna szerokość */
+    .profile-card{
+      width:100%;
+      display:grid;
+      grid-template-columns:1.6fr 1.1fr;
+      gap:20px;
+      padding:22px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:linear-gradient(135deg, rgba(15,23,42,.96), rgba(15,23,42,.88));
+      margin-bottom:16px;
+      box-shadow:var(--shadow);
+    }
+
+    .profile-main{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:16px 18px;
+      align-items:flex-start;
+    }
+
+    .profile-avatar-wrap{
+      grid-row:span 2;
+    }
+
+    .profile-avatar{
+      width:100px;
+      height:100px;
+      border-radius:20px;
+      border:1px solid var(--line);
+      object-fit:cover;
+      background:rgba(255,255,255,.05);
+      box-shadow:0 12px 30px rgba(0,0,0,.6);
+    }
+
+    .profile-header{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .badge-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(245,158,11,.7);
+      font-size:12px;
+      color:#fed7aa;
+      margin-bottom:2px;
+      background:rgba(15,23,42,.9);
+    }
+
+    .profile-main h3{
+      margin:0;
+      font-size:1.2rem;
+    }
+
+    .profile-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .meta-pill{
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+
+    .profile-grid{
+      grid-column:1 / -1;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px 18px;
+      margin-top:8px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .profile-label{
+      color:var(--muted);
+    }
+    .profile-value{
+      color:var(--text);
+      font-weight:500;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(34,197,94,.7);
+      font-size:12px;
+      color:#bbf7d0;
+      margin-bottom:10px;
+      background:rgba(22,163,74,.12);
+    }
+
+    .status-pill span{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    .hierarchy-list{
+      list-style:none;
+      padding:0;
+      margin:8px 0 0;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .hierarchy-list li{padding:4px 0;}
+
+    .logout-btn{
+      border-radius:999px;
+      padding:8px 14px;
+      border:1px solid rgba(248,113,113,.7);
+      background:rgba(248,113,113,.1);
+      color:#fecaca;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .logout-btn:hover{
+      background:rgba(248,113,113,.18);
+    }
+
+    .logout-btn-secondary{
+      margin-top:8px;
+      padding:8px 12px;
+      font-size:12px;
+      border-radius:10px;
+      border:1px solid rgba(248,113,113,.7);
+      background:rgba(248,113,113,.08);
+      color:#fecaca;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Baza danych – tabela obywateli */
+    .citizen-card{
+      width:100%;
+      border-radius:20px;
+      border:1px solid var(--line);
+      background:rgba(15,23,42,.96);
+      padding:16px 18px 18px;
+      box-shadow:var(--shadow);
+      margin-bottom:16px;
+    }
+
+    .citizen-form{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px 14px;
+      margin-bottom:12px;
+    }
+
+    .citizen-form small{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .citizen-form label{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .citizen-form input,
+    .citizen-form select{
+      padding:8px 9px;
+      border-radius:8px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.45);
+      color:var(--text);
+      font-size:13px;
+    }
+
+    .citizen-form input:focus,
+    .citizen-form select:focus{
+      outline:none;
+      border-color:rgba(245,158,11,.7);
+    }
+
+    .citizen-form button{
+      align-self:end;
+      padding:10px 12px;
+      font-size:13px;
+    }
+
+    .citizen-table-wrap{
+      max-height:340px;
+      overflow:auto;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(2,6,23,.9);
+    }
+
+    table.citizen-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:13px;
+    }
+
+    .citizen-table thead{
+      background:rgba(15,23,42,1);
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+
+    .citizen-table th,
+    .citizen-table td{
+      padding:8px 10px;
+      border-bottom:1px solid rgba(148,163,184,.25);
+      text-align:left;
+      white-space:nowrap;
+    }
+
+    .citizen-table th{
+      font-weight:600;
+      color:#e5e7eb;
+    }
+
+    .citizen-table tbody tr:nth-child(odd){
+      background:rgba(15,23,42,.7);
+    }
+
+    .citizen-table tbody tr:nth-child(even){
+      background:rgba(15,23,42,.45);
+    }
+
+    .badge-status{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.7);
+      font-size:11px;
+      color:#e5e7eb;
+      background:rgba(15,23,42,.9);
+    }
+
+    .badge-status.danger{
+      border-color:rgba(248,113,113,.8);
+      color:#fecaca;
+      background:rgba(248,113,113,.12);
+    }
+
+    .badge-status.warn{
+      border-color:rgba(234,179,8,.8);
+      color:#facc15;
+      background:rgba(234,179,8,.10);
+    }
+
+    .badge-status.ok{
+      border-color:rgba(34,197,94,.8);
+      color:#bbf7d0;
+      background:rgba(22,163,74,.12);
+    }
+
+    .badge-status span{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,.grid-3,.two-col,.requirements{grid-template-columns:1fr}
+      .hero-banner,.hero-content{min-height:auto}
+      .hero-content{padding:24px}
+      .hero h1{max-width:none}
+      .section-title{flex-direction:column;align-items:flex-start}
+      .system-main{grid-template-columns:1fr;}
+      .profile-card{grid-template-columns:1fr;}
+      .profile-main{
+        grid-template-columns:auto 1fr;
+      }
+      .profile-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .citizen-form{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="app-container">
-    <aside>
-        <!-- lewy panel, logo, user, nawigacja - zostawiamy jak w oryginale -->
-        <!-- zakładamy, że masz tam przyciski nawigacji z data-panel -->
-    </aside>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge">🛡️</div>
+        <div>SOP | STRONA GŁÓWNA RP</div>
+      </div>
+      <nav class="navlinks">
+        <a href="#onas">O nas</a>
+        <a href="#kierownictwo">Kierownictwo</a>
+        <a href="#news">News</a>
+        <a href="#rekrutacja">Rekrutacja</a>
+        <a href="#ochrona">Ochrona</a>
+        <a href="#kontakt">Kontakt</a>
+        <button id="loginTrigger" class="login-btn">🔐 Zaloguj do systemu</button>
+      </nav>
+    </div>
+  </header>
 
-    <main class="content">
-        <div class="top-strip">
-            <div class="top-strip-title">
-                <h1>SOP • PANEL</h1>
-                <span>System Operacyjny SOP • Emergency RP</span>
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-banner">
+          <div class="hero-overlay"></div>
+          <div class="hero-content">
+            <div>
+              <div class="eyebrow">🖤 Elitarna ochrona VIP • RP Server</div>
+              <h1>Profesjonalizm. Dyskrecja. Bezpieczeństwo State VIP.</h1>
+              <p>
+                Służba Ochrony Państwa to formacja odpowiedzialna za zabezpieczenie najważniejszych osób w stanie,
+                konwojów rządowych oraz wydarzeń o najwyższym priorytecie bezpieczeństwa.
+              </p>
+              <div class="hero-quote">
+                Chronimy tych, którzy rządzą stanem — z precyzją, honorem i pełną gotowością operacyjną.
+              </div>
             </div>
-            <div class="top-strip-indicators">
-                <div class="indicator-pill">
-                    <span>Tryb:</span><strong>Operacyjny</strong>
-                </div>
-                <div class="indicator-pill">
-                    <span>Poziom:</span><strong>SOP HQ</strong>
-                </div>
+            <div class="hero-footer">
+              <a class="btn btn-primary" href="#rekrutacja">📝 Złóż podanie</a>
+              <a class="btn btn-ghost" href="#onas">Poznaj SOP</a>
             </div>
+          </div>
         </div>
 
-        <!-- PANEL: O SOP -->
-        <section id="panel-o-sop" class="panel active">
-            <div class="panel-inner">
-                <h2>O SOP</h2>
-                <p class="panel-description">
-                    Kim jesteśmy na serwerze RP – formacja elitarnych funkcjonariuszy odpowiedzialna za ochronę VIP, budynków rządowych oraz infrastruktury krytycznej.
-                </p>
+        <aside class="status-card">
+          <div class="status-box">
+            <div class="status-title">Status rekrutacji</div>
+            <div class="status-closed">🔴 REKRUTACJA: ZAMKNIĘTA</div>
+            <p style="color:var(--muted);margin:10px 0 0;line-height:1.6;">
+              W przypadku otwarcia rekrutacji przycisk poniżej można podpiąć pod Google Forms lub system forum.
+            </p>
+          </div>
 
-                <div class="grid-2">
-                    <div class="card">
-                        <h3>Formacja elitarnych funkcjonariuszy</h3>
-                        <p>
-                            SOP to wyspecjalizowana formacja odpowiedzialna za ochronę najważniejszych osób w stanie, budynków rządowych oraz infrastruktury krytycznej.
-                            Działamy według precyzyjnych procedur RP, zachowując klimat realizmu i filmowego napięcia.
-                        </p>
-                        <ul class="list">
-                            <li>Profesjonalne podejście do ochrony VIP.</li>
-                            <li>Planowanie i realizacja konwojów rządowych.</li>
-                            <li>Ochrona obiektów strategicznych stanu.</li>
-                        </ul>
-                    </div>
-
-                    <div class="card">
-                        <h3>Fokus na jakość rozgrywki</h3>
-                        <p>
-                            Stawiamy na merytoryczne podejście do odgrywania służb, szkolenia, scenariusze konwojów, oraz współpracę z innymi frakcjami – wszystko po to, aby każda akcja SOP była wydarzeniem na serwerze.
-                        </p>
-                        <ul class="list">
-                            <li>Szkolenia wewnętrzne SOP.</li>
-                            <li>Wspólne akcje z PD, SD, GOV.</li>
-                            <li>Realistyczne procedury i briefing przed akcją.</li>
-                        </ul>
-                    </div>
-                </div>
+          <div class="status-box">
+            <div class="status-title">Szybki kontakt</div>
+            <div style="line-height:1.8;color:var(--text);">
+              Discord: <strong>@sop.command</strong><br />
+              OOC: <strong>Kontakt przez kanał rekrutacyjny</strong><br />
+              Status służby: <strong>Aktywna</strong>
             </div>
-        </section>
+          </div>
 
-        <!-- PANEL: Aktualności SOP -->
-        <section id="panel-aktualnosci" class="panel">
-            <div class="panel-inner">
-                <h2>Aktualności SOP</h2>
-                <p class="panel-description">
-                    Co dzieje się aktualnie w formacji SOP – ważne komunikaty, modernizacje, eventy RP.
-                </p>
+          <div class="card-list">
+            <div class="small-card">🎯 Ochrona osobista VIP, prewencja zagrożeń, eskorty i zabezpieczenia strategicznych punktów.</div>
+            <div class="small-card">🚓 Konwoje rządowe, koordynacja kolumn pojazdów uprzywilejowanych i procedury ewakuacyjne.</div>
+            <div class="small-card">📡 Rozpoznanie tras, sprawdzanie obiektów i wsparcie podczas eventów IC.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-                <div class="grid-2">
-                    <div class="card">
-                        <h3>Nowy pakiet szkoleń SOP</h3>
-                        <p>
-                            Wprowadzono zaktualizowane procedury konwojów VIP oraz nowe scenariusze ćwiczeń z udziałem innych frakcji.
-                        </p>
-                        <ul class="list">
-                            <li>Nowe materiały szkoleniowe IC/OOC.</li>
-                            <li>Ćwiczenia z ewakuacji VIP pod ostrzałem.</li>
-                            <li>Procedury współpracy z PD i SWAT.</li>
-                        </ul>
-                    </div>
+    <!-- O NAS -->
+    <section id="onas" class="section">
+      <div class="section-title">
+        <h2>O SOP</h2>
+        <span>Kim jesteśmy na serwerze RP</span>
+      </div>
+      <div class="two-col">
+        <div class="info-card">
+          <div class="icon">🏛️</div>
+          <h3>Formacja elitarnych funkcjonariuszy</h3>
+          <p>
+            SOP to wyspecjalizowana formacja odpowiedzialna za ochronę najważniejszych osób w stanie,
+            budynków rządowych oraz infrastruktury krytycznej. Działamy według precyzyjnych procedur RP, 
+            zachowując klimat realizmu i filmowego napięcia.
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🛡️</div>
+          <h3>Fokus na jakość rozgrywki</h3>
+          <p>
+            Stawiamy na merytoryczne podejście do odgrywania służb, szkolenia, scenariusze konwojów,
+            oraz współpracę z innymi frakcjami – wszystko po to, aby każda akcja SOP była wydarzeniem na serwerze.
+          </p>
+        </div>
+      </div>
+    </section>
 
-                    <div class="card">
-                        <h3>Modernizacja floty pojazdów</h3>
-                        <p>
-                            Flota SOP została rozszerzona o nowe pojazdy eskortowe z systemami oznakowania i komunikacji.
-                        </p>
-                        <ul class="list">
-                            <li>Nowe SUV-y eskortowe SOP.</li>
-                            <li>Specjalne oznakowanie na eventy VIP.</li>
-                            <li>Usprawnione systemy łączności radiowej.</li>
-                        </ul>
-                    </div>
-                </div>
+    <!-- KIEROWNICTWO -->
+    <section id="kierownictwo" class="section">
+      <div class="section-title">
+        <h2>Kierownictwo SOP</h2>
+        <span>Struktura dowodzenia</span>
+      </div>
+      <div class="leaders">
+        <div class="leader">
+          <div>
+            <strong>Komendant SOP</strong><br />
+            <span>Odpowiedzialny za całość działań formacji, koordynację frakcji i kontakt z administracją serwera.</span>
+          </div>
+          <span>Stopień: ⭐⭐⭐</span>
+        </div>
+        <div class="leader">
+          <div>
+            <strong>Zastępca Komendanta</strong><br />
+            <span>Koordynuje codzienne działania, nadzoruje szkolenia i procedury RP.</span>
+          </div>
+          <span>Stopień: ⭐⭐</span>
+        </div>
+        <div class="leader">
+          <div>
+            <strong>Oficer Operacyjny</strong><br />
+            <span>Dowodzi akcjami w terenie, odpowiada za planowanie konwojów i zabezpieczeń.</span>
+          </div>
+          <span>Stopień: ⭐</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section id="news" class="section">
+      <div class="section-title">
+        <h2>Aktualności</h2>
+        <span>Co dzieje się w SOP</span>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="news-item">
+            <strong>Nowy pakiet szkoleń SOP</strong><br />
+            Wprowadzono zaktualizowane procedury konwojów VIP oraz nowe scenariusze ćwiczeń z udziałem innych frakcji.
+          </div>
+          <div class="news-item">
+            <strong>Modernizacja floty pojazdów</strong><br />
+            Flota SOP została rozszerzona o nowe pojazdy eskortowe z systemami oznakowania i komunikacji.
+          </div>
+          <div class="news-item">
+            <strong>Wspólna operacja z PD</strong><br />
+            Zaplanowano event RP z udziałem SOP, PD oraz administracji stanu – zabezpieczenie wizyty gubernatora.
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="icon">📅</div>
+          <h3>Nadchodzące eventy</h3>
+          <p>
+            Planowane są cykliczne konwoje treningowe, odprawy SOP oraz akcje specjalne.
+            Śledź kanały frakcji na Discordzie, aby nie przegapić ważnych terminów i eventów RP.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REKRUTACJA -->
+    <section id="rekrutacja" class="section">
+      <div class="section-title">
+        <h2>Rekrutacja do SOP</h2>
+        <span>Dołącz do elitarnej formacji</span>
+      </div>
+      <div class="requirements">
+        <div class="req-box">
+          <h4>Wymagania OOC</h4>
+          <ul>
+            <li>Minimum 15 lat (lub wg regulaminu serwera).</li>
+            <li>Podstawowa znajomość zasad RP i regulaminu serwera.</li>
+            <li>Sprawny mikrofon i komunikacja na Discordzie.</li>
+            <li>Stabilne łącze oraz kultura osobista.</li>
+          </ul>
+        </div>
+        <div class="req-box">
+          <h4>Wymagania IC</h4>
+          <ul>
+            <li>Brak poważnych wyroków i kar w kartotece postaci.</li>
+            <li>Gotowość do odbycia szkolenia podstawowego SOP.</li>
+            <li>Dyspozycyjność na konwoje i służby według grafiku.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="system-note" style="margin-top:10px;">
+        Rekrutacja jest obecnie <strong style="color:#f97373;">zamknięta</strong>. Gdy zostanie otwarta, poniższy przycisk
+        można podpiąć pod formularz Google, stronę forum lub system ticketów.
+      </p>
+      <button class="btn btn-primary" style="margin-top:10px;" disabled>
+        📝 Formularz rekrutacyjny (wkrótce)
+      </button>
+    </section>
+
+    <!-- OCHRONA -->
+    <section id="ochrona" class="section">
+      <div class="section-title">
+        <h2>Zakres działań SOP</h2>
+        <span>Co zabezpieczamy na serwerze</span>
+      </div>
+      <div class="grid-3">
+        <div class="info-card">
+          <div class="icon">👤</div>
+          <h3>Ochrona osobista VIP</h3>
+          <p>
+            Ochrona gubernatora, członków rządu, wysokich rangą urzędników oraz gości specjalnych
+            podczas wizyt i eventów RP.
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🚨</div>
+          <h3>Konwoje rządowe</h3>
+          <p>
+            Planowanie i prowadzenie kolumn pojazdów uprzywilejowanych, zabezpieczenie tras i punktów newralgicznych.
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🏢</div>
+          <h3>Obiekty strategiczne</h3>
+          <p>
+            Ochrona budynków rządowych, siedzib SOP, punktów dowodzenia oraz kluczowych lokacji dla frakcji.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section id="kontakt" class="section">
+      <div class="section-title">
+        <h2>Kontakt i informacje</h2>
+        <span>Jak się z nami skontaktować</span>
+      </div>
+      <div class="two-col">
+        <div class="info-card">
+          <div class="icon">💬</div>
+          <h3>Discord</h3>
+          <p>
+            Oficjalny kontakt do SOP odbywa się przez serwer Discord. Użyj kanału rekrutacyjnego lub DM do kierownictwa SOP,
+            zgodnie z wytycznymi frakcji.
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="icon">📜</div>
+          <h3>Regulaminy i dokumenty</h3>
+          <p>
+            Wszelkie regulaminy, procedury i wewnętrzne dokumenty SOP publikowane są na forum lub w panelu SOP.
+            Pamiętaj, aby zawsze być na bieżąco z aktualizacjami.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© SOP – Służba Ochrony Państwa • RP Server</div>
+      <div class="footer-links">
+        <a href="#onas">O SOP</a>
+        <a href="#rekrutacja">Rekrutacja</a>
+        <a href="#ochrona">Zakres działań</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <div>
+        Panel SOP to system demonstracyjny – możesz podpiąć go pod backend serwera, aby obsługiwać
+        realne konta, raporty i konwoje.
+      </div>
+    </footer>
+  </main>
+
+  <!-- Modal logowania -->
+  <div id="loginModal" class="modal-backdrop">
+    <div class="modal-panel" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);">
+            System wewnętrzny SOP
+          </div>
+          <div class="modal-title">Wybierz stanowisko</div>
+        </div>
+        <button id="loginClose" class="modal-close" aria-label="Zamknij okno">&times;</button>
+      </div>
+
+      <form id="roleForm">
+        <p style="color:var(--muted);font-size:14px;margin:0 0 6px;">
+          Wybierz, jako kto chcesz się zalogować do panelu:
+        </p>
+
+        <div class="role-options">
+          <label class="role-option">
+            <input type="radio" name="role" value="sop" />
+            <div class="role-card">
+              <div class="role-radio"></div>
+              <strong>Funkcjonariusz SOP</strong>
+              <span>Standardowy dostęp do panelu operacyjnego, raportów i grafiku służb.</span>
             </div>
-        </section>
+          </label>
 
-        <!-- PANEL: Rekrutacja SOP -->
-        <section id="panel-rekrutacja" class="panel">
-            <div class="panel-inner">
-                <h2>Rekrutacja do SOP</h2>
-                <p class="panel-description">
-                    Dołącz do elitarnej formacji SOP – sprawdź wymagania oraz aktualny status naboru.
-                </p>
-
-                <div class="grid-2">
-                    <div class="card">
-                        <h3>Wymagania OOC</h3>
-                        <ul class="list">
-                            <li>Minimum 15 lat (lub wg regulaminu serwera).</li>
-                            <li>Podstawowa znajomość zasad RP i regulaminu serwera.</li>
-                            <li>Sprawny mikrofon i komunikacja na Discordzie.</li>
-                            <li>Stabilne łącze oraz kultura osobista.</li>
-                        </ul>
-                    </div>
-
-                    <div class="card">
-                        <h3>Wymagania IC</h3>
-                        <ul class="list">
-                            <li>Brak poważnych wyroków i kar w kartotece postaci.</li>
-                            <li>Gotowość do odbycia szkolenia podstawowego SOP.</li>
-                            <li>Dyspozycyjność na konwoje i służby według grafiku.</li>
-                        </ul>
-                        <p style="margin-top: 6px; font-size: 12px; color: var(--text-muted);">
-                            Rekrutacja jest obecnie <strong>zamknięta</strong>. Gdy zostanie otwarta, przycisk zgłoszeniowy może prowadzić do formularza Google, forum lub systemu ticketów.
-                        </p>
-                    </div>
-                </div>
+          <label class="role-option">
+            <input type="radio" name="role" value="tajna" />
+            <div class="role-card">
+              <div class="role-radio"></div>
+              <strong>Tajna Jednostka</strong>
+              <span>Dostęp rozszerzony dla jednostek specjalnych i operacji niejawnych.</span>
             </div>
-        </section>
+          </label>
+        </div>
 
-        <!-- PANEL: Baza obywateli SOP (Z EDYCJĄ STATUSU I NOTATKI) -->
-        <section id="panel-baza-obywateli" class="panel">
-            <div class="panel-inner">
-                <h2>Baza obywateli SOP</h2>
-                <p class="panel-description">
-                    Przeglądaj i edytuj dane obywateli – status oraz notatki służbowe dostępne dla uprawnionych funkcjonariuszy SOP.
-                </p>
+        <div id="loginPanel" class="login-panel" style="display:none;">
+          <h4 id="loginTitle">Panel logowania</h4>
+          <label for="loginUser">Login (Username)</label>
+          <input id="loginUser" type="text" autocomplete="off" />
+          <label for="loginPass" style="margin-top:8px;">Hasło (Password)</label>
+          <input id="loginPass" type="password" />
+          <div class="login-info" id="loginHint"></div>
+        </div>
 
-                <div class="citizen-layout">
-                    <!-- Lista obywateli -->
-                    <div class="citizen-list">
-                        <h3>Lista obywateli</h3>
-                        <input type="text" id="citizenSearch" placeholder="Szukaj po nazwisku / PESEL" class="form-row-input"/>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:14px;">
+          Dalej
+        </button>
+      </form>
+    </div>
+  </div>
 
-                        <table class="data-table" id="citizensTable">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Imię</th>
-                                <th>Nazwisko</th>
-                                <th>PESEL</th>
-                                <th>Status</th>
-                            </tr>
-                            </thead>
-                            <tbody id="citizensTableBody">
-                            <!-- wypełniane w JS -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Szczegóły obywatela + formularz edycji -->
-                    <div class="citizen-details">
-                        <h3>Szczegóły obywatela</h3>
-                        <div id="citizenDetailsView">
-                            <p>Wybierz obywatela z listy, aby zobaczyć szczegóły.</p>
-                        </div>
-
-                        <!-- FORMULARZ EDYCJI STATUSU I NOTATKI -->
-                        <form id="editCitizenForm" onsubmit="saveCitizenEdit(event)" style="margin-top: 12px;">
-                            <h3>Edycja danych obywatela</h3>
-
-                            <div class="form-row">
-                                <label for="citizenStatus">Status obywatela:</label>
-                                <select id="citizenStatus" name="citizenStatus">
-                                    <option value="czysty">Czysty</option>
-                                    <option value="obserwacja">Do obserwacji</option>
-                                    <option value="poszukiwany">Poszukiwany</option>
-                                    <option value="zatrzymany">Zatrzymany</option>
-                                </select>
-                            </div>
-
-                            <div class="form-row">
-                                <label for="citizenNote">Notatka służbowa:</label>
-                                <textarea id="citizenNote" name="citizenNote" rows="3" placeholder="Wpisz notatkę służbową dotyczącą obywatela..."></textarea>
-                            </div>
-
-                            <input type="hidden" id="citizenId" name="citizenId"/>
-
-                            <button type="submit" class="btn-primary">Zapisz zmiany</button>
-                        </form>
-                    </div>
-                </div>
+  <!-- Panel SOP -->
+  <div id="systemOverlay" class="system-overlay">
+    <div class="system-inner">
+      <div class="system-topbar">
+        <div>
+          <strong id="systemTitle">SOP – Panel</strong><br />
+          <span id="systemSub">Tryb: Funkcjonariusz SOP</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span id="userDisplay">Zalogowany: —</span>
+          <button id="logoutBtn" class="logout-btn">
+            ⏏ Wyloguj
+          </button>
+        </div>
+      </div>
+      <div class="system-main">
+        <aside class="system-sidebar">
+          <h3>Moduły</h3>
+          <div class="system-menu">
+            <button class="active" data-module="pulpit">Pulpit operacyjny</button>
+            <button data-module="baza-danych">Baza danych</button>
+            <button data-module="baza-pojazdow">Baza pojazdów</button>
+            <button data-module="zezwolenia">Zezwolenia</button>
+            <button data-module="szkolenia">Szkolenia</button>
+            <button data-module="raporty">Raporty służb</button>
+            <button data-module="konwoje">Konwoje VIP</button>
+            <button data-module="listy-goncze">Listy gończe</button>
+            <button data-module="sprawy-operacyjne">Sprawy operacyjne</button>
+            <button data-module="archiwum">Archiwum spraw</button>
+            <button data-module="hierarchia">Hierarchia SOP</button>
+          </div>
+        </aside>
+        <section class="system-content">
+          <div class="system-heading">
+            <div>
+              <div class="system-tag" id="systemTag">
+                <span>🛡️ SOP</span>
+                <span>Funkcjonariusz</span>
+              </div>
+              <h2 id="systemHeading">Pulpit operacyjny</h2>
             </div>
-        </section>
-        <!-- KONIEC: PANEL Baza obywateli -->
-              <!-- PANEL: Zakres działań SOP -->
-        <section id="panel-zakres-dzialan" class="panel">
-            <div class="panel-inner">
-                <h2>Zakres działań SOP</h2>
-                <p class="panel-description">
-                    Co zabezpieczamy na serwerze – ochrona VIP, konwoje rządowe, obiekty strategiczne i operacje specjalne.
+          </div>
+
+          <!-- PULPIT = PROFIL FUNKCJONARIUSZA -->
+          <div id="panel-pulpit" class="system-panel">
+            <div class="profile-card">
+              <div class="profile-main">
+                <div class="profile-avatar-wrap">
+                  <img
+                    class="profile-avatar"
+                    id="profileAvatar"
+                    src="https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif"
+                    alt="Zdjęcie funkcjonariusza"
+                  />
+                </div>
+                <div class="profile-header">
+                  <div class="badge-pill">
+                    <span>🔰 Odznaka</span>
+                    <span id="badgeNumber">SOP-000</span>
+                  </div>
+                  <h3 id="fullName">Imię Nazwisko</h3>
+                  <div class="profile-meta">
+                    <span class="meta-pill" id="rankShort">Funkcjonariusz SOP</span>
+                    <span class="meta-pill" id="unitShort">Sekcja Ochrony VIP</span>
+                  </div>
+                </div>
+                <div class="profile-grid">
+                  <div>
+                    <div class="profile-label">Login</div>
+                    <div class="profile-value" id="profileLogin">—</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Data urodzenia</div>
+                    <div class="profile-value" id="dob">—</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Wiek</div>
+                    <div class="profile-value" id="age">—</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Jednostka</div>
+                    <div class="profile-value" id="unit">Sekcja Ochrony VIP</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Służb od</div>
+                    <div class="profile-value" id="serviceFrom">—</div>
+                  </div>
+                  <div>
+                    <div class="profile-label">Stopień</div>
+                    <div class="profile-value" id="rank">Funkcjonariusz SOP</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="status-pill" id="dutyStatusPill">
+                  <span>🟢 <span id="dutyText">Na służbie</span></span>
+                </div>
+                <p class="system-note">
+                  Status służby odzwierciedla, czy funkcjonariusz jest aktualnie na służbie RP.
+                  Możesz to później podpiąć pod system duty z serwera.
                 </p>
-
-                <div class="grid-2">
-                    <div class="card">
-                        <h3>Ochrona osobista VIP</h3>
-                        <p>
-                            Ochrona gubernatora, członków rządu, wysokich rangą urzędników oraz gości specjalnych podczas wizyt i eventów RP.
-                        </p>
-                        <ul class="list">
-                            <li>Ochrona osobista VIP podczas spotkań publicznych.</li>
-                            <li>Planowanie wejść i wyjść taktycznych.</li>
-                            <li>Koordynacja z innymi służbami porządkowymi.</li>
-                        </ul>
-                    </div>
-
-                    <div class="card">
-                        <h3>Konwoje rządowe</h3>
-                        <p>
-                            Planowanie i prowadzenie kolumn pojazdów uprzywilejowanych, zabezpieczenie tras i punktów newralgicznych.
-                        </p>
-                        <ul class="list">
-                            <li>Konwoje VIP po mieście oraz poza terenem zabudowanym.</li>
-                            <li>Zabezpieczenie skrzyżowań i punktów ryzyka.</li>
-                            <li>Współpraca z PD / SD / SWAT przy wysokim poziomie zagrożenia.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="grid-2" style="margin-top: 10px;">
-                    <div class="card">
-                        <h3>Obiekty strategiczne</h3>
-                        <p>
-                            Ochrona budynków rządowych, siedzib SOP, punktów dowodzenia oraz kluczowych lokacji dla frakcji.
-                        </p>
-                        <ul class="list">
-                            <li>Stała ochrona kluczowych budynków GOV.</li>
-                            <li>Zabezpieczanie wejść, recepcji i parkingów.</li>
-                            <li>Reakcja na zagrożenia bombowe i zamachy RP.</li>
-                        </ul>
-                    </div>
-
-                    <div class="card">
-                        <h3>Operacje specjalne</h3>
-                        <p>
-                            Działania SOP podczas eventów specjalnych, wizyt zagranicznych delegacji, kryzysów politycznych i sytuacji nadzwyczajnych.
-                        </p>
-                        <ul class="list">
-                            <li>Wizyty delegacji międzynarodowych.</li>
-                            <li>Operacje wysokiego ryzyka przy udziale wielu frakcji.</li>
-                            <li>Planowanie i dowodzenie z punktu SOP HQ.</li>
-                        </ul>
-                    </div>
-                </div>
+                <button id="logoutProfileBtn" class="logout-btn-secondary">
+                  ⏏ Wyloguj z panelu
+                </button>
+              </div>
             </div>
-        </section>
+            <p class="system-note">
+              Pulpit operacyjny wyświetla Twój profil jako funkcjonariusza SOP: dane osobowe, odznakę
+              i podstawowe informacje służbowe. Dane są pobierane na podstawie konta, którym się zalogujesz.
+            </p>
+          </div>
 
-        <!-- PANEL: Kontakt i informacje SOP -->
-        <section id="panel-kontakt" class="panel">
-            <div class="panel-inner">
-                <h2>Kontakt i informacje</h2>
-                <p class="panel-description">
-                    Jak skontaktować się z kierownictwem SOP oraz gdzie znaleźć regulaminy i dokumenty frakcji.
-                </p>
-
-                <div class="grid-2">
-                    <div class="card">
-                        <h3>Discord</h3>
-                        <p>
-                            Oficjalny kontakt do SOP odbywa się przez serwer Discord. Użyj kanału rekrutacyjnego lub DM do kierownictwa SOP, zgodnie z wytycznymi frakcji.
-                        </p>
-                        <ul class="list">
-                            <li>Kanał #rekrutacja-sop dla naboru i pytań.</li>
-                            <li>DM do Komendanta / Zastępcy w sprawach formalnych.</li>
-                            <li>Ping frakcji SOP w sprawach pilnych IC.</li>
-                        </ul>
-                    </div>
-
-                    <div class="card">
-                        <h3>Regulaminy i dokumenty</h3>
-                        <p>
-                            Wszelkie regulaminy, procedury i wewnętrzne dokumenty SOP publikowane są na forum lub w panelu SOP. Pamiętaj, aby zawsze być na bieżąco z aktualizacjami.
-                        </p>
-                        <ul class="list">
-                            <li>Regulamin SOP – zasady służby i zachowania.</li>
-                            <li>Procedury operacyjne – konwoje, ochrona VIP, alarmy.</li>
-                            <li>Instrukcje szkoleniowe – materiały IC/OOC do nauki.</li>
-                        </ul>
-                    </div>
+          <!-- BAZA DANYCH – ROZBUDOWANA -->
+          <div id="panel-baza-danych" class="system-panel" style="display:none;">
+            <div class="citizen-card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <div>
+                  <strong>Rejestr obywateli SOP</strong><br />
+                  <span class="system-note">Baza osób objętych zainteresowaniem SOP – obywatele, VIP, osoby obserwowane.</span>
                 </div>
+              </div>
+
+              <form id="citizenForm" class="citizen-form">
+                <label>
+                  Imię
+                  <input type="text" id="citizenFirst" placeholder="np. Alex" required />
+                </label>
+                <label>
+                  Nazwisko
+                  <input type="text" id="citizenLast" placeholder="np. Shadow" required />
+                </label>
+                <label>
+                  ID / PESEL
+                  <input type="text" id="citizenId" placeholder="np. 920314-XXXX" />
+                </label>
+                <label>
+                  Status
+                  <select id="citizenStatus">
+                    <option value="neutral">Neutralny</option>
+                    <option value="vip">VIP</option>
+                    <option value="watch">Obserwacja</option>
+                    <option value="danger">Wysokie ryzyko</option>
+                  </select>
+                </label>
+                <label style="grid-column:1 / 4;">
+                  Notatka
+                  <input type="text" id="citizenNote" placeholder="krótka notatka operacyjna (opcjonalnie)" />
+                  <small>Możesz wpisać np. powiązania frakcyjne, historię incydentów, informacje operacyjne.</small>
+                </label>
+                <button type="submit" class="btn btn-primary">
+                  ➕ Dodaj obywatela
+                </button>
+              </form>
+
+              <div class="citizen-table-wrap">
+                <table class="citizen-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Imię i nazwisko</th>
+                      <th>ID / PESEL</th>
+                      <th>Status</th>
+                      <th>Notatka</th>
+                    </tr>
+                  </thead>
+                  <tbody id="citizenTableBody">
+                    <!-- wypełniane z JS -->
+                  </tbody>
+                </table>
+              </div>
             </div>
+            <p class="system-note">
+              To demo bazy danych obywateli. Dane przechowywane są po stronie frontu – później możesz podpiąć to pod
+              backend, forum lub API serwera RP.
+            </p>
+          </div>
+
+          <!-- Pozostałe moduły -->
+          <div id="panel-baza-pojazdow" class="system-panel" style="display:none;">
+            <p class="system-note">Baza pojazdów SOP.</p>
+          </div>
+          <div id="panel-zezwolenia" class="system-panel" style="display:none;">
+            <p class="system-note">Zezwolenia i licencje.</p>
+          </div>
+          <div id="panel-szkolenia" class="system-panel" style="display:none;">
+            <p class="system-note">Moduł szkoleń SOP.</p>
+          </div>
+          <div id="panel-raporty" class="system-panel" style="display:none;">
+            <p class="system-note">Raporty służb SOP.</p>
+          </div>
+          <div id="panel-konwoje" class="system-panel" style="display:none;">
+            <p class="system-note">Panel konwojów VIP.</p>
+          </div>
+          <div id="panel-listy-goncze" class="system-panel" style="display:none;">
+            <p class="system-note">Listy gończe SOP.</p>
+          </div>
+          <div id="panel-sprawy-operacyjne" class="system-panel" style="display:none;">
+            <p class="system-note">Sprawy operacyjne SOP.</p>
+          </div>
+          <div id="panel-archiwum" class="system-panel" style="display:none;">
+            <p class="system-note">Archiwum spraw SOP.</p>
+          </div>
+          <div id="panel-hierarchia" class="system-panel" style="display:none;">
+            <p class="system-note">Hierarchia SOP – struktura stopni.</p>
+            <ul class="hierarchy-list">
+              <li>1. Komendant SOP</li>
+              <li>2. Zastępca Komendanta SOP</li>
+              <li>3. Oficer Operacyjny</li>
+              <li>4. Starszy Funkcjonariusz SOP</li>
+              <li>5. Funkcjonariusz SOP</li>
+              <li>6. Aplikant SOP</li>
+            </ul>
+          </div>
         </section>
+      </div>
+    </div>
+  </div>
 
-    </main>
-</div>
+  <script>
+    // 10 kont – demo
+    const users = [
+      {
+        login: 'shadow_vortex92',
+        password: 'kX#7mP!aQ9_zT',
+        role: 'sop',
+        badge: 'SOP-101',
+        name: 'Alex Shadow',
+        dob: '1992-03-14',
+        age: 34,
+        rank: 'Starszy Funkcjonariusz SOP',
+        unit: 'Sekcja Ochrony VIP',
+        serviceFrom: '2020-05-01',
+        duty: 'on'
+      },
+      {
+        login: 'cyber_pulse',
+        password: '3$vF@mK2xL#pW',
+        role: 'sop',
+        badge: 'SOP-102',
+        name: 'Jordan Pulse',
+        dob: '1995-08-22',
+        age: 30,
+        rank: 'Funkcjonariusz SOP',
+        unit: 'Sekcja Rozpoznania',
+        serviceFrom: '2021-02-10',
+        duty: 'on'
+      },
+      {
+        login: 'pixel_forge26',
+        password: 'bN8&sY1*vR5_zQ',
+        role: 'sop',
+        badge: 'SOP-103',
+        name: 'Chris Forge',
+        dob: '1990-11-05',
+        age: 35,
+        rank: 'Funkcjonariusz SOP',
+        unit: 'Sekcja Logistyki',
+        serviceFrom: '2019-09-12',
+        duty: 'off'
+      },
+      {
+        login: 'nexus_glitch',
+        password: 'hP4!mX9$kL2@tV',
+        role: 'tajna',
+        badge: 'TS-201',
+        name: 'Morgan Nexus',
+        dob: '1989-01-30',
+        age: 37,
+        rank: 'Agent Specjalny',
+        unit: 'Tajna Jednostka',
+        serviceFrom: '2018-01-01',
+        duty: 'on'
+      },
+      {
+        login: 'quantum_echo',
+        password: '7#wB2%mZ9_xK1',
+        role: 'tajna',
+        badge: 'TS-202',
+        name: 'Taylor Echo',
+        dob: '1993-06-02',
+        age: 33,
+        rank: 'Agent',
+        unit: 'Tajna Jednostka',
+        serviceFrom: '2020-07-15',
+        duty: 'off'
+      },
+      {
+        login: 'neon_matrix',
+        password: 'vF5&pQ3!sL8_zX',
+        role: 'sop',
+        badge: 'SOP-104',
+        name: 'Jamie Matrix',
+        dob: '1994-09-09',
+        age: 31,
+        rank: 'Funkcjonariusz SOP',
+        unit: 'Sekcja Eskort',
+        serviceFrom: '2022-03-03',
+        duty: 'on'
+      },
+      {
+        login: 'alpha_frost00',
+        password: 'kR9$mX2@tP6_vB',
+        role: 'sop',
+        badge: 'SOP-105',
+        name: 'Robin Frost',
+        dob: '1991-12-12',
+        age: 34,
+        rank: 'Starszy Funkcjonariusz SOP',
+        unit: 'Sekcja Szkoleniowa',
+        serviceFrom: '2019-01-20',
+        duty: 'off'
+      },
+      {
+        login: 'digital_phantom',
+        password: '3#vL9%kQ1!zW5',
+        role: 'tajna',
+        badge: 'TS-203',
+        name: 'Sky Phantom',
+        dob: '1988-04-18',
+        age: 38,
+        rank: 'Agent Specjalny',
+        unit: 'Tajna Jednostka',
+        serviceFrom: '2017-06-06',
+        duty: 'on'
+      },
+      {
+        login: 'cosmic_shifter',
+        password: 'hP2&mX8$kL4@vT',
+        role: 'tajna',
+        badge: 'TS-204',
+        name: 'Riley Shifter',
+        dob: '1996-02-01',
+        age: 30,
+        rank: 'Agent',
+        unit: 'Tajna Jednostka',
+        serviceFrom: '2021-11-11',
+        duty: 'off'
+      },
+      {
+        login: 'hyper_nova',
+        password: '7$wB3%mZ9_xK2',
+        role: 'sop',
+        badge: 'SOP-106',
+        name: 'Casey Nova',
+        dob: '1993-10-25',
+        age: 32,
+        rank: 'Funkcjonariusz SOP',
+        unit: 'Sekcja Ochrony VIP',
+        serviceFrom: '2023-01-05',
+        duty: 'on'
+      },
+    ];
 
-<!-- SKRYPTY -->
-<script>
-    // PROSTA INICJALIZACJA citizens W LOCALSTORAGE (BAZA DANYCH FRONTEND)
-    if (!localStorage.getItem('citizens')) {
-        // przykładowe dane startowe – możesz usunąć albo zmienić pod siebie
-        const seedCitizens = [
-            {
-                id: 1,
-                firstName: 'Jan',
-                lastName: 'Kowalski',
-                pesel: '90010112345',
-                birthDate: '1990-01-01',
-                address: 'Los Santos, Center St. 12',
-                status: 'czysty',
-                note: ''
-            },
-            {
-                id: 2,
-                firstName: 'Anna',
-                lastName: 'Nowak',
-                pesel: '95050554321',
-                birthDate: '1995-05-05',
-                address: 'Los Santos, Vinewood 21',
-                status: 'obserwacja',
-                note: 'Powiązana z grupą podejrzaną o przemyt.'
-            }
-        ];
-        localStorage.setItem('citizens', JSON.stringify(seedCitizens));
+    const loginBtn = document.getElementById('loginTrigger');
+    const loginModal = document.getElementById('loginModal');
+    const loginClose = document.getElementById('loginClose');
+    const roleForm = document.getElementById('roleForm');
+
+    const loginPanel = document.getElementById('loginPanel');
+    const loginTitle = document.getElementById('loginTitle');
+    const loginHint = document.getElementById('loginHint');
+    const loginUser = document.getElementById('loginUser');
+    const loginPass = document.getElementById('loginPass');
+
+    const systemOverlay = document.getElementById('systemOverlay');
+    const systemTitle = document.getElementById('systemTitle');
+    const systemSub = document.getElementById('systemSub');
+    const systemTag = document.getElementById('systemTag');
+    const userDisplay = document.getElementById('userDisplay');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutProfileBtn = document.getElementById('logoutProfileBtn');
+
+    const moduleButtons = document.querySelectorAll('.system-menu button');
+    const panels = {
+      'pulpit': document.getElementById('panel-pulpit'),
+      'baza-danych': document.getElementById('panel-baza-danych'),
+      'baza-pojazdow': document.getElementById('panel-baza-pojazdow'),
+      'zezwolenia': document.getElementById('panel-zezwolenia'),
+      'szkolenia': document.getElementById('panel-szkolenia'),
+      'raporty': document.getElementById('panel-raporty'),
+      'konwoje': document.getElementById('panel-konwoje'),
+      'listy-goncze': document.getElementById('panel-listy-goncze'),
+      'sprawy-operacyjne': document.getElementById('panel-sprawy-operacyjne'),
+      'archiwum': document.getElementById('panel-archiwum'),
+      'hierarchia': document.getElementById('panel-hierarchia'),
+    };
+    const systemHeading = document.getElementById('systemHeading');
+
+    const profileAvatar = document.getElementById('profileAvatar');
+    const badgeNumber = document.getElementById('badgeNumber');
+    const fullName = document.getElementById('fullName');
+    const profileLogin = document.getElementById('profileLogin');
+    const rankEl = document.getElementById('rank');
+    const rankShort = document.getElementById('rankShort');
+    const unitShort = document.getElementById('unitShort');
+    const dobEl = document.getElementById('dob');
+    const ageEl = document.getElementById('age');
+    const unitEl = document.getElementById('unit');
+    const serviceFromEl = document.getElementById('serviceFrom');
+    const dutyStatusPill = document.getElementById('dutyStatusPill');
+
+    let selectedRole = null;
+    let step = 1;
+    let currentUser = null;
+
+    // Baza danych – przykładowi obywatele
+    const citizens = [
+      {
+        first: 'Alex',
+        last: 'Shadow',
+        id: '920314-XXXX',
+        status: 'vip',
+        note: 'Gubernator stanu – pełna ochrona SOP.'
+      },
+      {
+        first: 'Jordan',
+        last: 'Pulse',
+        id: '950822-XXXX',
+        status: 'watch',
+        note: 'Powiązania z organizacją przestępczą – obserwacja.'
+      },
+      {
+        first: 'Casey',
+        last: 'Nova',
+        id: '931025-XXXX',
+        status: 'neutral',
+        note: 'Brak szczególnych notatek – współpraca z SOP podczas eventów.'
+      },
+      {
+        first: 'Morgan',
+        last: 'Nexus',
+        id: '890130-XXXX',
+        status: 'danger',
+        note: 'Podejrzenie o sabotaż infrastruktury – priorytet operacyjny.'
+      }
+    ];
+
+    const citizenTableBody = document.getElementById('citizenTableBody');
+    const citizenForm = document.getElementById('citizenForm');
+    const citizenFirst = document.getElementById('citizenFirst');
+    const citizenLast = document.getElementById('citizenLast');
+    const citizenId = document.getElementById('citizenId');
+    const citizenStatus = document.getElementById('citizenStatus');
+    const citizenNote = document.getElementById('citizenNote');
+
+    function statusBadge(status){
+      let cls = 'badge-status';
+      let label = 'Neutralny';
+      let icon = '⚪';
+
+      if(status === 'vip'){
+        cls += ' ok';
+        label = 'VIP';
+        icon = '⭐';
+      }else if(status === 'watch'){
+        cls += ' warn';
+        label = 'Obserwacja';
+        icon = '👁️';
+      }else if(status === 'danger'){
+        cls += ' danger';
+        label = 'Wysokie ryzyko';
+        icon = '⚠️';
+      }
+
+      return `<span class="${cls}"><span>${icon}</span><span>${label}</span></span>`;
     }
 
-    // globalna lista obywateli z localStorage
-    let citizens = JSON.parse(localStorage.getItem('citizens') || '[]');
-
-    // prosta obsługa przełączania paneli po lewej (jeśli już masz – ten blok możesz pominąć)
-    document.addEventListener('DOMContentLoaded', () => {
-        const navButtons = document.querySelectorAll('.nav-button[data-panel]');
-        const panels = document.querySelectorAll('.panel');
-
-        navButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const target = btn.getAttribute('data-panel');
-
-                navButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                panels.forEach(p => {
-                    if (p.id === target) {
-                        p.classList.add('active');
-                    } else {
-                        p.classList.remove('active');
-                    }
-                });
-            });
-        });
-
-        // inicjalizacja widoku citizens
-        renderCitizensList(citizens);
-
-        const searchInput = document.getElementById('citizenSearch');
-        if (searchInput) {
-            searchInput.addEventListener('input', () => {
-                const q = searchInput.value.toLowerCase();
-                const filtered = citizens.filter(c =>
-                    c.firstName.toLowerCase().includes(q) ||
-                    c.lastName.toLowerCase().includes(q) ||
-                    c.pesel.toLowerCase().includes(q)
-                );
-                renderCitizensList(filtered);
-            });
-        }
-    });
-      // RENDEROWANIE LISTY OBYWATELI W TABELI
-    function renderCitizensList(data) {
-        const tbody = document.getElementById('citizensTableBody');
-        if (!tbody) return;
-
-        tbody.innerHTML = '';
-
-        data.forEach(citizen => {
-            const tr = document.createElement('tr');
-            tr.addEventListener('click', () => showCitizenDetails(citizen));
-
-            tr.innerHTML = `
-                <td>${citizen.id}</td>
-                <td>${citizen.firstName}</td>
-                <td>${citizen.lastName}</td>
-                <td>${citizen.pesel}</td>
-                <td>${citizen.status || 'czysty'}</td>
-            `;
-
-            tbody.appendChild(tr);
-        });
-    }
-
-    // SZCZEGÓŁY OBYWATELA + UZUPEŁNIENIE FORMULARZA EDYCJI
-    function showCitizenDetails(citizen) {
-        const details = document.getElementById('citizenDetailsView');
-        if (!details) return;
-
-        details.innerHTML = `
-            <table class="data-table">
-                <tr><th>ID</th><td>${citizen.id}</td></tr>
-                <tr><th>Imię</th><td>${citizen.firstName}</td></tr>
-                <tr><th>Nazwisko</th><td>${citizen.lastName}</td></tr>
-                <tr><th>PESEL</th><td>${citizen.pesel}</td></tr>
-                <tr><th>Data urodzenia</th><td>${citizen.birthDate || '-'}</td></tr>
-                <tr><th>Adres</th><td>${citizen.address || '-'}</td></tr>
-                <tr><th>Status</th><td>${citizen.status || 'czysty'}</td></tr>
-                <tr><th>Notatka</th><td>${citizen.note && citizen.note.trim() !== '' ? citizen.note : '-'}</td></tr>
-            </table>
+    function renderCitizens(){
+      citizenTableBody.innerHTML = '';
+      citizens.forEach((c, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td>${c.first} ${c.last}</td>
+          <td>${c.id || '—'}</td>
+          <td>${statusBadge(c.status)}</td>
+          <td>${c.note || '—'}</td>
         `;
-
-        // uzupełnienie formularza edycji
-        const idInput = document.getElementById('citizenId');
-        const statusInput = document.getElementById('citizenStatus');
-        const noteInput = document.getElementById('citizenNote');
-
-        if (idInput) idInput.value = citizen.id || '';
-        if (statusInput) statusInput.value = citizen.status || 'czysty';
-        if (noteInput) noteInput.value = citizen.note || '';
+        citizenTableBody.appendChild(tr);
+      });
     }
 
-    // ZAPIS EDYCJI STATUSU I NOTATKI DO "BAZY" (LOCALSTORAGE)
-    function saveCitizenEdit(event) {
-        event.preventDefault();
+    renderCitizens();
 
-        const id = document.getElementById('citizenId')?.value;
-        const status = document.getElementById('citizenStatus')?.value;
-        const note = document.getElementById('citizenNote')?.value;
+    citizenForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const first = citizenFirst.value.trim();
+      const last = citizenLast.value.trim();
+      const id = citizenId.value.trim();
+      const status = citizenStatus.value;
+      const note = citizenNote.value.trim();
 
-        if (!id) {
-            alert('Najpierw wybierz obywatela z listy.');
-            return;
-        }
+      if(!first || !last){
+        loginHint.textContent = 'Podaj co najmniej imię i nazwisko obywatela.';
+        loginHint.style.color = '#f97373';
+        return;
+      }
 
-        let citizensData = JSON.parse(localStorage.getItem('citizens') || '[]');
+      citizens.push({ first, last, id, status, note });
+      renderCitizens();
 
-        const index = citizensData.findIndex(c => String(c.id) === String(id));
-        if (index === -1) {
-            alert('Nie znaleziono obywatela w bazie.');
-            return;
-        }
-
-        citizensData[index].status = status;
-        citizensData[index].note = note;
-
-        // zapis do localStorage
-        localStorage.setItem('citizens', JSON.stringify(citizensData));
-        // aktualizacja globalnej zmiennej
-        citizens = citizensData;
-
-        // odśwież lista + szczegóły
-        renderCitizensList(citizensData);
-
-        const updated = citizensData.find(c => String(c.id) === String(id));
-        if (updated) {
-            showCitizenDetails(updated);
-        }
-
-        alert('Zmiany zapisane.');
-    }
-  <!-- SKRYPTY -->
-<script>
-    // PROSTA INICJALIZACJA citizens W LOCALSTORAGE (BAZA DANYCH FRONTEND)
-    if (!localStorage.getItem('citizens')) {
-        // przykładowe dane startowe – możesz usunąć albo zmienić pod siebie
-        const seedCitizens = [
-            {
-                id: 1,
-                firstName: 'Jan',
-                lastName: 'Kowalski',
-                pesel: '90010112345',
-                birthDate: '1990-01-01',
-                address: 'Los Santos, Center St. 12',
-                status: 'czysty',
-                note: ''
-            },
-            {
-                id: 2,
-                firstName: 'Anna',
-                lastName: 'Nowak',
-                pesel: '95050554321',
-                birthDate: '1995-05-05',
-                address: 'Los Santos, Vinewood 21',
-                status: 'obserwacja',
-                note: 'Powiązana z grupą podejrzaną o przemyt.'
-            }
-        ];
-        localStorage.setItem('citizens', JSON.stringify(seedCitizens));
-    }
-
-    // globalna lista obywateli z localStorage
-    let citizens = JSON.parse(localStorage.getItem('citizens') || '[]');
-
-    // prosta obsługa przełączania paneli po lewej (jeśli już masz – ten blok możesz pominąć)
-    document.addEventListener('DOMContentLoaded', () => {
-        const navButtons = document.querySelectorAll('.nav-button[data-panel]');
-        const panels = document.querySelectorAll('.panel');
-
-        navButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const target = btn.getAttribute('data-panel');
-
-                navButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                panels.forEach(p => {
-                    if (p.id === target) {
-                        p.classList.add('active');
-                    } else {
-                        p.classList.remove('active');
-                    }
-                });
-            });
-        });
-
-        // inicjalizacja widoku citizens
-        renderCitizensList(citizens);
-
-        const searchInput = document.getElementById('citizenSearch');
-        if (searchInput) {
-            searchInput.addEventListener('input', () => {
-                const q = searchInput.value.toLowerCase();
-                const filtered = citizens.filter(c =>
-                    c.firstName.toLowerCase().includes(q) ||
-                    c.lastName.toLowerCase().includes(q) ||
-                    c.pesel.toLowerCase().includes(q)
-                );
-                renderCitizensList(filtered);
-            });
-        }
+      citizenFirst.value = '';
+      citizenLast.value = '';
+      citizenId.value = '';
+      citizenStatus.value = 'neutral';
+      citizenNote.value = '';
     });
 
-    // RENDEROWANIE LISTY OBYWATELI W TABELI
-    function renderCitizensList(data) {
-        const tbody = document.getElementById('citizensTableBody');
-        if (!tbody) return;
-
-        tbody.innerHTML = '';
-
-        data.forEach(citizen => {
-            const tr = document.createElement('tr');
-            tr.addEventListener('click', () => showCitizenDetails(citizen));
-
-            tr.innerHTML = `
-                <td>${citizen.id}</td>
-                <td>${citizen.firstName}</td>
-                <td>${citizen.lastName}</td>
-                <td>${citizen.pesel}</td>
-                <td>${citizen.status || 'czysty'}</td>
-            `;
-
-            tbody.appendChild(tr);
-        });
+    function openModal() {
+      step = 1;
+      selectedRole = null;
+      loginPanel.style.display = 'none';
+      loginHint.textContent = '';
+      loginHint.style.color = '#9aa6b7';
+      loginUser.value = '';
+      loginPass.value = '';
+      loginModal.classList.add('is-open');
     }
 
-    // SZCZEGÓŁY OBYWATELA + UZUPEŁNIENIE FORMULARZA EDYCJI
-    function showCitizenDetails(citizen) {
-        const details = document.getElementById('citizenDetailsView');
-        if (!details) return;
-
-        details.innerHTML = `
-            <table class="data-table">
-                <tr><th>ID</th><td>${citizen.id}</td></tr>
-                <tr><th>Imię</th><td>${citizen.firstName}</td></tr>
-                <tr><th>Nazwisko</th><td>${citizen.lastName}</td></tr>
-                <tr><th>PESEL</th><td>${citizen.pesel}</td></tr>
-                <tr><th>Data urodzenia</th><td>${citizen.birthDate || '-'}</td></tr>
-                <tr><th>Adres</th><td>${citizen.address || '-'}</td></tr>
-                <tr><th>Status</th><td>${citizen.status || 'czysty'}</td></tr>
-                <tr><th>Notatka</th><td>${citizen.note && citizen.note.trim() !== '' ? citizen.note : '-'}</td></tr>
-            </table>
-        `;
-
-        // uzupełnienie formularza edycji
-        const idInput = document.getElementById('citizenId');
-        const statusInput = document.getElementById('citizenStatus');
-        const noteInput = document.getElementById('citizenNote');
-
-        if (idInput) idInput.value = citizen.id || '';
-        if (statusInput) statusInput.value = citizen.status || 'czysty';
-        if (noteInput) noteInput.value = citizen.note || '';
+    function closeModal() {
+      loginModal.classList.remove('is-open');
     }
 
-    // ZAPIS EDYCJI STATUSU I NOTATKI DO "BAZY" (LOCALSTORAGE)
-    function saveCitizenEdit(event) {
-        event.preventDefault();
+    loginBtn?.addEventListener('click', openModal);
+    loginClose?.addEventListener('click', closeModal);
+    loginModal?.addEventListener('click', (e) => {
+      if (e.target === loginModal) closeModal();
+    });
 
-        const id = document.getElementById('citizenId')?.value;
-        const status = document.getElementById('citizenStatus')?.value;
-        const note = document.getElementById('citizenNote')?.value;
-
-        if (!id) {
-            alert('Najpierw wybierz obywatela z listy.');
-            return;
-        }
-
-        let citizensData = JSON.parse(localStorage.getItem('citizens') || '[]');
-
-        const index = citizensData.findIndex(c => String(c.id) === String(id));
-        if (index === -1) {
-            alert('Nie znaleziono obywatela w bazie.');
-            return;
-        }
-
-        citizensData[index].status = status;
-        citizensData[index].note = note;
-
-        // zapis do localStorage
-        localStorage.setItem('citizens', JSON.stringify(citizensData));
-        // aktualizacja globalnej zmiennej
-        citizens = citizensData;
-
-        // odśwież lista + szczegóły
-        renderCitizensList(citizensData);
-
-        const updated = citizensData.find(c => String(c.id) === String(id));
-        if (updated) {
-            showCitizenDetails(updated);
-        }
-
-        alert('Zmiany zapisane.');
+    function showModule(key) {
+      moduleButtons.forEach(btn => {
+        const m = btn.getAttribute('data-module');
+        btn.classList.toggle('active', m === key);
+      });
+      Object.entries(panels).forEach(([name, el]) => {
+        if (!el) return;
+        el.style.display = name === key ? 'block' : 'none';
+      });
+      const titles = {
+        'pulpit': 'Pulpit operacyjny',
+        'baza-danych': 'Baza danych',
+        'baza-pojazdow': 'Baza pojazdów',
+        'zezwolenia': 'Zezwolenia',
+        'szkolenia': 'Szkolenia',
+        'raporty': 'Raporty służb',
+        'konwoje': 'Konwoje VIP',
+        'listy-goncze': 'Listy gończe',
+        'sprawy-operacyjne': 'Sprawy operacyjne',
+        'archiwum': 'Archiwum spraw',
+        'hierarchia': 'Hierarchia SOP',
+      };
+      systemHeading.textContent = titles[key] || 'Panel SOP';
     }
-</script>
+
+    moduleButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-module');
+        showModule(key);
+      });
+    });
+
+    function clearSession() {
+      currentUser = null;
+      userDisplay.textContent = 'Zalogowany: —';
+      badgeNumber.textContent = 'SOP-000';
+      fullName.textContent = 'Imię Nazwisko';
+      profileLogin.textContent = '—';
+      rankEl.textContent = 'Funkcjonariusz SOP';
+      rankShort.textContent = 'Funkcjonariusz SOP';
+      unitShort.textContent = 'Sekcja Ochrony VIP';
+      dobEl.textContent = '—';
+      ageEl.textContent = '—';
+      unitEl.textContent = 'Sekcja Ochrony VIP';
+      serviceFromEl.textContent = '—';
+      dutyStatusPill.innerHTML = '<span>⚪ <span id="dutyText">Poza służbą</span></span>';
+      dutyStatusPill.style.borderColor = 'rgba(148,163,184,.7)';
+      dutyStatusPill.style.color = '#e5e7eb';
+    }
+
+    function logout() {
+      systemOverlay.classList.remove('show');
+      document.body.style.overflow = '';
+      clearSession();
+    }
+
+    logoutBtn?.addEventListener('click', logout);
+    logoutProfileBtn?.addEventListener('click', logout);
+
+    function fillProfile(user) {
+      profileAvatar.src = user.avatar || "https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif";
+
+      badgeNumber.textContent = user.badge || 'SOP-000';
+      fullName.textContent = user.name || 'Imię Nazwisko';
+      profileLogin.textContent = user.login;
+      rankEl.textContent = user.rank || 'Funkcjonariusz SOP';
+      rankShort.textContent = user.rank || 'Funkcjonariusz SOP';
+      unitEl.textContent = user.unit || 'Sekcja Ochrony VIP';
+      unitShort.textContent = user.unit || 'Sekcja Ochrony VIP';
+      dobEl.textContent = user.dob || '—';
+      ageEl.textContent = user.age ?? '—';
+      serviceFromEl.textContent = user.serviceFrom || '—';
+
+      if (user.duty === 'on') {
+        dutyStatusPill.innerHTML = '<span>🟢 <span id="dutyText">Na służbie</span></span>';
+        dutyStatusPill.style.borderColor = 'rgba(34,197,94,.7)';
+        dutyStatusPill.style.color = '#bbf7d0';
+      } else {
+        dutyStatusPill.innerHTML = '<span>⚪ <span id="dutyText">Poza służbą</span></span>';
+        dutyStatusPill.style.borderColor = 'rgba(148,163,184,.7)';
+        dutyStatusPill.style.color = '#e5e7eb';
+      }
+    }
+
+    roleForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const roleInput = document.querySelector('input[name="role"]:checked');
+
+      if (step === 1) {
+        if (!roleInput) return;
+        selectedRole = roleInput.value;
+
+        loginTitle.textContent =
+          selectedRole === 'sop'
+            ? 'Logowanie – Funkcjonariusz SOP'
+            : 'Logowanie – Tajna Jednostka';
+
+        loginHint.textContent =
+          'Użyj loginu i hasła przypisanego do Twojego konta (z listy funkcjonariuszy).';
+        loginHint.style.color = '#9aa6b7';
+
+        loginPanel.style.display = 'block';
+        step = 2;
+        return;
+      }
+
+      if (step === 2) {
+        const user = loginUser.value.trim();
+        const pass = loginPass.value.trim();
+
+        const found = users.find(u =>
+          u.login === user &&
+          u.password === pass &&
+          u.role === selectedRole
+        );
+
+        if (!found) {
+          loginHint.textContent = 'Nieprawidłowe dane logowania lub rola.';
+          loginHint.style.color = '#f97373';
+          return;
+        }
+
+        currentUser = found;
+        fillProfile(currentUser);
+
+        if (selectedRole === 'sop') {
+          systemTitle.textContent = 'SOP – Panel Funkcjonariusza';
+          systemSub.textContent = 'Tryb: Funkcjonariusz SOP';
+          systemTag.innerHTML = '<span>🛡️ SOP</span><span>Funkcjonariusz</span>';
+        } else {
+          systemTitle.textContent = 'SOP – Panel Tajnej Jednostki';
+          systemSub.textContent = 'Tryb: Tajna Jednostka';
+          systemTag.innerHTML = '<span>🕵️ Tajna</span><span>Jednostka</span>';
+        }
+
+        userDisplay.textContent = 'Zalogowany: ' + currentUser.login;
+
+        closeModal();
+        systemOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        showModule('pulpit');
+      }
+    });
+
+    // ESC – niczego nie wylogowuje, tylko zamyka UI
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (loginModal.classList.contains('is-open')) {
+          closeModal();
+          return;
+        }
+        if (systemOverlay.classList.contains('show')) {
+          systemOverlay.classList.remove('show');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+  </script>
 </body>
 </html>
