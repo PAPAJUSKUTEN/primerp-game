@@ -387,7 +387,6 @@
       background:rgba(255,255,255,.03);
     }
 
-    /* Login button in nav */
     .login-btn{
       border-radius:999px;
       padding:10px 16px;
@@ -406,7 +405,6 @@
       background:rgba(245,158,11,.09);
     }
 
-    /* Modal styles */
     .modal-backdrop{
       position:fixed;
       inset:0;
@@ -522,7 +520,6 @@
       transform:translateY(-50%) scale(1);
     }
 
-    /* Krok 2 – panel logowania w modal */
     .login-panel{
       margin-top:14px;
       padding-top:14px;
@@ -557,7 +554,6 @@
       margin-top:6px;
     }
 
-    /* Pełnoekranowy system po zalogowaniu */
     .system-overlay{
       position:fixed;
       inset:0;
@@ -658,9 +654,7 @@
       color:var(--muted);
     }
 
-    .system-panel{
-      /* panele przełączane JS-em */
-    }
+    .system-panel{}
 
     .report-table{
       width:100%;
@@ -734,10 +728,8 @@
   </header>
 
   <main class="container">
-    <!-- ... sekcje publiczne jak wcześniej (hero, o nas, itp.) – bez zmian ... -->
-    <!-- Dla czytelności: cała część publiczna została zachowana identycznie jak w poprzedniej wersji -->
-
-    <!-- (skrócone – możesz zostawić dokładnie to, co miałeś wcześniej, powyżej nie zmieniałem nic) -->
+    <!-- Strona główna identyczna jak wcześniej (hero, sekcje, stopka) – możesz wkleić swoją pełną wersję.
+         Dla skrócenia nie powtarzam wszystkich sekcji, bo nie zmieniamy ich treści. -->
 
     <section class="hero">
       <div class="hero-grid">
@@ -789,14 +781,11 @@
       </div>
     </section>
 
-    <!-- Reszta sekcji publicznych – O nas, Kierownictwo, News, Rekrutacja, Ochrona, Kontakt
-         zostaje bez zmian (możesz przenieść z poprzedniej wersji 1:1). -->
-
-    <!-- ... dla skrócenia nie powtarzam ich tu ponownie ... -->
+    <!-- tu wklej swoje sekcje: O nas, Kierownictwo, News, Rekrutacja, Ochrona, Kontakt -->
 
   </main>
 
-  <!-- Modal logowania z wyborem stanowiska + login -->
+  <!-- Modal logowania -->
   <div id="loginModal" class="modal-backdrop">
     <div class="modal-panel" role="dialog" aria-modal="true">
       <div class="modal-header">
@@ -834,12 +823,11 @@
           </label>
         </div>
 
-        <!-- Krok 2 – logowanie zależne od roli -->
         <div id="loginPanel" class="login-panel" style="display:none;">
           <h4 id="loginTitle">Panel logowania</h4>
-          <label for="loginUser">Identyfikator</label>
+          <label for="loginUser">Login (Username)</label>
           <input id="loginUser" type="text" autocomplete="off" />
-          <label for="loginPass" style="margin-top:8px;">Hasło</label>
+          <label for="loginPass" style="margin-top:8px;">Hasło (Password)</label>
           <input id="loginPass" type="password" />
           <div class="login-info" id="loginHint"></div>
         </div>
@@ -851,7 +839,7 @@
     </div>
   </div>
 
-  <!-- Pełnoekranowy panel systemu SOP -->
+  <!-- Panel SOP -->
   <div id="systemOverlay" class="system-overlay">
     <div class="system-inner">
       <div class="system-topbar">
@@ -859,7 +847,7 @@
           <strong id="systemTitle">SOP – Panel</strong><br />
           <span id="systemSub">Tryb: Funkcjonariusz SOP</span>
         </div>
-        <span>ESC / F10 • Wyloguj się z panelu (front)</span>
+        <span id="userDisplay">Zalogowany: —</span>
       </div>
       <div class="system-main">
         <aside class="system-sidebar">
@@ -889,7 +877,6 @@
             </div>
           </div>
 
-          <!-- Panele treści -->
           <div id="panel-pulpit" class="system-panel">
             <p class="system-note">
               Witaj w panelu SOP. Obecny widok jest poglądowy – możesz tu wyświetlać aktywne konwoje, status jednostek,
@@ -899,104 +886,69 @@
 
           <div id="panel-baza-danych" class="system-panel" style="display:none;">
             <p class="system-note">
-              Baza danych funkcjonariuszy i osób powiązanych z SOP. Możesz tu dodać listę rekordów IC (ID postaci, status,
-              stopień, uprawnienia).
+              Baza danych funkcjonariuszy i osób powiązanych z SOP.
             </p>
           </div>
 
           <div id="panel-baza-pojazdow" class="system-panel" style="display:none;">
             <p class="system-note">
-              Baza pojazdów SOP: numery rejestracyjne, typ pojazdu, status (garaż / w akcji), przypisanie do jednostki.
+              Baza pojazdów SOP.
             </p>
           </div>
 
           <div id="panel-zezwolenia" class="system-panel" style="display:none;">
             <p class="system-note">
-              Zezwolenia i licencje: pozwolenia na broń, dostęp do stref zamkniętych, przepustki dla VIP i personelu.
+              Zezwolenia i licencje.
             </p>
           </div>
 
           <div id="panel-szkolenia" class="system-panel" style="display:none;">
             <p class="system-note">
-              Moduł szkoleń SOP: zaplanowane szkolenia, obecność, zaliczenia oraz historia treningów dla funkcjonariuszy.
+              Moduł szkoleń SOP.
             </p>
           </div>
 
           <div id="panel-raporty" class="system-panel" style="display:none;">
             <p class="system-note">
-              Raporty służb: zestawienie operacji, służb i interwencji SOP. Poniżej przykładowa tabela raportów.
+              Raporty służb SOP.
             </p>
-            <table class="report-table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Data</th>
-                  <th>Rodzaj</th>
-                  <th>Dowódca</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>SOP-001</td>
-                  <td>18.06</td>
-                  <td>Zabezpieczenie wizyty VIP</td>
-                  <td>SOP1</td>
-                  <td><span class="report-status closed">Zamknięty</span></td>
-                </tr>
-                <tr>
-                  <td>SOP-002</td>
-                  <td>19.06</td>
-                  <td>Konwój rządowy</td>
-                  <td>SOP1</td>
-                  <td><span class="report-status open">W toku</span></td>
-                </tr>
-                <tr>
-                  <td>SOP-003</td>
-                  <td>20.06</td>
-                  <td>Szkolenie defensywne</td>
-                  <td>SOP2</td>
-                  <td><span class="report-status closed">Zamknięty</span></td>
-                </tr>
-              </tbody>
-            </table>
           </div>
 
           <div id="panel-konwoje" class="system-panel" style="display:none;">
             <p class="system-note">
-              Panel konwojów VIP: lista zaplanowanych konwojów, trasy, składy pojazdów i status realizacji.
+              Panel konwojów VIP.
             </p>
           </div>
 
           <div id="panel-listy-goncze" class="system-panel" style="display:none;">
             <p class="system-note">
-              Listy gończe: osoby poszukiwane przez SOP. Możesz tu prowadzić listę imion IC, pseudonimów, zarzutów oraz statusu (aktywny / ujęty).
+              Listy gończe: osoby poszukiwane przez SOP.
             </p>
           </div>
 
           <div id="panel-sprawy-operacyjne" class="system-panel" style="display:none;">
             <p class="system-note">
-              Sprawy operacyjne: otwarte operacje SOP, przydzielone jednostki, status sprawy oraz kluczowe notatki operacyjne.
+              Sprawy operacyjne SOP.
             </p>
           </div>
 
           <div id="panel-archiwum" class="system-panel" style="display:none;">
             <p class="system-note">
-              Archiwum spraw: zakończone operacje, stare listy gończe i archiwalne raporty przechowywane do wglądu dowództwa.
+              Archiwum spraw SOP.
             </p>
           </div>
 
           <div id="panel-hierarchia" class="system-panel" style="display:none;">
             <p class="system-note">
-              Hierarchia SOP: drabinka stopni i kluczowych stanowisk. Możesz tu rozpisać strukturę IC frakcji – od Komendanta po młodszych funkcjonariuszy.
+              Hierarchia SOP – struktura stopni.
             </p>
             <ul class="hierarchy-list">
               <li>1. Komendant SOP</li>
               <li>2. Zastępca Komendanta SOP</li>
-              <li>3. Oficer Operacyjny / Dowódcy Sekcji</li>
+              <li>3. Oficer Operacyjny</li>
               <li>4. Starszy Funkcjonariusz SOP</li>
               <li>5. Funkcjonariusz SOP</li>
-              <li>6. Aplikant SOP / Rekrut (OJT)</li>
+              <li>6. Aplikant SOP</li>
             </ul>
           </div>
         </section>
@@ -1005,6 +957,21 @@
   </div>
 
   <script>
+    // 10 kont – na razie po stronie frontu (demo!)
+    // role: 'sop' lub 'tajna' możesz sobie potem dowolnie poustawiać
+    const users = [
+      { login: 'shadow_vortex92',  password: 'kX#7mP!aQ9_zT', role: 'sop' },
+      { login: 'cyber_pulse',      password: '3$vF@mK2xL#pW', role: 'sop' },
+      { login: 'pixel_forge26',    password: 'bN8&sY1*vR5_zQ', role: 'sop' },
+      { login: 'nexus_glitch',     password: 'hP4!mX9$kL2@tV', role: 'tajna' },
+      { login: 'quantum_echo',     password: '7#wB2%mZ9_xK1', role: 'tajna' },
+      { login: 'neon_matrix',      password: 'vF5&pQ3!sL8_zX', role: 'sop' },
+      { login: 'alpha_frost00',    password: 'kR9$mX2@tP6_vB', role: 'sop' },
+      { login: 'digital_phantom',  password: '3#vL9%kQ1!zW5', role: 'tajna' },
+      { login: 'cosmic_shifter',   password: 'hP2&mX8$kL4@vT', role: 'tajna' },
+      { login: 'hyper_nova',       password: '7$wB3%mZ9_xK2', role: 'sop' },
+    ];
+
     const loginBtn = document.getElementById('loginTrigger');
     const loginModal = document.getElementById('loginModal');
     const loginClose = document.getElementById('loginClose');
@@ -1020,6 +987,7 @@
     const systemTitle = document.getElementById('systemTitle');
     const systemSub = document.getElementById('systemSub');
     const systemTag = document.getElementById('systemTag');
+    const userDisplay = document.getElementById('userDisplay');
 
     const moduleButtons = document.querySelectorAll('.system-menu button');
     const panels = {
@@ -1038,11 +1006,13 @@
     const systemHeading = document.getElementById('systemHeading');
 
     let selectedRole = null;
-    let step = 1; // 1 = wybór roli, 2 = logowanie
+    let step = 1;
+    let currentUser = null;
 
     function openModal() {
       step = 1;
       selectedRole = null;
+      currentUser = null;
       loginPanel.style.display = 'none';
       loginHint.textContent = '';
       loginHint.style.color = '#9aa6b7';
@@ -1055,18 +1025,11 @@
       loginModal.classList.remove('is-open');
     }
 
-    if (loginBtn && loginModal) {
-      loginBtn.addEventListener('click', openModal);
-    }
-
-    if (loginClose) {
-      loginClose.addEventListener('click', closeModal);
-    }
+    loginBtn?.addEventListener('click', openModal);
+    loginClose?.addEventListener('click', closeModal);
 
     loginModal?.addEventListener('click', (e) => {
-      if (e.target === loginModal) {
-        closeModal();
-      }
+      if (e.target === loginModal) closeModal();
     });
 
     function showModule(key) {
@@ -1107,41 +1070,42 @@
       e.preventDefault();
       const roleInput = document.querySelector('input[name="role"]:checked');
 
-      // Krok 1 – wybór roli
       if (step === 1) {
         if (!roleInput) return;
         selectedRole = roleInput.value;
 
-        if (selectedRole === 'sop') {
-          loginTitle.textContent = 'Logowanie – Funkcjonariusz SOP';
-          loginHint.textContent = 'Dane testowe: użytkownik SOP1, hasło SOP1.';
-          loginHint.style.color = '#9aa6b7';
-        } else {
-          loginTitle.textContent = 'Logowanie – Tajna Jednostka';
-          loginHint.textContent = 'Dane testowe: użytkownik SOP2, hasło SOP2.';
-          loginHint.style.color = '#9aa6b7';
-        }
+        loginTitle.textContent =
+          selectedRole === 'sop'
+            ? 'Logowanie – Funkcjonariusz SOP'
+            : 'Logowanie – Tajna Jednostka';
+
+        loginHint.textContent =
+          'Użyj loginu i hasła przypisanego do Twojego konta (z listy funkcjonariuszy).';
+        loginHint.style.color = '#9aa6b7';
 
         loginPanel.style.display = 'block';
         step = 2;
         return;
       }
 
-      // Krok 2 – logowanie
       if (step === 2) {
         const user = loginUser.value.trim();
         const pass = loginPass.value.trim();
 
-        const validSop = selectedRole === 'sop' && user === 'SOP1' && pass === 'SOP1';
-        const validTajna = selectedRole === 'tajna' && user === 'SOP2' && pass === 'SOP2';
+        const found = users.find(u =>
+          u.login === user &&
+          u.password === pass &&
+          u.role === selectedRole
+        );
 
-        if (!validSop && !validTajna) {
-          loginHint.textContent = 'Nieprawidłowe dane logowania.';
+        if (!found) {
+          loginHint.textContent = 'Nieprawidłowe dane logowania lub rola.';
           loginHint.style.color = '#f97373';
           return;
         }
 
-        // Sukces – konfiguracja overlay
+        currentUser = found;
+
         if (selectedRole === 'sop') {
           systemTitle.textContent = 'SOP – Panel Funkcjonariusza';
           systemSub.textContent = 'Tryb: Funkcjonariusz SOP';
@@ -1152,6 +1116,8 @@
           systemTag.innerHTML = '<span>🕵️ Tajna</span><span>Jednostka</span>';
         }
 
+        userDisplay.textContent = 'Zalogowany: ' + currentUser.login;
+
         closeModal();
         systemOverlay.classList.add('show');
         document.body.style.overflow = 'hidden';
@@ -1159,12 +1125,13 @@
       }
     });
 
-    // Wylogowanie – ESC lub F10 chowa overlay (front)
     window.addEventListener('keydown', (e) => {
       if (!systemOverlay.classList.contains('show')) return;
       if (e.key === 'Escape' || e.key === 'F10') {
         systemOverlay.classList.remove('show');
         document.body.style.overflow = '';
+        currentUser = null;
+        userDisplay.textContent = 'Zalogowany: —';
       }
     });
   </script>
