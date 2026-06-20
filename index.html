@@ -252,7 +252,7 @@
       line-height:1.6;
     }
 
-    .section{padding:22px 0;}
+    .section{padding:28px 0;}
     .section-title{
       display:flex;
       justify-content:space-between;
@@ -526,6 +526,7 @@
       justify-content:space-between;
       align-items:center;
       background:rgba(3,5,10,.95);
+      gap:16px;
     }
     .system-topbar span{font-size:13px;color:var(--muted);}
     .system-main{
@@ -596,31 +597,46 @@
       color:var(--muted);
     }
 
-    /* AVATAR PROFILU */
-    .profile-avatar{
-      width:72px;
-      height:72px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      object-fit:cover;
-      margin-bottom:10px;
-      background:rgba(255,255,255,.05);
-    }
-
+    /* AVATAR + PROFIL */
     .profile-card{
       display:grid;
-      grid-template-columns:1.5fr 1fr;
-      gap:16px;
-      padding:16px;
+      grid-template-columns:1.6fr 1.1fr;
+      gap:18px;
+      padding:18px;
       border-radius:18px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.02);
+      background:linear-gradient(135deg, rgba(15,23,42,.96), rgba(15,23,42,.88));
       margin-bottom:16px;
+      box-shadow:var(--shadow);
     }
-    .profile-main h3{
-      margin:0 0 4px;
-      font-size:1.1rem;
+
+    .profile-main{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:14px 16px;
+      align-items:flex-start;
     }
+
+    .profile-avatar-wrap{
+      grid-row:span 2;
+    }
+
+    .profile-avatar{
+      width:86px;
+      height:86px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      object-fit:cover;
+      background:rgba(255,255,255,.05);
+      box-shadow:0 12px 30px rgba(0,0,0,.6);
+    }
+
+    .profile-header{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
     .badge-pill{
       display:inline-flex;
       align-items:center;
@@ -630,15 +646,40 @@
       border:1px solid rgba(245,158,11,.7);
       font-size:12px;
       color:#fed7aa;
-      margin-bottom:6px;
+      margin-bottom:2px;
+      background:rgba(15,23,42,.9);
     }
+
+    .profile-main h3{
+      margin:0;
+      font-size:1.15rem;
+    }
+
+    .profile-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .meta-pill{
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+
     .profile-grid{
+      grid-column:1 / -1;
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:6px 18px;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px 18px;
+      margin-top:8px;
       font-size:13px;
       color:var(--muted);
     }
+
     .profile-label{
       color:var(--muted);
     }
@@ -657,6 +698,13 @@
       font-size:12px;
       color:#bbf7d0;
       margin-bottom:6px;
+      background:rgba(22,163,74,.12);
+    }
+
+    .status-pill span{
+      display:flex;
+      align-items:center;
+      gap:4px;
     }
 
     .hierarchy-list{
@@ -668,6 +716,23 @@
     }
     .hierarchy-list li{padding:4px 0;}
 
+    .logout-btn{
+      border-radius:999px;
+      padding:8px 14px;
+      border:1px solid rgba(248,113,113,.7);
+      background:rgba(248,113,113,.1);
+      color:#fecaca;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      cursor:pointer;
+      transition:.18s ease;
+    }
+    .logout-btn:hover{
+      background:rgba(248,113,113,.18);
+    }
+
     @media (max-width: 980px){
       .hero-grid,.grid-3,.two-col,.requirements{grid-template-columns:1fr}
       .hero-banner,.hero-content{min-height:auto}
@@ -676,6 +741,12 @@
       .section-title{flex-direction:column;align-items:flex-start}
       .system-main{grid-template-columns:1fr;}
       .profile-card{grid-template-columns:1fr;}
+      .profile-main{
+        grid-template-columns:auto 1fr;
+      }
+      .profile-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
     }
   </style>
 </head>
@@ -699,9 +770,7 @@
   </header>
 
   <main class="container">
-    <!-- Strona główna jak wcześniej, skrócona tu dla czytelności.
-         W praktyce wklej całą swoją wersję (O nas, Kierownictwo, News, Rekrutacja, Ochrona, Kontakt). -->
-
+    <!-- HERO -->
     <section class="hero">
       <div class="hero-grid">
         <div class="hero-banner">
@@ -752,8 +821,201 @@
       </div>
     </section>
 
-    <!-- ...tu reszta sekcji strony głównej... -->
+    <!-- O NAS -->
+    <section id="onas" class="section">
+      <div class="section-title">
+        <h2>O SOP</h2>
+        <span>Kim jesteśmy na serwerze RP</span>
+      </div>
+      <div class="two-col">
+        <div class="info-card">
+          <div class="icon">🏛️</div>
+          <h3>Formacja elitarnych funkcjonariuszy</h3>
+          <p>
+            SOP to wyspecjalizowana formacja odpowiedzialna za ochronę najważniejszych osób w stanie,
+            budynków rządowych oraz infrastruktury krytycznej. Działamy według precyzyjnych procedur RP, 
+            zachowując klimat realizmu i filmowego napięcia.
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🛡️</div>
+          <h3>Fokus na jakość rozgrywki</h3>
+          <p>
+            Stawiamy na merytoryczne podejście do odgrywania służb, szkolenia, scenariusze konwojów,
+            oraz współpracę z innymi frakcjami – wszystko po to, aby każda akcja SOP była wydarzeniem na serwerze.
+          </p>
+        </div>
+      </div>
+    </section>
 
+    <!-- KIEROWNICTWO -->
+    <section id="kierownictwo" class="section">
+      <div class="section-title">
+        <h2>Kierownictwo SOP</h2>
+        <span>Struktura dowodzenia</span>
+      </div>
+      <div class="leaders">
+        <div class="leader">
+          <div>
+            <strong>Komendant SOP</strong><br />
+            <span>Odpowiedzialny za całość działań formacji, koordynację frakcji i kontakt z administracją serwera.</span>
+          </div>
+          <span>Stopień: ⭐⭐⭐</span>
+        </div>
+        <div class="leader">
+          <div>
+            <strong>Zastępca Komendanta</strong><br />
+            <span>Koordynuje codzienne działania, nadzoruje szkolenia i procedury RP.</span>
+          </div>
+          <span>Stopień: ⭐⭐</span>
+        </div>
+        <div class="leader">
+          <div>
+            <strong>Oficer Operacyjny</strong><br />
+            <span>Dowodzi akcjami w terenie, odpowiada za planowanie konwojów i zabezpieczeń.</span>
+          </div>
+          <span>Stopień: ⭐</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section id="news" class="section">
+      <div class="section-title">
+        <h2>Aktualności</h2>
+        <span>Co dzieje się w SOP</span>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="news-item">
+            <strong>Nowy pakiet szkoleń SOP</strong><br />
+            Wprowadzono zaktualizowane procedury konwojów VIP oraz nowe scenariusze ćwiczeń z udziałem innych frakcji.
+          </div>
+          <div class="news-item">
+            <strong>Modernizacja floty pojazdów</strong><br />
+            Flota SOP została rozszerzona o nowe pojazdy eskortowe z systemami oznakowania i komunikacji.
+          </div>
+          <div class="news-item">
+            <strong>Wspólna operacja z PD</strong><br />
+            Zaplanowano event RP z udziałem SOP, PD oraz administracji stanu – zabezpieczenie wizyty gubernatora.
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="icon">📅</div>
+          <h3>Nadchodzące eventy</h3>
+          <p>
+            Planowane są cykliczne konwoje treningowe, odprawy SOP oraz akcje specjalne.
+            Śledź kanały frakcji na Discordzie, aby nie przegapić ważnych terminów i eventów RP.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- REKRUTACJA -->
+    <section id="rekrutacja" class="section">
+      <div class="section-title">
+        <h2>Rekrutacja do SOP</h2>
+        <span>Dołącz do elitarnej formacji</span>
+      </div>
+      <div class="requirements">
+        <div class="req-box">
+          <h4>Wymagania OOC</h4>
+          <ul>
+            <li>Minimum 15 lat (lub wg regulaminu serwera).</li>
+            <li>Podstawowa znajomość zasad RP i regulaminu serwera.</li>
+            <li>Sprawny mikrofon i komunikacja na Discordzie.</li>
+            <li>Stabilne łącze oraz kultura osobista.</li>
+          </ul>
+        </div>
+        <div class="req-box">
+          <h4>Wymagania IC</h4>
+          <ul>
+            <li>Brak poważnych wyroków i kar w kartotece postaci.</li>
+            <li>Gotowość do odbycia szkolenia podstawowego SOP.</li>
+            <li>Dyspozycyjność na konwoje i służby według grafiku.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="system-note" style="margin-top:10px;">
+        Rekrutacja jest obecnie <strong style="color:#f97373;">zamknięta</strong>. Gdy zostanie otwarta, poniższy przycisk
+        można podpiąć pod formularz Google, stronę forum lub system ticketów.
+      </p>
+      <button class="btn btn-primary" style="margin-top:10px;" disabled>
+        📝 Formularz rekrutacyjny (wkrótce)
+      </button>
+    </section>
+
+    <!-- OCHRONA -->
+    <section id="ochrona" class="section">
+      <div class="section-title">
+        <h2>Zakres działań SOP</h2>
+        <span>Co zabezpieczamy na serwerze</span>
+      </div>
+      <div class="grid-3">
+        <div class="info-card">
+          <div class="icon">👤</div>
+          <h3>Ochrona osobista VIP</h3>
+          <p>
+            Ochrona gubernatora, członków rządu, wysokich rangą urzędników oraz gości specjalnych
+            podczas wizyt i eventów RP.
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🚨</div>
+          <h3>Konwoje rządowe</h3>
+          <p>
+            Planowanie i prowadzenie kolumn pojazdów uprzywilejowanych, zabezpieczenie tras i punktów newralgicznych.
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="icon">🏢</div>
+          <h3>Obiekty strategiczne</h3>
+          <p>
+            Ochrona budynków rządowych, siedzib SOP, punktów dowodzenia oraz kluczowych lokacji dla frakcji.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section id="kontakt" class="section">
+      <div class="section-title">
+        <h2>Kontakt i informacje</h2>
+        <span>Jak się z nami skontaktować</span>
+      </div>
+      <div class="two-col">
+        <div class="info-card">
+          <div class="icon">💬</div>
+          <h3>Discord</h3>
+          <p>
+            Oficjalny kontakt do SOP odbywa się przez serwer Discord. Użyj kanału rekrutacyjnego lub DM do kierownictwa SOP,
+            zgodnie z wytycznymi frakcji.
+          </p>
+        </div>
+        <div class="info-card">
+          <div class="icon">📜</div>
+          <h3>Regulaminy i dokumenty</h3>
+          <p>
+            Wszelkie regulaminy, procedury i wewnętrzne dokumenty SOP publikowane są na forum lub w panelu SOP.
+            Pamiętaj, aby zawsze być na bieżąco z aktualizacjami.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© SOP – Służba Ochrony Państwa • RP Server</div>
+      <div class="footer-links">
+        <a href="#onas">O SOP</a>
+        <a href="#rekrutacja">Rekrutacja</a>
+        <a href="#ochrona">Zakres działań</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <div>
+        Panel SOP to system demonstracyjny – możesz podpiąć go pod backend serwera, aby obsługiwać
+        realne konta, raporty i konwoje.
+      </div>
+    </footer>
   </main>
 
   <!-- Modal logowania -->
@@ -784,7 +1046,7 @@
             </div>
           </label>
 
-          <label class="role-option">
+        <label class="role-option">
             <input type="radio" name="role" value="tajna" />
             <div class="role-card">
               <div class="role-radio"></div>
@@ -818,7 +1080,12 @@
           <strong id="systemTitle">SOP – Panel</strong><br />
           <span id="systemSub">Tryb: Funkcjonariusz SOP</span>
         </div>
-        <span id="userDisplay">Zalogowany: —</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span id="userDisplay">Zalogowany: —</span>
+          <button id="logoutBtn" class="logout-btn">
+            ⏏ Wyloguj
+          </button>
+        </div>
       </div>
       <div class="system-main">
         <aside class="system-sidebar">
@@ -852,25 +1119,29 @@
           <div id="panel-pulpit" class="system-panel">
             <div class="profile-card">
               <div class="profile-main">
-                <img
-                  class="profile-avatar"
-                  id="profileAvatar"
-                  src="https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif"
-                  alt="Zdjęcie funkcjonariusza"
-                />
-                <div class="badge-pill">
-                  <span>🔰 Odznaka</span>
-                  <span id="badgeNumber">SOP-000</span>
+                <div class="profile-avatar-wrap">
+                  <img
+                    class="profile-avatar"
+                    id="profileAvatar"
+                    src="https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif"
+                    alt="Zdjęcie funkcjonariusza"
+                  />
                 </div>
-                <h3 id="fullName">Imię Nazwisko</h3>
+                <div class="profile-header">
+                  <div class="badge-pill">
+                    <span>🔰 Odznaka</span>
+                    <span id="badgeNumber">SOP-000</span>
+                  </div>
+                  <h3 id="fullName">Imię Nazwisko</h3>
+                  <div class="profile-meta">
+                    <span class="meta-pill" id="rankShort">Funkcjonariusz SOP</span>
+                    <span class="meta-pill" id="unitShort">Sekcja Ochrony VIP</span>
+                  </div>
+                </div>
                 <div class="profile-grid">
                   <div>
                     <div class="profile-label">Login</div>
                     <div class="profile-value" id="profileLogin">—</div>
-                  </div>
-                  <div>
-                    <div class="profile-label">Stopień</div>
-                    <div class="profile-value" id="rank">Funkcjonariusz SOP</div>
                   </div>
                   <div>
                     <div class="profile-label">Data urodzenia</div>
@@ -888,11 +1159,15 @@
                     <div class="profile-label">Służb od</div>
                     <div class="profile-value" id="serviceFrom">—</div>
                   </div>
+                  <div>
+                    <div class="profile-label">Stopień</div>
+                    <div class="profile-value" id="rank">Funkcjonariusz SOP</div>
+                  </div>
                 </div>
               </div>
               <div>
                 <div class="status-pill" id="dutyStatusPill">
-                  <span>🟢 Na służbie</span>
+                  <span>🟢 <span id="dutyText">Na służbie</span></span>
                 </div>
                 <p class="system-note">
                   Status służby odzwierciedla, czy funkcjonariusz jest aktualnie na służbie RP.
@@ -1101,6 +1376,7 @@
     const systemSub = document.getElementById('systemSub');
     const systemTag = document.getElementById('systemTag');
     const userDisplay = document.getElementById('userDisplay');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     const moduleButtons = document.querySelectorAll('.system-menu button');
     const panels = {
@@ -1124,11 +1400,14 @@
     const fullName = document.getElementById('fullName');
     const profileLogin = document.getElementById('profileLogin');
     const rankEl = document.getElementById('rank');
+    const rankShort = document.getElementById('rankShort');
+    const unitShort = document.getElementById('unitShort');
     const dobEl = document.getElementById('dob');
     const ageEl = document.getElementById('age');
     const unitEl = document.getElementById('unit');
     const serviceFromEl = document.getElementById('serviceFrom');
     const dutyStatusPill = document.getElementById('dutyStatusPill');
+    const dutyText = document.getElementById('dutyText');
 
     let selectedRole = null;
     let step = 1;
@@ -1137,7 +1416,7 @@
     function openModal() {
       step = 1;
       selectedRole = null;
-      currentUser = null;
+      // NIE czyścimy currentUser – to jest obecna sesja
       loginPanel.style.display = 'none';
       loginHint.textContent = '';
       loginHint.style.color = '#9aa6b7';
@@ -1188,25 +1467,53 @@
       });
     });
 
+    function clearSession() {
+      currentUser = null;
+      userDisplay.textContent = 'Zalogowany: —';
+      badgeNumber.textContent = 'SOP-000';
+      fullName.textContent = 'Imię Nazwisko';
+      profileLogin.textContent = '—';
+      rankEl.textContent = 'Funkcjonariusz SOP';
+      rankShort.textContent = 'Funkcjonariusz SOP';
+      unitShort.textContent = 'Sekcja Ochrony VIP';
+      dobEl.textContent = '—';
+      ageEl.textContent = '—';
+      unitEl.textContent = 'Sekcja Ochrony VIP';
+      serviceFromEl.textContent = '—';
+      dutyStatusPill.innerHTML = '<span>⚪ <span id="dutyText">Poza służbą</span></span>';
+      dutyStatusPill.style.borderColor = 'rgba(148,163,184,.7)';
+      dutyStatusPill.style.color = '#e5e7eb';
+    }
+
+    function logout() {
+      systemOverlay.classList.remove('show');
+      document.body.style.overflow = '';
+      clearSession();
+    }
+
+    logoutBtn?.addEventListener('click', logout);
+
     function fillProfile(user) {
       // domyślny avatar – możesz potem dodać user.avatar
-      profileAvatar.src = "https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif";
+      profileAvatar.src = user.avatar || "https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif";
 
       badgeNumber.textContent = user.badge || 'SOP-000';
       fullName.textContent = user.name || 'Imię Nazwisko';
       profileLogin.textContent = user.login;
       rankEl.textContent = user.rank || 'Funkcjonariusz SOP';
+      rankShort.textContent = user.rank || 'Funkcjonariusz SOP';
+      unitEl.textContent = user.unit || 'Sekcja Ochrony VIP';
+      unitShort.textContent = user.unit || 'Sekcja Ochrony VIP';
       dobEl.textContent = user.dob || '—';
       ageEl.textContent = user.age ?? '—';
-      unitEl.textContent = user.unit || 'Sekcja Ochrony VIP';
       serviceFromEl.textContent = user.serviceFrom || '—';
 
       if (user.duty === 'on') {
-        dutyStatusPill.innerHTML = '<span>🟢 Na służbie</span>';
+        dutyStatusPill.innerHTML = '<span>🟢 <span id="dutyText">Na służbie</span></span>';
         dutyStatusPill.style.borderColor = 'rgba(34,197,94,.7)';
         dutyStatusPill.style.color = '#bbf7d0';
       } else {
-        dutyStatusPill.innerHTML = '<span>⚪ Poza służbą</span>';
+        dutyStatusPill.innerHTML = '<span>⚪ <span id="dutyText">Poza służbą</span></span>';
         dutyStatusPill.style.borderColor = 'rgba(148,163,184,.7)';
         dutyStatusPill.style.color = '#e5e7eb';
       }
@@ -1272,13 +1579,25 @@
       }
     });
 
+    // ESC – tylko zamyka panel, nie wylogowuje
     window.addEventListener('keydown', (e) => {
-      if (!systemOverlay.classList.contains('show')) return;
-      if (e.key === 'Escape' || e.key === 'F10') {
-        systemOverlay.classList.remove('show');
-        document.body.style.overflow = '';
-        currentUser = null;
-        userDisplay.textContent = 'Zalogowany: —';
+      if (e.key === 'Escape') {
+        // jeśli otwarty modal – zamknij modal
+        if (loginModal.classList.contains('is-open')) {
+          closeModal();
+          return;
+        }
+        // jeśli otwarty panel systemu – tylko ukryj overlay, user zostaje zalogowany
+        if (systemOverlay.classList.contains('show')) {
+          systemOverlay.classList.remove('show');
+          document.body.style.overflow = '';
+        }
+      }
+      if (e.key === 'F10') {
+        // F10 – twardy logout
+        if (systemOverlay.classList.contains('show')) {
+          logout();
+        }
       }
     });
   </script>
