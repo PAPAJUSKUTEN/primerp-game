@@ -596,6 +596,17 @@
       color:var(--muted);
     }
 
+    /* AVATAR PROFILU */
+    .profile-avatar{
+      width:72px;
+      height:72px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      object-fit:cover;
+      margin-bottom:10px;
+      background:rgba(255,255,255,.05);
+    }
+
     .profile-card{
       display:grid;
       grid-template-columns:1.5fr 1fr;
@@ -841,6 +852,12 @@
           <div id="panel-pulpit" class="system-panel">
             <div class="profile-card">
               <div class="profile-main">
+                <img
+                  class="profile-avatar"
+                  id="profileAvatar"
+                  src="https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif"
+                  alt="Zdjęcie funkcjonariusza"
+                />
                 <div class="badge-pill">
                   <span>🔰 Odznaka</span>
                   <span id="badgeNumber">SOP-000</span>
@@ -1102,6 +1119,7 @@
     const systemHeading = document.getElementById('systemHeading');
 
     // elementy profilu
+    const profileAvatar = document.getElementById('profileAvatar');
     const badgeNumber = document.getElementById('badgeNumber');
     const fullName = document.getElementById('fullName');
     const profileLogin = document.getElementById('profileLogin');
@@ -1171,6 +1189,9 @@
     });
 
     function fillProfile(user) {
+      // domyślny avatar – możesz potem dodać user.avatar
+      profileAvatar.src = "https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif";
+
       badgeNumber.textContent = user.badge || 'SOP-000';
       fullName.textContent = user.name || 'Imię Nazwisko';
       profileLogin.textContent = user.login;
