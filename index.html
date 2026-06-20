@@ -1,919 +1,1081 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SOP | Strona Główna RP</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOP Strona Główna RP</title>
   <style>
-    :root{
-      --bg:#07090d;
-      --bg2:#0c1118;
-      --card:#111823;
-      --card2:#0f141d;
-      --text:#e8eef7;
-      --muted:#9aa6b7;
-      --accent:#f59e0b;
-      --accent2:#f97316;
-      --line:rgba(255,255,255,.08);
-      --success:#22c55e;
-      --danger:#ef4444;
-      --shadow:0 18px 50px rgba(0,0,0,.45);
-      --radius:18px;
+    :root {
+      --bg: #07090d;
+      --bg2: #0c1118;
+      --card: #111823;
+      --card2: #0f141d;
+      --text: #e8eef7;
+      --muted: #9aa6b7;
+      --accent: #f59e0b;
+      --accent2: #f97316;
+      --line: rgba(255, 255, 255, .08);
+      --success: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 18px 50px rgba(0, 0, 0, .45);
+      --radius: 18px;
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,Segoe UI,Arial,sans-serif;
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(245,158,11,.12), transparent 28%),
+        radial-gradient(circle at top, rgba(245, 158, 11, .12), transparent 28%),
         linear-gradient(180deg, #05070b 0%, var(--bg) 100%);
-      color:var(--text);
+      color: var(--text);
     }
 
-    a{color:inherit;text-decoration:none}
-    .container{
-      width:min(1180px, calc(100% - 32px));
-      margin:0 auto;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter:blur(12px);
-      background:rgba(6,8,12,.7);
-      border-bottom:1px solid var(--line);
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
     }
 
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:14px 0;
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(6, 8, 12, .7);
+      border-bottom: 1px solid var(--line);
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:800;
-      letter-spacing:.5px;
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
     }
 
-    .brand-badge{
-      width:42px;height:42px;
-      display:grid;place-items:center;
-      border-radius:12px;
-      background:linear-gradient(135deg, rgba(245,158,11,.25), rgba(249,115,22,.15));
-      border:1px solid rgba(245,158,11,.25);
-      box-shadow:var(--shadow);
-      font-size:20px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: .5px;
     }
 
-    .navlinks{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, .25), rgba(249, 115, 22, .15));
+      border: 1px solid rgba(245, 158, 11, .25);
+      box-shadow: var(--shadow);
+      font-size: 20px;
     }
 
-    .navlinks a{
-      padding:10px 14px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(255,255,255,.02);
-      color:var(--muted);
-      transition:.2s ease;
-      font-size:14px;
-    }
-    .navlinks a:hover{
-      color:var(--text);
-      border-color:rgba(245,158,11,.4);
-      background:rgba(245,158,11,.08);
+    .navlinks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
     }
 
-    .hero{
-      padding:32px 0 24px;
+    .navlinks a {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .02);
+      color: var(--muted);
+      transition: .2s ease;
+      font-size: 14px;
     }
 
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.35fr .85fr;
-      gap:20px;
-      align-items:stretch;
+    .navlinks a:hover {
+      color: var(--text);
+      border-color: rgba(245, 158, 11, .4);
+      background: rgba(245, 158, 11, .08);
     }
 
-    .hero-banner{
-      min-height:560px;
-      position:relative;
-      overflow:hidden;
-      border-radius:28px;
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
+    .hero {
+      padding: 32px 0 24px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr .85fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .hero-banner {
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
       background:
-        linear-gradient(180deg, rgba(4,6,10,.12), rgba(4,6,10,.88)),
-        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        linear-gradient(180deg, rgba(4, 6, 10, .12), rgba(4, 6, 10, .88)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80")
+          center/cover no-repeat;
     }
 
-    .hero-overlay{
-      position:absolute; inset:0;
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .40) 55%, rgba(0, 0, 0, .82) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 560px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, .45);
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: #f5d28a;
+      font-size: 13px;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 16px 0 12px;
+      font-size: clamp(2.2rem, 5vw, 4.8rem);
+      line-height: 1;
+      max-width: 10ch;
+      text-shadow: 0 8px 30px rgba(0, 0, 0, .65);
+    }
+
+    .hero p {
+      max-width: 680px;
+      color: #d5dde8;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .hero-quote {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-left: 4px solid var(--accent);
+      background: rgba(255, 255, 255, .06);
+      border-radius: 14px;
+      max-width: 720px;
+      color: #fff;
+    }
+
+    .hero-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: .2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #111;
+      box-shadow: 0 12px 30px rgba(245, 158, 11, .25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, .05);
+      border-color: var(--line);
+      color: var(--text);
+    }
+
+    .status-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 24px;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(17, 24, 35, .95), rgba(9, 13, 20, .95));
+      box-shadow: var(--shadow);
+    }
+
+    .status-box {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid var(--line);
+    }
+
+    .status-title {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      margin-bottom: 8px;
+    }
+
+    .status-open {
+      color: var(--success);
+      font-weight: 800;
+    }
+
+    .status-closed {
+      color: var(--danger);
+      font-weight: 800;
+    }
+
+    .card-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .small-card {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .section {
+      padding: 28px 0;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.7rem;
+    }
+
+    .section-title span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card {
+      background: linear-gradient(180deg, rgba(17, 24, 35, .95), rgba(10, 14, 20, .95));
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(245, 158, 11, .1);
+      border: 1px solid rgba(245, 158, 11, .25);
+      margin-bottom: 14px;
+      font-size: 22px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .leaders {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .leader {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .leader strong {
+      color: var(--text);
+    }
+
+    .news-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .news-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .requirements {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .req-box {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid var(--line);
+    }
+
+    .req-box h4 {
+      margin: 0 0 10px;
+    }
+
+    .req-box ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .footer {
+      margin-top: 24px;
+      padding: 22px 0 34px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .footer-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .login-btn {
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .03);
+      color: var(--text);
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .login-btn:hover {
+      border-color: rgba(245, 158, 11, .45);
+      background: rgba(245, 158, 11, .09);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .70);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s ease;
+      z-index: 80;
+    }
+
+    .modal-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-panel {
+      width: min(420px, calc(100% - 32px));
+      background: linear-gradient(180deg, #101522, #05070c);
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 22px 22px 20px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .03);
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .role-options {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .role-option {
+      position: relative;
+    }
+
+    .role-card {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 12px 11px 40px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .02);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      cursor: pointer;
+      transition: .18s ease;
+      font-size: 14px;
+    }
+
+    .role-card strong {
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .role-radio {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 2px solid var(--muted);
+    }
+
+    .role-card::after {
+      content: "";
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%) scale(0);
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      transition: transform .18s ease;
+    }
+
+    .role-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .role-option input[type="radio"]:checked + .role-card {
+      border-color: rgba(245, 158, 11, .8);
+      background: rgba(245, 158, 11, .10);
+      color: var(--text);
+    }
+
+    .role-option input[type="radio"]:checked + .role-card .role-radio {
+      border-color: var(--accent);
+    }
+
+    .role-option input[type="radio"]:checked + .role-card::after {
+      transform: translateY(-50%) scale(1);
+    }
+
+    .login-panel {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .login-panel h4 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .login-panel label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .login-panel input {
+      width: 100%;
+      padding: 10px 11px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, .45);
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .login-panel input:focus {
+      outline: none;
+      border-color: rgba(245, 158, 11, .7);
+    }
+
+    .login-panel .login-info {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .system-overlay {
+      position: fixed;
+      inset: 0;
       background:
-        linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.40) 55%, rgba(0,0,0,.82) 100%);
+        radial-gradient(circle at top, rgba(245, 158, 11, .06), transparent 55%),
+        #020309;
+      color: var(--text);
+      display: none;
+      z-index: 100;
     }
 
-    .hero-content{
-      position:relative;
-      z-index:1;
-      padding:34px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      min-height:560px;
+    .system-overlay.show {
+      display: flex;
     }
 
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      width:fit-content;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.1);
-      color:#f5d28a;
-      font-size:13px;
-      letter-spacing:.4px;
-      text-transform:uppercase;
+    .system-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
-    .hero h1{
-      margin:16px 0 12px;
-      font-size:clamp(2.2rem, 5vw, 4.8rem);
-      line-height:1;
-      max-width:10ch;
-      text-shadow:0 8px 30px rgba(0,0,0,.65);
+    .system-topbar {
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(3, 5, 10, .95);
+      gap: 16px;
     }
 
-    .hero p{
-      max-width:680px;
-      color:#d5dde8;
-      font-size:1.02rem;
-      line-height:1.7;
-      margin:0;
+    .system-topbar span {
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    .hero-quote{
-      margin-top:18px;
-      padding:16px 18px;
-      border-left:4px solid var(--accent);
-      background:rgba(255,255,255,.06);
-      border-radius:14px;
-      max-width:720px;
-      color:#fff;
+    .system-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      min-height: 0;
     }
 
-    .hero-footer{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      align-items:center;
-      margin-top:24px;
+    .system-sidebar {
+      border-right: 1px solid var(--line);
+      padding: 16px 14px;
+      background: rgba(3, 5, 10, .96);
+      overflow: auto;
     }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:14px 18px;
-      border-radius:14px;
-      border:1px solid transparent;
-      font-weight:700;
-      transition:.2s ease;
-      cursor:pointer;
+    .system-sidebar h3 {
+      margin: 0 0 10px;
+      font-size: .95rem;
     }
 
-    .btn-primary{
-      background:linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#111;
-      box-shadow:0 12px 30px rgba(245,158,11,.25);
-    }
-    .btn-primary:hover{transform:translateY(-1px)}
-    .btn-ghost{
-      background:rgba(255,255,255,.05);
-      border-color:var(--line);
-      color:var(--text);
+    .system-menu {
+      display: grid;
+      gap: 6px;
+      font-size: 14px;
     }
 
-    .status-card{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      padding:24px;
-      border-radius:28px;
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(9,13,20,.95));
-      box-shadow:var(--shadow);
+    .system-menu button {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      cursor: pointer;
+      transition: .15s ease;
     }
 
-    .status-box{
-      padding:18px;
-      border-radius:20px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
+    .system-menu button:hover {
+      background: rgba(255, 255, 255, .04);
+      color: var(--text);
     }
 
-    .status-title{
-      color:var(--muted);
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.4px;
-      margin-bottom:8px;
+    .system-menu button.active {
+      background: rgba(245, 158, 11, .14);
+      border-color: rgba(245, 158, 11, .7);
+      color: var(--text);
     }
 
-    .status-open{color:var(--success); font-weight:800}
-    .status-closed{color:var(--danger); font-weight:800}
-
-    .card-list{
-      display:grid;
-      gap:14px;
-      margin-top:4px;
+    .system-content {
+      padding: 18px 20px;
+      overflow: auto;
     }
 
-    .small-card{
-      padding:16px;
-      border-radius:18px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      color:var(--muted);
-      line-height:1.6;
+    .system-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
     }
 
-    .section{padding:28px 0;}
-    .section-title{
-      display:flex;
-      justify-content:space-between;
-      align-items:end;
-      gap:16px;
-      margin-bottom:16px;
-    }
-    .section-title h2{margin:0;font-size:1.7rem;}
-    .section-title span{color:var(--muted);font-size:14px;}
-
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:18px;
+    .system-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
     }
 
-    .info-card{
-      background:linear-gradient(180deg, rgba(17,24,35,.95), rgba(10,14,20,.95));
-      border:1px solid var(--line);
-      border-radius:22px;
-      padding:22px;
-      box-shadow:var(--shadow);
-    }
-    .info-card h3{margin:0 0 10px;font-size:1.05rem;}
-    .info-card p{margin:0;color:var(--muted);line-height:1.7;}
-
-    .icon{
-      width:48px;height:48px;
-      display:grid;place-items:center;
-      border-radius:14px;
-      background:rgba(245,158,11,.1);
-      border:1px solid rgba(245,158,11,.25);
-      margin-bottom:14px;
-      font-size:22px;
+    .system-heading h2 {
+      margin: 10px 0 4px;
+      font-size: 1.5rem;
     }
 
-    .two-col{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
+    .system-note {
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    .leaders{display:grid;gap:12px;margin-top:12px;}
-    .leader{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px 16px;
-      border-radius:16px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-      color:var(--muted);
-    }
-    .leader strong{color:var(--text)}
-    .news-item{
-      padding:16px 0;
-      border-bottom:1px solid var(--line);
-      color:var(--muted);
-      line-height:1.7;
-    }
-    .news-item:last-child{border-bottom:none;padding-bottom:0}
-
-    .requirements{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-    .req-box{
-      padding:18px;
-      border-radius:18px;
-      background:rgba(255,255,255,.03);
-      border:1px solid var(--line);
-    }
-    .req-box h4{margin:0 0 10px}
-    .req-box ul{
-      margin:0;
-      padding-left:18px;
-      color:var(--muted);
-      line-height:1.8;
+    .profile-card {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.6fr 1.1fr;
+      gap: 20px;
+      padding: 22px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(15, 23, 42, .96), rgba(15, 23, 42, .88));
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
     }
 
-    .footer{
-      margin-top:24px;
-      padding:22px 0 34px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.7;
-    }
-    .footer-links{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin:12px 0;
-    }
-    .footer-links a{
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
+    .profile-main {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px 18px;
+      align-items: flex-start;
     }
 
-    .login-btn{
-      border-radius:999px;
-      padding:10px 16px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
-      font-size:14px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      cursor:pointer;
-      transition:.2s ease;
-    }
-    .login-btn:hover{
-      border-color:rgba(245,158,11,.45);
-      background:rgba(245,158,11,.09);
+    .profile-avatar-wrap {
+      grid-row: span 2;
     }
 
-    .modal-backdrop{
-      position:fixed;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(0,0,0,.70);
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .2s ease;
-      z-index:80;
-    }
-    .modal-backdrop.is-open{
-      opacity:1;
-      pointer-events:auto;
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      object-fit: cover;
+      background: rgba(255, 255, 255, .05);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .6);
     }
 
-    .modal-panel{
-      width:min(420px, 100% - 32px);
-      background:linear-gradient(180deg, #101522, #05070c);
-      border-radius:22px;
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      padding:22px 22px 20px;
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .modal-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom:16px;
-    }
-    .modal-title{font-size:1.2rem;font-weight:700;}
-    .modal-close{
-      width:32px;height:32px;
-      display:grid;place-items:center;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      color:var(--muted);
-      cursor:pointer;
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(245, 158, 11, .7);
+      font-size: 12px;
+      color: #fed7aa;
+      margin-bottom: 2px;
+      background: rgba(15, 23, 42, .9);
     }
 
-    .role-options{display:grid;gap:10px;margin:12px 0 18px;}
-    .role-option{position:relative;}
-    .role-card{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      padding:12px 12px 11px 40px;
-      border-radius:16px;
-      background:rgba(255,255,255,.02);
-      border:1px solid var(--line);
-      color:var(--muted);
-      cursor:pointer;
-      transition:.18s ease;
-      font-size:14px;
-    }
-    .role-card strong{color:var(--text);font-size:14px}
-    .role-radio{
-      position:absolute;
-      left:12px;
-      top:50%;
-      transform:translateY(-50%);
-      width:16px;
-      height:16px;
-      border-radius:999px;
-      border:2px solid var(--muted);
-    }
-    .role-card::after{
-      content:'';
-      position:absolute;
-      left:15px;
-      top:50%;
-      transform:translateY(-50%) scale(.0);
-      width:10px;height:10px;
-      border-radius:999px;
-      background:var(--accent);
-      transition:transform .18s ease;
-    }
-    .role-option input[type="radio"]{
-      position:absolute;
-      opacity:0;
-      pointer-events:none;
-    }
-    .role-option input[type="radio"]:checked + .role-card{
-      border-color:rgba(245,158,11,.8);
-      background:rgba(245,158,11,.10);
-      color:var(--text);
-    }
-    .role-option input[type="radio"]:checked + .role-card .role-radio{
-      border-color:var(--accent);
-    }
-    .role-option input[type="radio"]:checked + .role-card::after{
-      transform:translateY(-50%) scale(1);
+    .profile-main h3 {
+      margin: 0;
+      font-size: 1.2rem;
     }
 
-    .login-panel{
-      margin-top:14px;
-      padding-top:14px;
-      border-top:1px solid var(--line);
-    }
-    .login-panel h4{margin:0 0 8px;font-size:1rem;}
-    .login-panel label{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:4px;
-    }
-    .login-panel input{
-      width:100%;
-      padding:10px 11px;
-      border-radius:10px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.45);
-      color:var(--text);
-      font-size:14px;
-    }
-    .login-panel input:focus{
-      outline:none;
-      border-color:rgba(245,158,11,.7);
-    }
-    .login-panel .login-info{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:6px;
+    .profile-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
     }
 
-    .system-overlay{
-      position:fixed;
-      inset:0;
-      background:radial-gradient(circle at top, rgba(245,158,11,.06), transparent 55%), #020309;
-      color:var(--text);
-      display:none;
-      z-index:100;
-    }
-    .system-overlay.show{
-      display:flex;
-    }
-    .system-inner{
-      width:100%;
-      height:100%;
-      display:flex;
-      flex-direction:column;
-    }
-    .system-topbar{
-      padding:10px 20px;
-      border-bottom:1px solid var(--line);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:rgba(3,5,10,.95);
-      gap:16px;
-    }
-    .system-topbar span{font-size:13px;color:var(--muted);}
-    .system-main{
-      flex:1;
-      display:grid;
-      grid-template-columns:230px 1fr;
-      min-height:0;
-    }
-    .system-sidebar{
-      border-right:1px solid var(--line);
-      padding:16px 14px;
-      background:rgba(3,5,10,.96);
-      overflow:auto;
-    }
-    .system-sidebar h3{margin:0 0 10px;font-size:0.95rem;}
-    .system-menu{
-      display:grid;
-      gap:6px;
-      font-size:14px;
-    }
-    .system-menu button{
-      width:100%;
-      padding:8px 10px;
-      border-radius:10px;
-      border:1px solid transparent;
-      background:transparent;
-      color:var(--muted);
-      text-align:left;
-      cursor:pointer;
-      transition:.15s ease;
-    }
-    .system-menu button:hover{
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-    }
-    .system-menu button.active{
-      background:rgba(245,158,11,.14);
-      border-color:rgba(245,158,11,.7);
-      color:var(--text);
-    }
-    .system-content{
-      padding:18px 20px;
-      overflow:auto;
-    }
-    .system-tag{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      font-size:12px;
-      color:var(--muted);
-    }
-    .system-heading{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:12px;
-    }
-    .system-heading h2{
-      margin:10px 0 4px;
-      font-size:1.5rem;
-    }
-    .system-note{
-      font-size:13px;
-      color:var(--muted);
+    .meta-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .03);
     }
 
-    /* PROFIL – pełna szerokość */
-    .profile-card{
-      width:100%;
-      display:grid;
-      grid-template-columns:1.6fr 1.1fr;
-      gap:20px;
-      padding:22px;
-      border-radius:22px;
-      border:1px solid var(--line);
-      background:linear-gradient(135deg, rgba(15,23,42,.96), rgba(15,23,42,.88));
-      margin-bottom:16px;
-      box-shadow:var(--shadow);
+    .profile-grid {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px 18px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    .profile-main{
-      display:grid;
-      grid-template-columns:auto 1fr;
-      gap:16px 18px;
-      align-items:flex-start;
+    .profile-label {
+      color: var(--muted);
     }
 
-    .profile-avatar-wrap{
-      grid-row:span 2;
+    .profile-value {
+      color: var(--text);
+      font-weight: 500;
     }
 
-    .profile-avatar{
-      width:100px;
-      height:100px;
-      border-radius:20px;
-      border:1px solid var(--line);
-      object-fit:cover;
-      background:rgba(255,255,255,.05);
-      box-shadow:0 12px 30px rgba(0,0,0,.6);
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 197, 94, .7);
+      font-size: 12px;
+      color: #bbf7d0;
+      margin-bottom: 10px;
+      background: rgba(22, 163, 74, .12);
     }
 
-    .profile-header{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
+    .status-pill span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .badge-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 10px;
-      border-radius:999px;
-      border:1px solid rgba(245,158,11,.7);
-      font-size:12px;
-      color:#fed7aa;
-      margin-bottom:2px;
-      background:rgba(15,23,42,.9);
+    .hierarchy-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    .profile-main h3{
-      margin:0;
-      font-size:1.2rem;
+    .hierarchy-list li {
+      padding: 4px 0;
     }
 
-    .profile-meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      font-size:12px;
-      color:var(--muted);
+    .logout-btn {
+      border-radius: 999px;
+      padding: 8px 14px;
+      border: 1px solid rgba(248, 113, 113, .7);
+      background: rgba(248, 113, 113, .1);
+      color: #fecaca;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: .18s ease;
     }
 
-    .meta-pill{
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
+    .logout-btn:hover {
+      background: rgba(248, 113, 113, .18);
     }
 
-    .profile-grid{
-      grid-column:1 / -1;
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:8px 18px;
-      margin-top:8px;
-      font-size:13px;
-      color:var(--muted);
+    .logout-btn-secondary {
+      margin-top: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(248, 113, 113, .7);
+      background: rgba(248, 113, 113, .08);
+      color: #fecaca;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .profile-label{
-      color:var(--muted);
-    }
-    .profile-value{
-      color:var(--text);
-      font-weight:500;
-    }
-
-    .status-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 10px;
-      border-radius:999px;
-      border:1px solid rgba(34,197,94,.7);
-      font-size:12px;
-      color:#bbf7d0;
-      margin-bottom:10px;
-      background:rgba(22,163,74,.12);
+    .citizen-card {
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(15, 23, 42, .96);
+      padding: 16px 18px 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
     }
 
-    .status-pill span{
-      display:flex;
-      align-items:center;
-      gap:4px;
+    .citizen-form {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px 14px;
+      margin-bottom: 12px;
     }
 
-    .hierarchy-list{
-      list-style:none;
-      padding:0;
-      margin:8px 0 0;
-      font-size:13px;
-      color:var(--muted);
-    }
-    .hierarchy-list li{padding:4px 0;}
-
-    .logout-btn{
-      border-radius:999px;
-      padding:8px 14px;
-      border:1px solid rgba(248,113,113,.7);
-      background:rgba(248,113,113,.1);
-      color:#fecaca;
-      font-size:13px;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      cursor:pointer;
-      transition:.18s ease;
-    }
-    .logout-btn:hover{
-      background:rgba(248,113,113,.18);
+    .citizen-form small {
+      font-size: 11px;
+      color: var(--muted);
     }
 
-    .logout-btn-secondary{
-      margin-top:8px;
-      padding:8px 12px;
-      font-size:12px;
-      border-radius:10px;
-      border:1px solid rgba(248,113,113,.7);
-      background:rgba(248,113,113,.08);
-      color:#fecaca;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-    }
-
-    /* Baza danych – tabela obywateli */
-    .citizen-card{
-      width:100%;
-      border-radius:20px;
-      border:1px solid var(--line);
-      background:rgba(15,23,42,.96);
-      padding:16px 18px 18px;
-      box-shadow:var(--shadow);
-      margin-bottom:16px;
-    }
-
-    .citizen-form{
-      display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:10px 14px;
-      margin-bottom:12px;
-    }
-
-    .citizen-form small{
-      font-size:11px;
-      color:var(--muted);
-    }
-
-    .citizen-form label{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      font-size:12px;
-      color:var(--muted);
+    .citizen-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--muted);
     }
 
     .citizen-form input,
-    .citizen-form select{
-      padding:8px 9px;
-      border-radius:8px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.45);
-      color:var(--text);
-      font-size:13px;
+    .citizen-form select {
+      padding: 8px 9px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, .45);
+      color: var(--text);
+      font-size: 13px;
     }
 
     .citizen-form input:focus,
-    .citizen-form select:focus{
-      outline:none;
-      border-color:rgba(245,158,11,.7);
+    .citizen-form select:focus {
+      outline: none;
+      border-color: rgba(245, 158, 11, .7);
     }
 
-    .citizen-form button{
-      align-self:end;
-      padding:10px 12px;
-      font-size:13px;
+    .citizen-form button {
+      align-self: end;
+      padding: 10px 12px;
+      font-size: 13px;
     }
 
-    .citizen-table-wrap{
-      max-height:340px;
-      overflow:auto;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:rgba(2,6,23,.9);
+    .citizen-table-wrap {
+      max-height: 340px;
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(2, 6, 23, .9);
     }
 
-    table.citizen-table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:13px;
+    table.citizen-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
     }
 
-    .citizen-table thead{
-      background:rgba(15,23,42,1);
-      position:sticky;
-      top:0;
-      z-index:1;
+    .citizen-table thead {
+      background: rgba(15, 23, 42, 1);
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
     .citizen-table th,
-    .citizen-table td{
-      padding:8px 10px;
-      border-bottom:1px solid rgba(148,163,184,.25);
-      text-align:left;
-      white-space:nowrap;
+    .citizen-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid rgba(148, 163, 184, .25);
+      text-align: left;
+      white-space: nowrap;
     }
 
-    .citizen-table th{
-      font-weight:600;
-      color:#e5e7eb;
+    .citizen-table th {
+      font-weight: 600;
+      color: #e5e7eb;
     }
 
-    .citizen-table tbody tr:nth-child(odd){
-      background:rgba(15,23,42,.7);
+    .citizen-table tbody tr:nth-child(odd) {
+      background: rgba(15, 23, 42, .7);
     }
 
-    .citizen-table tbody tr:nth-child(even){
-      background:rgba(15,23,42,.45);
+    .citizen-table tbody tr:nth-child(even) {
+      background: rgba(15, 23, 42, .45);
     }
 
-    .badge-status{
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,.7);
-      font-size:11px;
-      color:#e5e7eb;
-      background:rgba(15,23,42,.9);
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, .7);
+      font-size: 11px;
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, .9);
     }
 
-    .badge-status.danger{
-      border-color:rgba(248,113,113,.8);
-      color:#fecaca;
-      background:rgba(248,113,113,.12);
+    .badge-status.danger {
+      border-color: rgba(248, 113, 113, .8);
+      color: #fecaca;
+      background: rgba(248, 113, 113, .12);
     }
 
-    .badge-status.warn{
-      border-color:rgba(234,179,8,.8);
-      color:#facc15;
-      background:rgba(234,179,8,.10);
+    .badge-status.warn {
+      border-color: rgba(234, 179, 8, .8);
+      color: #facc15;
+      background: rgba(234, 179, 8, .10);
     }
 
-    .badge-status.ok{
-      border-color:rgba(34,197,94,.8);
-      color:#bbf7d0;
-      background:rgba(22,163,74,.12);
+    .badge-status.ok {
+      border-color: rgba(34, 197, 94, .8);
+      color: #bbf7d0;
+      background: rgba(22, 163, 74, .12);
     }
 
-    .badge-status span{
-      display:flex;
-      align-items:center;
-      gap:4px;
+    .badge-status span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    @media (max-width: 980px){
-      .hero-grid,.grid-3,.two-col,.requirements{grid-template-columns:1fr}
-      .hero-banner,.hero-content{min-height:auto}
-      .hero-content{padding:24px}
-      .hero h1{max-width:none}
-      .section-title{flex-direction:column;align-items:flex-start}
-      .system-main{grid-template-columns:1fr;}
-      .profile-card{grid-template-columns:1fr;}
-      .profile-main{
-        grid-template-columns:auto 1fr;
+    @media (max-width: 980px) {
+      .hero-grid,
+      .grid-3,
+      .two-col,
+      .requirements {
+        grid-template-columns: 1fr;
       }
-      .profile-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
+
+      .hero-banner,
+      .hero-content {
+        min-height: auto;
       }
-      .citizen-form{
-        grid-template-columns:repeat(2,minmax(0,1fr));
+
+      .hero-content {
+        padding: 24px;
+      }
+
+      .hero h1 {
+        max-width: none;
+      }
+
+      .section-title {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .system-main {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-main {
+        grid-template-columns: auto 1fr;
+      }
+
+      .profile-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .citizen-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="container nav">
-      <div class="brand">
-        <div class="brand-badge">🛡️</div>
-        <div>SOP | STRONA GŁÓWNA RP</div>
-      </div>
-      <nav class="navlinks">
-        <a href="#onas">O nas</a>
-        <a href="#kierownictwo">Kierownictwo</a>
-        <a href="#news">News</a>
-        <a href="#rekrutacja">Rekrutacja</a>
-        <a href="#ochrona">Ochrona</a>
-        <a href="#kontakt">Kontakt</a>
-        <button id="loginTrigger" class="login-btn">🔐 Zaloguj do systemu</button>
+    <div class="container">
+      <nav class="nav">
+        <div class="brand">
+          <div class="brand-badge">S</div>
+          <div>
+            SOP STRONA GŁÓWNA RP
+          </div>
+        </div>
+        <div class="navlinks">
+          <a href="#onas">O nas</a>
+          <a href="#kierownictwo">Kierownictwo</a>
+          <a href="#news">News</a>
+          <a href="#rekrutacja">Rekrutacja</a>
+          <a href="#ochrona">Ochrona</a>
+          <a href="#kontakt">Kontakt</a>
+          <button id="loginTrigger" class="login-btn">Zaloguj do systemu</button>
+        </div>
       </nav>
     </div>
   </header>
@@ -926,45 +1088,51 @@
           <div class="hero-overlay"></div>
           <div class="hero-content">
             <div>
-              <div class="eyebrow">🖤 Elitarna ochrona VIP • RP Server</div>
+              <div class="eyebrow">
+                Elitarna ochrona VIP RP Server
+              </div>
               <h1>Profesjonalizm. Dyskrecja. Bezpieczeństwo State VIP.</h1>
               <p>
                 Służba Ochrony Państwa to formacja odpowiedzialna za zabezpieczenie najważniejszych osób w stanie,
                 konwojów rządowych oraz wydarzeń o najwyższym priorytecie bezpieczeństwa.
               </p>
               <div class="hero-quote">
-                Chronimy tych, którzy rządzą stanem — z precyzją, honorem i pełną gotowością operacyjną.
+                Chronimy tych, którzy rządzą stanem z precyzją, honorem i pełną gotowością operacyjną.
               </div>
             </div>
             <div class="hero-footer">
-              <a class="btn btn-primary" href="#rekrutacja">📝 Złóż podanie</a>
+              <a class="btn btn-primary" href="#rekrutacja">Złóż podanie</a>
               <a class="btn btn-ghost" href="#onas">Poznaj SOP</a>
             </div>
           </div>
         </div>
-
         <aside class="status-card">
           <div class="status-box">
             <div class="status-title">Status rekrutacji</div>
-            <div class="status-closed">🔴 REKRUTACJA: ZAMKNIĘTA</div>
-            <p style="color:var(--muted);margin:10px 0 0;line-height:1.6;">
+            <div class="status-closed">REKRUTACJA ZAMKNIĘTA</div>
+            <p style="color: var(--muted); margin: 10px 0 0; line-height: 1.6;">
               W przypadku otwarcia rekrutacji przycisk poniżej można podpiąć pod Google Forms lub system forum.
             </p>
           </div>
-
           <div class="status-box">
             <div class="status-title">Szybki kontakt</div>
-            <div style="line-height:1.8;color:var(--text);">
-              Discord: <strong>@sop.command</strong><br />
-              OOC: <strong>Kontakt przez kanał rekrutacyjny</strong><br />
+            <div style="line-height: 1.8; color: var(--text);">
+              Discord: <strong>sop.command</strong><br>
+              IC: <strong>Biuro SOP</strong><br>
+              OOC: <strong>Kontakt przez kanał rekrutacyjny</strong><br>
               Status służby: <strong>Aktywna</strong>
             </div>
           </div>
-
           <div class="card-list">
-            <div class="small-card">🎯 Ochrona osobista VIP, prewencja zagrożeń, eskorty i zabezpieczenia strategicznych punktów.</div>
-            <div class="small-card">🚓 Konwoje rządowe, koordynacja kolumn pojazdów uprzywilejowanych i procedury ewakuacyjne.</div>
-            <div class="small-card">📡 Rozpoznanie tras, sprawdzanie obiektów i wsparcie podczas eventów IC.</div>
+            <div class="small-card">
+              Ochrona osobista VIP, prewencja zagrożeń, eskorty i zabezpieczenia strategicznych punktów.
+            </div>
+            <div class="small-card">
+              Konwoje rządowe, koordynacja kolumn pojazdów uprzywilejowanych i procedury ewakuacyjne.
+            </div>
+            <div class="small-card">
+              Rozpoznanie tras, sprawdzanie obiektów i wsparcie podczas eventów IC.
+            </div>
           </div>
         </aside>
       </div>
@@ -981,17 +1149,17 @@
           <div class="icon">🏛️</div>
           <h3>Formacja elitarnych funkcjonariuszy</h3>
           <p>
-            SOP to wyspecjalizowana formacja odpowiedzialna za ochronę najważniejszych osób w stanie,
-            budynków rządowych oraz infrastruktury krytycznej. Działamy według precyzyjnych procedur RP, 
-            zachowując klimat realizmu i filmowego napięcia.
+            SOP to wyspecjalizowana formacja odpowiedzialna za ochronę najważniejszych osób w stanie, budynków
+            rządowych oraz infrastruktury krytycznej. Działamy według precyzyjnych procedur RP, zachowując klimat
+            realizmu i filmowego napięcia.
           </p>
         </div>
         <div class="info-card">
-          <div class="icon">🛡️</div>
+          <div class="icon">🎯</div>
           <h3>Fokus na jakość rozgrywki</h3>
           <p>
-            Stawiamy na merytoryczne podejście do odgrywania służb, szkolenia, scenariusze konwojów,
-            oraz współpracę z innymi frakcjami – wszystko po to, aby każda akcja SOP była wydarzeniem na serwerze.
+            Stawiamy na merytoryczne podejście do odgrywania służb, szkolenia, scenariusze konwojów oraz współpracę
+            z innymi frakcjami – wszystko po to, aby każda akcja SOP była wydarzeniem na serwerze.
           </p>
         </div>
       </div>
@@ -1006,24 +1174,24 @@
       <div class="leaders">
         <div class="leader">
           <div>
-            <strong>Komendant SOP</strong><br />
+            <strong>Komendant SOP</strong><br>
             <span>Odpowiedzialny za całość działań formacji, koordynację frakcji i kontakt z administracją serwera.</span>
           </div>
-          <span>Stopień: ⭐⭐⭐</span>
+          <span>Stopień</span>
         </div>
         <div class="leader">
           <div>
-            <strong>Zastępca Komendanta</strong><br />
+            <strong>Zastępca Komendanta</strong><br>
             <span>Koordynuje codzienne działania, nadzoruje szkolenia i procedury RP.</span>
           </div>
-          <span>Stopień: ⭐⭐</span>
+          <span>Stopień</span>
         </div>
         <div class="leader">
           <div>
-            <strong>Oficer Operacyjny</strong><br />
+            <strong>Oficer Operacyjny</strong><br>
             <span>Dowodzi akcjami w terenie, odpowiada za planowanie konwojów i zabezpieczeń.</span>
           </div>
-          <span>Stopień: ⭐</span>
+          <span>Stopień</span>
         </div>
       </div>
     </section>
@@ -1037,15 +1205,15 @@
       <div class="two-col">
         <div>
           <div class="news-item">
-            <strong>Nowy pakiet szkoleń SOP</strong><br />
+            <strong>Nowy pakiet szkoleń SOP</strong><br>
             Wprowadzono zaktualizowane procedury konwojów VIP oraz nowe scenariusze ćwiczeń z udziałem innych frakcji.
           </div>
           <div class="news-item">
-            <strong>Modernizacja floty pojazdów</strong><br />
+            <strong>Modernizacja floty pojazdów</strong><br>
             Flota SOP została rozszerzona o nowe pojazdy eskortowe z systemami oznakowania i komunikacji.
           </div>
           <div class="news-item">
-            <strong>Wspólna operacja z PD</strong><br />
+            <strong>Wspólna operacja z PD</strong><br>
             Zaplanowano event RP z udziałem SOP, PD oraz administracji stanu – zabezpieczenie wizyty gubernatora.
           </div>
         </div>
@@ -1053,8 +1221,8 @@
           <div class="icon">📅</div>
           <h3>Nadchodzące eventy</h3>
           <p>
-            Planowane są cykliczne konwoje treningowe, odprawy SOP oraz akcje specjalne.
-            Śledź kanały frakcji na Discordzie, aby nie przegapić ważnych terminów i eventów RP.
+            Planowane są cykliczne konwoje treningowe, odprawy SOP oraz akcje specjalne. Śledź kanały frakcji
+            na Discordzie, aby nie przegapić ważnych terminów i eventów RP.
           </p>
         </div>
       </div>
@@ -1070,7 +1238,7 @@
         <div class="req-box">
           <h4>Wymagania OOC</h4>
           <ul>
-            <li>Minimum 15 lat (lub wg regulaminu serwera).</li>
+            <li>Minimum 15 lat lub wg regulaminu serwera.</li>
             <li>Podstawowa znajomość zasad RP i regulaminu serwera.</li>
             <li>Sprawny mikrofon i komunikacja na Discordzie.</li>
             <li>Stabilne łącze oraz kultura osobista.</li>
@@ -1085,12 +1253,12 @@
           </ul>
         </div>
       </div>
-      <p class="system-note" style="margin-top:10px;">
-        Rekrutacja jest obecnie <strong style="color:#f97373;">zamknięta</strong>. Gdy zostanie otwarta, poniższy przycisk
-        można podpiąć pod formularz Google, stronę forum lub system ticketów.
+      <p class="system-note" style="margin-top: 10px;">
+        Rekrutacja jest obecnie <strong style="color:#f97373;">zamknięta</strong>. Gdy zostanie otwarta, poniższy
+        przycisk można podpiąć pod formularz Google, stronę forum lub system ticketów.
       </p>
       <button class="btn btn-primary" style="margin-top:10px;" disabled>
-        📝 Formularz rekrutacyjny (wkrótce)
+        Formularz rekrutacyjny wkrótce
       </button>
     </section>
 
@@ -1102,15 +1270,14 @@
       </div>
       <div class="grid-3">
         <div class="info-card">
-          <div class="icon">👤</div>
+          <div class="icon">🛡️</div>
           <h3>Ochrona osobista VIP</h3>
           <p>
-            Ochrona gubernatora, członków rządu, wysokich rangą urzędników oraz gości specjalnych
-            podczas wizyt i eventów RP.
+            Ochrona gubernatora, członków rządu, wysokich rang urzędników oraz gości specjalnych podczas wizyt i eventów RP.
           </p>
         </div>
         <div class="info-card">
-          <div class="icon">🚨</div>
+          <div class="icon">🚓</div>
           <h3>Konwoje rządowe</h3>
           <p>
             Planowanie i prowadzenie kolumn pojazdów uprzywilejowanych, zabezpieczenie tras i punktów newralgicznych.
@@ -1153,16 +1320,16 @@
     </section>
 
     <footer class="footer">
-      <div>© SOP – Służba Ochrony Państwa • RP Server</div>
+      <div>SOP Służba Ochrony Państwa RP Server</div>
       <div class="footer-links">
         <a href="#onas">O SOP</a>
         <a href="#rekrutacja">Rekrutacja</a>
         <a href="#ochrona">Zakres działań</a>
         <a href="#kontakt">Kontakt</a>
       </div>
-      <div>
-        Panel SOP to system demonstracyjny – możesz podpiąć go pod backend serwera, aby obsługiwać
-        realne konta, raporty i konwoje.
+      <div class="system-note">
+        Panel SOP to system demonstracyjny – możesz podpiąć go pod backend serwera, aby obsługiwać realne konta, raporty
+        i konwoje.
       </div>
     </footer>
   </main>
@@ -1171,32 +1338,27 @@
   <div id="loginModal" class="modal-backdrop">
     <div class="modal-panel" role="dialog" aria-modal="true">
       <div class="modal-header">
-        <div>
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);">
-            System wewnętrzny SOP
-          </div>
-          <div class="modal-title">Wybierz stanowisko</div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)">
+          System wewnętrzny SOP
         </div>
+        <div class="modal-title" id="loginTitle">Wybierz stanowisko</div>
         <button id="loginClose" class="modal-close" aria-label="Zamknij okno">&times;</button>
       </div>
-
       <form id="roleForm">
         <p style="color:var(--muted);font-size:14px;margin:0 0 6px;">
-          Wybierz, jako kto chcesz się zalogować do panelu:
+          Wybierz, jako kto chcesz się zalogować do panelu
         </p>
-
         <div class="role-options">
           <label class="role-option">
-            <input type="radio" name="role" value="sop" />
+            <input type="radio" name="role" value="sop">
             <div class="role-card">
               <div class="role-radio"></div>
               <strong>Funkcjonariusz SOP</strong>
               <span>Standardowy dostęp do panelu operacyjnego, raportów i grafiku służb.</span>
             </div>
           </label>
-
           <label class="role-option">
-            <input type="radio" name="role" value="tajna" />
+            <input type="radio" name="role" value="tajna">
             <div class="role-card">
               <div class="role-radio"></div>
               <strong>Tajna Jednostka</strong>
@@ -1204,19 +1366,17 @@
             </div>
           </label>
         </div>
-
         <div id="loginPanel" class="login-panel" style="display:none;">
-          <h4 id="loginTitle">Panel logowania</h4>
-          <label for="loginUser">Login (Username)</label>
-          <input id="loginUser" type="text" autocomplete="off" />
-          <label for="loginPass" style="margin-top:8px;">Hasło (Password)</label>
-          <input id="loginPass" type="password" />
+          <h4 id="loginTitlePanel">Panel logowania</h4>
+          <label for="loginUser">Login / Username</label>
+          <input id="loginUser" type="text" autocomplete="off">
+          <label for="loginPass" style="margin-top:8px;">Hasło / Password</label>
+          <input id="loginPass" type="password">
           <div class="login-info" id="loginHint"></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:14px;">
+            Dalej
+          </button>
         </div>
-
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:14px;">
-          Dalej
-        </button>
       </form>
     </div>
   </div>
@@ -1226,14 +1386,12 @@
     <div class="system-inner">
       <div class="system-topbar">
         <div>
-          <strong id="systemTitle">SOP – Panel</strong><br />
-          <span id="systemSub">Tryb: Funkcjonariusz SOP</span>
+          <strong id="systemTitle">SOP Panel</strong><br>
+          <span id="systemSub">Tryb Funkcjonariusz SOP</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;">
           <span id="userDisplay">Zalogowany: —</span>
-          <button id="logoutBtn" class="logout-btn">
-            ⏏ Wyloguj
-          </button>
+          <button id="logoutBtn" class="logout-btn">Wyloguj</button>
         </div>
       </div>
       <div class="system-main">
@@ -1257,14 +1415,14 @@
           <div class="system-heading">
             <div>
               <div class="system-tag" id="systemTag">
-                <span>🛡️ SOP</span>
+                <span>SOP</span>
                 <span>Funkcjonariusz</span>
               </div>
               <h2 id="systemHeading">Pulpit operacyjny</h2>
             </div>
           </div>
 
-          <!-- PULPIT = PROFIL FUNKCJONARIUSZA -->
+          <!-- PULPIT PROFIL FUNKCJONARIUSZA -->
           <div id="panel-pulpit" class="system-panel">
             <div class="profile-card">
               <div class="profile-main">
@@ -1274,11 +1432,11 @@
                     id="profileAvatar"
                     src="https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif"
                     alt="Zdjęcie funkcjonariusza"
-                  />
+                  >
                 </div>
-                <div class="profile-header">
+                <div>
                   <div class="badge-pill">
-                    <span>🔰 Odznaka</span>
+                    <span>Odznaka</span>
                     <span id="badgeNumber">SOP-000</span>
                   </div>
                   <h3 id="fullName">Imię Nazwisko</h3>
@@ -1305,7 +1463,7 @@
                     <div class="profile-value" id="unit">Sekcja Ochrony VIP</div>
                   </div>
                   <div>
-                    <div class="profile-label">Służb od</div>
+                    <div class="profile-label">Służba od</div>
                     <div class="profile-value" id="serviceFrom">—</div>
                   </div>
                   <div>
@@ -1316,45 +1474,46 @@
               </div>
               <div>
                 <div class="status-pill" id="dutyStatusPill">
-                  <span>🟢 <span id="dutyText">Na służbie</span></span>
+                  <span><span id="dutyText">Na służbie</span></span>
                 </div>
                 <p class="system-note">
                   Status służby odzwierciedla, czy funkcjonariusz jest aktualnie na służbie RP.
                   Możesz to później podpiąć pod system duty z serwera.
                 </p>
                 <button id="logoutProfileBtn" class="logout-btn-secondary">
-                  ⏏ Wyloguj z panelu
+                  Wyloguj z panelu
                 </button>
               </div>
             </div>
             <p class="system-note">
-              Pulpit operacyjny wyświetla Twój profil jako funkcjonariusza SOP: dane osobowe, odznakę
-              i podstawowe informacje służbowe. Dane są pobierane na podstawie konta, którym się zalogujesz.
+              Pulpit operacyjny wyświetla Twój profil jako funkcjonariusza SOP – dane osobowe, odznakę i podstawowe
+              informacje służbowe. Dane są pobierane na podstawie konta, którym się zalogujesz.
             </p>
           </div>
 
-          <!-- BAZA DANYCH – ROZBUDOWANA -->
+          <!-- BAZA DANYCH ROZBUDOWANA -->
           <div id="panel-baza-danych" class="system-panel" style="display:none;">
             <div class="citizen-card">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                 <div>
-                  <strong>Rejestr obywateli SOP</strong><br />
-                  <span class="system-note">Baza osób objętych zainteresowaniem SOP – obywatele, VIP, osoby obserwowane.</span>
+                  <strong>Rejestr obywateli SOP</strong><br>
+                  <span class="system-note">
+                    Baza osób objętych zainteresowaniem SOP – obywatele, VIP, osoby obserwowane.
+                  </span>
                 </div>
               </div>
-
               <form id="citizenForm" class="citizen-form">
                 <label>
                   Imię
-                  <input type="text" id="citizenFirst" placeholder="np. Alex" required />
+                  <input type="text" id="citizenFirst" placeholder="np. Alex" required>
                 </label>
                 <label>
                   Nazwisko
-                  <input type="text" id="citizenLast" placeholder="np. Shadow" required />
+                  <input type="text" id="citizenLast" placeholder="np. Shadow" required>
                 </label>
                 <label>
                   ID / PESEL
-                  <input type="text" id="citizenId" placeholder="np. 920314-XXXX" />
+                  <input type="text" id="citizenId" placeholder="np. 920314-XXXX">
                 </label>
                 <label>
                   Status
@@ -1367,13 +1526,68 @@
                 </label>
                 <label style="grid-column:1 / 4;">
                   Notatka
-                  <input type="text" id="citizenNote" placeholder="krótka notatka operacyjna (opcjonalnie)" />
-                  <small>Możesz wpisać np. powiązania frakcyjne, historię incydentów, informacje operacyjne.</small>
+                  <input
+                    type="text"
+                    id="citizenNote"
+                    placeholder="krótka notatka operacyjna (opcjonalnie)"
+                  >
+                  <small>
+                    Możesz wpisać np. powiązania frakcyjne, historię incydentów, informacje operacyjne.
+                  </small>
                 </label>
-                <button type="submit" class="btn btn-primary">
-                  ➕ Dodaj obywatela
-                </button>
+                <label>
+                  &nbsp;
+                  <button type="submit" class="btn btn-primary">
+                    Dodaj obywatela
+                  </button>
+                </label>
               </form>
+
+              <!-- PANEL EDYCJI -->
+              <div
+                id="citizenEditPanel"
+                style="display:none; margin-bottom:10px; font-size:12px; color:var(--muted);"
+              >
+                <span id="citizenEditLabel" style="margin-right:8px;">
+                  Edytujesz obywatela:
+                </span>
+                <select
+                  id="citizenEditStatus"
+                  style="padding:4px 6px; border-radius:6px; border:1px solid var(--line);
+                         background:rgba(0,0,0,.45); color:var(--text); font-size:12px;"
+                >
+                  <option value="neutral">Neutralny</option>
+                  <option value="vip">VIP</option>
+                  <option value="watch">Obserwacja</option>
+                  <option value="danger">Wysokie ryzyko</option>
+                </select>
+                <input
+                  id="citizenEditNote"
+                  type="text"
+                  placeholder="Nowa notatka operacyjna"
+                  style="margin-left:6px; padding:4px 6px; border-radius:6px;
+                         border:1px solid var(--line); background:rgba(0,0,0,.45);
+                         color:var(--text); font-size:12px; width:260px;"
+                >
+                <button
+                  id="citizenEditSave"
+                  class="btn btn-primary"
+                  type="button"
+                  style="margin-left:6px; padding:6px 10px; font-size:12px;"
+                >
+                  Zapisz zmiany
+                </button>
+                <button
+                  id="citizenEditCancel"
+                  class="btn-ghost"
+                  type="button"
+                  style="margin-left:4px; padding:6px 10px; font-size:12px;
+                         border-radius:10px; border:1px solid var(--line);
+                         background:rgba(255,255,255,.03); color:var(--muted); cursor:pointer;"
+                >
+                  Anuluj
+                </button>
+              </div>
 
               <div class="citizen-table-wrap">
                 <table class="citizen-table">
@@ -1381,9 +1595,10 @@
                     <tr>
                       <th>#</th>
                       <th>Imię i nazwisko</th>
-                      <th>ID / PESEL</th>
+                      <th>ID PESEL</th>
                       <th>Status</th>
                       <th>Notatka</th>
+                      <th>Akcje</th>
                     </tr>
                   </thead>
                   <tbody id="citizenTableBody">
@@ -1391,38 +1606,46 @@
                   </tbody>
                 </table>
               </div>
+              <p class="system-note" style="margin-top:8px;">
+                To demo bazy danych obywateli. Dane przechowywane są po stronie frontu – później możesz podpiąć to
+                pod backend, forum lub API serwera RP.
+              </p>
             </div>
-            <p class="system-note">
-              To demo bazy danych obywateli. Dane przechowywane są po stronie frontu – później możesz podpiąć to pod
-              backend, forum lub API serwera RP.
-            </p>
           </div>
 
           <!-- Pozostałe moduły -->
           <div id="panel-baza-pojazdow" class="system-panel" style="display:none;">
             <p class="system-note">Baza pojazdów SOP.</p>
           </div>
+
           <div id="panel-zezwolenia" class="system-panel" style="display:none;">
             <p class="system-note">Zezwolenia i licencje.</p>
           </div>
+
           <div id="panel-szkolenia" class="system-panel" style="display:none;">
             <p class="system-note">Moduł szkoleń SOP.</p>
           </div>
+
           <div id="panel-raporty" class="system-panel" style="display:none;">
             <p class="system-note">Raporty służb SOP.</p>
           </div>
+
           <div id="panel-konwoje" class="system-panel" style="display:none;">
             <p class="system-note">Panel konwojów VIP.</p>
           </div>
+
           <div id="panel-listy-goncze" class="system-panel" style="display:none;">
             <p class="system-note">Listy gończe SOP.</p>
           </div>
+
           <div id="panel-sprawy-operacyjne" class="system-panel" style="display:none;">
             <p class="system-note">Sprawy operacyjne SOP.</p>
           </div>
+
           <div id="panel-archiwum" class="system-panel" style="display:none;">
             <p class="system-note">Archiwum spraw SOP.</p>
           </div>
+
           <div id="panel-hierarchia" class="system-panel" style="display:none;">
             <p class="system-note">Hierarchia SOP – struktura stopni.</p>
             <ul class="hierarchy-list">
@@ -1440,272 +1663,299 @@
   </div>
 
   <script>
-    // 10 kont – demo
+    // 10 kont demo
     const users = [
       {
-        login: 'shadow_vortex92',
-        password: 'kX#7mP!aQ9_zT',
-        role: 'sop',
-        badge: 'SOP-101',
-        name: 'Alex Shadow',
-        dob: '1992-03-14',
+        login: "shadowvortex92",
+        password: "kX7mP!aQ9zT",
+        role: "sop",
+        badge: "SOP-101",
+        name: "Alex Shadow",
+        dob: "1992-03-14",
         age: 34,
-        rank: 'Starszy Funkcjonariusz SOP',
-        unit: 'Sekcja Ochrony VIP',
-        serviceFrom: '2020-05-01',
-        duty: 'on'
+        rank: "Starszy Funkcjonariusz SOP",
+        unit: "Sekcja Ochrony VIP",
+        serviceFrom: "2020-05-01",
+        duty: "on"
       },
       {
-        login: 'cyber_pulse',
-        password: '3$vF@mK2xL#pW',
-        role: 'sop',
-        badge: 'SOP-102',
-        name: 'Jordan Pulse',
-        dob: '1995-08-22',
+        login: "cyberpulse",
+        password: "3vFmK2xLpW",
+        role: "sop",
+        badge: "SOP-102",
+        name: "Jordan Pulse",
+        dob: "1995-08-22",
         age: 30,
-        rank: 'Funkcjonariusz SOP',
-        unit: 'Sekcja Rozpoznania',
-        serviceFrom: '2021-02-10',
-        duty: 'on'
+        rank: "Funkcjonariusz SOP",
+        unit: "Sekcja Rozpoznania",
+        serviceFrom: "2021-02-10",
+        duty: "on"
       },
       {
-        login: 'pixel_forge26',
-        password: 'bN8&sY1*vR5_zQ',
-        role: 'sop',
-        badge: 'SOP-103',
-        name: 'Chris Forge',
-        dob: '1990-11-05',
+        login: "pixelforge26",
+        password: "bN8sY1vR5zQ",
+        role: "sop",
+        badge: "SOP-103",
+        name: "Chris Forge",
+        dob: "1990-11-05",
         age: 35,
-        rank: 'Funkcjonariusz SOP',
-        unit: 'Sekcja Logistyki',
-        serviceFrom: '2019-09-12',
-        duty: 'off'
+        rank: "Funkcjonariusz SOP",
+        unit: "Sekcja Logistyki",
+        serviceFrom: "2019-09-12",
+        duty: "off"
       },
       {
-        login: 'nexus_glitch',
-        password: 'hP4!mX9$kL2@tV',
-        role: 'tajna',
-        badge: 'TS-201',
-        name: 'Morgan Nexus',
-        dob: '1989-01-30',
+        login: "nexusglitch",
+        password: "hP4!mX9kL2tV",
+        role: "tajna",
+        badge: "TS-201",
+        name: "Morgan Nexus",
+        dob: "1989-01-30",
         age: 37,
-        rank: 'Agent Specjalny',
-        unit: 'Tajna Jednostka',
-        serviceFrom: '2018-01-01',
-        duty: 'on'
+        rank: "Agent Specjalny",
+        unit: "Tajna Jednostka",
+        serviceFrom: "2018-01-01",
+        duty: "on"
       },
       {
-        login: 'quantum_echo',
-        password: '7#wB2%mZ9_xK1',
-        role: 'tajna',
-        badge: 'TS-202',
-        name: 'Taylor Echo',
-        dob: '1993-06-02',
+        login: "quantumecho",
+        password: "7wB2mZ9xK1",
+        role: "tajna",
+        badge: "TS-202",
+        name: "Taylor Echo",
+        dob: "1993-06-02",
         age: 33,
-        rank: 'Agent',
-        unit: 'Tajna Jednostka',
-        serviceFrom: '2020-07-15',
-        duty: 'off'
+        rank: "Agent",
+        unit: "Tajna Jednostka",
+        serviceFrom: "2020-07-15",
+        duty: "off"
       },
       {
-        login: 'neon_matrix',
-        password: 'vF5&pQ3!sL8_zX',
-        role: 'sop',
-        badge: 'SOP-104',
-        name: 'Jamie Matrix',
-        dob: '1994-09-09',
+        login: "neonmatrix",
+        password: "vF5pQ3!sL8zX",
+        role: "sop",
+        badge: "SOP-104",
+        name: "Jamie Matrix",
+        dob: "1994-09-09",
         age: 31,
-        rank: 'Funkcjonariusz SOP',
-        unit: 'Sekcja Eskort',
-        serviceFrom: '2022-03-03',
-        duty: 'on'
+        rank: "Funkcjonariusz SOP",
+        unit: "Sekcja Eskort",
+        serviceFrom: "2022-03-03",
+        duty: "on"
       },
       {
-        login: 'alpha_frost00',
-        password: 'kR9$mX2@tP6_vB',
-        role: 'sop',
-        badge: 'SOP-105',
-        name: 'Robin Frost',
-        dob: '1991-12-12',
+        login: "alphafrost00",
+        password: "kR9mX2tP6vB",
+        role: "sop",
+        badge: "SOP-105",
+        name: "Robin Frost",
+        dob: "1991-12-12",
         age: 34,
-        rank: 'Starszy Funkcjonariusz SOP',
-        unit: 'Sekcja Szkoleniowa',
-        serviceFrom: '2019-01-20',
-        duty: 'off'
+        rank: "Starszy Funkcjonariusz SOP",
+        unit: "Sekcja Szkoleniowa",
+        serviceFrom: "2019-01-20",
+        duty: "off"
       },
       {
-        login: 'digital_phantom',
-        password: '3#vL9%kQ1!zW5',
-        role: 'tajna',
-        badge: 'TS-203',
-        name: 'Sky Phantom',
-        dob: '1988-04-18',
+        login: "digitalphantom",
+        password: "3vL9kQ1!zW5",
+        role: "tajna",
+        badge: "TS-203",
+        name: "Sky Phantom",
+        dob: "1988-04-18",
         age: 38,
-        rank: 'Agent Specjalny',
-        unit: 'Tajna Jednostka',
-        serviceFrom: '2017-06-06',
-        duty: 'on'
+        rank: "Agent Specjalny",
+        unit: "Tajna Jednostka",
+        serviceFrom: "2017-06-06",
+        duty: "on"
       },
       {
-        login: 'cosmic_shifter',
-        password: 'hP2&mX8$kL4@vT',
-        role: 'tajna',
-        badge: 'TS-204',
-        name: 'Riley Shifter',
-        dob: '1996-02-01',
+        login: "cosmicshifter",
+        password: "hP2mX8kL4vT",
+        role: "tajna",
+        badge: "TS-204",
+        name: "Riley Shifter",
+        dob: "1996-02-01",
         age: 30,
-        rank: 'Agent',
-        unit: 'Tajna Jednostka',
-        serviceFrom: '2021-11-11',
-        duty: 'off'
+        rank: "Agent",
+        unit: "Tajna Jednostka",
+        serviceFrom: "2021-11-11",
+        duty: "off"
       },
       {
-        login: 'hyper_nova',
-        password: '7$wB3%mZ9_xK2',
-        role: 'sop',
-        badge: 'SOP-106',
-        name: 'Casey Nova',
-        dob: '1993-10-25',
+        login: "hypernova",
+        password: "7wB3mZ9xK2",
+        role: "sop",
+        badge: "SOP-106",
+        name: "Casey Nova",
+        dob: "1993-10-25",
         age: 32,
-        rank: 'Funkcjonariusz SOP',
-        unit: 'Sekcja Ochrony VIP',
-        serviceFrom: '2023-01-05',
-        duty: 'on'
-      },
+        rank: "Funkcjonariusz SOP",
+        unit: "Sekcja Ochrony VIP",
+        serviceFrom: "2023-01-05",
+        duty: "on"
+      }
     ];
 
-    const loginBtn = document.getElementById('loginTrigger');
-    const loginModal = document.getElementById('loginModal');
-    const loginClose = document.getElementById('loginClose');
-    const roleForm = document.getElementById('roleForm');
-
-    const loginPanel = document.getElementById('loginPanel');
-    const loginTitle = document.getElementById('loginTitle');
-    const loginHint = document.getElementById('loginHint');
-    const loginUser = document.getElementById('loginUser');
-    const loginPass = document.getElementById('loginPass');
-
-    const systemOverlay = document.getElementById('systemOverlay');
-    const systemTitle = document.getElementById('systemTitle');
-    const systemSub = document.getElementById('systemSub');
-    const systemTag = document.getElementById('systemTag');
-    const userDisplay = document.getElementById('userDisplay');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const logoutProfileBtn = document.getElementById('logoutProfileBtn');
-
-    const moduleButtons = document.querySelectorAll('.system-menu button');
+    const loginBtn = document.getElementById("loginTrigger");
+    const loginModal = document.getElementById("loginModal");
+    const loginClose = document.getElementById("loginClose");
+    const roleForm = document.getElementById("roleForm");
+    const loginPanel = document.getElementById("loginPanel");
+    const loginTitle = document.getElementById("loginTitle");
+    const loginHint = document.getElementById("loginHint");
+    const loginUser = document.getElementById("loginUser");
+    const loginPass = document.getElementById("loginPass");
+    const systemOverlay = document.getElementById("systemOverlay");
+    const systemTitle = document.getElementById("systemTitle");
+    const systemSub = document.getElementById("systemSub");
+    const systemTag = document.getElementById("systemTag");
+    const userDisplay = document.getElementById("userDisplay");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const logoutProfileBtn = document.getElementById("logoutProfileBtn");
+    const moduleButtons = document.querySelectorAll(".system-menu button");
     const panels = {
-      'pulpit': document.getElementById('panel-pulpit'),
-      'baza-danych': document.getElementById('panel-baza-danych'),
-      'baza-pojazdow': document.getElementById('panel-baza-pojazdow'),
-      'zezwolenia': document.getElementById('panel-zezwolenia'),
-      'szkolenia': document.getElementById('panel-szkolenia'),
-      'raporty': document.getElementById('panel-raporty'),
-      'konwoje': document.getElementById('panel-konwoje'),
-      'listy-goncze': document.getElementById('panel-listy-goncze'),
-      'sprawy-operacyjne': document.getElementById('panel-sprawy-operacyjne'),
-      'archiwum': document.getElementById('panel-archiwum'),
-      'hierarchia': document.getElementById('panel-hierarchia'),
+      "pulpit": document.getElementById("panel-pulpit"),
+      "baza-danych": document.getElementById("panel-baza-danych"),
+      "baza-pojazdow": document.getElementById("panel-baza-pojazdow"),
+      "zezwolenia": document.getElementById("panel-zezwolenia"),
+      "szkolenia": document.getElementById("panel-szkolenia"),
+      "raporty": document.getElementById("panel-raporty"),
+      "konwoje": document.getElementById("panel-konwoje"),
+      "listy-goncze": document.getElementById("panel-listy-goncze"),
+      "sprawy-operacyjne": document.getElementById("panel-sprawy-operacyjne"),
+      "archiwum": document.getElementById("panel-archiwum"),
+      "hierarchia": document.getElementById("panel-hierarchia")
     };
-    const systemHeading = document.getElementById('systemHeading');
-
-    const profileAvatar = document.getElementById('profileAvatar');
-    const badgeNumber = document.getElementById('badgeNumber');
-    const fullName = document.getElementById('fullName');
-    const profileLogin = document.getElementById('profileLogin');
-    const rankEl = document.getElementById('rank');
-    const rankShort = document.getElementById('rankShort');
-    const unitShort = document.getElementById('unitShort');
-    const dobEl = document.getElementById('dob');
-    const ageEl = document.getElementById('age');
-    const unitEl = document.getElementById('unit');
-    const serviceFromEl = document.getElementById('serviceFrom');
-    const dutyStatusPill = document.getElementById('dutyStatusPill');
+    const systemHeading = document.getElementById("systemHeading");
+    const profileAvatar = document.getElementById("profileAvatar");
+    const badgeNumber = document.getElementById("badgeNumber");
+    const fullName = document.getElementById("fullName");
+    const profileLogin = document.getElementById("profileLogin");
+    const rankEl = document.getElementById("rank");
+    const rankShort = document.getElementById("rankShort");
+    const unitShort = document.getElementById("unitShort");
+    const dobEl = document.getElementById("dob");
+    const ageEl = document.getElementById("age");
+    const unitEl = document.getElementById("unit");
+    const serviceFromEl = document.getElementById("serviceFrom");
+    const dutyStatusPill = document.getElementById("dutyStatusPill");
 
     let selectedRole = null;
     let step = 1;
     let currentUser = null;
 
-    // Baza danych – przykładowi obywatele
+    // Baza danych - przykładowi obywatele
     const citizens = [
       {
-        first: 'Alex',
-        last: 'Shadow',
-        id: '920314-XXXX',
-        status: 'vip',
-        note: 'Gubernator stanu – pełna ochrona SOP.'
+        first: "Alex",
+        last: "Shadow",
+        id: "920314-XXXX",
+        status: "vip",
+        note: "Gubernator stanu, pełna ochrona SOP."
       },
       {
-        first: 'Jordan',
-        last: 'Pulse',
-        id: '950822-XXXX',
-        status: 'watch',
-        note: 'Powiązania z organizacją przestępczą – obserwacja.'
+        first: "Jordan",
+        last: "Pulse",
+        id: "950822-XXXX",
+        status: "watch",
+        note: "Powiązania z organizacją przestępczą, obserwacja."
       },
       {
-        first: 'Casey',
-        last: 'Nova',
-        id: '931025-XXXX',
-        status: 'neutral',
-        note: 'Brak szczególnych notatek – współpraca z SOP podczas eventów.'
+        first: "Casey",
+        last: "Nova",
+        id: "931025-XXXX",
+        status: "neutral",
+        note: "Brak szczególnych notatek, współpraca z SOP podczas eventów."
       },
       {
-        first: 'Morgan',
-        last: 'Nexus',
-        id: '890130-XXXX',
-        status: 'danger',
-        note: 'Podejrzenie o sabotaż infrastruktury – priorytet operacyjny.'
+        first: "Morgan",
+        last: "Nexus",
+        id: "890130-XXXX",
+        status: "danger",
+        note: "Podejrzenie o sabotaż infrastruktury, priorytet operacyjny."
       }
     ];
 
-    const citizenTableBody = document.getElementById('citizenTableBody');
-    const citizenForm = document.getElementById('citizenForm');
-    const citizenFirst = document.getElementById('citizenFirst');
-    const citizenLast = document.getElementById('citizenLast');
-    const citizenId = document.getElementById('citizenId');
-    const citizenStatus = document.getElementById('citizenStatus');
-    const citizenNote = document.getElementById('citizenNote');
+    const citizenTableBody = document.getElementById("citizenTableBody");
+    const citizenForm = document.getElementById("citizenForm");
+    const citizenFirst = document.getElementById("citizenFirst");
+    const citizenLast = document.getElementById("citizenLast");
+    const citizenId = document.getElementById("citizenId");
+    const citizenStatus = document.getElementById("citizenStatus");
+    const citizenNote = document.getElementById("citizenNote");
 
-    function statusBadge(status){
-      let cls = 'badge-status';
-      let label = 'Neutralny';
-      let icon = '⚪';
+    let editingCitizenIndex = null;
+    const citizenEditPanel = document.getElementById("citizenEditPanel");
+    const citizenEditLabel = document.getElementById("citizenEditLabel");
+    const citizenEditStatus = document.getElementById("citizenEditStatus");
+    const citizenEditNote = document.getElementById("citizenEditNote");
+    const citizenEditSave = document.getElementById("citizenEditSave");
+    const citizenEditCancel = document.getElementById("citizenEditCancel");
 
-      if(status === 'vip'){
-        cls += ' ok';
-        label = 'VIP';
-        icon = '⭐';
-      }else if(status === 'watch'){
-        cls += ' warn';
-        label = 'Obserwacja';
-        icon = '👁️';
-      }else if(status === 'danger'){
-        cls += ' danger';
-        label = 'Wysokie ryzyko';
-        icon = '⚠️';
+    function statusBadge(status) {
+      let cls = "badge-status";
+      let label = "Neutralny";
+      let icon = "●";
+      if (status === "vip") {
+        cls += " ok";
+        label = "VIP";
+        icon = "★";
+      } else if (status === "watch") {
+        cls += " warn";
+        label = "Obserwacja";
+        icon = "◒";
+      } else if (status === "danger") {
+        cls += " danger";
+        label = "Wysokie ryzyko";
+        icon = "!";
       }
-
       return `<span class="${cls}"><span>${icon}</span><span>${label}</span></span>`;
     }
 
-    function renderCitizens(){
-      citizenTableBody.innerHTML = '';
+    function renderCitizens() {
+      citizenTableBody.innerHTML = "";
       citizens.forEach((c, idx) => {
-        const tr = document.createElement('tr');
+        const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${idx + 1}</td>
           <td>${c.first} ${c.last}</td>
-          <td>${c.id || '—'}</td>
+          <td>${c.id}</td>
           <td>${statusBadge(c.status)}</td>
-          <td>${c.note || '—'}</td>
+          <td>${c.note}</td>
+          <td>
+            <button
+              type="button"
+              class="btn-ghost"
+              data-edit-index="${idx}"
+              style="padding:4px 8px; font-size:11px; border-radius:999px;
+                     border:1px solid var(--line); background:rgba(255,255,255,.03);
+                     color:var(--muted); cursor:pointer;"
+            >
+              Edytuj
+            </button>
+          </td>
         `;
         citizenTableBody.appendChild(tr);
+      });
+
+      citizenTableBody.querySelectorAll('button[data-edit-index]').forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-edit-index"));
+          const citizen = citizens[idx];
+          editingCitizenIndex = idx;
+          citizenEditPanel.style.display = "block";
+          citizenEditLabel.textContent =
+            `Edytujesz obywatela: ${citizen.first} ${citizen.last} (${citizen.id}) →`;
+          citizenEditStatus.value = citizen.status;
+          citizenEditNote.value = citizen.note || "";
+        });
       });
     }
 
     renderCitizens();
 
-    citizenForm?.addEventListener('submit', (e) => {
+    citizenForm?.addEventListener("submit", (e) => {
       e.preventDefault();
       const first = citizenFirst.value.trim();
       const last = citizenLast.value.trim();
@@ -1713,145 +1963,157 @@
       const status = citizenStatus.value;
       const note = citizenNote.value.trim();
 
-      if(!first || !last){
-        loginHint.textContent = 'Podaj co najmniej imię i nazwisko obywatela.';
-        loginHint.style.color = '#f97373';
+      if (!first || !last) {
+        loginHint.textContent = "Podaj co najmniej imię i nazwisko obywatela.";
+        loginHint.style.color = "#f97373";
         return;
       }
 
       citizens.push({ first, last, id, status, note });
       renderCitizens();
 
-      citizenFirst.value = '';
-      citizenLast.value = '';
-      citizenId.value = '';
-      citizenStatus.value = 'neutral';
-      citizenNote.value = '';
+      citizenFirst.value = "";
+      citizenLast.value = "";
+      citizenId.value = "";
+      citizenStatus.value = "neutral";
+      citizenNote.value = "";
+    });
+
+    citizenEditSave?.addEventListener("click", () => {
+      if (editingCitizenIndex === null) return;
+      const newStatus = citizenEditStatus.value;
+      const newNote = citizenEditNote.value.trim();
+      citizens[editingCitizenIndex].status = newStatus;
+      citizens[editingCitizenIndex].note = newNote;
+      editingCitizenIndex = null;
+      citizenEditPanel.style.display = "none";
+      renderCitizens();
+    });
+
+    citizenEditCancel?.addEventListener("click", () => {
+      editingCitizenIndex = null;
+      citizenEditPanel.style.display = "none";
     });
 
     function openModal() {
       step = 1;
       selectedRole = null;
-      loginPanel.style.display = 'none';
-      loginHint.textContent = '';
-      loginHint.style.color = '#9aa6b7';
-      loginUser.value = '';
-      loginPass.value = '';
-      loginModal.classList.add('is-open');
+      loginPanel.style.display = "none";
+      loginHint.textContent = "";
+      loginHint.style.color = "#9aa6b7";
+      loginUser.value = "";
+      loginPass.value = "";
+      loginModal.classList.add("is-open");
     }
 
     function closeModal() {
-      loginModal.classList.remove('is-open');
+      loginModal.classList.remove("is-open");
     }
 
-    loginBtn?.addEventListener('click', openModal);
-    loginClose?.addEventListener('click', closeModal);
-    loginModal?.addEventListener('click', (e) => {
+    loginBtn?.addEventListener("click", openModal);
+    loginClose?.addEventListener("click", closeModal);
+
+    loginModal?.addEventListener("click", (e) => {
       if (e.target === loginModal) closeModal();
     });
 
     function showModule(key) {
       moduleButtons.forEach(btn => {
-        const m = btn.getAttribute('data-module');
-        btn.classList.toggle('active', m === key);
+        const m = btn.getAttribute("data-module");
+        btn.classList.toggle("active", m === key);
       });
       Object.entries(panels).forEach(([name, el]) => {
         if (!el) return;
-        el.style.display = name === key ? 'block' : 'none';
+        el.style.display = name === key ? "block" : "none";
       });
       const titles = {
-        'pulpit': 'Pulpit operacyjny',
-        'baza-danych': 'Baza danych',
-        'baza-pojazdow': 'Baza pojazdów',
-        'zezwolenia': 'Zezwolenia',
-        'szkolenia': 'Szkolenia',
-        'raporty': 'Raporty służb',
-        'konwoje': 'Konwoje VIP',
-        'listy-goncze': 'Listy gończe',
-        'sprawy-operacyjne': 'Sprawy operacyjne',
-        'archiwum': 'Archiwum spraw',
-        'hierarchia': 'Hierarchia SOP',
+        "pulpit": "Pulpit operacyjny",
+        "baza-danych": "Baza danych",
+        "baza-pojazdow": "Baza pojazdów",
+        "zezwolenia": "Zezwolenia",
+        "szkolenia": "Szkolenia",
+        "raporty": "Raporty służb",
+        "konwoje": "Konwoje VIP",
+        "listy-goncze": "Listy gończe",
+        "sprawy-operacyjne": "Sprawy operacyjne",
+        "archiwum": "Archiwum spraw",
+        "hierarchia": "Hierarchia SOP"
       };
-      systemHeading.textContent = titles[key] || 'Panel SOP';
+      systemHeading.textContent = titles[key] || "Panel SOP";
     }
 
     moduleButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const key = btn.getAttribute('data-module');
+      btn.addEventListener("click", () => {
+        const key = btn.getAttribute("data-module");
         showModule(key);
       });
     });
 
     function clearSession() {
       currentUser = null;
-      userDisplay.textContent = 'Zalogowany: —';
-      badgeNumber.textContent = 'SOP-000';
-      fullName.textContent = 'Imię Nazwisko';
-      profileLogin.textContent = '—';
-      rankEl.textContent = 'Funkcjonariusz SOP';
-      rankShort.textContent = 'Funkcjonariusz SOP';
-      unitShort.textContent = 'Sekcja Ochrony VIP';
-      dobEl.textContent = '—';
-      ageEl.textContent = '—';
-      unitEl.textContent = 'Sekcja Ochrony VIP';
-      serviceFromEl.textContent = '—';
-      dutyStatusPill.innerHTML = '<span>⚪ <span id="dutyText">Poza służbą</span></span>';
-      dutyStatusPill.style.borderColor = 'rgba(148,163,184,.7)';
-      dutyStatusPill.style.color = '#e5e7eb';
+      userDisplay.textContent = "Zalogowany: —";
+      badgeNumber.textContent = "SOP-000";
+      fullName.textContent = "Imię Nazwisko";
+      profileLogin.textContent = "—";
+      rankEl.textContent = "Funkcjonariusz SOP";
+      rankShort.textContent = "Funkcjonariusz SOP";
+      unitShort.textContent = "Sekcja Ochrony VIP";
+      dobEl.textContent = "—";
+      ageEl.textContent = "—";
+      unitEl.textContent = "Sekcja Ochrony VIP";
+      serviceFromEl.textContent = "—";
+      dutyStatusPill.innerHTML = `<span><span id="dutyText">Poza służbą</span></span>`;
+      dutyStatusPill.style.borderColor = "rgba(148,163,184,.7)";
+      dutyStatusPill.style.color = "#e5e7eb";
     }
 
     function logout() {
-      systemOverlay.classList.remove('show');
-      document.body.style.overflow = '';
+      systemOverlay.classList.remove("show");
+      document.body.style.overflow = "";
       clearSession();
     }
 
-    logoutBtn?.addEventListener('click', logout);
-    logoutProfileBtn?.addEventListener('click', logout);
+    logoutBtn?.addEventListener("click", logout);
+    logoutProfileBtn?.addEventListener("click", logout);
 
     function fillProfile(user) {
       profileAvatar.src = user.avatar || "https://i.postimg.cc/prMd9SZ5/discord-banner-maker-cover-1772767679-9472.avif";
+      badgeNumber.textContent = user.badge || "SOP-000";
+      fullName.textContent = user.name || "Imię Nazwisko";
+      profileLogin.textContent = user.login || "—";
+      rankEl.textContent = user.rank || "Funkcjonariusz SOP";
+      rankShort.textContent = user.rank || "Funkcjonariusz SOP";
+      unitEl.textContent = user.unit || "Sekcja Ochrony VIP";
+      unitShort.textContent = user.unit || "Sekcja Ochrony VIP";
+      dobEl.textContent = user.dob || "—";
+      ageEl.textContent = user.age != null ? user.age : "—";
+      serviceFromEl.textContent = user.serviceFrom || "—";
 
-      badgeNumber.textContent = user.badge || 'SOP-000';
-      fullName.textContent = user.name || 'Imię Nazwisko';
-      profileLogin.textContent = user.login;
-      rankEl.textContent = user.rank || 'Funkcjonariusz SOP';
-      rankShort.textContent = user.rank || 'Funkcjonariusz SOP';
-      unitEl.textContent = user.unit || 'Sekcja Ochrony VIP';
-      unitShort.textContent = user.unit || 'Sekcja Ochrony VIP';
-      dobEl.textContent = user.dob || '—';
-      ageEl.textContent = user.age ?? '—';
-      serviceFromEl.textContent = user.serviceFrom || '—';
-
-      if (user.duty === 'on') {
-        dutyStatusPill.innerHTML = '<span>🟢 <span id="dutyText">Na służbie</span></span>';
-        dutyStatusPill.style.borderColor = 'rgba(34,197,94,.7)';
-        dutyStatusPill.style.color = '#bbf7d0';
+      if (user.duty === "on") {
+        dutyStatusPill.innerHTML = `<span><span id="dutyText">Na służbie</span></span>`;
+        dutyStatusPill.style.borderColor = "rgba(34,197,94,.7)";
+        dutyStatusPill.style.color = "#bbf7d0";
       } else {
-        dutyStatusPill.innerHTML = '<span>⚪ <span id="dutyText">Poza służbą</span></span>';
-        dutyStatusPill.style.borderColor = 'rgba(148,163,184,.7)';
-        dutyStatusPill.style.color = '#e5e7eb';
+        dutyStatusPill.innerHTML = `<span><span id="dutyText">Poza służbą</span></span>`;
+        dutyStatusPill.style.borderColor = "rgba(148,163,184,.7)";
+        dutyStatusPill.style.color = "#e5e7eb";
       }
     }
 
-    roleForm?.addEventListener('submit', (e) => {
+    roleForm?.addEventListener("submit", (e) => {
       e.preventDefault();
       const roleInput = document.querySelector('input[name="role"]:checked');
 
       if (step === 1) {
         if (!roleInput) return;
         selectedRole = roleInput.value;
-
-        loginTitle.textContent =
-          selectedRole === 'sop'
-            ? 'Logowanie – Funkcjonariusz SOP'
-            : 'Logowanie – Tajna Jednostka';
-
+        loginTitle.textContent = selectedRole === "sop"
+          ? "Logowanie – Funkcjonariusz SOP"
+          : "Logowanie – Tajna Jednostka";
         loginHint.textContent =
-          'Użyj loginu i hasła przypisanego do Twojego konta (z listy funkcjonariuszy).';
-        loginHint.style.color = '#9aa6b7';
-
-        loginPanel.style.display = 'block';
+          "Użyj loginu i hasła przypisanego do Twojego konta z listy funkcjonariuszy.";
+        loginHint.style.color = "#9aa6b7";
+        loginPanel.style.display = "block";
         step = 2;
         return;
       }
@@ -1859,51 +2121,46 @@
       if (step === 2) {
         const user = loginUser.value.trim();
         const pass = loginPass.value.trim();
-
-        const found = users.find(u =>
-          u.login === user &&
-          u.password === pass &&
-          u.role === selectedRole
+        const found = users.find(
+          (u) => u.login === user && u.password === pass && u.role === selectedRole
         );
 
         if (!found) {
-          loginHint.textContent = 'Nieprawidłowe dane logowania lub rola.';
-          loginHint.style.color = '#f97373';
+          loginHint.textContent = "Nieprawidłowe dane logowania lub rola.";
+          loginHint.style.color = "#f97373";
           return;
         }
 
         currentUser = found;
         fillProfile(currentUser);
 
-        if (selectedRole === 'sop') {
-          systemTitle.textContent = 'SOP – Panel Funkcjonariusza';
-          systemSub.textContent = 'Tryb: Funkcjonariusz SOP';
-          systemTag.innerHTML = '<span>🛡️ SOP</span><span>Funkcjonariusz</span>';
+        if (selectedRole === "sop") {
+          systemTitle.textContent = "SOP Panel Funkcjonariusza";
+          systemSub.textContent = "Tryb Funkcjonariusz SOP";
+          systemTag.innerHTML = `<span>SOP</span><span>Funkcjonariusz</span>`;
         } else {
-          systemTitle.textContent = 'SOP – Panel Tajnej Jednostki';
-          systemSub.textContent = 'Tryb: Tajna Jednostka';
-          systemTag.innerHTML = '<span>🕵️ Tajna</span><span>Jednostka</span>';
+          systemTitle.textContent = "SOP Panel Tajnej Jednostki";
+          systemSub.textContent = "Tryb Tajna Jednostka";
+          systemTag.innerHTML = `<span>Tajna</span><span>Jednostka</span>`;
         }
-
-        userDisplay.textContent = 'Zalogowany: ' + currentUser.login;
+        userDisplay.textContent = "Zalogowany: " + currentUser.login;
 
         closeModal();
-        systemOverlay.classList.add('show');
-        document.body.style.overflow = 'hidden';
-        showModule('pulpit');
+        systemOverlay.classList.add("show");
+        document.body.style.overflow = "hidden";
+        showModule("pulpit");
       }
     });
 
-    // ESC – niczego nie wylogowuje, tylko zamyka UI
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (loginModal.classList.contains('is-open')) {
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (loginModal.classList.contains("is-open")) {
           closeModal();
           return;
         }
-        if (systemOverlay.classList.contains('show')) {
-          systemOverlay.classList.remove('show');
-          document.body.style.overflow = '';
+        if (systemOverlay.classList.contains("show")) {
+          systemOverlay.classList.remove("show");
+          document.body.style.overflow = "";
         }
       }
     });
