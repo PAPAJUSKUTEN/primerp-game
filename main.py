@@ -300,7 +300,7 @@ async def aplikuj(
         "2. Od jak dawna grasz na Venus RP?",
         "3. Czy miałeś już doświadczenie w frakcjach porządkowych? Jeśli tak – jakich?",
         "4. Dlaczego chcesz dołączyć do frakcji SOP?",
-        "5. Jakie są tuoi najmocniejsze strony przydatne w SOP?",
+        "5. Jakie są twoje najmocniejsze strony przydatne w SOP?",
         "6. Jakie są twoje słabe strony, nad którymi chcesz pracować?",
         "7. Opisz krótko swoją znajomość regulaminu frakcji SOP.",
         "8. Jak reagujesz na stresujące sytuacje podczas akcji RP?",
