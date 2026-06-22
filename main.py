@@ -44,13 +44,6 @@ def index():
 
 @app.route("/wyslij-wiadomosc", methods=["POST"])
 def wyslij_wiadomosc():
-    """
-    JSON:
-    {
-      "channel_id": 1234567890,
-      "content": "Treść wiadomości"
-    }
-    """
     data = request.get_json(force=True, silent=True) or {}
     channel_id = data.get("channel_id")
     content = data.get("content")
@@ -93,6 +86,32 @@ class FlaskServerThread(threading.Thread):
         self.srv.shutdown()
 
 # --------------------------------------------------
+# WIDOKI I PRZYCISKI (UI) DLACZEGO /obowiazki
+# --------------------------------------------------
+
+class ObowiazkiView(discord.ui.View):
+    def __init__(self):
+        # timeout=None sprawia, że przyciski będą działać "wiecznie" (tzw. persistent view),
+        # pod warunkiem, że zarejestrujesz ten widok w on_ready (dodane poniżej).
+        super().__init__(timeout=None)
+
+    @discord.ui.button(label="Raport", style=discord.ButtonStyle.primary, custom_id="button_raport")
+    async def raport_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        # Tutaj możesz wstawić kod np. otwierający Modal (formularz) lub tworzący nowy kanał
+        await interaction.response.send_message(
+            "Wybrano opcję: **Raport**. Tutaj możesz rozbudować akcję (np. wywołać formularz).", 
+            ephemeral=True
+        )
+
+    @discord.ui.button(label="Incydent", style=discord.ButtonStyle.danger, custom_id="button_incydent")
+    async def incydent_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        # Tutaj analogicznie akcja dla zgłoszenia incydentu
+        await interaction.response.send_message(
+            "Wybrano opcję: **Incydent**. Tutaj możesz rozbudować akcję.", 
+            ephemeral=True
+        )
+
+# --------------------------------------------------
 # DISCORD BOT
 # --------------------------------------------------
 
@@ -111,7 +130,9 @@ class VenusSOPBot(commands.Bot):
         self.flask_thread = None
 
     async def setup_hook(self):
-        # Sync slash komend na starcie (guild – szybsza propagacja)
+        # Rejestracja widoku jako trwały (persistent), dzięki czemu przyciski działają po restarcie bota
+        self.add_view(ObowiazkiView())
+
         try:
             guild = discord.Object(id=GUILD_ID)
             self.tree.copy_global_to(guild=guild)
@@ -124,7 +145,6 @@ class VenusSOPBot(commands.Bot):
         except Exception:
             logger.exception("Błąd podczas tree.sync()")
 
-        # Self ping jako task
         self.loop.create_task(self.self_ping_loop())
 
     async def on_ready(self):
@@ -163,6 +183,36 @@ async def ping(ctx: commands.Context):
     await ctx.reply("Pong! Bot działa poprawnie.")
 
 # --------------------------------------------------
+# SLASH: /obowiazki – wysyła panel z przyciskami
+# --------------------------------------------------
+
+@bot.tree.command(name="obowiazki", description="Wysyła panel zarządzania obowiązkami SOP z przyciskami.")
+async def obowiazki(interaction: discord.Interaction):
+    # Sprawdzamy uprawnienia użytkownika (np. czy ma rolę administracyjną / wymaganą rola),
+    # aby zwykli gracze nie spamowali tym panelem.
+    role = interaction.guild.get_role(REQUIRED_ROLE_ID)
+    if role not in interaction.user.roles:
+        await interaction.response.send_message(
+            "Nie masz uprawnień (wymaganej roli) do użycia tej komendy.", 
+            ephemeral=True
+        )
+        return
+
+    embed = discord.Embed(
+        title="Panel Obowiązków Służbowych – SOP",
+        description=(
+            "Wybierz odpowiednią opcję poniżej, aby zgłosić swoje działania:\n\n"
+            "**📝 Raport** – Kliknij, aby złożyć codzienny/tygodniowy raport ze służby.\n"
+            "**🚨 Incydent** – Kliknij, aby zgłosić nagłe zdarzenie lub naruszenie."
+        ),
+        color=discord.Color.blue()
+    )
+    embed.set_footer(text="Venus SOP • System Zarządzania Obowiązkami")
+
+    # Wysyłamy wiadomość na kanał (nie jako ephemeral, aby wszyscy widzieli panel)
+    await interaction.response.send_message(embed=embed, view=ObowiazkiView())
+
+# --------------------------------------------------
 # SLASH: /ticket – tworzy kanał ticket-nazwa
 # --------------------------------------------------
 
@@ -172,23 +222,16 @@ async def ticket(
     interaction: discord.Interaction,
     nazwa: str
 ):
-    # Defer – żeby nie było „aplikacja nie reaguje”
     await interaction.response.defer(ephemeral=True)
 
     guild = interaction.guild
     if guild is None:
-        await interaction.followup.send(
-            "Ta komenda może być używana tylko na serwerze.",
-            ephemeral=True
-        )
+        await interaction.followup.send("Ta komenda może być używana tylko na serwerze.", ephemeral=True)
         return
 
     category = guild.get_channel(CATEGORY_ID)
     if category is None or not isinstance(category, discord.CategoryChannel):
-        await interaction.followup.send(
-            "Nie mogę znaleźć kategorii ticketów. Skontaktuj się z administracją.",
-            ephemeral=True
-        )
+        await interaction.followup.send("Nie mogę znaleźć kategorii ticketów. Skontaktuj się z administracją.", ephemeral=True)
         return
 
     channel_name = f"ticket-{nazwa}".lower().replace(" ", "-")
@@ -209,21 +252,11 @@ async def ticket(
             reason=f"Ticket utworzony przez {interaction.user} ({interaction.user.id})"
         )
     except Exception as e:
-        await interaction.followup.send(
-            f"Wystąpił błąd przy tworzeniu kanału: `{e}`",
-            ephemeral=True
-        )
+        await interaction.followup.send(f"Wystąpił błąd przy tworzeniu kanału: `{e}`", ephemeral=True)
         return
 
-    await interaction.followup.send(
-        f"Utworzono kanał {channel.mention} dla {nazwa}.",
-        ephemeral=True
-    )
-
-    await channel.send(
-        f"Witaj, {interaction.user.mention}! Opisz swój problem, "
-        f"a administracja wkrótce się tobą zajmie."
-    )
+    await interaction.followup.send(f"Utworzono kanał {channel.mention} dla {nazwa}.", ephemeral=True)
+    await channel.send(f"Witaj, {interaction.user.mention}! Opisz swój problem, a administracja wkrótce się tobą zajmie.")
 
 # --------------------------------------------------
 # SLASH: /aplikuj – kanał podanie-nazwa + 10 pytań
@@ -235,23 +268,16 @@ async def aplikuj(
     interaction: discord.Interaction,
     nazwa: str
 ):
-    # Defer, żeby uniknąć timeoutu
     await interaction.response.defer(ephemeral=True)
 
     guild = interaction.guild
     if guild is None:
-        await interaction.followup.send(
-            "Ta komenda może być używana tylko na serwerze.",
-            ephemeral=True
-        )
+        await interaction.followup.send("Ta komenda może być używana tylko na serwerze.", ephemeral=True)
         return
 
     category = guild.get_channel(CATEGORY_ID)
     if category is None or not isinstance(category, discord.CategoryChannel):
-        await interaction.followup.send(
-            "Nie mogę znaleźć kategorii podań SOP. Skontaktuj się z administracją.",
-            ephemeral=True
-        )
+        await interaction.followup.send("Nie mogę znaleźć kategorii podań SOP. Skontaktuj się z administracją.", ephemeral=True)
         return
 
     channel_name = f"podanie-{nazwa}".lower().replace(" ", "-")
@@ -272,10 +298,7 @@ async def aplikuj(
             reason=f"Podanie SOP utworzone przez {interaction.user} ({interaction.user.id})"
         )
     except Exception as e:
-        await interaction.followup.send(
-            f"Wystąpił błąd przy tworzeniu kanału z podaniem: `{e}`",
-            ephemeral=True
-        )
+        await interaction.followup.send(f"Wystąpił błąd przy tworzeniu kanału z podaniem: `{e}`", ephemeral=True)
         return
 
     pytania = [
@@ -288,8 +311,7 @@ async def aplikuj(
         "7. Opisz krótko swoją znajomość regulaminu frakcji SOP.",
         "8. Jak reagujesz na stresujące sytuacje podczas akcji RP?",
         "9. Opisz przykładową akcję RP, w której SOP bierze udział.",
-        "10. Czy posiadasz sprawny mikrofon i możliwość częstej gry? "
-        "W jakich godzinach jesteś zwykle dostępny?"
+        "10. Czy posiadasz sprawny mikrofon i możliwość częstej gry? W jakich godzinach jesteś zwykle dostępny?"
     ]
 
     embed = discord.Embed(
@@ -301,16 +323,12 @@ async def aplikuj(
         color=discord.Color.dark_gold()
     )
 
-    for q in pytania:
+    for q in pytanya:
         embed.add_field(name="\u200b", value=q, inline=False)
 
     embed.set_footer(text=f"Wysłane przez: {interaction.user}")
 
-    await interaction.followup.send(
-        f"Utworzono kanał {channel.mention} dla twojego podania do SOP.",
-        ephemeral=True
-    )
-
+    await interaction.followup.send(f"Utworzono kanał {channel.mention} dla twojego podania do SOP.", ephemeral=True)
     await channel.send(content=interaction.user.mention, embed=embed)
 
 # --------------------------------------------------
