@@ -15,9 +15,9 @@ from werkzeug.serving import make_server
 # KONFIGURACJA
 # --------------------------------------------------
 
-GUILD_ID = 1516847056210366645          # ID serwera (Venus RP – wstaw swój, jeśli inny)
+GUILD_ID = 1516847056210366645          # ID serwera (Venus RP)
 CATEGORY_ID = 1516847056210366645       # ID kategorii dla ticket/podanie
-REQUIRED_ROLE_ID = 1516825582002765894  # ID roli wymaganej do !ping
+REQUIRED_ROLE_ID = 1516825582002765894  # ID roli wymaganej do !ping oraz /obowiazki
 
 TOKEN = os.getenv("TOKEN")
 RENDER_EXTERNAL_URL = os.getenv("RENDER_EXTERNAL_URL")
@@ -86,26 +86,23 @@ class FlaskServerThread(threading.Thread):
         self.srv.shutdown()
 
 # --------------------------------------------------
-# WIDOKI I PRZYCISKI (UI) DLACZEGO /obowiazki
+# WIDOKI I PRZYCISKI (UI) DLA /obowiazki
 # --------------------------------------------------
 
 class ObowiazkiView(discord.ui.View):
     def __init__(self):
-        # timeout=None sprawia, że przyciski będą działać "wiecznie" (tzw. persistent view),
-        # pod warunkiem, że zarejestrujesz ten widok w on_ready (dodane poniżej).
+        # timeout=None + custom_id sprawiają, że przyciski działają permanentnie (po restarcie bota)
         super().__init__(timeout=None)
 
     @discord.ui.button(label="Raport", style=discord.ButtonStyle.primary, custom_id="button_raport")
     async def raport_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        # Tutaj możesz wstawić kod np. otwierający Modal (formularz) lub tworzący nowy kanał
         await interaction.response.send_message(
-            "Wybrano opcję: **Raport**. Tutaj możesz rozbudować akcję (np. wywołać formularz).", 
+            "Wybrano opcję: **Raport**. Tutaj możesz rozbudować akcję (np. wywołać formularz/Modal).", 
             ephemeral=True
         )
 
     @discord.ui.button(label="Incydent", style=discord.ButtonStyle.danger, custom_id="button_incydent")
     async def incydent_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        # Tutaj analogicznie akcja dla zgłoszenia incydentu
         await interaction.response.send_message(
             "Wybrano opcję: **Incydent**. Tutaj możesz rozbudować akcję.", 
             ephemeral=True
@@ -130,7 +127,7 @@ class VenusSOPBot(commands.Bot):
         self.flask_thread = None
 
     async def setup_hook(self):
-        # Rejestracja widoku jako trwały (persistent), dzięki czemu przyciski działają po restarcie bota
+        # Rejestracja trwałego widoku przed synchronizacją komend
         self.add_view(ObowiazkiView())
 
         try:
@@ -183,13 +180,11 @@ async def ping(ctx: commands.Context):
     await ctx.reply("Pong! Bot działa poprawnie.")
 
 # --------------------------------------------------
-# SLASH: /obowiazki – wysyła panel z przyciskami
+# SLASH: /obowiazki – panel z przyciskami Raport / Incydent
 # --------------------------------------------------
 
 @bot.tree.command(name="obowiazki", description="Wysyła panel zarządzania obowiązkami SOP z przyciskami.")
 async def obowiazki(interaction: discord.Interaction):
-    # Sprawdzamy uprawnienia użytkownika (np. czy ma rolę administracyjną / wymaganą rola),
-    # aby zwykli gracze nie spamowali tym panelem.
     role = interaction.guild.get_role(REQUIRED_ROLE_ID)
     if role not in interaction.user.roles:
         await interaction.response.send_message(
@@ -202,14 +197,13 @@ async def obowiazki(interaction: discord.Interaction):
         title="Panel Obowiązków Służbowych – SOP",
         description=(
             "Wybierz odpowiednią opcję poniżej, aby zgłosić swoje działania:\n\n"
-            "**📝 Raport** – Kliknij, aby złożyć codzienny/tygodniowy raport ze służby.\n"
+            "**📝 Raport** – Kliknij, aby złożyć raport ze służby.\n"
             "**🚨 Incydent** – Kliknij, aby zgłosić nagłe zdarzenie lub naruszenie."
         ),
         color=discord.Color.blue()
     )
     embed.set_footer(text="Venus SOP • System Zarządzania Obowiązkami")
 
-    # Wysyłamy wiadomość na kanał (nie jako ephemeral, aby wszyscy widzieli panel)
     await interaction.response.send_message(embed=embed, view=ObowiazkiView())
 
 # --------------------------------------------------
@@ -306,7 +300,7 @@ async def aplikuj(
         "2. Od jak dawna grasz na Venus RP?",
         "3. Czy miałeś już doświadczenie w frakcjach porządkowych? Jeśli tak – jakich?",
         "4. Dlaczego chcesz dołączyć do frakcji SOP?",
-        "5. Jakie są twoje najmocniejsze strony przydatne w SOP?",
+        "5. Jakie są tuoi najmocniejsze strony przydatne w SOP?",
         "6. Jakie są twoje słabe strony, nad którymi chcesz pracować?",
         "7. Opisz krótko swoją znajomość regulaminu frakcji SOP.",
         "8. Jak reagujesz na stresujące sytuacje podczas akcji RP?",
@@ -323,7 +317,7 @@ async def aplikuj(
         color=discord.Color.dark_gold()
     )
 
-    for q in pytanya:
+    for q in pytania:
         embed.add_field(name="\u200b", value=q, inline=False)
 
     embed.set_footer(text=f"Wysłane przez: {interaction.user}")
