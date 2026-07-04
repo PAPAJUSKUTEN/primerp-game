@@ -3,40 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RP Panel Kar</title>
+  <title>RP | System Kar</title>
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:#121824;
-      --panel2:#171f2d;
+      --bg:#090d12;
+      --panel:#111824;
+      --panel2:#161f2e;
+      --line:rgba(255,255,255,.08);
       --text:#e8eef7;
-      --muted:#9aa7b8;
+      --muted:#97a6bb;
       --accent:#ff8a00;
       --accent2:#ffb347;
-      --line:rgba(255,255,255,.08);
       --good:#43d17a;
       --danger:#ff5c7a;
+      --shadow:0 16px 45px rgba(0,0,0,.28);
+      --r:18px;
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:Arial, Helvetica, sans-serif;
+      font-family:Inter, Arial, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(255,138,0,.16), transparent 30%),
-        linear-gradient(180deg, #0b0f14 0%, #0e131b 100%);
+        radial-gradient(circle at top, rgba(255,138,0,.14), transparent 28%),
+        linear-gradient(180deg, #090d12 0%, #0d121a 100%);
       color:var(--text);
       min-height:100vh;
     }
 
-    .wrap{
+    .app{
       display:flex;
       min-height:100vh;
     }
 
     .sidebar{
-      width:250px;
-      background:rgba(18,24,36,.95);
+      width:280px;
+      background:rgba(17,24,36,.96);
       border-right:1px solid var(--line);
       padding:24px 18px;
       position:sticky;
@@ -44,41 +46,42 @@
       height:100vh;
     }
 
-    .logo{
-      font-size:22px;
+    .brand{
+      font-size:24px;
       font-weight:800;
       color:var(--accent);
-      margin-bottom:6px;
+      margin-bottom:8px;
+      letter-spacing:.4px;
     }
 
-    .sub{
+    .brand-sub{
       color:var(--muted);
       font-size:13px;
-      margin-bottom:24px;
-      line-height:1.4;
+      line-height:1.5;
+      margin-bottom:22px;
     }
 
-    .navbtn{
-      width:100%;
-      padding:12px 14px;
-      margin-bottom:10px;
-      border:none;
-      border-radius:12px;
+    .sidecard{
       background:var(--panel2);
-      color:var(--text);
-      text-align:left;
-      cursor:pointer;
-      transition:.2s;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:14px;
+    }
+
+    .sidecard h3{
+      margin:0 0 8px 0;
       font-size:14px;
     }
 
-    .navbtn:hover,
-    .navbtn.active{
-      background:linear-gradient(90deg, rgba(255,138,0,.25), rgba(255,138,0,.08));
-      border:1px solid rgba(255,138,0,.35);
+    .sidecard p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
     }
 
-    .main{
+    .content{
       flex:1;
       padding:28px;
     }
@@ -88,26 +91,27 @@
       justify-content:space-between;
       align-items:center;
       gap:16px;
-      margin-bottom:24px;
+      margin-bottom:20px;
       padding:18px 20px;
-      background:rgba(18,24,36,.85);
+      background:rgba(17,24,36,.88);
       border:1px solid var(--line);
       border-radius:18px;
+      box-shadow:var(--shadow);
       backdrop-filter:blur(10px);
     }
 
-    .title h1{
+    .topbar h1{
       margin:0 0 6px 0;
       font-size:28px;
     }
 
-    .title p{
+    .topbar p{
       margin:0;
       color:var(--muted);
       font-size:14px;
     }
 
-    .badge{
+    .status{
       padding:10px 14px;
       border-radius:999px;
       background:rgba(67,209,122,.12);
@@ -119,16 +123,16 @@
 
     .grid{
       display:grid;
-      grid-template-columns:1.1fr .9fr;
+      grid-template-columns:1.05fr .95fr;
       gap:20px;
     }
 
     .card{
-      background:rgba(18,24,36,.9);
+      background:rgba(17,24,36,.92);
       border:1px solid var(--line);
       border-radius:18px;
       padding:20px;
-      box-shadow:0 12px 40px rgba(0,0,0,.25);
+      box-shadow:var(--shadow);
     }
 
     .card h2{
@@ -136,7 +140,7 @@
       font-size:18px;
     }
 
-    .form{
+    .form-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:14px;
@@ -148,9 +152,7 @@
       gap:8px;
     }
 
-    .field.full{
-      grid-column:1 / -1;
-    }
+    .full{grid-column:1/-1}
 
     label{
       font-size:13px;
@@ -162,35 +164,105 @@
       padding:12px 14px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.08);
-      background:#0f1520;
+      background:#0e141f;
       color:var(--text);
       outline:none;
       font-size:14px;
     }
 
     textarea{
-      min-height:110px;
+      min-height:88px;
       resize:vertical;
     }
 
     input:focus, select:focus, textarea:focus{
-      border-color:rgba(255,138,0,.5);
+      border-color:rgba(255,138,0,.55);
       box-shadow:0 0 0 3px rgba(255,138,0,.12);
+    }
+
+    .crime-list{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      max-height:520px;
+      overflow:auto;
+      padding-right:4px;
+    }
+
+    .crime{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:12px 12px;
+      border-radius:14px;
+      background:var(--panel2);
+      border:1px solid var(--line);
+      transition:.18s;
+    }
+
+    .crime:hover{
+      border-color:rgba(255,138,0,.25);
+      transform:translateY(-1px);
+    }
+
+    .crime input{
+      width:18px;
+      height:18px;
+      margin-top:2px;
+      accent-color:var(--accent);
+      flex:0 0 auto;
+    }
+
+    .crime-title{
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .crime-title span{
+      color:#ffd36a;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .points-box{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .mini{
+      padding:15px;
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:16px;
+    }
+
+    .mini .num{
+      font-size:26px;
+      font-weight:800;
+      color:var(--accent);
+      margin-bottom:6px;
+    }
+
+    .mini .txt{
+      color:var(--muted);
+      font-size:13px;
     }
 
     .actions{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
-      margin-top:6px;
+      margin-top:14px;
     }
 
     .btn{
       border:none;
       padding:12px 16px;
       border-radius:12px;
-      cursor:pointer;
       font-weight:700;
+      cursor:pointer;
       transition:.2s;
       font-size:14px;
     }
@@ -206,42 +278,14 @@
       border:1px solid var(--line);
     }
 
-    .btn:hover{
-      transform:translateY(-1px);
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin-bottom:18px;
-    }
-
-    .stat{
-      padding:16px;
-      border-radius:16px;
-      background:var(--panel2);
-      border:1px solid var(--line);
-    }
-
-    .stat .num{
-      font-size:26px;
-      font-weight:800;
-      color:var(--accent);
-      margin-bottom:6px;
-    }
-
-    .stat .txt{
-      color:var(--muted);
-      font-size:13px;
-    }
+    .btn:hover{transform:translateY(-1px)}
 
     table{
       width:100%;
       border-collapse:collapse;
+      margin-top:8px;
       overflow:hidden;
       border-radius:14px;
-      margin-top:8px;
     }
 
     th, td{
@@ -254,7 +298,6 @@
 
     th{
       color:var(--muted);
-      font-weight:600;
       font-size:12px;
       text-transform:uppercase;
       letter-spacing:.5px;
@@ -264,27 +307,63 @@
       background:rgba(255,255,255,.02);
     }
 
-    .points{
+    .pts{
       color:#ffd36a;
-      font-weight:700;
+      font-weight:800;
     }
 
     .empty{
       color:var(--muted);
+      padding:16px 0 6px;
       font-size:14px;
-      padding:18px 0 4px;
     }
 
-    .tabs-content{
+    .tabs{
       display:none;
     }
 
-    .tabs-content.active{
+    .tabs.active{
       display:block;
     }
 
+    .history-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .history-item{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .history-head{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
+    }
+
+    .history-name{
+      font-weight:800;
+      color:var(--text);
+    }
+
+    .history-points{
+      color:#ffd36a;
+      font-weight:800;
+    }
+
+    .history-meta{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
     @media (max-width: 980px){
-      .wrap{flex-direction:column}
+      .app{flex-direction:column}
       .sidebar{
         width:100%;
         height:auto;
@@ -293,210 +372,275 @@
       .grid{
         grid-template-columns:1fr;
       }
-      .form{
-        grid-template-columns:1fr;
-      }
+    }
+
+    @media (max-width: 700px){
+      .content{padding:16px}
+      .topbar{flex-direction:column;align-items:flex-start}
+      .form-grid{grid-template-columns:1fr}
+      .points-box{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="app">
     <aside class="sidebar">
-      <div class="logo">RP KARANIE</div>
-      <div class="sub">Panel do wpisywania kar, powodów i punktów karnych dla systemu RP.</div>
+      <div class="brand">RP KARANIE</div>
+      <div class="brand-sub">Panel do wpisywania kar, danych osoby i punktów za wybrane przewinienia.</div>
 
-      <button class="navbtn active" onclick="showTab('kara', this)">Dodaj karę</button>
-      <button class="navbtn" onclick="showTab('historia', this)">Historia kar</button>
-      <button class="navbtn" onclick="showTab('statystyki', this)">Statystyki</button>
+      <div class="sidecard">
+        <h3>Tryb pracy</h3>
+        <p>Wybierz przewinienia, a system sam policzy sumę punktów.</p>
+      </div>
+
+      <div class="sidecard">
+        <h3>Wskazówka</h3>
+        <p>Możesz później dodać zapis do localStorage albo eksport do pliku.</p>
+      </div>
     </aside>
 
-    <main class="main">
+    <main class="content">
       <div class="topbar">
-        <div class="title">
+        <div>
           <h1>System kar RP</h1>
-          <p>Wpisuj kogo karasz, za co i ile punktów otrzymuje.</p>
+          <p>Nick, wiek, narodowość, przewinienia i suma punktów w jednym panelu.</p>
         </div>
-        <div class="badge">Status: aktywny</div>
+        <div class="status">Status: aktywny</div>
       </div>
 
-      <div id="kara" class="tabs-content active">
-        <div class="grid">
-          <section class="card">
-            <h2>Dodaj nową karę</h2>
-            <div class="form">
-              <div class="field">
-                <label for="nick">Nick osoby karanej</label>
-                <input id="nick" type="text" placeholder="np. Jan Kowalski" />
-              </div>
-
-              <div class="field">
-                <label for="punkty">Punkty karne</label>
-                <input id="punkty" type="number" min="1" max="100" value="5" />
-              </div>
-
-              <div class="field full">
-                <label for="powod">Za co kara</label>
-                <textarea id="powod" placeholder="np. nieprzestrzeganie regulaminu, brak kultury, trolling..."></textarea>
-              </div>
-
-              <div class="field">
-                <label for="typ">Typ kary</label>
-                <select id="typ">
-                  <option>Upomnienie</option>
-                  <option>Kara punktowa</option>
-                  <option>Ostrzeżenie</option>
-                  <option>Zawieszenie</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="dodal">Dodał</label>
-                <input id="dodal" type="text" placeholder="np. Admin / Moderator" />
-              </div>
-
-              <div class="field full">
-                <div class="actions">
-                  <button class="btn primary" onclick="dodajKare()">Dodaj karę</button>
-                  <button class="btn secondary" onclick="wyczyscForm()">Wyczyść</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section class="card">
-            <h2>Podgląd systemu</h2>
-            <div class="stats">
-              <div class="stat">
-                <div class="num" id="liczbaKar">0</div>
-                <div class="txt">Dodane kary</div>
-              </div>
-              <div class="stat">
-                <div class="num" id="sumaPunktow">0</div>
-                <div class="txt">Suma punktów</div>
-              </div>
-            </div>
-
-            <div class="empty">Po dodaniu kary pojawi się ona w historii obok.</div>
-          </section>
-        </div>
-      </div>
-
-      <div id="historia" class="tabs-content">
+      <div class="grid">
         <section class="card">
-          <h2>Historia kar</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Nick</th>
-                <th>Powód</th>
-                <th>Punkty</th>
-                <th>Typ</th>
-                <th>Dodał</th>
-              </tr>
-            </thead>
-            <tbody id="tabelaKar">
-              <tr>
-                <td colspan="5" class="empty">Brak wpisów. Dodaj pierwszą karę w zakładce „Dodaj karę”.</td>
-              </tr>
-            </tbody>
-          </table>
+          <h2>Dane osoby</h2>
+          <div class="form-grid">
+            <div class="field">
+              <label for="nick">Nick osoby</label>
+              <input id="nick" type="text" placeholder="np. Jan Kowalski" />
+            </div>
+            <div class="field">
+              <label for="wiek">Wiek</label>
+              <input id="wiek" type="number" min="1" max="120" placeholder="np. 19" />
+            </div>
+            <div class="field full">
+              <label for="narodowosc">Narodowość</label>
+              <input id="narodowosc" type="text" placeholder="np. Polska" />
+            </div>
+            <div class="field full">
+              <label for="uwagi">Dodatkowe uwagi</label>
+              <textarea id="uwagi" placeholder="np. świadek zdarzenia, pojazd, miejsce, inne informacje..."></textarea>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" onclick="dodajWpis()">Dodaj wpis</button>
+            <button class="btn secondary" onclick="wyczysc()">Wyczyść</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Przewinienia</h2>
+          <div class="crime-list" id="crimeList"></div>
+
+          <div class="points-box">
+            <div class="mini">
+              <div class="num" id="sumPoints">0</div>
+              <div class="txt">Suma punktów</div>
+            </div>
+            <div class="mini">
+              <div class="num" id="selectedCount">0</div>
+              <div class="txt">Zaznaczone przewinienia</div>
+            </div>
+          </div>
         </section>
       </div>
 
-      <div id="statystyki" class="tabs-content">
+      <div style="height:20px"></div>
+
+      <div class="grid">
         <section class="card">
-          <h2>Statystyki</h2>
-          <div class="stats">
-            <div class="stat">
-              <div class="num" id="statNick">—</div>
-              <div class="txt">Ostatnio ukarany</div>
-            </div>
-            <div class="stat">
-              <div class="num" id="statMax">0</div>
-              <div class="txt">Najwyższa kara punktowa</div>
-            </div>
+          <h2>Historia wpisów</h2>
+          <div id="history" class="history-list">
+            <div class="empty">Brak wpisów. Dodaj pierwszą karę, aby zobaczyć historię.</div>
           </div>
-          <div class="empty">Tutaj możesz później dodać wykresy, rankingi i eksport danych do pliku.</div>
+        </section>
+
+        <section class="card">
+          <h2>Podsumowanie</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Pole</th>
+                <th>Wartość</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ostatni nick</td>
+                <td id="lastNick">—</td>
+              </tr>
+              <tr>
+                <td>Ostatni wiek</td>
+                <td id="lastAge">—</td>
+              </tr>
+              <tr>
+                <td>Ostatnia narodowość</td>
+                <td id="lastNat">—</td>
+              </tr>
+              <tr>
+                <td>Ostatnia suma punktów</td>
+                <td class="pts" id="lastSum">0</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
       </div>
     </main>
   </div>
 
   <script>
-    const kary = [];
+    const crimes = [
+      {name:'Celowe potrącenie funkcjonariusza', points:10000},
+      {name:'Celowe utrudnianie działań Policji, PSP lub JRM', points:10000},
+      {name:'Nielegalny wjazd na teren zamknięty', points:2000},
+      {name:'Zakłócanie porządku publicznego', points:2000},
+      {name:'Zaśmiecanie miasta', points:1000},
+      {name:'Spowodowanie kolizji', points:2000},
+      {name:'Spowodowanie wypadku', points:5000},
+      {name:'Porzucenie pojazdu na drodze', points:1000},
+      {name:'Blokowanie ruchu drogowego', points:2000},
+      {name:'Jazda po chodniku', points:2500},
+      {name:'Celowe taranowanie pojazdów', points:5000},
+      {name:'Niszczenie mienia publicznego', points:5000},
+      {name:'Niezastosowanie się do poleceń Policji', points:5000},
+      {name:'Niezatrzymanie się do kontroli', points:10000},
+      {name:'Ucieczka przed Policją', points:7500},
+      {name:'Ucieczka z kontroli drogowej', points:5000},
+      {name:'Obrażanie funkcjonariusza', points:2000},
+      {name:'Naruszenie nietykalności funkcjonariusza', points:5000},
+      {name:'Napaść na funkcjonariusza Policji, PSP, JRM lub Wojska', points:10000},
+      {name:'Utrudnianie pracy służb', points:5000},
+      {name:'Blokowanie wyjazdu PSP/JRM', points:3000},
+      {name:'Utrudnianie akcji ratowniczej', points:5000},
+      {name:'Fałszywe wezwanie służb', points:7500},
+      {name:'Podszywanie się pod funkcjonariusza', points:10000},
+      {name:'Przekroczenie prędkości 10–20 km/h', points:1000},
+      {name:'Przekroczenie prędkości 21–40 km/h', points:2000},
+      {name:'Przekroczenie prędkości powyżej 40 km/h', points:3000},
+      {name:'Przejazd na czerwonym świetle', points:2000},
+      {name:'Niezatrzymanie się na znaku STOP', points:1500},
+      {name:'Nieustąpienie pierwszeństwa', points:2000},
+      {name:'Wyprzedzanie na przejściu dla pieszych', points:3000},
+      {name:'Wyprzedzanie na skrzyżowaniu', points:2500},
+      {name:'Jazda bez świateł', points:1000},
+      {name:'Korzystanie z telefonu podczas jazdy', points:1500},
+      {name:'Jazda pod prąd', points:3000},
+      {name:'Nieprzepuszczenie pojazdu uprzywilejowanego', points:5000},
+      {name:'Nieprawidłowe parkowanie', points:1000},
+      {name:'Parkowanie na miejscu dla osób z niepełnosprawnościami', points:2000},
+      {name:'Parkowanie na przystanku', points:2500},
+      {name:'Parkowanie przed remizą, szpitalem lub komisariatem', points:3000}
+    ];
 
-    function showTab(id, btn){
-      document.querySelectorAll('.tabs-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.navbtn').forEach(b => b.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      btn.classList.add('active');
+    const selected = [];
+    const history = [];
+
+    const crimeList = document.getElementById('crimeList');
+
+    crimes.forEach((c, i) => {
+      const item = document.createElement('label');
+      item.className = 'crime';
+      item.innerHTML = `
+        <input type="checkbox" value="${i}" onchange="updateSum()" />
+        <div class="crime-title">${c.name} <span>${c.points.toLocaleString('pl-PL')} $</span></div>
+      `;
+      crimeList.appendChild(item);
+    });
+
+    function updateSum(){
+      const checks = [...document.querySelectorAll('#crimeList input[type="checkbox"]')];
+      const active = checks
+        .map((cb, i) => cb.checked ? crimes[i] : null)
+        .filter(Boolean);
+
+      document.getElementById('selectedCount').textContent = active.length;
+      document.getElementById('sumPoints').textContent = active.reduce((a, b) => a + b.points, 0).toLocaleString('pl-PL');
     }
 
-    function dodajKare(){
+    function dodajWpis(){
       const nick = document.getElementById('nick').value.trim();
-      const powod = document.getElementById('powod').value.trim();
-      const punkty = parseInt(document.getElementById('punkty').value) || 0;
-      const typ = document.getElementById('typ').value;
-      const dodal = document.getElementById('dodal').value.trim();
+      const wiek = document.getElementById('wiek').value.trim();
+      const narodowosc = document.getElementById('narodowosc').value.trim();
+      const uwagi = document.getElementById('uwagi').value.trim();
 
-      if(!nick || !powod || !dodal || punkty <= 0){
-        alert('Uzupełnij wszystkie pola poprawnie.');
+      const checks = [...document.querySelectorAll('#crimeList input[type="checkbox"]')];
+      const wybrane = checks
+        .map((cb, i) => cb.checked ? crimes[i] : null)
+        .filter(Boolean);
+
+      if(!nick || !wiek || !narodowosc || wybrane.length === 0){
+        alert('Uzupełnij nick, wiek, narodowość i zaznacz przynajmniej jedno przewinienie.');
         return;
       }
 
-      const wpis = { nick, powod, punkty, typ, dodal };
-      kary.unshift(wpis);
-      renderTabela();
-      renderStatystyki();
-      wyczyscForm(true);
-      showTab('historia', document.querySelectorAll('.navbtn')[1]);
+      const suma = wybrane.reduce((a, b) => a + b.points, 0);
+      const wpis = {
+        nick,
+        wiek,
+        narodowosc,
+        uwagi,
+        suma,
+        przewinienia: wybrane.map(x => `${x.name} (${x.points.toLocaleString('pl-PL')} $)`).join(', ')
+      };
+
+      history.unshift(wpis);
+      renderHistory();
+
+      document.getElementById('lastNick').textContent = nick;
+      document.getElementById('lastAge').textContent = wiek;
+      document.getElementById('lastNat').textContent = narodowosc;
+      document.getElementById('lastSum').textContent = suma.toLocaleString('pl-PL');
+
+      alert('Wpis został dodany.');
     }
 
-    function renderTabela(){
-      const tbody = document.getElementById('tabelaKar');
-      if(kary.length === 0){
-        tbody.innerHTML = '<tr><td colspan="5" class="empty">Brak wpisów. Dodaj pierwszą karę w zakładce „Dodaj karę”.</td></tr>';
+    function renderHistory(){
+      const box = document.getElementById('history');
+      if(history.length === 0){
+        box.innerHTML = '<div class="empty">Brak wpisów. Dodaj pierwszą karę, aby zobaczyć historię.</div>';
         return;
       }
 
-      tbody.innerHTML = kary.map(k => `
-        <tr>
-          <td>${escapeHtml(k.nick)}</td>
-          <td>${escapeHtml(k.powod)}</td>
-          <td class="points">${k.punkty}</td>
-          <td>${escapeHtml(k.typ)}</td>
-          <td>${escapeHtml(k.dodal)}</td>
-        </tr>
+      box.innerHTML = history.map(h => `
+        <div class="history-item">
+          <div class="history-head">
+            <div class="history-name">${escapeHtml(h.nick)} | ${escapeHtml(h.wiek)} lat | ${escapeHtml(h.narodowosc)}</div>
+            <div class="history-points">${h.suma.toLocaleString('pl-PL')} $</div>
+          </div>
+          <div class="history-meta"><b>Przewinienia:</b> ${escapeHtml(h.przewinienia)}</div>
+          ${h.uwagi ? `<div class="history-meta" style="margin-top:8px;"><b>Uwagi:</b> ${escapeHtml(h.uwagi)}</div>` : ''}
+        </div>
       `).join('');
     }
 
-    function renderStatystyki(){
-      document.getElementById('liczbaKar').textContent = kary.length;
-      document.getElementById('sumaPunktow').textContent = kary.reduce((a, b) => a + b.punkty, 0);
-      document.getElementById('statNick').textContent = kary[0] ? kary[0].nick : '—';
-      document.getElementById('statMax').textContent = kary.length ? Math.max(...kary.map(k => k.punkty)) : 0;
-    }
-
-    function wyczyscForm(silent){
+    function wyczysc(){
       document.getElementById('nick').value = '';
-      document.getElementById('powod').value = '';
-      document.getElementById('punkty').value = 5;
-      document.getElementById('typ').value = 'Upomnienie';
-      document.getElementById('dodal').value = '';
-      if(!silent) alert('Formularz wyczyszczony.');
+      document.getElementById('wiek').value = '';
+      document.getElementById('narodowosc').value = '';
+      document.getElementById('uwagi').value = '';
+      document.querySelectorAll('#crimeList input[type="checkbox"]').forEach(cb => cb.checked = false);
+      updateSum();
     }
 
     function escapeHtml(text){
-      return text
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
+      return String(text)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
     }
 
-    renderTabela();
-    renderStatystyki();
+    updateSum();
+    renderHistory();
   </script>
 </body>
 </html>
