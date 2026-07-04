@@ -490,7 +490,7 @@
   </div>
 
   <script>
-    const WEBHOOK_URL = "WSTAW_TUTAJ_WEBHOOK";
+    const WEBHOOK_URL = "TU_WKLEJ_WEBHOOK";
 
     const crimes = [
       {name:'Celowe potrącenie funkcjonariusza', points:10000},
@@ -610,9 +610,7 @@
       }
 
       const suma = wybrane.reduce((a, b) => a + b.points, 0);
-      const opis = wybrane
-        .map(x => `• ${x.name} — ${x.points.toLocaleString('pl-PL')} $`)
-        .join('\n');
+      const opis = wybrane.map(x => `• ${x.name} — ${x.points.toLocaleString('pl-PL')} $`).join('\n');
 
       const payload = {
         username: "RP System Kar",
