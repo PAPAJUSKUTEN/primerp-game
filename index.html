@@ -1,688 +1,141 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RP | System Kar</title>
-  <style>
-    :root{
-      --bg:#090d12;
-      --panel:#111824;
-      --panel2:#161f2e;
-      --line:rgba(255,255,255,.08);
-      --text:#e8eef7;
-      --muted:#97a6bb;
-      --accent:#ff8a00;
-      --accent2:#ffb347;
-      --good:#43d17a;
-      --danger:#ff5c7a;
-      --shadow:0 16px 45px rgba(0,0,0,.28);
-      --r:18px;
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(255,138,0,.14), transparent 28%),
-        linear-gradient(180deg, #090d12 0%, #0d121a 100%);
-      color:var(--text);
-      min-height:100vh;
-    }
-
-    .app{
-      display:flex;
-      min-height:100vh;
-    }
-
-    .sidebar{
-      width:280px;
-      background:rgba(17,24,36,.96);
-      border-right:1px solid var(--line);
-      padding:24px 18px;
-      position:sticky;
-      top:0;
-      height:100vh;
-    }
-
-    .brand{
-      font-size:24px;
-      font-weight:800;
-      color:var(--accent);
-      margin-bottom:8px;
-      letter-spacing:.4px;
-    }
-
-    .brand-sub{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-      margin-bottom:22px;
-    }
-
-    .sidecard{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
-      margin-bottom:14px;
-    }
-
-    .sidecard h3{
-      margin:0 0 8px 0;
-      font-size:14px;
-    }
-
-    .sidecard p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-    }
-
-    .content{
-      flex:1;
-      padding:28px;
-    }
-
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      margin-bottom:20px;
-      padding:18px 20px;
-      background:rgba(17,24,36,.88);
-      border:1px solid var(--line);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(10px);
-    }
-
-    .topbar h1{
-      margin:0 0 6px 0;
-      font-size:28px;
-    }
-
-    .topbar p{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .status{
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(67,209,122,.12);
-      color:var(--good);
-      border:1px solid rgba(67,209,122,.28);
-      font-size:13px;
-      white-space:nowrap;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:20px;
-    }
-
-    .card{
-      background:rgba(17,24,36,.92);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:20px;
-      box-shadow:var(--shadow);
-    }
-
-    .card h2{
-      margin:0 0 16px 0;
-      font-size:18px;
-    }
-
-    .form-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-
-    .full{grid-column:1/-1}
-
-    label{
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    input, select, textarea{
-      width:100%;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.08);
-      background:#0e141f;
-      color:var(--text);
-      outline:none;
-      font-size:14px;
-    }
-
-    textarea{
-      min-height:88px;
-      resize:vertical;
-    }
-
-    input:focus, select:focus, textarea:focus{
-      border-color:rgba(255,138,0,.55);
-      box-shadow:0 0 0 3px rgba(255,138,0,.12);
-    }
-
-    .crime-list{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-      max-height:520px;
-      overflow:auto;
-      padding-right:4px;
-    }
-
-    .crime{
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-      padding:12px 12px;
-      border-radius:14px;
-      background:var(--panel2);
-      border:1px solid var(--line);
-      transition:.18s;
-    }
-
-    .crime:hover{
-      border-color:rgba(255,138,0,.25);
-      transform:translateY(-1px);
-    }
-
-    .crime input{
-      width:18px;
-      height:18px;
-      margin-top:2px;
-      accent-color:var(--accent);
-      flex:0 0 auto;
-    }
-
-    .crime-title{
-      font-size:14px;
-      line-height:1.45;
-    }
-
-    .crime-title span{
-      color:#ffd36a;
-      font-weight:700;
-      white-space:nowrap;
-    }
-
-    .points-box{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin-top:14px;
-    }
-
-    .mini{
-      padding:15px;
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:16px;
-    }
-
-    .mini .num{
-      font-size:26px;
-      font-weight:800;
-      color:var(--accent);
-      margin-bottom:6px;
-    }
-
-    .mini .txt{
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .actions{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:14px;
-    }
-
-    .btn{
-      border:none;
-      padding:12px 16px;
-      border-radius:12px;
-      font-weight:700;
-      cursor:pointer;
-      transition:.2s;
-      font-size:14px;
-    }
-
-    .btn.primary{
-      background:linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#111;
-    }
-
-    .btn.secondary{
-      background:#20283a;
-      color:var(--text);
-      border:1px solid var(--line);
-    }
-
-    .btn:hover{transform:translateY(-1px)}
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:8px;
-      overflow:hidden;
-      border-radius:14px;
-    }
-
-    th, td{
-      padding:12px 10px;
-      text-align:left;
-      border-bottom:1px solid var(--line);
-      font-size:14px;
-      vertical-align:top;
-    }
-
-    th{
-      color:var(--muted);
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:.5px;
-    }
-
-    tr:hover td{
-      background:rgba(255,255,255,.02);
-    }
-
-    .pts{
-      color:#ffd36a;
-      font-weight:800;
-    }
-
-    .empty{
-      color:var(--muted);
-      padding:16px 0 6px;
-      font-size:14px;
-    }
-
-    .history-list{
-      display:grid;
-      gap:12px;
-    }
-
-    .history-item{
-      background:var(--panel2);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
-    }
-
-    .history-head{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:8px;
-    }
-
-    .history-name{
-      font-weight:800;
-      color:var(--text);
-    }
-
-    .history-points{
-      color:#ffd36a;
-      font-weight:800;
-    }
-
-    .history-meta{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-    }
-
-    @media (max-width: 980px){
-      .app{flex-direction:column}
-      .sidebar{
-        width:100%;
-        height:auto;
-        position:relative;
-      }
-      .grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width: 700px){
-      .content{padding:16px}
-      .topbar{flex-direction:column;align-items:flex-start}
-      .form-grid{grid-template-columns:1fr}
-      .points-box{grid-template-columns:1fr}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TwojaNazwa RP | Najlepszy Serwer Roleplay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#6366f1', // Indigo-500
+                        brandDark: '#4f46e5', // Indigo-600
+                        bgDark: '#0f172a', // Slate-900
+                        bgCard: '#1e293b', // Slate-800
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">RP KARANIE</div>
-      <div class="brand-sub">Panel do wpisywania kar, danych osoby i punktów za wybrane przewinienia.</div>
+<body class="bg-bgDark text-gray-200 font-sans antialiased selection:bg-brand selection:text-white flex flex-col min-h-screen">
 
-      <div class="sidecard">
-        <h3>Tryb pracy</h3>
-        <p>Wybierz przewinienia, a system sam policzy sumę punktów.</p>
-      </div>
-
-      <div class="sidecard">
-        <h3>Wskazówka</h3>
-        <p>Możesz później dodać zapis do localStorage albo eksport do pliku.</p>
-      </div>
-    </aside>
-
-    <main class="content">
-      <div class="topbar">
-        <div>
-          <h1>System kar RP</h1>
-          <p>Nick, wiek, narodowość, przewinienia i suma punktów w jednym panelu.</p>
+    <nav class="fixed w-full z-50 bg-bgDark/90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-gamepad text-brand text-2xl"></i>
+                    <span class="font-bold text-xl tracking-wider text-white">TWOJANAZWA <span class="text-brand">RP</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-brand px-3 py-2 rounded-md text-sm font-medium transition-colors">Strona Główna</a>
+                        <a href="#factions" class="hover:text-brand px-3 py-2 rounded-md text-sm font-medium transition-colors">Frakcje</a>
+                        <a href="#rules" class="hover:text-brand px-3 py-2 rounded-md text-sm font-medium transition-colors">Regulamin</a>
+                    </div>
+                </div>
+                <div>
+                    <button class="bg-brand hover:bg-brandDark text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-brand/20">
+                        <i class="fa-brands fa-discord"></i>
+                        Zaloguj
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="status">Status: aktywny</div>
-      </div>
+    </nav>
 
-      <div class="grid">
-        <section class="card">
-          <h2>Dane osoby</h2>
-          <div class="form-grid">
-            <div class="field">
-              <label for="nick">Nick osoby</label>
-              <input id="nick" type="text" placeholder="np. Jan Kowalski" />
-            </div>
-            <div class="field">
-              <label for="wiek">Wiek</label>
-              <input id="wiek" type="number" min="1" max="120" placeholder="np. 19" />
-            </div>
-            <div class="field full">
-              <label for="narodowosc">Narodowość</label>
-              <input id="narodowosc" type="text" placeholder="np. Polska" />
-            </div>
-            <div class="field full">
-              <label for="uwagi">Dodatkowe uwagi</label>
-              <textarea id="uwagi" placeholder="np. świadek zdarzenia, pojazd, miejsce, inne informacje..."></textarea>
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="btn primary" onclick="dodajWpis()">Dodaj wpis</button>
-            <button class="btn secondary" onclick="wyslijNaDiscord()">Wyślij na Discord</button>
-            <button class="btn secondary" onclick="wyczysc()">Wyczyść</button>
-          </div>
-        </section>
-
-        <section class="card">
-          <h2>Przewinienia</h2>
-          <div class="crime-list" id="crimeList"></div>
-
-          <div class="points-box">
-            <div class="mini">
-              <div class="num" id="sumPoints">0</div>
-              <div class="txt">Suma punktów</div>
-            </div>
-            <div class="mini">
-              <div class="num" id="selectedCount">0</div>
-              <div class="txt">Zaznaczone przewinienia</div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div style="height:20px"></div>
-
-      <div class="grid">
-        <section class="card">
-          <h2>Historia wpisów</h2>
-          <div id="history" class="history-list">
-            <div class="empty">Brak wpisów. Dodaj pierwszą karę, aby zobaczyć historię.</div>
-          </div>
-        </section>
-
-        <section class="card">
-          <h2>Podsumowanie</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Pole</th>
-                <th>Wartość</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Ostatni nick</td>
-                <td id="lastNick">—</td>
-              </tr>
-              <tr>
-                <td>Ostatni wiek</td>
-                <td id="lastAge">—</td>
-              </tr>
-              <tr>
-                <td>Ostatnia narodowość</td>
-                <td id="lastNat">—</td>
-              </tr>
-              <tr>
-                <td>Ostatnia suma punktów</td>
-                <td class="pts" id="lastSum">0</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    const WEBHOOK_URL = "TU_WKLEJ_WEBHOOK";
-
-    const crimes = [
-      {name:'Celowe potrącenie funkcjonariusza', points:10000},
-      {name:'Celowe utrudnianie działań Policji, PSP lub JRM', points:10000},
-      {name:'Nielegalny wjazd na teren zamknięty', points:2000},
-      {name:'Zakłócanie porządku publicznego', points:2000},
-      {name:'Zaśmiecanie miasta', points:1000},
-      {name:'Spowodowanie kolizji', points:2000},
-      {name:'Spowodowanie wypadku', points:5000},
-      {name:'Porzucenie pojazdu na drodze', points:1000},
-      {name:'Blokowanie ruchu drogowego', points:2000},
-      {name:'Jazda po chodniku', points:2500},
-      {name:'Celowe taranowanie pojazdów', points:5000},
-      {name:'Niszczenie mienia publicznego', points:5000},
-      {name:'Niezastosowanie się do poleceń Policji', points:5000},
-      {name:'Niezatrzymanie się do kontroli', points:10000},
-      {name:'Ucieczka przed Policją', points:7500},
-      {name:'Ucieczka z kontroli drogowej', points:5000},
-      {name:'Obrażanie funkcjonariusza', points:2000},
-      {name:'Naruszenie nietykalności funkcjonariusza', points:5000},
-      {name:'Napaść na funkcjonariusza Policji, PSP, JRM lub Wojska', points:10000},
-      {name:'Utrudnianie pracy służb', points:5000},
-      {name:'Blokowanie wyjazdu PSP/JRM', points:3000},
-      {name:'Utrudnianie akcji ratowniczej', points:5000},
-      {name:'Fałszywe wezwanie służb', points:7500},
-      {name:'Podszywanie się pod funkcjonariusza', points:10000},
-      {name:'Przekroczenie prędkości 10–20 km/h', points:1000},
-      {name:'Przekroczenie prędkości 21–40 km/h', points:2000},
-      {name:'Przekroczenie prędkości powyżej 40 km/h', points:3000},
-      {name:'Przejazd na czerwonym świetle', points:2000},
-      {name:'Niezatrzymanie się na znaku STOP', points:1500},
-      {name:'Nieustąpienie pierwszeństwa', points:2000},
-      {name:'Wyprzedzanie na przejściu dla pieszych', points:3000},
-      {name:'Wyprzedzanie na skrzyżowaniu', points:2500},
-      {name:'Jazda bez świateł', points:1000},
-      {name:'Korzystanie z telefonu podczas jazdy', points:1500},
-      {name:'Jazda pod prąd', points:3000},
-      {name:'Nieprzepuszczenie pojazdu uprzywilejowanego', points:5000},
-      {name:'Nieprawidłowe parkowanie', points:1000},
-      {name:'Parkowanie na miejscu dla osób z niepełnosprawnościami', points:2000},
-      {name:'Parkowanie na przystanku', points:2500},
-      {name:'Parkowanie przed remizą, szpitalem lub komisariatem', points:3000}
-    ];
-
-    const history = [];
-    const crimeList = document.getElementById('crimeList');
-
-    crimes.forEach((c, i) => {
-      const item = document.createElement('label');
-      item.className = 'crime';
-      item.innerHTML = `
-        <input type="checkbox" value="${i}" onchange="updateSum()" />
-        <div class="crime-title">${c.name} <span>${c.points.toLocaleString('pl-PL')} $</span></div>
-      `;
-      crimeList.appendChild(item);
-    });
-
-    function getSelectedCrimes(){
-      const checks = [...document.querySelectorAll('#crimeList input[type="checkbox"]')];
-      return checks.map((cb, i) => cb.checked ? crimes[i] : null).filter(Boolean);
-    }
-
-    function updateSum(){
-      const active = getSelectedCrimes();
-      document.getElementById('selectedCount').textContent = active.length;
-      document.getElementById('sumPoints').textContent = active.reduce((a, b) => a + b.points, 0).toLocaleString('pl-PL');
-    }
-
-    function dodajWpis(){
-      const nick = document.getElementById('nick').value.trim();
-      const wiek = document.getElementById('wiek').value.trim();
-      const narodowosc = document.getElementById('narodowosc').value.trim();
-      const uwagi = document.getElementById('uwagi').value.trim();
-      const wybrane = getSelectedCrimes();
-
-      if(!nick || !wiek || !narodowosc || wybrane.length === 0){
-        alert('Uzupełnij nick, wiek, narodowość i zaznacz przynajmniej jedno przewinienie.');
-        return;
-      }
-
-      const suma = wybrane.reduce((a, b) => a + b.points, 0);
-      const wpis = {
-        nick,
-        wiek,
-        narodowosc,
-        uwagi,
-        suma,
-        przewinienia: wybrane.map(x => `${x.name} (${x.points.toLocaleString('pl-PL')} $)`).join(', ')
-      };
-
-      history.unshift(wpis);
-      renderHistory();
-
-      document.getElementById('lastNick').textContent = nick;
-      document.getElementById('lastAge').textContent = wiek;
-      document.getElementById('lastNat').textContent = narodowosc;
-      document.getElementById('lastSum').textContent = suma.toLocaleString('pl-PL');
-
-      alert('Wpis został dodany.');
-    }
-
-    async function wyslijNaDiscord(){
-      if (!WEBHOOK_URL || WEBHOOK_URL === "https://discord.com/api/webhooks/1519206227719225535/T1JOXU5Dy_uFQQkEuZLKcfGsSTl0zq-8SOwg9cNnKMAbGzYFn1t3nOpCUaQgt49Y3GoP") {
-        alert('Wstaw najpierw webhook w kodzie.');
-        return;
-      }
-
-      const nick = document.getElementById('nick').value.trim();
-      const wiek = document.getElementById('wiek').value.trim();
-      const narodowosc = document.getElementById('narodowosc').value.trim();
-      const uwagi = document.getElementById('uwagi').value.trim();
-      const wybrane = getSelectedCrimes();
-
-      if(!nick || !wiek || !narodowosc || wybrane.length === 0){
-        alert('Uzupełnij nick, wiek, narodowość i zaznacz przynajmniej jedno przewinienie.');
-        return;
-      }
-
-      const suma = wybrane.reduce((a, b) => a + b.points, 0);
-      const opis = wybrane.map(x => `• ${x.name} — ${x.points.toLocaleString('pl-PL')} $`).join('\n');
-
-      const payload = {
-        username: "RP System Kar",
-        embeds: [{
-          title: "Nowa kara RP",
-          color: 16753920,
-          fields: [
-            { name: "Nick", value: nick, inline: true },
-            { name: "Wiek", value: wiek, inline: true },
-            { name: "Narodowość", value: narodowosc, inline: true },
-            { name: "Suma punktów", value: `${suma.toLocaleString('pl-PL')} $`, inline: false },
-            { name: "Przewinienia", value: opis.slice(0, 1024), inline: false },
-            { name: "Uwagi", value: (uwagi || "Brak").slice(0, 1024), inline: false }
-          ],
-          footer: { text: "System RP" },
-          timestamp: new Date().toISOString()
-        }]
-      };
-
-      try{
-        const res = await fetch(WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) alert("Wysłano na Discord.");
-        else alert("Nie udało się wysłać.");
-      }catch(e){
-        alert("Błąd wysyłania: możliwy problem z CORS albo webhookiem.");
-      }
-    }
-
-    function renderHistory(){
-      const box = document.getElementById('history');
-      if(history.length === 0){
-        box.innerHTML = '<div class="empty">Brak wpisów. Dodaj pierwszą karę, aby zobaczyć historię.</div>';
-        return;
-      }
-
-      box.innerHTML = history.map(h => `
-        <div class="history-item">
-          <div class="history-head">
-            <div class="history-name">${escapeHtml(h.nick)} | ${escapeHtml(h.wiek)} lat | ${escapeHtml(h.narodowosc)}</div>
-            <div class="history-points">${h.suma.toLocaleString('pl-PL')} $</div>
-          </div>
-          <div class="history-meta"><b>Przewinienia:</b> ${escapeHtml(h.przewinienia)}</div>
-          ${h.uwagi ? `<div class="history-meta" style="margin-top:8px;"><b>Uwagi:</b> ${escapeHtml(h.uwagi)}</div>` : ''}
+    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 px-4 text-center flex-grow flex flex-col justify-center items-center relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/20 rounded-full blur-[120px] -z-10"></div>
+        
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-lg">
+            Zbuduj swoją <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-purple-500">historię</span>
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
+            Dołącz do najbardziej zaawansowanego serwera Roleplay. Rozbudowana ekonomia, aktywne frakcje i zgrana społeczność czekają właśnie na Ciebie.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4">
+            <button class="bg-white text-bgDark px-8 py-3 rounded-lg font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                <i class="fa-solid fa-play"></i> Dołącz do Gry
+            </button>
+            <button class="bg-gray-800 text-white px-8 py-3 rounded-lg font-bold border border-gray-700 hover:bg-gray-700 transition-colors flex items-center justify-center gap-2">
+                <i class="fa-brands fa-discord"></i> Nasz Discord
+            </button>
         </div>
-      `).join('');
-    }
 
-    function wyczysc(){
-      document.getElementById('nick').value = '';
-      document.getElementById('wiek').value = '';
-      document.getElementById('narodowosc').value = '';
-      document.getElementById('uwagi').value = '';
-      document.querySelectorAll('#crimeList input[type="checkbox"]').forEach(cb => cb.checked = false);
-      updateSum();
-    }
+        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto border-t border-gray-800 pt-8">
+            <div>
+                <p class="text-3xl font-bold text-white">128</p>
+                <p class="text-sm text-gray-400">Graczy Online</p>
+            </div>
+            <div>
+                <p class="text-3xl font-bold text-white">60fps</p>
+                <p class="text-sm text-gray-400">Płynna Rozgrywka</p>
+            </div>
+            <div>
+                <p class="text-3xl font-bold text-white">24/7</p>
+                <p class="text-sm text-gray-400">Uptime Serwera</p>
+            </div>
+            <div>
+                <p class="text-3xl font-bold text-white">50+</p>
+                <p class="text-sm text-gray-400">Unikalnych Skryptów</p>
+            </div>
+        </div>
+    </section>
 
-    function escapeHtml(text){
-      return String(text)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'",'&#039;');
-    }
+    <section id="factions" class="py-20 bg-bgDark border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Wybierz swoją ścieżkę</h2>
+                <p class="text-gray-400">Zatrudnij się w jednej z legalnych frakcji lub zejdź na przestępczą ścieżkę.</p>
+            </div>
 
-    updateSum();
-    renderHistory();
-  </script>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-bgCard rounded-xl p-6 border border-gray-700 hover:border-blue-500 transition-colors group">
+                    <div class="w-14 h-14 bg-blue-500/20 text-blue-500 rounded-lg flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Police Department</h3>
+                    <p class="text-gray-400 mb-4">Dbaj o porządek na ulicach miasta. Bierz udział w pościgach, śledztwach i interwencjach.</p>
+                    <a href="#" class="text-blue-500 hover:text-blue-400 font-semibold text-sm">Złóż podanie &rarr;</a>
+                </div>
+
+                <div class="bg-bgCard rounded-xl p-6 border border-gray-700 hover:border-red-500 transition-colors group">
+                    <div class="w-14 h-14 bg-red-500/20 text-red-500 rounded-lg flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-truck-medical"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Służby Medyczne (EMS)</h3>
+                    <p class="text-gray-400 mb-4">Ratuj życie obywateli. Obsługuj zaawansowany system medyczny i przeprowadzaj operacje.</p>
+                    <a href="#" class="text-red-500 hover:text-red-400 font-semibold text-sm">Złóż podanie &rarr;</a>
+                </div>
+
+                <div class="bg-bgCard rounded-xl p-6 border border-gray-700 hover:border-yellow-500 transition-colors group">
+                    <div class="w-14 h-14 bg-yellow-500/20 text-yellow-500 rounded-lg flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-wrench"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Warsztat Samochodowy</h3>
+                    <p class="text-gray-400 mb-4">Tuninguj i naprawiaj pojazdy. Holuj rozbite auta i zarządzaj miejskim warsztatem.</p>
+                    <a href="#" class="text-yellow-500 hover:text-yellow-400 font-semibold text-sm">Złóż podanie &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black/50 border-t border-gray-800 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-gray-500 text-sm">
+                &copy; 2026 TwojaNazwa RP. Wszelkie prawa zastrzeżone.
+            </p>
+            <div class="flex gap-4">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
