@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TwojaNazwa RP | Najlepszy Serwer Roleplay</title>
+    <title>TwojaNazwa RP | Zaawansowany Serwer Roleplay</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -11,10 +11,12 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: '#6366f1', // Indigo-500
-                        brandDark: '#4f46e5', // Indigo-600
-                        bgDark: '#0f172a', // Slate-900
-                        bgCard: '#1e293b', // Slate-800
+                        brand: '#6366f1', 
+                        brandDark: '#4f46e5', 
+                        bgDark: '#0f172a', 
+                        bgCard: '#1e293b',
+                        mdtBg: '#09090b',
+                        mdtBorder: '#27272a'
                     }
                 }
             }
@@ -23,117 +25,208 @@
 </head>
 <body class="bg-bgDark text-gray-200 font-sans antialiased selection:bg-brand selection:text-white flex flex-col min-h-screen">
 
+    <!-- Nawigacja -->
     <nav class="fixed w-full z-50 bg-bgDark/90 backdrop-blur-md border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-gamepad text-brand text-2xl"></i>
+                    <i class="fa-solid fa-server text-brand text-2xl"></i>
                     <span class="font-bold text-xl tracking-wider text-white">TWOJANAZWA <span class="text-brand">RP</span></span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="hover:text-brand px-3 py-2 rounded-md text-sm font-medium transition-colors">Strona Główna</a>
-                        <a href="#factions" class="hover:text-brand px-3 py-2 rounded-md text-sm font-medium transition-colors">Frakcje</a>
-                        <a href="#rules" class="hover:text-brand px-3 py-2 rounded-md text-sm font-medium transition-colors">Regulamin</a>
+                        <a href="#home" class="hover:text-brand px-3 py-2 rounded-md font-medium transition-colors">Start</a>
+                        <a href="#factions" class="hover:text-brand px-3 py-2 rounded-md font-medium transition-colors">Frakcje</a>
+                        <a href="#mdt-preview" class="hover:text-brand px-3 py-2 rounded-md font-medium transition-colors">System MDT</a>
+                        <a href="#dashboard" class="hover:text-brand px-3 py-2 rounded-md font-medium transition-colors">Panel Gracza</a>
+                        <a href="#rules" class="hover:text-brand px-3 py-2 rounded-md font-medium transition-colors">Regulamin</a>
                     </div>
                 </div>
                 <div>
-                    <button class="bg-brand hover:bg-brandDark text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-brand/20">
-                        <i class="fa-brands fa-discord"></i>
-                        Zaloguj
+                    <button class="bg-[#5865F2] hover:bg-[#4752C4] text-white px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-[#5865F2]/20">
+                        <i class="fa-brands fa-discord"></i> Login OAuth2
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 px-4 text-center flex-grow flex flex-col justify-center items-center relative overflow-hidden">
+    <!-- Sekcja Hero -->
+    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 px-4 text-center relative overflow-hidden">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/20 rounded-full blur-[120px] -z-10"></div>
         
+        <div class="inline-block bg-brand/10 border border-brand/20 text-brand px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
+            <i class="fa-solid fa-rocket mr-2"></i> Nowa edycja już wystartowała!
+        </div>
+        
         <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-lg">
-            Zbuduj swoją <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-purple-500">historię</span>
+            Wkrocz do świata <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-purple-500">Prawdziwego RP</span>
         </h1>
         <p class="mt-4 text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
-            Dołącz do najbardziej zaawansowanego serwera Roleplay. Rozbudowana ekonomia, aktywne frakcje i zgrana społeczność czekają właśnie na Ciebie.
+            Autorskie skrypty, rozbudowana ekonomia i dedykowany bot Discord dbający o Twoje zgłoszenia. Twórz narrację na własnych zasadach.
         </p>
         
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <button class="bg-white text-bgDark px-8 py-3 rounded-lg font-bold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                <i class="fa-solid fa-play"></i> Dołącz do Gry
+                <i class="fa-solid fa-play"></i> Połącz z serwerem
             </button>
-            <button class="bg-gray-800 text-white px-8 py-3 rounded-lg font-bold border border-gray-700 hover:bg-gray-700 transition-colors flex items-center justify-center gap-2">
-                <i class="fa-brands fa-discord"></i> Nasz Discord
-            </button>
-        </div>
-
-        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto border-t border-gray-800 pt-8">
-            <div>
-                <p class="text-3xl font-bold text-white">128</p>
-                <p class="text-sm text-gray-400">Graczy Online</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-white">60fps</p>
-                <p class="text-sm text-gray-400">Płynna Rozgrywka</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-white">24/7</p>
-                <p class="text-sm text-gray-400">Uptime Serwera</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-white">50+</p>
-                <p class="text-sm text-gray-400">Unikalnych Skryptów</p>
-            </div>
         </div>
     </section>
 
-    <section id="factions" class="py-20 bg-bgDark border-t border-gray-800">
+    <!-- Podgląd Systemu MDT (Kluczowy system) -->
+    <section id="mdt-preview" class="py-20 bg-black/40 border-t border-y border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-white mb-4">Wybierz swoją ścieżkę</h2>
-                <p class="text-gray-400">Zatrudnij się w jednej z legalnych frakcji lub zejdź na przestępczą ścieżkę.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-bgCard rounded-xl p-6 border border-gray-700 hover:border-blue-500 transition-colors group">
-                    <div class="w-14 h-14 bg-blue-500/20 text-blue-500 rounded-lg flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Police Department</h3>
-                    <p class="text-gray-400 mb-4">Dbaj o porządek na ulicach miasta. Bierz udział w pościgach, śledztwach i interwencjach.</p>
-                    <a href="#" class="text-blue-500 hover:text-blue-400 font-semibold text-sm">Złóż podanie &rarr;</a>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-3xl font-bold text-white mb-4">Autorski Panel <span class="text-blue-500">MDT</span></h2>
+                    <p class="text-gray-400 mb-6">
+                        Zaprojektowany od zera Mobile Data Terminal dla służb porządkowych. Błyskawiczny dostęp do bazy obywateli, rejestrów pojazdów i notatek służbowych prosto z przeglądarki.
+                    </p>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand"></i> Wyszukiwarka Live po imieniu i nazwisku</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand"></i> Wystawianie mandatów i wpisywanie do kartoteki</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand"></i> Synchronizacja rang z Discordem (Tylko dla LSPD/EMS)</li>
+                    </ul>
                 </div>
-
-                <div class="bg-bgCard rounded-xl p-6 border border-gray-700 hover:border-red-500 transition-colors group">
-                    <div class="w-14 h-14 bg-red-500/20 text-red-500 rounded-lg flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-truck-medical"></i>
+                
+                <!-- Makieta MDT -->
+                <div class="w-full md:w-1/2 bg-mdtBg border border-mdtBorder rounded-xl shadow-2xl overflow-hidden">
+                    <div class="bg-zinc-900 border-b border-mdtBorder px-4 py-3 flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-blue-500 font-bold">
+                            <i class="fa-solid fa-building-shield"></i> LSPD Baza Danych
+                        </div>
+                        <div class="text-xs text-zinc-500">Zalogowano: Oficer #001</div>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Służby Medyczne (EMS)</h3>
-                    <p class="text-gray-400 mb-4">Ratuj życie obywateli. Obsługuj zaawansowany system medyczny i przeprowadzaj operacje.</p>
-                    <a href="#" class="text-red-500 hover:text-red-400 font-semibold text-sm">Złóż podanie &rarr;</a>
-                </div>
-
-                <div class="bg-bgCard rounded-xl p-6 border border-gray-700 hover:border-yellow-500 transition-colors group">
-                    <div class="w-14 h-14 bg-yellow-500/20 text-yellow-500 rounded-lg flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-wrench"></i>
+                    <div class="p-6">
+                        <div class="relative mb-6">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-zinc-500"></i>
+                            <input type="text" placeholder="Wyszukaj obywatela (Imię i Nazwisko)..." class="w-full bg-zinc-900 border border-mdtBorder text-white rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:border-blue-500 transition-colors">
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-zinc-900 border border-mdtBorder p-3 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <p class="text-white font-semibold">Jan Kowalski</p>
+                                    <p class="text-xs text-zinc-500">DOB: 12/04/1995</p>
+                                </div>
+                                <span class="bg-green-500/10 text-green-500 text-xs px-2 py-1 rounded border border-green-500/20">Czysta kartoteka</span>
+                            </div>
+                            <div class="bg-zinc-900 border border-mdtBorder p-3 rounded-lg flex justify-between items-center">
+                                <div>
+                                    <p class="text-white font-semibold">Markus XYZ</p>
+                                    <p class="text-xs text-zinc-500">DOB: 05/11/1998</p>
+                                </div>
+                                <span class="bg-red-500/10 text-red-500 text-xs px-2 py-1 rounded border border-red-500/20">Poszukiwany</span>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Warsztat Samochodowy</h3>
-                    <p class="text-gray-400 mb-4">Tuninguj i naprawiaj pojazdy. Holuj rozbite auta i zarządzaj miejskim warsztatem.</p>
-                    <a href="#" class="text-yellow-500 hover:text-yellow-400 font-semibold text-sm">Złóż podanie &rarr;</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-black/50 border-t border-gray-800 py-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-gray-500 text-sm">
-                &copy; 2026 TwojaNazwa RP. Wszelkie prawa zastrzeżone.
-            </p>
-            <div class="flex gap-4">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl"><i class="fa-brands fa-discord"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors text-xl"><i class="fa-brands fa-tiktok"></i></a>
+    <!-- Integracja i Panel Gracza -->
+    <section id="dashboard" class="py-20 bg-bgDark border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Webowy Panel Gracza</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-16">Nasz serwer jest zintegrowany z potężnym botem Discord. Zarządzaj swoim kontem RP bez wchodzenia do gry.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <div class="bg-bgCard p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-purple-500/20 text-purple-500 rounded-lg flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-ticket"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">System Ticketów</h3>
+                    <p class="text-gray-400 text-sm">Masz problem? Stwórz zgłoszenie przez stronę. Odpowiedzi administracji z Discorda pojawią się bezpośrednio w Twoim panelu www.</p>
+                </div>
+                <div class="bg-bgCard p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-green-500/20 text-green-500 rounded-lg flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Podgląd Majątku</h3>
+                    <p class="text-gray-400 text-sm">Sprawdzaj stan konta bankowego swojej postaci, posiadane pojazdy i nieruchomości logując się bezpiecznie przez uwierzytelnianie bota.</p>
+                </div>
+                <div class="bg-bgCard p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-orange-500/20 text-orange-500 rounded-lg flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Aplikacje Whitelist</h3>
+                    <p class="text-gray-400 text-sm">Wypełniaj podania o WhiteListę we wbudowanym edytorze. Nasz bot automatycznie oceni podstawy i przekaże je na kanał rekrutacyjny.</p>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Frakcje -->
+    <section id="factions" class="py-20 bg-black/40">
+        <!-- Zostawiamy poprzednie kafelki frakcji dla czytelności. Możesz tu wkleić sekcję LSPD/EMS/Mechanik z poprzedniej wersji -->
+        <div class="max-w-7xl mx-auto px-4 text-center">
+             <h2 class="text-3xl font-bold text-white mb-4">Otwarte Rekrutacje do Frakcji</h2>
+             <p class="text-gray-400">Dołącz do struktury serwera. Podania obsługiwane są automatycznie.</p>
+        </div>
+    </section>
+
+    <!-- Regulamin (Interaktywny Akordeon) -->
+    <section id="rules" class="py-20 bg-bgDark border-t border-gray-800">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">Zasady Rozgrywki (Regulamin)</h2>
+            
+            <div class="space-y-4">
+                <!-- Punkt 1 -->
+                <div class="bg-bgCard border border-gray-700 rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left font-bold text-white flex justify-between items-center focus:outline-none" onclick="toggleAccordion('rule1')">
+                        1. Zasady Ogólne i RDM / VDM
+                        <i class="fa-solid fa-chevron-down text-brand transition-transform duration-300" id="icon-rule1"></i>
+                    </button>
+                    <div id="rule1" class="hidden px-6 pb-4 text-gray-400 text-sm">
+                        Zabrania się bezpodstawnego zabijania innych graczy (RDM) oraz celowego rozjeżdżania ich pojazdami (VDM). Każda akcja agresywna musi mieć solidne podłoże fabularne i zainicjowaną akcję RP.
+                    </div>
+                </div>
+
+                <!-- Punkt 2 -->
+                <div class="bg-bgCard border border-gray-700 rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left font-bold text-white flex justify-between items-center focus:outline-none" onclick="toggleAccordion('rule2')">
+                        2. Poszanowanie Życia (FailRP)
+                        <i class="fa-solid fa-chevron-down text-brand transition-transform duration-300" id="icon-rule2"></i>
+                    </button>
+                    <div id="rule2" class="hidden px-6 pb-4 text-gray-400 text-sm">
+                        Twoja postać ma tylko jedno życie. Jeśli celuje do Ciebie 3 uzbrojonych napastników, a Ty nie masz wyciągniętej broni, musisz poddać się ich woli. Ignorowanie strachu o własne życie będzie surowo karane.
+                    </div>
+                </div>
+
+                <!-- Punkt 3 -->
+                <div class="bg-bgCard border border-gray-700 rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left font-bold text-white flex justify-between items-center focus:outline-none" onclick="toggleAccordion('rule3')">
+                        3. MetaGaming (MG)
+                        <i class="fa-solid fa-chevron-down text-brand transition-transform duration-300" id="icon-rule3"></i>
+                    </button>
+                    <div id="rule3" class="hidden px-6 pb-4 text-gray-400 text-sm">
+                        Wykorzystywanie informacji zdobytych poza grą (np. z transmisji na Twitchu, czatów Discord OOC) wewnątrz gry (IC) jest kategorycznie zabronione. Twoja postać wie tylko to, czego sama doświadczyła lub usłyszała.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skrypt JS do Regulaminu -->
+    <script>
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+
+    <!-- Stopka -->
+    <footer class="bg-black border-t border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-600 text-sm">&copy; 2026 TwojaNazwa RP. Strona połączona z API Bota Discord.</p>
         </div>
     </footer>
 
