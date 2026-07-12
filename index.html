@@ -3,190 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAJBARDZIEJ ZJEBANA STRONA INTERNETOWA 2026</title>
+    <title>GameScripts Hub | Moje Skrypty do Gier</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap');
+        :root {
+            --bg: #0f0f1a;
+            --accent: #00ffcc;
+            --card: #1a1a2e;
+        }
         
-        body {
-            background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff0000);
-            background-size: 400% 400%;
-            animation: rainbow 0.3s linear infinite;
-            font-family: 'Comic Sans MS', cursive;
+        * {
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            color: #00ff00;
-            text-shadow: 3px 3px 0 #000,
-                        -3px -3px 0 #000,
-                        3px -3px 0 #000,
-                        -3px 3px 0 #000;
+            box-sizing: border-box;
         }
 
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        body {
+            background: var(--bg);
+            color: #e0e0ff;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
         }
 
         h1 {
-            font-size: 80px;
-            text-align: center;
-            animation: shake 0.1s linear infinite;
-            transform: rotate(-5deg);
-            margin: 20px;
+            font-size: 3rem;
+            color: var(--accent);
         }
 
-        @keyframes shake {
-            0% { transform: translate(2px, 2px) rotate(0deg); }
-            10% { transform: translate(-2px, -2px) rotate(-2deg); }
-            20% { transform: translate(-3px, 0px) rotate(2deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 2px) rotate(-2deg); }
-            80% { transform: translate(-1px, -1px) rotate(2deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(2px, -2px) rotate(-1deg); }
+        .subtitle {
+            color: #a0a0cc;
+            margin-top: 0.5rem;
+        }
+
+        nav {
+            background: #16213e;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #334;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
         }
 
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            background: #1e1e38;
+            border: 2px solid #334;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #334;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 255, 204, 0.2);
+            border-color: var(--accent);
+        }
+
+        .card-header {
+            height: 180px;
+            background: linear-gradient(45deg, #00ccaa, #009988);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
             position: relative;
-            z-index: 1;
         }
 
-        marquee {
-            font-size: 40px;
-            color: yellow;
-            text-shadow: 4px 4px #ff00ff;
+        .card-body {
+            padding: 1.5rem;
         }
 
-        img {
-            position: absolute;
-            animation: spin 1s linear infinite;
-            width: 150px;
-            border: 8px solid red;
-            box-shadow: 0 0 30px yellow;
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
         }
 
-        .popup {
-            position: fixed;
-            background: rgba(0,0,0,0.9);
-            color: lime;
-            border: 5px dashed red;
-            padding: 20px;
-            font-size: 25px;
-            z-index: 9999;
-            animation: popupAnim 0.5s;
+        .tech {
+            color: #88ffdd;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .description {
+            color: #b0b0cc;
+            margin-bottom: 1.5rem;
         }
 
-        button {
-            font-size: 30px;
-            padding: 20px 40px;
-            background: #ff00ff;
-            color: yellow;
-            border: 6px solid lime;
+        .btn {
+            padding: 10px 24px;
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 6px;
             cursor: pointer;
-            animation: pulse 0.5s infinite;
-            transform: rotate(8deg);
+            font-weight: bold;
+            transition: 0.3s;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1) rotate(8deg); }
-            50% { transform: scale(1.2) rotate(-8deg); }
+        .btn:hover {
+            background: var(--accent);
+            color: #0f0f1a;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: #556;
+            border-top: 1px solid #223;
+            margin-top: 4rem;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>GameScripts Hub</h1>
+        <p class="subtitle">Moja kolekcja skryptów, mechanik i małych gier</p>
+    </header>
 
-    <h1>TA STRONA JEST KURWA ZJEBANA</h1>
-    
-    <marquee direction="left">KLIKNIJ WSZĘDZIE • TWOJA MATKA TO KOBYŁA • 420 BLAZE IT • POLSKA GUROM</marquee>
-    <marquee direction="right" style="font-size:60px;">NIE ZAMYKAJ TEJ KARTY • JESTEŚ TU NA ZAWSZE</marquee>
+    <nav>
+        <div class="nav-container">
+            <input type="text" class="search-bar" placeholder="Szukaj skryptu lub mechaniki... (np. inventory, combat, procedural)">
+            <div>
+                <button class="btn" onclick="addNewProject()">+ Dodaj nowy skrypt</button>
+            </div>
+        </div>
+    </nav>
 
-    <div class="container" style="text-align:center; margin-top:50px;">
-        <h2 style="font-size:60px; color:red;">WITAJ W PIEKLE INTERNETU</h2>
-        <p style="font-size:35px;">Twoja strona została zhackowana przez Janusza z Będzina</p>
+    <div class="container">
+        <h2 style="margin-bottom: 1.5rem; color: #ddd;">Moje Projekty</h2>
         
-        <button onclick="spam()">KLIKNIJ MNIE JEŚLI JESTEŚ PEDALEM</button>
-        <button onclick="rickroll()">NIE KLIKAJ TEGO</button>
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Przykładowe karty - możesz edytować -->
+        </div>
     </div>
 
-    <!-- Spinning images everywhere -->
-    <img src="https://picsum.photos/200/200?random=1" style="top:10%; left:5%;">
-    <img src="https://picsum.photos/200/200?random=2" style="top:30%; left:15%; animation-duration:0.4s;">
-    <img src="https://picsum.photos/200/200?random=3" style="top:60%; right:10%;">
-    <img src="https://picsum.photos/200/200?random=4" style="bottom:20%; left:20%; animation-duration:1.5s;">
-    <img src="https://picsum.photos/200/200?random=5" style="top:15%; right:25%;">
-
-    <audio autoplay loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+    <footer>
+        <p>GameScripts Hub © 2026 • Wszystkie skrypty są open-source do Twojego użytku</p>
+    </footer>
 
     <script>
-        function spam() {
-            for(let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    alert("GRATULACJE JESTEŚ PEDALEM " + Math.random().toString(36).substring(7).toUpperCase());
-                }, i * 80);
+        const projects = [
+            {
+                title: "Zaawansowany System Inventory",
+                emoji: "🎒",
+                tech: "JavaScript • HTML5 Canvas",
+                desc: "Przeciąganie przedmiotów, stacki, kategorie, zapis w localStorage",
+                link: "#"
+            },
+            {
+                title: "Combat System z Turami",
+                emoji: "⚔️",
+                tech: "Phaser 3",
+                desc: "System walki turowej z buffami, debuffami i animacjami",
+                link: "#"
+            },
+            {
+                title: "Proceduralna Generacja LoD",
+                emoji: "🌲",
+                tech: "JavaScript",
+                desc: "Generowanie poziomów roguelike z algorytmem BSP",
+                link: "#"
+            },
+            {
+                title: "Dialog System z Gałęziami",
+                emoji: "💬",
+                tech: "JavaScript",
+                desc: "Zaawansowany system dialogów z warunkami i relacjami NPC",
+                link: "#"
+            },
+            {
+                title: "Platformer Controller",
+                emoji: "🏃",
+                tech: "Godot 4 / JavaScript",
+                desc: "Płynny kontroler z coyote time, jump buffer i wall jump",
+                link: "#"
+            }
+        ];
+
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+
+            projects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <div class="card-header">${project.emoji}</div>
+                    <div class="card-body">
+                        <div class="project-title">${project.title}</div>
+                        <div class="tech">${project.tech}</div>
+                        <div class="description">${project.desc}</div>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn" onclick="viewDemo('${project.title}')">Zobacz Demo</button>
+                            <button class="btn" onclick="downloadScript('${project.title}')">Pobierz .js</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function viewDemo(title) {
+            alert(`Otwieram demo: ${title}\n\n(W rzeczywistości tutaj będzie link do live demo)`);
+        }
+
+        function downloadScript(title) {
+            alert(`Pobieranie skryptu: ${title}.js\n\n(Tutaj wstawisz prawdziwy download)`);
+        }
+
+        function addNewProject() {
+            const title = prompt("Nazwa skryptu/mechaniki:");
+            if (title) {
+                alert(`Nowy projekt "${title}" dodany! (Edytuj kod JS żeby dodać prawdziwą kartę)`);
+                // Tutaj możesz dodać logikę dodawania nowego projektu
             }
         }
 
-        function rickroll() {
-            window.open("https://www.youtube.com/watch?v=dQw4w9wgxcq", "_blank");
-        }
-
-        // Random popups
-        setInterval(() => {
-            const popup = document.createElement('div');
-            popup.className = 'popup';
-            popup.style.left = Math.random() * 70 + '%';
-            popup.style.top = Math.random() * 70 + '%';
-            popup.innerHTML = `
-                <h3>UWAGA!!!</h3>
-                <p>${['Twoja mama dzwoni', 'Masz wirusa', 'Kup viagrę', 'POLSKA GUROM', 'Windows XP detected'][Math.floor(Math.random()*5)]}</p>
-                <button onclick="this.parentElement.remove()">OK KURWA</button>
-            `;
-            document.body.appendChild(popup);
-            
-            setTimeout(() => {
-                if(popup.parentElement) popup.remove();
-            }, 4500);
-        }, 1200);
-
-        // Cursor trail of dicks (emoji)
-        document.addEventListener('mousemove', (e) => {
-            const dick = document.createElement('div');
-            dick.textContent = '🍆';
-            dick.style.position = 'fixed';
-            dick.style.left = e.pageX + 'px';
-            dick.style.top = e.pageY + 'px';
-            dick.style.fontSize = '30px';
-            dick.style.zIndex = '99999';
-            dick.style.pointerEvents = 'none';
-            dick.style.opacity = '0.8';
-            document.body.appendChild(dick);
-            
-            setTimeout(() => dick.remove(), 800);
-        });
-
-        // Konami code = more chaos
-        let konami = '';
-        document.addEventListener('keydown', (e) => {
-            konami += e.key;
-            if(konami.length > 10) konami = konami.slice(-10);
-            if(konami.includes('ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba')) {
-                document.body.style.filter = 'invert(1) hue-rotate(180deg)';
-                alert('KONAMI ACTIVATED - JESZCZE WIĘCEJ ZJEBANIA');
-            }
-        });
-
-        console.log("%cTA STRONA JEST TAK ZJEBANA ŻE NIELUDZIE", "color:red; font-size:50px; font-family:Comic Sans MS");
+        // Uruchomienie
+        window.onload = renderProjects;
     </script>
 </body>
 </html>
