@@ -53,7 +53,7 @@ body{
 .badge{padding:10px 14px; border-radius:999px; background:rgba(124,92,255,.18); color:#ddd6ff; font-size:14px}
 .queue{display:grid; gap:12px}
 .item{
-  display:flex; align-items:center; gap:12px; padding:12px; border-radius:18px; background:rgba(255,255,255,.06);
+  display:flex; align-items:center; gap:12px; padding:12px; border-radius:18px; background:rgba(255,255,255,.06); cursor:pointer;
 }
 .item.active{background:rgba(124,92,255,.18); border:1px solid rgba(124,92,255,.35)}
 .thumb{width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg,var(--accent),var(--accent2))}
@@ -61,7 +61,7 @@ body{
 .item span{color:var(--muted); font-size:14px}
 .controls{padding:18px; border-radius:24px; background:var(--card2); display:grid; gap:16px}
 .bar{height:10px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden}
-.bar > div{width:48%; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.bar > div{width:0%; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .1s linear;}
 .time{display:flex; justify-content:space-between; color:var(--muted); font-size:14px}
 .buttons{display:flex; justify-content:center; gap:14px; flex-wrap:wrap}
 .btn{
@@ -78,12 +78,15 @@ input[type="range"]{width:100%; accent-color:var(--accent2)}
 </style>
 </head>
 <body>
+  <!-- AUDIO -->
+  <audio id="audio" src="Cinema City.mp3"></audio>
+
   <main class="player">
     <section class="card art">
       <div class="cover"><div class="vinyl"></div></div>
       <div class="meta">
-        <h1>Midnight Waves</h1>
-        <p>Nowoczesny, minimalistyczny odtwarzacz muzyki z miękkim glassmorphismem, czytelnym układem i animowanym tłem.</p>
+        <h1>Cinema City</h1>
+        <p>Twój utwór osadzony w stylowym odtwarzaczu z ciemnym motywem i miękkimi gradientami.</p>
       </div>
     </section>
 
@@ -91,44 +94,129 @@ input[type="range"]{width:100%; accent-color:var(--accent2)}
       <div class="topline">
         <div>
           <div style="color:var(--muted);font-size:14px">Teraz odtwarzane</div>
-          <strong>Lo-fi Horizons</strong>
+          <strong id="track-title">Cinema City</strong>
         </div>
-        <div class="badge">HD Audio</div>
+        <div class="badge">MP3 • Local</div>
       </div>
 
       <div class="controls">
         <div class="range">
-          <div class="bar"><div></div></div>
-          <div class="time"><span>1:42</span><span>3:36</span></div>
+          <div class="bar"><div id="progress"></div></div>
+          <div class="time"><span id="current">0:00</span><span id="duration">0:00</span></div>
         </div>
         <div class="buttons">
-          <button class="btn">⟲</button>
-          <button class="btn">⟨</button>
-          <button class="btn play">▶</button>
-          <button class="btn">⟩</button>
-          <button class="btn">↻</button>
+          <button class="btn" id="btn-back">⟨</button>
+          <button class="btn play" id="btn-play">▶</button>
+          <button class="btn" id="btn-forward">⟩</button>
         </div>
         <div class="range">
-          <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:14px"><span>Głośność</span><span>78%</span></div>
-          <input type="range" min="0" max="100" value="78" />
+          <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:14px">
+            <span>Głośność</span><span id="volume-label">78%</span>
+          </div>
+          <input type="range" min="0" max="100" value="78" id="volume" />
         </div>
       </div>
 
       <div>
         <h3 style="margin:0 0 12px">Playlista</h3>
         <div class="queue">
-          <div class="item active"><div class="thumb"></div><div><b>Lo-fi Horizons</b><span>Chill • 03:36</span></div></div>
-          <div class="item"><div class="thumb"></div><div><b>Neon Drive</b><span>Synthwave • 04:12</span></div></div>
-          <div class="item"><div class="thumb"></div><div><b>Cloud Motion</b><span>Ambient • 05:01</span></div></div>
+          <div class="item active" data-src="Cinema City.mp3">
+            <div class="thumb"></div>
+            <div><b>Cinema City</b><span>Twój utwór • MP3</span></div>
+          </div>
+          <div class="item" data-src="">
+            <div class="thumb"></div>
+            <div><b>Neon Drive</b><span>Demo • placeholder</span></div>
+          </div>
+          <div class="item" data-src="">
+            <div class="thumb"></div>
+            <div><b>Cloud Motion</b><span>Demo • placeholder</span></div>
+          </div>
         </div>
       </div>
 
       <div class="stats">
         <div class="pill">Tryb: ciemny</div>
-        <div class="pill">Equalizer: on</div>
-        <div class="pill">Bluetooth: ready</div>
+        <div class="pill">Equalizer: UI only</div>
+        <div class="pill">Źródło: lokalny plik</div>
       </div>
     </section>
   </main>
+
+<script>
+const audio = document.getElementById('audio');
+const btnPlay = document.getElementById('btn-play');
+const progress = document.getElementById('progress');
+const current = document.getElementById('current');
+const duration = document.getElementById('duration');
+const volumeRange = document.getElementById('volume');
+const volumeLabel = document.getElementById('volume-label');
+const items = document.querySelectorAll('.item');
+const trackTitle = document.getElementById('track-title);
+
+function formatTime(sec){
+  if(isNaN(sec)) return "0:00";
+  const m = Math.floor(sec/60);
+  const s = Math.floor(sec%60).toString().padStart(2,'0');
+  return m+":"+s;
+}
+
+// Play / pause
+btnPlay.addEventListener('click', () => {
+  if(audio.paused){
+    audio.play();
+    btnPlay.textContent = '⏸';
+  }else{
+    audio.pause();
+    btnPlay.textContent = '▶';
+  }
+});
+
+// Update duration
+audio.addEventListener('loadedmetadata', () => {
+  duration.textContent = formatTime(audio.duration);
+});
+
+// Update progress
+audio.addEventListener('timeupdate', () => {
+  current.textContent = formatTime(audio.currentTime);
+  if(audio.duration){
+    const pct = (audio.currentTime / audio.duration) * 100;
+    progress.style.width = pct + '%';
+  }
+});
+
+// Volume
+volumeRange.addEventListener('input', (e) => {
+  const v = e.target.value;
+  audio.volume = v / 100;
+  volumeLabel.textContent = v + '%';
+});
+
+// Simple prev/next (demo)
+document.getElementById('btn-back').addEventListener('click', () => {
+  audio.currentTime = Math.max(0, audio.currentTime - 10);
+});
+document.getElementById('btn-forward').addEventListener('click', () => {
+  audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
+});
+
+// Playlist click (Cinema City ma realny src)
+items.forEach(item => {
+  item.addEventListener('click', () => {
+    items.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+
+    const src = item.getAttribute('data-src');
+    const name = item.querySelector('b').textContent;
+    if(src){
+      audio.src = src;
+      audio.play();
+      btnPlay.textContent = '⏸';
+      trackTitle.textContent = name;
+    }
+  });
+});
+</script>
 </body>
 </html>
