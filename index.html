@@ -3,439 +3,570 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Music Zone</title>
+  <title>Moja Muzyka</title>
   <style>
     :root{
-      --bg:#050816;
-      --panel:rgba(255,255,255,.07);
-      --panel2:rgba(255,255,255,.12);
-      --text:#eef3ff;
-      --muted:#a6b2d6;
-      --accent:#7c5cff;
-      --accent2:#27d7ff;
-      --line:rgba(255,255,255,.12);
-      --shadow:0 20px 60px rgba(0,0,0,.45);
-      --radius:24px;
+      --bg:#0f0f11;
+      --bg-elevated:#18181b;
+      --bg-card:#202124;
+      --bg-hover:#2a2b30;
+      --text:#ffffff;
+      --muted:#b3b7c4;
+      --accent:#ff5252;
+      --accent-soft:#ff8860;
+      --line:#303238;
+      --radius:18px;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
     html{ scroll-behavior:smooth; }
     body{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(124,92,255,.25), transparent 30%),
-        radial-gradient(circle at top right, rgba(39,215,255,.18), transparent 28%),
-        linear-gradient(135deg, #050816, #090f24);
+      font-family: Roboto, system-ui, -apple-system, Segoe UI, sans-serif;
+      background:var(--bg);
       color:var(--text);
       min-height:100vh;
       overflow-x:hidden;
     }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background:
-        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-      background-size:80px 80px;
-      mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
-      pointer-events:none;
-      opacity:.3;
-    }
-
-    .container{
-      width:min(1200px, calc(100% - 32px));
-      margin:0 auto;
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter:blur(18px);
-      background:rgba(5,8,22,.55);
-      border-bottom:1px solid var(--line);
-    }
-
-    .topbar-inner{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:18px 0;
-      gap:20px;
-      flex-wrap:wrap;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:800;
-    }
-
-    .brand-mark{
-      width:42px;
-      height:42px;
-      border-radius:14px;
-      background:linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow:0 10px 30px rgba(124,92,255,.35);
+    .app{
       display:grid;
-      place-items:center;
-      font-weight:900;
-      color:#08111f;
+      grid-template-columns:260px 1fr;
+      min-height:100vh;
     }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      border:none;
-      cursor:pointer;
-      text-decoration:none;
-      font-weight:700;
-      border-radius:999px;
-      padding:14px 22px;
-      transition:.25s;
-      white-space:nowrap;
-    }
-
-    .btn-primary{
-      background:linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#08111f;
-      box-shadow:0 12px 30px rgba(124,92,255,.28);
-    }
-
-    .btn-secondary{
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      border:1px solid var(--line);
-      backdrop-filter:blur(12px);
-    }
-
-    .btn:hover{ transform:translateY(-2px); }
-
-    .hero{
-      padding:70px 0 35px;
-    }
-
-    .hero-card{
-      background:var(--panel);
-      border:1px solid var(--line);
-      backdrop-filter:blur(18px);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:42px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .hero-card::after{
-      content:"";
-      position:absolute;
-      right:-120px;
-      bottom:-120px;
-      width:300px;
-      height:300px;
-      background:radial-gradient(circle, rgba(39,215,255,.2), transparent 65%);
-      pointer-events:none;
-    }
-
-    .kicker{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:8px 14px;
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--line);
-      color:var(--muted);
-      font-size:.95rem;
-      margin-bottom:18px;
-    }
-
-    h1{
-      font-size:clamp(2.3rem, 6vw, 4.8rem);
-      line-height:1.02;
-      margin-bottom:18px;
-      letter-spacing:-1.5px;
-    }
-
-    .gradient{
-      background:linear-gradient(135deg, #fff, #9fe7ff 35%, #a68cff 70%, #7c5cff);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-
-    .lead{
-      color:var(--muted);
-      font-size:1.06rem;
-      line-height:1.75;
-      max-width:70ch;
-      margin-bottom:28px;
-    }
-
-    .main{
-      padding:10px 0 70px;
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:20px;
-      align-items:start;
-    }
-
-    .panel{
-      background:var(--panel);
-      border:1px solid var(--line);
-      backdrop-filter:blur(18px);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-    }
-
-    .player{
-      padding:26px;
-    }
-
-    .player-cover{
-      width:100%;
-      aspect-ratio:16/9;
-      border-radius:22px;
-      background:
-        radial-gradient(circle at top left, rgba(124,92,255,.45), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(39,215,255,.35), transparent 30%),
-        linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
-      border:1px solid rgba(255,255,255,.10);
-      display:flex;
-      align-items:end;
-      padding:22px;
-      margin-bottom:18px;
-      overflow:hidden;
-      position:relative;
-    }
-
-    .player-cover h2{
-      font-size:1.8rem;
-      margin-bottom:6px;
-    }
-
-    .player-cover p{
-      color:var(--muted);
-    }
-
-    .now-playing{
-      margin:10px 0 18px;
-      color:var(--muted);
-      font-size:.95rem;
-    }
-
-    audio{
-      width:100%;
-      margin:10px 0 18px;
-      border-radius:14px;
-    }
-
-    .controls{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    .playlist{
-      padding:26px;
-    }
-
-    .playlist h3{
-      margin-bottom:16px;
-      font-size:1.3rem;
-    }
-
-    .track-list{
-      list-style:none;
-      display:grid;
-      gap:12px;
-    }
-
-    .track{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      padding:16px 18px;
-      border-radius:18px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      transition:.22s;
-      cursor:pointer;
-    }
-
-    .track:hover{
-      background:rgba(255,255,255,.085);
-      transform:translateY(-2px);
-    }
-
-    .track.active{
-      border-color:rgba(124,92,255,.65);
-      background:rgba(124,92,255,.16);
-    }
-
-    .track-info{
+    /* Lewy sidebar jak w YT Music */
+    .sidebar{
+      background:#15151a;
+      border-right:1px solid var(--line);
+      padding:16px 14px;
       display:flex;
       flex-direction:column;
-      gap:4px;
+      gap:20px;
     }
 
-    .track-info b{
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:500;
       font-size:1rem;
     }
 
-    .track-info span{
+    .logo-icon{
+      width:26px;
+      height:18px;
+      border-radius:4px;
+      background:#fff;
+      position:relative;
+      overflow:hidden;
+    }
+    .logo-icon::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at 20% 20%, #ff0000 0, #ff0000 40%, transparent 60%);
+    }
+
+    .logo span{
+      color:var(--muted);
+    }
+
+    .nav-group{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      margin-top:10px;
+    }
+
+    .nav-label{
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+
+    .nav-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-radius:8px;
       color:var(--muted);
       font-size:.92rem;
+      cursor:pointer;
+      transition:.18s;
     }
 
-    .pill{
-      padding:8px 12px;
+    .nav-item:hover{
+      background:#202026;
+      color:var(--text);
+    }
+
+    .nav-item.active{
+      background:#202026;
+      color:var(--text);
+      font-weight:500;
+    }
+
+    .nav-dot{
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      border:2px solid #fff;
+      background:#ff0000;
+    }
+
+    .nav-icon{
+      width:18px;
+      height:18px;
+      border-radius:4px;
+      border:1px solid var(--line);
+      display:grid;
+      place-items:center;
+      font-size:.7rem;
+    }
+
+    .sidebar-bottom{
+      margin-top:auto;
+      font-size:.8rem;
+      color:var(--muted);
+    }
+
+    /* Główna kolumna: topbar + content */
+    .main{
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+
+    .topbar{
+      height:56px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 20px;
+      border-bottom:1px solid var(--line);
+      background:#131316;
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .topbar-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .topbar-title{
+      font-size:.9rem;
+      color:var(--muted);
+    }
+
+    .chip{
+      padding:6px 10px;
       border-radius:999px;
-      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      font-size:.78rem;
       color:var(--muted);
+    }
+
+    .search-box{
+      background:#202124;
+      border-radius:999px;
+      padding:6px 10px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      color:var(--muted);
+      font-size:.9rem;
+      width:260px;
+    }
+
+    .search-input{
+      border:none;
+      outline:none;
+      background:transparent;
+      color:var(--text);
+      font-size:.9rem;
+      width:100%;
+    }
+
+    .topbar-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:.9rem;
+      color:var(--muted);
+    }
+
+    .avatar{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:linear-gradient(135deg, #ff5252, #ffb45a);
+      display:grid;
+      place-items:center;
+      font-size:.8rem;
+      color:#000;
+      font-weight:600;
+    }
+
+    /* Content */
+    .content{
+      padding:18px 22px 80px;
+    }
+
+    .section{
+      margin-bottom:26px;
+    }
+
+    .section-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:12px;
+    }
+
+    .section-title{
+      font-size:1.1rem;
+      font-weight:500;
+    }
+
+    .section-sub{
       font-size:.85rem;
-      white-space:nowrap;
-    }
-
-    .footer{
-      padding:24px 0 45px;
-      text-align:center;
       color:var(--muted);
-      border-top:1px solid var(--line);
     }
 
-    @media (max-width: 920px){
-      .layout{ grid-template-columns:1fr; }
-      .hero-card, .player, .playlist{ padding:20px; }
+    /* Karty utworów jak „Listen again” */
+    .cards-row{
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
+      gap:14px;
+    }
+
+    .card{
+      background:var(--bg-card);
+      border-radius:var(--radius);
+      overflow:hidden;
+      cursor:pointer;
+      transition:.18s;
+      border:1px solid #1d1f23;
+    }
+
+    .card:hover{
+      background:var(--bg-hover);
+      transform:translateY(-2px);
+    }
+
+    .card-cover{
+      height:120px;
+      background:linear-gradient(135deg, #303238, #202226);
+      position:relative;
+    }
+
+    .card-cover::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at 20% 20%, #ff5252 0, #ff5252 40%, transparent 60%);
+      opacity:.65;
+    }
+
+    .card-cover-alt::before{
+      background:radial-gradient(circle at 20% 20%, #ffb45a 0, #ffb45a 40%, transparent 60%);
+    }
+
+    .card-body{
+      padding:10px 10px 12px;
+      font-size:.86rem;
+    }
+
+    .card-title{
+      font-weight:500;
+      margin-bottom:4px;
+    }
+
+    .card-meta{
+      color:var(--muted);
+      font-size:.78rem;
+    }
+
+    /* Player embed sekcja */
+    .player-embed{
+      margin-top:24px;
+      background:var(--bg-card);
+      border-radius:var(--radius);
+      border:1px solid #1d1f23;
+      padding:14px 14px 18px;
+    }
+
+    .player-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:12px;
+    }
+
+    .player-title{
+      font-size:1rem;
+      font-weight:500;
+    }
+
+    .player-badge{
+      font-size:.78rem;
+      color:var(--muted);
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+    }
+
+    .player-frame-wrap{
+      position:relative;
+      padding-bottom:56.25%;
+      height:0;
+      overflow:hidden;
+      border-radius:12px;
+      background:#000;
+    }
+
+    .player-frame-wrap iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+
+    /* Dolny mini pasek jak mini-player */
+    .bottom-bar{
+      position:fixed;
+      bottom:0;
+      left:260px;
+      right:0;
+      height:64px;
+      background:#18181b;
+      border-top:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 20px;
+      font-size:.85rem;
+    }
+
+    .bottom-left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .bottom-cover{
+      width:40px;
+      height:40px;
+      border-radius:6px;
+      background:linear-gradient(135deg, #303238, #1c1d22);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .bottom-cover::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at 15% 15%, #ff5252 0, #ff5252 45%, transparent 65%);
+      opacity:.6;
+    }
+
+    .bottom-meta-main{
+      font-weight:500;
+    }
+
+    .bottom-meta-sub{
+      color:var(--muted);
+      font-size:.78rem;
+    }
+
+    .bottom-controls{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:var(--muted);
+    }
+
+    .bottom-pill{
+      padding:4px 9px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      font-size:.78rem;
+    }
+
+    @media (max-width: 900px){
+      .app{ grid-template-columns:1fr; }
+      .sidebar{ display:none; }
+      .bottom-bar{ left:0; }
+    }
+
+    @media (max-width: 600px){
+      .cards-row{ grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); }
+      .content{ padding:14px 12px 80px; }
+      .topbar{ padding:0 10px; }
+      .search-box{ display:none; }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
-        <div class="brand-mark">M</div>
+  <div class="app">
+    <!-- Lewy sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon"></div>
         <div>
-          <div>Music Zone</div>
-          <small style="color:var(--muted)">Twoja playlistowa strona</small>
+          Moja Muzyka
+          <span>• insp. YT Music</span>
         </div>
       </div>
-      <a class="btn btn-secondary" href="#playlist">Playlista</a>
-    </div>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-card">
-        <div class="kicker">🎵 Nowoczesna strona do muzyki</div>
-        <h1>Słuchaj utworów w <span class="gradient">eleganckim</span> stylu.</h1>
-        <p class="lead">
-          To gotowa strona z odtwarzaczem audio i listą utworów. Klikasz numer
-          piosenki, a ona od razu się ładuje i gra. Możesz to łatwo przerobić pod
-          swoje MP3, SoundCloud, playlistę albo muzyczne portfolio.
-        </p>
-        <a class="btn btn-primary" href="#player">Otwórz odtwarzacz</a>
+      <div class="nav-group">
+        <div class="nav-label">Szybki dostęp</div>
+        <div class="nav-item active">
+          <div class="nav-dot"></div>
+          <span>Strona główna</span>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">♪</div>
+          <span>Playlista LM</span>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">★</div>
+          <span>Ulubione</span>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">☰</div>
+          <span>Albumy</span>
+        </div>
       </div>
-    </section>
 
-    <section class="main" id="player">
-      <div class="layout">
-        <div class="panel player">
-          <div class="player-cover">
+      <div class="nav-group" style="margin-top:16px;">
+        <div class="nav-label">Biblioteka</div>
+        <div class="nav-item">
+          <div class="nav-icon">▶</div>
+          <span>Ostatnio odtwarzane</span>
+        </div>
+        <div class="nav-item">
+          <div class="nav-icon">∞</div>
+          <span>Mój mix</span>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        Wygląd podobny do YouTube Music, ale cały layout jest Twój i możesz go przerabiać.
+      </div>
+    </aside>
+
+    <!-- Główna część -->
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="topbar-title">Strona główna</div>
+          <div class="chip">Inspirowane YouTube Music</div>
+        </div>
+        <div class="topbar-right">
+          <div class="search-box">
+            🔍
+            <input class="search-input" type="text" placeholder="Szukaj utworu, albumu, wykonawcy" />
+          </div>
+          <span>Gość</span>
+          <div class="avatar">M</div>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- Sekcja jak „Listen again” -->
+        <section class="section">
+          <div class="section-header">
             <div>
-              <h2 id="songTitle">Neon Dreams</h2>
-              <p id="songArtist">Music Zone • sample track</p>
+              <div class="section-title">Słuchaj ponownie</div>
+              <div class="section-sub">Kilka przykładowych „kart” utworów jak na YT Music.</div>
             </div>
           </div>
 
-          <div class="now-playing" id="nowPlaying">Teraz gra: Neon Dreams</div>
-          <audio id="audioPlayer" controls>
-            <source id="audioSource" src="" type="audio/mpeg" />
-            Twoja przeglądarka nie obsługuje audio.
-          </audio>
+          <div class="cards-row">
+            <article class="card">
+              <div class="card-cover"></div>
+              <div class="card-body">
+                <div class="card-title">Neon Dreams</div>
+                <div class="card-meta">Synth Wave • 3:24</div>
+              </div>
+            </article>
 
-          <div class="controls">
-            <button class="btn btn-primary" onclick="prevTrack()">⟵ Poprzedni</button>
-            <button class="btn btn-secondary" onclick="nextTrack()">Następny ⟶</button>
+            <article class="card">
+              <div class="card-cover card-cover-alt"></div>
+              <div class="card-body">
+                <div class="card-title">Midnight Drive</div>
+                <div class="card-meta">Future Bass • 4:01</div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-cover"></div>
+              <div class="card-body">
+                <div class="card-title">Skyline</div>
+                <div class="card-meta">Chill Electronic • 2:58</div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-cover card-cover-alt"></div>
+              <div class="card-body">
+                <div class="card-title">Pulse</div>
+                <div class="card-meta">Night Mix • 3:42</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- Sekcja playlista YouTube Music (LM) -->
+        <section class="section">
+          <div class="player-embed">
+            <div class="player-header">
+              <div>
+                <div class="player-title">Playlista YouTube Music — Mixtape (LM)</div>
+                <div class="section-sub">Oficjalny odtwarzacz playlisty z YouTube, osadzony na stronie.</div>
+              </div>
+              <div class="player-badge">Źródło: YouTube</div>
+            </div>
+
+            <div class="player-frame-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/videoseries?list=LM"
+                title="YouTube playlist player LM"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Dolny pasek jak mini-player -->
+      <div class="bottom-bar">
+        <div class="bottom-left">
+          <div class="bottom-cover"></div>
+          <div>
+            <div class="bottom-meta-main">Neon Dreams</div>
+            <div class="bottom-meta-sub">Synth Wave • sample track</div>
           </div>
         </div>
-
-        <div class="panel playlist" id="playlist">
-          <h3>Lista utworów</h3>
-          <ul class="track-list" id="trackList"></ul>
+        <div class="bottom-controls">
+          <span>⏮</span>
+          <span>▶</span>
+          <span>⏭</span>
+          <div class="bottom-pill">LM – YouTube Music</div>
         </div>
       </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    © 2026 Music Zone
-  </footer>
-
-  <script>
-    const tracks = [
-      { title: "Neon Dreams", artist: "Synth Wave", src: "music/song1.mp3", time: "3:24" },
-      { title: "Midnight Drive", artist: "Future Bass", src: "music/song2.mp3", time: "4:01" },
-      { title: "Skyline", artist: "Chill Electronic", src: "music/song3.mp3", time: "2:58" },
-      { title: "Pulse", artist: "Night Mix", src: "music/song4.mp3", time: "3:42" }
-    ];
-
-    const audioPlayer = document.getElementById("audioPlayer");
-    const audioSource = document.getElementById("audioSource");
-    const trackList = document.getElementById("trackList");
-    const songTitle = document.getElementById("songTitle");
-    const songArtist = document.getElementById("songArtist");
-    const nowPlaying = document.getElementById("nowPlaying");
-
-    let currentTrack = 0;
-
-    function renderTracks() {
-      trackList.innerHTML = "";
-      tracks.forEach((track, index) => {
-        const li = document.createElement("li");
-        li.className = "track" + (index === currentTrack ? " active" : "");
-        li.innerHTML = `
-          <div class="track-info">
-            <b>${index + 1}. ${track.title}</b>
-            <span>${track.artist}</span>
-          </div>
-          <div class="pill">${track.time}</div>
-        `;
-        li.onclick = () => loadTrack(index);
-        trackList.appendChild(li);
-      });
-    }
-
-    function loadTrack(index) {
-      currentTrack = index;
-      audioSource.src = tracks[index].src;
-      audioPlayer.load();
-      audioPlayer.play().catch(() => {});
-      songTitle.textContent = tracks[index].title;
-      songArtist.textContent = tracks[index].artist;
-      nowPlaying.textContent = `Teraz gra: ${tracks[index].title}`;
-      renderTracks();
-    }
-
-    function nextTrack() {
-      loadTrack((currentTrack + 1) % tracks.length);
-    }
-
-    function prevTrack() {
-      loadTrack((currentTrack - 1 + tracks.length) % tracks.length);
-    }
-
-    renderTracks();
-    loadTrack(0);
-  </script>
+    </div>
+  </div>
 </body>
 </html>
