@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Melody - Odtwarzacz Muzyki</title>
+<style>
+:root{
+  --bg1:#0f1226; --bg2:#171a36; --card:rgba(255,255,255,.08); --card2:rgba(255,255,255,.12);
+  --text:#f5f7ff; --muted:#aab0d6; --accent:#7c5cff; --accent2:#24d2b5; --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; font-family:Inter,system-ui,Arial,sans-serif; color:var(--text);
+  background: radial-gradient(circle at top left,#24305e 0%, transparent 35%),
+              radial-gradient(circle at bottom right,#1d6b8f 0%, transparent 30%),
+              linear-gradient(135deg,var(--bg1),var(--bg2));
+  display:grid; place-items:center; padding:24px;
+}
+.player{
+  width:min(920px,100%); display:grid; grid-template-columns:1.1fr .9fr; gap:24px;
+}
+.card{
+  background:var(--card); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(18px);
+  border-radius:28px; box-shadow:var(--shadow);
+}
+.art{
+  padding:28px; display:flex; flex-direction:column; justify-content:space-between; min-height:560px; position:relative; overflow:hidden;
+}
+.art::before{
+  content:""; position:absolute; inset:-40%; background:conic-gradient(from 180deg, rgba(124,92,255,.25), rgba(36,210,181,.2), rgba(255,255,255,.05), rgba(124,92,255,.25));
+  animation:spin 14s linear infinite; filter:blur(20px);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.art > *{position:relative; z-index:1}
+.cover{
+  width:100%; aspect-ratio:1/1; border-radius:24px; background:
+    linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.05)),
+    radial-gradient(circle at 30% 30%, rgba(124,92,255,.9), transparent 38%),
+    radial-gradient(circle at 70% 70%, rgba(36,210,181,.9), transparent 35%),
+    linear-gradient(145deg,#1b2042,#0f1226);
+  display:grid; place-items:center; box-shadow:inset 0 1px 0 rgba(255,255,255,.15);
+}
+.vinyl{
+  width:62%; aspect-ratio:1/1; border-radius:50%; background:radial-gradient(circle at center,#14162e 0 12%, #0b0d1d 13% 23%, #1b1d34 24% 27%, #090b16 28% 100%);
+  position:relative; box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+.vinyl::before{content:""; position:absolute; inset:44%; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent2)); box-shadow:0 0 0 10px rgba(255,255,255,.08)}
+.meta h1{margin:18px 0 8px; font-size:clamp(28px,4vw,42px)}
+.meta p{margin:0; color:var(--muted); line-height:1.6}
+.right{padding:24px; display:flex; flex-direction:column; gap:18px}
+.topline{display:flex; justify-content:space-between; align-items:center}
+.badge{padding:10px 14px; border-radius:999px; background:rgba(124,92,255,.18); color:#ddd6ff; font-size:14px}
+.queue{display:grid; gap:12px}
+.item{
+  display:flex; align-items:center; gap:12px; padding:12px; border-radius:18px; background:rgba(255,255,255,.06);
+}
+.item.active{background:rgba(124,92,255,.18); border:1px solid rgba(124,92,255,.35)}
+.thumb{width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.item b{display:block}
+.item span{color:var(--muted); font-size:14px}
+.controls{padding:18px; border-radius:24px; background:var(--card2); display:grid; gap:16px}
+.bar{height:10px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden}
+.bar > div{width:48%; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.time{display:flex; justify-content:space-between; color:var(--muted); font-size:14px}
+.buttons{display:flex; justify-content:center; gap:14px; flex-wrap:wrap}
+.btn{
+  width:52px; height:52px; border:none; border-radius:50%; background:rgba(255,255,255,.12); color:var(--text);
+  font-size:18px; cursor:pointer; transition:.2s transform,.2s background;
+}
+.btn:hover{transform:translateY(-2px); background:rgba(255,255,255,.18)}
+.btn.play{width:68px; height:68px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; box-shadow:0 12px 30px rgba(124,92,255,.35)}
+.range{display:grid; gap:8px}
+input[type="range"]{width:100%; accent-color:var(--accent2)}
+.stats{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.pill{padding:10px 14px; border-radius:999px; background:rgba(255,255,255,.08); color:var(--muted); font-size:14px}
+@media (max-width:800px){.player{grid-template-columns:1fr}.art{min-height:480px}}
+</style>
+</head>
+<body>
+  <main class="player">
+    <section class="card art">
+      <div class="cover"><div class="vinyl"></div></div>
+      <div class="meta">
+        <h1>Midnight Waves</h1>
+        <p>Nowoczesny, minimalistyczny odtwarzacz muzyki z miękkim glassmorphismem, czytelnym układem i animowanym tłem.</p>
+      </div>
+    </section>
 
+    <section class="card right">
+      <div class="topline">
+        <div>
+          <div style="color:var(--muted);font-size:14px">Teraz odtwarzane</div>
+          <strong>Lo-fi Horizons</strong>
+        </div>
+        <div class="badge">HD Audio</div>
+      </div>
+
+      <div class="controls">
+        <div class="range">
+          <div class="bar"><div></div></div>
+          <div class="time"><span>1:42</span><span>3:36</span></div>
+        </div>
+        <div class="buttons">
+          <button class="btn">⟲</button>
+          <button class="btn">⟨</button>
+          <button class="btn play">▶</button>
+          <button class="btn">⟩</button>
+          <button class="btn">↻</button>
+        </div>
+        <div class="range">
+          <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:14px"><span>Głośność</span><span>78%</span></div>
+          <input type="range" min="0" max="100" value="78" />
+        </div>
+      </div>
+
+      <div>
+        <h3 style="margin:0 0 12px">Playlista</h3>
+        <div class="queue">
+          <div class="item active"><div class="thumb"></div><div><b>Lo-fi Horizons</b><span>Chill • 03:36</span></div></div>
+          <div class="item"><div class="thumb"></div><div><b>Neon Drive</b><span>Synthwave • 04:12</span></div></div>
+          <div class="item"><div class="thumb"></div><div><b>Cloud Motion</b><span>Ambient • 05:01</span></div></div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="pill">Tryb: ciemny</div>
+        <div class="pill">Equalizer: on</div>
+        <div class="pill">Bluetooth: ready</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
