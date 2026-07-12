@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NeoPulse</title>
+  <title>Music Zone</title>
   <style>
     :root{
       --bg:#050816;
-      --bg2:#090f24;
       --panel:rgba(255,255,255,.07);
       --panel2:rgba(255,255,255,.12);
-      --text:#ecf2ff;
-      --muted:#a8b3cf;
+      --text:#eef3ff;
+      --muted:#a6b2d6;
       --accent:#7c5cff;
       --accent2:#27d7ff;
       --line:rgba(255,255,255,.12);
@@ -19,22 +18,14 @@
       --radius:24px;
     }
 
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
-
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html{ scroll-behavior:smooth; }
     body{
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background:
         radial-gradient(circle at top left, rgba(124,92,255,.25), transparent 30%),
         radial-gradient(circle at top right, rgba(39,215,255,.18), transparent 28%),
-        linear-gradient(135deg, var(--bg), var(--bg2));
+        linear-gradient(135deg, #050816, #090f24);
       color:var(--text);
       min-height:100vh;
       overflow-x:hidden;
@@ -50,7 +41,7 @@
       background-size:80px 80px;
       mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
       pointer-events:none;
-      opacity:.35;
+      opacity:.3;
     }
 
     .container{
@@ -73,6 +64,7 @@
       align-items:center;
       padding:18px 0;
       gap:20px;
+      flex-wrap:wrap;
     }
 
     .brand{
@@ -80,7 +72,6 @@
       align-items:center;
       gap:12px;
       font-weight:800;
-      letter-spacing:.4px;
     }
 
     .brand-mark{
@@ -92,24 +83,7 @@
       display:grid;
       place-items:center;
       font-weight:900;
-    }
-
-    .nav{
-      display:flex;
-      gap:18px;
-      flex-wrap:wrap;
-      justify-content:center;
-    }
-
-    .nav a{
-      color:var(--muted);
-      text-decoration:none;
-      font-weight:600;
-      transition:.25s;
-    }
-
-    .nav a:hover{
-      color:var(--text);
+      color:#08111f;
     }
 
     .btn{
@@ -140,32 +114,18 @@
       backdrop-filter:blur(12px);
     }
 
-    .btn:hover{
-      transform:translateY(-2px);
-      filter:brightness(1.05);
-    }
+    .btn:hover{ transform:translateY(-2px); }
 
     .hero{
-      padding:84px 0 50px;
-      position:relative;
+      padding:70px 0 35px;
     }
 
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.4fr .9fr;
-      gap:24px;
-      align-items:stretch;
-    }
-
-    .hero-card, .glass-card{
+    .hero-card{
       background:var(--panel);
       border:1px solid var(--line);
       backdrop-filter:blur(18px);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
-    }
-
-    .hero-card{
       padding:42px;
       position:relative;
       overflow:hidden;
@@ -174,9 +134,10 @@
     .hero-card::after{
       content:"";
       position:absolute;
-      inset:auto -120px -120px auto;
-      width:280px;
-      height:280px;
+      right:-120px;
+      bottom:-120px;
+      width:300px;
+      height:300px;
       background:radial-gradient(circle, rgba(39,215,255,.2), transparent 65%);
       pointer-events:none;
     }
@@ -195,7 +156,7 @@
     }
 
     h1{
-      font-size:clamp(2.4rem, 6vw, 5rem);
+      font-size:clamp(2.3rem, 6vw, 4.8rem);
       line-height:1.02;
       margin-bottom:18px;
       letter-spacing:-1.5px;
@@ -210,322 +171,271 @@
 
     .lead{
       color:var(--muted);
-      font-size:1.08rem;
+      font-size:1.06rem;
       line-height:1.75;
-      max-width:62ch;
+      max-width:70ch;
       margin-bottom:28px;
     }
 
-    .hero-actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
+    .main{
+      padding:10px 0 70px;
     }
 
-    .stats{
+    .layout{
       display:grid;
-      gap:16px;
-      grid-template-columns:1fr;
-    }
-
-    .stat{
-      padding:22px;
-      border-radius:22px;
-      background:rgba(255,255,255,.05);
-      border:1px solid var(--line);
-    }
-
-    .stat b{
-      display:block;
-      font-size:1.5rem;
-      margin-bottom:6px;
-    }
-
-    .stat span{
-      color:var(--muted);
-    }
-
-    .section{
-      padding:22px 0 80px;
-    }
-
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:end;
+      grid-template-columns:1.2fr .8fr;
       gap:20px;
-      margin-bottom:22px;
-      flex-wrap:wrap;
-    }
-
-    .section-head h2{
-      font-size:2rem;
-      letter-spacing:-.5px;
-    }
-
-    .section-head p{
-      color:var(--muted);
-      max-width:55ch;
-    }
-
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:18px;
-    }
-
-    .card{
-      padding:24px;
-      border-radius:22px;
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--line);
-      transition:.25s;
-    }
-
-    .card:hover{
-      transform:translateY(-4px);
-      background:rgba(255,255,255,.085);
-    }
-
-    .icon{
-      width:52px;
-      height:52px;
-      border-radius:16px;
-      display:grid;
-      place-items:center;
-      margin-bottom:16px;
-      background:linear-gradient(135deg, rgba(124,92,255,.25), rgba(39,215,255,.18));
-      border:1px solid rgba(255,255,255,.12);
-      font-size:1.4rem;
-    }
-
-    .card h3{
-      margin-bottom:10px;
-      font-size:1.15rem;
-    }
-
-    .card p{
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .split{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-      align-items:stretch;
+      align-items:start;
     }
 
     .panel{
-      padding:28px;
-      border-radius:22px;
-      background:rgba(255,255,255,.06);
+      background:var(--panel);
       border:1px solid var(--line);
+      backdrop-filter:blur(18px);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
     }
 
-    .list{
+    .player{
+      padding:26px;
+    }
+
+    .player-cover{
+      width:100%;
+      aspect-ratio:16/9;
+      border-radius:22px;
+      background:
+        radial-gradient(circle at top left, rgba(124,92,255,.45), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(39,215,255,.35), transparent 30%),
+        linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.10);
+      display:flex;
+      align-items:end;
+      padding:22px;
+      margin-bottom:18px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .player-cover h2{
+      font-size:1.8rem;
+      margin-bottom:6px;
+    }
+
+    .player-cover p{
+      color:var(--muted);
+    }
+
+    .now-playing{
+      margin:10px 0 18px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    audio{
+      width:100%;
+      margin:10px 0 18px;
+      border-radius:14px;
+    }
+
+    .controls{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .playlist{
+      padding:26px;
+    }
+
+    .playlist h3{
+      margin-bottom:16px;
+      font-size:1.3rem;
+    }
+
+    .track-list{
       list-style:none;
       display:grid;
-      gap:14px;
-      margin-top:18px;
+      gap:12px;
     }
 
-    .list li{
-      padding:14px 16px;
-      border-radius:16px;
+    .track{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding:16px 18px;
+      border-radius:18px;
       background:rgba(255,255,255,.05);
       border:1px solid rgba(255,255,255,.08);
+      transition:.22s;
+      cursor:pointer;
+    }
+
+    .track:hover{
+      background:rgba(255,255,255,.085);
+      transform:translateY(-2px);
+    }
+
+    .track.active{
+      border-color:rgba(124,92,255,.65);
+      background:rgba(124,92,255,.16);
+    }
+
+    .track-info{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .track-info b{
+      font-size:1rem;
+    }
+
+    .track-info span{
       color:var(--muted);
+      font-size:.92rem;
+    }
+
+    .pill{
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:.85rem;
+      white-space:nowrap;
     }
 
     .footer{
-      padding:30px 0 50px;
-      color:var(--muted);
+      padding:24px 0 45px;
       text-align:center;
+      color:var(--muted);
       border-top:1px solid var(--line);
     }
 
     @media (max-width: 920px){
-      .hero-grid, .cards, .split{
-        grid-template-columns:1fr;
-      }
-      .topbar-inner{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-      .nav{
-        justify-content:flex-start;
-      }
-    }
-
-    @media (max-width: 560px){
-      .hero-card, .panel, .card{
-        padding:20px;
-      }
-      h1{
-        font-size:2.4rem;
-      }
-      .hero{
-        padding-top:52px;
-      }
+      .layout{ grid-template-columns:1fr; }
+      .hero-card, .player, .playlist{ padding:20px; }
     }
   </style>
 </head>
 <body>
-
   <header class="topbar">
     <div class="container topbar-inner">
       <div class="brand">
-        <div class="brand-mark">N</div>
+        <div class="brand-mark">M</div>
         <div>
-          <div>NeoPulse</div>
-          <small style="color:var(--muted)">Premium website concept</small>
+          <div>Music Zone</div>
+          <small style="color:var(--muted)">Twoja playlistowa strona</small>
         </div>
       </div>
-
-      <nav class="nav">
-        <a href="#o-nas">O nas</a>
-        <a href="#funkcje">Funkcje</a>
-        <a href="#galeria">Sekcje</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
-
-      <a class="btn btn-secondary" href="#kontakt">Zobacz więcej</a>
+      <a class="btn btn-secondary" href="#playlist">Playlista</a>
     </div>
   </header>
 
   <main class="container">
     <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-card">
-          <div class="kicker">⚡ Nowoczesny design • płynne animacje • premium feel</div>
-          <h1>Strona, która od razu robi <span class="gradient">wrażenie</span>.</h1>
-          <p class="lead">
-            To jest elegancki, responsywny layout z mocnym pierwszym ekranem, kartami
-            informacyjnymi i dopracowanym stylem. Nadaje się jako strona główna projektu,
-            serwera RP, klanu, firmy albo panelu społeczności.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#funkcje">Poznaj funkcje</a>
-            <a class="btn btn-secondary" href="#o-nas">Otwórz sekcje</a>
-          </div>
-        </div>
-
-        <div class="stats">
-          <div class="glass-card stat">
-            <b>100%</b>
-            <span>responsywny układ na telefon, tablet i desktop</span>
-          </div>
-          <div class="glass-card stat">
-            <b>Glassmorphism</b>
-            <span>przezroczyste panele, blur i neonowe akcenty</span>
-          </div>
-          <div class="glass-card stat">
-            <b>Modularny</b>
-            <span>łatwy do przerobienia pod RP, gaming lub firmę</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="funkcje">
-      <div class="section-head">
-        <div>
-          <h2>Co tu robi efekt</h2>
-          <p>Najlepiej wyglądają wyraźne sekcje, kontrastowe kolory i spójne odstępy.</p>
-        </div>
-      </div>
-
-      <div class="cards">
-        <article class="card">
-          <div class="icon">✦</div>
-          <h3>Mocny hero</h3>
-          <p>Duży nagłówek, gradient i wyraźne CTA sprawiają, że strona od razu wygląda profesjonalnie.</p>
-        </article>
-
-        <article class="card">
-          <div class="icon">▣</div>
-          <h3>Premium karty</h3>
-          <p>Treść jest podzielona na czytelne bloki, co daje wrażenie porządku i jakości.</p>
-        </article>
-
-        <article class="card">
-          <div class="icon">↗</div>
-          <h3>Nowoczesny styl</h3>
-          <p>Dark mode, blur, gradienty i delikatne linie tworzą klimat nowoczesnego dashboardu.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="o-nas">
-      <div class="split">
-        <div class="panel">
-          <h2 style="margin-bottom:12px;">O projekcie</h2>
-          <p style="color:var(--muted); line-height:1.8;">
-            Ta sekcja dobrze nadaje się na opis Twojego zespołu, serwera lub marki.
-            Możesz tu podmienić treść na informacje o społeczności, celach, rekrutacji
-            albo ofercie.
-          </p>
-          <ul class="list">
-            <li>Profesjonalny wygląd.</li>
-            <li>Łatwa rozbudowa o kolejne moduły.</li>
-            <li>Świetna baza pod panel administracyjny albo stronę RP.</li>
-          </ul>
-        </div>
-
-        <div class="panel">
-          <h2 style="margin-bottom:12px;">Kontakt i CTA</h2>
-          <p style="color:var(--muted); line-height:1.8;">
-            W tym miejscu możesz dodać link do Discorda, formularz rekrutacji albo
-            przycisk do logowania. Całość jest gotowa pod dalszą rozbudowę.
-          </p>
-          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;">
-            <a class="btn btn-primary" href="#kontakt">Start</a>
-            <a class="btn btn-secondary" href="#galeria">Zobacz sekcje</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="galeria">
-      <div class="section-head">
-        <div>
-          <h2>Możliwe sekcje</h2>
-          <p>Możesz to łatwo przerobić na stronę klanu, serwera, firmy albo panelu RP.</p>
-        </div>
-      </div>
-
-      <div class="cards">
-        <article class="card">
-          <h3>Informacje</h3>
-          <p>Opis projektu, zasady, misja i najważniejsze dane.</p>
-        </article>
-        <article class="card">
-          <h3>Nowości</h3>
-          <p>Aktualizacje, ogłoszenia i zmiany na stronie lub serwerze.</p>
-        </article>
-        <article class="card">
-          <h3>Rekrutacja</h3>
-          <p>Przycisk do formularza, logowania lub aplikacji do zespołu.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="kontakt">
-      <div class="panel" style="text-align:center;">
-        <h2 style="margin-bottom:12px;">Gotowe do podmiany pod Twój projekt</h2>
-        <p style="color:var(--muted); line-height:1.8; max-width:70ch; margin:0 auto 22px;">
-          Wystarczy zmienić nazwę, kolory i treść sekcji, a dostajesz stronę, która wygląda
-          dużo bardziej premium niż standardowy prosty layout.
+      <div class="hero-card">
+        <div class="kicker">🎵 Nowoczesna strona do muzyki</div>
+        <h1>Słuchaj utworów w <span class="gradient">eleganckim</span> stylu.</h1>
+        <p class="lead">
+          To gotowa strona z odtwarzaczem audio i listą utworów. Klikasz numer
+          piosenki, a ona od razu się ładuje i gra. Możesz to łatwo przerobić pod
+          swoje MP3, SoundCloud, playlistę albo muzyczne portfolio.
         </p>
-        <a class="btn btn-primary" href="#top">Wróć na górę</a>
+        <a class="btn btn-primary" href="#player">Otwórz odtwarzacz</a>
+      </div>
+    </section>
+
+    <section class="main" id="player">
+      <div class="layout">
+        <div class="panel player">
+          <div class="player-cover">
+            <div>
+              <h2 id="songTitle">Neon Dreams</h2>
+              <p id="songArtist">Music Zone • sample track</p>
+            </div>
+          </div>
+
+          <div class="now-playing" id="nowPlaying">Teraz gra: Neon Dreams</div>
+          <audio id="audioPlayer" controls>
+            <source id="audioSource" src="" type="audio/mpeg" />
+            Twoja przeglądarka nie obsługuje audio.
+          </audio>
+
+          <div class="controls">
+            <button class="btn btn-primary" onclick="prevTrack()">⟵ Poprzedni</button>
+            <button class="btn btn-secondary" onclick="nextTrack()">Następny ⟶</button>
+          </div>
+        </div>
+
+        <div class="panel playlist" id="playlist">
+          <h3>Lista utworów</h3>
+          <ul class="track-list" id="trackList"></ul>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    © 2026 NeoPulse — nowoczesny layout demo
+    © 2026 Music Zone
   </footer>
 
+  <script>
+    const tracks = [
+      { title: "Neon Dreams", artist: "Synth Wave", src: "music/song1.mp3", time: "3:24" },
+      { title: "Midnight Drive", artist: "Future Bass", src: "music/song2.mp3", time: "4:01" },
+      { title: "Skyline", artist: "Chill Electronic", src: "music/song3.mp3", time: "2:58" },
+      { title: "Pulse", artist: "Night Mix", src: "music/song4.mp3", time: "3:42" }
+    ];
+
+    const audioPlayer = document.getElementById("audioPlayer");
+    const audioSource = document.getElementById("audioSource");
+    const trackList = document.getElementById("trackList");
+    const songTitle = document.getElementById("songTitle");
+    const songArtist = document.getElementById("songArtist");
+    const nowPlaying = document.getElementById("nowPlaying");
+
+    let currentTrack = 0;
+
+    function renderTracks() {
+      trackList.innerHTML = "";
+      tracks.forEach((track, index) => {
+        const li = document.createElement("li");
+        li.className = "track" + (index === currentTrack ? " active" : "");
+        li.innerHTML = `
+          <div class="track-info">
+            <b>${index + 1}. ${track.title}</b>
+            <span>${track.artist}</span>
+          </div>
+          <div class="pill">${track.time}</div>
+        `;
+        li.onclick = () => loadTrack(index);
+        trackList.appendChild(li);
+      });
+    }
+
+    function loadTrack(index) {
+      currentTrack = index;
+      audioSource.src = tracks[index].src;
+      audioPlayer.load();
+      audioPlayer.play().catch(() => {});
+      songTitle.textContent = tracks[index].title;
+      songArtist.textContent = tracks[index].artist;
+      nowPlaying.textContent = `Teraz gra: ${tracks[index].title}`;
+      renderTracks();
+    }
+
+    function nextTrack() {
+      loadTrack((currentTrack + 1) % tracks.length);
+    }
+
+    function prevTrack() {
+      loadTrack((currentTrack - 1 + tracks.length) % tracks.length);
+    }
+
+    renderTracks();
+    loadTrack(0);
+  </script>
 </body>
 </html>
