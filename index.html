@@ -2,425 +2,169 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Emergency Hamburg RP - Polski Serwer</title>
+    <title>Moja strona z zakładkami</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Ładniejsza czcionka -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --bg-gradient: radial-gradient(circle at top left, #0f172a 0, #020617 35%, #0b1120 70%, #020617 100%);
-            --accent: #38bdf8;
-            --accent-soft: rgba(56, 189, 248, 0.25);
-            --text-main: #e5e7eb;
-            --text-muted: #9ca3af;
-            --danger: #f97373;
-            --success: #4ade80;
-        }
-
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;              /* układ: sidebar + content obok siebie */
             min-height: 100vh;
-            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            color: var(--text-main);
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-        }
-
-        /* Tło z efektami */
-        .background-orbits {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .orbit {
-            position: absolute;
-            border-radius: 999px;
-            filter: blur(60px);
-            opacity: 0.45;
-            mix-blend-mode: screen;
-        }
-
-        .orbit.orbit-a {
-            width: 420px;
-            height: 420px;
-            top: -80px;
-            left: -60px;
-            background: conic-gradient(from 120deg, #38bdf8, #6366f1, #22c55e, #38bdf8);
-        }
-
-        .orbit.orbit-b {
-            width: 360px;
-            height: 360px;
-            bottom: -120px;
-            right: -40px;
-            background: conic-gradient(from 40deg, #f97373, #a855f7, #38bdf8, #f97373);
-        }
-
-        /* Layout */
-        .page {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 32px 18px 42px;
-        }
-
-        header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-mark {
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle at 30% 0%, #38bdf8 0, transparent 60%);
-            border-radius: 12px;
-            border: 1px solid rgba(148, 163, 184, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
-        }
-
-        .logo-mark span {
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 0.05em;
+            background: #0b1120;
             color: #e5e7eb;
         }
 
-        .logo-text h1 {
-            margin: 0;
-            font-size: 1.9rem;
-            letter-spacing: 0.03em;
-        }
-
-        .logo-text p {
-            margin: 3px 0 0;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .header-meta {
-            text-align: right;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .header-meta .pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(148, 163, 184, 0.4);
-        }
-
-        .header-meta .indicator {
-            width: 7px;
-            height: 7px;
-            border-radius: 999px;
-            background: var(--success);
-            box-shadow: 0 0 0 6px rgba(74, 222, 128, 0.2);
-        }
-
-        /* Nawigacja */
+        /* Lewy pasek (zakładki) */
         nav {
-            margin-bottom: 24px;
-            border-radius: 999px;
+            width: 240px;               /* szerokość sidebaru */
             background: rgba(15, 23, 42, 0.9);
-            border: 1px solid rgba(148, 163, 184, 0.4);
-            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.85);
-            overflow-x: auto;
+            border-right: 1px solid #1f2937;
+            padding: 20px 16px;
+        }
+
+        nav h2 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: #93c5fd;
         }
 
         nav ul {
-            margin: 0;
-            padding: 8px;
             list-style: none;
-            display: flex;
-            gap: 6px;
+        }
+
+        nav li + li {
+            margin-top: 8px;
         }
 
         nav a {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            border-radius: 999px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            white-space: nowrap;
-            transition: all 0.18s ease;
-        }
-
-        nav a span {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--accent) 0, transparent 70%);
-            opacity: 0.4;
-        }
-
-        nav a.active,
-        nav a:hover {
-            color: var(--text-main);
-            background: rgba(24, 35, 55, 0.9);
-            box-shadow: 0 0 0 1px var(--accent-soft);
-        }
-
-        /* Glassmorphism cards */
-        .grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-            gap: 18px;
-        }
-
-        @media (max-width: 900px) {
-            .grid {
-                grid-template-columns: minmax(0, 1fr);
-            }
-        }
-
-        .card {
-            position: relative;
-            padding: 18px 18px 20px;
-            border-radius: 18px;
-            background: rgba(15, 23, 42, 0.80);
-            border: 1px solid rgba(148, 163, 184, 0.45);
-            box-shadow:
-                0 24px 40px rgba(15, 23, 42, 0.95),
-                0 0 0 1px rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(18px);
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            inset: -1px;
-            border-radius: inherit;
-            border: 1px solid rgba(125, 211, 252, 0.16);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card h2 {
-            margin: 0 0 8px;
-            font-size: 1.2rem;
-            color: var(--accent);
-            letter-spacing: 0.03em;
-        }
-
-        .card p {
-            margin: 0 0 10px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        .chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 10px;
-        }
-
-        .chip {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid rgba(148, 163, 184, 0.55);
-            color: var(--text-muted);
-        }
-
-        .chip--accent {
-            border-color: var(--accent-soft);
-            color: var(--accent);
-            background: rgba(15, 23, 42, 0.96);
-        }
-
-        ul, ol {
-            padding-left: 18px;
-            margin: 4px 0 10px;
-            font-size: 0.9rem;
-        }
-
-        li {
-            margin-bottom: 5px;
-        }
-
-        strong {
+            display: block;
+            padding: 10px 12px;
+            border-radius: 8px;
             color: #e5e7eb;
-            font-weight: 600;
-        }
-
-        a {
-            color: var(--accent);
             text-decoration: none;
+            font-size: 0.95rem;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
         }
 
-        a:hover {
-            text-decoration: underline;
+        nav a:hover {
+            background: rgba(59, 130, 246, 0.25);
+            color: #bfdbfe;
+            transform: translateX(2px);
         }
 
-        /* Stopka */
-        footer {
-            margin-top: 24px;
-            padding: 14px 8px 4px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-align: center;
+        nav a.active {
+            background: rgba(37, 99, 235, 0.6);
+            color: #f9fafb;
+        }
+
+        /* Prawa część – treść */
+        main {
+            flex: 1;                    /* zajmuje całą resztę szerokości */
+            padding: 24px;
+        }
+
+        .section {
+            display: none;              /* domyślnie ukryte */
+            max-width: 900px;
+        }
+
+        .section.active {
+            display: block;             /* pokazujemy aktualną zakładkę */
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: #bfdbfe;
+        }
+
+        p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #d1d5db;
+        }
+
+        /* Responsywność – na bardzo wąskich ekranach sidebar na górze */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            nav {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #1f2937;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            nav h2 {
+                width: 100%;
+            }
+            nav ul {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            nav li {
+                margin: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Tło efektowe -->
-    <div class="background-orbits">
-        <div class="orbit orbit-a"></div>
-        <div class="orbit orbit-b"></div>
-    </div>
+    <nav>
+        <h2>Nawigacja</h2>
+        <ul>
+            <li><a href="#start" class="active" onclick="showSection('start')">Strona główna</a></li>
+            <li><a href="#info" onclick="showSection('info')">Informacje</a></li>
+            <li><a href="#regulamin" onclick="showSection('regulamin')">Regulamin</a></li>
+            <li><a href="#kontakt" onclick="showSection('kontakt')">Kontakt</a></li>
+        </ul>
+    </nav>
 
-    <div class="page">
-        <header>
-            <div class="logo">
-                <div class="logo-mark">
-                    <span>EH</span>
-                </div>
-                <div class="logo-text">
-                    <h1>Emergency Hamburg RP</h1>
-                    <p>Polski serwer RolePlay stworzony przez graczy – dla graczy</p>
-                </div>
-            </div>
-            <div class="header-meta">
-                <div class="pill">
-                    <span class="indicator"></span>
-                    <span>Serwer online • Sesje RP codziennie</span>
-                </div>
-                <div style="margin-top: 6px;">
-                    Platforma: Roblox • Język: PL • Tryb: Realistyczny
-                </div>
-            </div>
-        </header>
+    <main>
+        <section id="start" class="section active">
+            <h1>Strona główna</h1>
+            <p>Tu możesz dać ogólny opis projektu / serwera / strony.</p>
+        </section>
 
-        <nav>
-            <ul>
-                <li><a href="#server-info" class="active"><span></span>Serwer</a></li>
-                <li><a href="#rules"><span></span>Regulamin RP</a></li>
-                <li><a href="#fractions"><span></span>Frakcje</a></li>
-                <li><a href="#recruitment"><span></span>Rekrutacja</a></li>
-                <li><a href="#staff"><span></span>Administracja</a></li>
-            </ul>
-        </nav>
+        <section id="info" class="section">
+            <h1>Informacje</h1>
+            <p>W tej zakładce dodaj szczegółowe informacje, np. o serwerze RP, frakcjach itd.</p>
+        </section>
 
-        <div class="grid">
-            <!-- Kolumna lewa: serwer + regulamin -->
-            <div class="column-left">
-                <section id="server-info" class="card">
-                    <h2>Informacje o serwerze</h2>
-                    <div class="chips">
-                        <span class="chip chip--accent">Polski RP</span>
-                        <span class="chip">Minimalny wiek: 13+ (zalecane 15+)</span>
-                        <span class="chip">Wymagany Discord + mikrofon</span>
-                    </div>
-                    <p>
-                        Serwer Emergency Hamburg RP nastawiony jest na spokojną, realistyczną rozgrywkę w klimacie służb ratunkowych oraz cywilnego życia w mieście Hamburg.
-                    </p>
-                    <ul>
-                        <li>Nazwa serwera w Emergency Hamburg: <strong>Polski RP | Emergency Hamburg</strong></li>
-                        <li>Sesje RP odbywają się w godzinach wieczornych (CET).</li>
-                        <li>Nowi gracze przechodzą krótkie wprowadzenie do zasad RP.</li>
-                    </ul>
-                    <p>
-                        Dołącz na nasz Discord: 
-                        <strong><a href="https://discord.gg/twoj-link" target="_blank" rel="noopener">discord.gg/twoj-link</a></strong>
-                    </p>
-                </section>
+        <section id="regulamin" class="section">
+            <h1>Regulamin</h1>
+            <p>Tutaj wklej lub wpisz zasady, które mają obowiązywać użytkowników.</p>
+        </section>
 
-                <section id="rules" class="card">
-                    <h2>Regulamin ogólny RP</h2>
-                    <p>Wejście na serwer oznacza akceptację poniższego regulaminu. Nieznajomość zasad nie zwalnia z ich przestrzegania.</p>
-                    <ol>
-                        <li>Szanuj innych – zakaz wyzwisk, nękania, dyskryminacji i toksycznych zachowań.</li>
-                        <li>Zakaz RDM/VDM – każde działanie musi mieć logiczne uzasadnienie w RP.</li>
-                        <li>Obowiązek odgrywania obrażeń, stresu i konsekwencji decyzji swojej postaci.</li>
-                        <li>Zakaz exploitów, cheatów, skryptów oraz celowego wykorzystywania bugów gry.</li>
-                        <li>Na kanałach głosowych obowiązuje kultura wypowiedzi, język polski oraz podstawowe zasady netykiety.</li>
-                        <li>Decyzje administracji są ostateczne; odwołania przyjmowane są wyłącznie przez system ticketów na Discordzie.</li>
-                    </ol>
-                    <p>
-                        System kar obejmuje ostrzeżenia, mute, kick oraz ban czasowy lub stały – w zależności od skali naruszenia.
-                    </p>
-                </section>
-            </div>
+        <section id="kontakt" class="section">
+            <h1>Kontakt</h1>
+            <p>Link do Discorda, mail, formularz zgłoszeniowy – wszystko co potrzebne, żeby się z Tobą skontaktować.</p>
+        </section>
 
-            <!-- Kolumna prawa: frakcje + rekrutacja + administracja -->
-            <div class="column-right">
-                <section id="fractions" class="card">
-                    <h2>Frakcje na serwerze</h2>
-                    <p>Na serwerze dostępne są frakcje służb oraz role cywilne. Awans w strukturach zależy od aktywności i jakości odgrywania RP.</p>
-                    <ul>
-                        <li><strong>Policja</strong> – reagowanie na zgłoszenia, patrole, kontrola ruchu drogowego, interwencje.</li>
-                        <li><strong>Straż Pożarna</strong> – pożary, wypadki, akcje techniczne, wsparcie służb medycznych.</li>
-                        <li><strong>Ratownictwo Medyczne</strong> – pomoc medyczna, transport do szpitala, triage na miejscu zdarzenia.</li>
-                        <li><strong>Cywile</strong> – praca, życie codzienne, inicjowanie sytuacji RP w mieście.</li>
-                    </ul>
-                </section>
+        <script>
+            function showSection(id) {
+                // przełączanie widoczności sekcji
+                const sections = document.querySelectorAll('.section');
+                sections.forEach(sec => {
+                    sec.classList.toggle('active', sec.id === id);
+                });
 
-                <section id="recruitment" class="card">
-                    <h2>Rekrutacja do frakcji</h2>
-                    <p>Aby dołączyć do jednej z frakcji, wypełnij formularz w zakładce <strong>#podania</strong> na Discordzie.</p>
-                    <ul>
-                        <li>Minimum 10 godzin spędzonych w Emergency Hamburg.</li>
-                        <li>Brak kar na serwerze w ostatnich 30 dni.</li>
-                        <li>Znajomość regulaminu ogólnego oraz podstawowych zasad wybranej frakcji.</li>
-                    </ul>
-                    <p>
-                        Standardowy czas rozpatrzenia podania wynosi do 72 godzin. Po akceptacji kandydat przechodzi krótkie szkolenie wstępne prowadzone przez kadrę.
-                    </p>
-                </section>
-
-                <section id="staff" class="card">
-                    <h2>Administracja i kontakt</h2>
-                    <p>W razie problemów technicznych, konfliktów lub propozycji zmian, skontaktuj się z administracją poprzez system ticketów.</p>
-                    <ul>
-                        <li><strong>Owner:</strong> Nine</li>
-                        <li><strong>Head Admin:</strong> [nick]</li>
-                        <li><strong>Moderatorzy:</strong> [lista nicków]</li>
-                    </ul>
-                    <p>
-                        Tickety zakładamy na Discordzie w kanale <strong>#support</strong>. Opisz sytuację, podaj datę, nicki uczestników oraz ewentualne dowody (screen, zapis). 
-                    </p>
-                </section>
-            </div>
-        </div>
-
-        <footer>
-            Emergency Hamburg RP &copy; 2026 • Projekt niezależny, niepowiązany oficjalnie z twórcami gry Emergency Hamburg.
-        </footer>
-    </div>
+                // podświetlenie aktywnej zakładki w sidebarze
+                const links = document.querySelectorAll('nav a');
+                links.forEach(link => {
+                    const target = link.getAttribute('href').replace('#', '');
+                    link.classList.toggle('active', target === id);
+                });
+            }
+        </script>
+    </main>
 </body>
 </html>
