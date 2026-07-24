@@ -6,99 +6,411 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root{
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
             --bg-gradient: radial-gradient(circle at top left, #1e3a8a 0%, #0f172a 35%, #020617 100%);
-            --accent: #38bdf8; --accent-2: #a855f7;
-            --text-main: #e5e7eb; --text-muted: #9ca3af;
-            --card-bg: rgba(15,23,42,0.75);
-        }
-        body{
-            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-            min-height:100vh; display:flex;
-            background:var(--bg-gradient); color:var(--text-main); padding:16px;
-        }
-        .layout{ display:flex; width:100%; max-width:1280px; margin:0 auto; gap:20px; }
-
-        /* SIDEBAR (skrócone, bez zmian funkcjonalnych) */
-        .sidebar{ width:260px; background:rgba(15,23,42,0.65); border-radius:20px;
-            border:1px solid rgba(148,163,184,0.35); box-shadow:0 24px 60px rgba(15,23,42,0.9);
-            backdrop-filter:blur(18px); padding:20px 18px; display:flex; flex-direction:column;
-        }
-        .logo{ display:flex; align-items:center; gap:12px; margin-bottom:20px; }
-        .logo-icon{ width:36px; height:36px; border-radius:999px;
-            background:conic-gradient(from 180deg,#38bdf8,#a855f7,#22c55e,#38bdf8);
-            box-shadow:0 0 18px rgba(56,189,248,0.8);
-        }
-        .logo-text span:first-child{ font-size:1.05rem; font-weight:600; text-transform:uppercase; }
-        .logo-text span:last-child{ font-size:0.8rem; color:var(--text-muted); }
-        .nav-title{ font-size:0.8rem; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
-        .nav-list{ list-style:none; margin-bottom:16px; }
-        .nav-item + .nav-item{ margin-top:6px; }
-        .nav-link{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px;
-            color:var(--text-main); text-decoration:none; font-size:0.92rem; transition:background .2s, transform .1s;
-            cursor:pointer;
-        }
-        .nav-link span.icon-dot{ width:7px; height:7px; border-radius:999px; background:rgba(148,163,184,0.6); }
-        .nav-link.active{ background:linear-gradient(135deg, rgba(56,189,248,0.18), rgba(168,85,247,0.16));
-            color:#f9fafb; box-shadow:0 12px 25px rgba(15,23,42,0.9);
+            --accent: #38bdf8;
+            --accent-2: #a855f7;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --card-bg: rgba(15, 23, 42, 0.75);
         }
 
-        /* CONTENT */
-        .content{ flex:1; background: rgba(15,23,42,0.8); border-radius:24px;
-            border:1px solid rgba(148,163,184,0.4); box-shadow:0 24px 70px rgba(0,0,0,0.75);
-            backdrop-filter:blur(22px); padding:26px; position:relative; overflow:hidden;
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            padding: 16px;
         }
-        .content::before{ content:""; position:absolute; inset:-25%;
+
+        .layout {
+            display: flex;
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: rgba(15, 23, 42, 0.65);
+            border-radius: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(18px);
+            padding: 20px 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            background: conic-gradient(from 180deg, #38bdf8, #a855f7, #22c55e, #38bdf8);
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text span:first-child {
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .logo-text span:last-child {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .nav-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .nav-list {
+            list-style: none;
+            margin-bottom: 16px;
+        }
+
+        .nav-item + .nav-item {
+            margin-top: 6px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.92rem;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s, color 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link span.icon-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.6);
+        }
+
+        .nav-link.active span.icon-dot {
+            background: var(--accent);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(168, 85, 247, 0.16));
+            box-shadow: 0 12px 25px rgba(15, 23, 42, 0.9);
+            color: #f9fafb;
+        }
+
+        .nav-link:hover {
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateX(3px);
+        }
+
+        .nav-label-main {
+            font-weight: 500;
+        }
+
+        .nav-label-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.35);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .sidebar-footer span {
+            display: block;
+        }
+
+        .content {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 24px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            box-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.75),
+                0 0 0 1px rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(22px);
+            padding: 26px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .content::before {
+            content: "";
+            position: absolute;
+            inset: -25%;
             background:
-                radial-gradient(circle at 10% 20%, rgba(56,189,248,0.15), transparent 55%),
-                radial-gradient(circle at 80% 0%, rgba(168,85,247,0.12), transparent 60%);
-            opacity:0.85; pointer-events:none;
+                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.15), transparent 55%),
+                radial-gradient(circle at 80% 0%, rgba(168, 85, 247, 0.12), transparent 60%);
+            opacity: 0.85;
+            pointer-events: none;
         }
-        .content-inner{ position:relative; z-index:1; }
-        .hero-row{ display:flex; gap:18px; margin-bottom:22px; flex-wrap:wrap; }
-        .hero-pill{ padding:6px 10px; border-radius:999px; border:1px solid rgba(56,189,248,0.4);
-            color:#bae6fd; background:rgba(15,23,42,0.8);
+
+        .content-inner {
+            position: relative;
+            z-index: 1;
         }
-        .section{ display:none; max-width:100%; margin-top:8px; }
-        .section.active{ display:block; }
-        h2{ font-size:1.4rem; margin-bottom:10px; color:#bfdbfe; }
-        p, li{ color:var(--text-main); font-size:0.95rem; line-height:1.6; }
-        ul{ margin-top:6px; padding-left:18px; }
 
-        /* PROPERTY GRID & CARD */
-        .property-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:14px; }
-        .property-card{ background:var(--card-bg); border:1px solid rgba(148,163,184,0.25);
-            border-radius:18px; overflow:hidden; box-shadow:0 16px 35px rgba(0,0,0,0.35);
-            transition:transform .15s, box-shadow .15s;
-            display:flex; flex-direction:column;
+        .hero-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 22px;
         }
-        .property-card:hover{ transform:translateY(-3px); box-shadow:0 22px 45px rgba(0,0,0,0.45); }
-        .property-card img{ width:100%; height:170px; object-fit:cover; display:block; }
-        .property-body{ padding:14px; display:flex; flex-direction:column; gap:10px; flex:1; }
-        .property-body h3{ font-size:1rem; color:#e0f2fe; margin-bottom:4px; }
-        .property-body p{ color:var(--text-muted); margin-bottom:6px; flex:1; }
 
-        /* buttons */
-        .prop-actions{ display:flex; gap:8px; margin-top:auto; }
-        .btn{
-            padding:8px 12px; border-radius:10px; border:none; cursor:pointer; font-weight:600; font-size:0.9rem;
-            transition:transform .08s, box-shadow .1s;
+        .hero-pill {
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            font-size: 0.8rem;
+            color: #bae6fd;
+            background: rgba(15, 23, 42, 0.8);
         }
-        .btn-buy{ background:linear-gradient(135deg,#10b981,#34d399); color:#042018; }
-        .btn-rent{ background:linear-gradient(135deg,#f97316,#fb923c); color:#2b0f00; }
-        .btn:hover{ transform:translateY(-2px); }
 
-        /* modal */
-        .modal-backdrop{ position:fixed; inset:0; background:rgba(2,6,23,0.6); display:none; align-items:center; justify-content:center; z-index:9999; }
-        .modal{ background:rgba(10,14,26,0.95); padding:20px; border-radius:12px; width:90%; max-width:480px; border:1px solid rgba(100,116,139,0.25); box-shadow:0 20px 60px rgba(0,0,0,0.7); color:var(--text-main); }
-        .modal h3{ margin-bottom:8px; color:#bfdbfe; }
-        .modal p{ color:var(--text-muted); margin-bottom:14px; }
-        .modal .modal-row{ display:flex; gap:8px; justify-content:flex-end; }
-        .modal .close{ background:transparent; color:var(--text-muted); border:1px solid rgba(148,163,184,0.18); padding:8px 10px; border-radius:8px; cursor:pointer; }
+        .section {
+            display: none;
+            max-width: 100%;
+            margin-top: 8px;
+        }
 
-        @media(max-width:1100px){ .property-grid{ grid-template-columns:repeat(2,1fr); } }
-        @media(max-width:700px){ .property-grid{ grid-template-columns:1fr; } .sidebar{ width:100%; flex-direction:row; } .nav-list{ display:flex; gap:8px; flex-wrap:wrap; } }
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #bfdbfe;
+        }
+
+        .section p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .section ul {
+            margin-top: 4px;
+            list-style: disc;
+            padding-left: 18px;
+        }
+
+        .section li {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 14px;
+            font-size: 0.9rem;
+            border-radius: 999px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            text-decoration: none;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            color: #0b1120;
+            font-weight: 600;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+            transition: transform 0.1s, box-shadow 0.15s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 22px 55px rgba(15, 23, 42, 1);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            color: #e5e7eb;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            box-shadow: none;
+        }
+
+        .cta-btn.secondary:hover {
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .property-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
+            transition: transform 0.15s, box-shadow 0.15s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .property-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.45);
+        }
+
+        .property-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .property-body {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .property-body h3 {
+            font-size: 1rem;
+            color: #e0f2fe;
+            margin-bottom: 4px;
+        }
+
+        .property-body p {
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            flex: 1;
+        }
+
+        .prop-meta {
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        .prop-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-buy {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: #042018;
+        }
+
+        .btn-rent {
+            background: linear-gradient(135deg, #f97316, #fb923c);
+            color: #2b0f00;
+        }
+
+        @media (max-width: 1100px) {
+            .property-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 960px) {
+            body {
+                padding: 10px;
+            }
+
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .nav-title {
+                margin-top: 2px;
+            }
+
+            .nav-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-bottom: 0;
+            }
+
+            .nav-item + .nav-item {
+                margin-top: 0;
+            }
+
+            .nav-link {
+                padding: 8px 10px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -190,193 +502,46 @@
 
                 <section id="nieruchomosci" class="section">
                     <h2>Nieruchomości</h2>
-                    <p>W Midnight City RP dostępne są różne typy nieruchomości: mieszkania, domy i lokale użytkowe. Poniżej przykładowa lista 18 nieruchomości (3 w rzędzie), każda z przyciskami Kup / Wynajmij.</p>
+                    <p>W Midnight City RP dostępne są różne typy nieruchomości, które można wykorzystać jako miejsce zamieszkania, biznes albo punkt spotkań. Przyciski są tylko wizualne i na razie nie działają.</p>
 
                     <div class="property-grid">
-                        <!-- 18 kart; każda ma atrybut data-name użyty przez JS -->
-                        <div class="property-card" data-name="Mieszkanie 01">
-                            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 1">
+                        <div class="property-card">
+                            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="Dom Mieszkalny Ulica Długa 1">
                             <div class="property-body">
-                                <h3>Mieszkanie 01</h3>
+                                <h3>Dom Mieszkalny</h3>
+                                <div class="prop-meta">Ulica Długa 1</div>
+                                <div class="prop-meta">Cena: Wkrótce</div>
                                 <p>Nowoczesne mieszkanie w centrum miasta, idealne dla jednej postaci.</p>
                                 <div class="prop-actions">
-                                    <button class="btn btn-buy" data-action="Kup">Kup</button>
-                                    <button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button>
+                                    <button class="btn btn-buy" type="button">Kup</button>
+                                    <button class="btn btn-rent" type="button">Wynajmij</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="property-card" data-name="Mieszkanie 02">
-                            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 2">
-                            <div class="property-body">
-                                <h3>Mieszkanie 02</h3>
-                                <p>Jasne wnętrze z widokiem na miasto i miejscem na mały biznes.</p>
-                                <div class="prop-actions">
-                                    <button class="btn btn-buy" data-action="Kup">Kup</button>
-                                    <button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 03">
-                            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 3">
-                            <div class="property-body">
-                                <h3>Mieszkanie 03</h3>
-                                <p>Lokal premium dla bardziej rozwiniętej postaci lub lidera grupy.</p>
-                                <div class="prop-actions">
-                                    <button class="btn btn-buy" data-action="Kup">Kup</button>
-                                    <button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- kolejne 15 kart (skrócone tutaj, w pliku znajdują się wszystkie 18) -->
-                        <div class="property-card" data-name="Mieszkanie 04">
-                            <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 4">
-                            <div class="property-body">
-                                <h3>Mieszkanie 04</h3>
-                                <p>Przytulne wnętrze z nowoczesnym układem i spokojną atmosferą.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 05">
-                            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 5">
-                            <div class="property-body">
-                                <h3>Mieszkanie 05</h3>
-                                <p>Świetne dla gracza, który szuka prostego i funkcjonalnego lokum.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 06">
-                            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 6">
-                            <div class="property-body">
-                                <h3>Mieszkanie 06</h3>
-                                <p>Elegancki apartament z dużą ilością przestrzeni i światła.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 07">
-                            <img src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 7">
-                            <div class="property-body">
-                                <h3>Mieszkanie 07</h3>
-                                <p>Wygodne lokum w spokojniejszej części miasta.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 08">
-                            <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 8">
-                            <div class="property-body">
-                                <h3>Mieszkanie 08</h3>
-                                <p>Idealne na start, z prostym wystrojem i dobrym układem pokoi.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 09">
-                            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 9">
-                            <div class="property-body">
-                                <h3>Mieszkanie 09</h3>
-                                <p>Przestronny lokal dla kilku osób lub małej organizacji.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 10">
-                            <img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 10">
-                            <div class="property-body">
-                                <h3>Mieszkanie 10</h3>
-                                <p>Nowoczesny apartament z klimatem nocnego miasta.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 11">
-                            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 11">
-                            <div class="property-body">
-                                <h3>Mieszkanie 11</h3>
-                                <p>Luksusowy lokal dla postaci z wyższym statusem.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Mieszkanie 12">
-                            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 12">
-                            <div class="property-body">
-                                <h3>Mieszkanie 12</h3>
-                                <p>Stylowe mieszkanie na wynajem, dobre do codziennej gry.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Lokal 13">
-                            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Lokal 13">
-                            <div class="property-body">
-                                <h3>Lokal 13</h3>
-                                <p>Mały lokal usługowy, odpowiedni na sklep lub biuro.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Lokal 14">
-                            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="Lokal 14">
-                            <div class="property-body">
-                                <h3>Lokal 14</h3>
-                                <p>Biznesowy lokal z miejscem na spotkania i działalność RP.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Lokal 15">
-                            <img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80" alt="Lokal 15">
-                            <div class="property-body">
-                                <h3>Lokal 15</h3>
-                                <p>Przestrzeń idealna na działalność handlową lub biurową.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Dom 16">
-                            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Dom 16">
-                            <div class="property-body">
-                                <h3>Dom 16</h3>
-                                <p>Dom dla rodziny lub grupy postaci, z większą prywatnością.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Dom 17">
-                            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Dom 17">
-                            <div class="property-body">
-                                <h3>Dom 17</h3>
-                                <p>Duży dom z przestrzenią na organizację spotkań i wydarzeń.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
-
-                        <div class="property-card" data-name="Dom 18">
-                            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Dom 18">
-                            <div class="property-body">
-                                <h3>Dom 18</h3>
-                                <p>Ekskluzywna nieruchomość dla najbardziej rozwiniętych postaci.</p>
-                                <div class="prop-actions"><button class="btn btn-buy" data-action="Kup">Kup</button><button class="btn btn-rent" data-action="Wynajmij">Wynajmij</button></div>
-                            </div>
-                        </div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 2"><div class="property-body"><h3>Mieszkanie 02</h3><div class="prop-meta">Ulica Długa 2</div><div class="prop-meta">Cena: Wkrótce</div><p>Jasne wnętrze z widokiem na miasto i miejscem na mały biznes.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 3"><div class="property-body"><h3>Mieszkanie 03</h3><div class="prop-meta">Ulica Długa 3</div><div class="prop-meta">Cena: Wkrótce</div><p>Lokal premium dla bardziej rozwiniętej postaci lub lidera grupy.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 4"><div class="property-body"><h3>Mieszkanie 04</h3><div class="prop-meta">Ulica Długa 4</div><div class="prop-meta">Cena: Wkrótce</div><p>Przytulne wnętrze z nowoczesnym układem i spokojną atmosferą.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 5"><div class="property-body"><h3>Mieszkanie 05</h3><div class="prop-meta">Ulica Długa 5</div><div class="prop-meta">Cena: Wkrótce</div><p>Świetne dla gracza, który szuka prostego i funkcjonalnego lokum.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 6"><div class="property-body"><h3>Mieszkanie 06</h3><div class="prop-meta">Ulica Długa 6</div><div class="prop-meta">Cena: Wkrótce</div><p>Elegancki apartament z dużą ilością przestrzeni i światła.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 7"><div class="property-body"><h3>Mieszkanie 07</h3><div class="prop-meta">Ulica Długa 7</div><div class="prop-meta">Cena: Wkrótce</div><p>Wygodne lokum w spokojniejszej części miasta.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 8"><div class="property-body"><h3>Mieszkanie 08</h3><div class="prop-meta">Ulica Długa 8</div><div class="prop-meta">Cena: Wkrótce</div><p>Idealne na start, z prostym wystrojem i dobrym układem pokoi.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 9"><div class="property-body"><h3>Mieszkanie 09</h3><div class="prop-meta">Ulica Długa 9</div><div class="prop-meta">Cena: Wkrótce</div><p>Przestronny lokal dla kilku osób lub małej organizacji.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 10"><div class="property-body"><h3>Mieszkanie 10</h3><div class="prop-meta">Ulica Długa 10</div><div class="prop-meta">Cena: Wkrótce</div><p>Nowoczesny apartament z klimatem nocnego miasta.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 11"><div class="property-body"><h3>Mieszkanie 11</h3><div class="prop-meta">Ulica Długa 11</div><div class="prop-meta">Cena: Wkrótce</div><p>Luksusowy lokal dla postaci z wyższym statusem.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 12"><div class="property-body"><h3>Mieszkanie 12</h3><div class="prop-meta">Ulica Długa 12</div><div class="prop-meta">Cena: Wkrótce</div><p>Stylowe mieszkanie na wynajem, dobre do codziennej gry.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Lokal 13"><div class="property-body"><h3>Lokal 13</h3><div class="prop-meta">Ulica Długa 13</div><div class="prop-meta">Cena: Wkrótce</div><p>Mały lokal usługowy, odpowiedni na sklep lub biuro.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="Lokal 14"><div class="property-body"><h3>Lokal 14</h3><div class="prop-meta">Ulica Długa 14</div><div class="prop-meta">Cena: Wkrótce</div><p>Biznesowy lokal z miejscem na spotkania i działalność RP.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80" alt="Lokal 15"><div class="property-body"><h3>Lokal 15</h3><div class="prop-meta">Ulica Długa 15</div><div class="prop-meta">Cena: Wkrótce</div><p>Przestrzeń idealna na działalność handlową lub biurową.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Dom 16"><div class="property-body"><h3>Dom 16</h3><div class="prop-meta">Ulica Długa 16</div><div class="prop-meta">Cena: Wkrótce</div><p>Dom dla rodziny lub grupy postaci, z większą prywatnością.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Dom 17"><div class="property-body"><h3>Dom 17</h3><div class="prop-meta">Ulica Długa 17</div><div class="prop-meta">Cena: Wkrótce</div><p>Duży dom z przestrzenią na organizację spotkań i wydarzeń.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Dom 18"><div class="property-body"><h3>Dom 18</h3><div class="prop-meta">Ulica Długa 18</div><div class="prop-meta">Cena: Wkrótce</div><p>Ekskluzywna nieruchomość dla najbardziej rozwiniętych postaci.</p><div class="prop-actions"><button class="btn btn-buy" type="button">Kup</button><button class="btn btn-rent" type="button">Wynajmij</button></div></div></div>
                     </div>
                 </section>
 
                 <section id="kontakt" class="section">
                     <h2>Kontakt i Discord</h2>
-                    <p>Główne centrum komunikacji Midnight City RP znajduje się na serwerze Discord. Tam dostępne są ogłoszenia, kanały tekstowe i głosowe, support oraz panel podań.</p>
-                    <ul>
-                        <li>Link zaproszeniowy na Discord Midnight City RP.</li>
-                        <li>Adres e‑mail administracji (opcjonalnie).</li>
-                        <li>Linki do profili serwera na innych platformach.</li>
-                    </ul>
-
+                    <p>Główne centrum komunikacji Midnight City RP znajduje się na serwerze Discord.</p>
                     <div class="cta-row">
                         <a href="#" class="cta-btn"><span>Dołącz na Discord</span></a>
                         <a href="#" class="cta-btn secondary"><span>Formularz kontaktowy</span></a>
@@ -386,68 +551,18 @@
         </main>
     </div>
 
-    <!-- Modal -->
-    <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-hidden="true">
-        <div class="modal" role="document">
-            <h3 id="modalTitle">Akcja</h3>
-            <p id="modalText">Szczegóły...</p>
-            <div class="modal-row">
-                <button id="modalClose" class="close">Zamknij</button>
-                <button id="modalConfirm" class="btn btn-buy">Potwierdź</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Tabs
-        function showSection(id){
-            document.querySelectorAll('.section').forEach(sec => sec.classList.toggle('active', sec.id===id));
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.toggle('active', link.dataset.target===id));
-            // scroll to top of content for UX
-            document.querySelector('.content').scrollTop = 0;
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.toggle('active', sec.id === id));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.toggle('active', link.dataset.target === id));
         }
+
         document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e){
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
                 showSection(this.dataset.target);
             });
         });
-
-        // Modal logic for Kup / Wynajmij
-        const modalBackdrop = document.getElementById('modalBackdrop');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalText = document.getElementById('modalText');
-        const modalConfirm = document.getElementById('modalConfirm');
-        const modalClose = document.getElementById('modalClose');
-
-        // open modal when clicking action buttons
-        document.querySelectorAll('.property-grid .prop-actions .btn').forEach(btn => {
-            btn.addEventListener('click', function(e){
-                const card = this.closest('.property-card');
-                const name = card?.dataset?.name || card.querySelector('h3')?.innerText || 'Nieruchomość';
-                const action = this.dataset.action || 'Akcja';
-                modalTitle.textContent = action + ' — ' + name;
-                modalText.textContent = `Wybrałeś: ${action} dla ${name}. Tutaj możesz dodać dalszą logikę (formularz, potwierdzenie, płatność itp.).`;
-                modalConfirm.textContent = action === 'Kup' ? 'Potwierdź zakup' : 'Potwierdź wynajem';
-                modalBackdrop.style.display = 'flex';
-                modalBackdrop.setAttribute('aria-hidden','false');
-            });
-        });
-
-        modalClose.addEventListener('click', closeModal);
-        modalBackdrop.addEventListener('click', function(e){
-            if(e.target === modalBackdrop) closeModal();
-        });
-        modalConfirm.addEventListener('click', function(){
-            // miejsce na dalszą logikę: wysłanie requestu, formularz itp.
-            alert(modalTitle.textContent + '\\nAkcja potwierdzona (demo).');
-            closeModal();
-        });
-
-        function closeModal(){
-            modalBackdrop.style.display = 'none';
-            modalBackdrop.setAttribute('aria-hidden','true');
-        }
     </script>
 </body>
 </html>
