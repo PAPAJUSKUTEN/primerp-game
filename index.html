@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-        /* Reset i podstawy */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,8 +14,8 @@
 
         :root {
             --bg-gradient: radial-gradient(circle at top left, #1e3a8a 0%, #0f172a 35%, #020617 100%);
-            --accent: #38bdf8;      /* jasny niebieski */
-            --accent-2: #a855f7;    /* fiolet */
+            --accent: #38bdf8;
+            --accent-2: #a855f7;
             --text-main: #e5e7eb;
             --text-muted: #9ca3af;
         }
@@ -30,7 +29,6 @@
             padding: 16px;
         }
 
-        /* Kontener na całą stronę */
         .layout {
             display: flex;
             width: 100%;
@@ -39,10 +37,9 @@
             gap: 20px;
         }
 
-        /* Glassmorphism sidebar */
         .sidebar {
             width: 260px;
-            background: rgba(15, 23, 42, 0.65);        /* półprzezroczyste */
+            background: rgba(15, 23, 42, 0.65);
             border-radius: 20px;
             border: 1px solid rgba(148, 163, 184, 0.35);
             box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
@@ -172,7 +169,6 @@
             display: block;
         }
 
-        /* Główna treść */
         .content {
             flex: 1;
             background: rgba(15, 23, 42, 0.8);
@@ -187,7 +183,6 @@
             position: relative;
         }
 
-        /* delikatne „światełko miasta” w tle */
         .content::before {
             content: "";
             position: absolute;
@@ -328,7 +323,6 @@
             background: rgba(15, 23, 42, 0.9);
         }
 
-        /* Responsywność */
         @media (max-width: 960px) {
             body {
                 padding: 10px;
@@ -378,7 +372,6 @@
 </head>
 <body>
     <div class="layout">
-        <!-- Lewy szklany sidebar -->
         <aside class="sidebar">
             <div class="logo">
                 <div class="logo-icon"></div>
@@ -418,6 +411,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="#nieruchomosci" class="nav-link" onclick="showSection('nieruchomosci'); return false;">
+                        <span class="icon-dot"></span>
+                        <div>
+                            <div class="nav-label-main">Nieruchomości</div>
+                            <div class="nav-label-sub">Mieszkania i lokale</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="#regulamin" class="nav-link" onclick="showSection('regulamin'); return false;">
                         <span class="icon-dot"></span>
                         <div>
@@ -452,153 +454,138 @@
             </div>
         </aside>
 
-        <!-- Prawa część – treść zakładek -->
         <main class="content">
             <div class="content-inner">
-                <!-- HERO -->
                 <div class="tagline">Witamy w Midnight City</div>
                 <div class="hero-title">Miasto, które nie zasypia.</div>
                 <div class="hero-subtitle">
-                    Midnight City RP to polski serwer roleplay, który łączy klimat nocnego miasta, realistyczne mechaniki 
-                    i rozgrywkę nastawioną na współpracę między graczami. Poniżej znajdziesz wszystkie informacje potrzebne,
-                    aby bez problemu dołączyć do społeczności.
+                    Midnight City RP to polski serwer roleplay, który łączy klimat nocnego miasta, realistyczne mechaniki
+                    i rozgrywkę nastawioną na współpracę między graczami. Poniżej znajdziesz najważniejsze informacje
+                    o serwerze, frakcjach, nieruchomościach i zasadach rozgrywki.
                 </div>
 
                 <div class="hero-row">
                     <div class="hero-pill">🔹 Polski serwer RP</div>
                     <div class="hero-pill">🌃 Klimat nocnego miasta</div>
                     <div class="hero-pill">👮🏻‍♂️ Służby, gangi, cywile</div>
-                    <div class="hero-pill">🎧 Komunikacja przez Discord</div>
+                    <div class="hero-pill">🏙️ System nieruchomości</div>
                 </div>
 
-                <!-- Sekcja: Strona główna -->
                 <section id="start" class="section active">
                     <h2>Strona główna</h2>
                     <p>
-                        Midnight City RP to miejsce dla osób, które lubią zorganizowaną rozgrywkę, przemyślane historie 
-                        i jasno określone zasady. Tutaj znajdziesz podstawowe informacje o serwerze, linki oraz 
-                        ogólny zarys świata, w którym toczy się akcja.
+                        Midnight City RP to miejsce dla osób, które lubią zorganizowaną rozgrywkę, rozwinięte historie
+                        i jasno określone zasady. Na tej stronie znajdziesz podstawowe informacje o serwerze oraz
+                        odnośniki do najważniejszych zakładek.
                     </p>
                     <p>
-                        Zachęcamy, aby przed dołączeniem dokładnie zapoznać się z regulaminem i opisem frakcji – 
-                        dzięki temu Twoje wejście do miasta będzie płynne, a rozgrywka przyjemna dla Ciebie i innych graczy.
+                        Zanim wejdziesz do miasta, zapoznaj się z opisem serwera, frakcjami, regulaminem oraz systemem
+                        podań i nieruchomości. Dzięki temu szybciej odnajdziesz się w świecie Midnight City.
                     </p>
-                    <div class="callout">
-                        Tip: dodaj tę stronę do zakładek w przeglądarce – wszystkie ważne informacje o Midnight City RP 
-                        zawsze będziesz mieć pod ręką.
-                    </div>
                 </section>
 
-                <!-- Sekcja: O serwerze -->
                 <section id="info" class="section">
                     <h2>O serwerze</h2>
                     <p>
-                        Midnight City RP powstało z myślą o graczach, którzy szukają balansu między realizmem 
-                        a swobodą tworzenia własnych historii. Serwer jest rozwijany przez społeczność i administrację, 
-                        która słucha propozycji graczy.
+                        Midnight City RP powstało z myślą o graczach szukających balansu między realizmem a swobodą
+                        tworzenia własnych historii. Rozgrywka nastawiona jest na współpracę, odgrywanie postaci
+                        i rozwój miasta przez działania graczy.
                     </p>
                     <ul>
                         <li>Tryb rozgrywki: roleplay z naciskiem na odgrywanie postaci.</li>
-                        <li>Język: polski (komunikacja na czacie i Discordzie).</li>
-                        <li>Minimalny wiek: ustaw według tego, co planujesz (np. 15+ / 16+).</li>
-                        <li>Rozgrywka: służby miejskie, cywilne życie, organizacje przestępcze, eventy społeczności.</li>
+                        <li>Język: polski – komunikacja na serwerze i Discordzie.</li>
+                        <li>Minimalny wiek: ustalany przez administrację (np. 15+ / 16+).</li>
+                        <li>Rozgrywka: służby miejskie, życie cywilne, organizacje przestępcze, eventy społeczności.</li>
                     </ul>
-                    <div class="callout">
-                        Tutaj możesz później dodać informacje techniczne serwera: IP, nazwy pakietów, wersję gry, 
-                        wymagania sprzętowe itp.
-                    </div>
                 </section>
 
-                <!-- Sekcja: Frakcje -->
                 <section id="frakcje" class="section">
                     <h2>Frakcje Midnight City RP</h2>
                     <p>
-                        W Midnight City RP możesz dołączyć do różnych frakcji – od służb mundurowych po 
-                        organizacje przestępcze i role cywilne. Każda frakcja ma swój charakter, zasady i 
-                        możliwości rozwoju postaci.
+                        W Midnight City RP istnieje kilka głównych frakcji, do których mogą dołączyć gracze. Każda
+                        frakcja ma własne zasady i zadania, a także możliwości rozwoju postaci.
                     </p>
                     <ul>
-                        <li>Policja miejaska – odpowiedzialna za bezpieczeństwo i reagowanie na wykroczenia.</li>
-                        <li>Ratownictwo medyczne – pomoc poszkodowanym, działania na miejscu zdarzeń.</li>
-                        <li>Straż pożarna / służby techniczne – akcje ratunkowe, zabezpieczanie miasta.</li>
-                        <li>Organizacje przestępcze – gangi, grupy z własną hierarchią i celami.</li>
-                        <li>Cywile – biznesy, życie codzienne, rola mieszkańców Midnight City.</li>
+                        <li>Policja miejska – bezpieczeństwo miasta, patrole, interwencje.</li>
+                        <li>Ratownictwo medyczne – pomoc poszkodowanym, zabezpieczanie zdarzeń.</li>
+                        <li>Straż pożarna / służby techniczne – akcje ratunkowe, wsparcie miasta.</li>
+                        <li>Organizacje przestępcze – gangi, grupy przestępcze, nielegalne działania.</li>
+                        <li>Cywile – mieszkańcy miasta, biznesy, życie codzienne.</li>
+                    </ul>
+                </section>
+
+                <section id="nieruchomosci" class="section">
+                    <h2>Nieruchomości Midnight City</h2>
+                    <p>
+                        System nieruchomości w Midnight City RP pozwala graczom posiadać mieszkania, domy oraz lokale
+                        użytkowe. Dzięki temu możesz prowadzić własny biznes, organizować spotkania lub po prostu
+                        mieć miejsce, które Twoja postać nazywa domem.
+                    </p>
+                    <ul>
+                        <li>Mieszkania – prywatne lokale dla postaci, możliwość personalizacji wnętrz.</li>
+                        <li>Domy – większe nieruchomości dla rodzin, grup lub bardziej rozwiniętych postaci.</li>
+                        <li>Lokale usługowe – bary, sklepy, warsztaty i inne biznesy działające w Midnight City.</li>
+                        <li>Zasady wynajmu i zakupu – określane przez administrację, zależne od ekonomii serwera.</li>
                     </ul>
                     <div class="callout">
-                        Ten fragment możesz dowolnie edytować pod konkretne frakcje, które masz lub planujesz mieć 
-                        na serwerze Midnight City RP.
+                        Nieruchomości są ważnym elementem klimatu miasta i ekonomii serwera. Rozważ wprowadzenie
+                        prostego systemu wynajmu, kupna oraz opłat za utrzymanie lokali.
                     </div>
                 </section>
 
-                <!-- Sekcja: Regulamin -->
                 <section id="regulamin" class="section">
                     <h2>Regulamin serwera</h2>
                     <p>
-                        Regulamin Midnight City RP jest zbiorem zasad mających zapewnić wszystkim graczom 
-                        komfortową i uczciwą rozgrywkę. Nieprzestrzeganie zasad może skutkować ostrzeżeniami, 
-                        banami lub innymi sankcjami.
+                        Regulamin Midnight City RP określa zasady zachowania oraz sposób prowadzenia rozgrywki.
+                        Celem zasad jest utrzymanie porządku i zapewnienie wszystkim graczom uczciwej, przyjemnej
+                        rozgrywki.
                     </p>
                     <ul>
-                        <li>Szanuj innych graczy – zakaz obrażania, nękania, toksycznego zachowania.</li>
-                        <li>Zakaz cheatu, exploitów i wykorzystywania błędów gry.</li>
-                        <li>Zakaz metagamingu, powergamingu i innych form psucia rozgrywki RP.</li>
-                        <li>Obowiązek dostosowania się do decyzji administracji serwera.</li>
-                        <li>Pełen regulamin znajdziesz na Discordzie / w osobnym dokumencie.</li>
+                        <li>Szanuj innych graczy – zakaz obrażania, nękania i toksycznych zachowań.</li>
+                        <li>Zakaz cheatów, exploitów i wykorzystywania błędów gry.</li>
+                        <li>Zakaz metagamingu i powergamingu oraz innych form psucia rozgrywki RP.</li>
+                        <li>Obowiązek stosowania się do decyzji administracji serwera.</li>
+                        <li>Szczegółowe zasady rozgrywki i kar znajdują się w pełnym regulaminie serwera.</li>
                     </ul>
-                    <div class="callout">
-                        Możesz tu wkleić pełny regulamin albo dać link do dokumentu regulaminu na Discordzie / Google Docs. 
-                        Pamiętaj, żeby na bieżąco aktualizować zasady.
-                    </div>
                 </section>
 
-                <!-- Sekcja: Podania -->
                 <section id="podania" class="section">
                     <h2>Podania na Midnight City RP</h2>
                     <p>
-                        Aby dołączyć do wybranej frakcji lub otrzymać dostęp do serwera, wymagane może być złożenie podania. 
-                        Dzięki temu administracja może ocenić Twoje podejście do RP i dopasować Cię do odpowiedniej roli.
+                        W zależności od frakcji i roli, dołączenie do Midnight City RP może wymagać złożenia podania.
+                        Dzięki temu administracja może sprawdzić Twoje podejście do RP oraz pomóc Ci znaleźć
+                        odpowiednie miejsce w mieście.
                     </p>
                     <ul>
-                        <li>Wejdź na Discord Midnight City RP i przejdź do kanału z podaniami.</li>
-                        <li>Zapoznaj się z wzorem podania (pytania, wymagane informacje).</li>
-                        <li>Wypełnij podanie rzetelnie – im lepiej opiszesz swoją postać, tym łatwiej ją zatwierdzić.</li>
-                        <li>Czekaj na odpowiedź administracji – nie spamuj, nie pytaj co 5 minut o status podania.</li>
+                        <li>Przejdź na serwer Discord Midnight City RP do kanału z podaniami.</li>
+                        <li>Zapoznaj się z wymaganiami dla wybranej frakcji lub roli.</li>
+                        <li>Wypełnij podanie zgodnie z wzorem, rzetelnie opisując swoją postać.</li>
+                        <li>Oczekuj na odpowiedź administracji w wyznaczonym kanale lub wiadomości prywatnej.</li>
                     </ul>
-                    <div class="callout">
-                        Jeśli chcesz, później możemy do tej sekcji dodać gotowy formularz HTML lub przycisk prowadzący 
-                        bezpośrednio do panelu podań.
-                    </div>
                 </section>
 
-                <!-- Sekcja: Kontakt / Discord -->
                 <section id="kontakt" class="section">
                     <h2>Kontakt i Discord</h2>
                     <p>
-                        Najważniejszym miejscem komunikacji jest serwer Discord Midnight City RP. Tam znajdziesz 
-                        ogłoszenia, kanały tekstowe i głosowe, support, panel podań oraz ogólne informacje o serwerze.
+                        Główne centrum komunikacji Midnight City RP znajduje się na serwerze Discord. Tam dostępne są
+                        ogłoszenia, kanały tekstowe i głosowe, support oraz panel podań.
                     </p>
                     <p>
-                        W tym miejscu dodaj linki, które pozwolą graczom szybko dołączyć do społeczności:
+                        Potrzebne linki kontaktowe:
                     </p>
                     <ul>
-                        <li>Link zaproszeniowy do Discorda Midnight City RP.</li>
-                        <li>Ewentualny e‑mail kontaktowy administracji.</li>
-                        <li>Profil serwera na innych platformach (np. forum, social media).</li>
+                        <li>Link zaproszeniowy na Discord Midnight City RP.</li>
+                        <li>Adres e‑mail administracji (opcjonalnie).</li>
+                        <li>Linki do profili serwera na innych platformach.</li>
                     </ul>
 
                     <div class="cta-row">
-                        <!-- Podmień # na prawdziwy link Discord -->
                         <a href="#" class="cta-btn">
                             <span>Dołącz na Discord</span>
                         </a>
                         <a href="#" class="cta-btn secondary">
                             <span>Formularz kontaktowy</span>
                         </a>
-                    </div>
-
-                    <div class="callout">
-                        Uzupełnij powyższe przyciski o prawdziwe linki, gdy tylko będziesz miał docelowy Discord 
-                        / panel kontaktowy dla Midnight City RP.
                     </div>
                 </section>
             </div>
@@ -607,13 +594,11 @@
 
     <script>
         function showSection(id) {
-            // przełączanie widoczności sekcji
             const sections = document.querySelectorAll('.section');
             sections.forEach(sec => {
                 sec.classList.toggle('active', sec.id === id);
             });
 
-            // podświetlenie aktywnej zakładki
             const links = document.querySelectorAll('.nav-link');
             links.forEach(link => {
                 const href = link.getAttribute('href').replace('#', '');
