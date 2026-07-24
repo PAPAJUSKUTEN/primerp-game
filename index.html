@@ -109,6 +109,7 @@
             text-decoration: none;
             font-size: 0.92rem;
             transition: background 0.2s, transform 0.1s, box-shadow 0.2s, color 0.2s;
+            cursor: pointer;
         }
 
         .nav-link span.icon-dot {
@@ -388,70 +389,14 @@
             </div>
 
             <div class="nav-title">Zakładki</div>
-            <ul class="nav-listst">
-                >
-                    <a href="#start" class="nav-link active" onclick="showSection('start'); return false;">
-                        <span class="icon-dot"></span>
-                        <div>
-                            <div class="nav-label-main">Strona główna</div>
-                            <div class="nav-label-sub">Zarys świata</div>
-                        </div>
-                    </a>
-                </l/li>
-                >
-                    <a href="#info" class="nav-link" onclick="showSection('info'); return false;">
-                        <span class="icon-dot"></span>
-                        <div>
-                            <div class="nav-label-main">O serwerze</div>
-                            <div class="nav-label-sub">Informacje organizacyjne</div>
-                        </div>
-                    </a>
-                </l/li>
-                >
-                    <a href="#frakcje" class="nav-link" onclick="showSection('frakcje'); return false;">
-                        <span class="icon-dot"></span>
-                        <div>
-                            <div class="nav-label-main">Frakcje</div>
-                            <div class="nav-label-sub">Służby, gangi, cywile</div>
-                        </div>
-                    </a>
-                </l/li>
-                >
-                    <a href="#regulamin" class="nav-link" onclick="showSection('regulamin'); return false;">
-                        <span class="icon-dot"></span>
-                        <div>
-                            <div class="nav-label-main">Regulamin</div>
-                            <div class="nav-label-sub">Zasady gry</div>
-                        </div>
-                    </a>
-                </l/li>
-                >
-                    <a href="#podania" class="nav-link" onclick="showSection('podania'); return false;">
-                        <span class="icon-dot"></span>
-                        <div>
-                            <div class="nav-label-main">Podania</div>
-                            <div class="nav-label-sub">Jak dołączyć</div>
-                        </div>
-                    </a>
-                </l/li>
-                >
-                    <a href="#nieruchomosci" class="nav-link" onclick="showSection('nieruchomosci'); return false;">
-                        <span class="icon-dot"></span>
-                        <div>
-                            <div class="nav-label-main">Nieruchomości</div>
-                            <div class="nav-label-sub">Mieszkania i lokale</div>
-                        </div>
-                    </a>
-                </l/li>
-                >
-                    <a href="#kontakt" class="nav-link" onclick="showSection('kontakt'); return false;">
-                        <span class="icon-dot"></span>
-                        <div>
-                            <div class="nav-label-main">Kontakt / Discord</div>
-                            <div class="nav-label-sub">Linki społeczności</div>
-                        </div>
-                    </a>
-                </li>
+            <ul class="nav-list">
+                <li class="nav-item"><a class="nav-link active" data-target="start"><span class="icon-dot"></span><div><div class="nav-label-main">Strona główna</div><div class="nav-label-sub">Zarys świata</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="info"><span class="icon-dot"></span><div><div class="nav-label-main">O serwerze</div><div class="nav-label-sub">Informacje organizacyjne</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="frakcje"><span class="icon-dot"></span><div><div class="nav-label-main">Frakcje</div><div class="nav-label-sub">Służby, gangi, cywile</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="regulamin"><span class="icon-dot"></span><div><div class="nav-label-main">Regulamin</div><div class="nav-label-sub">Zasady gry</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="podania"><span class="icon-dot"></span><div><div class="nav-label-main">Podania</div><div class="nav-label-sub">Jak dołączyć</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="nieruchomosci"><span class="icon-dot"></span><div><div class="nav-label-main">Nieruchomości</div><div class="nav-label-sub">Mieszkania i lokale</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="kontakt"><span class="icon-dot"></span><div><div class="nav-label-main">Kontakt / Discord</div><div class="nav-label-sub">Linki społeczności</div></div></a></li>
             </ul>
 
             <div class="sidebar-footer">
@@ -470,91 +415,60 @@
 
                 <section id="start" class="section active">
                     <h2>Strona główna</h2>
-                    <p>
-                        Midnight City RP to miejsce dla osób, które lubią zorganizowaną rozgrywkę, rozwinięte historie
-                        i jasno określone zasady. Na tej stronie znajdziesz podstawowe informacje o serwerze oraz
-                        odnośniki do najważniejszych zakładek.
-                    </p>
-                    <p>
-                        Zanim wejdziesz do miasta, zapoznaj się z opisem serwera, frakcjami, regulaminem oraz systemem
-                        podań. Dzięki temu szybciej odnajdziesz się w świecie Midnight City.
-                    </p>
+                    <p>Midnight City RP to miejsce dla osób, które lubią zorganizowaną rozgrywkę, rozwinięte historie i jasno określone zasady. Na tej stronie znajdziesz podstawowe informacje o serwerze oraz odnośniki do najważniejszych zakładek.</p>
+                    <p>Zanim wejdziesz do miasta, zapoznaj się z opisem serwera, frakcjami, regulaminem oraz systemem podań. Dzięki temu szybciej odnajdziesz się w świecie Midnight City.</p>
                 </section>
 
                 <section id="info" class="section">
                     <h2>O serwerze</h2>
-                    <p>
-                        Midnight City RP powstało z myślą o graczach szukających balansu między realizmem a swobodą
-                        tworzenia własnych historii. Rozgrywka nastawiona jest na współpracę, odgrywanie postaci
-                        i rozwój miasta przez działania graczy.
-                    </p>
-                    <u
+                    <p>Midnight City RP powstało z myślą o graczach szukających balansu między realizmem a swobodą tworzenia własnych historii. Rozgrywka nastawiona jest na współpracę, odgrywanie postaci i rozwój miasta przez działania graczy.</p>
                     <ul>
-                        >Tryb rozgrywki: roleplay z naciskiem na odgrywanie postaci.</l/li>
-                        >Język: polski – komunikacja na serwerze i Discordzie.</l/li>
-                        >Minimalny wiek: ustalany przez administrację (np. 15+ / 16+).</l/li>
-                        >Rozgrywka: służby miejskie, życie cywilne, organizacje przestępcze, eventy społeczności.</l/li>
-                        >System nieruchomości: mieszkania, domy i lokale użytkowe dostępne dla graczy.</li>
+                        <li>Tryb rozgrywki: roleplay z naciskiem na odgrywanie postaci.</li>
+                        <li>Język: polski – komunikacja na serwerze i Discordzie.</li>
+                        <li>Minimalny wiek: ustalany przez administrację (np. 15+ / 16+).</li>
+                        <li>Rozgrywka: służby miejskie, życie cywilne, organizacje przestępcze, eventy społeczności.</li>
+                        <li>System nieruchomości: mieszkania, domy i lokale użytkowe dostępne dla graczy.</li>
                     </ul>
                 </section>
 
                 <section id="frakcje" class="section">
                     <h2>Frakcje Midnight City RP</h2>
-                    <p>
-                        W Midnight City RP istnieje kilka głównych frakcji, do których mogą dołączyć gracze. Każda
-                        frakcja ma własne zasady i zadania, a także możliwości rozwoju postaci.
-                    </p>
-                    <u
+                    <p>W Midnight City RP istnieje kilka głównych frakcji, do których mogą dołączyć gracze. Każda frakcja ma własne zasady i zadania, a także możliwości rozwoju postaci.</p>
                     <ul>
-                        >Policja miejska – bezpieczeństwo miasta, patrole, interwencje.</l/li>
-                        >Ratownictwo medyczne – pomoc poszkodowanym, zabezpieczanie zdarzeń.</l/li>
-                        >Straż pożarna / służby techniczne – akcje ratunkowe, wsparcie miasta.</l/li>
-                        >Organizacje przestępcze – gangi, grupy przestępcze, nielegalne działania.</l/li>
-                        >Cywile – mieszkańcy miasta, biznesy, życie codzienne.</li>
+                        <li>Policja miejska – bezpieczeństwo miasta, patrole, interwencje.</li>
+                        <li>Ratownictwo medyczne – pomoc poszkodowanym, zabezpieczanie zdarzeń.</li>
+                        <li>Straż pożarna / służby techniczne – akcje ratunkowe, wsparcie miasta.</li>
+                        <li>Organizacje przestępcze – gangi, grupy przestępcze, nielegalne działania.</li>
+                        <li>Cywile – mieszkańcy miasta, biznesy, życie codzienne.</li>
                     </ul>
                 </section>
 
                 <section id="regulamin" class="section">
                     <h2>Regulamin serwera</h2>
-                    <p>
-                        Regulamin Midnight City RP określa zasady zachowania oraz sposób prowadzenia rozgrywki.
-                        Celem zasad jest utrzymanie porządku i zapewnienie wszystkim graczom uczciwej, przyjemnej
-                        rozgrywki.
-                    </p>
-                    <u
+                    <p>Regulamin Midnight City RP określa zasady zachowania oraz sposób prowadzenia rozgrywki. Celem zasad jest utrzymanie porządku i zapewnienie wszystkim graczom uczciwej, przyjemnej rozgrywki.</p>
                     <ul>
-                        >Szanuj innych graczy – zakaz obrażania, nękania i toksycznych zachowań.</l/li>
-                        >Zakaz cheatów, exploitów i wykorzystywania błędów gry.</l/li>
-                        >Zakaz metagamingu i powergamingu oraz innych form psucia rozgrywki RP.</l/li>
-                        >Obowiązek stosowania się do decyzji administracji serwera.</l/li>
-                        >Szczegółowe zasady rozgrywki i kar znajdują się w pełnym regulaminie serwera.</li>
+                        <li>Szanuj innych graczy – zakaz obrażania, nękania i toksycznych zachowań.</li>
+                        <li>Zakaz cheatów, exploitów i wykorzystywania błędów gry.</li>
+                        <li>Zakaz metagamingu i powergamingu oraz innych form psucia rozgrywki RP.</li>
+                        <li>Obowiązek stosowania się do decyzji administracji serwera.</li>
+                        <li>Szczegółowe zasady rozgrywki i kar znajdują się w pełnym regulaminie serwera.</li>
                     </ul>
                 </section>
 
                 <section id="podania" class="section">
                     <h2>Podania na Midnight City RP</h2>
-                    <p>
-                        W zależności od frakcji i roli, dołączenie do Midnight City RP może wymagać złożenia podania.
-                        Dzięki temu administracja może sprawdzić Twoje podejście do RP oraz pomóc Ci znaleźć
-                        odpowiednie miejsce w mieście.
-                    </p>
-                    <u
+                    <p>W zależności od frakcji i roli, dołączenie do Midnight City RP może wymagać złożenia podania. Dzięki temu administracja może sprawdzić Twoje podejście do RP oraz pomóc Ci znaleźć odpowiednie miejsce w mieście.</p>
                     <ul>
-                        >Przejdź na serwer Discord Midnight City RP do kanału z podaniami.</l/li>
-                        >Zapoznaj się z wymaganiami dla wybranej frakcji lub roli.</l/li>
-                        >Wypełnij podanie zgodnie z wzorem, rzetelnie opisując swoją postać.</l/li>
-                        >Oczekuj na odpowiedź administracji w wyznaczonym kanale lub wiadomości prywatnej.</li>
+                        <li>Przejdź na serwer Discord Midnight City RP do kanału z podaniami.</li>
+                        <li>Zapoznaj się z wymaganiami dla wybranej frakcji lub roli.</li>
+                        <li>Wypełnij podanie zgodnie z wzorem, rzetelnie opisując swoją postać.</li>
+                        <li>Oczekuj na odpowiedź administracji w wyznaczonym kanale lub wiadomości prywatnej.</li>
                     </ul>
                 </section>
 
                 <section id="nieruchomosci" class="section">
                     <h2>Nieruchomości</h2>
-                    <p>
-                        W Midnight City RP dostępne są różne typy nieruchomości, które można wykorzystać jako miejsce
-                        zamieszkania, biznes albo punkt spotkań. Poniżej znajdziesz przykładową listę 18 lokali
-                        ułożonych po 3 w rzędzie.
-                    </p>
-
+                    <p>W Midnight City RP dostępne są różne typy nieruchomości, które można wykorzystać jako miejsce zamieszkania, biznes albo punkt spotkań. Poniżej znajdziesz przykładową listę 18 lokali ułożonych po 3 w rzędzie.</p>
                     <div class="property-grid">
                         <div class="property-card"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 1"><div class="property-body"><h3>Mieszkanie 01</h3><p>Nowoczesne mieszkanie w centrum miasta, idealne dla jednej postaci.</p></div></div>
                         <div class="property-card"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 2"><div class="property-body"><h3>Mieszkanie 02</h3><p>Jasne wnętrze z widokiem na miasto i miejscem na mały biznes.</p></div></div>
@@ -579,16 +493,12 @@
 
                 <section id="kontakt" class="section">
                     <h2>Kontakt i Discord</h2>
-                    <p>
-                        Główne centrum komunikacji Midnight City RP znajduje się na serwerze Discord. Tam dostępne są
-                        ogłoszenia, kanały tekstowe i głosowe, support oraz panel podań.
-                    </p>
+                    <p>Główne centrum komunikacji Midnight City RP znajduje się na serwerze Discord. Tam dostępne są ogłoszenia, kanały tekstowe i głosowe, support oraz panel podań.</p>
                     <p>Potrzebne linki kontaktowe:</p>
-                    <u
                     <ul>
-                        >Link zaproszeniowy na Discord Midnight City RP.</l/li>
-                        >Adres e‑mail administracji (opcjonalnie).</l/li>
-                        >Linki do profili serwera na innych platformach.</li>
+                        <li>Link zaproszeniowy na Discord Midnight City RP.</li>
+                        <li>Adres e‑mail administracji (opcjonalnie).</li>
+                        <li>Linki do profili serwera na innych platformach.</li>
                     </ul>
 
                     <div class="cta-row">
@@ -602,12 +512,20 @@
 
     <script>
         function showSection(id) {
-            const sections = document.querySelectorAll('.section');
-            sectk => {
-                const href = link.getAttribute('href').replace('#', '');
-                link.classList.toggle('active', href === id);
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.toggle('active', sec.id === id);
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.toggle('active', link.dataset.target === id);
             });
         }
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                showSection(this.dataset.target);
+            });
+        });
     </script>
 </body>
 </html>
