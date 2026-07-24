@@ -111,16 +111,6 @@
             transition: background 0.2s, transform 0.1s, box-shadow 0.2s, color 0.2s;
         }
 
-        .nav-link::before {
-            content: "";
-            width: 4px;
-            height: 4px;
-            border-radius: 999px;
-            background: var(--accent);
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
         .nav-link span.icon-dot {
             width: 7px;
             height: 7px;
@@ -142,10 +132,6 @@
         .nav-link:hover {
             background: rgba(15, 23, 42, 0.9);
             transform: translateX(3px);
-        }
-
-        .nav-link:hover::before {
-            opacity: 1;
         }
 
         .nav-label-main {
@@ -269,16 +255,6 @@
             font-size: 0.95rem;
             color: var(--text-main);
             margin-bottom: 4px;
-        }
-
-        .callout {
-            margin-top: 12px;
-            padding: 10px 12px;
-            border-radius: 12px;
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px dashed rgba(56, 189, 248, 0.5);
-            font-size: 0.85rem;
-            color: var(--text-muted);
         }
 
         .cta-row {
@@ -411,15 +387,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#nieruchomosci" class="nav-link" onclick="showSection('nieruchomosci'); return false;">
-                        <span class="icon-dot"></span>
-                        <div>
-                            <div class="nav-label-main">Nieruchomości</div>
-                            <div class="nav-label-sub">Mieszkania i lokale</div>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="#regulamin" class="nav-link" onclick="showSection('regulamin'); return false;">
                         <span class="icon-dot"></span>
                         <div>
@@ -461,14 +428,13 @@
                 <div class="hero-subtitle">
                     Midnight City RP to polski serwer roleplay, który łączy klimat nocnego miasta, realistyczne mechaniki
                     i rozgrywkę nastawioną na współpracę między graczami. Poniżej znajdziesz najważniejsze informacje
-                    o serwerze, frakcjach, nieruchomościach i zasadach rozgrywki.
+                    o serwerze, frakcjach i zasadach rozgrywki.
                 </div>
 
                 <div class="hero-row">
                     <div class="hero-pill">🔹 Polski serwer RP</div>
                     <div class="hero-pill">🌃 Klimat nocnego miasta</div>
                     <div class="hero-pill">👮🏻‍♂️ Służby, gangi, cywile</div>
-                    <div class="hero-pill">🏙️ System nieruchomości</div>
                 </div>
 
                 <section id="start" class="section active">
@@ -480,7 +446,7 @@
                     </p>
                     <p>
                         Zanim wejdziesz do miasta, zapoznaj się z opisem serwera, frakcjami, regulaminem oraz systemem
-                        podań i nieruchomości. Dzięki temu szybciej odnajdziesz się w świecie Midnight City.
+                        podań. Dzięki temu szybciej odnajdziesz się w świecie Midnight City.
                     </p>
                 </section>
 
@@ -496,6 +462,7 @@
                         <li>Język: polski – komunikacja na serwerze i Discordzie.</li>
                         <li>Minimalny wiek: ustalany przez administrację (np. 15+ / 16+).</li>
                         <li>Rozgrywka: służby miejskie, życie cywilne, organizacje przestępcze, eventy społeczności.</li>
+                        <li>System nieruchomości: mieszkania, domy i lokale użytkowe dostępne dla graczy.</li>
                     </ul>
                 </section>
 
@@ -512,25 +479,6 @@
                         <li>Organizacje przestępcze – gangi, grupy przestępcze, nielegalne działania.</li>
                         <li>Cywile – mieszkańcy miasta, biznesy, życie codzienne.</li>
                     </ul>
-                </section>
-
-                <section id="nieruchomosci" class="section">
-                    <h2>Nieruchomości Midnight City</h2>
-                    <p>
-                        System nieruchomości w Midnight City RP pozwala graczom posiadać mieszkania, domy oraz lokale
-                        użytkowe. Dzięki temu możesz prowadzić własny biznes, organizować spotkania lub po prostu
-                        mieć miejsce, które Twoja postać nazywa domem.
-                    </p>
-                    <ul>
-                        <li>Mieszkania – prywatne lokale dla postaci, możliwość personalizacji wnętrz.</li>
-                        <li>Domy – większe nieruchomości dla rodzin, grup lub bardziej rozwiniętych postaci.</li>
-                        <li>Lokale usługowe – bary, sklepy, warsztaty i inne biznesy działające w Midnight City.</li>
-                        <li>Zasady wynajmu i zakupu – określane przez administrację, zależne od ekonomii serwera.</li>
-                    </ul>
-                    <div class="callout">
-                        Nieruchomości są ważnym elementem klimatu miasta i ekonomii serwera. Rozważ wprowadzenie
-                        prostego systemu wynajmu, kupna oraz opłat za utrzymanie lokali.
-                    </div>
                 </section>
 
                 <section id="regulamin" class="section">
@@ -570,9 +518,7 @@
                         Główne centrum komunikacji Midnight City RP znajduje się na serwerze Discord. Tam dostępne są
                         ogłoszenia, kanały tekstowe i głosowe, support oraz panel podań.
                     </p>
-                    <p>
-                        Potrzebne linki kontaktowe:
-                    </p>
+                    <p>Potrzebne linki kontaktowe:</p>
                     <ul>
                         <li>Link zaproszeniowy na Discord Midnight City RP.</li>
                         <li>Adres e‑mail administracji (opcjonalnie).</li>
