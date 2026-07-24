@@ -2,169 +2,624 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Moja strona z zakładkami</title>
+    <title>Midnight City RP - Oficjalna strona</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
+        /* Reset i podstawy */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        :root {
+            --bg-gradient: radial-gradient(circle at top left, #1e3a8a 0%, #0f172a 35%, #020617 100%);
+            --accent: #38bdf8;      /* jasny niebieski */
+            --accent-2: #a855f7;    /* fiolet */
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+        }
+
         body {
-            font-family: system-ui, -apple-system, sans-serif;
-            display: flex;              /* układ: sidebar + content obok siebie */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
             min-height: 100vh;
-            background: #0b1120;
-            color: #e5e7eb;
+            display: flex;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            padding: 16px;
         }
 
-        /* Lewy pasek (zakładki) */
-        nav {
-            width: 240px;               /* szerokość sidebaru */
-            background: rgba(15, 23, 42, 0.9);
-            border-right: 1px solid #1f2937;
-            padding: 20px 16px;
+        /* Kontener na całą stronę */
+        .layout {
+            display: flex;
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            gap: 20px;
         }
 
-        nav h2 {
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-            color: #93c5fd;
+        /* Glassmorphism sidebar */
+        .sidebar {
+            width: 260px;
+            background: rgba(15, 23, 42, 0.65);        /* półprzezroczyste */
+            border-radius: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(18px);
+            padding: 20px 18px;
+            display: flex;
+            flex-direction: column;
         }
 
-        nav ul {
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            background: conic-gradient(from 180deg, #38bdf8, #a855f7, #22c55e, #38bdf8);
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text span:first-child {
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .logo-text span:last-child {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .nav-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .nav-list {
             list-style: none;
+            margin-bottom: 16px;
         }
 
-        nav li + li {
-            margin-top: 8px;
+        .nav-item + .nav-item {
+            margin-top: 6px;
         }
 
-        nav a {
-            display: block;
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             padding: 10px 12px;
-            border-radius: 8px;
-            color: #e5e7eb;
+            border-radius: 12px;
+            color: var(--text-main);
             text-decoration: none;
-            font-size: 0.95rem;
-            transition: background 0.2s, color 0.2s, transform 0.1s;
+            font-size: 0.92rem;
+            position: relative;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s, color 0.2s;
         }
 
-        nav a:hover {
-            background: rgba(59, 130, 246, 0.25);
-            color: #bfdbfe;
-            transform: translateX(2px);
+        .nav-link::before {
+            content: "";
+            width: 4px;
+            height: 4px;
+            border-radius: 999px;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.2s;
         }
 
-        nav a.active {
-            background: rgba(37, 99, 235, 0.6);
+        .nav-link span.icon-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.6);
+        }
+
+        .nav-link.active span.icon-dot {
+            background: var(--accent);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(168, 85, 247, 0.16));
+            box-shadow: 0 12px 25px rgba(15, 23, 42, 0.9);
             color: #f9fafb;
         }
 
-        /* Prawa część – treść */
-        main {
-            flex: 1;                    /* zajmuje całą resztę szerokości */
-            padding: 24px;
+        .nav-link:hover {
+            background: rgba(15, 23, 42, 0.9);
+            transform: translateX(3px);
+        }
+
+        .nav-link:hover::before {
+            opacity: 1;
+        }
+
+        .nav-label-main {
+            font-weight: 500;
+        }
+
+        .nav-label-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.35);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .sidebar-footer span {
+            display: block;
+        }
+
+        /* Główna treść */
+        .content {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 24px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            box-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.75),
+                0 0 0 1px rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(22px);
+            padding: 26px 26px 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* delikatne „światełko miasta” w tle */
+        .content::before {
+            content: "";
+            position: absolute;
+            inset: -25%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.15), transparent 55%),
+                radial-gradient(circle at 80% 0%, rgba(168, 85, 247, 0.12), transparent 60%);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .content-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 620px;
+            margin-bottom: 18px;
+        }
+
+        .hero-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .hero-pill {
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            font-size: 0.8rem;
+            color: #bae6fd;
+            background: rgba(15, 23, 42, 0.8);
         }
 
         .section {
-            display: none;              /* domyślnie ukryte */
+            display: none;
             max-width: 900px;
+            margin-top: 8px;
         }
 
         .section.active {
-            display: block;             /* pokazujemy aktualną zakładkę */
+            display: block;
         }
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 12px;
+        .section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
             color: #bfdbfe;
         }
 
-        p {
+        .section p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-main);
             margin-bottom: 10px;
-            line-height: 1.6;
-            color: #d1d5db;
         }
 
-        /* Responsywność – na bardzo wąskich ekranach sidebar na górze */
-        @media (max-width: 768px) {
+        .section ul {
+            margin-top: 4px;
+            list-style: disc;
+            padding-left: 18px;
+        }
+
+        .section li {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .callout {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px dashed rgba(56, 189, 248, 0.5);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 14px;
+            font-size: 0.9rem;
+            border-radius: 999px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            text-decoration: none;
+            background: linear-gradient(135deg, #38bdf8, #a855f7);
+            color: #0b1120;
+            font-weight: 600;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+            transition: transform 0.1s, box-shadow 0.15s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 22px 55px rgba(15, 23, 42, 1);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            color: #e5e7eb;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            box-shadow: none;
+        }
+
+        .cta-btn.secondary:hover {
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        /* Responsywność */
+        @media (max-width: 960px) {
             body {
+                padding: 10px;
+            }
+
+            .layout {
                 flex-direction: column;
             }
-            nav {
+
+            .sidebar {
                 width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #1f2937;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .nav-title {
+                margin-top: 2px;
+            }
+
+            .nav-list {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 8px;
+                gap: 6px;
+                margin-bottom: 0;
             }
-            nav h2 {
-                width: 100%;
+
+            .nav-item + .nav-item {
+                margin-top: 0;
             }
-            nav ul {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
+
+            .nav-link {
+                padding: 8px 10px;
             }
-            nav li {
-                margin: 0;
+
+            .sidebar-footer {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 1.6rem;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <h2>Nawigacja</h2>
-        <ul>
-            <li><a href="#start" class="active" onclick="showSection('start')">Strona główna</a></li>
-            <li><a href="#info" onclick="showSection('info')">Informacje</a></li>
-            <li><a href="#regulamin" onclick="showSection('regulamin')">Regulamin</a></li>
-            <li><a href="#kontakt" onclick="showSection('kontakt')">Kontakt</a></li>
-        </ul>
-    </nav>
+    <div class="layout">
+        <!-- Lewy szklany sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <div class="logo-text">
+                    <span>MIDNIGHT CITY RP</span>
+                    <span>Polski serwer roleplay</span>
+                </div>
+            </div>
 
-    <main>
-        <section id="start" class="section active">
-            <h1>Strona główna</h1>
-            <p>Tu możesz dać ogólny opis projektu / serwera / strony.</p>
-        </section>
+            <div class="nav-title">Zakładki</div>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#start" class="nav-link active" onclick="showSection('start'); return false;">
+                        <span class="icon-dot"></span>
+                        <div>
+                            <div class="nav-label-main">Strona główna</div>
+                            <div class="nav-label-sub">Zarys świata Midnight City</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#info" class="nav-link" onclick="showSection('info'); return false;">
+                        <span class="icon-dot"></span>
+                        <div>
+                            <div class="nav-label-main">O serwerze</div>
+                            <div class="nav-label-sub">Informacje organizacyjne</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#frakcje" class="nav-link" onclick="showSection('frakcje'); return false;">
+                        <span class="icon-dot"></span>
+                        <div>
+                            <div class="nav-label-main">Frakcje</div>
+                            <div class="nav-label-sub">Służby, gangi, cywile</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#regulamin" class="nav-link" onclick="showSection('regulamin'); return false;">
+                        <span class="icon-dot"></span>
+                        <div>
+                            <div class="nav-label-main">Regulamin</div>
+                            <div class="nav-label-sub">Zasady gry i zachowania</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#podania" class="nav-link" onclick="showSection('podania'); return false;">
+                        <span class="icon-dot"></span>
+                        <div>
+                            <div class="nav-label-main">Podania</div>
+                            <div class="nav-label-sub">Jak dołączyć do Midnight City</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#kontakt" class="nav-link" onclick="showSection('kontakt'); return false;">
+                        <span class="icon-dot"></span>
+                        <div>
+                            <div class="nav-label-main">Kontakt / Discord</div>
+                            <div class="nav-label-sub">Linki społeczności</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
 
-        <section id="info" class="section">
-            <h1>Informacje</h1>
-            <p>W tej zakładce dodaj szczegółowe informacje, np. o serwerze RP, frakcjach itd.</p>
-        </section>
+            <div class="sidebar-footer">
+                <span>Midnight City RP © 2026</span>
+                <span>Niezależny projekt społecznościowy.</span>
+            </div>
+        </aside>
 
-        <section id="regulamin" class="section">
-            <h1>Regulamin</h1>
-            <p>Tutaj wklej lub wpisz zasady, które mają obowiązywać użytkowników.</p>
-        </section>
+        <!-- Prawa część – treść zakładek -->
+        <main class="content">
+            <div class="content-inner">
+                <!-- HERO -->
+                <div class="tagline">Witamy w Midnight City</div>
+                <div class="hero-title">Miasto, które nie zasypia.</div>
+                <div class="hero-subtitle">
+                    Midnight City RP to polski serwer roleplay, który łączy klimat nocnego miasta, realistyczne mechaniki 
+                    i rozgrywkę nastawioną na współpracę między graczami. Poniżej znajdziesz wszystkie informacje potrzebne,
+                    aby bez problemu dołączyć do społeczności.
+                </div>
 
-        <section id="kontakt" class="section">
-            <h1>Kontakt</h1>
-            <p>Link do Discorda, mail, formularz zgłoszeniowy – wszystko co potrzebne, żeby się z Tobą skontaktować.</p>
-        </section>
+                <div class="hero-row">
+                    <div class="hero-pill">🔹 Polski serwer RP</div>
+                    <div class="hero-pill">🌃 Klimat nocnego miasta</div>
+                    <div class="hero-pill">👮🏻‍♂️ Służby, gangi, cywile</div>
+                    <div class="hero-pill">🎧 Komunikacja przez Discord</div>
+                </div>
 
-        <script>
-            function showSection(id) {
-                // przełączanie widoczności sekcji
-                const sections = document.querySelectorAll('.section');
-                sections.forEach(sec => {
-                    sec.classList.toggle('active', sec.id === id);
-                });
+                <!-- Sekcja: Strona główna -->
+                <section id="start" class="section active">
+                    <h2>Strona główna</h2>
+                    <p>
+                        Midnight City RP to miejsce dla osób, które lubią zorganizowaną rozgrywkę, przemyślane historie 
+                        i jasno określone zasady. Tutaj znajdziesz podstawowe informacje o serwerze, linki oraz 
+                        ogólny zarys świata, w którym toczy się akcja.
+                    </p>
+                    <p>
+                        Zachęcamy, aby przed dołączeniem dokładnie zapoznać się z regulaminem i opisem frakcji – 
+                        dzięki temu Twoje wejście do miasta będzie płynne, a rozgrywka przyjemna dla Ciebie i innych graczy.
+                    </p>
+                    <div class="callout">
+                        Tip: dodaj tę stronę do zakładek w przeglądarce – wszystkie ważne informacje o Midnight City RP 
+                        zawsze będziesz mieć pod ręką.
+                    </div>
+                </section>
 
-                // podświetlenie aktywnej zakładki w sidebarze
-                const links = document.querySelectorAll('nav a');
-                links.forEach(link => {
-                    const target = link.getAttribute('href').replace('#', '');
-                    link.classList.toggle('active', target === id);
-                });
-            }
-        </script>
-    </main>
+                <!-- Sekcja: O serwerze -->
+                <section id="info" class="section">
+                    <h2>O serwerze</h2>
+                    <p>
+                        Midnight City RP powstało z myślą o graczach, którzy szukają balansu między realizmem 
+                        a swobodą tworzenia własnych historii. Serwer jest rozwijany przez społeczność i administrację, 
+                        która słucha propozycji graczy.
+                    </p>
+                    <ul>
+                        <li>Tryb rozgrywki: roleplay z naciskiem na odgrywanie postaci.</li>
+                        <li>Język: polski (komunikacja na czacie i Discordzie).</li>
+                        <li>Minimalny wiek: ustaw według tego, co planujesz (np. 15+ / 16+).</li>
+                        <li>Rozgrywka: służby miejskie, cywilne życie, organizacje przestępcze, eventy społeczności.</li>
+                    </ul>
+                    <div class="callout">
+                        Tutaj możesz później dodać informacje techniczne serwera: IP, nazwy pakietów, wersję gry, 
+                        wymagania sprzętowe itp.
+                    </div>
+                </section>
+
+                <!-- Sekcja: Frakcje -->
+                <section id="frakcje" class="section">
+                    <h2>Frakcje Midnight City RP</h2>
+                    <p>
+                        W Midnight City RP możesz dołączyć do różnych frakcji – od służb mundurowych po 
+                        organizacje przestępcze i role cywilne. Każda frakcja ma swój charakter, zasady i 
+                        możliwości rozwoju postaci.
+                    </p>
+                    <ul>
+                        <li>Policja miejaska – odpowiedzialna za bezpieczeństwo i reagowanie na wykroczenia.</li>
+                        <li>Ratownictwo medyczne – pomoc poszkodowanym, działania na miejscu zdarzeń.</li>
+                        <li>Straż pożarna / służby techniczne – akcje ratunkowe, zabezpieczanie miasta.</li>
+                        <li>Organizacje przestępcze – gangi, grupy z własną hierarchią i celami.</li>
+                        <li>Cywile – biznesy, życie codzienne, rola mieszkańców Midnight City.</li>
+                    </ul>
+                    <div class="callout">
+                        Ten fragment możesz dowolnie edytować pod konkretne frakcje, które masz lub planujesz mieć 
+                        na serwerze Midnight City RP.
+                    </div>
+                </section>
+
+                <!-- Sekcja: Regulamin -->
+                <section id="regulamin" class="section">
+                    <h2>Regulamin serwera</h2>
+                    <p>
+                        Regulamin Midnight City RP jest zbiorem zasad mających zapewnić wszystkim graczom 
+                        komfortową i uczciwą rozgrywkę. Nieprzestrzeganie zasad może skutkować ostrzeżeniami, 
+                        banami lub innymi sankcjami.
+                    </p>
+                    <ul>
+                        <li>Szanuj innych graczy – zakaz obrażania, nękania, toksycznego zachowania.</li>
+                        <li>Zakaz cheatu, exploitów i wykorzystywania błędów gry.</li>
+                        <li>Zakaz metagamingu, powergamingu i innych form psucia rozgrywki RP.</li>
+                        <li>Obowiązek dostosowania się do decyzji administracji serwera.</li>
+                        <li>Pełen regulamin znajdziesz na Discordzie / w osobnym dokumencie.</li>
+                    </ul>
+                    <div class="callout">
+                        Możesz tu wkleić pełny regulamin albo dać link do dokumentu regulaminu na Discordzie / Google Docs. 
+                        Pamiętaj, żeby na bieżąco aktualizować zasady.
+                    </div>
+                </section>
+
+                <!-- Sekcja: Podania -->
+                <section id="podania" class="section">
+                    <h2>Podania na Midnight City RP</h2>
+                    <p>
+                        Aby dołączyć do wybranej frakcji lub otrzymać dostęp do serwera, wymagane może być złożenie podania. 
+                        Dzięki temu administracja może ocenić Twoje podejście do RP i dopasować Cię do odpowiedniej roli.
+                    </p>
+                    <ul>
+                        <li>Wejdź na Discord Midnight City RP i przejdź do kanału z podaniami.</li>
+                        <li>Zapoznaj się z wzorem podania (pytania, wymagane informacje).</li>
+                        <li>Wypełnij podanie rzetelnie – im lepiej opiszesz swoją postać, tym łatwiej ją zatwierdzić.</li>
+                        <li>Czekaj na odpowiedź administracji – nie spamuj, nie pytaj co 5 minut o status podania.</li>
+                    </ul>
+                    <div class="callout">
+                        Jeśli chcesz, później możemy do tej sekcji dodać gotowy formularz HTML lub przycisk prowadzący 
+                        bezpośrednio do panelu podań.
+                    </div>
+                </section>
+
+                <!-- Sekcja: Kontakt / Discord -->
+                <section id="kontakt" class="section">
+                    <h2>Kontakt i Discord</h2>
+                    <p>
+                        Najważniejszym miejscem komunikacji jest serwer Discord Midnight City RP. Tam znajdziesz 
+                        ogłoszenia, kanały tekstowe i głosowe, support, panel podań oraz ogólne informacje o serwerze.
+                    </p>
+                    <p>
+                        W tym miejscu dodaj linki, które pozwolą graczom szybko dołączyć do społeczności:
+                    </p>
+                    <ul>
+                        <li>Link zaproszeniowy do Discorda Midnight City RP.</li>
+                        <li>Ewentualny e‑mail kontaktowy administracji.</li>
+                        <li>Profil serwera na innych platformach (np. forum, social media).</li>
+                    </ul>
+
+                    <div class="cta-row">
+                        <!-- Podmień # na prawdziwy link Discord -->
+                        <a href="#" class="cta-btn">
+                            <span>Dołącz na Discord</span>
+                        </a>
+                        <a href="#" class="cta-btn secondary">
+                            <span>Formularz kontaktowy</span>
+                        </a>
+                    </div>
+
+                    <div class="callout">
+                        Uzupełnij powyższe przyciski o prawdziwe linki, gdy tylko będziesz miał docelowy Discord 
+                        / panel kontaktowy dla Midnight City RP.
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showSection(id) {
+            // przełączanie widoczności sekcji
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => {
+                sec.classList.toggle('active', sec.id === id);
+            });
+
+            // podświetlenie aktywnej zakładki
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => {
+                const href = link.getAttribute('href').replace('#', '');
+                link.classList.toggle('active', href === id);
+            });
+        }
+    </script>
 </body>
 </html>
