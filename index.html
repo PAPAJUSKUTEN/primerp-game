@@ -18,6 +18,7 @@
             --accent-2: #a855f7;
             --text-main: #e5e7eb;
             --text-muted: #9ca3af;
+            --card-bg: rgba(15, 23, 42, 0.75);
         }
 
         body {
@@ -163,7 +164,7 @@
                 0 24px 70px rgba(0, 0, 0, 0.75),
                 0 0 0 1px rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(22px);
-            padding: 26px 26px 28px;
+            padding: 26px;
             overflow: hidden;
             position: relative;
         }
@@ -184,27 +185,6 @@
             z-index: 1;
         }
 
-        .tagline {
-            font-size: 0.8rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 6px;
-        }
-
-        .hero-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 18px;
-        }
-
-        .hero-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            max-width: 620px;
-            margin-bottom: 18px;
-        }
-
         .hero-row {
             display: flex;
             flex-wrap: wrap;
@@ -223,7 +203,7 @@
 
         .section {
             display: none;
-            max-width: 900px;
+            max-width: 100%;
             margin-top: 8px;
         }
 
@@ -298,6 +278,57 @@
             background: rgba(15, 23, 42, 0.9);
         }
 
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .property-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 45px rgba(0, 0, 0, 0.45);
+        }
+
+        .property-card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .property-body {
+            padding: 14px;
+        }
+
+        .property-body h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #e0f2fe;
+        }
+
+        .property-body p {
+            font-size: 0.88rem;
+            line-height: 1.55;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        @media (max-width: 1100px) {
+            .property-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
         @media (max-width: 960px) {
             body {
                 padding: 10px;
@@ -338,9 +369,9 @@
             }
         }
 
-        @media (max-width: 640px) {
-            .hero-title {
-                font-size: 1.6rem;
+        @media (max-width: 700px) {
+            .property-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -357,17 +388,17 @@
             </div>
 
             <div class="nav-title">Zakładki</div>
-            <ul class="nav-list">
-                <li class="nav-item">
+            <ul class="nav-listst">
+                >
                     <a href="#start" class="nav-link active" onclick="showSection('start'); return false;">
                         <span class="icon-dot"></span>
                         <div>
                             <div class="nav-label-main">Strona główna</div>
-                            <div class="nav-label-sub">Zarys świata Midnight City</div>
+                            <div class="nav-label-sub">Zarys świata</div>
                         </div>
                     </a>
-                </li>
-                <li class="nav-item">
+                </l/li>
+                >
                     <a href="#info" class="nav-link" onclick="showSection('info'); return false;">
                         <span class="icon-dot"></span>
                         <div>
@@ -375,8 +406,8 @@
                             <div class="nav-label-sub">Informacje organizacyjne</div>
                         </div>
                     </a>
-                </li>
-                <li class="nav-item">
+                </l/li>
+                >
                     <a href="#frakcje" class="nav-link" onclick="showSection('frakcje'); return false;">
                         <span class="icon-dot"></span>
                         <div>
@@ -384,26 +415,26 @@
                             <div class="nav-label-sub">Służby, gangi, cywile</div>
                         </div>
                     </a>
-                </li>
-                <li class="nav-item">
+                </l/li>
+                >
                     <a href="#regulamin" class="nav-link" onclick="showSection('regulamin'); return false;">
                         <span class="icon-dot"></span>
                         <div>
                             <div class="nav-label-main">Regulamin</div>
-                            <div class="nav-label-sub">Zasady gry i zachowania</div>
+                            <div class="nav-label-sub">Zasady gry</div>
                         </div>
                     </a>
-                </li>
-                <li class="nav-item">
+                </l/li>
+                >
                     <a href="#podania" class="nav-link" onclick="showSection('podania'); return false;">
                         <span class="icon-dot"></span>
                         <div>
                             <div class="nav-label-main">Podania</div>
-                            <div class="nav-label-sub">Jak dołączyć do Midnight City</div>
+                            <div class="nav-label-sub">Jak dołączyć</div>
                         </div>
                     </a>
-                </li>
-                <li class="nav-item">
+                </l/li>
+                >
                     <a href="#nieruchomosci" class="nav-link" onclick="showSection('nieruchomosci'); return false;">
                         <span class="icon-dot"></span>
                         <div>
@@ -411,8 +442,8 @@
                             <div class="nav-label-sub">Mieszkania i lokale</div>
                         </div>
                     </a>
-                </li>
-                <li class="nav-item">
+                </l/li>
+                >
                     <a href="#kontakt" class="nav-link" onclick="showSection('kontakt'); return false;">
                         <span class="icon-dot"></span>
                         <div>
@@ -457,12 +488,13 @@
                         tworzenia własnych historii. Rozgrywka nastawiona jest na współpracę, odgrywanie postaci
                         i rozwój miasta przez działania graczy.
                     </p>
+                    <u
                     <ul>
-                        <li>Tryb rozgrywki: roleplay z naciskiem na odgrywanie postaci.</li>
-                        <li>Język: polski – komunikacja na serwerze i Discordzie.</li>
-                        <li>Minimalny wiek: ustalany przez administrację (np. 15+ / 16+).</li>
-                        <li>Rozgrywka: służby miejskie, życie cywilne, organizacje przestępcze, eventy społeczności.</li>
-                        <li>System nieruchomości: mieszkania, domy i lokale użytkowe dostępne dla graczy.</li>
+                        >Tryb rozgrywki: roleplay z naciskiem na odgrywanie postaci.</l/li>
+                        >Język: polski – komunikacja na serwerze i Discordzie.</l/li>
+                        >Minimalny wiek: ustalany przez administrację (np. 15+ / 16+).</l/li>
+                        >Rozgrywka: służby miejskie, życie cywilne, organizacje przestępcze, eventy społeczności.</l/li>
+                        >System nieruchomości: mieszkania, domy i lokale użytkowe dostępne dla graczy.</li>
                     </ul>
                 </section>
 
@@ -472,12 +504,13 @@
                         W Midnight City RP istnieje kilka głównych frakcji, do których mogą dołączyć gracze. Każda
                         frakcja ma własne zasady i zadania, a także możliwości rozwoju postaci.
                     </p>
+                    <u
                     <ul>
-                        <li>Policja miejska – bezpieczeństwo miasta, patrole, interwencje.</li>
-                        <li>Ratownictwo medyczne – pomoc poszkodowanym, zabezpieczanie zdarzeń.</li>
-                        <li>Straż pożarna / służby techniczne – akcje ratunkowe, wsparcie miasta.</li>
-                        <li>Organizacje przestępcze – gangi, grupy przestępcze, nielegalne działania.</li>
-                        <li>Cywile – mieszkańcy miasta, biznesy, życie codzienne.</li>
+                        >Policja miejska – bezpieczeństwo miasta, patrole, interwencje.</l/li>
+                        >Ratownictwo medyczne – pomoc poszkodowanym, zabezpieczanie zdarzeń.</l/li>
+                        >Straż pożarna / służby techniczne – akcje ratunkowe, wsparcie miasta.</l/li>
+                        >Organizacje przestępcze – gangi, grupy przestępcze, nielegalne działania.</l/li>
+                        >Cywile – mieszkańcy miasta, biznesy, życie codzienne.</li>
                     </ul>
                 </section>
 
@@ -488,12 +521,13 @@
                         Celem zasad jest utrzymanie porządku i zapewnienie wszystkim graczom uczciwej, przyjemnej
                         rozgrywki.
                     </p>
+                    <u
                     <ul>
-                        <li>Szanuj innych graczy – zakaz obrażania, nękania i toksycznych zachowań.</li>
-                        <li>Zakaz cheatów, exploitów i wykorzystywania błędów gry.</li>
-                        <li>Zakaz metagamingu i powergamingu oraz innych form psucia rozgrywki RP.</li>
-                        <li>Obowiązek stosowania się do decyzji administracji serwera.</li>
-                        <li>Szczegółowe zasady rozgrywki i kar znajdują się w pełnym regulaminie serwera.</li>
+                        >Szanuj innych graczy – zakaz obrażania, nękania i toksycznych zachowań.</l/li>
+                        >Zakaz cheatów, exploitów i wykorzystywania błędów gry.</l/li>
+                        >Zakaz metagamingu i powergamingu oraz innych form psucia rozgrywki RP.</l/li>
+                        >Obowiązek stosowania się do decyzji administracji serwera.</l/li>
+                        >Szczegółowe zasady rozgrywki i kar znajdują się w pełnym regulaminie serwera.</li>
                     </ul>
                 </section>
 
@@ -504,27 +538,43 @@
                         Dzięki temu administracja może sprawdzić Twoje podejście do RP oraz pomóc Ci znaleźć
                         odpowiednie miejsce w mieście.
                     </p>
+                    <u
                     <ul>
-                        <li>Przejdź na serwer Discord Midnight City RP do kanału z podaniami.</li>
-                        <li>Zapoznaj się z wymaganiami dla wybranej frakcji lub roli.</li>
-                        <li>Wypełnij podanie zgodnie z wzorem, rzetelnie opisując swoją postać.</li>
-                        <li>Oczekuj na odpowiedź administracji w wyznaczonym kanale lub wiadomości prywatnej.</li>
+                        >Przejdź na serwer Discord Midnight City RP do kanału z podaniami.</l/li>
+                        >Zapoznaj się z wymaganiami dla wybranej frakcji lub roli.</l/li>
+                        >Wypełnij podanie zgodnie z wzorem, rzetelnie opisując swoją postać.</l/li>
+                        >Oczekuj na odpowiedź administracji w wyznaczonym kanale lub wiadomości prywatnej.</li>
                     </ul>
                 </section>
 
                 <section id="nieruchomosci" class="section">
                     <h2>Nieruchomości</h2>
                     <p>
-                        System nieruchomości w Midnight City RP pozwala graczom posiadać mieszkania, domy oraz lokale
-                        użytkowe. Dzięki temu możesz prowadzić własny biznes, organizować spotkania lub po prostu
-                        mieć miejsce, które Twoja postać nazywa domem.
+                        W Midnight City RP dostępne są różne typy nieruchomości, które można wykorzystać jako miejsce
+                        zamieszkania, biznes albo punkt spotkań. Poniżej znajdziesz przykładową listę 18 lokali
+                        ułożonych po 3 w rzędzie.
                     </p>
-                    <ul>
-                        <li>Mieszkania – prywatne lokale dla postaci, możliwość personalizacji wnętrz.</li>
-                        <li>Domy – większe nieruchomości dla rodzin, grup lub bardziej rozwiniętych postaci.</li>
-                        <li>Lokale usługowe – bary, sklepy, warsztaty i inne biznesy działające w Midnight City.</li>
-                        <li>Zasady wynajmu i zakupu – określane przez administrację, zależne od ekonomii serwera.</li>
-                    </ul>
+
+                    <div class="property-grid">
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 1"><div class="property-body"><h3>Mieszkanie 01</h3><p>Nowoczesne mieszkanie w centrum miasta, idealne dla jednej postaci.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 2"><div class="property-body"><h3>Mieszkanie 02</h3><p>Jasne wnętrze z widokiem na miasto i miejscem na mały biznes.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 3"><div class="property-body"><h3>Mieszkanie 03</h3><p>Lokal premium dla bardziej rozwiniętej postaci lub lidera grupy.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 4"><div class="property-body"><h3>Mieszkanie 04</h3><p>Przytulne wnętrze z nowoczesnym układem i spokojną atmosferą.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 5"><div class="property-body"><h3>Mieszkanie 05</h3><p>Świetne dla gracza, który szuka prostego i funkcjonalnego lokum.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 6"><div class="property-body"><h3>Mieszkanie 06</h3><p>Elegancki apartament z dużą ilością przestrzeni i światła.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 7"><div class="property-body"><h3>Mieszkanie 07</h3><p>Wygodne lokum w spokojniejszej części miasta.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 8"><div class="property-body"><h3>Mieszkanie 08</h3><p>Idealne na start, z prostym wystrojem i dobrym układem pokoi.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 9"><div class="property-body"><h3>Mieszkanie 09</h3><p>Przestronny lokal dla kilku osób lub małej organizacji.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 10"><div class="property-body"><h3>Mieszkanie 10</h3><p>Nowoczesny apartament z klimatem nocnego miasta.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 11"><div class="property-body"><h3>Mieszkanie 11</h3><p>Luksusowy lokal dla postaci z wyższym statusem.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 12"><div class="property-body"><h3>Mieszkanie 12</h3><p>Stylowe mieszkanie na wynajem, dobre do codziennej gry.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Lokal 13"><div class="property-body"><h3>Lokal 13</h3><p>Mały lokal usługowy, odpowiedni na sklep lub biuro.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="Lokal 14"><div class="property-body"><h3>Lokal 14</h3><p>Biznesowy lokal z miejscem na spotkania i działalność RP.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80" alt="Lokal 15"><div class="property-body"><h3>Lokal 15</h3><p>Przestrzeń idealna na działalność handlową lub biurową.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Dom 16"><div class="property-body"><h3>Dom 16</h3><p>Dom dla rodziny lub grupy postaci, z większą prywatnością.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Dom 17"><div class="property-body"><h3>Dom 17</h3><p>Duży dom z przestrzenią na organizację spotkań i wydarzeń.</p></div></div>
+                        <div class="property-card"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Dom 18"><div class="property-body"><h3>Dom 18</h3><p>Ekskluzywna nieruchomość dla najbardziej rozwiniętych postaci.</p></div></div>
+                    </div>
                 </section>
 
                 <section id="kontakt" class="section">
@@ -534,19 +584,16 @@
                         ogłoszenia, kanały tekstowe i głosowe, support oraz panel podań.
                     </p>
                     <p>Potrzebne linki kontaktowe:</p>
+                    <u
                     <ul>
-                        <li>Link zaproszeniowy na Discord Midnight City RP.</li>
-                        <li>Adres e‑mail administracji (opcjonalnie).</li>
-                        <li>Linki do profili serwera na innych platformach.</li>
+                        >Link zaproszeniowy na Discord Midnight City RP.</l/li>
+                        >Adres e‑mail administracji (opcjonalnie).</l/li>
+                        >Linki do profili serwera na innych platformach.</li>
                     </ul>
 
                     <div class="cta-row">
-                        <a href="#" class="cta-btn">
-                            <span>Dołącz na Discord</span>
-                        </a>
-                        <a href="#" class="cta-btn secondary">
-                            <span>Formularz kontaktowy</span>
-                        </a>
+                        <a href="#" class="cta-btn"><span>Dołącz na Discord</span></a>
+                        <a href="#" class="cta-btn secondary"><span>Formularz kontaktowy</span></a>
                     </div>
                 </section>
             </div>
@@ -556,12 +603,7 @@
     <script>
         function showSection(id) {
             const sections = document.querySelectorAll('.section');
-            sections.forEach(sec => {
-                sec.classList.toggle('active', sec.id === id);
-            });
-
-            const links = document.querySelectorAll('.nav-link');
-            links.forEach(link => {
+            sectk => {
                 const href = link.getAttribute('href').replace('#', '');
                 link.classList.toggle('active', href === id);
             });
