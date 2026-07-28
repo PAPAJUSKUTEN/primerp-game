@@ -1018,6 +1018,9 @@ body {
   color: var(--accent);
   font-weight: 600;
   line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
 
 .prop-actions {
@@ -2285,6 +2288,7 @@ body {
             }
 
             const metas = card.querySelectorAll('.prop-meta');
+            const nightcoin = card.querySelector('.prop-nightcoin');
             if (metas.length === 2 && !metas[0].closest('.prop-meta-row')) {
                 const row = document.createElement('div');
                 row.className = 'prop-meta-row';
@@ -2296,6 +2300,10 @@ body {
 
                 row.appendChild(metas[0]);
                 row.appendChild(metas[1]);
+                if (nightcoin) {
+                    nightcoin.innerHTML = `<span class="meta-icon">🌙</span><span>${nightcoin.textContent}</span>`;
+                    row.appendChild(nightcoin);
+                }
             } else if (metas.length === 1 && !metas[0].closest('.prop-meta-row')) {
                 const row = document.createElement('div');
                 row.className = 'prop-meta-row';
@@ -2305,6 +2313,10 @@ body {
                 metas[0].classList.add('prop-price');
 
                 row.appendChild(metas[0]);
+                if (nightcoin) {
+                    nightcoin.innerHTML = `<span class="meta-icon">🌙</span><span>${nightcoin.textContent}</span>`;
+                    row.appendChild(nightcoin);
+                }
             }
         });
 
