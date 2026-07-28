@@ -739,6 +739,31 @@ body {
   font-weight: 600;
 }
 
+.mafia-card {
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.mafia-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+.mafia-colors {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mafia-color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1334,7 +1359,17 @@ body {
                     <p>Poniżej znajduje się lista oficjalnie zarejestrowanych organizacji przestępczych działających na terenie Midnight City RP. Rejestracja mafii odbywa się poprzez Discord serwera.</p>
 
                     <div class="faction-grid">
-                        <div class="faction-card" style="--faction-color:#ef4444">
+                        <div class="faction-card mafia-card" style="--faction-color:#ef4444"
+                             data-name="Nazwa mafii 1"
+                             data-status="active"
+                             data-status-label="Aktywna"
+                             data-owner="Nick gracza"
+                             data-territory="Dzielnica"
+                             data-members="0"
+                             data-colors="#ef4444,#111111,#f5f5f5"
+                             data-description="Pełny opis organizacji, jej historii, charakteru działalności i obszaru wpływów w mieście."
+                             data-tags="Tag 1,Tag 2">
+                            <img class="faction-banner" src="https://i.postimg.cc/zvB2959m/(3).png" alt="Baner Nazwa mafii 1">
                             <div class="faction-card-body">
                                 <span class="mafia-status active">Aktywna</span>
                                 <div class="faction-icon">🃏</div>
@@ -1352,7 +1387,17 @@ body {
                             </div>
                         </div>
 
-                        <div class="faction-card" style="--faction-color:#f97316">
+                        <div class="faction-card mafia-card" style="--faction-color:#f97316"
+                             data-name="Nazwa mafii 2"
+                             data-status="recruiting"
+                             data-status-label="Rekrutacja"
+                             data-owner="Nick gracza"
+                             data-territory="Dzielnica"
+                             data-members="0"
+                             data-colors="#f97316,#111111,#fde047"
+                             data-description="Pełny opis organizacji, jej historii, charakteru działalności i obszaru wpływów w mieście."
+                             data-tags="Tag 1,Tag 2">
+                            <img class="faction-banner" src="https://i.postimg.cc/L8fQdx0J/(4).png" alt="Baner Nazwa mafii 2">
                             <div class="faction-card-body">
                                 <span class="mafia-status recruiting">Rekrutacja</span>
                                 <div class="faction-icon">🎴</div>
@@ -1370,7 +1415,17 @@ body {
                             </div>
                         </div>
 
-                        <div class="faction-card" style="--faction-color:#a855f7">
+                        <div class="faction-card mafia-card" style="--faction-color:#a855f7"
+                             data-name="Nazwa mafii 3"
+                             data-status="suspended"
+                             data-status-label="Zawieszona"
+                             data-owner="Nick gracza"
+                             data-territory="Dzielnica"
+                             data-members="0"
+                             data-colors="#a855f7,#111111,#e5e5e5"
+                             data-description="Pełny opis organizacji, jej historii, charakteru działalności i obszaru wpływów w mieście."
+                             data-tags="Tag 1,Tag 2">
+                            <img class="faction-banner" src="https://i.postimg.cc/NMNp8SLD/(1).png" alt="Baner Nazwa mafii 3">
                             <div class="faction-card-body">
                                 <span class="mafia-status suspended">Zawieszona</span>
                                 <div class="faction-icon">♠️</div>
@@ -1992,6 +2047,27 @@ body {
         </div>
     </div>
 
+    <div id="mafiaModal" class="property-modal">
+        <div class="property-modal-content">
+            <button class="property-modal-close" id="closeMafiaModal">×</button>
+            <span class="mafia-status" id="mafiaModalStatus"></span>
+            <h2 id="mafiaModalTitle" style="margin-top:8px;"></h2>
+            <p id="mafiaModalDescription"></p>
+
+            <div class="modal-box">
+                <h3 style="margin-bottom:10px;color:#e0f2fe;">Dodatkowe informacje</h3>
+                <ul class="modal-info-list" id="mafiaModalInfoList"></ul>
+            </div>
+
+            <div class="modal-box" style="margin-top:18px;">
+                <h3 style="margin-bottom:10px;color:#e0f2fe;">Kolory pojazdów</h3>
+                <div class="mafia-colors" id="mafiaModalColors"></div>
+            </div>
+
+            <div class="faction-tags" id="mafiaModalTags" style="margin-top:16px;"></div>
+        </div>
+    </div>
+
     <div id="applicationModal" class="property-modal">
         <div class="property-modal-content">
             <button class="property-modal-close" id="closeApplicationModal">×</button>
@@ -2144,6 +2220,44 @@ body {
         closeModalBtn.addEventListener('click', closePropertyModal);
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closePropertyModal();
+        });
+
+        // ===== Modal mafii =====
+        const mafiaModal = document.getElementById('mafiaModal');
+        const closeMafiaModalBtn = document.getElementById('closeMafiaModal');
+        const mafiaModalStatus = document.getElementById('mafiaModalStatus');
+        const mafiaModalTitle = document.getElementById('mafiaModalTitle');
+        const mafiaModalDescription = document.getElementById('mafiaModalDescription');
+        const mafiaModalInfoList = document.getElementById('mafiaModalInfoList');
+        const mafiaModalColors = document.getElementById('mafiaModalColors');
+        const mafiaModalTags = document.getElementById('mafiaModalTags');
+
+        document.querySelectorAll('.mafia-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const colors = (card.dataset.colors || '').split(',').map(c => c.trim()).filter(Boolean);
+                const tags = (card.dataset.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+
+                mafiaModalStatus.textContent = card.dataset.statusLabel || '';
+                mafiaModalStatus.className = 'mafia-status ' + (card.dataset.status || '');
+                mafiaModalTitle.textContent = card.dataset.name || '';
+                mafiaModalDescription.textContent = card.dataset.description || '';
+
+                mafiaModalInfoList.innerHTML = `
+                    <li>👑 Właściciel: ${card.dataset.owner || '-'}</li>
+                    <li>📍 Terytorium: ${card.dataset.territory || '-'}</li>
+                    <li>👥 Członkowie: ${card.dataset.members || '-'}</li>
+                `;
+
+                mafiaModalColors.innerHTML = colors.map(c => `<span class="mafia-color-dot" style="background:${c}" title="${c}"></span>`).join('');
+                mafiaModalTags.innerHTML = tags.map(t => `<span class="faction-tag">${t}</span>`).join('');
+
+                mafiaModal.classList.add('active');
+            });
+        });
+
+        closeMafiaModalBtn.addEventListener('click', () => mafiaModal.classList.remove('active'));
+        mafiaModal.addEventListener('click', (e) => {
+            if (e.target === mafiaModal) mafiaModal.classList.remove('active');
         });
 
         // ===== Formularz podania -> webhook Discord =====
