@@ -606,6 +606,78 @@ body {
   gap: 16px;
 }
 
+.faction-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.faction-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(250, 204, 21, 0.22);
+  border-top: 3px solid var(--faction-color, var(--accent));
+  border-radius: 18px;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45);
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faction-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: color-mix(in srgb, var(--faction-color, var(--accent)) 20%, transparent);
+  border: 1px solid color-mix(in srgb, var(--faction-color, var(--accent)) 55%, transparent);
+}
+
+.faction-name {
+  font-size: 1.05rem;
+  color: #fff4b0;
+}
+
+.faction-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.faction-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.faction-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  color: #fff4b0;
+  background: color-mix(in srgb, var(--faction-color, var(--accent)) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--faction-color, var(--accent)) 50%, transparent);
+}
+
+@media (max-width: 1100px) {
+  .faction-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .faction-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1107,13 +1179,63 @@ body {
                 <section id="frakcje" class="section">
                     <h2>Frakcje Midnight City RP</h2>
                     <p>W Midnight City RP istnieje kilka głównych frakcji, do których mogą dołączyć gracze. Każda frakcja ma własne zasady, zadania oraz możliwości rozwoju postaci.</p>
-                    <ul>
-                        <li>Policja Miejska (LSPD / Law Enforcement).</li>
-                        <li>Ratownictwo Medyczne (EMS).</li>
-                        <li>Straż Pożarna / Służby Techniczne.</li>
-                        <li>Organizacje Przestępcze.</li>
-                        <li>Cywile.</li>
-                    </ul>
+
+                    <div class="faction-grid">
+                        <div class="faction-card" style="--faction-color:#3b82f6">
+                            <div class="faction-icon">👮</div>
+                            <h3 class="faction-name">Policja Państwowa</h3>
+                            <p class="faction-desc">Utrzymuje porządek publiczny, reaguje na zgłoszenia i prowadzi interwencje na terenie całego miasta.</p>
+                            <div class="faction-tags">
+                                <span class="faction-tag">Patrole</span>
+                                <span class="faction-tag">Interwencje</span>
+                                <span class="faction-tag">Śledztwa</span>
+                            </div>
+                        </div>
+
+                        <div class="faction-card" style="--faction-color:#ef4444">
+                            <div class="faction-icon">🚒</div>
+                            <h3 class="faction-name">Straż Pożarna</h3>
+                            <p class="faction-desc">Gasi pożary, usuwa zagrożenia i zabezpiecza miejsca wypadków, dbając o bezpieczeństwo mieszkańców.</p>
+                            <div class="faction-tags">
+                                <span class="faction-tag">Pożary</span>
+                                <span class="faction-tag">Ratownictwo</span>
+                                <span class="faction-tag">Zabezpieczenia</span>
+                            </div>
+                        </div>
+
+                        <div class="faction-card" style="--faction-color:#f97316">
+                            <div class="faction-icon">🚌</div>
+                            <h3 class="faction-name">Zajezdnia</h3>
+                            <p class="faction-desc">Odpowiada za komunikację miejską – trasy autobusowe, transport mieszkańców i utrzymanie taboru.</p>
+                            <div class="faction-tags">
+                                <span class="faction-tag">Transport</span>
+                                <span class="faction-tag">Trasy</span>
+                                <span class="faction-tag">Tabor</span>
+                            </div>
+                        </div>
+
+                        <div class="faction-card" style="--faction-color:#22c55e">
+                            <div class="faction-icon">📦</div>
+                            <h3 class="faction-name">Firma Dostawcza</h3>
+                            <p class="faction-desc">Realizuje zlecenia transportowe i dostawy towarów do sklepów oraz mieszkańców miasta.</p>
+                            <div class="faction-tags">
+                                <span class="faction-tag">Dostawy</span>
+                                <span class="faction-tag">Logistyka</span>
+                                <span class="faction-tag">Zlecenia</span>
+                            </div>
+                        </div>
+
+                        <div class="faction-card" style="--faction-color:#f59e0b">
+                            <div class="faction-icon">🛠️</div>
+                            <h3 class="faction-name">Pomoc Drogowa</h3>
+                            <p class="faction-desc">Holuje uszkodzone pojazdy, wspiera kierowców w awariach i sprząta miejsca kolizji.</p>
+                            <div class="faction-tags">
+                                <span class="faction-tag">Holowanie</span>
+                                <span class="faction-tag">Naprawy</span>
+                                <span class="faction-tag">Kolizje</span>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <section id="regulamin" class="section">
