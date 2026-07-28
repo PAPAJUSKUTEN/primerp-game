@@ -2226,6 +2226,15 @@ body {
 
                 row.appendChild(metas[0]);
                 row.appendChild(metas[1]);
+            } else if (metas.length === 1 && !metas[0].closest('.prop-meta-row')) {
+                const row = document.createElement('div');
+                row.className = 'prop-meta-row';
+                metas[0].parentNode.insertBefore(row, metas[0]);
+
+                metas[0].innerHTML = `<span class="meta-icon">💰</span><span>${metas[0].textContent}</span>`;
+                metas[0].classList.add('prop-price');
+
+                row.appendChild(metas[0]);
             }
         });
 
