@@ -355,6 +355,72 @@ body {
   background: rgba(20, 20, 20, 0.92);
 }
 
+.application-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.application-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.application-form label .req {
+  color: #f87171;
+}
+
+.application-form input,
+.application-form textarea {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(250, 204, 21, 0.25);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.92rem;
+  resize: vertical;
+}
+
+.application-form input:focus,
+.application-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.15);
+}
+
+.application-form-status {
+  font-size: 0.88rem;
+  min-height: 1.3em;
+  line-height: 1.5;
+}
+
+.application-form-status.success {
+  color: #4ade80;
+}
+
+.application-form-status.error {
+  color: #f87171;
+}
+
+.application-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.cta-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  filter: none !important;
+}
+
 .application-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -944,7 +1010,7 @@ body {
                     <div class="application-grid">
                         <div class="application-card">
                             <div class="application-head">
-                                <div class="application-icon">🛡️</div>
+                                <div class="application-icon">👑</div>
                                 <div class="application-title">
                                     <h3>Administrator</h3>
                                     <span>Zespół administracyjny serwera</span>
@@ -971,7 +1037,7 @@ body {
                             </ul>
 
                             <div class="application-footer">
-                                <a href="https://discord.gg/TWÓJ-LINK" class="cta-btn"><span>Złóż podanie na Discordzie</span></a>
+                                <button type="button" class="cta-btn" data-apply="administrator"><span>Złóż podanie</span></button>
                             </div>
                         </div>
 
@@ -1004,7 +1070,7 @@ body {
                             </ul>
 
                             <div class="application-footer">
-                                <a href="https://discord.gg/TWÓJ-LINK" class="cta-btn"><span>Złóż podanie na Discordzie</span></a>
+                                <button type="button" class="cta-btn" data-apply="policjant"><span>Złóż podanie</span></button>
                             </div>
                         </div>
                     </div>
@@ -1435,6 +1501,46 @@ body {
         </div>
     </div>
 
+    <div id="applicationModal" class="property-modal">
+        <div class="property-modal-content">
+            <button class="property-modal-close" id="closeApplicationModal">×</button>
+            <h2 id="appModalTitle">Podanie</h2>
+            <p id="appModalSubtitle" style="color:var(--text-muted);margin-bottom:6px;"></p>
+
+            <form id="applicationForm" class="application-form">
+                <label>Nick w grze <span class="req">*</span>
+                    <input type="text" name="nick" placeholder="np. Jan Kowalski" required>
+                </label>
+
+                <label>Discord (nazwa użytkownika lub link do profilu) <span class="req">*</span>
+                    <input type="text" name="discord" placeholder="np. nick lub discord.com/users/..." required>
+                </label>
+
+                <label>Wiek <span class="req">*</span>
+                    <input type="number" name="wiek" min="10" max="99" placeholder="np. 18" required>
+                </label>
+
+                <label>Doświadczenie w RP <span class="req">*</span>
+                    <textarea name="doswiadczenie" rows="3" placeholder="Opisz swoje wcześniejsze doświadczenie w roleplay..." required></textarea>
+                </label>
+
+                <label>Dlaczego chcesz dołączyć / motywacja <span class="req">*</span>
+                    <textarea name="motywacja" rows="3" placeholder="Opisz swoją motywację..." required></textarea>
+                </label>
+
+                <label>Dodatkowe informacje (opcjonalnie)
+                    <textarea name="dodatkowe" rows="2" placeholder="Cokolwiek jeszcze chcesz dodać..."></textarea>
+                </label>
+
+                <div id="applicationFormStatus" class="application-form-status"></div>
+
+                <div class="application-form-actions">
+                    <button type="submit" class="cta-btn" id="applicationSubmitBtn"><span>Prześlij</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function showSection(id) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.toggle('active', sec.id === id));
@@ -1540,6 +1646,117 @@ body {
         closeModalBtn.addEventListener('click', closePropertyModal);
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closePropertyModal();
+        });
+
+        // ===== Formularz podania -> webhook Discord =====
+        const DISCORD_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1531522821098967140/55qba8QPNa3AST6eAm3Siwe2VcusnphDEeF8vHi8L3bjyVjq0uphCj3irGZ8BkFJmOu9';
+
+        const roleInfo = {
+            administrator: { label: 'Administrator', subtitle: 'Zespół administracyjny serwera', color: 0xfacc15, emoji: '👑' },
+            policjant: { label: 'Policjant', subtitle: 'Frakcja: Policja Miejska (LSPD)', color: 0x3b82f6, emoji: '👮' }
+        };
+
+        const applicationModal = document.getElementById('applicationModal');
+        const closeApplicationModalBtn = document.getElementById('closeApplicationModal');
+        const applicationForm = document.getElementById('applicationForm');
+        const appModalTitle = document.getElementById('appModalTitle');
+        const appModalSubtitle = document.getElementById('appModalSubtitle');
+        const applicationFormStatus = document.getElementById('applicationFormStatus');
+        const applicationSubmitBtn = document.getElementById('applicationSubmitBtn');
+
+        let currentRole = null;
+
+        function resetApplicationStatus() {
+            applicationFormStatus.textContent = '';
+            applicationFormStatus.className = 'application-form-status';
+        }
+
+        function openApplicationModal(roleKey) {
+            currentRole = roleKey;
+            const info = roleInfo[roleKey] || { label: 'Rola', subtitle: '' };
+            appModalTitle.textContent = `Podanie: ${info.label}`;
+            appModalSubtitle.textContent = info.subtitle || '';
+            applicationForm.reset();
+            resetApplicationStatus();
+            applicationSubmitBtn.disabled = false;
+            applicationSubmitBtn.querySelector('span').textContent = 'Prześlij';
+            applicationModal.classList.add('active');
+        }
+
+        function closeApplicationModal() {
+            applicationModal.classList.remove('active');
+        }
+
+        document.querySelectorAll('[data-apply]').forEach(btn => {
+            btn.addEventListener('click', () => openApplicationModal(btn.dataset.apply));
+        });
+
+        closeApplicationModalBtn.addEventListener('click', closeApplicationModal);
+        applicationModal.addEventListener('click', (e) => {
+            if (e.target === applicationModal) closeApplicationModal();
+        });
+
+        applicationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(applicationForm);
+            const nick = (formData.get('nick') || '').trim();
+            const discord = (formData.get('discord') || '').trim();
+            const wiek = (formData.get('wiek') || '').trim();
+            const doswiadczenie = (formData.get('doswiadczenie') || '').trim();
+            const motywacja = (formData.get('motywacja') || '').trim();
+            const dodatkowe = (formData.get('dodatkowe') || '').trim();
+
+            const info = roleInfo[currentRole] || { label: 'Nieznana rola', color: 0xfacc15, emoji: '📋' };
+
+            const fields = [
+                { name: 'Nick w grze', value: nick || '-', inline: true },
+                { name: 'Discord', value: discord || '-', inline: true },
+                { name: 'Wiek', value: wiek || '-', inline: true },
+                { name: 'Doświadczenie w RP', value: doswiadczenie || '-' },
+                { name: 'Motywacja', value: motywacja || '-' }
+            ];
+
+            if (dodatkowe) {
+                fields.push({ name: 'Dodatkowe informacje', value: dodatkowe });
+            }
+
+            const payload = {
+                embeds: [{
+                    title: `${info.emoji} Nowe podanie: ${info.label}`,
+                    color: info.color,
+                    fields: fields,
+                    timestamp: new Date().toISOString(),
+                    footer: { text: 'Midnight City RP – Formularz podań' }
+                }]
+            };
+
+            applicationSubmitBtn.disabled = true;
+            applicationSubmitBtn.querySelector('span').textContent = 'Wysyłanie...';
+            resetApplicationStatus();
+
+            try {
+                const res = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok || res.status === 204) {
+                    applicationFormStatus.textContent = '✅ Podanie zostało wysłane! Oczekuj na kontakt na Discordzie.';
+                    applicationFormStatus.classList.add('success');
+                    applicationForm.reset();
+                    setTimeout(closeApplicationModal, 2500);
+                } else {
+                    throw new Error('Webhook responded with status ' + res.status);
+                }
+            } catch (err) {
+                applicationFormStatus.textContent = '❌ Nie udało się wysłać podania. Spróbuj ponownie lub napisz bezpośrednio na Discordzie.';
+                applicationFormStatus.classList.add('error');
+            } finally {
+                applicationSubmitBtn.disabled = false;
+                applicationSubmitBtn.querySelector('span').textContent = 'Prześlij';
+            }
         });
     </script>
 </body>
