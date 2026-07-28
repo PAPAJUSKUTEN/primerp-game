@@ -429,6 +429,7 @@ body {
 }
 
 .application-card {
+  position: relative;
   background: var(--card-bg);
   border: 1px solid rgba(250, 204, 21, 0.22);
   border-radius: 18px;
@@ -438,6 +439,42 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.application-card.is-closed {
+  border-color: rgba(148, 163, 184, 0.28);
+  overflow: hidden;
+}
+
+.application-card.is-closed .application-icon {
+  filter: grayscale(0.4);
+}
+
+.closed-ribbon {
+  position: absolute;
+  top: 14px;
+  right: -34px;
+  transform: rotate(40deg);
+  background: linear-gradient(135deg, #64748b, #334155);
+  color: #f1f5f9;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 5px 40px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.cta-btn-locked,
+.cta-btn-locked:hover {
+  background: linear-gradient(135deg, #475569, #334155);
+  color: #cbd5e1;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none !important;
+  filter: none !important;
+  opacity: 0.85;
 }
 
 .application-card:hover {
@@ -1008,7 +1045,8 @@ body {
                     <p>W zależności od frakcji i roli, dołączenie do Midnight City RP lub wsparcie projektu może wymagać złożenia podania. Poniżej znajdziesz profile dwóch najczęściej wybieranych ról wraz z wymaganiami.</p>
 
                     <div class="application-grid">
-                        <div class="application-card">
+                        <div class="application-card is-closed">
+                            <div class="closed-ribbon">🔒 Podania zamknięte</div>
                             <div class="application-head">
                                 <div class="application-icon">👑</div>
                                 <div class="application-title">
@@ -1037,7 +1075,7 @@ body {
                             </ul>
 
                             <div class="application-footer">
-                                <button type="button" class="cta-btn" data-apply="administrator"><span>Złóż podanie</span></button>
+                                <button type="button" class="cta-btn cta-btn-locked" disabled aria-disabled="true"><span>🔒 Złóż podanie</span></button>
                             </div>
                         </div>
 
