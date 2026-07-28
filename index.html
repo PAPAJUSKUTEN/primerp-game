@@ -619,7 +619,23 @@ body {
   border-top: 3px solid var(--faction-color, var(--accent));
   border-radius: 18px;
   box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45);
-  padding: 22px 18px;
+  padding: 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.faction-banner {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid rgba(250, 204, 21, 0.22);
+}
+
+.faction-card-body {
+  padding: 18px 18px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1182,6 +1198,8 @@ body {
 
                     <div class="faction-grid">
                         <div class="faction-card" style="--faction-color:#3b82f6">
+                            <img class="faction-banner" src="https://images.unsplash.com/photo-1617196701537-7329482cc9fe?auto=format&fit=crop&w=800&q=80" alt="Baner Policja Państwowa">
+                            <div class="faction-card-body">
                             <div class="faction-icon">👮</div>
                             <h3 class="faction-name">Policja Państwowa</h3>
                             <p class="faction-desc">Utrzymuje porządek publiczny, reaguje na zgłoszenia i prowadzi interwencje na terenie całego miasta.</p>
@@ -1190,9 +1208,12 @@ body {
                                 <span class="faction-tag">Interwencje</span>
                                 <span class="faction-tag">Śledztwa</span>
                             </div>
+                            </div>
                         </div>
 
                         <div class="faction-card" style="--faction-color:#ef4444">
+                            <img class="faction-banner" src="https://images.unsplash.com/photo-1601056639791-a713c8650047?auto=format&fit=crop&w=800&q=80" alt="Baner Straż Pożarna">
+                            <div class="faction-card-body">
                             <div class="faction-icon">🚒</div>
                             <h3 class="faction-name">Straż Pożarna</h3>
                             <p class="faction-desc">Gasi pożary, usuwa zagrożenia i zabezpiecza miejsca wypadków, dbając o bezpieczeństwo mieszkańców.</p>
@@ -1201,9 +1222,12 @@ body {
                                 <span class="faction-tag">Ratownictwo</span>
                                 <span class="faction-tag">Zabezpieczenia</span>
                             </div>
+                            </div>
                         </div>
 
                         <div class="faction-card" style="--faction-color:#f97316">
+                            <img class="faction-banner" src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=800&q=80" alt="Baner Zajezdnia">
+                            <div class="faction-card-body">
                             <div class="faction-icon">🚌</div>
                             <h3 class="faction-name">Zajezdnia</h3>
                             <p class="faction-desc">Odpowiada za komunikację miejską – trasy autobusowe, transport mieszkańców i utrzymanie taboru.</p>
@@ -1212,9 +1236,12 @@ body {
                                 <span class="faction-tag">Trasy</span>
                                 <span class="faction-tag">Tabor</span>
                             </div>
+                            </div>
                         </div>
 
                         <div class="faction-card" style="--faction-color:#22c55e">
+                            <img class="faction-banner" src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80" alt="Baner Firma Dostawcza">
+                            <div class="faction-card-body">
                             <div class="faction-icon">📦</div>
                             <h3 class="faction-name">Firma Dostawcza</h3>
                             <p class="faction-desc">Realizuje zlecenia transportowe i dostawy towarów do sklepów oraz mieszkańców miasta.</p>
@@ -1223,9 +1250,12 @@ body {
                                 <span class="faction-tag">Logistyka</span>
                                 <span class="faction-tag">Zlecenia</span>
                             </div>
+                            </div>
                         </div>
 
                         <div class="faction-card" style="--faction-color:#f59e0b">
+                            <img class="faction-banner" src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=800&q=80" alt="Baner Pomoc Drogowa">
+                            <div class="faction-card-body">
                             <div class="faction-icon">🛠️</div>
                             <h3 class="faction-name">Pomoc Drogowa</h3>
                             <p class="faction-desc">Holuje uszkodzone pojazdy, wspiera kierowców w awariach i sprząta miejsca kolizji.</p>
@@ -1233,6 +1263,7 @@ body {
                                 <span class="faction-tag">Holowanie</span>
                                 <span class="faction-tag">Naprawy</span>
                                 <span class="faction-tag">Kolizje</span>
+                            </div>
                             </div>
                         </div>
                     </div>
