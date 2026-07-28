@@ -355,6 +355,109 @@ body {
   background: rgba(20, 20, 20, 0.92);
 }
 
+.application-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.application-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(250, 204, 21, 0.22);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.application-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.55);
+  border-color: rgba(250, 204, 21, 0.62);
+}
+
+.application-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.application-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.25), rgba(234, 179, 8, 0.18));
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  flex: 0 0 auto;
+}
+
+.application-title h3 {
+  font-size: 1.1rem;
+  color: #fff4b0;
+}
+
+.application-title span {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.application-card p.application-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.application-section-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffe066;
+  margin-top: 4px;
+}
+
+.application-card ul {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.application-card ul li {
+  font-size: 0.88rem;
+  color: #e6e6e6;
+  line-height: 1.5;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.application-card ul li::before {
+  content: "▸";
+  color: var(--accent);
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.application-footer {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+@media (max-width: 700px) {
+  .application-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .property-scroll {
   max-height: 620px;
   overflow-y: auto;
@@ -613,13 +716,6 @@ body {
   line-height: 1.6;
 }
 
-.modal-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 18px;
-  margin-top: 16px;
-}
-
 .modal-gallery {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -639,6 +735,7 @@ body {
   border: 1px solid rgba(250, 204, 21, 0.14);
   border-radius: 16px;
   padding: 14px;
+  margin-top: 16px;
 }
 
 .modal-info-list {
@@ -649,13 +746,6 @@ body {
 .modal-info-list li {
   margin-bottom: 6px;
   color: #f0f0f0;
-}
-
-.modal-video iframe {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border: 0;
-  border-radius: 14px;
 }
 
 @media (max-width: 1100px) {
@@ -710,10 +800,6 @@ body {
   .hero-aside {
     max-width: 100%;
   }
-
-  .modal-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 960px) {
@@ -757,6 +843,7 @@ body {
                 <li class="nav-item"><a class="nav-link" data-target="regulamin"><span class="icon-dot"></span><div><div class="nav-label-main">Regulamin</div><div class="nav-label-sub">Zasady gry</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="podania"><span class="icon-dot"></span><div><div class="nav-label-main">Podania</div><div class="nav-label-sub">Jak dołączyć</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="nieruchomosci"><span class="icon-dot"></span><div><div class="nav-label-main">Nieruchomości</div><div class="nav-label-sub">Mieszkania i lokale</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="wspolpraca"><span class="icon-dot"></span><div><div class="nav-label-main">Współpraca</div><div class="nav-label-sub">Partnerstwa i media</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="kontakt"><span class="icon-dot"></span><div><div class="nav-label-main">Kontakt / Discord</div><div class="nav-label-sub">Linki społeczności</div></div></a></li>
             </ul>
 
@@ -852,18 +939,88 @@ body {
 
                 <section id="podania" class="section">
                     <h2>Podania na Midnight City RP</h2>
-                    <p>W zależności od frakcji i roli, dołączenie do Midnight City RP lub wsparcie projektu może wymagać złożenia podania.</p>
+                    <p>W zależności od frakcji i roli, dołączenie do Midnight City RP lub wsparcie projektu może wymagać złożenia podania. Poniżej znajdziesz profile dwóch najczęściej wybieranych ról wraz z wymaganiami.</p>
+
+                    <div class="application-grid">
+                        <div class="application-card">
+                            <div class="application-head">
+                                <div class="application-icon">🛡️</div>
+                                <div class="application-title">
+                                    <h3>Administrator</h3>
+                                    <span>Zespół administracyjny serwera</span>
+                                </div>
+                            </div>
+                            <p class="application-desc">Administrator dba o porządek na serwerze, wspiera graczy, rozwiązuje zgłoszenia i pilnuje przestrzegania regulaminu. To rola wymagająca zaufania, cierpliwości i dobrej znajomości zasad RP.</p>
+
+                            <div class="application-section-title">Wymagania</div>
+                            <ul>
+                                <li>Ukończone 18 lat lub zgoda opiekuna w wyjątkowych przypadkach.</li>
+                                <li>Minimum 1 miesiąc aktywnej gry na serwerze.</li>
+                                <li>Bardzo dobra znajomość regulaminu i zasad Heavy/Medium RP.</li>
+                                <li>Brak kar administracyjnych w ostatnim czasie.</li>
+                                <li>Dyspozycyjność – minimum kilka godzin tygodniowo.</li>
+                                <li>Kultura osobista i opanowanie w sytuacjach konfliktowych.</li>
+                            </ul>
+
+                            <div class="application-section-title">Zakres obowiązków</div>
+                            <ul>
+                                <li>Obsługa zgłoszeń i ticketów graczy.</li>
+                                <li>Nadzór nad przestrzeganiem regulaminu.</li>
+                                <li>Pomoc nowym graczom w odnalezieniu się na serwerze.</li>
+                                <li>Współpraca z resztą zespołu administracyjnego.</li>
+                            </ul>
+
+                            <div class="application-footer">
+                                <a href="https://discord.gg/TWÓJ-LINK" class="cta-btn"><span>Złóż podanie na Discordzie</span></a>
+                            </div>
+                        </div>
+
+                        <div class="application-card">
+                            <div class="application-head">
+                                <div class="application-icon">👮</div>
+                                <div class="application-title">
+                                    <h3>Policjant</h3>
+                                    <span>Frakcja: Policja Miejska (LSPD)</span>
+                                </div>
+                            </div>
+                            <p class="application-desc">Policjant dba o bezpieczeństwo i porządek publiczny w mieście, reaguje na zgłoszenia i prowadzi interwencje zgodnie z procedurami frakcji oraz duchem roleplay.</p>
+
+                            <div class="application-section-title">Wymagania</div>
+                            <ul>
+                                <li>Ukończone 16 lat.</li>
+                                <li>Minimum 2 tygodnie aktywnej gry na serwerze.</li>
+                                <li>Znajomość podstawowych procedur i kodów służbowych.</li>
+                                <li>Umiejętność prowadzenia dynamicznego i wiarygodnego RP.</li>
+                                <li>Czysta kartoteka – brak poważnych naruszeń regulaminu.</li>
+                                <li>Gotowość do udziału w szkoleniu wewnętrznym frakcji.</li>
+                            </ul>
+
+                            <div class="application-section-title">Zakres obowiązków</div>
+                            <ul>
+                                <li>Patrolowanie miasta i reagowanie na zgłoszenia.</li>
+                                <li>Prowadzenie interwencji zgodnie z procedurami.</li>
+                                <li>Współpraca z innymi służbami (EMS, Straż).</li>
+                                <li>Dbanie o realistyczny i klimatyczny RP w trakcie służby.</li>
+                            </ul>
+
+                            <div class="application-footer">
+                                <a href="https://discord.gg/TWÓJ-LINK" class="cta-btn"><span>Złóż podanie na Discordzie</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="application-section-title" style="margin-top:20px;">Jak złożyć podanie</div>
                     <ul>
                         <li>Przejdź na serwer Discord Midnight City RP do kanału z podaniami.</li>
-                        <li>Zapoznaj się z wymaganiami dla wybranej kategorii.</li>
-                        <li>Wypełnij podanie zgodnie ze wzorem.</li>
-                        <li>Oczekuj na weryfikację.</li>
+                        <li>Zapoznaj się z wymaganiami dla wybranej roli, opisanymi powyżej.</li>
+                        <li>Wypełnij podanie zgodnie ze wzorem obowiązującym na Discordzie.</li>
+                        <li>Oczekuj na weryfikację przez zespół administracyjny.</li>
                     </ul>
                 </section>
 
                 <section id="nieruchomosci" class="section">
                     <h2>Nieruchomości</h2>
-                    <p>W Midnight City RP dostępne są różne typy nieruchomości. Kliknij w zdjęcie, żeby zobaczyć dodatkowe zdjęcia, informacje i film z YouTube.</p>
+                    <p>W Midnight City RP dostępne są różne typy nieruchomości. Kliknij w zdjęcie, żeby zobaczyć dodatkowe zdjęcia i informacje.</p>
 
                     <div class="property-scroll" id="propertyScroll">
                     <div class="property-grid">
@@ -873,7 +1030,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Nowoczesny dom mieszkalny w atrakcyjnej lokalizacji miasta."
                              data-info="3 sypialnie, garaż, ogród, 2 łazienki"
-                             data-video="https://youtu.be/QliuXIYYTZE?si=SFP7UhnC35G2QBSY"
                              data-gallery='["https://i.postimg.cc/9Fx7QY7Q/Zrzut-ekranu-2026-07-24-034510.png","https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://i.postimg.cc/9Fx7QY7Q/Zrzut-ekranu-2026-07-24-034510.png" alt="Dom mieszkalny przy ulicy Długiej 1">
                             <div class="property-body">
@@ -894,7 +1050,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Osiedle mieszkalne 1, idealne jako drugi dom lub lokum dla kilku postaci."
                              data-info="Blok mieszkalny, dobra lokalizacja, szybki dostęp do centrum"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://i.postimg.cc/5yXMqJsW/Zrzut-ekranu-2026-07-24-034530.png","https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://i.postimg.cc/5yXMqJsW/Zrzut-ekranu-2026-07-24-034530.png" alt="Osiedle mieszkalne 1, mieszkanie 2">
                             <div class="property-body">
@@ -915,7 +1070,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Osiedle mieszkalne 2, dobre dla graczy szukających klimatycznego miejsca w mieście."
                              data-info="Spokojna okolica, kilka pokoi, wygodny układ"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://i.postimg.cc/766vwD8f/Zrzut-ekranu-2026-07-24-034707.png","https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://i.postimg.cc/766vwD8f/Zrzut-ekranu-2026-07-24-034707.png" alt="Osiedle mieszkalne 2, mieszkanie 3">
                             <div class="property-body">
@@ -936,7 +1090,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Przytulne wnętrze z nowoczesnym układem i spokojną atmosferą."
                              data-info="Willa, duży salon, taras, ogród"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://i.postimg.cc/fyqmpc7b/Zrzut-ekranu-2026-07-24-034832.png","https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://i.postimg.cc/fyqmpc7b/Zrzut-ekranu-2026-07-24-034832.png" alt="Willa przy ulicy Okrężnej 1">
                             <div class="property-body">
@@ -957,7 +1110,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Świetne dla gracza, który szuka prostego i funkcjonalnego lokum."
                              data-info="Prosty układ, wygodny do codziennej gry"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://i.postimg.cc/V6LSwSkt/Zrzut-ekranu-2026-07-24-034815.png","https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://i.postimg.cc/V6LSwSkt/Zrzut-ekranu-2026-07-24-034815.png" alt="Dom mieszkalny przy ulicy Okrężnej 2">
                             <div class="property-body">
@@ -978,7 +1130,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Elegancki apartament z dużą ilością przestrzeni i światła."
                              data-info="Nowoczesny wystrój, duży metraż, apartament premium"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://i.postimg.cc/v8CWrzBQ/Zrzut-ekranu-2026-07-24-035137.png","https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://i.postimg.cc/v8CWrzBQ/Zrzut-ekranu-2026-07-24-035137.png" alt="Dom mieszkalny przy ulicy Okrężnej 4">
                             <div class="property-body">
@@ -999,7 +1150,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Wygodne lokum w spokojniejszej części miasta."
                              data-info="Spokojna okolica, dobry układ, miejsce do RP"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://i.postimg.cc/vBrd0XsN/Zrzut-ekranu-2026-07-24-034352.png","https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://i.postimg.cc/vBrd0XsN/Zrzut-ekranu-2026-07-24-034352.png" alt="Mieszkanie 07 przy ulicy Parkowej 1">
                             <div class="property-body">
@@ -1020,7 +1170,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Idealne na start, z prostym wystrojem i dobrym układem pokoi."
                              data-info="Startowe mieszkanie, prosty układ, niski próg wejścia"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 08 przy ulicy Długiej 8">
                             <div class="property-body">
@@ -1041,7 +1190,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Przestronny lokal dla kilku osób lub małej organizacji."
                              data-info="Większy metraż, dobre pod grupę graczy"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 09 przy ulicy Długiej 9">
                             <div class="property-body">
@@ -1062,7 +1210,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Nowoczesny apartament z klimatem nocnego miasta."
                              data-info="Nowoczesny styl, dobre oświetlenie, miejski klimat"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 10 przy ulicy Długiej 10">
                             <div class="property-body">
@@ -1083,7 +1230,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Luksusowy lokal dla postaci z wyższym statusem."
                              data-info="Luksus, duża przestrzeń, apartament premium"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 11 przy ulicy Długiej 11">
                             <div class="property-body">
@@ -1104,7 +1250,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Stylowe mieszkanie na wynajem, dobre do codziennej gry."
                              data-info="Stylowe wnętrze, praktyczny układ, wygodne do RP"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Mieszkanie 12 przy ulicy Długiej 12">
                             <div class="property-body">
@@ -1125,7 +1270,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Mały lokal usługowy, odpowiedni na sklep lub biuro."
                              data-info="Lokal użytkowy, biznes, sklep lub biuro"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Lokal 13 przy ulicy Długiej 13">
                             <div class="property-body">
@@ -1146,7 +1290,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Biznesowy lokal z miejscem na spotkania i działalność RP."
                              data-info="Idealny na biuro, punkt spotkań lub działalność"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="Lokal 14 przy ulicy Długiej 14">
                             <div class="property-body">
@@ -1167,7 +1310,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Przestrzeń idealna na działalność handlową lub biurową."
                              data-info="Funkcjonalna przestrzeń, lokal komercyjny"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=900&q=80" alt="Lokal 15 przy ulicy Długiej 15">
                             <div class="property-body">
@@ -1188,7 +1330,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Dom dla rodziny lub grupy postaci, z większą prywatnością."
                              data-info="Rodzinny dom, większa prywatność, dobry na dłuższą grę"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="Dom 16 przy ulicy Długiej 16">
                             <div class="property-body">
@@ -1209,7 +1350,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Duży dom z przestrzenią na organizację spotkań i wydarzeń."
                              data-info="Duży metraż, dobre na eventy i spotkania"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Dom 17 przy ulicy Długiej 17">
                             <div class="property-body">
@@ -1230,7 +1370,6 @@ body {
                              data-price="Wkrótce"
                              data-description="Ekskluzywna nieruchomość dla najbardziej rozwiniętych postaci."
                              data-info="Premium, luksus, największy standard"
-                             data-video="https://www.youtube.com/embed/ScMzIvxBSi4"
                              data-gallery='["https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80","https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80"]'>
                             <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80" alt="Dom 18 przy ulicy Długiej 18">
                             <div class="property-body">
@@ -1247,6 +1386,21 @@ body {
                     </div>
                     </div>
                     <div class="property-scroll-hint">⬍ Przewijaj listę, aby zobaczyć więcej nieruchomości</div>
+                </section>
+
+                <section id="wspolpraca" class="section">
+                    <h2>Współpraca</h2>
+                    <p>Midnight City RP jest otwarte na współpracę ze streamerami, twórcami treści, społecznościami RP oraz innymi projektami. Zależy nam na budowaniu długoterminowych i wartościowych partnerstw.</p>
+                    <ul>
+                        <li>Współpraca ze streamerami i twórcami YouTube – promocja serwera oraz wspólne materiały.</li>
+                        <li>Partnerstwa z innymi serwerami i społecznościami RP.</li>
+                        <li>Współpraca z grafikami, montażystami i osobami zajmującymi się mediami społecznościowymi.</li>
+                        <li>Sponsoring wydarzeń i eventów społeczności.</li>
+                    </ul>
+                    <p>Jeśli jesteś zainteresowany/a współpracą, napisz do nas na Discordzie – opisz swój pomysł oraz w jaki sposób widzisz wspólne działania.</p>
+                    <div class="cta-row">
+                        <a href="https://discord.gg/TWÓJ-LINK" class="cta-btn"><span>Napisz w sprawie współpracy</span></a>
+                    </div>
                 </section>
 
                 <section id="kontakt" class="section">
@@ -1269,16 +1423,9 @@ body {
             <p id="modalPrice"></p>
             <p id="modalDescription"></p>
 
-            <div class="modal-grid">
-                <div class="modal-box">
-                    <h3 style="margin-bottom:10px;color:#e0f2fe;">Dodatkowe informacje</h3>
-                    <ul class="modal-info-list" id="modalInfoList"></ul>
-                </div>
-
-                <div class="modal-box modal-video">
-                    <h3 style="margin-bottom:10px;color:#e0f2fe;">Film z YouTube</h3>
-                    <iframe id="modalVideo" src="" title="YouTube video" allowfullscreen></iframe>
-                </div>
+            <div class="modal-box">
+                <h3 style="margin-bottom:10px;color:#e0f2fe;">Dodatkowe informacje</h3>
+                <ul class="modal-info-list" id="modalInfoList"></ul>
             </div>
 
             <div class="modal-box" style="margin-top:18px;">
@@ -1322,7 +1469,6 @@ body {
         const modalDescription = document.getElementById('modalDescription');
         const modalInfoList = document.getElementById('modalInfoList');
         const modalGallery = document.getElementById('modalGallery');
-        const modalVideo = document.getElementById('modalVideo');
 
         function propertyTypeInfo(title) {
             const t = (title || '').toLowerCase();
@@ -1350,7 +1496,7 @@ body {
 
                 const zoomHint = document.createElement('div');
                 zoomHint.className = 'property-zoom-hint';
-                zoomHint.textContent = 'Kliknij, aby zobaczyć zdjęcia, opis i film';
+                zoomHint.textContent = 'Kliknij, aby zobaczyć zdjęcia i opis';
                 media.appendChild(zoomHint);
             }
 
@@ -1382,7 +1528,6 @@ body {
 
                 modalInfoList.innerHTML = info.map(item => `<li>${item}</li>`).join('');
                 modalGallery.innerHTML = gallery.map(src => `<img src="${src}" alt="Zdjęcie nieruchomości">`).join('');
-                modalVideo.src = card.dataset.video || '';
 
                 modal.classList.add('active');
             });
@@ -1390,7 +1535,6 @@ body {
 
         function closePropertyModal() {
             modal.classList.remove('active');
-            modalVideo.src = '';
         }
 
         closeModalBtn.addEventListener('click', closePropertyModal);
