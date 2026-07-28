@@ -661,6 +661,26 @@ body {
   pointer-events: none;
 }
 
+.premium-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.65);
+  color: #1a1400;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
 .property-zoom-hint {
   position: absolute;
   inset: 0;
@@ -1637,6 +1657,13 @@ body {
                 badge.className = 'property-badge';
                 badge.innerHTML = `<span>${type.icon}</span><span>${type.label}</span>`;
                 media.appendChild(badge);
+
+                if (type.label === 'Willa') {
+                    const premiumBadge = document.createElement('div');
+                    premiumBadge.className = 'premium-badge';
+                    premiumBadge.innerHTML = `<span>👑</span><span>Premium Plan</span>`;
+                    media.appendChild(premiumBadge);
+                }
 
                 const zoomHint = document.createElement('div');
                 zoomHint.className = 'property-zoom-hint';
