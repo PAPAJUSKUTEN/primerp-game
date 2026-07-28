@@ -1367,9 +1367,12 @@ body {
                              data-territory="Dzielnica"
                              data-members="0"
                              data-colors="#ef4444,#111111,#f5f5f5"
+                             data-balance="0"
+                             data-cards="Brak"
+                             data-contracts="Brak aktywnych kontraktów"
                              data-description="Pełny opis organizacji, jej historii, charakteru działalności i obszaru wpływów w mieście."
                              data-tags="Tag 1,Tag 2">
-                            <img class="faction-banner" src="https://i.postimg.cc/zvB2959m/(3).png" alt="Baner Nazwa mafii 1">
+                            <img class="faction-banner" src="https://i.postimg.cc/9fH8csDd/Gemini-Generated-Image-eem7ppeem7ppeem7.png" alt="Baner Nazwa mafii 1">
                             <div class="faction-card-body">
                                 <span class="mafia-status active">Aktywna</span>
                                 <div class="faction-icon">🃏</div>
@@ -1395,9 +1398,12 @@ body {
                              data-territory="Dzielnica"
                              data-members="0"
                              data-colors="#f97316,#111111,#fde047"
+                             data-balance="0"
+                             data-cards="Brak"
+                             data-contracts="Brak aktywnych kontraktów"
                              data-description="Pełny opis organizacji, jej historii, charakteru działalności i obszaru wpływów w mieście."
                              data-tags="Tag 1,Tag 2">
-                            <img class="faction-banner" src="https://i.postimg.cc/L8fQdx0J/(4).png" alt="Baner Nazwa mafii 2">
+                            <img class="faction-banner" src="https://i.postimg.cc/9fH8csDd/Gemini-Generated-Image-eem7ppeem7ppeem7.png" alt="Baner Nazwa mafii 2">
                             <div class="faction-card-body">
                                 <span class="mafia-status recruiting">Rekrutacja</span>
                                 <div class="faction-icon">🎴</div>
@@ -1423,9 +1429,12 @@ body {
                              data-territory="Dzielnica"
                              data-members="0"
                              data-colors="#a855f7,#111111,#e5e5e5"
+                             data-balance="0"
+                             data-cards="Brak"
+                             data-contracts="Brak aktywnych kontraktów"
                              data-description="Pełny opis organizacji, jej historii, charakteru działalności i obszaru wpływów w mieście."
                              data-tags="Tag 1,Tag 2">
-                            <img class="faction-banner" src="https://i.postimg.cc/NMNp8SLD/(1).png" alt="Baner Nazwa mafii 3">
+                            <img class="faction-banner" src="https://i.postimg.cc/9fH8csDd/Gemini-Generated-Image-eem7ppeem7ppeem7.png" alt="Baner Nazwa mafii 3">
                             <div class="faction-card-body">
                                 <span class="mafia-status suspended">Zawieszona</span>
                                 <div class="faction-icon">♠️</div>
@@ -2060,6 +2069,16 @@ body {
             </div>
 
             <div class="modal-box" style="margin-top:18px;">
+                <h3 style="margin-bottom:10px;color:#e0f2fe;">Karty mafii</h3>
+                <p id="mafiaModalCards" style="color:#d9d9d9;"></p>
+            </div>
+
+            <div class="modal-box" style="margin-top:18px;">
+                <h3 style="margin-bottom:10px;color:#e0f2fe;">Kontrakty</h3>
+                <p id="mafiaModalContracts" style="color:#d9d9d9;"></p>
+            </div>
+
+            <div class="modal-box" style="margin-top:18px;">
                 <h3 style="margin-bottom:10px;color:#e0f2fe;">Kolory pojazdów</h3>
                 <div class="mafia-colors" id="mafiaModalColors"></div>
             </div>
@@ -2231,6 +2250,8 @@ body {
         const mafiaModalInfoList = document.getElementById('mafiaModalInfoList');
         const mafiaModalColors = document.getElementById('mafiaModalColors');
         const mafiaModalTags = document.getElementById('mafiaModalTags');
+        const mafiaModalCards = document.getElementById('mafiaModalCards');
+        const mafiaModalContracts = document.getElementById('mafiaModalContracts');
 
         document.querySelectorAll('.mafia-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -2246,7 +2267,11 @@ body {
                     <li>👑 Właściciel: ${card.dataset.owner || '-'}</li>
                     <li>📍 Terytorium: ${card.dataset.territory || '-'}</li>
                     <li>👥 Członkowie: ${card.dataset.members || '-'}</li>
+                    <li>💰 Stan konta: ${card.dataset.balance || '0'}$</li>
                 `;
+
+                mafiaModalCards.textContent = card.dataset.cards || 'Brak';
+                mafiaModalContracts.textContent = card.dataset.contracts || 'Brak aktywnych kontraktów';
 
                 mafiaModalColors.innerHTML = colors.map(c => `<span class="mafia-color-dot" style="background:${c}" title="${c}"></span>`).join('');
                 mafiaModalTags.innerHTML = tags.map(t => `<span class="faction-tag">${t}</span>`).join('');
