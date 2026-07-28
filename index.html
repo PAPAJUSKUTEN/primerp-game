@@ -694,6 +694,51 @@ body {
   }
 }
 
+.mafia-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  align-self: flex-start;
+}
+
+.mafia-status.active {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.16);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.mafia-status.recruiting {
+  color: #fde68a;
+  background: rgba(250, 204, 21, 0.16);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+}
+
+.mafia-status.suspended {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.mafia-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.mafia-meta-row span.meta-label {
+  color: #fff4b0;
+  font-weight: 600;
+}
+
 .admin-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1118,13 +1163,13 @@ body {
                 <li class="nav-item"><a class="nav-link" data-target="start-guide"><span class="icon-dot"></span><div><div class="nav-label-main">Jak zacząć</div><div class="nav-label-sub">Pierwsze kroki na serwerze</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="info"><span class="icon-dot"></span><div><div class="nav-label-main">O serwerze</div><div class="nav-label-sub">Informacje organizacyjne</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="frakcje"><span class="icon-dot"></span><div><div class="nav-label-main">Frakcje</div><div class="nav-label-sub">Służby, gangi, cywile</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="mafie"><span class="icon-dot"></span><div><div class="nav-label-main">Mafie</div><div class="nav-label-sub">Zarejestrowane organizacje</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="regulamin"><span class="icon-dot"></span><div><div class="nav-label-main">Regulamin</div><div class="nav-label-sub">Zasady gry</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="podania"><span class="icon-dot"></span><div><div class="nav-label-main">Podania</div><div class="nav-label-sub">Jak dołączyć</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="nieruchomosci"><span class="icon-dot"></span><div><div class="nav-label-main">Nieruchomości</div><div class="nav-label-sub">Mieszkania i lokale</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="administratorzy"><span class="icon-dot"></span><div><div class="nav-label-main">Administratorzy</div><div class="nav-label-sub">Zespół serwera</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="wspolpraca"><span class="icon-dot"></span><div><div class="nav-label-main">Współpraca</div><div class="nav-label-sub">Partnerstwa i media</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="kontakt"><span class="icon-dot"></span><div><div class="nav-label-main">Kontakt / Discord</div><div class="nav-label-sub">Linki społeczności</div></div></a></li>
-                <li class="nav-item"><a class="nav-link" data-target="zglos-blad"><span class="icon-dot"></span><div><div class="nav-label-main">Zgłoś błąd</div><div class="nav-label-sub">Bugi i problemy techniczne</div></div></a></li>
             </ul>
 
             <div class="sidebar-footer">
@@ -1279,6 +1324,67 @@ body {
                                 <span class="faction-tag">Naprawy</span>
                                 <span class="faction-tag">Kolizje</span>
                             </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="mafie" class="section">
+                    <h2>Zarejestrowane mafie</h2>
+                    <p>Poniżej znajduje się lista oficjalnie zarejestrowanych organizacji przestępczych działających na terenie Midnight City RP. Rejestracja mafii odbywa się poprzez Discord serwera.</p>
+
+                    <div class="faction-grid">
+                        <div class="faction-card" style="--faction-color:#ef4444">
+                            <div class="faction-card-body">
+                                <span class="mafia-status active">Aktywna</span>
+                                <div class="faction-icon">🃏</div>
+                                <h3 class="faction-name">Nazwa mafii 1</h3>
+                                <p class="faction-desc">Krótki opis organizacji, jej charakteru działalności i obszaru wpływów w mieście.</p>
+                                <div class="mafia-meta-row">
+                                    <span><span class="meta-label">Lider:</span> Nick gracza</span>
+                                    <span><span class="meta-label">Terytorium:</span> Dzielnica</span>
+                                    <span><span class="meta-label">Członkowie:</span> 0</span>
+                                </div>
+                                <div class="faction-tags">
+                                    <span class="faction-tag">Tag 1</span>
+                                    <span class="faction-tag">Tag 2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faction-card" style="--faction-color:#f97316">
+                            <div class="faction-card-body">
+                                <span class="mafia-status recruiting">Rekrutacja</span>
+                                <div class="faction-icon">🎴</div>
+                                <h3 class="faction-name">Nazwa mafii 2</h3>
+                                <p class="faction-desc">Krótki opis organizacji, jej charakteru działalności i obszaru wpływów w mieście.</p>
+                                <div class="mafia-meta-row">
+                                    <span><span class="meta-label">Lider:</span> Nick gracza</span>
+                                    <span><span class="meta-label">Terytorium:</span> Dzielnica</span>
+                                    <span><span class="meta-label">Członkowie:</span> 0</span>
+                                </div>
+                                <div class="faction-tags">
+                                    <span class="faction-tag">Tag 1</span>
+                                    <span class="faction-tag">Tag 2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faction-card" style="--faction-color:#a855f7">
+                            <div class="faction-card-body">
+                                <span class="mafia-status suspended">Zawieszona</span>
+                                <div class="faction-icon">♠️</div>
+                                <h3 class="faction-name">Nazwa mafii 3</h3>
+                                <p class="faction-desc">Krótki opis organizacji, jej charakteru działalności i obszaru wpływów w mieście.</p>
+                                <div class="mafia-meta-row">
+                                    <span><span class="meta-label">Lider:</span> Nick gracza</span>
+                                    <span><span class="meta-label">Terytorium:</span> Dzielnica</span>
+                                    <span><span class="meta-label">Członkowie:</span> 0</span>
+                                </div>
+                                <div class="faction-tags">
+                                    <span class="faction-tag">Tag 1</span>
+                                    <span class="faction-tag">Tag 2</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1862,39 +1968,6 @@ body {
                         <a href="#" class="cta-btn secondary"><span>Formularz kontaktowy</span></a>
                     </div>
                 </section>
-
-                <section id="zglos-blad" class="section">
-                    <h2>Zgłoś błąd</h2>
-                    <p>Znalazłeś buga, błąd w skrypcie lub problem techniczny na serwerze? Opisz go poniżej – zgłoszenie trafi bezpośrednio na Discord ekipy technicznej.</p>
-
-                    <form id="bugReportForm" class="application-form">
-                        <label>Nick w grze <span class="req">*</span>
-                            <input type="text" name="nick" placeholder="np. Jan Kowalski" required>
-                        </label>
-
-                        <label>Discord (nazwa użytkownika lub link do profilu) <span class="req">*</span>
-                            <input type="text" name="discord" placeholder="np. nick lub discord.com/users/..." required>
-                        </label>
-
-                        <label>Gdzie wystąpił błąd? <span class="req">*</span>
-                            <input type="text" name="lokalizacja" placeholder="np. komenda policji, garaż, panel frakcji..." required>
-                        </label>
-
-                        <label>Opis błędu <span class="req">*</span>
-                            <textarea name="opis" rows="4" placeholder="Opisz dokładnie co się stało, kiedy i jak to powtórzyć..." required></textarea>
-                        </label>
-
-                        <label>Dodatkowe informacje / linki do screenów (opcjonalnie)
-                            <textarea name="dodatkowe" rows="2" placeholder="Linki do zrzutów ekranu, nagrań itp..."></textarea>
-                        </label>
-
-                        <div id="bugReportFormStatus" class="application-form-status"></div>
-
-                        <div class="application-form-actions">
-                            <button type="submit" class="cta-btn" id="bugReportSubmitBtn"><span>Prześlij</span></button>
-                        </div>
-                    </form>
-                </section>
             </div>
         </main>
     </div>
@@ -2183,101 +2256,6 @@ body {
                 applicationSubmitBtn.querySelector('span').textContent = 'Prześlij';
             }
         });
-        // ===== Formularz zgłoszenia błędu -> webhook Discord =====
-        const BUG_REPORT_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1531558916738121762/aNmSIphFtM9O93lk1XUrBzkRZ5PDDCnWVlB5b13jUZuERYKA43EniywnABfpp1HWxqaL';
-
-        const bugReportForm = document.getElementById('bugReportForm');
-        const bugReportFormStatus = document.getElementById('bugReportFormStatus');
-        const bugReportSubmitBtn = document.getElementById('bugReportSubmitBtn');
-
-        function resetBugReportStatus() {
-            bugReportFormStatus.textContent = '';
-            bugReportFormStatus.className = 'application-form-status';
-        }
-
-        bugReportForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(bugReportForm);
-            const nick = (formData.get('nick') || '').trim();
-            const discord = (formData.get('discord') || '').trim();
-            const lokalizacja = (formData.get('lokalizacja') || '').trim();
-            const opis = (formData.get('opis') || '').trim();
-            const dodatkowe = (formData.get('dodatkowe') || '').trim();
-
-            const fields = [
-                { name: 'Nick w grze', value: nick || '-', inline: true },
-                { name: 'Discord', value: discord || '-', inline: true },
-                { name: 'Miejsce wystąpienia', value: lokalizacja || '-' },
-                { name: 'Opis błędu', value: opis || '-' }
-            ];
-
-            if (dodatkowe) {
-                fields.push({ name: 'Dodatkowe informacje', value: dodatkowe });
-            }
-
-            const payload = {
-                embeds: [{
-                    title: '🐞 Nowe zgłoszenie błędu',
-                    color: 0xef4444,
-                    fields: fields,
-                    timestamp: new Date().toISOString(),
-                    footer: { text: 'Midnight City RP – Zgłoszenia błędów' }
-                }]
-            };
-
-            bugReportSubmitBtn.disabled = true;
-            bugReportSubmitBtn.querySelector('span').textContent = 'Wysyłanie...';
-            resetBugReportStatus();
-
-            try {
-                const res = await fetch(BUG_REPORT_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (res.ok || res.status === 204) {
-                    bugReportFormStatus.textContent = '✅ Zgłoszenie zostało wysłane! Dziękujemy za pomoc w ulepszaniu serwera.';
-                    bugReportFormStatus.classList.add('success');
-                    bugReportForm.reset();
-                } else {
-                    throw new Error('Webhook responded with status ' + res.status);
-                }
-            } catch (err) {
-                bugReportFormStatus.textContent = '❌ Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz bezpośrednio na Discordzie.';
-                bugReportFormStatus.classList.add('error');
-            } finally {
-                bugReportSubmitBtn.disabled = false;
-                bugReportSubmitBtn.querySelector('span').textContent = 'Prześlij';
-            }
-        });
-        // ===== Muzyka w tle (ukryty odtwarzacz YouTube) =====
-        const BG_MUSIC_VIDEO_ID = 'QliuXIYYTZE';
-        const bgMusicFrame = document.getElementById('bgMusicFrame');
-        let bgMusicStarted = false;
-
-        function sendYtCommand(func, args = []) {
-            if (!bgMusicFrame || !bgMusicFrame.contentWindow) return;
-            bgMusicFrame.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args }), '*');
-        }
-
-        function startBgMusic() {
-            if (bgMusicStarted) return;
-            bgMusicStarted = true;
-            sendYtCommand('unMute');
-            sendYtCommand('playVideo');
-        }
-
-        document.addEventListener('click', startBgMusic, { once: true });
     </script>
-
-    <iframe
-        id="bgMusicFrame"
-        src="https://www.youtube.com/embed/QliuXIYYTZE?autoplay=1&mute=1&loop=1&playlist=QliuXIYYTZE&controls=0&enablejsapi=1"
-        style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;border:none;"
-        allow="autoplay"
-        title="Muzyka w tle">
-    </iframe>
 </body>
 </html>
