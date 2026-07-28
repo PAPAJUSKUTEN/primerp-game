@@ -355,11 +355,49 @@ body {
   background: rgba(20, 20, 20, 0.92);
 }
 
+.property-scroll {
+  max-height: 620px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 14px;
+  padding: 4px 10px 4px 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-2) rgba(255, 255, 255, 0.06);
+}
+
+.property-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.property-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.property-scroll::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+}
+
+.property-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-3);
+}
+
+.property-scroll-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  opacity: 0.85;
+}
+
 .property-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  margin-top: 14px;
 }
 
 .property-card {
@@ -371,6 +409,7 @@ body {
   transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .property-card:hover {
@@ -379,12 +418,62 @@ body {
   border-color: rgba(250, 204, 21, 0.62);
 }
 
+.property-media {
+  position: relative;
+  overflow: hidden;
+}
+
 .property-card img {
   width: 100%;
   height: 170px;
   object-fit: cover;
   display: block;
   cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.property-card:hover img {
+  transform: scale(1.05);
+}
+
+.property-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.78);
+  border: 1px solid rgba(250, 204, 21, 0.55);
+  color: #fff4b0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.property-zoom-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff4b0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  text-align: center;
+  padding: 0 12px;
+}
+
+.property-card:hover .property-zoom-hint {
+  opacity: 1;
 }
 
 .property-body {
@@ -405,12 +494,35 @@ body {
   color: var(--text-muted);
   margin-bottom: 6px;
   flex: 1;
+  line-height: 1.55;
+}
+
+.prop-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(250, 204, 21, 0.14);
+  border-radius: 10px;
 }
 
 .prop-meta {
   font-size: 0.85rem;
   color: #e6e6e6;
   line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.prop-meta .meta-icon {
+  flex: 0 0 auto;
+}
+
+.prop-meta.prop-price {
+  color: #ffe066;
+  font-weight: 600;
 }
 
 .prop-actions {
@@ -420,22 +532,35 @@ body {
 }
 
 .btn {
-  padding: 8px 12px;
+  padding: 9px 12px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9rem;
+  flex: 1;
+  transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
 }
 
 .btn-buy {
-  background: linear-gradient(135deg, #facc15, #eab308);
-  color: #111111;
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(34, 197, 94, 0.4);
+}
+
+.btn-buy:hover {
+  box-shadow: 0 14px 28px rgba(34, 197, 94, 0.55);
 }
 
 .btn-rent {
   background: linear-gradient(135deg, #fde047, #ca8a04);
   color: #111111;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
 }
 
 .property-modal {
@@ -591,9 +716,19 @@ body {
   }
 }
 
+@media (max-width: 960px) {
+  .property-scroll {
+    max-height: 70vh;
+  }
+}
+
 @media (max-width: 700px) {
   .property-grid {
     grid-template-columns: 1fr;
+  }
+
+  .property-scroll {
+    max-height: 65vh;
   }
 
   .modal-gallery {
@@ -730,6 +865,7 @@ body {
                     <h2>Nieruchomości</h2>
                     <p>W Midnight City RP dostępne są różne typy nieruchomości. Kliknij w zdjęcie, żeby zobaczyć dodatkowe zdjęcia, informacje i film z YouTube.</p>
 
+                    <div class="property-scroll" id="propertyScroll">
                     <div class="property-grid">
                         <div class="property-card"
                              data-title="Dom Mieszkalny"
@@ -1109,6 +1245,8 @@ body {
                             </div>
                         </div>
                     </div>
+                    </div>
+                    <div class="property-scroll-hint">⬍ Przewijaj listę, aby zobaczyć więcej nieruchomości</div>
                 </section>
 
                 <section id="kontakt" class="section">
@@ -1185,6 +1323,51 @@ body {
         const modalInfoList = document.getElementById('modalInfoList');
         const modalGallery = document.getElementById('modalGallery');
         const modalVideo = document.getElementById('modalVideo');
+
+        function propertyTypeInfo(title) {
+            const t = (title || '').toLowerCase();
+            if (t.includes('mieszkanie')) return { label: 'Mieszkanie', icon: '🏢' };
+            if (t.includes('osiedle')) return { label: 'Osiedle', icon: '🏘️' };
+            if (t.includes('willa')) return { label: 'Willa', icon: '🏰' };
+            if (t.includes('lokal')) return { label: 'Lokal użytkowy', icon: '🏬' };
+            if (t.includes('dom')) return { label: 'Dom', icon: '🏡' };
+            return { label: 'Nieruchomość', icon: '🏠' };
+        }
+
+        document.querySelectorAll('.property-card').forEach(card => {
+            const img = card.querySelector('img');
+            if (img && !img.closest('.property-media')) {
+                const media = document.createElement('div');
+                media.className = 'property-media';
+                img.parentNode.insertBefore(media, img);
+                media.appendChild(img);
+
+                const type = propertyTypeInfo(card.dataset.title);
+                const badge = document.createElement('div');
+                badge.className = 'property-badge';
+                badge.innerHTML = `<span>${type.icon}</span><span>${type.label}</span>`;
+                media.appendChild(badge);
+
+                const zoomHint = document.createElement('div');
+                zoomHint.className = 'property-zoom-hint';
+                zoomHint.textContent = 'Kliknij, aby zobaczyć zdjęcia, opis i film';
+                media.appendChild(zoomHint);
+            }
+
+            const metas = card.querySelectorAll('.prop-meta');
+            if (metas.length === 2 && !metas[0].closest('.prop-meta-row')) {
+                const row = document.createElement('div');
+                row.className = 'prop-meta-row';
+                metas[0].parentNode.insertBefore(row, metas[0]);
+
+                metas[0].innerHTML = `<span class="meta-icon">📍</span><span>${metas[0].textContent}</span>`;
+                metas[1].innerHTML = `<span class="meta-icon">💰</span><span>${metas[1].textContent}</span>`;
+                metas[1].classList.add('prop-price');
+
+                row.appendChild(metas[0]);
+                row.appendChild(metas[1]);
+            }
+        });
 
         document.querySelectorAll('.property-card img').forEach(img => {
             img.addEventListener('click', () => {
