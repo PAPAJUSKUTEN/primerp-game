@@ -1124,6 +1124,7 @@ body {
                 <li class="nav-item"><a class="nav-link" data-target="administratorzy"><span class="icon-dot"></span><div><div class="nav-label-main">Administratorzy</div><div class="nav-label-sub">Zespół serwera</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="wspolpraca"><span class="icon-dot"></span><div><div class="nav-label-main">Współpraca</div><div class="nav-label-sub">Partnerstwa i media</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="kontakt"><span class="icon-dot"></span><div><div class="nav-label-main">Kontakt / Discord</div><div class="nav-label-sub">Linki społeczności</div></div></a></li>
+                <li class="nav-item"><a class="nav-link" data-target="zglos-blad"><span class="icon-dot"></span><div><div class="nav-label-main">Zgłoś błąd</div><div class="nav-label-sub">Bugi i problemy techniczne</div></div></a></li>
             </ul>
 
             <div class="sidebar-footer">
@@ -1861,6 +1862,39 @@ body {
                         <a href="#" class="cta-btn secondary"><span>Formularz kontaktowy</span></a>
                     </div>
                 </section>
+
+                <section id="zglos-blad" class="section">
+                    <h2>Zgłoś błąd</h2>
+                    <p>Znalazłeś buga, błąd w skrypcie lub problem techniczny na serwerze? Opisz go poniżej – zgłoszenie trafi bezpośrednio na Discord ekipy technicznej.</p>
+
+                    <form id="bugReportForm" class="application-form">
+                        <label>Nick w grze <span class="req">*</span>
+                            <input type="text" name="nick" placeholder="np. Jan Kowalski" required>
+                        </label>
+
+                        <label>Discord (nazwa użytkownika lub link do profilu) <span class="req">*</span>
+                            <input type="text" name="discord" placeholder="np. nick lub discord.com/users/..." required>
+                        </label>
+
+                        <label>Gdzie wystąpił błąd? <span class="req">*</span>
+                            <input type="text" name="lokalizacja" placeholder="np. komenda policji, garaż, panel frakcji..." required>
+                        </label>
+
+                        <label>Opis błędu <span class="req">*</span>
+                            <textarea name="opis" rows="4" placeholder="Opisz dokładnie co się stało, kiedy i jak to powtórzyć..." required></textarea>
+                        </label>
+
+                        <label>Dodatkowe informacje / linki do screenów (opcjonalnie)
+                            <textarea name="dodatkowe" rows="2" placeholder="Linki do zrzutów ekranu, nagrań itp..."></textarea>
+                        </label>
+
+                        <div id="bugReportFormStatus" class="application-form-status"></div>
+
+                        <div class="application-form-actions">
+                            <button type="submit" class="cta-btn" id="bugReportSubmitBtn"><span>Prześlij</span></button>
+                        </div>
+                    </form>
+                </section>
             </div>
         </main>
     </div>
@@ -2147,6 +2181,75 @@ body {
             } finally {
                 applicationSubmitBtn.disabled = false;
                 applicationSubmitBtn.querySelector('span').textContent = 'Prześlij';
+            }
+        });
+        // ===== Formularz zgłoszenia błędu -> webhook Discord =====
+        const BUG_REPORT_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1531558916738121762/aNmSIphFtM9O93lk1XUrBzkRZ5PDDCnWVlB5b13jUZuERYKA43EniywnABfpp1HWxqaL';
+
+        const bugReportForm = document.getElementById('bugReportForm');
+        const bugReportFormStatus = document.getElementById('bugReportFormStatus');
+        const bugReportSubmitBtn = document.getElementById('bugReportSubmitBtn');
+
+        function resetBugReportStatus() {
+            bugReportFormStatus.textContent = '';
+            bugReportFormStatus.className = 'application-form-status';
+        }
+
+        bugReportForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(bugReportForm);
+            const nick = (formData.get('nick') || '').trim();
+            const discord = (formData.get('discord') || '').trim();
+            const lokalizacja = (formData.get('lokalizacja') || '').trim();
+            const opis = (formData.get('opis') || '').trim();
+            const dodatkowe = (formData.get('dodatkowe') || '').trim();
+
+            const fields = [
+                { name: 'Nick w grze', value: nick || '-', inline: true },
+                { name: 'Discord', value: discord || '-', inline: true },
+                { name: 'Miejsce wystąpienia', value: lokalizacja || '-' },
+                { name: 'Opis błędu', value: opis || '-' }
+            ];
+
+            if (dodatkowe) {
+                fields.push({ name: 'Dodatkowe informacje', value: dodatkowe });
+            }
+
+            const payload = {
+                embeds: [{
+                    title: '🐞 Nowe zgłoszenie błędu',
+                    color: 0xef4444,
+                    fields: fields,
+                    timestamp: new Date().toISOString(),
+                    footer: { text: 'Midnight City RP – Zgłoszenia błędów' }
+                }]
+            };
+
+            bugReportSubmitBtn.disabled = true;
+            bugReportSubmitBtn.querySelector('span').textContent = 'Wysyłanie...';
+            resetBugReportStatus();
+
+            try {
+                const res = await fetch(BUG_REPORT_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok || res.status === 204) {
+                    bugReportFormStatus.textContent = '✅ Zgłoszenie zostało wysłane! Dziękujemy za pomoc w ulepszaniu serwera.';
+                    bugReportFormStatus.classList.add('success');
+                    bugReportForm.reset();
+                } else {
+                    throw new Error('Webhook responded with status ' + res.status);
+                }
+            } catch (err) {
+                bugReportFormStatus.textContent = '❌ Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz bezpośrednio na Discordzie.';
+                bugReportFormStatus.classList.add('error');
+            } finally {
+                bugReportSubmitBtn.disabled = false;
+                bugReportSubmitBtn.querySelector('span').textContent = 'Prześlij';
             }
         });
     </script>
