@@ -1517,36 +1517,90 @@ body {
 
 /* ===== Profil: dowód osobisty i statystyki ===== */
 .id-card {
-  display: flex;
-  gap: 18px;
-  background: rgba(15, 15, 15, 0.94);
-  border: 1px solid var(--border-soft);
-  border-radius: 18px;
-  padding: 20px;
+  --pl-red: #dc143c;
+  max-width: 460px;
+  background: linear-gradient(135deg, #f5f5f0 0%, #e9e9e2 100%);
+  border-radius: 14px;
+  padding: 0;
   margin-bottom: 18px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  color: #1a1a1a;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 .id-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 100% 0%, rgba(250, 204, 21, 0.1), transparent 60%);
+  background:
+    repeating-linear-gradient(115deg, rgba(220, 20, 60, 0.04) 0px, rgba(220, 20, 60, 0.04) 2px, transparent 2px, transparent 14px);
   pointer-events: none;
 }
 
-.id-card-photo {
-  width: 90px;
-  height: 110px;
+.id-card-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--pl-red);
+  color: #fff;
+}
+
+.id-card-flag {
+  width: 26px;
+  height: 18px;
+  border-radius: 2px;
+  overflow: hidden;
   flex: 0 0 auto;
-  border-radius: 10px;
-  background: linear-gradient(160deg, #2a2a2a, #111111);
-  border: 1px solid var(--border-soft);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+}
+
+.id-card-flag span {
+  display: block;
+  height: 50%;
+}
+
+.id-card-flag span:first-child { background: #fff; }
+.id-card-flag span:last-child { background: var(--pl-red); }
+
+.id-card-topbar-text {
+  line-height: 1.15;
+}
+
+.id-card-topbar-text .country {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.id-card-topbar-text .doctype {
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.id-card-main {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  position: relative;
+}
+
+.id-card-photo {
+  width: 82px;
+  height: 104px;
+  flex: 0 0 auto;
+  border-radius: 4px;
+  background: linear-gradient(160deg, #d8d8d0, #b8b8ae);
+  border: 1px solid rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 2.1rem;
+  color: #6b6b60;
 }
 
 .id-card-body {
@@ -1554,38 +1608,55 @@ body {
   min-width: 0;
 }
 
-.id-card-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--accent);
-  margin-bottom: 6px;
-}
-
 .id-card-name {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #fff7cc;
-  margin-bottom: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
 }
 
 .id-card-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px 16px;
-  font-size: 0.85rem;
+  gap: 4px 14px;
+  font-size: 0.82rem;
 }
 
 .id-card-grid dt {
-  color: var(--text-muted);
-  font-size: 0.72rem;
+  color: #6b6b60;
+  font-size: 0.65rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
 }
 
 .id-card-grid dd {
-  color: var(--text-main);
-  margin-bottom: 6px;
+  color: #161616;
+  font-weight: 600;
+}
+
+.id-card-mrz {
+  background: #111;
+  color: #d8d8d0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 10px 16px;
+  line-height: 1.5;
+  word-break: break-all;
+  position: relative;
+}
+
+.id-card-mrz-note {
+  position: absolute;
+  bottom: 100%;
+  left: 16px;
+  font-family: system-ui, sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.5);
+  padding-bottom: 2px;
 }
 
 .profil-stats {
@@ -2633,27 +2704,44 @@ body {
 
                 <section id="profil" class="section">
                     <h2>Twój profil</h2>
-                    <p>Witaj z powrotem, <strong id="profilUserName">test</strong>! To Twoja prywatna zakładka, widoczna tylko po zalogowaniu.</p>
+                    <p>Witaj z powrotem, <strong id="profilUserName">test</strong> (login: <span id="profilLogin">test</span>)! To Twoja prywatna zakładka, widoczna tylko po zalogowaniu.</p>
 
                     <div class="id-card">
-                        <div class="id-card-photo">🪪</div>
-                        <div class="id-card-body">
-                            <div class="id-card-label">Dowód osobisty RP</div>
-                            <div class="id-card-name" id="idCardName">Jan Kowalski</div>
-                            <dl class="id-card-grid">
-                                <dt>Login</dt>
-                                <dd id="profilLogin">test</dd>
-                                <dt>Nr dowodu</dt>
-                                <dd id="idCardNumber">MC-000000</dd>
-                                <dt>Data urodzenia</dt>
-                                <dd>01.01.2000</dd>
-                                <dt>Obywatelstwo</dt>
-                                <dd>Midnight City</dd>
-                                <dt>Adres zamieszkania</dt>
-                                <dd>ul. Przykładowa 1, Midnight City</dd>
-                                <dt>Status</dt>
-                                <dd>Aktywny</dd>
-                            </dl>
+                        <div class="id-card-topbar">
+                            <div class="id-card-flag"><span></span><span></span></div>
+                            <div class="id-card-topbar-text">
+                                <div class="country">Midnight City RP</div>
+                                <div class="doctype">DOWÓD OSOBISTY</div>
+                            </div>
+                        </div>
+                        <div class="id-card-main">
+                            <div class="id-card-photo">🪪</div>
+                            <div class="id-card-body">
+                                <div class="id-card-name" id="idCardName">KOWALSKI JAN</div>
+                                <dl class="id-card-grid">
+                                    <dt>Nazwisko</dt>
+                                    <dd id="idCardSurname">Kowalski</dd>
+                                    <dt>Imię</dt>
+                                    <dd id="idCardFirstname">Jan</dd>
+                                    <dt>Obywatelstwo</dt>
+                                    <dd>Midnight City</dd>
+                                    <dt>Płeć</dt>
+                                    <dd id="idCardGender">M</dd>
+                                    <dt>Data urodzenia</dt>
+                                    <dd>01.01.2000</dd>
+                                    <dt>Numer dokumentu</dt>
+                                    <dd id="idCardNumber">MCX 000000</dd>
+                                    <dt>Termin ważności</dt>
+                                    <dd>01.01.2036</dd>
+                                    <dt>Organ wydający</dt>
+                                    <dd>Ratusz Midnight City</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="id-card-mrz">
+                            <div class="id-card-mrz-note">Dokument fikcyjny – wyłącznie do celów roleplay</div>
+                            ID&lt;&lt;MCX0000006PL0001019M3601010&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;2<br>
+                            KOWALSKI&lt;&lt;JAN&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
                         </div>
                     </div>
 
@@ -3105,6 +3193,9 @@ body {
             const profilUserName = document.getElementById('profilUserName');
             const profilLogin = document.getElementById('profilLogin');
             const idCardName = document.getElementById('idCardName');
+            const idCardSurname = document.getElementById('idCardSurname');
+            const idCardFirstname = document.getElementById('idCardFirstname');
+            const idCardGender = document.getElementById('idCardGender');
             const idCardNumber = document.getElementById('idCardNumber');
             const statNightcoin = document.getElementById('statNightcoin');
             const statProperties = document.getElementById('statProperties');
@@ -3113,8 +3204,10 @@ body {
 
             // Przykładowe dane profilu - w prawdziwym systemie pochodziłyby z bazy/backendu
             const mockProfile = {
-                fullName: 'Jan Kowalski',
-                idNumber: 'MC-482913',
+                surname: 'Kowalski',
+                firstname: 'Jan',
+                gender: 'M',
+                idNumber: 'MCX 482913',
                 nightcoin: 2450,
                 properties: 1,
                 playtime: '37h',
@@ -3141,7 +3234,10 @@ body {
                 profilLogin.textContent = username;
                 profilNavItem.style.display = '';
 
-                idCardName.textContent = mockProfile.fullName;
+                idCardName.textContent = `${mockProfile.surname.toUpperCase()} ${mockProfile.firstname.toUpperCase()}`;
+                idCardSurname.textContent = mockProfile.surname;
+                idCardFirstname.textContent = mockProfile.firstname;
+                idCardGender.textContent = mockProfile.gender;
                 idCardNumber.textContent = mockProfile.idNumber;
                 statNightcoin.textContent = mockProfile.nightcoin.toLocaleString('pl-PL');
                 statProperties.textContent = mockProfile.properties;
