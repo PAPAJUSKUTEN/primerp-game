@@ -943,6 +943,24 @@ body {
   pointer-events: none;
 }
 
+.property-card.is-locked {
+  opacity: 0.68;
+  filter: grayscale(0.25);
+}
+
+.property-card.is-locked .property-media img {
+  filter: grayscale(0.4) brightness(0.85);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+  pointer-events: none;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
 .property-zoom-hint {
   position: absolute;
   inset: 0;
@@ -2279,6 +2297,16 @@ body {
                     statusBadge.className = 'status-badge';
                     statusBadge.textContent = card.dataset.status;
                     media.appendChild(statusBadge);
+                }
+
+                const lockedStatuses = ['niedostępne', 'sprzedane'];
+                if (lockedStatuses.includes((card.dataset.status || '').toLowerCase())) {
+                    card.classList.add('is-locked');
+                    card.querySelectorAll('.btn-buy, .btn-rent').forEach(btn => {
+                        btn.disabled = true;
+                        btn.setAttribute('aria-disabled', 'true');
+                        btn.textContent = '🔒 ' + btn.textContent;
+                    });
                 }
 
                 const zoomHint = document.createElement('div');
