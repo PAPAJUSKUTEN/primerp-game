@@ -2723,7 +2723,7 @@ body {
                             </div>
                         </div>
                         <div class="id-card-main">
-                            <div class="id-card-photo"><img src="https://i.postimg.cc/TPRCFgL6/unnamed.jpg" alt="Zdjęcie profilowe"></div>
+                            <div class="id-card-photo"><img id="idCardPhoto" src="https://i.postimg.cc/TPRCFgL6/unnamed.jpg" alt="Zdjęcie profilowe"></div>
                             <div class="id-card-body">
                                 <div class="id-card-name" id="idCardName">KOWALSKI JAN</div>
                                 <dl class="id-card-grid">
@@ -3202,6 +3202,7 @@ body {
             const profilUserName = document.getElementById('profilUserName');
             const profilLogin = document.getElementById('profilLogin');
             const idCardName = document.getElementById('idCardName');
+            const idCardPhoto = document.getElementById('idCardPhoto');
             const idCardSurname = document.getElementById('idCardSurname');
             const idCardFirstname = document.getElementById('idCardFirstname');
             const idCardGender = document.getElementById('idCardGender');
@@ -3232,6 +3233,7 @@ body {
                 profilNavItem.style.display = '';
 
                 idCardName.textContent = `${profile.surname.toUpperCase()} ${profile.firstname.toUpperCase()}`;
+                idCardPhoto.src = profile.photo || 'https://i.postimg.cc/TPRCFgL6/unnamed.jpg';
                 idCardSurname.textContent = profile.surname;
                 idCardFirstname.textContent = profile.firstname;
                 idCardGender.textContent = profile.gender;
