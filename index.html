@@ -3176,14 +3176,15 @@ body {
             }
         });
 
-        // ===== Logowanie przez przycisk w menu (login/hasło wpisane na sztywno w kodzie) =====
-        // UWAGA: to NIE jest prawdziwe zabezpieczenie - login i hasło są widoczne
-        // w kodzie źródłowym strony dla każdego, kto zajrzy w narzędzia deweloperskie.
-        // Nadaje się do odblokowania dodatkowej zakładki "Profil" jako prosty gadżet,
-        // a nie do ochrony realnych danych czy uprawnień.
-        (function () {
-            const VALID_USER = 'test';
-            const VALID_PASS = '123';
+        // ===== Logowanie przez przycisk w menu =====
+        // Konta (login/hasło/dane profilu) są w osobnym pliku, wczytywanym
+        // dynamicznie niżej (patrz loadAccountsFile) - nie tutaj w index.html.
+        // UWAGA: to NADAL nie jest prawdziwe zabezpieczenie - ten plik
+        // jest zwykłym plikiem JS pobieranym przez przeglądarkę, więc każdy może
+        // go otworzyć (Źródło strony / karta Sieć) i zobaczyć loginy i hasła
+        // w czystym tekście. Nadaje się do odblokowania zakładki "Profil" jako
+        // prosty gadżet, a nie do ochrony realnych danych czy uprawnień.
+        function initLoginSystem() {
             const SESSION_KEY = 'mcrp_logged_in';
 
             const overlay = document.getElementById('loginOverlay');
@@ -3210,18 +3211,6 @@ body {
             const statPlaytime = document.getElementById('statPlaytime');
             const statFaction = document.getElementById('statFaction');
 
-            // Przykładowe dane profilu - w prawdziwym systemie pochodziłyby z bazy/backendu
-            const mockProfile = {
-                surname: 'Kowalski',
-                firstname: 'Jan',
-                gender: 'M',
-                idNumber: 'MCX 482913',
-                nightcoin: 2450,
-                properties: 1,
-                playtime: '37h',
-                faction: 'Cywil'
-            };
-
             function openLoginModal() {
                 loginError.textContent = '';
                 loginForm.reset();
@@ -3233,24 +3222,24 @@ body {
                 overlay.classList.remove('active');
             }
 
-            function applyLoggedInUI(username) {
+            function applyLoggedInUI(login, profile) {
                 openLoginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
                 userBadge.style.display = 'flex';
-                userBadgeName.textContent = username;
-                profilUserName.textContent = username;
-                profilLogin.textContent = username;
+                userBadgeName.textContent = login;
+                profilUserName.textContent = login;
+                profilLogin.textContent = login;
                 profilNavItem.style.display = '';
 
-                idCardName.textContent = `${mockProfile.surname.toUpperCase()} ${mockProfile.firstname.toUpperCase()}`;
-                idCardSurname.textContent = mockProfile.surname;
-                idCardFirstname.textContent = mockProfile.firstname;
-                idCardGender.textContent = mockProfile.gender;
-                idCardNumber.textContent = mockProfile.idNumber;
-                statNightcoin.textContent = mockProfile.nightcoin.toLocaleString('pl-PL');
-                statProperties.textContent = mockProfile.properties;
-                statPlaytime.textContent = mockProfile.playtime;
-                statFaction.textContent = mockProfile.faction;
+                idCardName.textContent = `${profile.surname.toUpperCase()} ${profile.firstname.toUpperCase()}`;
+                idCardSurname.textContent = profile.surname;
+                idCardFirstname.textContent = profile.firstname;
+                idCardGender.textContent = profile.gender;
+                idCardNumber.textContent = profile.idNumber;
+                statNightcoin.textContent = profile.nightcoin.toLocaleString('pl-PL');
+                statProperties.textContent = profile.properties;
+                statPlaytime.textContent = profile.playtime;
+                statFaction.textContent = profile.faction;
             }
 
             function applyLoggedOutUI() {
@@ -3265,9 +3254,14 @@ body {
             }
 
             // Jeśli user zalogował się już w tej karcie/sesji przeglądarki, nie pytaj ponownie
-            const savedUser = sessionStorage.getItem(SESSION_KEY);
-            if (savedUser) {
-                applyLoggedInUI(savedUser);
+            const saved = sessionStorage.getItem(SESSION_KEY);
+            if (saved) {
+                try {
+                    const { login, profile } = JSON.parse(saved);
+                    applyLoggedInUI(login, profile);
+                } catch (err) {
+                    sessionStorage.removeItem(SESSION_KEY);
+                }
             }
 
             openLoginBtn.addEventListener('click', openLoginModal);
@@ -3286,9 +3280,11 @@ body {
                 const user = loginUser.value.trim();
                 const pass = loginPass.value;
 
-                if (user === VALID_USER && pass === VALID_PASS) {
-                    sessionStorage.setItem(SESSION_KEY, user);
-                    applyLoggedInUI(user);
+                const account = findAccount(user, pass);
+
+                if (account) {
+                    sessionStorage.setItem(SESSION_KEY, JSON.stringify({ login: account.login, profile: account.profile }));
+                    applyLoggedInUI(account.login, account.profile);
                     closeLoginModal();
                     showSection('profil');
                 } else {
@@ -3297,6 +3293,20 @@ body {
                     loginPass.focus();
                 }
             });
+        }
+
+        // Wczytanie pliku z kontami w sposób niewidoczny wprost w źródle HTML:
+        // tworzymy znacznik <script> dynamicznie z poziomu JS, zamiast pisać
+        // <script src="..."> na stałe w kodzie strony. Uruchamiamy logowanie
+        // dopiero gdy plik się załaduje.
+        (function loadAccountsFile() {
+            const s = document.createElement('script');
+            s.src = 'data-x7q2.js';
+            s.onload = initLoginSystem;
+            s.onerror = function () {
+                console.error('Nie udało się wczytać pliku z kontami.');
+            };
+            document.head.appendChild(s);
         })();
     </script>
 </body>
