@@ -1514,6 +1514,109 @@ body {
   font-size: 0.8rem;
   color: #ff8080;
 }
+
+/* ===== Profil: dowód osobisty i statystyki ===== */
+.id-card {
+  display: flex;
+  gap: 18px;
+  background: rgba(15, 15, 15, 0.94);
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.id-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(250, 204, 21, 0.1), transparent 60%);
+  pointer-events: none;
+}
+
+.id-card-photo {
+  width: 90px;
+  height: 110px;
+  flex: 0 0 auto;
+  border-radius: 10px;
+  background: linear-gradient(160deg, #2a2a2a, #111111);
+  border: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.id-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.id-card-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.id-card-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #fff7cc;
+  margin-bottom: 10px;
+}
+
+.id-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 16px;
+  font-size: 0.85rem;
+}
+
+.id-card-grid dt {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.id-card-grid dd {
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.profil-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.profil-stat {
+  background: rgba(18, 18, 18, 0.94);
+  border: 1px solid rgba(250, 204, 21, 0.24);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.profil-stat-icon {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.profil-stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff7cc;
+}
+
+.profil-stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
 </style>
 </head>
 <body>
@@ -2531,12 +2634,50 @@ body {
                 <section id="profil" class="section">
                     <h2>Twój profil</h2>
                     <p>Witaj z powrotem, <strong id="profilUserName">test</strong>! To Twoja prywatna zakładka, widoczna tylko po zalogowaniu.</p>
-                    <div class="hero-aside" style="max-width:none;">
-                        <h3>Dane konta</h3>
-                        <ul>
-                            <li>Login: <span id="profilLogin">test</span></li>
-                            <li>Status: Zalogowany</li>
-                        </ul>
+
+                    <div class="id-card">
+                        <div class="id-card-photo">🪪</div>
+                        <div class="id-card-body">
+                            <div class="id-card-label">Dowód osobisty RP</div>
+                            <div class="id-card-name" id="idCardName">Jan Kowalski</div>
+                            <dl class="id-card-grid">
+                                <dt>Login</dt>
+                                <dd id="profilLogin">test</dd>
+                                <dt>Nr dowodu</dt>
+                                <dd id="idCardNumber">MC-000000</dd>
+                                <dt>Data urodzenia</dt>
+                                <dd>01.01.2000</dd>
+                                <dt>Obywatelstwo</dt>
+                                <dd>Midnight City</dd>
+                                <dt>Adres zamieszkania</dt>
+                                <dd>ul. Przykładowa 1, Midnight City</dd>
+                                <dt>Status</dt>
+                                <dd>Aktywny</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <div class="profil-stats">
+                        <div class="profil-stat">
+                            <div class="profil-stat-icon">🌙</div>
+                            <div class="profil-stat-value" id="statNightcoin">0</div>
+                            <div class="profil-stat-label">Stan konta Night Coin</div>
+                        </div>
+                        <div class="profil-stat">
+                            <div class="profil-stat-icon">🏠</div>
+                            <div class="profil-stat-value" id="statProperties">0</div>
+                            <div class="profil-stat-label">Posiadane nieruchomości</div>
+                        </div>
+                        <div class="profil-stat">
+                            <div class="profil-stat-icon">🕒</div>
+                            <div class="profil-stat-value" id="statPlaytime">0h</div>
+                            <div class="profil-stat-label">Czas gry na serwerze</div>
+                        </div>
+                        <div class="profil-stat">
+                            <div class="profil-stat-icon">🎖️</div>
+                            <div class="profil-stat-value" id="statFaction">Brak</div>
+                            <div class="profil-stat-label">Aktualna frakcja</div>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -2963,6 +3104,22 @@ body {
             const profilNavItem = document.getElementById('profilNavItem');
             const profilUserName = document.getElementById('profilUserName');
             const profilLogin = document.getElementById('profilLogin');
+            const idCardName = document.getElementById('idCardName');
+            const idCardNumber = document.getElementById('idCardNumber');
+            const statNightcoin = document.getElementById('statNightcoin');
+            const statProperties = document.getElementById('statProperties');
+            const statPlaytime = document.getElementById('statPlaytime');
+            const statFaction = document.getElementById('statFaction');
+
+            // Przykładowe dane profilu - w prawdziwym systemie pochodziłyby z bazy/backendu
+            const mockProfile = {
+                fullName: 'Jan Kowalski',
+                idNumber: 'MC-482913',
+                nightcoin: 2450,
+                properties: 1,
+                playtime: '37h',
+                faction: 'Cywil'
+            };
 
             function openLoginModal() {
                 loginError.textContent = '';
@@ -2983,6 +3140,13 @@ body {
                 profilUserName.textContent = username;
                 profilLogin.textContent = username;
                 profilNavItem.style.display = '';
+
+                idCardName.textContent = mockProfile.fullName;
+                idCardNumber.textContent = mockProfile.idNumber;
+                statNightcoin.textContent = mockProfile.nightcoin.toLocaleString('pl-PL');
+                statProperties.textContent = mockProfile.properties;
+                statPlaytime.textContent = mockProfile.playtime;
+                statFaction.textContent = mockProfile.faction;
             }
 
             function applyLoggedOutUI() {
