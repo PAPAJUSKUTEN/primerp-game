@@ -1358,33 +1358,88 @@ body {
   }
 }
 
-/* ===== Ekran logowania ===== */
-.layout { display: none; }
-.layout.unlocked { display: flex; }
+/* ===== Przycisk logowania w sidebarze ===== */
+.login-btn-wrap {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-soft);
+}
 
+#openLoginBtn, #logoutBtn {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: rgba(250, 204, 21, 0.1);
+  color: #ffe97a;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+}
+
+#openLoginBtn:hover, #logoutBtn:hover {
+  background: rgba(250, 204, 21, 0.2);
+  transform: translateY(-1px);
+}
+
+#logoutBtn {
+  display: none;
+  border-color: rgba(255, 100, 100, 0.35);
+  color: #ff9a9a;
+  background: rgba(255, 80, 80, 0.08);
+}
+
+.user-badge {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: rgba(250, 204, 21, 0.1);
+  font-size: 0.82rem;
+  color: #ffe97a;
+}
+
+/* ===== Modal logowania ===== */
 #loginOverlay {
+  display: none;
   position: fixed;
   inset: 0;
   z-index: 9999;
-  display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-gradient);
+  background: rgba(0, 0, 0, 0.82);
   padding: 16px;
 }
 
-#loginOverlay.hidden { display: none; }
+#loginOverlay.active {
+  display: flex;
+}
 
 .login-box {
   width: 100%;
   max-width: 340px;
-  background: rgba(15, 15, 15, 0.94);
+  background: rgba(15, 15, 15, 0.98);
   border: 1px solid var(--border-soft);
   border-radius: 20px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(18px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
   padding: 28px 24px;
   text-align: center;
+  position: relative;
+}
+
+.login-box-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
 }
 
 .login-box .logo-icon {
@@ -1463,9 +1518,10 @@ body {
 </head>
 <body>
 
-    <!-- ===== Ekran logowania ===== -->
+    <!-- ===== Modal logowania ===== -->
     <div id="loginOverlay">
         <div class="login-box">
+            <button type="button" class="login-box-close" id="closeLoginBtn" aria-label="Zamknij">✕</button>
             <div class="logo-icon"></div>
             <h1>Midnight City RP</h1>
             <p class="login-sub">Zaloguj się, aby wejść na stronę</p>
@@ -1508,7 +1564,14 @@ body {
                 <li class="nav-item"><a class="nav-link" data-target="administratorzy"><span class="icon-dot"></span><div><div class="nav-label-main">Administratorzy</div><div class="nav-label-sub">Zespół serwera</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="wspolpraca"><span class="icon-dot"></span><div><div class="nav-label-main">Współpraca</div><div class="nav-label-sub">Partnerstwa i media</div></div></a></li>
                 <li class="nav-item"><a class="nav-link" data-target="kontakt"><span class="icon-dot"></span><div><div class="nav-label-main">Kontakt / Discord</div><div class="nav-label-sub">Linki społeczności</div></div></a></li>
+                <li class="nav-item" id="profilNavItem" style="display:none;"><a class="nav-link" data-target="profil"><span class="icon-dot"></span><div><div class="nav-label-main">Profil</div><div class="nav-label-sub">Twoje konto</div></div></a></li>
             </ul>
+
+            <div class="login-btn-wrap">
+                <div class="user-badge" id="userBadge">👤 <span id="userBadgeName">test</span></div>
+                <button type="button" id="openLoginBtn">🔑 Zaloguj</button>
+                <button type="button" id="logoutBtn">Wyloguj</button>
+            </div>
 
             <div class="sidebar-footer">
                 <span>Midnight City RP © 2026</span>
@@ -2464,6 +2527,18 @@ body {
                         <a href="#" class="cta-btn secondary"><span>Formularz kontaktowy</span></a>
                     </div>
                 </section>
+
+                <section id="profil" class="section">
+                    <h2>Twój profil</h2>
+                    <p>Witaj z powrotem, <strong id="profilUserName">test</strong>! To Twoja prywatna zakładka, widoczna tylko po zalogowaniu.</p>
+                    <div class="hero-aside" style="max-width:none;">
+                        <h3>Dane konta</h3>
+                        <ul>
+                            <li>Login: <span id="profilLogin">test</span></li>
+                            <li>Status: Zalogowany</li>
+                        </ul>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
@@ -2864,32 +2939,79 @@ body {
             }
         });
 
-        // ===== Prosty ekran logowania (login/hasło wpisane na sztywno w kodzie) =====
+        // ===== Logowanie przez przycisk w menu (login/hasło wpisane na sztywno w kodzie) =====
         // UWAGA: to NIE jest prawdziwe zabezpieczenie - login i hasło są widoczne
         // w kodzie źródłowym strony dla każdego, kto zajrzy w narzędzia deweloperskie.
-        // Nadaje się do zasłonięcia strony przed przypadkowymi gośćmi, a nie do
-        // ochrony realnych danych czy uprawnień.
+        // Nadaje się do odblokowania dodatkowej zakładki "Profil" jako prosty gadżet,
+        // a nie do ochrony realnych danych czy uprawnień.
         (function () {
             const VALID_USER = 'test';
             const VALID_PASS = '123';
             const SESSION_KEY = 'mcrp_logged_in';
 
             const overlay = document.getElementById('loginOverlay');
-            const layout = document.querySelector('.layout');
             const loginForm = document.getElementById('loginForm');
             const loginUser = document.getElementById('loginUser');
             const loginPass = document.getElementById('loginPass');
             const loginError = document.getElementById('loginError');
 
-            function unlock() {
-                overlay.classList.add('hidden');
-                layout.classList.add('unlocked');
+            const openLoginBtn = document.getElementById('openLoginBtn');
+            const closeLoginBtn = document.getElementById('closeLoginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userBadge = document.getElementById('userBadge');
+            const userBadgeName = document.getElementById('userBadgeName');
+            const profilNavItem = document.getElementById('profilNavItem');
+            const profilUserName = document.getElementById('profilUserName');
+            const profilLogin = document.getElementById('profilLogin');
+
+            function openLoginModal() {
+                loginError.textContent = '';
+                loginForm.reset();
+                overlay.classList.add('active');
+                setTimeout(() => loginUser.focus(), 50);
+            }
+
+            function closeLoginModal() {
+                overlay.classList.remove('active');
+            }
+
+            function applyLoggedInUI(username) {
+                openLoginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                userBadge.style.display = 'flex';
+                userBadgeName.textContent = username;
+                profilUserName.textContent = username;
+                profilLogin.textContent = username;
+                profilNavItem.style.display = '';
+            }
+
+            function applyLoggedOutUI() {
+                openLoginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                userBadge.style.display = 'none';
+                profilNavItem.style.display = 'none';
+                // jeśli user jest aktualnie na zakładce Profil, wróć na start
+                if (document.getElementById('profil').classList.contains('active')) {
+                    showSection('start');
+                }
             }
 
             // Jeśli user zalogował się już w tej karcie/sesji przeglądarki, nie pytaj ponownie
-            if (sessionStorage.getItem(SESSION_KEY) === 'true') {
-                unlock();
+            const savedUser = sessionStorage.getItem(SESSION_KEY);
+            if (savedUser) {
+                applyLoggedInUI(savedUser);
             }
+
+            openLoginBtn.addEventListener('click', openLoginModal);
+            closeLoginBtn.addEventListener('click', closeLoginModal);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeLoginModal();
+            });
+
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem(SESSION_KEY);
+                applyLoggedOutUI();
+            });
 
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -2897,9 +3019,10 @@ body {
                 const pass = loginPass.value;
 
                 if (user === VALID_USER && pass === VALID_PASS) {
-                    sessionStorage.setItem(SESSION_KEY, 'true');
-                    loginError.textContent = '';
-                    unlock();
+                    sessionStorage.setItem(SESSION_KEY, user);
+                    applyLoggedInUI(user);
+                    closeLoginModal();
+                    showSection('profil');
                 } else {
                     loginError.textContent = 'Nieprawidłowy login lub hasło.';
                     loginPass.value = '';
