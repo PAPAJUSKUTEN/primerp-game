@@ -943,16 +943,9 @@ body {
   pointer-events: none;
 }
 
-.property-card.is-locked {
-  opacity: 0.68;
-}
-
 .btn:disabled {
-  opacity: 0.45;
   cursor: not-allowed;
   pointer-events: none;
-  box-shadow: none !important;
-  transform: none !important;
 }
 
 .property-zoom-hint {
@@ -2295,7 +2288,6 @@ body {
 
                 const lockedStatuses = ['niedostępne', 'sprzedane'];
                 if (lockedStatuses.includes((card.dataset.status || '').toLowerCase())) {
-                    card.classList.add('is-locked');
                     card.querySelectorAll('.btn-buy, .btn-rent').forEach(btn => {
                         btn.disabled = true;
                         btn.setAttribute('aria-disabled', 'true');
