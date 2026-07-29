@@ -1357,9 +1357,133 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== Ekran logowania ===== */
+.layout { display: none; }
+.layout.unlocked { display: flex; }
+
+#loginOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gradient);
+  padding: 16px;
+}
+
+#loginOverlay.hidden { display: none; }
+
+.login-box {
+  width: 100%;
+  max-width: 340px;
+  background: rgba(15, 15, 15, 0.94);
+  border: 1px solid var(--border-soft);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(18px);
+  padding: 28px 24px;
+  text-align: center;
+}
+
+.login-box .logo-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 12px;
+}
+
+.login-box h1 {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff7cc;
+  margin-bottom: 4px;
+}
+
+.login-box p.login-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+
+.login-field {
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.login-field label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+}
+
+.login-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.login-field input:focus {
+  border-color: var(--accent);
+}
+
+#loginBtn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 11px 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+#loginBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(250, 204, 21, 0.35);
+}
+
+#loginError {
+  min-height: 18px;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #ff8080;
+}
 </style>
 </head>
 <body>
+
+    <!-- ===== Ekran logowania ===== -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <div class="logo-icon"></div>
+            <h1>Midnight City RP</h1>
+            <p class="login-sub">Zaloguj się, aby wejść na stronę</p>
+            <form id="loginForm">
+                <div class="login-field">
+                    <label for="loginUser">Login</label>
+                    <input type="text" id="loginUser" autocomplete="username" required>
+                </div>
+                <div class="login-field">
+                    <label for="loginPass">Hasło</label>
+                    <input type="password" id="loginPass" autocomplete="current-password" required>
+                </div>
+                <button type="submit" id="loginBtn">Zaloguj</button>
+                <div id="loginError"></div>
+            </form>
+        </div>
+    </div>
+
     <div class="layout">
         <aside class="sidebar" role="navigation" aria-label="Główne menu">
             <div class="logo">
@@ -2739,6 +2863,50 @@ body {
                 applicationSubmitBtn.querySelector('span').textContent = 'Prześlij';
             }
         });
+
+        // ===== Prosty ekran logowania (login/hasło wpisane na sztywno w kodzie) =====
+        // UWAGA: to NIE jest prawdziwe zabezpieczenie - login i hasło są widoczne
+        // w kodzie źródłowym strony dla każdego, kto zajrzy w narzędzia deweloperskie.
+        // Nadaje się do zasłonięcia strony przed przypadkowymi gośćmi, a nie do
+        // ochrony realnych danych czy uprawnień.
+        (function () {
+            const VALID_USER = 'test';
+            const VALID_PASS = '123';
+            const SESSION_KEY = 'mcrp_logged_in';
+
+            const overlay = document.getElementById('loginOverlay');
+            const layout = document.querySelector('.layout');
+            const loginForm = document.getElementById('loginForm');
+            const loginUser = document.getElementById('loginUser');
+            const loginPass = document.getElementById('loginPass');
+            const loginError = document.getElementById('loginError');
+
+            function unlock() {
+                overlay.classList.add('hidden');
+                layout.classList.add('unlocked');
+            }
+
+            // Jeśli user zalogował się już w tej karcie/sesji przeglądarki, nie pytaj ponownie
+            if (sessionStorage.getItem(SESSION_KEY) === 'true') {
+                unlock();
+            }
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const user = loginUser.value.trim();
+                const pass = loginPass.value;
+
+                if (user === VALID_USER && pass === VALID_PASS) {
+                    sessionStorage.setItem(SESSION_KEY, 'true');
+                    loginError.textContent = '';
+                    unlock();
+                } else {
+                    loginError.textContent = 'Nieprawidłowy login lub hasło.';
+                    loginPass.value = '';
+                    loginPass.focus();
+                }
+            });
+        })();
     </script>
 </body>
 </html>
