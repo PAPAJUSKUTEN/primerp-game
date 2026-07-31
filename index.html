@@ -378,6 +378,7 @@ body {
 }
 
 .application-form input,
+.application-form select,
 .application-form textarea {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(250, 204, 21, 0.25);
@@ -390,6 +391,7 @@ body {
 }
 
 .application-form input:focus,
+.application-form select:focus,
 .application-form textarea:focus {
   outline: none;
   border-color: var(--accent);
@@ -1662,8 +1664,7 @@ body {
                     <p>W zależności od frakcji i roli, dołączenie do Midnight City RP lub wsparcie projektu może wymagać złożenia podania. Poniżej znajdziesz profile dwóch najczęściej wybieranych ról wraz z wymaganiami.</p>
 
                     <div class="application-grid">
-                        <div class="application-card is-closed">
-                            <div class="closed-ribbon">🔒 Podania zamknięte</div>
+                        <div class="application-card">
                             <div class="application-head">
                                 <div class="application-icon">👑</div>
                                 <div class="application-title">
@@ -1692,7 +1693,7 @@ body {
                             </ul>
 
                             <div class="application-footer">
-                                <button type="button" class="cta-btn cta-btn-locked" disabled aria-disabled="true"><span>🔒 Złóż podanie</span></button>
+                                <button type="button" class="cta-btn" data-apply="administrator"><span>Złóż podanie</span></button>
                             </div>
                         </div>
 
@@ -2405,29 +2406,7 @@ body {
             <p id="appModalSubtitle" style="color:var(--text-muted);margin-bottom:6px;"></p>
 
             <form id="applicationForm" class="application-form">
-                <label>Nick w grze <span class="req">*</span>
-                    <input type="text" name="nick" placeholder="np. Jan Kowalski" required>
-                </label>
-
-                <label>Discord (nazwa użytkownika lub link do profilu) <span class="req">*</span>
-                    <input type="text" name="discord" placeholder="np. nick lub discord.com/users/..." required>
-                </label>
-
-                <label>Wiek <span class="req">*</span>
-                    <input type="number" name="wiek" min="10" max="99" placeholder="np. 18" required>
-                </label>
-
-                <label>Doświadczenie w RP <span class="req">*</span>
-                    <textarea name="doswiadczenie" rows="3" placeholder="Opisz swoje wcześniejsze doświadczenie w roleplay..." required></textarea>
-                </label>
-
-                <label>Dlaczego chcesz dołączyć / motywacja <span class="req">*</span>
-                    <textarea name="motywacja" rows="3" placeholder="Opisz swoją motywację..." required></textarea>
-                </label>
-
-                <label>Dodatkowe informacje (opcjonalnie)
-                    <textarea name="dodatkowe" rows="2" placeholder="Cokolwiek jeszcze chcesz dodać..."></textarea>
-                </label>
+                <div id="applicationFormFields"></div>
 
                 <div id="applicationFormStatus" class="application-form-status"></div>
 
@@ -2632,17 +2611,54 @@ body {
             if (e.target === mafiaModal) mafiaModal.classList.remove('active');
         });
 
-        // ===== Formularz podania -> webhook Discord =====
-        const DISCORD_WEBHOOK_URL = 'https://discordapp.com/api/webhooks/1531522821098967140/55qba8QPNa3AST6eAm3Siwe2VcusnphDEeF8vHi8L3bjyVjq0uphCj3irGZ8BkFJmOu9';
-
+        // ===== Formularz podania -> webhook Discord (osobny webhook i pytania dla każdej roli) =====
         const roleInfo = {
-            administrator: { label: 'Administrator', subtitle: 'Zespół administracyjny serwera', color: 0xfacc15, emoji: '👑' },
-            grom: { label: 'Grom', subtitle: 'Frakcja: Jednostka Specjalna GROM', color: 0x3b82f6, emoji: '🛡️' }
+            administrator: {
+                label: 'Administrator',
+                subtitle: 'Zespół administracyjny serwera',
+                color: 0xfacc15,
+                emoji: '👑',
+                webhook: 'https://discordapp.com/api/webhooks/1532600993903149056/tZfyOBMlXvYh_m3ugoAZIclLHKrhQ8vte88N7W26w33-Rvp5_ToADOGnFC9emFVkATSc'
+            },
+            grom: {
+                label: 'Grom',
+                subtitle: 'Frakcja: Jednostka Specjalna GROM',
+                color: 0x3b82f6,
+                emoji: '🛡️',
+                webhook: 'https://discordapp.com/api/webhooks/1532600715954880613/9Vzd2ojaqrI0BHEMjowPtLZ5Jsod-4tDglxgPLWjMd8NK7EVpbhCvkXeJ2Hd3cfvup3v'
+            }
+        };
+
+        // Pytania (pola formularza) dla poszczególnych ról.
+        // type: text | number | textarea | select
+        const roleFields = {
+            administrator: [
+                { key: 'nick_discord', label: 'Nick z Robloxa (oraz nazwa na Discordzie)', type: 'text', required: true, placeholder: 'np. JanKowalski / Jan#0001' },
+                { key: 'wiek', label: 'Ile masz lat?', type: 'number', required: true, min: 10, max: 99, placeholder: 'np. 16' },
+                { key: 'staz_rp', label: 'Od jak dawna grasz na serwerach RolePlay (w tym na Emergency Hamburg)?', type: 'textarea', required: true, rows: 2, placeholder: 'Opisz swój staż w grach RP...' },
+                { key: 'dyspozycyjnosc', label: 'Ile czasu dziennie/tygodniowo jesteś w stanie poświęcić na pełnienie obowiązków Helpera?', type: 'text', required: true, placeholder: 'np. 2h dziennie / 10h tygodniowo' },
+                { key: 'doswiadczenie_admin', label: 'Czy posiadałeś/aś już wcześniej doświadczenie w Administracji na innych serwerach RP? (jeśli tak, opisz jakie)', type: 'textarea', required: true, rows: 3 },
+                { key: 'znajomosc_regulaminu', label: 'Jak oceniasz swoją znajomość regulaminu Midnight City RP w skali od 1 do 10?', type: 'number', required: true, min: 1, max: 10, placeholder: 'np. 8' },
+                { key: 'dlaczego_ty', label: 'Dlaczego to właśnie Ciebie powinniśmy wybrać do naszej Ekipy? (opisz swoje zalety)', type: 'textarea', required: true, rows: 3 },
+                { key: 'mikrofon', label: 'Czy posiadasz sprawny mikrofon i możliwość komunikacji głosowej na Discordzie?', type: 'select', required: true, options: ['Tak', 'Nie'] },
+                { key: 'nagrywanie', label: 'Czy potrafisz nagrywać klipy/dowody wideo z gry w razie potrzeby?', type: 'select', required: true, options: ['Tak', 'Nie'] },
+                { key: 'zaleta_wada', label: 'Jaka jest Twoja największa zaleta oraz największa wada w pracy zespołowej?', type: 'textarea', required: true, rows: 3 },
+                { key: 'reakcja_na_krytyke', label: 'Jak reagujesz na krytykę ze strony wyższej Administracji?', type: 'textarea', required: true, rows: 3 }
+            ],
+            grom: [
+                { key: 'nick', label: 'Nick w grze', type: 'text', required: true, placeholder: 'np. Jan Kowalski' },
+                { key: 'discord', label: 'Discord (nazwa użytkownika lub link do profilu)', type: 'text', required: true, placeholder: 'np. nick lub discord.com/users/...' },
+                { key: 'wiek', label: 'Wiek', type: 'number', required: true, min: 10, max: 99, placeholder: 'np. 18' },
+                { key: 'doswiadczenie', label: 'Doświadczenie w RP', type: 'textarea', required: true, rows: 3, placeholder: 'Opisz swoje wcześniejsze doświadczenie w roleplay...' },
+                { key: 'motywacja', label: 'Dlaczego chcesz dołączyć / motywacja', type: 'textarea', required: true, rows: 3, placeholder: 'Opisz swoją motywację...' },
+                { key: 'dodatkowe', label: 'Dodatkowe informacje (opcjonalnie)', type: 'textarea', required: false, rows: 2, placeholder: 'Cokolwiek jeszcze chcesz dodać...' }
+            ]
         };
 
         const applicationModal = document.getElementById('applicationModal');
         const closeApplicationModalBtn = document.getElementById('closeApplicationModal');
         const applicationForm = document.getElementById('applicationForm');
+        const applicationFormFields = document.getElementById('applicationFormFields');
         const appModalTitle = document.getElementById('appModalTitle');
         const appModalSubtitle = document.getElementById('appModalSubtitle');
         const applicationFormStatus = document.getElementById('applicationFormStatus');
@@ -2650,9 +2666,36 @@ body {
 
         let currentRole = null;
 
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
         function resetApplicationStatus() {
             applicationFormStatus.textContent = '';
             applicationFormStatus.className = 'application-form-status';
+        }
+
+        function buildApplicationFields(roleKey) {
+            const fields = roleFields[roleKey] || [];
+            applicationFormFields.innerHTML = fields.map(f => {
+                const reqMark = f.required ? ' <span class="req">*</span>' : '';
+                const reqAttr = f.required ? 'required' : '';
+                const placeholder = f.placeholder ? escapeHtml(f.placeholder) : '';
+
+                if (f.type === 'textarea') {
+                    return `<label>${escapeHtml(f.label)}${reqMark}<textarea name="${f.key}" rows="${f.rows || 3}" placeholder="${placeholder}" ${reqAttr}></textarea></label>`;
+                }
+                if (f.type === 'select') {
+                    const opts = (f.options || []).map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+                    return `<label>${escapeHtml(f.label)}${reqMark}<select name="${f.key}" ${reqAttr}><option value="" disabled selected>Wybierz...</option>${opts}</select></label>`;
+                }
+                const extra = f.type === 'number' ? `min="${f.min ?? ''}" max="${f.max ?? ''}"` : '';
+                return `<label>${escapeHtml(f.label)}${reqMark}<input type="${f.type}" name="${f.key}" placeholder="${placeholder}" ${extra} ${reqAttr}></label>`;
+            }).join('');
         }
 
         function openApplicationModal(roleKey) {
@@ -2660,6 +2703,7 @@ body {
             const info = roleInfo[roleKey] || { label: 'Rola', subtitle: '' };
             appModalTitle.textContent = `Podanie: ${info.label}`;
             appModalSubtitle.textContent = info.subtitle || '';
+            buildApplicationFields(roleKey);
             applicationForm.reset();
             resetApplicationStatus();
             applicationSubmitBtn.disabled = false;
@@ -2683,26 +2727,22 @@ body {
         applicationForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const formData = new FormData(applicationForm);
-            const nick = (formData.get('nick') || '').trim();
-            const discord = (formData.get('discord') || '').trim();
-            const wiek = (formData.get('wiek') || '').trim();
-            const doswiadczenie = (formData.get('doswiadczenie') || '').trim();
-            const motywacja = (formData.get('motywacja') || '').trim();
-            const dodatkowe = (formData.get('dodatkowe') || '').trim();
-
             const info = roleInfo[currentRole] || { label: 'Nieznana rola', color: 0xfacc15, emoji: '📋' };
+            const fieldsConfig = roleFields[currentRole] || [];
+            const formData = new FormData(applicationForm);
 
-            const fields = [
-                { name: 'Nick w grze', value: nick || '-', inline: true },
-                { name: 'Discord', value: discord || '-', inline: true },
-                { name: 'Wiek', value: wiek || '-', inline: true },
-                { name: 'Doświadczenie w RP', value: doswiadczenie || '-' },
-                { name: 'Motywacja', value: motywacja || '-' }
-            ];
+            const fields = fieldsConfig
+                .map(f => {
+                    const value = (formData.get(f.key) || '').toString().trim();
+                    if (!value && !f.required) return null;
+                    return { name: f.label, value: value || '-' };
+                })
+                .filter(Boolean);
 
-            if (dodatkowe) {
-                fields.push({ name: 'Dodatkowe informacje', value: dodatkowe });
+            if (!info.webhook) {
+                applicationFormStatus.textContent = '❌ Brak skonfigurowanego webhooka dla tej roli. Skontaktuj się z administracją.';
+                applicationFormStatus.classList.add('error');
+                return;
             }
 
             const payload = {
@@ -2720,7 +2760,7 @@ body {
             resetApplicationStatus();
 
             try {
-                const res = await fetch(DISCORD_WEBHOOK_URL, {
+                const res = await fetch(info.webhook, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
