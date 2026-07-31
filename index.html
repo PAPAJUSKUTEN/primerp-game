@@ -2169,7 +2169,7 @@ body {
                                 <li>Priorytetowa kolejka wejścia na serwer</li>
                             </ul>
                             <div class="plan-footer">
-                                <button type="button" class="cta-btn"><span>Kup pakiet</span></button>
+                                <button type="button" class="cta-btn" data-buy="premium1"><span>Kup pakiet</span></button>
                             </div>
                         </div>
 
@@ -2195,7 +2195,7 @@ body {
                                 <li>Możliwość rezerwacji unikalnej tablicy rejestracyjnej</li>
                             </ul>
                             <div class="plan-footer">
-                                <button type="button" class="cta-btn"><span>Kup pakiet</span></button>
+                                <button type="button" class="cta-btn" data-buy="premium2"><span>Kup pakiet</span></button>
                             </div>
                         </div>
 
@@ -2221,7 +2221,7 @@ body {
                                 <li>Wcześniejszy dostęp do nowych funkcji serwera</li>
                             </ul>
                             <div class="plan-footer">
-                                <button type="button" class="cta-btn"><span>Kup pakiet</span></button>
+                                <button type="button" class="cta-btn" data-buy="premium3"><span>Kup pakiet</span></button>
                             </div>
                         </div>
 
@@ -2412,6 +2412,34 @@ body {
 
                 <div class="application-form-actions">
                     <button type="submit" class="cta-btn" id="applicationSubmitBtn"><span>Prześlij</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="premiumModal" class="property-modal">
+        <div class="property-modal-content">
+            <button class="property-modal-close" id="closePremiumModal">×</button>
+            <h2 id="premiumModalTitle">Zakup pakietu</h2>
+            <p id="premiumModalSubtitle" style="color:var(--text-muted);margin-bottom:6px;"></p>
+
+            <form id="premiumForm" class="application-form">
+                <label>Nick na Discordzie <span class="req">*</span>
+                    <input type="text" name="discord_nick" placeholder="np. nick lub discord.com/users/..." required>
+                </label>
+
+                <label>Czy posiadasz wystarczającą ilość Night Coin na koncie, aby wykupić ten pakiet? <span class="req">*</span>
+                    <select name="ma_nightcoin" required>
+                        <option value="" disabled selected>Wybierz...</option>
+                        <option value="Tak">Tak</option>
+                        <option value="Nie">Nie</option>
+                    </select>
+                </label>
+
+                <div id="premiumFormStatus" class="application-form-status"></div>
+
+                <div class="application-form-actions">
+                    <button type="submit" class="cta-btn" id="premiumSubmitBtn"><span>Kup pakiet</span></button>
                 </div>
             </form>
         </div>
@@ -2780,6 +2808,128 @@ body {
             } finally {
                 applicationSubmitBtn.disabled = false;
                 applicationSubmitBtn.querySelector('span').textContent = 'Prześlij';
+            }
+        });
+
+        // ===== Zakup Premium -> webhook Discord (osobny webhook dla każdego pakietu) =====
+        const planInfo = {
+            premium1: {
+                label: 'Premium',
+                price: '20 NC / tydzień',
+                color: 0xfacc15,
+                emoji: '⭐',
+                webhook: 'https://discordapp.com/api/webhooks/1532603818242478172/xJ0wvLUsIbEIa6eTicGzjtZ96tRVkuXPqc2sj2378ZqaAphrbOjruUY8BtaEaEAbSc9q'
+            },
+            premium2: {
+                label: 'Premium Plus',
+                price: '40 NC / tydzień',
+                color: 0x3b82f6,
+                emoji: '💎',
+                webhook: 'https://discordapp.com/api/webhooks/1532603873976520744/5tEuVBz82vE4Yoak8-VMWr5JKJhy1ZtDGh2W-nijtl1PcaltpmxdpRGu97RqI_VmlyyD'
+            },
+            premium3: {
+                label: 'Premium Ultra',
+                price: '80 NC / tydzień',
+                color: 0xeab308,
+                emoji: '👑',
+                webhook: 'https://discordapp.com/api/webhooks/1532603921141600446/K9GkXw5NVLiLGLwi6lQBFt7PtkLwQCCDvldFoiIeujHyVYYWsd0LaT_XUJB9_sqSDwfp'
+            }
+        };
+
+        const premiumModal = document.getElementById('premiumModal');
+        const closePremiumModalBtn = document.getElementById('closePremiumModal');
+        const premiumForm = document.getElementById('premiumForm');
+        const premiumModalTitle = document.getElementById('premiumModalTitle');
+        const premiumModalSubtitle = document.getElementById('premiumModalSubtitle');
+        const premiumFormStatus = document.getElementById('premiumFormStatus');
+        const premiumSubmitBtn = document.getElementById('premiumSubmitBtn');
+
+        let currentPlan = null;
+
+        function resetPremiumStatus() {
+            premiumFormStatus.textContent = '';
+            premiumFormStatus.className = 'application-form-status';
+        }
+
+        function openPremiumModal(planKey) {
+            currentPlan = planKey;
+            const info = planInfo[planKey] || { label: 'Pakiet', price: '' };
+            premiumModalTitle.textContent = `Zakup: ${info.label}`;
+            premiumModalSubtitle.textContent = info.price || '';
+            premiumForm.reset();
+            resetPremiumStatus();
+            premiumSubmitBtn.disabled = false;
+            premiumSubmitBtn.querySelector('span').textContent = 'Kup pakiet';
+            premiumModal.classList.add('active');
+        }
+
+        function closePremiumModal() {
+            premiumModal.classList.remove('active');
+        }
+
+        document.querySelectorAll('[data-buy]').forEach(btn => {
+            btn.addEventListener('click', () => openPremiumModal(btn.dataset.buy));
+        });
+
+        closePremiumModalBtn.addEventListener('click', closePremiumModal);
+        premiumModal.addEventListener('click', (e) => {
+            if (e.target === premiumModal) closePremiumModal();
+        });
+
+        premiumForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const info = planInfo[currentPlan] || { label: 'Nieznany pakiet', color: 0xfacc15, emoji: '⭐' };
+            const formData = new FormData(premiumForm);
+            const discordNick = (formData.get('discord_nick') || '').toString().trim();
+            const maNightcoin = (formData.get('ma_nightcoin') || '').toString().trim();
+
+            if (!info.webhook) {
+                premiumFormStatus.textContent = '❌ Brak skonfigurowanego webhooka dla tego pakietu. Skontaktuj się z administracją.';
+                premiumFormStatus.classList.add('error');
+                return;
+            }
+
+            const payload = {
+                embeds: [{
+                    title: `${info.emoji} Zakup pakietu: ${info.label}`,
+                    color: info.color,
+                    fields: [
+                        { name: 'Pakiet', value: info.label, inline: true },
+                        { name: 'Cena', value: info.price || '-', inline: true },
+                        { name: 'Nick na Discordzie', value: discordNick || '-' },
+                        { name: 'Wystarczająca ilość Night Coin', value: maNightcoin || '-' }
+                    ],
+                    timestamp: new Date().toISOString(),
+                    footer: { text: 'Midnight City RP – Zakup Premium' }
+                }]
+            };
+
+            premiumSubmitBtn.disabled = true;
+            premiumSubmitBtn.querySelector('span').textContent = 'Wysyłanie...';
+            resetPremiumStatus();
+
+            try {
+                const res = await fetch(info.webhook, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok || res.status === 204) {
+                    premiumFormStatus.textContent = '✅ Zgłoszenie zakupu zostało wysłane! Oczekuj na kontakt na Discordzie.';
+                    premiumFormStatus.classList.add('success');
+                    premiumForm.reset();
+                    setTimeout(closePremiumModal, 2500);
+                } else {
+                    throw new Error('Webhook responded with status ' + res.status);
+                }
+            } catch (err) {
+                premiumFormStatus.textContent = '❌ Nie udało się wysłać zgłoszenia. Spróbuj ponownie lub napisz bezpośrednio na Discordzie.';
+                premiumFormStatus.classList.add('error');
+            } finally {
+                premiumSubmitBtn.disabled = false;
+                premiumSubmitBtn.querySelector('span').textContent = 'Kup pakiet';
             }
         });
 
