@@ -1360,6 +1360,84 @@ body {
   }
 }
 
+/* ===== Karta kodu serwera (Emergency Hamburg) ===== */
+.server-code-card {
+  margin-top: 18px;
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.1), rgba(20, 20, 20, 0.9));
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 20px 22px;
+  max-width: 560px;
+}
+
+.server-code-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.server-code-icon {
+  font-size: 1.4rem;
+}
+
+.server-code-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff7cc;
+}
+
+.server-code-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.server-code-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 10px 14px;
+  flex-wrap: wrap;
+}
+
+.server-code-value {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  flex: 1;
+  word-break: break-all;
+}
+
+.server-code-copy {
+  padding: 7px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: rgba(250, 204, 21, 0.12);
+  color: #ffe97a;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.server-code-copy:hover {
+  background: rgba(250, 204, 21, 0.22);
+  transform: translateY(-1px);
+}
+
+.server-code-note {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
 </style>
 </head>
 <body>
@@ -1429,6 +1507,19 @@ body {
                 <section id="start" class="section active">
                     <h2>Strona główna</h2>
                     <p>Midnight City RP to miejsce dla osób, które lubią zorganizowaną rozgrywkę, rozwinięte historie i jasno określone zasady. Na tej stronie znajdziesz podstawowe informacje o serwerze oraz odnośniki do najważniejszych zakładek.</p>
+
+                    <div class="server-code-card">
+                        <div class="server-code-head">
+                            <span class="server-code-icon">🚑</span>
+                            <span class="server-code-title">Emergency Hamburg – Kod do serwera</span>
+                        </div>
+                        <p class="server-code-desc">Wpisz poniższy kod w grze Emergency Hamburg, aby dołączyć do naszego serwera.</p>
+                        <div class="server-code-box">
+                            <span class="server-code-value" id="ehServerCode">10cap1up</span>
+                            <button type="button" class="server-code-copy" id="ehCopyBtn">📋 Kopiuj</button>
+                        </div>
+                        <p class="server-code-note">Więcej kodów pojawi się tutaj wkrótce.</p>
+                    </div>
                 </section>
 
                 <section id="start-guide" class="section">
@@ -2932,6 +3023,34 @@ body {
                 premiumSubmitBtn.querySelector('span').textContent = 'Kup pakiet';
             }
         });
+
+        // ===== Kopiowanie kodu serwera Emergency Hamburg =====
+        const ehCopyBtn = document.getElementById('ehCopyBtn');
+        const ehServerCode = document.getElementById('ehServerCode');
+
+        if (ehCopyBtn && ehServerCode) {
+            ehCopyBtn.addEventListener('click', async () => {
+                const code = ehServerCode.textContent.trim();
+                const originalLabel = ehCopyBtn.textContent;
+
+                try {
+                    await navigator.clipboard.writeText(code);
+                } catch (err) {
+                    // Fallback dla przeglądarek bez wsparcia dla Clipboard API
+                    const tempInput = document.createElement('textarea');
+                    tempInput.value = code;
+                    tempInput.style.position = 'fixed';
+                    tempInput.style.opacity = '0';
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    try { document.execCommand('copy'); } catch (e) {}
+                    document.body.removeChild(tempInput);
+                }
+
+                ehCopyBtn.textContent = '✅ Skopiowano';
+                setTimeout(() => { ehCopyBtn.textContent = originalLabel; }, 1800);
+            });
+        }
 
     </script>
 </body>
