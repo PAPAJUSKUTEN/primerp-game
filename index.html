@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona z Projektyami Gier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        nav {
+            background-color: #444;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .content {
+            padding: 20px;
+        }
+        .project {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        .project h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
 
+<header>
+    <h1>Strona z Projektyami Gier</h1>
+</header>
+
+<nav>
+    <a href="#home">Strona główna</a>
+    <a href="#projects">Projekty</a>
+    <a href="#contact">Kontakt</a>
+</nav>
+
+<div class="content" id="home">
+    <h2>Witaj na naszej stronie!</h2>
+    <p>Ta strona zawiera projekty gier, które mogą Cię zainteresować.</p>
+</div>
+
+<div class="content" id="projects">
+    <h2>Projekty Gier</h2>
+    <div class="project">
+        <h3>Emergency Hamburg</h3>
+        <img src="https://example.com/emergency_hamburg.jpg" alt="Emergency Hamburg" style="width:100%;">
+        <p>Descrption of Emergency Hamburg project.</p>
+    </div>
+    <!-- Dodaj więcej projektów w tej samej strukturze -->
+</div>
+
+<div class="content" id="contact">
+    <h2>Kontakt</h2>
+    <p>Napisz do nas, jeśli masz pytania lub propozycje:</p>
+    <form action="/submit_form" method="post">
+        <label for="name">Imię:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label for="message">Wiadomość:</label><br>
+        <textarea id="message" name="message"></textarea><br>
+        <input type="submit" value="Wyślij">
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2023 Strona z Projektyami Gier. Wszelkie prawa zastrzeżone.</p>
+</footer>
+
+</body>
+</html>
