@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logowanie</title>
+  <title>Panel logowania</title>
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
@@ -18,44 +18,102 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #111827, #312e81);
-      color: white;
       padding: 20px;
+      color: white;
+      overflow: hidden;
+      position: relative;
+
+      background:
+        linear-gradient(
+          rgba(5, 8, 22, 0.72),
+          rgba(19, 8, 48, 0.82)
+        ),
+        url("https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/5c3973bf-a629-5d92-8347-53ea66f8f95d/e0768043-f16d-5667-a3cd-c51a212d68ac.jpg");
+
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.35;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -120px;
+      left: -100px;
+      background: #7c3aed;
+    }
+
+    body::after {
+      right: -120px;
+      bottom: -120px;
+      background: #06b6d4;
     }
 
     .login-box {
+      position: relative;
+      z-index: 1;
       width: 100%;
       max-width: 390px;
       padding: 35px;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      background: rgba(10, 12, 35, 0.78);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(15px);
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 35px rgba(124, 58, 237, 0.25);
+      backdrop-filter: blur(17px);
+      animation: showPanel 0.7s ease;
+    }
+
+    @keyframes showPanel {
+      from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .logo {
-      width: 65px;
-      height: 65px;
+      width: 68px;
+      height: 68px;
       margin: 0 auto 20px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      border-radius: 18px;
+      justify-content: center;
+      border-radius: 20px;
       background: linear-gradient(135deg, #8b5cf6, #2563eb);
-      font-size: 30px;
+      font-size: 31px;
+      box-shadow:
+        0 10px 25px rgba(99, 102, 241, 0.45),
+        0 0 25px rgba(124, 58, 237, 0.35);
     }
 
     h1 {
       text-align: center;
+      font-size: 29px;
       margin-bottom: 8px;
     }
 
     .subtitle {
-      text-align: center;
-      color: #c7c7d3;
-      font-size: 14px;
       margin-bottom: 28px;
+      color: #c7c9d8;
+      text-align: center;
+      font-size: 14px;
     }
 
     .input-box {
@@ -65,28 +123,29 @@
     label {
       display: block;
       margin-bottom: 8px;
-      font-size: 14px;
       color: #e5e7eb;
+      font-size: 14px;
     }
 
     input {
       width: 100%;
-      padding: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 11px;
+      padding: 15px;
       outline: none;
-      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.28);
       color: white;
       font-size: 15px;
+      transition: 0.25s ease;
     }
 
     input::placeholder {
-      color: #aaaabd;
+      color: #a6a8b8;
     }
 
     input:focus {
       border-color: #8b5cf6;
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.16);
     }
 
     .password-box {
@@ -94,7 +153,7 @@
     }
 
     .password-box input {
-      padding-right: 50px;
+      padding-right: 52px;
     }
 
     .show-password {
@@ -109,44 +168,62 @@
       font-size: 18px;
     }
 
-    button[type="submit"] {
+    .show-password:hover {
+      opacity: 0.75;
+    }
+
+    .login-button {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       margin-top: 10px;
       border: none;
-      border-radius: 11px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #8b5cf6, #2563eb);
       color: white;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.25s;
+      transition: 0.25s ease;
     }
 
-    button[type="submit"]:hover {
+    .login-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+      box-shadow: 0 12px 27px rgba(99, 102, 241, 0.4);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
     }
 
     .message {
       display: none;
       margin-top: 18px;
       padding: 12px;
-      border-radius: 9px;
+      border-radius: 10px;
       text-align: center;
       font-size: 14px;
     }
 
-    .success {
+    .message.success {
       display: block;
-      background: rgba(34, 197, 94, 0.2);
+      background: rgba(34, 197, 94, 0.16);
       color: #86efac;
     }
 
-    .error {
+    .message.error {
       display: block;
-      background: rgba(239, 68, 68, 0.2);
+      background: rgba(239, 68, 68, 0.16);
       color: #fca5a5;
+    }
+
+    @media (max-width: 480px) {
+      .login-box {
+        padding: 28px 22px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
     }
   </style>
 </head>
@@ -162,10 +239,12 @@
     <form id="loginForm">
       <div class="input-box">
         <label for="login">Login</label>
+
         <input
           type="text"
           id="login"
           placeholder="Wpisz login"
+          autocomplete="username"
           required
         >
       </div>
@@ -178,6 +257,7 @@
             type="password"
             id="password"
             placeholder="Wpisz hasło"
+            autocomplete="current-password"
             required
           >
 
@@ -185,13 +265,14 @@
             type="button"
             class="show-password"
             id="showPassword"
+            aria-label="Pokaż hasło"
           >
             👁
           </button>
         </div>
       </div>
 
-      <button type="submit">
+      <button type="submit" class="login-button">
         Zaloguj się
       </button>
 
@@ -203,16 +284,20 @@
     const loginForm = document.getElementById("loginForm");
     const loginInput = document.getElementById("login");
     const passwordInput = document.getElementById("password");
-    const showPassword = document.getElementById("showPassword");
+    const showPasswordButton = document.getElementById("showPassword");
     const message = document.getElementById("message");
 
-    showPassword.addEventListener("click", () => {
-      if (passwordInput.type === "password") {
+    showPasswordButton.addEventListener("click", () => {
+      const passwordIsHidden = passwordInput.type === "password";
+
+      if (passwordIsHidden) {
         passwordInput.type = "text";
-        showPassword.textContent = "🙈";
+        showPasswordButton.textContent = "🙈";
+        showPasswordButton.setAttribute("aria-label", "Ukryj hasło");
       } else {
         passwordInput.type = "password";
-        showPassword.textContent = "👁";
+        showPasswordButton.textContent = "👁";
+        showPasswordButton.setAttribute("aria-label", "Pokaż hasło");
       }
     });
 
