@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logowanie</title>
+  <title>VENUS RP • MTD</title>
 
   <style>
     * {
@@ -11,6 +11,22 @@
       padding: 0;
       box-sizing: border-box;
       font-family: Arial, Helvetica, sans-serif;
+    }
+
+    :root {
+      --background: #07090f;
+      --sidebar: #0d111b;
+      --sidebar-light: #141a28;
+      --panel: #101722;
+      --panel-light: #172131;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f5f7fb;
+      --muted: #8e99aa;
+      --accent: #6c63ff;
+      --accent-light: #847cff;
+      --success: #29c77d;
+      --danger: #ef5b67;
+      --warning: #f0b45b;
     }
 
     html,
@@ -21,8 +37,12 @@
 
     body {
       min-height: 100vh;
-      color: white;
-      overflow: hidden;
+      color: var(--text);
+      background: var(--background);
+      overflow-x: hidden;
+    }
+
+    body.login-mode {
       background:
         linear-gradient(
           rgba(5, 8, 22, 0.72),
@@ -34,9 +54,36 @@
       background-attachment: fixed;
     }
 
-    body.black-screen {
-      background: #000000;
+    body.login-mode::before,
+    body.login-mode::after {
+      content: "";
+      position: fixed;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.35;
+      z-index: 0;
+      pointer-events: none;
     }
+
+    body.login-mode::before {
+      top: -120px;
+      left: -100px;
+      background: #7c3aed;
+    }
+
+    body.login-mode::after {
+      right: -120px;
+      bottom: -120px;
+      background: #06b6d4;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* EKRAN LOGOWANIA */
 
     .login-screen {
       min-height: 100vh;
@@ -202,13 +249,485 @@
       color: #fca5a5;
     }
 
-    .login-screen.hidden {
+    /* GŁÓWNY PANEL */
+
+    .dashboard {
+      min-height: 100vh;
+      display: flex;
+      background:
+        radial-gradient(
+          circle at 70% 0%,
+          rgba(108, 99, 255, 0.11),
+          transparent 30%
+        ),
+        #07090f;
+    }
+
+    .sidebar {
+      width: 270px;
+      min-height: 100vh;
+      padding: 24px 16px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      background: rgba(13, 17, 27, 0.98);
+      border-right: 1px solid var(--border);
+    }
+
+    .sidebar-header {
+      padding: 8px 12px 26px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .server-name {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 0.3px;
+    }
+
+    .server-logo {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6c63ff, #3b82f6);
+      box-shadow: 0 8px 20px rgba(108, 99, 255, 0.25);
+      font-size: 19px;
+    }
+
+    .server-subtitle {
+      margin-top: 8px;
+      margin-left: 49px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-title {
+      margin: 27px 12px 10px;
+      color: #626d7e;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .navigation {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 14px;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      background: transparent;
+      color: #aeb6c5;
+      text-align: left;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.045);
+      color: white;
+    }
+
+    .nav-button.active {
+      background: linear-gradient(
+        90deg,
+        rgba(108, 99, 255, 0.2),
+        rgba(108, 99, 255, 0.07)
+      );
+      border-color: rgba(108, 99, 255, 0.25);
+      color: white;
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+
+    .nav-icon {
+      width: 24px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .user-box {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6c63ff, #2563eb);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .user-info {
+      min-width: 0;
+    }
+
+    .user-name {
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .user-status {
+      margin-top: 3px;
+      color: var(--success);
+      font-size: 11px;
+    }
+
+    .logout-button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      border: 1px solid rgba(239, 91, 103, 0.2);
+      border-radius: 9px;
+      background: rgba(239, 91, 103, 0.08);
+      color: #f3949d;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .logout-button:hover {
+      background: rgba(239, 91, 103, 0.18);
+    }
+
+    .main-content {
+      min-width: 0;
+      flex: 1;
+      padding: 34px;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .mobile-menu-button {
       display: none;
+      padding: 10px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--panel);
+      color: white;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .page-heading h1 {
+      color: white;
+      font-size: 27px;
+    }
+
+    .page-heading p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .date-box {
+      padding: 11px 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .page-section {
+      display: none;
+      animation: pageAppear 0.25s ease;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes pageAppear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stat-value {
+      margin-top: 11px;
+      color: white;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    .stat-change {
+      margin-top: 7px;
+      color: var(--success);
+      font-size: 11px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+    }
+
+    .content-card {
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--panel);
+    }
+
+    .content-card h2 {
+      margin-bottom: 7px;
+      color: white;
+      font-size: 17px;
+    }
+
+    .content-card-description {
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .activity-icon {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      background: rgba(108, 99, 255, 0.15);
+      font-size: 15px;
+    }
+
+    .activity-text {
+      color: #ccd1dc;
+      font-size: 13px;
+    }
+
+    .activity-time {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quick-button {
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-light);
+      color: #d8dce5;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .quick-button:hover {
+      border-color: rgba(108, 99, 255, 0.55);
+      background: rgba(108, 99, 255, 0.1);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    th,
+    td {
+      padding: 15px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    td {
+      color: #d8dce5;
+      font-size: 13px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status {
+      display: inline-flex;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+    }
+
+    .status.green {
+      background: rgba(41, 199, 125, 0.12);
+      color: #62dda2;
+    }
+
+    .status.orange {
+      background: rgba(240, 180, 91, 0.12);
+      color: #f3c477;
+    }
+
+    .status.red {
+      background: rgba(239, 91, 103, 0.12);
+      color: #f38b94;
+    }
+
+    .empty-state {
+      padding: 50px 20px;
+      border: 1px dashed rgba(255, 255, 255, 0.13);
+      border-radius: 14px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1050px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        z-index: 20;
+        transition: left 0.25s ease;
+      }
+
+      .sidebar.mobile-open {
+        left: 0;
+      }
+
+      .main-content {
+        width: 100%;
+        padding: 22px 16px;
+      }
+
+      .mobile-menu-button {
+        display: block;
+      }
+
+      .topbar {
+        align-items: center;
+      }
+
+      .date-box {
+        display: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-heading h1 {
+        font-size: 23px;
+      }
     }
   </style>
 </head>
 
-<body>
+<body class="login-mode">
+
+  <!-- LOGOWANIE -->
 
   <section class="login-screen" id="loginScreen">
     <div class="login-box">
@@ -262,23 +781,539 @@
     </div>
   </section>
 
+  <!-- PANEL PO ZALOGOWANIU -->
+
+  <section class="dashboard hidden" id="dashboard">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="server-name">
+          <div class="server-logo">♜</div>
+          <span>VENUS RP</span>
+        </div>
+
+        <div class="server-subtitle">
+          MTD • PANEL
+        </div>
+      </div>
+
+      <div class="nav-title">
+        Nawigacja
+      </div>
+
+      <nav class="navigation">
+        <button class="nav-button active" data-page="home">
+          <span class="nav-icon">🏠</span>
+          <span>Główna</span>
+        </button>
+
+        <button class="nav-button" data-page="people">
+          <span class="nav-icon">👤</span>
+          <span>Osoby</span>
+        </button>
+
+        <button class="nav-button" data-page="vehicles">
+          <span class="nav-icon">🚗</span>
+          <span>Pojazdy</span>
+        </button>
+
+        <button class="nav-button" data-page="officers">
+          <span class="nav-icon">👮</span>
+          <span>Funkcjonariusze</span>
+        </button>
+
+        <button class="nav-button" data-page="reports">
+          <span class="nav-icon">📝</span>
+          <span>Raport</span>
+        </button>
+
+        <button class="nav-button" data-page="laws">
+          <span class="nav-icon">⚖️</span>
+          <span>Ustawy</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-box">
+          <div class="avatar">A</div>
+
+          <div class="user-info">
+            <div class="user-name">admin</div>
+            <div class="user-status">● Online</div>
+          </div>
+        </div>
+
+        <button class="logout-button" id="logoutButton">
+          Wyloguj się
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu-button" id="mobileMenuButton">
+          ☰
+        </button>
+
+        <div class="page-heading">
+          <h1 id="pageTitle">Główna</h1>
+          <p id="pageSubtitle">
+            Centrum zarządzania serwerem VENUS RP.
+          </p>
+        </div>
+
+        <div class="date-box" id="currentDate">
+          Panel administracyjny
+        </div>
+      </header>
+
+      <!-- GŁÓWNA -->
+
+      <section class="page-section active" id="page-home">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Aktywne osoby</div>
+            <div class="stat-value">128</div>
+            <div class="stat-change">+12% w tym tygodniu</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Pojazdy</div>
+            <div class="stat-value">342</div>
+            <div class="stat-change">+8 nowych pojazdów</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Funkcjonariusze</div>
+            <div class="stat-value">24</div>
+            <div class="stat-change">19 obecnie online</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Raporty</div>
+            <div class="stat-value">57</div>
+            <div class="stat-change">+6 oczekuje na sprawdzenie</div>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card">
+            <h2>Ostatnia aktywność</h2>
+            <p class="content-card-description">
+              Najnowsze wydarzenia w panelu.
+            </p>
+
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon">👤</div>
+
+                <div>
+                  <div class="activity-text">
+                    Dodano nową osobę do systemu
+                  </div>
+
+                  <div class="activity-time">
+                    5 minut temu
+                  </div>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon">📝</div>
+
+                <div>
+                  <div class="activity-text">
+                    Utworzono nowy raport służbowy
+                  </div>
+
+                  <div class="activity-time">
+                    18 minut temu
+                  </div>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon">🚗</div>
+
+                <div>
+                  <div class="activity-text">
+                    Zaktualizowano dane pojazdu
+                  </div>
+
+                  <div class="activity-time">
+                    42 minuty temu
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-card">
+            <h2>Szybkie akcje</h2>
+            <p class="content-card-description">
+              Najczęściej używane funkcje.
+            </p>
+
+            <div class="quick-actions">
+              <button class="quick-button" data-open-page="people">
+                👤 Dodaj osobę
+              </button>
+
+              <button class="quick-button" data-open-page="vehicles">
+                🚗 Dodaj pojazd
+              </button>
+
+              <button class="quick-button" data-open-page="reports">
+                📝 Utwórz raport
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OSOBY -->
+
+      <section class="page-section" id="page-people">
+        <div class="content-card">
+          <h2>Osoby</h2>
+          <p class="content-card-description">
+            Lista osób znajdujących się w systemie.
+          </p>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Imię i nazwisko</th>
+                  <th>Numer ID</th>
+                  <th>Status</th>
+                  <th>Ostatnia aktywność</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Jan Kowalski</td>
+                  <td>VEN-1024</td>
+                  <td><span class="status green">Aktywny</span></td>
+                  <td>Dzisiaj, 21:42</td>
+                </tr>
+
+                <tr>
+                  <td>Piotr Nowak</td>
+                  <td>VEN-1025</td>
+                  <td><span class="status orange">Kontrola</span></td>
+                  <td>Dzisiaj, 20:18</td>
+                </tr>
+
+                <tr>
+                  <td>Adam Wiśniewski</td>
+                  <td>VEN-1026</td>
+                  <td><span class="status red">Zablokowany</span></td>
+                  <td>Wczoraj, 18:03</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- POJAZDY -->
+
+      <section class="page-section" id="page-vehicles">
+        <div class="content-card">
+          <h2>Pojazdy</h2>
+          <p class="content-card-description">
+            Zarejestrowane pojazdy na serwerze.
+          </p>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Tablice</th>
+                  <th>Właściciel</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>BMW M5</td>
+                  <td>VEN 001</td>
+                  <td>Jan Kowalski</td>
+                  <td><span class="status green">Aktywny</span></td>
+                </tr>
+
+                <tr>
+                  <td>Mercedes AMG</td>
+                  <td>VEN 245</td>
+                  <td>Piotr Nowak</td>
+                  <td><span class="status orange">Kontrola</span></td>
+                </tr>
+
+                <tr>
+                  <td>Volkswagen Golf</td>
+                  <td>VEN 889</td>
+                  <td>Adam Wiśniewski</td>
+                  <td><span class="status red">Zatrzymany</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- FUNKCJONARIUSZE -->
+
+      <section class="page-section" id="page-officers">
+        <div class="content-card">
+          <h2>Funkcjonariusze</h2>
+          <p class="content-card-description">
+            Lista funkcjonariuszy oraz ich aktualny status.
+          </p>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Funkcjonariusz</th>
+                  <th>Stopień</th>
+                  <th>Jednostka</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Marek Zieliński</td>
+                  <td>Komendant</td>
+                  <td>Główna</td>
+                  <td><span class="status green">Na służbie</span></td>
+                </tr>
+
+                <tr>
+                  <td>Tomasz Wójcik</td>
+                  <td>Starszy sierżant</td>
+                  <td>Drogówka</td>
+                  <td><span class="status green">Na służbie</span></td>
+                </tr>
+
+                <tr>
+                  <td>Karol Lewandowski</td>
+                  <td>Posterunkowy</td>
+                  <td>Patrol</td>
+                  <td><span class="status orange">Przerwa</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- RAPORT -->
+
+      <section class="page-section" id="page-reports">
+        <div class="content-card">
+          <h2>Raporty</h2>
+          <p class="content-card-description">
+            Raporty i dokumenty służbowe.
+          </p>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Numer raportu</th>
+                  <th>Autor</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>#RPT-2048</td>
+                  <td>Marek Zieliński</td>
+                  <td>10.09.2026</td>
+                  <td><span class="status orange">Do sprawdzenia</span></td>
+                </tr>
+
+                <tr>
+                  <td>#RPT-2047</td>
+                  <td>Tomasz Wójcik</td>
+                  <td>10.09.2026</td>
+                  <td><span class="status green">Zatwierdzony</span></td>
+                </tr>
+
+                <tr>
+                  <td>#RPT-2046</td>
+                  <td>Karol Lewandowski</td>
+                  <td>09.09.2026</td>
+                  <td><span class="status red">Odrzucony</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- USTAWY -->
+
+      <section class="page-section" id="page-laws">
+        <div class="content-card">
+          <h2>Ustawy</h2>
+          <p class="content-card-description">
+            Baza ustaw i przepisów obowiązujących na serwerze.
+          </p>
+
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon">⚖️</div>
+
+              <div>
+                <div class="activity-text">
+                  Kodeks drogowy
+                </div>
+
+                <div class="activity-time">
+                  24 artykuły • Zaktualizowano dzisiaj
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon">⚖️</div>
+
+              <div>
+                <div class="activity-text">
+                  Kodeks karny
+                </div>
+
+                <div class="activity-time">
+                  58 artykułów • Zaktualizowano 2 dni temu
+                </div>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon">⚖️</div>
+
+              <div>
+                <div class="activity-text">
+                  Regulamin służb mundurowych
+                </div>
+
+                <div class="activity-time">
+                  17 artykułów • Zaktualizowano tydzień temu
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+
   <script>
     const loginForm = document.getElementById("loginForm");
     const loginInput = document.getElementById("login");
     const passwordInput = document.getElementById("password");
     const showPasswordButton = document.getElementById("showPassword");
-    const loginScreen = document.getElementById("loginScreen");
     const message = document.getElementById("message");
+
+    const loginScreen = document.getElementById("loginScreen");
+    const dashboard = document.getElementById("dashboard");
+    const logoutButton = document.getElementById("logoutButton");
+
+    const navigationButtons = document.querySelectorAll(".nav-button");
+    const pageSections = document.querySelectorAll(".page-section");
+    const quickButtons = document.querySelectorAll(".quick-button");
+
+    const pageTitle = document.getElementById("pageTitle");
+    const pageSubtitle = document.getElementById("pageSubtitle");
+    const currentDate = document.getElementById("currentDate");
+
+    const mobileMenuButton = document.getElementById("mobileMenuButton");
+    const sidebar = document.getElementById("sidebar");
+
+    const pageData = {
+      home: {
+        title: "Główna",
+        subtitle: "Centrum zarządzania serwerem VENUS RP."
+      },
+
+      people: {
+        title: "Osoby",
+        subtitle: "Zarządzaj osobami znajdującymi się w systemie."
+      },
+
+      vehicles: {
+        title: "Pojazdy",
+        subtitle: "Przeglądaj zarejestrowane pojazdy."
+      },
+
+      officers: {
+        title: "Funkcjonariusze",
+        subtitle: "Sprawdzaj funkcjonariuszy oraz ich status."
+      },
+
+      reports: {
+        title: "Raport",
+        subtitle: "Przeglądaj raporty i dokumenty służbowe."
+      },
+
+      laws: {
+        title: "Ustawy",
+        subtitle: "Baza ustaw i przepisów serwera."
+      }
+    };
+
+    function updateDate() {
+      const date = new Date();
+
+      currentDate.textContent = date.toLocaleDateString("pl-PL", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      });
+    }
+
+    function openPage(pageName) {
+      navigationButtons.forEach(function(button) {
+        button.classList.remove("active");
+
+        if (button.dataset.page === pageName) {
+          button.classList.add("active");
+        }
+      });
+
+      pageSections.forEach(function(section) {
+        section.classList.remove("active");
+      });
+
+      const selectedSection = document.getElementById("page-" + pageName);
+
+      if (selectedSection) {
+        selectedSection.classList.add("active");
+      }
+
+      if (pageData[pageName]) {
+        pageTitle.textContent = pageData[pageName].title;
+        pageSubtitle.textContent = pageData[pageName].subtitle;
+      }
+
+      sidebar.classList.remove("mobile-open");
+    }
 
     showPasswordButton.addEventListener("click", function() {
       if (passwordInput.type === "password") {
         passwordInput.type = "text";
         showPasswordButton.textContent = "🙈";
-        showPasswordButton.setAttribute("aria-label", "Ukryj hasło");
       } else {
         passwordInput.type = "password";
         showPasswordButton.textContent = "👁";
-        showPasswordButton.setAttribute("aria-label", "Pokaż hasło");
       }
     });
 
@@ -288,14 +1323,56 @@
       const login = loginInput.value.trim();
       const password = passwordInput.value.trim();
 
+      message.className = "message";
+
       if (login === "admin" && password === "1234") {
-        document.body.classList.add("black-screen");
-        loginScreen.classList.add("hidden");
-        document.title = "Czarny ekran";
+        message.textContent = "Zalogowano pomyślnie!";
+        message.classList.add("success");
+
+        setTimeout(function() {
+          document.body.classList.remove("login-mode");
+          loginScreen.classList.add("hidden");
+          dashboard.classList.remove("hidden");
+
+          updateDate();
+          document.title = "VENUS RP • MTD";
+        }, 700);
       } else {
         message.textContent = "Nieprawidłowy login lub hasło.";
-        message.className = "message error";
+        message.classList.add("error");
       }
+    });
+
+    navigationButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        openPage(button.dataset.page);
+      });
+    });
+
+    quickButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        openPage(button.dataset.openPage);
+      });
+    });
+
+    mobileMenuButton.addEventListener("click", function() {
+      sidebar.classList.toggle("mobile-open");
+    });
+
+    logoutButton.addEventListener("click", function() {
+      dashboard.classList.add("hidden");
+      loginScreen.classList.remove("hidden");
+      document.body.classList.add("login-mode");
+
+      loginForm.reset();
+      passwordInput.type = "password";
+      showPasswordButton.textContent = "👁";
+      message.textContent = "";
+      message.className = "message";
+
+      openPage("home");
+
+      document.title = "Logowanie";
     });
   </script>
 
