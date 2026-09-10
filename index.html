@@ -1,1380 +1,3600 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VENUS RP • MTD</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    :root {
-      --background: #07090f;
-      --sidebar: #0d111b;
-      --sidebar-light: #141a28;
-      --panel: #101722;
-      --panel-light: #172131;
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #f5f7fb;
-      --muted: #8e99aa;
-      --accent: #6c63ff;
-      --accent-light: #847cff;
-      --success: #29c77d;
-      --danger: #ef5b67;
-      --warning: #f0b45b;
-    }
-
-    html,
-    body {
-      width: 100%;
-      min-height: 100%;
-    }
-
-    body {
-      min-height: 100vh;
-      color: var(--text);
-      background: var(--background);
-      overflow-x: hidden;
-    }
-
-    body.login-mode {
-      background:
-        linear-gradient(
-          rgba(5, 8, 22, 0.72),
-          rgba(19, 8, 48, 0.82)
-        ),
-        url("https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/5c3973bf-a629-5d92-8347-53ea66f8f95d/e0768043-f16d-5667-a3cd-c51a212d68ac.jpg");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
-
-    body.login-mode::before,
-    body.login-mode::after {
-      content: "";
-      position: fixed;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.35;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    body.login-mode::before {
-      top: -120px;
-      left: -100px;
-      background: #7c3aed;
-    }
-
-    body.login-mode::after {
-      right: -120px;
-      bottom: -120px;
-      background: #06b6d4;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* EKRAN LOGOWANIA */
-
-    .login-screen {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .login-box {
-      width: 100%;
-      max-width: 390px;
-      padding: 35px;
-      border-radius: 24px;
-      background: rgba(10, 12, 35, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.55),
-        0 0 35px rgba(124, 58, 237, 0.25);
-      backdrop-filter: blur(17px);
-      animation: showPanel 0.7s ease;
-    }
-
-    @keyframes showPanel {
-      from {
-        opacity: 0;
-        transform: translateY(25px) scale(0.97);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .logo {
-      width: 68px;
-      height: 68px;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #8b5cf6, #2563eb);
-      font-size: 31px;
-      box-shadow:
-        0 10px 25px rgba(99, 102, 241, 0.45),
-        0 0 25px rgba(124, 58, 237, 0.35);
-    }
-
-    .login-box h1 {
-      text-align: center;
-      font-size: 29px;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      margin-bottom: 28px;
-      color: #c7c9d8;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .input-box {
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      color: #e5e7eb;
-      font-size: 14px;
-    }
-
-    input {
-      width: 100%;
-      padding: 15px;
-      outline: none;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 12px;
-      background: rgba(0, 0, 0, 0.28);
-      color: white;
-      font-size: 15px;
-      transition: 0.25s ease;
-    }
-
-    input::placeholder {
-      color: #a6a8b8;
-    }
-
-    input:focus {
-      border-color: #8b5cf6;
-      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.16);
-    }
-
-    .password-box {
-      position: relative;
-    }
-
-    .password-box input {
-      padding-right: 52px;
-    }
-
-    .show-password {
-      position: absolute;
-      top: 50%;
-      right: 13px;
-      transform: translateY(-50%);
-      border: none;
-      background: transparent;
-      color: white;
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .show-password:hover {
-      opacity: 0.75;
-    }
-
-    .login-button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #8b5cf6, #2563eb);
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
-
-    .login-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 27px rgba(99, 102, 241, 0.4);
-    }
-
-    .login-button:active {
-      transform: translateY(0);
-    }
-
-    .message {
-      display: none;
-      margin-top: 18px;
-      padding: 12px;
-      border-radius: 10px;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .message.success {
-      display: block;
-      background: rgba(34, 197, 94, 0.16);
-      color: #86efac;
-    }
-
-    .message.error {
-      display: block;
-      background: rgba(239, 68, 68, 0.16);
-      color: #fca5a5;
-    }
-
-    /* GŁÓWNY PANEL */
-
-    .dashboard {
-      min-height: 100vh;
-      display: flex;
-      background:
-        radial-gradient(
-          circle at 70% 0%,
-          rgba(108, 99, 255, 0.11),
-          transparent 30%
-        ),
-        #07090f;
-    }
-
-    .sidebar {
-      width: 270px;
-      min-height: 100vh;
-      padding: 24px 16px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      background: rgba(13, 17, 27, 0.98);
-      border-right: 1px solid var(--border);
-    }
-
-    .sidebar-header {
-      padding: 8px 12px 26px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .server-name {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      color: var(--text);
-      font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 0.3px;
-    }
-
-    .server-logo {
-      width: 38px;
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #6c63ff, #3b82f6);
-      box-shadow: 0 8px 20px rgba(108, 99, 255, 0.25);
-      font-size: 19px;
-    }
-
-    .server-subtitle {
-      margin-top: 8px;
-      margin-left: 49px;
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    .nav-title {
-      margin: 27px 12px 10px;
-      color: #626d7e;
-      font-size: 10px;
-      font-weight: bold;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    .navigation {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .nav-button {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 13px 14px;
-      border: 1px solid transparent;
-      border-radius: 11px;
-      background: transparent;
-      color: #aeb6c5;
-      text-align: left;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .nav-button:hover {
-      background: rgba(255, 255, 255, 0.045);
-      color: white;
-    }
-
-    .nav-button.active {
-      background: linear-gradient(
-        90deg,
-        rgba(108, 99, 255, 0.2),
-        rgba(108, 99, 255, 0.07)
-      );
-      border-color: rgba(108, 99, 255, 0.25);
-      color: white;
-      box-shadow: inset 3px 0 0 var(--accent);
-    }
-
-    .nav-icon {
-      width: 24px;
-      font-size: 18px;
-      text-align: center;
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-    }
-
-    .user-box {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      padding: 10px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.035);
-    }
-
-    .avatar {
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #6c63ff, #2563eb);
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .user-info {
-      min-width: 0;
-    }
-
-    .user-name {
-      color: white;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .user-status {
-      margin-top: 3px;
-      color: var(--success);
-      font-size: 11px;
-    }
-
-    .logout-button {
-      width: 100%;
-      margin-top: 12px;
-      padding: 10px;
-      border: 1px solid rgba(239, 91, 103, 0.2);
-      border-radius: 9px;
-      background: rgba(239, 91, 103, 0.08);
-      color: #f3949d;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .logout-button:hover {
-      background: rgba(239, 91, 103, 0.18);
-    }
-
-    .main-content {
-      min-width: 0;
-      flex: 1;
-      padding: 34px;
-      overflow-x: hidden;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .mobile-menu-button {
-      display: none;
-      padding: 10px 13px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: var(--panel);
-      color: white;
-      cursor: pointer;
-      font-size: 20px;
-    }
-
-    .page-heading h1 {
-      color: white;
-      font-size: 27px;
-    }
-
-    .page-heading p {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .date-box {
-      padding: 11px 15px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--panel);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .page-section {
-      display: none;
-      animation: pageAppear 0.25s ease;
-    }
-
-    .page-section.active {
-      display: block;
-    }
-
-    @keyframes pageAppear {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 22px;
-    }
-
-    .stat-card {
-      padding: 20px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--panel);
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .stat-value {
-      margin-top: 11px;
-      color: white;
-      font-size: 26px;
-      font-weight: bold;
-    }
-
-    .stat-change {
-      margin-top: 7px;
-      color: var(--success);
-      font-size: 11px;
-    }
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap: 18px;
-    }
-
-    .content-card {
-      padding: 22px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: var(--panel);
-    }
-
-    .content-card h2 {
-      margin-bottom: 7px;
-      color: white;
-      font-size: 17px;
-    }
-
-    .content-card-description {
-      margin-bottom: 20px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .activity-list {
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-    }
-
-    .activity-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.035);
-    }
-
-    .activity-icon {
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9px;
-      background: rgba(108, 99, 255, 0.15);
-      font-size: 15px;
-    }
-
-    .activity-text {
-      color: #ccd1dc;
-      font-size: 13px;
-    }
-
-    .activity-time {
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .quick-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .quick-button {
-      padding: 13px 14px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--panel-light);
-      color: #d8dce5;
-      text-align: left;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .quick-button:hover {
-      border-color: rgba(108, 99, 255, 0.55);
-      background: rgba(108, 99, 255, 0.1);
-    }
-
-    .table-wrapper {
-      overflow-x: auto;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 620px;
-    }
-
-    th,
-    td {
-      padding: 15px;
-      border-bottom: 1px solid var(--border);
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    th {
-      background: rgba(255, 255, 255, 0.035);
-      color: var(--muted);
-      font-size: 11px;
-      text-transform: uppercase;
-    }
-
-    td {
-      color: #d8dce5;
-      font-size: 13px;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .status {
-      display: inline-flex;
-      padding: 5px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-    }
-
-    .status.green {
-      background: rgba(41, 199, 125, 0.12);
-      color: #62dda2;
-    }
-
-    .status.orange {
-      background: rgba(240, 180, 91, 0.12);
-      color: #f3c477;
-    }
-
-    .status.red {
-      background: rgba(239, 91, 103, 0.12);
-      color: #f38b94;
-    }
-
-    .empty-state {
-      padding: 50px 20px;
-      border: 1px dashed rgba(255, 255, 255, 0.13);
-      border-radius: 14px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 14px;
-    }
-
-    @media (max-width: 1050px) {
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .sidebar {
-        position: fixed;
-        top: 0;
-        left: -280px;
-        z-index: 20;
-        transition: left 0.25s ease;
-      }
-
-      .sidebar.mobile-open {
-        left: 0;
-      }
-
-      .main-content {
-        width: 100%;
-        padding: 22px 16px;
-      }
-
-      .mobile-menu-button {
-        display: block;
-      }
-
-      .topbar {
-        align-items: center;
-      }
-
-      .date-box {
-        display: none;
-      }
-    }
-
-    @media (max-width: 520px) {
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .page-heading h1 {
-        font-size: 23px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MTD | Venus RP Police</title>
+
+    <!-- =========================================================
+         FONT
+    ========================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- =========================================================
+         ICONS
+    ========================================================== -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- =========================================================
+         STYLE
+    ========================================================== -->
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #070b12;
+            --bg-2: #0a0f18;
+            --sidebar: #090e16;
+            --card: #0d141f;
+            --card-2: #101925;
+
+            --border: rgba(255,255,255,0.07);
+            --border-light: rgba(255,255,255,0.11);
+
+            --text: #f4f7fb;
+            --text-secondary: #9ca8b8;
+            --text-muted: #667386;
+
+            --blue: #3b82f6;
+            --blue-dark: #2563eb;
+            --blue-light: #60a5fa;
+
+            --green: #22c55e;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+            --purple: #8b5cf6;
+
+            --radius: 14px;
+            --radius-small: 10px;
+
+            --sidebar-width: 255px;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 80% 10%,
+                    rgba(37, 99, 235, 0.08),
+                    transparent 28%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           SCROLLBAR
+        ========================================================== */
+
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1d2938;
+            border-radius: 20px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2b3a4d;
+        }
+
+        /* =========================================================
+           APP
+        ========================================================== */
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* =========================================================
+           SIDEBAR
+        ========================================================== */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: var(--sidebar-width);
+            height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,255,255,0.015),
+                    transparent
+                ),
+                var(--sidebar);
+
+            border-right: 1px solid var(--border);
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 100;
+        }
+
+        .brand {
+            height: 86px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 22px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand-logo {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--blue),
+                    #1d4ed8
+                );
+
+            box-shadow:
+                0 8px 25px rgba(37, 99, 235, 0.25);
+
+            margin-right: 12px;
+
+            font-size: 18px;
+        }
+
+        .brand-info h1 {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+        }
+
+        .brand-info span {
+            display: block;
+
+            margin-top: 3px;
+
+            font-size: 10px;
+            color: var(--text-muted);
+
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================== */
+
+        .nav {
+            padding: 18px 12px;
+            flex: 1;
+        }
+
+        .nav-label {
+            padding: 0 12px;
+            margin-bottom: 10px;
+
+            font-size: 10px;
+            color: var(--text-muted);
+
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            padding: 12px 13px;
+            margin-bottom: 5px;
+
+            border: 1px solid transparent;
+            border-radius: 10px;
+
+            background: transparent;
+
+            color: var(--text-secondary);
+
+            font-size: 13px;
+            font-weight: 600;
+
+            text-align: left;
+
+            transition:
+                background 0.2s,
+                color 0.2s,
+                border 0.2s,
+                transform 0.2s;
+        }
+
+        .nav-item i {
+            width: 22px;
+
+            margin-right: 11px;
+
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.035);
+            color: white;
+
+            transform: translateX(2px);
+        }
+
+        .nav-item.active {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(59,130,246,0.17),
+                    rgba(59,130,246,0.05)
+                );
+
+            border-color: rgba(59,130,246,0.18);
+
+            color: #ffffff;
+        }
+
+        .nav-item.active i {
+            color: var(--blue-light);
+        }
+
+        /* =========================================================
+           USER CARD
+        ========================================================== */
+
+        .sidebar-user {
+            padding: 14px;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+
+            padding: 11px;
+
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border);
+
+            border-radius: 12px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1d4ed8,
+                    #3b82f6
+                );
+
+            font-size: 13px;
+            font-weight: 800;
+
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            margin-left: 10px;
+            overflow: hidden;
+        }
+
+        .user-info strong {
+            display: block;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-info span {
+            display: block;
+
+            margin-top: 3px;
+
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .online-dot {
+            width: 7px;
+            height: 7px;
+
+            margin-left: auto;
+
+            border-radius: 50%;
+
+            background: var(--green);
+
+            box-shadow: 0 0 9px rgba(34,197,94,0.6);
+        }
+
+        /* =========================================================
+           MAIN
+        ========================================================== */
+
+        .main {
+            width: calc(100% - var(--sidebar-width));
+            margin-left: var(--sidebar-width);
+
+            min-height: 100vh;
+        }
+
+        /* =========================================================
+           TOPBAR
+        ========================================================== */
+
+        .topbar {
+            height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            border-bottom: 1px solid var(--border);
+
+            background:
+                rgba(7,11,18,0.78);
+
+            backdrop-filter: blur(15px);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 50;
+        }
+
+        .page-heading {
+            display: flex;
+            align-items: center;
+        }
+
+        .page-heading h2 {
+            font-size: 18px;
+            font-weight: 750;
+        }
+
+        .page-heading span {
+            margin-left: 12px;
+
+            padding-left: 12px;
+
+            border-left: 1px solid var(--border);
+
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .clock {
+            min-width: 76px;
+
+            text-align: center;
+
+            padding: 8px 11px;
+
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .notification-btn {
+            position: relative;
+
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            background: rgba(255,255,255,0.025);
+
+            color: var(--text-secondary);
+        }
+
+        .notification-btn:hover {
+            color: white;
+            border-color: var(--border-light);
+        }
+
+        .notification-dot {
+            position: absolute;
+
+            top: 7px;
+            right: 7px;
+
+            width: 6px;
+            height: 6px;
+
+            background: var(--red);
+
+            border-radius: 50%;
+        }
+
+        /* =========================================================
+           CONTENT
+        ========================================================== */
+
+        .content {
+            padding: 30px;
+            max-width: 1600px;
+        }
+
+        .page {
+            display: none;
+
+            animation: pageIn 0.25s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes pageIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================== */
+
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            margin-bottom: 22px;
+        }
+
+        .section-header h3 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .section-header p {
+            margin-top: 6px;
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+        }
+
+        /* =========================================================
+           CARDS
+        ========================================================== */
+
+        .card {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.018),
+                    transparent
+                ),
+                var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: var(--radius);
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .card-header {
+            padding: 17px 19px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h4 {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 19px;
+        }
+
+        /* =========================================================
+           DASHBOARD
+        ========================================================== */
+
+        .welcome {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 27px;
+
+            margin-bottom: 20px;
+
+            border-radius: var(--radius);
+
+            background:
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(59,130,246,0.22),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #101b2d,
+                    #0d141f
+                );
+
+            border: 1px solid rgba(59,130,246,0.16);
+        }
+
+        .welcome::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            right: -50px;
+            bottom: -100px;
+
+            border-radius: 50%;
+
+            border: 25px solid rgba(59,130,246,0.05);
+        }
+
+        .welcome h3 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .welcome p {
+            margin-top: 7px;
+
+            font-size: 12px;
+
+            color: var(--text-secondary);
+        }
+
+        .service-status {
+            display: inline-flex;
+            align-items: center;
+
+            margin-top: 17px;
+
+            padding: 7px 11px;
+
+            border-radius: 8px;
+
+            background: rgba(34,197,94,0.08);
+            border: 1px solid rgba(34,197,94,0.16);
+
+            color: #86efac;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            margin-right: 7px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+        }
+
+        /* =========================================================
+           STAT GRID
+        ========================================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            padding: 18px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: rgba(59,130,246,0.10);
+
+            color: var(--blue-light);
+
+            font-size: 14px;
+
+            margin-bottom: 14px;
+        }
+
+        .stat-value {
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            margin-top: 4px;
+
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* =========================================================
+           GRID
+        ========================================================== */
+
+        .grid-2 {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 15px;
+        }
+
+        /* =========================================================
+           ACTIVITY
+        ========================================================== */
+
+        .activity {
+            display: flex;
+            align-items: flex-start;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 8px;
+
+            background: rgba(59,130,246,0.08);
+
+            color: var(--blue-light);
+
+            font-size: 11px;
+        }
+
+        .activity-content {
+            margin-left: 10px;
+        }
+
+        .activity-content strong {
+            display: block;
+
+            font-size: 11px;
+        }
+
+        .activity-content span {
+            display: block;
+
+            margin-top: 4px;
+
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        /* =========================================================
+           QUICK ACTIONS
+        ========================================================== */
+
+        .quick-actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 9px;
+        }
+
+        .quick-btn {
+            padding: 13px;
+
+            display: flex;
+            align-items: center;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: rgba(255,255,255,0.018);
+
+            color: var(--text-secondary);
+
+            font-size: 11px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .quick-btn i {
+            width: 22px;
+            color: var(--blue-light);
+        }
+
+        .quick-btn:hover {
+            background: rgba(59,130,246,0.08);
+            border-color: rgba(59,130,246,0.18);
+            color: white;
+        }
+
+        /* =========================================================
+           SEARCH
+        ========================================================== */
+
+        .search-box {
+            position: relative;
+
+            width: 100%;
+        }
+
+        .search-box i {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: var(--text-muted);
+
+            font-size: 12px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            height: 42px;
+
+            padding: 0 14px 0 38px;
+
+            border-radius: 10px;
+
+            border: 1px solid var(--border);
+
+            background: #0a1019;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 12px;
+
+            transition: 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: rgba(59,130,246,0.45);
+
+            box-shadow:
+                0 0 0 3px rgba(59,130,246,0.06);
+        }
+
+        /* =========================================================
+           TABLE
+        ========================================================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 12px 15px;
+
+            text-align: left;
+
+            font-size: 10px;
+
+            color: var(--text-muted);
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 14px 15px;
+
+            border-bottom: 1px solid var(--border);
+
+            font-size: 11px;
+
+            color: var(--text-secondary);
+        }
+
+        tbody tr {
+            transition: 0.15s;
+        }
+
+        tbody tr:hover {
+            background: rgba(255,255,255,0.018);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .person-name {
+            display: flex;
+            align-items: center;
+
+            color: white;
+
+            font-weight: 600;
+        }
+
+        .mini-avatar {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-right: 9px;
+
+            border-radius: 8px;
+
+            background: #162337;
+
+            color: var(--blue-light);
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           BADGES
+        ========================================================== */
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 5px 8px;
+
+            border-radius: 6px;
+
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .badge-green {
+            color: #86efac;
+            background: rgba(34,197,94,0.09);
+        }
+
+        .badge-red {
+            color: #fca5a5;
+            background: rgba(239,68,68,0.09);
+        }
+
+        .badge-yellow {
+            color: #fcd34d;
+            background: rgba(245,158,11,0.09);
+        }
+
+        .badge-blue {
+            color: #93c5fd;
+            background: rgba(59,130,246,0.09);
+        }
+
+        .badge-purple {
+            color: #c4b5fd;
+            background: rgba(139,92,246,0.09);
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================== */
+
+        .btn {
+            height: 38px;
+
+            padding: 0 14px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            background: rgba(255,255,255,0.025);
+
+            color: var(--text-secondary);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            color: white;
+            border-color: var(--border-light);
+        }
+
+        .btn-primary {
+            background: var(--blue-dark);
+            border-color: var(--blue);
+
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            border-color: #60a5fa;
+        }
+
+        .btn-danger {
+            color: #fca5a5;
+            border-color: rgba(239,68,68,0.15);
+            background: rgba(239,68,68,0.06);
+        }
+
+        /* =========================================================
+           PERSON / VEHICLE DETAIL
+        ========================================================== */
+
+        .profile-layout {
+            display: grid;
+
+            grid-template-columns: 300px 1fr;
+
+            gap: 20px;
+        }
+
+        .profile-main {
+            padding: 25px;
+
+            text-align: center;
+        }
+
+        .large-avatar {
+            width: 85px;
+            height: 85px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1d4ed8,
+                    #3b82f6
+                );
+
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .profile-main h3 {
+            font-size: 16px;
+        }
+
+        .profile-main p {
+            margin-top: 5px;
+
+            color: var(--text-muted);
+
+            font-size: 10px;
+        }
+
+        .profile-status {
+            margin-top: 17px;
+        }
+
+        .info-list {
+            margin-top: 22px;
+
+            text-align: left;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid var(--border);
+
+            font-size: 10px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row span:first-child {
+            color: var(--text-muted);
+        }
+
+        .info-row span:last-child {
+            color: white;
+            font-weight: 600;
+
+            text-align: right;
+        }
+
+        /* =========================================================
+           DETAIL SECTIONS
+        ========================================================== */
+
+        .detail-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 15px;
+        }
+
+        .detail-item {
+            padding: 13px;
+
+            background: rgba(255,255,255,0.018);
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+        }
+
+        .detail-item label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            font-size: 9px;
+
+            color: var(--text-muted);
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-item strong {
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           REPORT FORM
+        ========================================================== */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            margin-bottom: 7px;
+
+            font-size: 10px;
+
+            color: var(--text-secondary);
+
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 9px;
+
+            outline: none;
+
+            background: #0a1019;
+
+            color: white;
+
+            font-size: 11px;
+        }
+
+        .form-group input,
+        .form-group select {
+            height: 40px;
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: rgba(59,130,246,0.4);
+        }
+
+        .form-actions {
+            margin-top: 18px;
+
+            display: flex;
+            justify-content: flex-end;
+
+            gap: 8px;
+        }
+
+        /* =========================================================
+           LAW CARDS
+        ========================================================== */
+
+        .law-layout {
+            display: grid;
+
+            grid-template-columns: 320px 1fr;
+
+            gap: 20px;
+        }
+
+        .law-list {
+            max-height: 650px;
+            overflow-y: auto;
+        }
+
+        .law-item {
+            padding: 15px;
+
+            border-bottom: 1px solid var(--border);
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .law-item:hover {
+            background: rgba(255,255,255,0.018);
+        }
+
+        .law-item.active {
+            background: rgba(59,130,246,0.08);
+        }
+
+        .law-item strong {
+            display: block;
+
+            font-size: 11px;
+        }
+
+        .law-item span {
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 9px;
+
+            color: var(--text-muted);
+        }
+
+        .law-detail {
+            min-height: 450px;
+        }
+
+        .article-number {
+            display: inline-block;
+
+            margin-bottom: 12px;
+
+            padding: 6px 9px;
+
+            border-radius: 7px;
+
+            background: rgba(59,130,246,0.08);
+
+            color: var(--blue-light);
+
+            font-size: 10px;
+
+            font-weight: 800;
+        }
+
+        .law-detail h3 {
+            font-size: 18px;
+        }
+
+        .law-description {
+            margin-top: 20px;
+
+            color: var(--text-secondary);
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+        .law-penalty {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+        /* =========================================================
+           EMPTY
+        ========================================================== */
+
+        .empty {
+            padding: 50px 20px;
+
+            text-align: center;
+
+            color: var(--text-muted);
+        }
+
+        .empty i {
+            font-size: 25px;
+
+            margin-bottom: 12px;
+        }
+
+        .empty p {
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================== */
+
+        .toast-container {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            z-index: 500;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .toast {
+            min-width: 270px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 13px 15px;
+
+            background: #101925;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.35);
+
+            animation:
+                toastIn 0.25s ease;
+        }
+
+        .toast i {
+            color: var(--green);
+
+            margin-right: 10px;
+        }
+
+        .toast span {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================== */
+
+        .modal-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0,0,0,0.65);
+
+            backdrop-filter: blur(7px);
+
+            z-index: 400;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            width: min(600px, calc(100% - 30px));
+
+            max-height: 85vh;
+
+            overflow-y: auto;
+
+            background: #0d141f;
+
+            border: 1px solid var(--border-light);
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,0.5);
+
+            animation: modalIn 0.2s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.97) translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header h3 {
+            font-size: 14px;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+
+            border: 0;
+
+            background: transparent;
+
+            color: var(--text-muted);
+
+            border-radius: 7px;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .grid-2,
+            .profile-layout,
+            .law-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            :root {
+                --sidebar-width: 70px;
+            }
+
+            .sidebar {
+                width: 70px;
+            }
+
+            .brand {
+                justify-content: center;
+                padding: 0;
+            }
+
+            .brand-info,
+            .nav-label,
+            .nav-item span,
+            .user-info,
+            .online-dot {
+                display: none;
+            }
+
+            .brand-logo {
+                margin: 0;
+            }
+
+            .nav-item {
+                justify-content: center;
+            }
+
+            .nav-item i {
+                margin: 0;
+            }
+
+            .sidebar-user {
+                padding: 10px;
+            }
+
+            .user-card {
+                justify-content: center;
+                padding: 8px;
+            }
+
+            .main {
+                width: calc(100% - 70px);
+                margin-left: 70px;
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .law-penalty {
+                grid-template-columns: 1fr;
+            }
+
+            .page-heading span {
+                display: none;
+            }
+
+            .clock {
+                display: none;
+            }
+        }
+
+    </style>
 </head>
 
-<body class="login-mode">
+<body>
 
-  <!-- LOGOWANIE -->
+<div class="app">
 
-  <section class="login-screen" id="loginScreen">
-    <div class="login-box">
-      <div class="logo">🔐</div>
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
 
-      <h1>Logowanie</h1>
-      <p class="subtitle">Wprowadź login i hasło</p>
+    <aside class="sidebar">
 
-      <form id="loginForm">
-        <div class="input-box">
-          <label for="login">Login</label>
+        <div class="brand">
 
-          <input
-            type="text"
-            id="login"
-            placeholder="Wpisz login"
-            autocomplete="username"
-            required
-          >
+            <div class="brand-logo">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+
+            <div class="brand-info">
+                <h1>VENUS RP</h1>
+                <span>Mobile Terminal Data</span>
+            </div>
+
         </div>
 
-        <div class="input-box">
-          <label for="password">Hasło</label>
+        <nav class="nav">
 
-          <div class="password-box">
-            <input
-              type="password"
-              id="password"
-              placeholder="Wpisz hasło"
-              autocomplete="current-password"
-              required
-            >
+            <div class="nav-label">
+                Terminal
+            </div>
 
             <button
-              type="button"
-              class="show-password"
-              id="showPassword"
-              aria-label="Pokaż hasło"
+                class="nav-item active"
+                data-page="home"
             >
-              👁
+                <i class="fa-solid fa-house"></i>
+                <span>Główna</span>
             </button>
-          </div>
+
+            <button
+                class="nav-item"
+                data-page="people"
+            >
+                <i class="fa-solid fa-user"></i>
+                <span>Osoby</span>
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="vehicles"
+            >
+                <i class="fa-solid fa-car"></i>
+                <span>Pojazdy</span>
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="officers"
+            >
+                <i class="fa-solid fa-user-shield"></i>
+                <span>Funkcjonariusze</span>
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="reports"
+            >
+                <i class="fa-solid fa-file-lines"></i>
+                <span>Raport</span>
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="laws"
+            >
+                <i class="fa-solid fa-scale-balanced"></i>
+                <span>Ustawy</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-user">
+
+            <div class="user-card">
+
+                <div class="avatar">
+                    JK
+                </div>
+
+                <div class="user-info">
+                    <strong>Jan Kowalski</strong>
+                    <span>Policjant • #2047</span>
+                </div>
+
+                <div class="online-dot"></div>
+
+            </div>
+
         </div>
 
-        <button type="submit" class="login-button">
-          Zaloguj się
-        </button>
-
-        <div id="message" class="message"></div>
-      </form>
-    </div>
-  </section>
-
-  <!-- PANEL PO ZALOGOWANIU -->
-
-  <section class="dashboard hidden" id="dashboard">
-
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <div class="server-name">
-          <div class="server-logo">♜</div>
-          <span>VENUS RP</span>
-        </div>
-
-        <div class="server-subtitle">
-          MTD • PANEL
-        </div>
-      </div>
-
-      <div class="nav-title">
-        Nawigacja
-      </div>
-
-      <nav class="navigation">
-        <button class="nav-button active" data-page="home">
-          <span class="nav-icon">🏠</span>
-          <span>Główna</span>
-        </button>
-
-        <button class="nav-button" data-page="people">
-          <span class="nav-icon">👤</span>
-          <span>Osoby</span>
-        </button>
-
-        <button class="nav-button" data-page="vehicles">
-          <span class="nav-icon">🚗</span>
-          <span>Pojazdy</span>
-        </button>
-
-        <button class="nav-button" data-page="officers">
-          <span class="nav-icon">👮</span>
-          <span>Funkcjonariusze</span>
-        </button>
-
-        <button class="nav-button" data-page="reports">
-          <span class="nav-icon">📝</span>
-          <span>Raport</span>
-        </button>
-
-        <button class="nav-button" data-page="laws">
-          <span class="nav-icon">⚖️</span>
-          <span>Ustawy</span>
-        </button>
-      </nav>
-
-      <div class="sidebar-footer">
-        <div class="user-box">
-          <div class="avatar">A</div>
-
-          <div class="user-info">
-            <div class="user-name">admin</div>
-            <div class="user-status">● Online</div>
-          </div>
-        </div>
-
-        <button class="logout-button" id="logoutButton">
-          Wyloguj się
-        </button>
-      </div>
     </aside>
 
-    <main class="main-content">
-      <header class="topbar">
-        <button class="mobile-menu-button" id="mobileMenuButton">
-          ☰
-        </button>
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
 
-        <div class="page-heading">
-          <h1 id="pageTitle">Główna</h1>
-          <p id="pageSubtitle">
-            Centrum zarządzania serwerem VENUS RP.
-          </p>
-        </div>
+    <main class="main">
 
-        <div class="date-box" id="currentDate">
-          Panel administracyjny
-        </div>
-      </header>
+        <!-- =====================================================
+             TOPBAR
+        ====================================================== -->
 
-      <!-- GŁÓWNA -->
+        <header class="topbar">
 
-      <section class="page-section active" id="page-home">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-label">Aktywne osoby</div>
-            <div class="stat-value">128</div>
-            <div class="stat-change">+12% w tym tygodniu</div>
-          </div>
+            <div class="page-heading">
 
-          <div class="stat-card">
-            <div class="stat-label">Pojazdy</div>
-            <div class="stat-value">342</div>
-            <div class="stat-change">+8 nowych pojazdów</div>
-          </div>
+                <h2 id="pageTitle">
+                    Główna
+                </h2>
 
-          <div class="stat-card">
-            <div class="stat-label">Funkcjonariusze</div>
-            <div class="stat-value">24</div>
-            <div class="stat-change">19 obecnie online</div>
-          </div>
+                <span>
+                    Policyjny System Informacyjny
+                </span>
 
-          <div class="stat-card">
-            <div class="stat-label">Raporty</div>
-            <div class="stat-value">57</div>
-            <div class="stat-change">+6 oczekuje na sprawdzenie</div>
-          </div>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card">
-            <h2>Ostatnia aktywność</h2>
-            <p class="content-card-description">
-              Najnowsze wydarzenia w panelu.
-            </p>
-
-            <div class="activity-list">
-              <div class="activity-item">
-                <div class="activity-icon">👤</div>
-
-                <div>
-                  <div class="activity-text">
-                    Dodano nową osobę do systemu
-                  </div>
-
-                  <div class="activity-time">
-                    5 minut temu
-                  </div>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <div class="activity-icon">📝</div>
-
-                <div>
-                  <div class="activity-text">
-                    Utworzono nowy raport służbowy
-                  </div>
-
-                  <div class="activity-time">
-                    18 minut temu
-                  </div>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <div class="activity-icon">🚗</div>
-
-                <div>
-                  <div class="activity-text">
-                    Zaktualizowano dane pojazdu
-                  </div>
-
-                  <div class="activity-time">
-                    42 minuty temu
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="content-card">
-            <h2>Szybkie akcje</h2>
-            <p class="content-card-description">
-              Najczęściej używane funkcje.
-            </p>
-
-            <div class="quick-actions">
-              <button class="quick-button" data-open-page="people">
-                👤 Dodaj osobę
-              </button>
-
-              <button class="quick-button" data-open-page="vehicles">
-                🚗 Dodaj pojazd
-              </button>
-
-              <button class="quick-button" data-open-page="reports">
-                📝 Utwórz raport
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- OSOBY -->
-
-      <section class="page-section" id="page-people">
-        <div class="content-card">
-          <h2>Osoby</h2>
-          <p class="content-card-description">
-            Lista osób znajdujących się w systemie.
-          </p>
-
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Imię i nazwisko</th>
-                  <th>Numer ID</th>
-                  <th>Status</th>
-                  <th>Ostatnia aktywność</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>Jan Kowalski</td>
-                  <td>VEN-1024</td>
-                  <td><span class="status green">Aktywny</span></td>
-                  <td>Dzisiaj, 21:42</td>
-                </tr>
-
-                <tr>
-                  <td>Piotr Nowak</td>
-                  <td>VEN-1025</td>
-                  <td><span class="status orange">Kontrola</span></td>
-                  <td>Dzisiaj, 20:18</td>
-                </tr>
-
-                <tr>
-                  <td>Adam Wiśniewski</td>
-                  <td>VEN-1026</td>
-                  <td><span class="status red">Zablokowany</span></td>
-                  <td>Wczoraj, 18:03</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- POJAZDY -->
-
-      <section class="page-section" id="page-vehicles">
-        <div class="content-card">
-          <h2>Pojazdy</h2>
-          <p class="content-card-description">
-            Zarejestrowane pojazdy na serwerze.
-          </p>
-
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Model</th>
-                  <th>Tablice</th>
-                  <th>Właściciel</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>BMW M5</td>
-                  <td>VEN 001</td>
-                  <td>Jan Kowalski</td>
-                  <td><span class="status green">Aktywny</span></td>
-                </tr>
-
-                <tr>
-                  <td>Mercedes AMG</td>
-                  <td>VEN 245</td>
-                  <td>Piotr Nowak</td>
-                  <td><span class="status orange">Kontrola</span></td>
-                </tr>
-
-                <tr>
-                  <td>Volkswagen Golf</td>
-                  <td>VEN 889</td>
-                  <td>Adam Wiśniewski</td>
-                  <td><span class="status red">Zatrzymany</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- FUNKCJONARIUSZE -->
-
-      <section class="page-section" id="page-officers">
-        <div class="content-card">
-          <h2>Funkcjonariusze</h2>
-          <p class="content-card-description">
-            Lista funkcjonariuszy oraz ich aktualny status.
-          </p>
-
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Funkcjonariusz</th>
-                  <th>Stopień</th>
-                  <th>Jednostka</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>Marek Zieliński</td>
-                  <td>Komendant</td>
-                  <td>Główna</td>
-                  <td><span class="status green">Na służbie</span></td>
-                </tr>
-
-                <tr>
-                  <td>Tomasz Wójcik</td>
-                  <td>Starszy sierżant</td>
-                  <td>Drogówka</td>
-                  <td><span class="status green">Na służbie</span></td>
-                </tr>
-
-                <tr>
-                  <td>Karol Lewandowski</td>
-                  <td>Posterunkowy</td>
-                  <td>Patrol</td>
-                  <td><span class="status orange">Przerwa</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- RAPORT -->
-
-      <section class="page-section" id="page-reports">
-        <div class="content-card">
-          <h2>Raporty</h2>
-          <p class="content-card-description">
-            Raporty i dokumenty służbowe.
-          </p>
-
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Numer raportu</th>
-                  <th>Autor</th>
-                  <th>Data</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>#RPT-2048</td>
-                  <td>Marek Zieliński</td>
-                  <td>10.09.2026</td>
-                  <td><span class="status orange">Do sprawdzenia</span></td>
-                </tr>
-
-                <tr>
-                  <td>#RPT-2047</td>
-                  <td>Tomasz Wójcik</td>
-                  <td>10.09.2026</td>
-                  <td><span class="status green">Zatwierdzony</span></td>
-                </tr>
-
-                <tr>
-                  <td>#RPT-2046</td>
-                  <td>Karol Lewandowski</td>
-                  <td>09.09.2026</td>
-                  <td><span class="status red">Odrzucony</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- USTAWY -->
-
-      <section class="page-section" id="page-laws">
-        <div class="content-card">
-          <h2>Ustawy</h2>
-          <p class="content-card-description">
-            Baza ustaw i przepisów obowiązujących na serwerze.
-          </p>
-
-          <div class="activity-list">
-            <div class="activity-item">
-              <div class="activity-icon">⚖️</div>
-
-              <div>
-                <div class="activity-text">
-                  Kodeks drogowy
-                </div>
-
-                <div class="activity-time">
-                  24 artykuły • Zaktualizowano dzisiaj
-                </div>
-              </div>
             </div>
 
-            <div class="activity-item">
-              <div class="activity-icon">⚖️</div>
+            <div class="top-actions">
 
-              <div>
-                <div class="activity-text">
-                  Kodeks karny
+                <div class="clock" id="clock">
+                    00:00:00
                 </div>
 
-                <div class="activity-time">
-                  58 artykułów • Zaktualizowano 2 dni temu
-                </div>
-              </div>
+                <button class="notification-btn">
+                    <i class="fa-regular fa-bell"></i>
+                    <div class="notification-dot"></div>
+                </button>
+
             </div>
 
-            <div class="activity-item">
-              <div class="activity-icon">⚖️</div>
+        </header>
 
-              <div>
-                <div class="activity-text">
-                  Regulamin służb mundurowych
+        <!-- =====================================================
+             CONTENT
+        ====================================================== -->
+
+        <div class="content">
+
+            <!-- =================================================
+                 GŁÓWNA
+            ================================================== -->
+
+            <section
+                class="page active"
+                id="page-home"
+            >
+
+                <div class="welcome">
+
+                    <h3>
+                        Witaj w MTD, Jan.
+                    </h3>
+
+                    <p>
+                        Mobilny Terminal Danych • Venus RP Police Department
+                    </p>
+
+                    <div class="service-status">
+
+                        <div class="status-dot"></div>
+
+                        Funkcjonariusz aktywny na służbie
+
+                    </div>
+
                 </div>
 
-                <div class="activity-time">
-                  17 artykułów • Zaktualizowano tydzień temu
+                <div class="stats">
+
+                    <div class="card stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <div class="stat-value">
+                            124
+                        </div>
+
+                        <div class="stat-label">
+                            Funkcjonariusze na służbie
+                        </div>
+
+                    </div>
+
+                    <div class="card stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+
+                        <div class="stat-value">
+                            7
+                        </div>
+
+                        <div class="stat-label">
+                            Aktywne zgłoszenia
+                        </div>
+
+                    </div>
+
+                    <div class="card stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+
+                        <div class="stat-value">
+                            18
+                        </div>
+
+                        <div class="stat-label">
+                            Twoje raporty
+                        </div>
+
+                    </div>
+
+                    <div class="card stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+
+                        <div class="stat-value">
+                            04:27
+                        </div>
+
+                        <div class="stat-label">
+                            Czas na służbie
+                        </div>
+
+                    </div>
+
                 </div>
-              </div>
-            </div>
-          </div>
+
+                <div class="grid-2">
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <h4>
+                                Ostatnia aktywność
+                            </h4>
+
+                            <span class="badge badge-blue">
+                                Dzisiaj
+                            </span>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="activity">
+
+                                <div class="activity-icon">
+                                    <i class="fa-solid fa-car"></i>
+                                </div>
+
+                                <div class="activity-content">
+
+                                    <strong>
+                                        Sprawdzono pojazd WX 2047K
+                                    </strong>
+
+                                    <span>
+                                        22:37 • Kontrola drogowa
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="activity">
+
+                                <div class="activity-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                                <div class="activity-content">
+
+                                    <strong>
+                                        Wyszukano Jana Nowaka
+                                    </strong>
+
+                                    <span>
+                                        22:29 • Baza osób
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="activity">
+
+                                <div class="activity-icon">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </div>
+
+                                <div class="activity-content">
+
+                                    <strong>
+                                        Utworzono raport #10482
+                                    </strong>
+
+                                    <span>
+                                        22:11 • Raport służbowy
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <h4>
+                                Szybkie akcje
+                            </h4>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="quick-actions">
+
+                                <button
+                                    class="quick-btn"
+                                    onclick="openPage('people')"
+                                >
+                                    <i class="fa-solid fa-user"></i>
+                                    Szukaj osoby
+                                </button>
+
+                                <button
+                                    class="quick-btn"
+                                    onclick="openPage('vehicles')"
+                                >
+                                    <i class="fa-solid fa-car"></i>
+                                    Szukaj pojazdu
+                                </button>
+
+                                <button
+                                    class="quick-btn"
+                                    onclick="openPage('reports')"
+                                >
+                                    <i class="fa-solid fa-file-circle-plus"></i>
+                                    Nowy raport
+                                </button>
+
+                                <button
+                                    class="quick-btn"
+                                    onclick="openPage('laws')"
+                                >
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                    Sprawdź ustawę
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 OSOBY
+            ================================================== -->
+
+            <section
+                class="page"
+                id="page-people"
+            >
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Osoby</h3>
+
+                        <p>
+                            Baza danych obywateli Venus RP.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div style="width: 400px; max-width: 100%;">
+
+                            <div class="search-box">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                <input
+                                    type="text"
+                                    id="peopleSearch"
+                                    placeholder="Imię, nazwisko, PESEL lub numer dokumentu..."
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Obywatel</th>
+                                    <th>PESEL</th>
+                                    <th>Prawo jazdy</th>
+                                    <th>Punkty</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="peopleTable">
+
+                                <tr data-search="jan kowalski 99010112345 204812">
+
+                                    <td>
+
+                                        <div class="person-name">
+
+                                            <div class="mini-avatar">
+                                                JK
+                                            </div>
+
+                                            Jan Kowalski
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        99010112345
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Aktywne
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        6 / 24
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Brak poszukiwania
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <button
+                                            class="btn"
+                                            onclick="showPerson('Jan Kowalski')"
+                                        >
+                                            Otwórz
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                                <tr data-search="anna nowak 97052288421 204921">
+
+                                    <td>
+
+                                        <div class="person-name">
+
+                                            <div class="mini-avatar">
+                                                AN
+                                            </div>
+
+                                            Anna Nowak
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        97052288421
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Aktywne
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        2 / 24
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Brak poszukiwania
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <button
+                                            class="btn"
+                                            onclick="showPerson('Anna Nowak')"
+                                        >
+                                            Otwórz
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                                <tr data-search="piotr zielinski 95030144512 205182">
+
+                                    <td>
+
+                                        <div class="person-name">
+
+                                            <div class="mini-avatar">
+                                                PZ
+                                            </div>
+
+                                            Piotr Zieliński
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        95030144512
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-red">
+                                            Zatrzymane
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        18 / 24
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-yellow">
+                                            Zakaz prowadzenia
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <button
+                                            class="btn"
+                                            onclick="showPerson('Piotr Zieliński')"
+                                        >
+                                            Otwórz
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 POJAZDY
+            ================================================== -->
+
+            <section
+                class="page"
+                id="page-vehicles"
+            >
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Pojazdy</h3>
+
+                        <p>
+                            Centralna baza pojazdów zarejestrowanych w Venus RP.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div style="width: 400px; max-width: 100%;">
+
+                            <div class="search-box">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                <input
+                                    type="text"
+                                    id="vehicleSearch"
+                                    placeholder="Tablica, VIN, marka lub właściciel..."
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Tablica</th>
+                                    <th>Pojazd</th>
+                                    <th>Właściciel</th>
+                                    <th>OC</th>
+                                    <th>Przegląd</th>
+                                    <th>Status</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="vehicleTable">
+
+                                <tr data-search="wx2047k bmw m5 jan kowalski">
+
+                                    <td>
+                                        <strong style="color:white;">
+                                            WX 2047K
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        BMW M5
+                                    </td>
+
+                                    <td>
+                                        Jan Kowalski
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Aktywne
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Ważny
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Brak alertów
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                                <tr data-search="ww8123p audi rs6 anna nowak">
+
+                                    <td>
+                                        <strong style="color:white;">
+                                            WW 8123P
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        Audi RS6
+                                    </td>
+
+                                    <td>
+                                        Anna Nowak
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Aktywne
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Ważny
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Brak alertów
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                                <tr data-search="wz4499x mercedes amg piotr zielinski">
+
+                                    <td>
+                                        <strong style="color:white;">
+                                            WZ 4499X
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        Mercedes-AMG C63
+                                    </td>
+
+                                    <td>
+                                        Piotr Zieliński
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-red">
+                                            Brak
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-yellow">
+                                            Wygasły
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-red">
+                                            ALERT
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 FUNKCJONARIUSZE
+            ================================================== -->
+
+            <section
+                class="page"
+                id="page-officers"
+            >
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Funkcjonariusze</h3>
+
+                        <p>
+                            Lista funkcjonariuszy oraz ich aktualny status.
+                        </p>
+                    </div>
+
+                    <span class="badge badge-green">
+                        124 na służbie
+                    </span>
+
+                </div>
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div style="width: 400px; max-width: 100%;">
+
+                            <div class="search-box">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                <input
+                                    type="text"
+                                    id="officerSearch"
+                                    placeholder="Szukaj funkcjonariusza..."
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Funkcjonariusz</th>
+                                    <th>Stopień</th>
+                                    <th>Numer</th>
+                                    <th>Jednostka</th>
+                                    <th>Status</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="officerTable">
+
+                                <tr data-search="jan kowalski policjant 2047 p21">
+
+                                    <td>
+                                        <div class="person-name">
+                                            <div class="mini-avatar">
+                                                JK
+                                            </div>
+                                            Jan Kowalski
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        Policjant
+                                    </td>
+
+                                    <td>
+                                        #2047
+                                    </td>
+
+                                    <td>
+                                        P-21
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Na służbie
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                                <tr data-search="adam wisniewski sierzant 2012 p14">
+
+                                    <td>
+                                        <div class="person-name">
+                                            <div class="mini-avatar">
+                                                AW
+                                            </div>
+                                            Adam Wiśniewski
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        Sierżant
+                                    </td>
+
+                                    <td>
+                                        #2012
+                                    </td>
+
+                                    <td>
+                                        P-14
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-green">
+                                            Na służbie
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                                <tr data-search="marek dabrowski aspirant 1988 p07">
+
+                                    <td>
+                                        <div class="person-name">
+                                            <div class="mini-avatar">
+                                                MD
+                                            </div>
+                                            Marek Dąbrowski
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        Aspirant
+                                    </td>
+
+                                    <td>
+                                        #1988
+                                    </td>
+
+                                    <td>
+                                        P-07
+                                    </td>
+
+                                    <td>
+                                        <span class="badge badge-yellow">
+                                            Przerwa
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 RAPORT
+            ================================================== -->
+
+            <section
+                class="page"
+                id="page-reports"
+            >
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Raporty</h3>
+
+                        <p>
+                            Tworzenie oraz historia raportów służbowych.
+                        </p>
+                    </div>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="newReport()"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        Nowy raport
+                    </button>
+
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <h4>
+                                Ostatnie raporty
+                            </h4>
+
+                        </div>
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Numer</th>
+                                        <th>Typ</th>
+                                        <th>Data</th>
+                                        <th>Status</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>#10482</td>
+                                        <td>Kontrola drogowa</td>
+                                        <td>10.09.2026</td>
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Zakończony
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>#10471</td>
+                                        <td>Interwencja</td>
+                                        <td>10.09.2026</td>
+                                        <td>
+                                            <span class="badge badge-yellow">
+                                                Weryfikacja
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>#10452</td>
+                                        <td>Wypadek drogowy</td>
+                                        <td>09.09.2026</td>
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Zakończony
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <h4>
+                                Informacje
+                            </h4>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="detail-grid">
+
+                                <div class="detail-item">
+                                    <label>Raportów</label>
+                                    <strong>18</strong>
+                                </div>
+
+                                <div class="detail-item">
+                                    <label>Zakończone</label>
+                                    <strong>16</strong>
+                                </div>
+
+                                <div class="detail-item">
+                                    <label>Do weryfikacji</label>
+                                    <strong>2</strong>
+                                </div>
+
+                                <div class="detail-item">
+                                    <label>Ostatni raport</label>
+                                    <strong>#10482</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 USTAWY
+            ================================================== -->
+
+            <section
+                class="page"
+                id="page-laws"
+            >
+
+                <div class="section-header">
+
+                    <div>
+                        <h3>Ustawy</h3>
+
+                        <p>
+                            Wewnętrzna baza przepisów i taryfikatora Venus RP.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="law-layout">
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div class="search-box">
+
+                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                <input
+                                    type="text"
+                                    id="lawSearch"
+                                    placeholder="Szukaj artykułu..."
+                                >
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="law-list"
+                            id="lawList"
+                        >
+
+                            <div
+                                class="law-item active"
+                                onclick="selectLaw(this, 'Art. 12', 'Przekroczenie prędkości', 'Kierujący pojazdem, który przekracza dopuszczalną prędkość, podlega karze zgodnie z taryfikatorem.', '500 $', '6 pkt', 'Brak')"
+                            >
+
+                                <strong>
+                                    Art. 12 — Przekroczenie prędkości
+                                </strong>
+
+                                <span>
+                                    Prawo drogowe
+                                </span>
+
+                            </div>
+
+                            <div
+                                class="law-item"
+                                onclick="selectLaw(this, 'Art. 27', 'Niezatrzymanie się do kontroli', 'Kierujący pojazdem ma obowiązek zatrzymać pojazd na wyraźne polecenie funkcjonariusza.', '2 000 $', '10 pkt', 'Zakaz prowadzenia')"
+                            >
+
+                                <strong>
+                                    Art. 27 — Niezatrzymanie się do kontroli
+                                </strong>
+
+                                <span>
+                                    Prawo drogowe
+                                </span>
+
+                            </div>
+
+                            <div
+                                class="law-item"
+                                onclick="selectLaw(this, 'Art. 41', 'Zakłócanie porządku publicznego', 'Osoba zakłócająca porządek publiczny może zostać ukarana mandatem lub skierowana do dalszego postępowania.', '750 $', '0 pkt', 'Brak')"
+                            >
+
+                                <strong>
+                                    Art. 41 — Zakłócanie porządku
+                                </strong>
+
+                                <span>
+                                    Porządek publiczny
+                                </span>
+
+                            </div>
+
+                            <div
+                                class="law-item"
+                                onclick="selectLaw(this, 'Art. 63', 'Kradzież pojazdu', 'Bez zezwolenia właściciela zabranie pojazdu stanowi przestępstwo.', '5 000 $', '0 pkt', 'Areszt')"
+                            >
+
+                                <strong>
+                                    Art. 63 — Kradzież pojazdu
+                                </strong>
+
+                                <span>
+                                    Kodeks karny
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card law-detail">
+
+                        <div class="card-body">
+
+                            <div class="article-number" id="lawNumber">
+                                Art. 12
+                            </div>
+
+                            <h3 id="lawTitle">
+                                Przekroczenie prędkości
+                            </h3>
+
+                            <div class="law-description" id="lawDescription">
+
+                                Kierujący pojazdem, który przekracza
+                                dopuszczalną prędkość, podlega karze
+                                zgodnie z taryfikatorem.
+
+                            </div>
+
+                            <div class="law-penalty">
+
+                                <div class="detail-item">
+
+                                    <label>
+                                        Mandat
+                                    </label>
+
+                                    <strong id="lawFine">
+                                        500 $
+                                    </strong>
+
+                                </div>
+
+                                <div class="detail-item">
+
+                                    <label>
+                                        Punkty
+                                    </label>
+
+                                    <strong id="lawPoints">
+                                        6 pkt
+                                    </strong>
+
+                                </div>
+
+                                <div class="detail-item">
+
+                                    <label>
+                                        Dodatkowa kara
+                                    </label>
+
+                                    <strong id="lawAdditional">
+                                        Brak
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
         </div>
-      </section>
+
     </main>
-  </section>
 
-  <script>
-    const loginForm = document.getElementById("loginForm");
-    const loginInput = document.getElementById("login");
-    const passwordInput = document.getElementById("password");
-    const showPasswordButton = document.getElementById("showPassword");
-    const message = document.getElementById("message");
+</div>
 
-    const loginScreen = document.getElementById("loginScreen");
-    const dashboard = document.getElementById("dashboard");
-    const logoutButton = document.getElementById("logoutButton");
 
-    const navigationButtons = document.querySelectorAll(".nav-button");
-    const pageSections = document.querySelectorAll(".page-section");
-    const quickButtons = document.querySelectorAll(".quick-button");
+<!-- =============================================================
+     MODAL
+============================================================== -->
 
-    const pageTitle = document.getElementById("pageTitle");
-    const pageSubtitle = document.getElementById("pageSubtitle");
-    const currentDate = document.getElementById("currentDate");
+<div
+    class="modal-overlay"
+    id="modalOverlay"
+>
 
-    const mobileMenuButton = document.getElementById("mobileMenuButton");
-    const sidebar = document.getElementById("sidebar");
+    <div class="modal">
 
-    const pageData = {
-      home: {
-        title: "Główna",
-        subtitle: "Centrum zarządzania serwerem VENUS RP."
-      },
+        <div class="modal-header">
 
-      people: {
-        title: "Osoby",
-        subtitle: "Zarządzaj osobami znajdującymi się w systemie."
-      },
+            <h3 id="modalTitle">
+                Informacje
+            </h3>
 
-      vehicles: {
-        title: "Pojazdy",
-        subtitle: "Przeglądaj zarejestrowane pojazdy."
-      },
+            <button
+                class="modal-close"
+                onclick="closeModal()"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
-      officers: {
-        title: "Funkcjonariusze",
-        subtitle: "Sprawdzaj funkcjonariuszy oraz ich status."
-      },
+        </div>
 
-      reports: {
-        title: "Raport",
-        subtitle: "Przeglądaj raporty i dokumenty służbowe."
-      },
+        <div
+            class="modal-body"
+            id="modalBody"
+        >
 
-      laws: {
-        title: "Ustawy",
-        subtitle: "Baza ustaw i przepisów serwera."
-      }
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =============================================================
+     TOAST
+============================================================== -->
+
+<div
+    class="toast-container"
+    id="toastContainer"
+></div>
+
+
+<!-- =============================================================
+     JAVASCRIPT
+============================================================== -->
+
+<script>
+
+    /* =========================================================
+       PAGE TITLES
+    ========================================================== */
+
+    const pageTitles = {
+
+        home: "Główna",
+        people: "Osoby",
+        vehicles: "Pojazdy",
+        officers: "Funkcjonariusze",
+        reports: "Raporty",
+        laws: "Ustawy"
+
     };
 
-    function updateDate() {
-      const date = new Date();
 
-      currentDate.textContent = date.toLocaleDateString("pl-PL", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-      });
+    /* =========================================================
+       NAVIGATION
+    ========================================================== */
+
+    const navItems =
+        document.querySelectorAll(".nav-item");
+
+    const pages =
+        document.querySelectorAll(".page");
+
+
+    navItems.forEach(item => {
+
+        item.addEventListener("click", () => {
+
+            const page =
+                item.dataset.page;
+
+            openPage(page);
+
+        });
+
+    });
+
+
+    function openPage(page) {
+
+        navItems.forEach(item => {
+
+            item.classList.toggle(
+                "active",
+                item.dataset.page === page
+            );
+
+        });
+
+        pages.forEach(section => {
+
+            section.classList.toggle(
+                "active",
+                section.id === `page-${page}`
+            );
+
+        });
+
+        document.getElementById("pageTitle").textContent =
+            pageTitles[page] || "MTD";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
     }
 
-    function openPage(pageName) {
-      navigationButtons.forEach(function(button) {
-        button.classList.remove("active");
 
-        if (button.dataset.page === pageName) {
-          button.classList.add("active");
+    /* =========================================================
+       CLOCK
+    ========================================================== */
+
+    function updateClock() {
+
+        const now = new Date();
+
+        const hours =
+            String(now.getHours()).padStart(2, "0");
+
+        const minutes =
+            String(now.getMinutes()).padStart(2, "0");
+
+        const seconds =
+            String(now.getSeconds()).padStart(2, "0");
+
+        document.getElementById("clock").textContent =
+            `${hours}:${minutes}:${seconds}`;
+
+    }
+
+    setInterval(updateClock, 1000);
+
+    updateClock();
+
+
+    /* =========================================================
+       SEARCH FUNCTION
+    ========================================================== */
+
+    function setupSearch(inputId, tableId) {
+
+        const input =
+            document.getElementById(inputId);
+
+        const table =
+            document.getElementById(tableId);
+
+        if (!input || !table) {
+            return;
         }
-      });
 
-      pageSections.forEach(function(section) {
-        section.classList.remove("active");
-      });
+        input.addEventListener("input", () => {
 
-      const selectedSection = document.getElementById("page-" + pageName);
+            const query =
+                input.value
+                    .toLowerCase()
+                    .trim();
 
-      if (selectedSection) {
-        selectedSection.classList.add("active");
-      }
+            const rows =
+                table.querySelectorAll("tr");
 
-      if (pageData[pageName]) {
-        pageTitle.textContent = pageData[pageName].title;
-        pageSubtitle.textContent = pageData[pageName].subtitle;
-      }
+            rows.forEach(row => {
 
-      sidebar.classList.remove("mobile-open");
+                const text =
+                    row.dataset.search || "";
+
+                row.style.display =
+                    text.includes(query)
+                        ? ""
+                        : "none";
+
+            });
+
+        });
+
     }
 
-    showPasswordButton.addEventListener("click", function() {
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        showPasswordButton.textContent = "🙈";
-      } else {
-        passwordInput.type = "password";
-        showPasswordButton.textContent = "👁";
-      }
+
+    setupSearch(
+        "peopleSearch",
+        "peopleTable"
+    );
+
+    setupSearch(
+        "vehicleSearch",
+        "vehicleTable"
+    );
+
+    setupSearch(
+        "officerSearch",
+        "officerTable"
+    );
+
+
+    /* =========================================================
+       PERSON MODAL
+    ========================================================== */
+
+    function showPerson(name) {
+
+        document.getElementById("modalTitle").textContent =
+            name;
+
+        document.getElementById("modalBody").innerHTML = `
+
+            <div class="profile-layout">
+
+                <div class="card">
+
+                    <div class="profile-main">
+
+                        <div class="large-avatar">
+                            ${getInitials(name)}
+                        </div>
+
+                        <h3>
+                            ${name}
+                        </h3>
+
+                        <p>
+                            Obywatel Venus RP
+                        </p>
+
+                        <div class="profile-status">
+
+                            <span class="badge badge-green">
+                                Brak poszukiwania
+                            </span>
+
+                        </div>
+
+                        <div class="info-list">
+
+                            <div class="info-row">
+                                <span>PESEL</span>
+                                <span>99010112345</span>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Dowód</span>
+                                <span>VEN-204812</span>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Prawo jazdy</span>
+                                <span>Aktywne</span>
+                            </div>
+
+                            <div class="info-row">
+                                <span>Punkty karne</span>
+                                <span>6 / 24</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div class="card">
+
+                        <div class="card-header">
+                            <h4>
+                                Informacje
+                            </h4>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="detail-grid">
+
+                                <div class="detail-item">
+                                    <label>Data urodzenia</label>
+                                    <strong>01.01.1999</strong>
+                                </div>
+
+                                <div class="detail-item">
+                                    <label>Adres</label>
+                                    <strong>Venus City 24</strong>
+                                </div>
+
+                                <div class="detail-item">
+                                    <label>Mandaty</label>
+                                    <strong>2</strong>
+                                </div>
+
+                                <div class="detail-item">
+                                    <label>Ostatnia kontrola</label>
+                                    <strong>10.09.2026</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+        openModal();
+
+    }
+
+
+    function getInitials(name) {
+
+        return name
+            .split(" ")
+            .map(word => word[0])
+            .join("")
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    /* =========================================================
+       REPORT
+    ========================================================== */
+
+    function newReport() {
+
+        document.getElementById("modalTitle").textContent =
+            "Nowy raport";
+
+        document.getElementById("modalBody").innerHTML = `
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label>
+                        Typ raportu
+                    </label>
+
+                    <select id="reportType">
+
+                        <option>
+                            Kontrola drogowa
+                        </option>
+
+                        <option>
+                            Interwencja
+                        </option>
+
+                        <option>
+                            Wypadek drogowy
+                        </option>
+
+                        <option>
+                            Zatrzymanie
+                        </option>
+
+                        <option>
+                            Inne
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Lokalizacja
+                    </label>
+
+                    <input
+                        type="text"
+                        placeholder="np. Venus City"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Osoba
+                    </label>
+
+                    <input
+                        type="text"
+                        placeholder="Imię i nazwisko"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Pojazd
+                    </label>
+
+                    <input
+                        type="text"
+                        placeholder="Tablica rejestracyjna"
+                    >
+
+                </div>
+
+                <div class="form-group full">
+
+                    <label>
+                        Opis zdarzenia
+                    </label>
+
+                    <textarea
+                        placeholder="Opisz przebieg zdarzenia..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button
+                    class="btn"
+                    onclick="closeModal()"
+                >
+                    Anuluj
+                </button>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="createReport()"
+                >
+                    <i class="fa-solid fa-file-circle-check"></i>
+                    Utwórz raport
+                </button>
+
+            </div>
+
+        `;
+
+        openModal();
+
+    }
+
+
+    function createReport() {
+
+        closeModal();
+
+        showToast(
+            "Raport został utworzony pomyślnie."
+        );
+
+    }
+
+
+    /* =========================================================
+       LAW SELECTION
+    ========================================================== */
+
+    function selectLaw(
+        element,
+        number,
+        title,
+        description,
+        fine,
+        points,
+        additional
+    ) {
+
+        document
+            .querySelectorAll(".law-item")
+            .forEach(item => {
+                item.classList.remove("active");
+            });
+
+        element.classList.add("active");
+
+        document.getElementById("lawNumber").textContent =
+            number;
+
+        document.getElementById("lawTitle").textContent =
+            title;
+
+        document.getElementById("lawDescription").textContent =
+            description;
+
+        document.getElementById("lawFine").textContent =
+            fine;
+
+        document.getElementById("lawPoints").textContent =
+            points;
+
+        document.getElementById("lawAdditional").textContent =
+            additional;
+
+    }
+
+
+    /* =========================================================
+       LAW SEARCH
+    ========================================================== */
+
+    const lawSearch =
+        document.getElementById("lawSearch");
+
+    lawSearch.addEventListener("input", () => {
+
+        const query =
+            lawSearch.value
+                .toLowerCase()
+                .trim();
+
+        document
+            .querySelectorAll(".law-item")
+            .forEach(item => {
+
+                item.style.display =
+                    item.textContent
+                        .toLowerCase()
+                        .includes(query)
+                        ? ""
+                        : "none";
+
+            });
+
     });
 
-    loginForm.addEventListener("submit", function(event) {
-      event.preventDefault();
 
-      const login = loginInput.value.trim();
-      const password = passwordInput.value.trim();
+    /* =========================================================
+       MODAL
+    ========================================================== */
 
-      message.className = "message";
+    function openModal() {
 
-      if (login === "admin" && password === "1234") {
-        message.textContent = "Zalogowano pomyślnie!";
-        message.classList.add("success");
+        document
+            .getElementById("modalOverlay")
+            .classList.add("active");
 
-        setTimeout(function() {
-          document.body.classList.remove("login-mode");
-          loginScreen.classList.add("hidden");
-          dashboard.classList.remove("hidden");
+    }
 
-          updateDate();
-          document.title = "VENUS RP • MTD";
-        }, 700);
-      } else {
-        message.textContent = "Nieprawidłowy login lub hasło.";
-        message.classList.add("error");
-      }
-    });
 
-    navigationButtons.forEach(function(button) {
-      button.addEventListener("click", function() {
-        openPage(button.dataset.page);
-      });
-    });
+    function closeModal() {
 
-    quickButtons.forEach(function(button) {
-      button.addEventListener("click", function() {
-        openPage(button.dataset.openPage);
-      });
-    });
+        document
+            .getElementById("modalOverlay")
+            .classList.remove("active");
 
-    mobileMenuButton.addEventListener("click", function() {
-      sidebar.classList.toggle("mobile-open");
-    });
+    }
 
-    logoutButton.addEventListener("click", function() {
-      dashboard.classList.add("hidden");
-      loginScreen.classList.remove("hidden");
-      document.body.classList.add("login-mode");
 
-      loginForm.reset();
-      passwordInput.type = "password";
-      showPasswordButton.textContent = "👁";
-      message.textContent = "";
-      message.className = "message";
+    document
+        .getElementById("modalOverlay")
+        .addEventListener("click", event => {
 
-      openPage("home");
+            if (
+                event.target.id ===
+                "modalOverlay"
+            ) {
 
-      document.title = "Logowanie";
-    });
-  </script>
+                closeModal();
+
+            }
+
+        });
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Escape") {
+                closeModal();
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       TOAST
+    ========================================================== */
+
+    function showToast(message) {
+
+        const container =
+            document.getElementById("toastContainer");
+
+        const toast =
+            document.createElement("div");
+
+        toast.className = "toast";
+
+        toast.innerHTML = `
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span>
+                ${message}
+            </span>
+
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+
+            toast.style.opacity = "0";
+            toast.style.transform =
+                "translateX(20px)";
+
+            setTimeout(() => {
+                toast.remove();
+            }, 250);
+
+        }, 3000);
+
+    }
+
+
+    /* =========================================================
+       NOTIFICATION
+    ========================================================== */
+
+    document
+        .querySelector(".notification-btn")
+        .addEventListener("click", () => {
+
+            showToast(
+                "Masz 1 nowe powiadomienie."
+            );
+
+        });
+
+
+</script>
 
 </body>
 </html>
