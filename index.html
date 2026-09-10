@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logowanie i panel</title>
+  <title>Logowanie</title>
 
   <style>
     * {
@@ -11,6 +11,11 @@
       padding: 0;
       box-sizing: border-box;
       font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html,
+    body {
+      min-height: 100%;
     }
 
     body {
@@ -52,12 +57,6 @@
       bottom: -120px;
       background: #06b6d4;
     }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* EKRAN LOGOWANIA */
 
     .login-screen {
       min-height: 100vh;
@@ -110,7 +109,7 @@
         0 0 25px rgba(124, 58, 237, 0.35);
     }
 
-    h1 {
+    .login-box h1 {
       text-align: center;
       font-size: 29px;
       margin-bottom: 8px;
@@ -226,11 +225,16 @@
     /* PANEL PO ZALOGOWANIU */
 
     .dashboard-screen {
+      display: none;
       min-height: 100vh;
       padding: 30px;
       position: relative;
       z-index: 1;
       animation: showDashboard 0.7s ease;
+    }
+
+    .dashboard-screen.active {
+      display: block;
     }
 
     @keyframes showDashboard {
@@ -394,8 +398,6 @@
 
 <body>
 
-  <!-- EKRAN LOGOWANIA -->
-
   <section class="login-screen" id="loginScreen">
     <div class="login-box">
       <div class="logo">🔐</div>
@@ -448,9 +450,7 @@
     </div>
   </section>
 
-  <!-- PANEL PO ZALOGOWANIU -->
-
-  <section class="dashboard-screen hidden" id="dashboardScreen">
+  <section class="dashboard-screen" id="dashboardScreen">
     <nav class="navbar">
       <div class="brand">
         <div class="brand-icon">⚡</div>
@@ -466,7 +466,7 @@
       <section class="welcome-box">
         <h1>Witaj w panelu! 👋</h1>
         <p>
-          Logowanie przebiegło pomyślnie. Teraz znajdujesz się na stronie głównej.
+          Logowanie przebiegło pomyślnie. To jest strona wyświetlana po zalogowaniu.
         </p>
       </section>
 
@@ -509,21 +509,17 @@
     const dashboardScreen = document.getElementById("dashboardScreen");
     const logoutButton = document.getElementById("logoutButton");
 
-    showPasswordButton.addEventListener("click", () => {
-      const passwordIsHidden = passwordInput.type === "password";
-
-      if (passwordIsHidden) {
+    showPasswordButton.addEventListener("click", function() {
+      if (passwordInput.type === "password") {
         passwordInput.type = "text";
         showPasswordButton.textContent = "🙈";
-        showPasswordButton.setAttribute("aria-label", "Ukryj hasło");
       } else {
         passwordInput.type = "password";
         showPasswordButton.textContent = "👁";
-        showPasswordButton.setAttribute("aria-label", "Pokaż hasło");
       }
     });
 
-    loginForm.addEventListener("submit", (event) => {
+    loginForm.addEventListener("submit", function(event) {
       event.preventDefault();
 
       const login = loginInput.value.trim();
@@ -535,10 +531,11 @@
         message.textContent = "Zalogowano pomyślnie!";
         message.classList.add("success");
 
-        setTimeout(() => {
-          loginScreen.classList.add("hidden");
-          dashboardScreen.classList.remove("hidden");
+        setTimeout(function() {
+          loginScreen.style.display = "none";
+          dashboardScreen.style.display = "block";
           document.title = "Panel użytkownika";
+          window.scrollTo(0, 0);
         }, 700);
       } else {
         message.textContent = "Nieprawidłowy login lub hasło.";
@@ -546,17 +543,16 @@
       }
     });
 
-    logoutButton.addEventListener("click", () => {
-      dashboardScreen.classList.add("hidden");
-      loginScreen.classList.remove("hidden");
+    logoutButton.addEventListener("click", function() {
+      dashboardScreen.style.display = "none";
+      loginScreen.style.display = "flex";
 
       loginForm.reset();
       passwordInput.type = "password";
       showPasswordButton.textContent = "👁";
       message.textContent = "";
       message.className = "message";
-
-      document.title = "Logowanie i panel";
+      document.title = "Logowanie";
     });
   </script>
 
