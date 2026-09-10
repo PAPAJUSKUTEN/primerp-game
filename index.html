@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel logowania</title>
+  <title>Logowanie i panel</title>
 
   <style>
     * {
@@ -15,21 +15,14 @@
 
     body {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
       color: white;
-      overflow: hidden;
-      position: relative;
-
+      overflow-x: hidden;
       background:
         linear-gradient(
           rgba(5, 8, 22, 0.72),
           rgba(19, 8, 48, 0.82)
         ),
         url("https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/5c3973bf-a629-5d92-8347-53ea66f8f95d/e0768043-f16d-5667-a3cd-c51a212d68ac.jpg");
-
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -60,9 +53,23 @@
       background: #06b6d4;
     }
 
-    .login-box {
+    .hidden {
+      display: none !important;
+    }
+
+    /* EKRAN LOGOWANIA */
+
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
       position: relative;
       z-index: 1;
+    }
+
+    .login-box {
       width: 100%;
       max-width: 390px;
       padding: 35px;
@@ -216,13 +223,170 @@
       color: #fca5a5;
     }
 
-    @media (max-width: 480px) {
+    /* PANEL PO ZALOGOWANIU */
+
+    .dashboard-screen {
+      min-height: 100vh;
+      padding: 30px;
+      position: relative;
+      z-index: 1;
+      animation: showDashboard 0.7s ease;
+    }
+
+    @keyframes showDashboard {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .navbar {
+      max-width: 1150px;
+      margin: 0 auto 35px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 18px;
+      background: rgba(10, 12, 35, 0.7);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #8b5cf6, #2563eb);
+    }
+
+    .logout-button {
+      padding: 11px 17px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      background: rgba(239, 68, 68, 0.18);
+      color: #fecaca;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .logout-button:hover {
+      background: rgba(239, 68, 68, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .content {
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .welcome-box {
+      margin-bottom: 25px;
+      padding: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      background: rgba(10, 12, 35, 0.72);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(16px);
+    }
+
+    .welcome-box h1 {
+      margin-bottom: 10px;
+      text-align: left;
+      font-size: 32px;
+    }
+
+    .welcome-box p {
+      color: #c7c9d8;
+      font-size: 15px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      min-height: 170px;
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 18px;
+      background: rgba(10, 12, 35, 0.68);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(14px);
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(139, 92, 246, 0.65);
+    }
+
+    .card-icon {
+      margin-bottom: 18px;
+      font-size: 30px;
+    }
+
+    .card h2 {
+      margin-bottom: 8px;
+      font-size: 19px;
+    }
+
+    .card p {
+      color: #bfc2d1;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    @media (max-width: 800px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome-box h1 {
+        font-size: 26px;
+      }
+    }
+
+    @media (max-width: 500px) {
       .login-box {
         padding: 28px 22px;
       }
 
-      h1 {
-        font-size: 26px;
+      .dashboard-screen {
+        padding: 18px;
+      }
+
+      .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .logout-button {
+        width: 100%;
+      }
+
+      .welcome-box {
+        padding: 25px;
       }
     }
   </style>
@@ -230,55 +394,109 @@
 
 <body>
 
-  <div class="login-box">
-    <div class="logo">🔐</div>
+  <!-- EKRAN LOGOWANIA -->
 
-    <h1>Logowanie</h1>
-    <p class="subtitle">Wprowadź login i hasło</p>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <div class="logo">🔐</div>
 
-    <form id="loginForm">
-      <div class="input-box">
-        <label for="login">Login</label>
+      <h1>Logowanie</h1>
+      <p class="subtitle">Wprowadź login i hasło</p>
 
-        <input
-          type="text"
-          id="login"
-          placeholder="Wpisz login"
-          autocomplete="username"
-          required
-        >
-      </div>
+      <form id="loginForm">
+        <div class="input-box">
+          <label for="login">Login</label>
 
-      <div class="input-box">
-        <label for="password">Hasło</label>
-
-        <div class="password-box">
           <input
-            type="password"
-            id="password"
-            placeholder="Wpisz hasło"
-            autocomplete="current-password"
+            type="text"
+            id="login"
+            placeholder="Wpisz login"
+            autocomplete="username"
             required
           >
-
-          <button
-            type="button"
-            class="show-password"
-            id="showPassword"
-            aria-label="Pokaż hasło"
-          >
-            👁
-          </button>
         </div>
+
+        <div class="input-box">
+          <label for="password">Hasło</label>
+
+          <div class="password-box">
+            <input
+              type="password"
+              id="password"
+              placeholder="Wpisz hasło"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="show-password"
+              id="showPassword"
+              aria-label="Pokaż hasło"
+            >
+              👁
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="login-button">
+          Zaloguj się
+        </button>
+
+        <div id="message" class="message"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- PANEL PO ZALOGOWANIU -->
+
+  <section class="dashboard-screen hidden" id="dashboardScreen">
+    <nav class="navbar">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <span>Panel użytkownika</span>
       </div>
 
-      <button type="submit" class="login-button">
-        Zaloguj się
+      <button class="logout-button" id="logoutButton">
+        Wyloguj się
       </button>
+    </nav>
 
-      <div id="message" class="message"></div>
-    </form>
-  </div>
+    <main class="content">
+      <section class="welcome-box">
+        <h1>Witaj w panelu! 👋</h1>
+        <p>
+          Logowanie przebiegło pomyślnie. Teraz znajdujesz się na stronie głównej.
+        </p>
+      </section>
+
+      <section class="cards">
+        <div class="card">
+          <div class="card-icon">👤</div>
+          <h2>Profil</h2>
+          <p>
+            Tutaj możesz później dodać informacje o zalogowanym użytkowniku.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h2>Statystyki</h2>
+          <p>
+            Miejsce na statystyki, wyniki, poziomy lub informacje z Twojego projektu.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h2>Ustawienia</h2>
+          <p>
+            W przyszłości możesz tutaj dodać ustawienia konta i wyglądu panelu.
+          </p>
+        </div>
+      </section>
+    </main>
+  </section>
 
   <script>
     const loginForm = document.getElementById("loginForm");
@@ -286,6 +504,10 @@
     const passwordInput = document.getElementById("password");
     const showPasswordButton = document.getElementById("showPassword");
     const message = document.getElementById("message");
+
+    const loginScreen = document.getElementById("loginScreen");
+    const dashboardScreen = document.getElementById("dashboardScreen");
+    const logoutButton = document.getElementById("logoutButton");
 
     showPasswordButton.addEventListener("click", () => {
       const passwordIsHidden = passwordInput.type === "password";
@@ -314,12 +536,27 @@
         message.classList.add("success");
 
         setTimeout(() => {
-          window.location.href = "panel.html";
-        }, 1000);
+          loginScreen.classList.add("hidden");
+          dashboardScreen.classList.remove("hidden");
+          document.title = "Panel użytkownika";
+        }, 700);
       } else {
         message.textContent = "Nieprawidłowy login lub hasło.";
         message.classList.add("error");
       }
+    });
+
+    logoutButton.addEventListener("click", () => {
+      dashboardScreen.classList.add("hidden");
+      loginScreen.classList.remove("hidden");
+
+      loginForm.reset();
+      passwordInput.type = "password";
+      showPasswordButton.textContent = "👁";
+      message.textContent = "";
+      message.className = "message";
+
+      document.title = "Logowanie i panel";
     });
   </script>
 
