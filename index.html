@@ -894,7 +894,6 @@
 
         .search-box input:focus {
             border-color: rgba(59,130,246,0.45);
-
             box-shadow:
                 0 0 0 3px rgba(59,130,246,0.06);
         }
@@ -1662,8 +1661,6 @@
             }
         }
 
-    
-
         /* =========================================================
            LOGIN GATE
         ========================================================== */
@@ -1821,849 +1818,403 @@
 
 <body>
 
-
-<section class="login-screen" id="loginScreen" aria-labelledby="loginTitle">
-    <div class="login-card">
-        <div class="login-badge" aria-hidden="true">
-            <i class="fa-solid fa-shield-halved"></i>
-        </div>
-        <h2 id="loginTitle">Dostęp do terminala</h2>
-        <p>Zaloguj się, aby otworzyć policyjny system Mobile Terminal Data Venus RP.</p>
-        <form id="loginForm" novalidate>
-            <label class="login-field" for="loginUsername">
-                <span>Identyfikator służbowy</span>
-                <input class="login-input" id="loginUsername" name="username" type="text" autocomplete="username" placeholder="Wpisz identyfikator" required>
-            </label>
-            <label class="login-field" for="loginPassword">
-                <span>Hasło</span>
-                <input class="login-input" id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Wpisz hasło" required>
-            </label>
-            <button class="login-submit" type="submit">
-                <i class="fa-solid fa-right-to-bracket"></i> Zaloguj do MDT
-            </button>
-            <p class="login-error" id="loginError" role="alert" aria-live="polite"></p>
-        </form>
-        <div class="login-notice">
-            <i class="fa-solid fa-circle-info"></i>
-            Środowisko demonstracyjne — dane dostępowe są tymczasowe.
-        </div>
-    </div>
-</section>
-
-<div class="app" id="mdtApp" aria-hidden="true">
-
-    <!-- =========================================================
-         SIDEBAR
-    ========================================================== -->
-
-    <aside class="sidebar">
-
-        <div class="brand">
-
-            <div class="brand-logo">
+    <section class="login-screen" id="loginScreen" aria-labelledby="loginTitle">
+        <div class="login-card">
+            <div class="login-badge" aria-hidden="true">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
-
-            <div class="brand-info">
-                <h1>VENUS RP</h1>
-                <span>Mobile Terminal Data</span>
+            <h2 id="loginTitle">Dostęp do terminala</h2>
+            <p>Zaloguj się, aby otworzyć policyjny system Mobile Terminal Data Venus RP.</p>
+            <form id="loginForm" novalidate>
+                <label class="login-field" for="loginUsername">
+                    <span>Identyfikator służbowy</span>
+                    <input class="login-input" id="loginUsername" name="username" type="text" autocomplete="username" placeholder="Wpisz identyfikator" required>
+                </label>
+                <label class="login-field" for="loginPassword">
+                    <span>Hasło</span>
+                    <input class="login-input" id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Wpisz hasło" required>
+                </label>
+                <button class="login-submit" type="submit">
+                    <i class="fa-solid fa-right-to-bracket"></i> Zaloguj do MDT
+                </button>
+                <p class="login-error" id="loginError" role="alert" aria-live="polite"></p>
+            </form>
+            <div class="login-notice">
+                <i class="fa-solid fa-circle-info"></i>
+                Środowisko demonstracyjne — dane dostępowe są tymczasowe.
             </div>
-
         </div>
+    </section>
 
-        <nav class="nav">
+    <div class="app" id="mdtApp" aria-hidden="true">
 
-            <div class="nav-label">
-                Terminal
-            </div>
+        <!-- =========================================================
+             SIDEBAR
+        ========================================================== -->
 
-            <button
-                class="nav-item active"
-                data-page="home"
-            >
-                <i class="fa-solid fa-house"></i>
-                <span>Główna</span>
-            </button>
+        <aside class="sidebar">
 
-            <button
-                class="nav-item"
-                data-page="people"
-            >
-                <i class="fa-solid fa-user"></i>
-                <span>Osoby</span>
-            </button>
+            <div class="brand">
 
-            <button
-                class="nav-item"
-                data-page="vehicles"
-            >
-                <i class="fa-solid fa-car"></i>
-                <span>Pojazdy</span>
-            </button>
-
-            <button
-                class="nav-item"
-                data-page="officers"
-            >
-                <i class="fa-solid fa-user-shield"></i>
-                <span>Funkcjonariusze</span>
-            </button>
-
-            <button
-                class="nav-item"
-                data-page="reports"
-            >
-                <i class="fa-solid fa-file-lines"></i>
-                <span>Raport</span>
-            </button>
-
-            <button
-                class="nav-item"
-                data-page="laws"
-            >
-                <i class="fa-solid fa-scale-balanced"></i>
-                <span>Ustawy</span>
-            </button>
-
-        </nav>
-
-        <div class="sidebar-user">
-
-            <div class="user-card">
-
-                <div class="avatar">
-                    JK
+                <div class="brand-logo">
+                    <i class="fa-solid fa-shield-halved"></i>
                 </div>
 
-                <div class="user-info">
-                    <strong>Jan Kowalski</strong>
-                    <span>Policjant • #2047</span>
+                <div class="brand-info">
+                    <h1>VENUS RP</h1>
+                    <span>Mobile Terminal Data</span>
                 </div>
-
-                <div class="online-dot"></div>
 
             </div>
 
-        </div>
+            <nav class="nav">
 
-    </aside>
-
-    <!-- =========================================================
-         MAIN
-    ========================================================== -->
-
-    <main class="main">
-
-        <!-- =====================================================
-             TOPBAR
-        ====================================================== -->
-
-        <header class="topbar">
-
-            <div class="page-heading">
-
-                <h2 id="pageTitle">
-                    Główna
-                </h2>
-
-                <span>
-                    Policyjny System Informacyjny
-                </span>
-
-            </div>
-
-            <div class="top-actions">
-
-                <div class="clock" id="clock">
-                    00:00:00
+                <div class="nav-label">
+                    Terminal
                 </div>
 
-                <button class="notification-btn">
-                    <i class="fa-regular fa-bell"></i>
-                    <div class="notification-dot"></div>
+                <button
+                    class="nav-item active"
+                    data-page="home"
+                >
+                    <i class="fa-solid fa-house"></i>
+                    <span>Główna</span>
                 </button>
 
+                <button
+                    class="nav-item"
+                    data-page="people"
+                >
+                    <i class="fa-solid fa-user"></i>
+                    <span>Osoby</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="vehicles"
+                >
+                    <i class="fa-solid fa-car"></i>
+                    <span>Pojazdy</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="officers"
+                >
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Funkcjonariusze</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="reports"
+                >
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Raport</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="laws"
+                >
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span>Ustawy</span>
+                </button>
+
+            </nav>
+
+            <div class="sidebar-user">
+
+                <div class="user-card">
+
+                    <div class="avatar">
+                        JK
+                    </div>
+
+                    <div class="user-info">
+                        <strong>Jan Kowalski</strong>
+                        <span>Policjant • #2047</span>
+                    </div>
+
+                    <div class="online-dot"></div>
+
+                </div>
+
             </div>
 
-        </header>
+        </aside>
 
-        <!-- =====================================================
-             CONTENT
-        ====================================================== -->
+        <!-- =========================================================
+             MAIN
+        ========================================================== -->
 
-        <div class="content">
+        <main class="main">
 
-            <!-- =================================================
-                 GŁÓWNA
-            ================================================== -->
+            <!-- =====================================================
+                 TOPBAR
+            ====================================================== -->
 
-            <section
-                class="page active"
-                id="page-home"
-            >
+            <header class="topbar">
 
-                <div class="welcome">
+                <div class="page-heading">
 
-                    <h3>
-                        Witaj w MTD, Jan.
-                    </h3>
+                    <h2 id="pageTitle">
+                        Główna
+                    </h2>
 
-                    <p>
-                        Mobilny Terminal Danych • Venus RP Police Department
-                    </p>
-
-                    <div class="service-status">
-
-                        <div class="status-dot"></div>
-
-                        Funkcjonariusz aktywny na służbie
-
-                    </div>
-
-                </div>
-
-                <div class="stats">
-
-                    <div class="card stat-card">
-
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-
-                        <div class="stat-value">
-                            124
-                        </div>
-
-                        <div class="stat-label">
-                            Funkcjonariusze na służbie
-                        </div>
-
-                    </div>
-
-                    <div class="card stat-card">
-
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                        </div>
-
-                        <div class="stat-value">
-                            7
-                        </div>
-
-                        <div class="stat-label">
-                            Aktywne zgłoszenia
-                        </div>
-
-                    </div>
-
-                    <div class="card stat-card">
-
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-file-lines"></i>
-                        </div>
-
-                        <div class="stat-value">
-                            18
-                        </div>
-
-                        <div class="stat-label">
-                            Twoje raporty
-                        </div>
-
-                    </div>
-
-                    <div class="card stat-card">
-
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-clock"></i>
-                        </div>
-
-                        <div class="stat-value">
-                            04:27
-                        </div>
-
-                        <div class="stat-label">
-                            Czas na służbie
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="grid-2">
-
-                    <div class="card">
-
-                        <div class="card-header">
-
-                            <h4>
-                                Ostatnia aktywność
-                            </h4>
-
-                            <span class="badge badge-blue">
-                                Dzisiaj
-                            </span>
-
-                        </div>
-
-                        <div class="card-body">
-
-                            <div class="activity">
-
-                                <div class="activity-icon">
-                                    <i class="fa-solid fa-car"></i>
-                                </div>
-
-                                <div class="activity-content">
-
-                                    <strong>
-                                        Sprawdzono pojazd WX 2047K
-                                    </strong>
-
-                                    <span>
-                                        22:37 • Kontrola drogowa
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <div class="activity">
-
-                                <div class="activity-icon">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-
-                                <div class="activity-content">
-
-                                    <strong>
-                                        Wyszukano Jana Nowaka
-                                    </strong>
-
-                                    <span>
-                                        22:29 • Baza osób
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <div class="activity">
-
-                                <div class="activity-icon">
-                                    <i class="fa-solid fa-file-lines"></i>
-                                </div>
-
-                                <div class="activity-content">
-
-                                    <strong>
-                                        Utworzono raport #10482
-                                    </strong>
-
-                                    <span>
-                                        22:11 • Raport służbowy
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="card">
-
-                        <div class="card-header">
-
-                            <h4>
-                                Szybkie akcje
-                            </h4>
-
-                        </div>
-
-                        <div class="card-body">
-
-                            <div class="quick-actions">
-
-                                <button
-                                    class="quick-btn"
-                                    onclick="openPage('people')"
-                                >
-                                    <i class="fa-solid fa-user"></i>
-                                    Szukaj osoby
-                                </button>
-
-                                <button
-                                    class="quick-btn"
-                                    onclick="openPage('vehicles')"
-                                >
-                                    <i class="fa-solid fa-car"></i>
-                                    Szukaj pojazdu
-                                </button>
-
-                                <button
-                                    class="quick-btn"
-                                    onclick="openPage('reports')"
-                                >
-                                    <i class="fa-solid fa-file-circle-plus"></i>
-                                    Nowy raport
-                                </button>
-
-                                <button
-                                    class="quick-btn"
-                                    onclick="openPage('laws')"
-                                >
-                                    <i class="fa-solid fa-scale-balanced"></i>
-                                    Sprawdź ustawę
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 OSOBY
-            ================================================== -->
-
-            <section
-                class="page"
-                id="page-people"
-            >
-
-                <div class="section-header">
-
-                    <div>
-                        <h3>Osoby</h3>
-
-                        <p>
-                            Baza danych obywateli Venus RP.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-header">
-
-                        <div style="width: 400px; max-width: 100%;">
-
-                            <div class="search-box">
-
-                                <i class="fa-solid fa-magnifying-glass"></i>
-
-                                <input
-                                    type="text"
-                                    id="peopleSearch"
-                                    placeholder="Imię, nazwisko, PESEL lub numer dokumentu..."
-                                >
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="table-wrapper">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>Obywatel</th>
-                                    <th>PESEL</th>
-                                    <th>Prawo jazdy</th>
-                                    <th>Punkty</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="peopleTable">
-
-                                <tr data-search="jan kowalski 99010112345 204812">
-
-                                    <td>
-
-                                        <div class="person-name">
-
-                                            <div class="mini-avatar">
-                                                JK
-                                            </div>
-
-                                            Jan Kowalski
-
-                                        </div>
-
-                                    </td>
-
-                                    <td>
-                                        99010112345
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Aktywne
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        6 / 24
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Brak poszukiwania
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <button
-                                            class="btn"
-                                            onclick="showPerson('Jan Kowalski')"
-                                        >
-                                            Otwórz
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-                                <tr data-search="anna nowak 97052288421 204921">
-
-                                    <td>
-
-                                        <div class="person-name">
-
-                                            <div class="mini-avatar">
-                                                AN
-                                            </div>
-
-                                            Anna Nowak
-
-                                        </div>
-
-                                    </td>
-
-                                    <td>
-                                        97052288421
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Aktywne
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        2 / 24
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Brak poszukiwania
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <button
-                                            class="btn"
-                                            onclick="showPerson('Anna Nowak')"
-                                        >
-                                            Otwórz
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-                                <tr data-search="piotr zielinski 95030144512 205182">
-
-                                    <td>
-
-                                        <div class="person-name">
-
-                                            <div class="mini-avatar">
-                                                PZ
-                                            </div>
-
-                                            Piotr Zieliński
-
-                                        </div>
-
-                                    </td>
-
-                                    <td>
-                                        95030144512
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-red">
-                                            Zatrzymane
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        18 / 24
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-yellow">
-                                            Zakaz prowadzenia
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <button
-                                            class="btn"
-                                            onclick="showPerson('Piotr Zieliński')"
-                                        >
-                                            Otwórz
-                                        </button>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 POJAZDY
-            ================================================== -->
-
-            <section
-                class="page"
-                id="page-vehicles"
-            >
-
-                <div class="section-header">
-
-                    <div>
-                        <h3>Pojazdy</h3>
-
-                        <p>
-                            Centralna baza pojazdów zarejestrowanych w Venus RP.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="card-header">
-
-                        <div style="width: 400px; max-width: 100%;">
-
-                            <div class="search-box">
-
-                                <i class="fa-solid fa-magnifying-glass"></i>
-
-                                <input
-                                    type="text"
-                                    id="vehicleSearch"
-                                    placeholder="Tablica, VIN, marka lub właściciel..."
-                                >
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="table-wrapper">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>Tablica</th>
-                                    <th>Pojazd</th>
-                                    <th>Właściciel</th>
-                                    <th>OC</th>
-                                    <th>Przegląd</th>
-                                    <th>Status</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody id="vehicleTable">
-
-                                <tr data-search="wx2047k bmw m5 jan kowalski">
-
-                                    <td>
-                                        <strong style="color:white;">
-                                            WX 2047K
-                                        </strong>
-                                    </td>
-
-                                    <td>
-                                        BMW M5
-                                    </td>
-
-                                    <td>
-                                        Jan Kowalski
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Aktywne
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Ważny
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Brak alertów
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-                                <tr data-search="ww8123p audi rs6 anna nowak">
-
-                                    <td>
-                                        <strong style="color:white;">
-                                            WW 8123P
-                                        </strong>
-                                    </td>
-
-                                    <td>
-                                        Audi RS6
-                                    </td>
-
-                                    <td>
-                                        Anna Nowak
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Aktywne
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Ważny
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Brak alertów
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-                                <tr data-search="wz4499x mercedes amg piotr zielinski">
-
-                                    <td>
-                                        <strong style="color:white;">
-                                            WZ 4499X
-                                        </strong>
-                                    </td>
-
-                                    <td>
-                                        Mercedes-AMG C63
-                                    </td>
-
-                                    <td>
-                                        Piotr Zieliński
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-red">
-                                            Brak
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-yellow">
-                                            Wygasły
-                                        </span>
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-red">
-                                            ALERT
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 FUNKCJONARIUSZE
-            ================================================== -->
-
-            <section
-                class="page"
-                id="page-officers"
-            >
-
-                <div class="section-header">
-
-                    <div>
-                        <h3>Funkcjonariusze</h3>
-
-                        <p>
-                            Lista funkcjonariuszy oraz ich aktualny status.
-                        </p>
-                    </div>
-
-                    <span class="badge badge-green">
-                        124 na służbie
+                    <span>
+                        Policyjny System Informacyjny
                     </span>
 
                 </div>
 
-                <div class="card">
+                <div class="top-actions">
 
-                    <div class="card-header">
+                    <div class="clock" id="clock">
+                        00:00:00
+                    </div>
 
-                        <div style="width: 400px; max-width: 100%;">
+                    <button class="notification-btn">
+                        <i class="fa-regular fa-bell"></i>
+                        <div class="notification-dot"></div>
+                    </button>
 
-                            <div class="search-box">
+                </div>
 
-                                <i class="fa-solid fa-magnifying-glass"></i>
+            </header>
 
-                                <input
-                                    type="text"
-                                    id="officerSearch"
-                                    placeholder="Szukaj funkcjonariusza..."
-                                >
+            <!-- =====================================================
+                 CONTENT
+            ====================================================== -->
+
+            <div class="content">
+
+                <!-- =================================================
+                     GŁÓWNA
+                ================================================== -->
+
+                <section
+                    class="page active"
+                    id="page-home"
+                >
+
+                    <div class="welcome">
+
+                        <h3>
+                            Witaj w MTD, Jan.
+                        </h3>
+
+                        <p>
+                            Mobilny Terminal Danych • Venus RP Police Department
+                        </p>
+
+                        <div class="service-status">
+
+                            <div class="status-dot"></div>
+
+                            Funkcjonariusz aktywny na służbie
+
+                        </div>
+
+                    </div>
+
+                    <div class="stats">
+
+                        <div class="card stat-card">
+
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+
+                            <div class="stat-value">
+                                124
+                            </div>
+
+                            <div class="stat-label">
+                                Funkcjonariusze na służbie
+                            </div>
+
+                        </div>
+
+                        <div class="card stat-card">
+
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+
+                            <div class="stat-value">
+                                7
+                            </div>
+
+                            <div class="stat-label">
+                                Aktywne zgłoszenia
+                            </div>
+
+                        </div>
+
+                        <div class="card stat-card">
+
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+
+                            <div class="stat-value">
+                                18
+                            </div>
+
+                            <div class="stat-label">
+                                Twoje raporty
+                            </div>
+
+                        </div>
+
+                        <div class="card stat-card">
+
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+
+                            <div class="stat-value">
+                                04:27
+                            </div>
+
+                            <div class="stat-label">
+                                Czas na służbie
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="grid-2">
+
+                        <div class="card">
+
+                            <div class="card-header">
+
+                                <h4>
+                                    Ostatnia aktywność
+                                </h4>
+
+                                <span class="badge badge-blue">
+                                    Dzisiaj
+                                </span>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="activity">
+
+                                    <div class="activity-icon">
+                                        <i class="fa-solid fa-car"></i>
+                                    </div>
+
+                                    <div class="activity-content">
+
+                                        <strong>
+                                            Sprawdzono pojazd WX 2047K
+                                        </strong>
+
+                                        <span>
+                                            22:37 • Kontrola drogowa
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="activity">
+
+                                    <div class="activity-icon">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+
+                                    <div class="activity-content">
+
+                                        <strong>
+                                            Wyszukano Jana Nowaka
+                                        </strong>
+
+                                        <span>
+                                            22:29 • Baza osób
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="activity">
+
+                                    <div class="activity-icon">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                    </div>
+
+                                    <div class="activity-content">
+
+                                        <strong>
+                                            Utworzono raport #10482
+                                        </strong>
+
+                                        <span>
+                                            22:11 • Raport służbowy
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="card">
+
+                            <div class="card-header">
+
+                                <h4>
+                                    Szybkie akcje
+                                </h4>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="quick-actions">
+
+                                    <button
+                                        class="quick-btn"
+                                        onclick="openPage('people')"
+                                    >
+                                        <i class="fa-solid fa-user"></i>
+                                        Szukaj osoby
+                                    </button>
+
+                                    <button
+                                        class="quick-btn"
+                                        onclick="openPage('vehicles')"
+                                    >
+                                        <i class="fa-solid fa-car"></i>
+                                        Szukaj pojazdu
+                                    </button>
+
+                                    <button
+                                        class="quick-btn"
+                                        onclick="openPage('reports')"
+                                    >
+                                        <i class="fa-solid fa-file-circle-plus"></i>
+                                        Nowy raport
+                                    </button>
+
+                                    <button
+                                        class="quick-btn"
+                                        onclick="openPage('laws')"
+                                    >
+                                        <i class="fa-solid fa-scale-balanced"></i>
+                                        Sprawdź ustawę
+                                    </button>
+
+                                </div>
 
                             </div>
 
@@ -2671,166 +2222,49 @@
 
                     </div>
 
-                    <div class="table-wrapper">
+                </section>
 
-                        <table>
 
-                            <thead>
+                <!-- =================================================
+                     OSOBY
+                ================================================== -->
 
-                                <tr>
-                                    <th>Funkcjonariusz</th>
-                                    <th>Stopień</th>
-                                    <th>Numer</th>
-                                    <th>Jednostka</th>
-                                    <th>Status</th>
-                                </tr>
+                <section
+                    class="page"
+                    id="page-people"
+                >
 
-                            </thead>
+                    <div class="section-header">
 
-                            <tbody id="officerTable">
+                        <div>
+                            <h3>Osoby</h3>
 
-                                <tr data-search="jan kowalski policjant 2047 p21">
-
-                                    <td>
-                                        <div class="person-name">
-                                            <div class="mini-avatar">
-                                                JK
-                                            </div>
-                                            Jan Kowalski
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        Policjant
-                                    </td>
-
-                                    <td>
-                                        #2047
-                                    </td>
-
-                                    <td>
-                                        P-21
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Na służbie
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-                                <tr data-search="adam wisniewski sierzant 2012 p14">
-
-                                    <td>
-                                        <div class="person-name">
-                                            <div class="mini-avatar">
-                                                AW
-                                            </div>
-                                            Adam Wiśniewski
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        Sierżant
-                                    </td>
-
-                                    <td>
-                                        #2012
-                                    </td>
-
-                                    <td>
-                                        P-14
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-green">
-                                            Na służbie
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-                                <tr data-search="marek dabrowski aspirant 1988 p07">
-
-                                    <td>
-                                        <div class="person-name">
-                                            <div class="mini-avatar">
-                                                MD
-                                            </div>
-                                            Marek Dąbrowski
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        Aspirant
-                                    </td>
-
-                                    <td>
-                                        #1988
-                                    </td>
-
-                                    <td>
-                                        P-07
-                                    </td>
-
-                                    <td>
-                                        <span class="badge badge-yellow">
-                                            Przerwa
-                                        </span>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
+                            <p>
+                                Baza danych obywateli Venus RP.
+                            </p>
+                        </div>
 
                     </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- =================================================
-                 RAPORT
-            ================================================== -->
-
-            <section
-                class="page"
-                id="page-reports"
-            >
-
-                <div class="section-header">
-
-                    <div>
-                        <h3>Raporty</h3>
-
-                        <p>
-                            Tworzenie oraz historia raportów służbowych.
-                        </p>
-                    </div>
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="newReport()"
-                    >
-                        <i class="fa-solid fa-plus"></i>
-                        Nowy raport
-                    </button>
-
-                </div>
-
-                <div class="grid-2">
 
                     <div class="card">
 
                         <div class="card-header">
 
-                            <h4>
-                                Ostatnie raporty
-                            </h4>
+                            <div style="width: 400px; max-width: 100%;">
+
+                                <div class="search-box">
+
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                                    <input
+                                        type="text"
+                                        id="peopleSearch"
+                                        placeholder="Imię, nazwisko, PESEL lub numer dokumentu..."
+                                    >
+
+                                </div>
+
+                            </div>
 
                         </div>
 
@@ -2841,47 +2275,157 @@
                                 <thead>
 
                                     <tr>
-                                        <th>Numer</th>
-                                        <th>Typ</th>
-                                        <th>Data</th>
+                                        <th>Obywatel</th>
+                                        <th>PESEL</th>
+                                        <th>Prawo jazdy</th>
+                                        <th>Punkty</th>
                                         <th>Status</th>
+                                        <th></th>
                                     </tr>
 
                                 </thead>
 
-                                <tbody>
+                                <tbody id="peopleTable">
 
-                                    <tr>
-                                        <td>#10482</td>
-                                        <td>Kontrola drogowa</td>
-                                        <td>10.09.2026</td>
+                                    <tr data-search="jan kowalski 99010112345 204812">
+
+                                        <td>
+
+                                            <div class="person-name">
+
+                                                <div class="mini-avatar">
+                                                    JK
+                                                </div>
+
+                                                Jan Kowalski
+
+                                            </div>
+
+                                        </td>
+
+                                        <td>
+                                            99010112345
+                                        </td>
+
                                         <td>
                                             <span class="badge badge-green">
-                                                Zakończony
+                                                Aktywne
                                             </span>
                                         </td>
+
+                                        <td>
+                                            6 / 24
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Brak poszukiwania
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="btn"
+                                                onclick="showPerson('Jan Kowalski')"
+                                            >
+                                                Otwórz
+                                            </button>
+                                        </td>
+
                                     </tr>
 
-                                    <tr>
-                                        <td>#10471</td>
-                                        <td>Interwencja</td>
-                                        <td>10.09.2026</td>
+                                    <tr data-search="anna nowak 97052288421 204921">
+
+                                        <td>
+
+                                            <div class="person-name">
+
+                                                <div class="mini-avatar">
+                                                    AN
+                                                </div>
+
+                                                Anna Nowak
+
+                                            </div>
+
+                                        </td>
+
+                                        <td>
+                                            97052288421
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Aktywne
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            2 / 24
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Brak poszukiwania
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                class="btn"
+                                                onclick="showPerson('Anna Nowak')"
+                                            >
+                                                Otwórz
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr data-search="piotr zielinski 95030144512 205182">
+
+                                        <td>
+
+                                            <div class="person-name">
+
+                                                <div class="mini-avatar">
+                                                    PZ
+                                                </div>
+
+                                                Piotr Zieliński
+
+                                            </div>
+
+                                        </td>
+
+                                        <td>
+                                            95030144512
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-red">
+                                                Zatrzymane
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            18 / 24
+                                        </td>
+
                                         <td>
                                             <span class="badge badge-yellow">
-                                                Weryfikacja
+                                                Zakaz prowadzenia
                                             </span>
                                         </td>
-                                    </tr>
 
-                                    <tr>
-                                        <td>#10452</td>
-                                        <td>Wypadek drogowy</td>
-                                        <td>09.09.2026</td>
                                         <td>
-                                            <span class="badge badge-green">
-                                                Zakończony
-                                            </span>
+                                            <button
+                                                class="btn"
+                                                onclick="showPerson('Piotr Zieliński')"
+                                            >
+                                                Otwórz
+                                            </button>
                                         </td>
+
                                     </tr>
 
                                 </tbody>
@@ -2892,38 +2436,492 @@
 
                     </div>
 
+                </section>
+
+
+                <!-- =================================================
+                     POJAZDY
+                ================================================== -->
+
+                <section
+                    class="page"
+                    id="page-vehicles"
+                >
+
+                    <div class="section-header">
+
+                        <div>
+                            <h3>Pojazdy</h3>
+
+                            <p>
+                                Centralna baza pojazdów zarejestrowanych w Venus RP.
+                            </p>
+                        </div>
+
+                    </div>
+
                     <div class="card">
 
                         <div class="card-header">
 
-                            <h4>
-                                Informacje
-                            </h4>
+                            <div style="width: 400px; max-width: 100%;">
+
+                                <div class="search-box">
+
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                                    <input
+                                        type="text"
+                                        id="vehicleSearch"
+                                        placeholder="Tablica, VIN, marka lub właściciel..."
+                                    >
+
+                                </div>
+
+                            </div>
 
                         </div>
 
-                        <div class="card-body">
+                        <div class="table-wrapper">
 
-                            <div class="detail-grid">
+                            <table>
 
-                                <div class="detail-item">
-                                    <label>Raportów</label>
-                                    <strong>18</strong>
+                                <thead>
+
+                                    <tr>
+                                        <th>Tablica</th>
+                                        <th>Pojazd</th>
+                                        <th>Właściciel</th>
+                                        <th>OC</th>
+                                        <th>Przegląd</th>
+                                        <th>Status</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="vehicleTable">
+
+                                    <tr data-search="wx2047k bmw m5 jan kowalski">
+
+                                        <td>
+                                            <strong style="color:white;">
+                                                WX 2047K
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            BMW M5
+                                        </td>
+
+                                        <td>
+                                            Jan Kowalski
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Aktywne
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Ważny
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Brak alertów
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr data-search="ww8123p audi rs6 anna nowak">
+
+                                        <td>
+                                            <strong style="color:white;">
+                                                WW 8123P
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            Audi RS6
+                                        </td>
+
+                                        <td>
+                                            Anna Nowak
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Aktywne
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Ważny
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Brak alertów
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr data-search="wz4499x mercedes amg piotr zielinski">
+
+                                        <td>
+                                            <strong style="color:white;">
+                                                WZ 4499X
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            Mercedes-AMG C63
+                                        </td>
+
+                                        <td>
+                                            Piotr Zieliński
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-red">
+                                                Brak
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-yellow">
+                                                Wygasły
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-red">
+                                                ALERT
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     FUNKCJONARIUSZE
+                ================================================== -->
+
+                <section
+                    class="page"
+                    id="page-officers"
+                >
+
+                    <div class="section-header">
+
+                        <div>
+                            <h3>Funkcjonariusze</h3>
+
+                            <p>
+                                Lista funkcjonariuszy oraz ich aktualny status.
+                            </p>
+                        </div>
+
+                        <span class="badge badge-green">
+                            124 na służbie
+                        </span>
+
+                    </div>
+
+                    <div class="card">
+
+                        <div class="card-header">
+
+                            <div style="width: 400px; max-width: 100%;">
+
+                                <div class="search-box">
+
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                                    <input
+                                        type="text"
+                                        id="officerSearch"
+                                        placeholder="Szukaj funkcjonariusza..."
+                                    >
+
                                 </div>
 
-                                <div class="detail-item">
-                                    <label>Zakończone</label>
-                                    <strong>16</strong>
-                                </div>
+                            </div>
 
-                                <div class="detail-item">
-                                    <label>Do weryfikacji</label>
-                                    <strong>2</strong>
-                                </div>
+                        </div>
 
-                                <div class="detail-item">
-                                    <label>Ostatni raport</label>
-                                    <strong>#10482</strong>
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Funkcjonariusz</th>
+                                        <th>Stopień</th>
+                                        <th>Numer</th>
+                                        <th>Jednostka</th>
+                                        <th>Status</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="officerTable">
+
+                                    <tr data-search="jan kowalski policjant 2047 p21">
+
+                                        <td>
+                                            <div class="person-name">
+                                                <div class="mini-avatar">
+                                                    JK
+                                                </div>
+                                                Jan Kowalski
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            Policjant
+                                        </td>
+
+                                        <td>
+                                            #2047
+                                        </td>
+
+                                        <td>
+                                            P-21
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Na służbie
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr data-search="adam wisniewski sierzant 2012 p14">
+
+                                        <td>
+                                            <div class="person-name">
+                                                <div class="mini-avatar">
+                                                    AW
+                                                </div>
+                                                Adam Wiśniewski
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            Sierżant
+                                        </td>
+
+                                        <td>
+                                            #2012
+                                        </td>
+
+                                        <td>
+                                            P-14
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-green">
+                                                Na służbie
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr data-search="marek dabrowski aspirant 1988 p07">
+
+                                        <td>
+                                            <div class="person-name">
+                                                <div class="mini-avatar">
+                                                    MD
+                                                </div>
+                                                Marek Dąbrowski
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            Aspirant
+                                        </td>
+
+                                        <td>
+                                            #1988
+                                        </td>
+
+                                        <td>
+                                            P-07
+                                        </td>
+
+                                        <td>
+                                            <span class="badge badge-yellow">
+                                                Przerwa
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     RAPORT
+                ================================================== -->
+
+                <section
+                    class="page"
+                    id="page-reports"
+                >
+
+                    <div class="section-header">
+
+                        <div>
+                            <h3>Raporty</h3>
+
+                            <p>
+                                Tworzenie oraz historia raportów służbowych.
+                            </p>
+                        </div>
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="newReport()"
+                        >
+                            <i class="fa-solid fa-plus"></i>
+                            Nowy raport
+                        </button>
+
+                    </div>
+
+                    <div class="grid-2">
+
+                        <div class="card">
+
+                            <div class="card-header">
+
+                                <h4>
+                                    Ostatnie raporty
+                                </h4>
+
+                            </div>
+
+                            <div class="table-wrapper">
+
+                                <table>
+
+                                    <thead>
+
+                                        <tr>
+                                            <th>Numer</th>
+                                            <th>Typ</th>
+                                            <th>Data</th>
+                                            <th>Status</th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr>
+                                            <td>#10482</td>
+                                            <td>Kontrola drogowa</td>
+                                            <td>10.09.2026</td>
+                                            <td>
+                                                <span class="badge badge-green">
+                                                    Zakończony
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>#10471</td>
+                                            <td>Interwencja</td>
+                                            <td>10.09.2026</td>
+                                            <td>
+                                                <span class="badge badge-yellow">
+                                                    Weryfikacja
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>#10452</td>
+                                            <td>Wypadek drogowy</td>
+                                            <td>09.09.2026</td>
+                                            <td>
+                                                <span class="badge badge-green">
+                                                    Zakończony
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                        <div class="card">
+
+                            <div class="card-header">
+
+                                <h4>
+                                    Informacje
+                                </h4>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="detail-grid">
+
+                                    <div class="detail-item">
+                                        <label>Raportów</label>
+                                        <strong>18</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <label>Zakończone</label>
+                                        <strong>16</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <label>Do weryfikacji</label>
+                                        <strong>2</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <label>Ostatni raport</label>
+                                        <strong>#10482</strong>
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -2932,177 +2930,177 @@
 
                     </div>
 
-                </div>
-
-            </section>
+                </section>
 
 
-            <!-- =================================================
-                 USTAWY
-            ================================================== -->
+                <!-- =================================================
+                     USTAWY
+                ================================================== -->
 
-            <section
-                class="page"
-                id="page-laws"
-            >
+                <section
+                    class="page"
+                    id="page-laws"
+                >
 
-                <div class="section-header">
+                    <div class="section-header">
 
-                    <div>
-                        <h3>Ustawy</h3>
+                        <div>
+                            <h3>Ustawy</h3>
 
-                        <p>
-                            Wewnętrzna baza przepisów i taryfikatora Venus RP.
-                        </p>
+                            <p>
+                                Wewnętrzna baza przepisów i taryfikatora Venus RP.
+                            </p>
+                        </div>
+
                     </div>
 
-                </div>
+                    <div class="law-layout">
 
-                <div class="law-layout">
+                        <div class="card">
 
-                    <div class="card">
+                            <div class="card-header">
 
-                        <div class="card-header">
+                                <div class="search-box">
 
-                            <div class="search-box">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
 
-                                <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input
+                                        type="text"
+                                        id="lawSearch"
+                                        placeholder="Szukaj artykułu..."
+                                    >
 
-                                <input
-                                    type="text"
-                                    id="lawSearch"
-                                    placeholder="Szukaj artykułu..."
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="law-list"
+                                id="lawList"
+                            >
+
+                                <div
+                                    class="law-item active"
+                                    onclick="selectLaw(this, 'Art. 12', 'Przekroczenie prędkości', 'Kierujący pojazdem, który przekracza dopuszczalną prędkość, podlega karze zgodnie z taryfikatorem.', '500 $', '6 pkt', 'Brak')"
                                 >
 
-                            </div>
+                                    <strong>
+                                        Art. 12 — Przekroczenie prędkości
+                                    </strong>
 
-                        </div>
+                                    <span>
+                                        Prawo drogowe
+                                    </span>
 
-                        <div
-                            class="law-list"
-                            id="lawList"
-                        >
+                                </div>
 
-                            <div
-                                class="law-item active"
-                                onclick="selectLaw(this, 'Art. 12', 'Przekroczenie prędkości', 'Kierujący pojazdem, który przekracza dopuszczalną prędkość, podlega karze zgodnie z taryfikatorem.', '500 $', '6 pkt', 'Brak')"
-                            >
+                                <div
+                                    class="law-item"
+                                    onclick="selectLaw(this, 'Art. 27', 'Niezatrzymanie się do kontroli', 'Kierujący pojazdem ma obowiązek zatrzymać pojazd na wyraźne polecenie funkcjonariusza.', '2 000 $', '10 pkt', 'Zakaz prowadzenia')"
+                                >
 
-                                <strong>
-                                    Art. 12 — Przekroczenie prędkości
-                                </strong>
+                                    <strong>
+                                        Art. 27 — Niezatrzymanie się do kontroli
+                                    </strong>
 
-                                <span>
-                                    Prawo drogowe
-                                </span>
+                                    <span>
+                                        Prawo drogowe
+                                    </span>
 
-                            </div>
+                                </div>
 
-                            <div
-                                class="law-item"
-                                onclick="selectLaw(this, 'Art. 27', 'Niezatrzymanie się do kontroli', 'Kierujący pojazdem ma obowiązek zatrzymać pojazd na wyraźne polecenie funkcjonariusza.', '2 000 $', '10 pkt', 'Zakaz prowadzenia')"
-                            >
+                                <div
+                                    class="law-item"
+                                    onclick="selectLaw(this, 'Art. 41', 'Zakłócanie porządku publicznego', 'Osoba zakłócająca porządek publiczny może zostać ukarana mandatem lub skierowana do dalszego postępowania.', '750 $', '0 pkt', 'Brak')"
+                                >
 
-                                <strong>
-                                    Art. 27 — Niezatrzymanie się do kontroli
-                                </strong>
+                                    <strong>
+                                        Art. 41 — Zakłócanie porządku
+                                    </strong>
 
-                                <span>
-                                    Prawo drogowe
-                                </span>
+                                    <span>
+                                        Porządek publiczny
+                                    </span>
 
-                            </div>
+                                </div>
 
-                            <div
-                                class="law-item"
-                                onclick="selectLaw(this, 'Art. 41', 'Zakłócanie porządku publicznego', 'Osoba zakłócająca porządek publiczny może zostać ukarana mandatem lub skierowana do dalszego postępowania.', '750 $', '0 pkt', 'Brak')"
-                            >
+                                <div
+                                    class="law-item"
+                                    onclick="selectLaw(this, 'Art. 63', 'Kradzież pojazdu', 'Bez zezwolenia właściciela zabranie pojazdu stanowi przestępstwo.', '5 000 $', '0 pkt', 'Areszt')"
+                                >
 
-                                <strong>
-                                    Art. 41 — Zakłócanie porządku
-                                </strong>
+                                    <strong>
+                                        Art. 63 — Kradzież pojazdu
+                                    </strong>
 
-                                <span>
-                                    Porządek publiczny
-                                </span>
+                                    <span>
+                                        Kodeks karny
+                                    </span>
 
-                            </div>
-
-                            <div
-                                class="law-item"
-                                onclick="selectLaw(this, 'Art. 63', 'Kradzież pojazdu', 'Bez zezwolenia właściciela zabranie pojazdu stanowi przestępstwo.', '5 000 $', '0 pkt', 'Areszt')"
-                            >
-
-                                <strong>
-                                    Art. 63 — Kradzież pojazdu
-                                </strong>
-
-                                <span>
-                                    Kodeks karny
-                                </span>
+                                </div>
 
                             </div>
 
                         </div>
 
-                    </div>
 
+                        <div class="card law-detail">
 
-                    <div class="card law-detail">
+                            <div class="card-body">
 
-                        <div class="card-body">
+                                <div class="article-number" id="lawNumber">
+                                    Art. 12
+                                </div>
 
-                            <div class="article-number" id="lawNumber">
-                                Art. 12
-                            </div>
+                                <h3 id="lawTitle">
+                                    Przekroczenie prędkości
+                                </h3>
 
-                            <h3 id="lawTitle">
-                                Przekroczenie prędkości
-                            </h3>
+                                <div class="law-description" id="lawDescription">
 
-                            <div class="law-description" id="lawDescription">
-
-                                Kierujący pojazdem, który przekracza
-                                dopuszczalną prędkość, podlega karze
-                                zgodnie z taryfikatorem.
-
-                            </div>
-
-                            <div class="law-penalty">
-
-                                <div class="detail-item">
-
-                                    <label>
-                                        Mandat
-                                    </label>
-
-                                    <strong id="lawFine">
-                                        500 $
-                                    </strong>
+                                    Kierujący pojazdem, który przekracza
+                                    dopuszczalną prędkość, podlega karze
+                                    zgodnie z taryfikatorem.
 
                                 </div>
 
-                                <div class="detail-item">
+                                <div class="law-penalty">
 
-                                    <label>
-                                        Punkty
-                                    </label>
+                                    <div class="detail-item">
 
-                                    <strong id="lawPoints">
-                                        6 pkt
-                                    </strong>
+                                        <label>
+                                            Mandat
+                                        </label>
 
-                                </div>
+                                        <strong id="lawFine">
+                                            500 $
+                                        </strong>
 
-                                <div class="detail-item">
+                                    </div>
 
-                                    <label>
-                                        Dodatkowa kara
-                                    </label>
+                                    <div class="detail-item">
 
-                                    <strong id="lawAdditional">
-                                        Brak
-                                    </strong>
+                                        <label>
+                                            Punkty
+                                        </label>
+
+                                        <strong id="lawPoints">
+                                            6 pkt
+                                        </strong>
+
+                                    </div>
+
+                                    <div class="detail-item">
+
+                                        <label>
+                                            Dodatkowa kara
+                                        </label>
+
+                                        <strong id="lawAdditional">
+                                            Brak
+                                        </strong>
+
+                                    </div>
 
                                 </div>
 
@@ -3112,360 +3110,360 @@
 
                     </div>
 
-                </div>
+                </section>
 
-            </section>
+            </div>
 
-        </div>
+        </main>
 
-    </main>
-
-</div>
+    </div>
 
 
-<!-- =============================================================
-     MODAL
-============================================================== -->
+    <!-- =============================================================
+         MODAL
+    =============================================================== -->
 
-<div
-    class="modal-overlay"
-    id="modalOverlay"
->
+    <div
+        class="modal-overlay"
+        id="modalOverlay"
+    >
 
-    <div class="modal">
+        <div class="modal">
 
-        <div class="modal-header">
+            <div class="modal-header">
 
-            <h3 id="modalTitle">
-                Informacje
-            </h3>
+                <h3 id="modalTitle">
+                    Informacje
+                </h3>
 
-            <button
-                class="modal-close"
-                onclick="closeModal()"
+                <button
+                    class="modal-close"
+                    onclick="closeModal()"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+            <div
+                class="modal-body"
+                id="modalBody"
             >
-                <i class="fa-solid fa-xmark"></i>
-            </button>
 
-        </div>
-
-        <div
-            class="modal-body"
-            id="modalBody"
-        >
+            </div>
 
         </div>
 
     </div>
 
-</div>
+
+    <!-- =============================================================
+         TOAST
+    =============================================================== -->
+
+    <div
+        class="toast-container"
+        id="toastContainer"
+    ></div>
 
 
-<!-- =============================================================
-     TOAST
-============================================================== -->
+    <!-- =============================================================
+         JAVASCRIPT
+    =============================================================== -->
 
-<div
-    class="toast-container"
-    id="toastContainer"
-></div>
+    <script>
 
+        /* =========================================================
+           LOGIN GATE (DEMO ONLY)
+        ========================================================== */
 
-<!-- =============================================================
-     JAVASCRIPT
-============================================================== -->
+        const loginForm = document.getElementById("loginForm");
+        const loginScreen = document.getElementById("loginScreen");
+        const mdtApp = document.getElementById("mdtApp");
+        const loginError = document.getElementById("loginError");
 
-<script>
+        const demoCredentials = {
+            username: "policja",
+            password: "venus2026"
+        };
 
-    /* =========================================================
-       LOGIN GATE (DEMO ONLY)
-    ========================================================== */
+        loginForm.addEventListener("submit", event => {
+            event.preventDefault();
 
-    const loginForm = document.getElementById("loginForm");
-    const loginScreen = document.getElementById("loginScreen");
-    const mdtApp = document.getElementById("mdtApp");
-    const loginError = document.getElementById("loginError");
+            const username = document.getElementById("loginUsername").value.trim();
+            const password = document.getElementById("loginPassword").value;
 
-    const demoCredentials = {
-        username: "policja",
-        password: "venus2026"
-    };
+            if (username !== demoCredentials.username || password !== demoCredentials.password) {
+                loginError.textContent = "Nieprawidłowy identyfikator lub hasło.";
+                document.getElementById("loginPassword").focus();
+                return;
+            }
 
-    loginForm.addEventListener("submit", event => {
-        event.preventDefault();
-
-        const username = document.getElementById("loginUsername").value.trim();
-        const password = document.getElementById("loginPassword").value;
-
-        if (username !== demoCredentials.username || password !== demoCredentials.password) {
-            loginError.textContent = "Nieprawidłowy identyfikator lub hasło.";
-            document.getElementById("loginPassword").focus();
-            return;
-        }
-
-        loginError.textContent = "";
-        loginScreen.hidden = true;
-        mdtApp.classList.add("is-authenticated");
-        mdtApp.removeAttribute("aria-hidden");
-        document.body.style.overflow = "auto";
-    });
-
-
-    /* =========================================================
-       PAGE TITLES
-    ========================================================== */
-
-    const pageTitles = {
-
-        home: "Główna",
-        people: "Osoby",
-        vehicles: "Pojazdy",
-        officers: "Funkcjonariusze",
-        reports: "Raporty",
-        laws: "Ustawy"
-
-    };
-
-
-    /* =========================================================
-       NAVIGATION
-    ========================================================== */
-
-    const navItems =
-        document.querySelectorAll(".nav-item");
-
-    const pages =
-        document.querySelectorAll(".page");
-
-
-    navItems.forEach(item => {
-
-        item.addEventListener("click", () => {
-
-            const page =
-                item.dataset.page;
-
-            openPage(page);
-
+            loginError.textContent = "";
+            loginScreen.hidden = true;
+            mdtApp.classList.add("is-authenticated");
+            mdtApp.removeAttribute("aria-hidden");
+            document.body.style.overflow = "auto";
         });
 
-    });
+
+        /* =========================================================
+           PAGE TITLES
+        ========================================================== */
+
+        const pageTitles = {
+
+            home: "Główna",
+            people: "Osoby",
+            vehicles: "Pojazdy",
+            officers: "Funkcjonariusze",
+            reports: "Raporty",
+            laws: "Ustawy"
+
+        };
 
 
-    function openPage(page) {
+        /* =========================================================
+           NAVIGATION
+        ========================================================== */
+
+        const navItems =
+            document.querySelectorAll(".nav-item");
+
+        const pages =
+            document.querySelectorAll(".page");
+
 
         navItems.forEach(item => {
 
-            item.classList.toggle(
-                "active",
-                item.dataset.page === page
-            );
+            item.addEventListener("click", () => {
 
-        });
+                const page =
+                    item.dataset.page;
 
-        pages.forEach(section => {
-
-            section.classList.toggle(
-                "active",
-                section.id === `page-${page}`
-            );
-
-        });
-
-        document.getElementById("pageTitle").textContent =
-            pageTitles[page] || "MTD";
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }
-
-
-    /* =========================================================
-       CLOCK
-    ========================================================== */
-
-    function updateClock() {
-
-        const now = new Date();
-
-        const hours =
-            String(now.getHours()).padStart(2, "0");
-
-        const minutes =
-            String(now.getMinutes()).padStart(2, "0");
-
-        const seconds =
-            String(now.getSeconds()).padStart(2, "0");
-
-        document.getElementById("clock").textContent =
-            `${hours}:${minutes}:${seconds}`;
-
-    }
-
-    setInterval(updateClock, 1000);
-
-    updateClock();
-
-
-    /* =========================================================
-       SEARCH FUNCTION
-    ========================================================== */
-
-    function setupSearch(inputId, tableId) {
-
-        const input =
-            document.getElementById(inputId);
-
-        const table =
-            document.getElementById(tableId);
-
-        if (!input || !table) {
-            return;
-        }
-
-        input.addEventListener("input", () => {
-
-            const query =
-                input.value
-                    .toLowerCase()
-                    .trim();
-
-            const rows =
-                table.querySelectorAll("tr");
-
-            rows.forEach(row => {
-
-                const text =
-                    row.dataset.search || "";
-
-                row.style.display =
-                    text.includes(query)
-                        ? ""
-                        : "none";
+                openPage(page);
 
             });
 
         });
 
-    }
+
+        function openPage(page) {
+
+            navItems.forEach(item => {
+
+                item.classList.toggle(
+                    "active",
+                    item.dataset.page === page
+                );
+
+            });
+
+            pages.forEach(section => {
+
+                section.classList.toggle(
+                    "active",
+                    section.id === `page-${page}`
+                );
+
+            });
+
+            document.getElementById("pageTitle").textContent =
+                pageTitles[page] || "MTD";
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
 
 
-    setupSearch(
-        "peopleSearch",
-        "peopleTable"
-    );
+        /* =========================================================
+           CLOCK
+        ========================================================== */
 
-    setupSearch(
-        "vehicleSearch",
-        "vehicleTable"
-    );
+        function updateClock() {
 
-    setupSearch(
-        "officerSearch",
-        "officerTable"
-    );
+            const now = new Date();
+
+            const hours =
+                String(now.getHours()).padStart(2, "0");
+
+            const minutes =
+                String(now.getMinutes()).padStart(2, "0");
+
+            const seconds =
+                String(now.getSeconds()).padStart(2, "0");
+
+            document.getElementById("clock").textContent =
+                `${hours}:${minutes}:${seconds}`;
+
+        }
+
+        setInterval(updateClock, 1000);
+
+        updateClock();
 
 
-    /* =========================================================
-       PERSON MODAL
-    ========================================================== */
+        /* =========================================================
+           SEARCH FUNCTION
+        ========================================================== */
 
-    function showPerson(name) {
+        function setupSearch(inputId, tableId) {
 
-        document.getElementById("modalTitle").textContent =
-            name;
+            const input =
+                document.getElementById(inputId);
 
-        document.getElementById("modalBody").innerHTML = `
+            const table =
+                document.getElementById(tableId);
 
-            <div class="profile-layout">
+            if (!input || !table) {
+                return;
+            }
 
-                <div class="card">
+            input.addEventListener("input", () => {
 
-                    <div class="profile-main">
+                const query =
+                    input.value
+                        .toLowerCase()
+                        .trim();
 
-                        <div class="large-avatar">
-                            ${getInitials(name)}
-                        </div>
+                const rows =
+                    table.querySelectorAll("tr");
 
-                        <h3>
-                            ${name}
-                        </h3>
+                rows.forEach(row => {
 
-                        <p>
-                            Obywatel Venus RP
-                        </p>
+                    const text =
+                        row.dataset.search || "";
 
-                        <div class="profile-status">
+                    row.style.display =
+                        text.includes(query)
+                            ? ""
+                            : "none";
 
-                            <span class="badge badge-green">
-                                Brak poszukiwania
-                            </span>
+                });
 
-                        </div>
+            });
 
-                        <div class="info-list">
+        }
 
-                            <div class="info-row">
-                                <span>PESEL</span>
-                                <span>99010112345</span>
-                            </div>
 
-                            <div class="info-row">
-                                <span>Dowód</span>
-                                <span>VEN-204812</span>
-                            </div>
+        setupSearch(
+            "peopleSearch",
+            "peopleTable"
+        );
 
-                            <div class="info-row">
-                                <span>Prawo jazdy</span>
-                                <span>Aktywne</span>
-                            </div>
+        setupSearch(
+            "vehicleSearch",
+            "vehicleTable"
+        );
 
-                            <div class="info-row">
-                                <span>Punkty karne</span>
-                                <span>6 / 24</span>
-                            </div>
+        setupSearch(
+            "officerSearch",
+            "officerTable"
+        );
 
-                        </div>
 
-                    </div>
+        /* =========================================================
+           PERSON MODAL
+        ========================================================== */
 
-                </div>
+        function showPerson(name) {
 
-                <div>
+            document.getElementById("modalTitle").textContent =
+                name;
+
+            document.getElementById("modalBody").innerHTML = `
+
+                <div class="profile-layout">
 
                     <div class="card">
 
-                        <div class="card-header">
-                            <h4>
-                                Informacje
-                            </h4>
+                        <div class="profile-main">
+
+                            <div class="large-avatar">
+                                ${getInitials(name)}
+                            </div>
+
+                            <h3>
+                                ${name}
+                            </h3>
+
+                            <p>
+                                Obywatel Venus RP
+                            </p>
+
+                            <div class="profile-status">
+
+                                <span class="badge badge-green">
+                                    Brak poszukiwania
+                                </span>
+
+                            </div>
+
+                            <div class="info-list">
+
+                                <div class="info-row">
+                                    <span>PESEL</span>
+                                    <span>99010112345</span>
+                                </div>
+
+                                <div class="info-row">
+                                    <span>Dowód</span>
+                                    <span>VEN-204812</span>
+                                </div>
+
+                                <div class="info-row">
+                                    <span>Prawo jazdy</span>
+                                    <span>Aktywne</span>
+                                </div>
+
+                                <div class="info-row">
+                                    <span>Punkty karne</span>
+                                    <span>6 / 24</span>
+                                </div>
+
+                            </div>
+
                         </div>
 
-                        <div class="card-body">
+                    </div>
 
-                            <div class="detail-grid">
+                    <div>
 
-                                <div class="detail-item">
-                                    <label>Data urodzenia</label>
-                                    <strong>01.01.1999</strong>
-                                </div>
+                        <div class="card">
 
-                                <div class="detail-item">
-                                    <label>Adres</label>
-                                    <strong>Venus City 24</strong>
-                                </div>
+                            <div class="card-header">
+                                <h4>
+                                    Informacje
+                                </h4>
+                            </div>
 
-                                <div class="detail-item">
-                                    <label>Mandaty</label>
-                                    <strong>2</strong>
-                                </div>
+                            <div class="card-body">
 
-                                <div class="detail-item">
-                                    <label>Ostatnia kontrola</label>
-                                    <strong>10.09.2026</strong>
+                                <div class="detail-grid">
+
+                                    <div class="detail-item">
+                                        <label>Data urodzenia</label>
+                                        <strong>01.01.1999</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <label>Adres</label>
+                                        <strong>Venus City 24</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <label>Mandaty</label>
+                                        <strong>2</strong>
+                                    </div>
+
+                                    <div class="detail-item">
+                                        <label>Ostatnia kontrola</label>
+                                        <strong>10.09.2026</strong>
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -3476,342 +3474,340 @@
 
                 </div>
 
-            </div>
+            `;
 
-        `;
-
-        openModal();
-
-    }
-
-
-    function getInitials(name) {
-
-        return name
-            .split(" ")
-            .map(word => word[0])
-            .join("")
-            .substring(0, 2)
-            .toUpperCase();
-
-    }
-
-
-    /* =========================================================
-       REPORT
-    ========================================================== */
-
-    function newReport() {
-
-        document.getElementById("modalTitle").textContent =
-            "Nowy raport";
-
-        document.getElementById("modalBody").innerHTML = `
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Typ raportu
-                    </label>
-
-                    <select id="reportType">
-
-                        <option>
-                            Kontrola drogowa
-                        </option>
-
-                        <option>
-                            Interwencja
-                        </option>
-
-                        <option>
-                            Wypadek drogowy
-                        </option>
-
-                        <option>
-                            Zatrzymanie
-                        </option>
-
-                        <option>
-                            Inne
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Lokalizacja
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder="np. Venus City"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Osoba
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder="Imię i nazwisko"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Pojazd
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder="Tablica rejestracyjna"
-                    >
-
-                </div>
-
-                <div class="form-group full">
-
-                    <label>
-                        Opis zdarzenia
-                    </label>
-
-                    <textarea
-                        placeholder="Opisz przebieg zdarzenia..."
-                    ></textarea>
-
-                </div>
-
-            </div>
-
-            <div class="form-actions">
-
-                <button
-                    class="btn"
-                    onclick="closeModal()"
-                >
-                    Anuluj
-                </button>
-
-                <button
-                    class="btn btn-primary"
-                    onclick="createReport()"
-                >
-                    <i class="fa-solid fa-file-circle-check"></i>
-                    Utwórz raport
-                </button>
-
-            </div>
-
-        `;
-
-        openModal();
-
-    }
-
-
-    function createReport() {
-
-        closeModal();
-
-        showToast(
-            "Raport został utworzony pomyślnie."
-        );
-
-    }
-
-
-    /* =========================================================
-       LAW SELECTION
-    ========================================================== */
-
-    function selectLaw(
-        element,
-        number,
-        title,
-        description,
-        fine,
-        points,
-        additional
-    ) {
-
-        document
-            .querySelectorAll(".law-item")
-            .forEach(item => {
-                item.classList.remove("active");
-            });
-
-        element.classList.add("active");
-
-        document.getElementById("lawNumber").textContent =
-            number;
-
-        document.getElementById("lawTitle").textContent =
-            title;
-
-        document.getElementById("lawDescription").textContent =
-            description;
-
-        document.getElementById("lawFine").textContent =
-            fine;
-
-        document.getElementById("lawPoints").textContent =
-            points;
-
-        document.getElementById("lawAdditional").textContent =
-            additional;
-
-    }
-
-
-    /* =========================================================
-       LAW SEARCH
-    ========================================================== */
-
-    const lawSearch =
-        document.getElementById("lawSearch");
-
-    lawSearch.addEventListener("input", () => {
-
-        const query =
-            lawSearch.value
-                .toLowerCase()
-                .trim();
-
-        document
-            .querySelectorAll(".law-item")
-            .forEach(item => {
-
-                item.style.display =
-                    item.textContent
-                        .toLowerCase()
-                        .includes(query)
-                        ? ""
-                        : "none";
-
-            });
-
-    });
-
-
-    /* =========================================================
-       MODAL
-    ========================================================== */
-
-    function openModal() {
-
-        document
-            .getElementById("modalOverlay")
-            .classList.add("active");
-
-    }
-
-
-    function closeModal() {
-
-        document
-            .getElementById("modalOverlay")
-            .classList.remove("active");
-
-    }
-
-
-    document
-        .getElementById("modalOverlay")
-        .addEventListener("click", event => {
-
-            if (
-                event.target.id ===
-                "modalOverlay"
-            ) {
-
-                closeModal();
-
-            }
-
-        });
-
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (event.key === "Escape") {
-                closeModal();
-            }
+            openModal();
 
         }
-    );
 
 
-    /* =========================================================
-       TOAST
-    ========================================================== */
+        function getInitials(name) {
 
-    function showToast(message) {
+            return name
+                .split(" ")
+                .map(word => word[0])
+                .join("")
+                .substring(0, 2)
+                .toUpperCase();
 
-        const container =
-            document.getElementById("toastContainer");
-
-        const toast =
-            document.createElement("div");
-
-        toast.className = "toast";
-
-        toast.innerHTML = `
-
-            <i class="fa-solid fa-circle-check"></i>
-
-            <span>
-                ${message}
-            </span>
-
-        `;
-
-        container.appendChild(toast);
-
-        setTimeout(() => {
-
-            toast.style.opacity = "0";
-            toast.style.transform =
-                "translateX(20px)";
-
-            setTimeout(() => {
-                toast.remove();
-            }, 250);
-
-        }, 3000);
-
-    }
+        }
 
 
-    /* =========================================================
-       NOTIFICATION
-    ========================================================== */
+        /* =========================================================
+           REPORT
+        ========================================================== */
 
-    document
-        .querySelector(".notification-btn")
-        .addEventListener("click", () => {
+        function newReport() {
+
+            document.getElementById("modalTitle").textContent =
+                "Nowy raport";
+
+            document.getElementById("modalBody").innerHTML = `
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Typ raportu
+                        </label>
+
+                        <select id="reportType">
+
+                            <option>
+                                Kontrola drogowa
+                            </option>
+
+                            <option>
+                                Interwencja
+                            </option>
+
+                            <option>
+                                Wypadek drogowy
+                            </option>
+
+                            <option>
+                                Zatrzymanie
+                            </option>
+
+                            <option>
+                                Inne
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Lokalizacja
+                        </label>
+
+                        <input
+                            type="text"
+                            placeholder="np. Venus City"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Osoba
+                        </label>
+
+                        <input
+                            type="text"
+                            placeholder="Imię i nazwisko"
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Pojazd
+                        </label>
+
+                        <input
+                            type="text"
+                            placeholder="Tablica rejestracyjna"
+                        >
+
+                    </div>
+
+                    <div class="form-group full">
+
+                        <label>
+                            Opis zdarzenia
+                        </label>
+
+                        <textarea
+                            placeholder="Opisz przebieg zdarzenia..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button
+                        class="btn"
+                        onclick="closeModal()"
+                    >
+                        Anuluj
+                    </button>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="createReport()"
+                    >
+                        <i class="fa-solid fa-file-circle-check"></i>
+                        Utwórz raport
+                    </button>
+
+                </div>
+
+            `;
+
+            openModal();
+
+        }
+
+
+        function createReport() {
+
+            closeModal();
 
             showToast(
-                "Masz 1 nowe powiadomienie."
+                "Raport został utworzony pomyślnie."
             );
+
+        }
+
+
+        /* =========================================================
+           LAW SELECTION
+        ========================================================== */
+
+        function selectLaw(
+            element,
+            number,
+            title,
+            description,
+            fine,
+            points,
+            additional
+        ) {
+
+            document
+                .querySelectorAll(".law-item")
+                .forEach(item => {
+                    item.classList.remove("active");
+                });
+
+            element.classList.add("active");
+
+            document.getElementById("lawNumber").textContent =
+                number;
+
+            document.getElementById("lawTitle").textContent =
+                title;
+
+            document.getElementById("lawDescription").textContent =
+                description;
+
+            document.getElementById("lawFine").textContent =
+                fine;
+
+            document.getElementById("lawPoints").textContent =
+                points;
+
+            document.getElementById("lawAdditional").textContent =
+                additional;
+
+        }
+
+
+        /* =========================================================
+           LAW SEARCH
+        ========================================================== */
+
+        const lawSearch =
+            document.getElementById("lawSearch");
+
+        lawSearch.addEventListener("input", () => {
+
+            const query =
+                lawSearch.value
+                    .toLowerCase()
+                    .trim();
+
+            document
+                .querySelectorAll(".law-item")
+                .forEach(item => {
+
+                    item.style.display =
+                        item.textContent
+                            .toLowerCase()
+                            .includes(query)
+                            ? ""
+                            : "none";
+
+                });
 
         });
 
 
-</script>
+        /* =========================================================
+           MODAL
+        ========================================================== */
+
+        function openModal() {
+
+            document
+                .getElementById("modalOverlay")
+                .classList.add("active");
+
+        }
+
+
+        function closeModal() {
+
+            document
+                .getElementById("modalOverlay")
+                .classList.remove("active");
+
+        }
+
+
+        document
+            .getElementById("modalOverlay")
+            .addEventListener("click", event => {
+
+                if (
+                    event.target.id ===
+                    "modalOverlay"
+                ) {
+
+                    closeModal();
+
+                }
+
+            });
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (event.key === "Escape") {
+                    closeModal();
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           TOAST
+        ========================================================== */
+
+        function showToast(message) {
+
+            const container =
+                document.getElementById("toastContainer");
+
+            const toast =
+                document.createElement("div");
+
+            toast.className = "toast";
+
+            toast.innerHTML = `
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <span>
+                    ${message}
+                </span>
+
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+
+                toast.style.opacity = "0";
+                toast.style.transform =
+                    "translateX(20px)";
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 250);
+
+            }, 3000);
+
+        }
+
+
+        /* =========================================================
+           NOTIFICATION
+        ========================================================== */
+
+        document
+            .querySelector(".notification-btn")
+            .addEventListener("click", () => {
+
+                showToast(
+                    "Masz 1 nowe powiadomienie."
+                );
+
+            });
+
+
+    </script>
 
 </body>
 </html>
