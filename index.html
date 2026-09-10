@@ -15,13 +15,14 @@
 
     html,
     body {
+      width: 100%;
       min-height: 100%;
     }
 
     body {
       min-height: 100vh;
       color: white;
-      overflow-x: hidden;
+      overflow: hidden;
       background:
         linear-gradient(
           rgba(5, 8, 22, 0.72),
@@ -33,29 +34,8 @@
       background-attachment: fixed;
     }
 
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.35;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    body::before {
-      top: -120px;
-      left: -100px;
-      background: #7c3aed;
-    }
-
-    body::after {
-      right: -120px;
-      bottom: -120px;
-      background: #06b6d4;
+    body.black-screen {
+      background: #000000;
     }
 
     .login-screen {
@@ -222,176 +202,8 @@
       color: #fca5a5;
     }
 
-    /* PANEL PO ZALOGOWANIU */
-
-    .dashboard-screen {
+    .login-screen.hidden {
       display: none;
-      min-height: 100vh;
-      padding: 30px;
-      position: relative;
-      z-index: 1;
-      animation: showDashboard 0.7s ease;
-    }
-
-    .dashboard-screen.active {
-      display: block;
-    }
-
-    @keyframes showDashboard {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .navbar {
-      max-width: 1150px;
-      margin: 0 auto 35px;
-      padding: 18px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 18px;
-      background: rgba(10, 12, 35, 0.7);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(16px);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 13px;
-      background: linear-gradient(135deg, #8b5cf6, #2563eb);
-    }
-
-    .logout-button {
-      padding: 11px 17px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      background: rgba(239, 68, 68, 0.18);
-      color: #fecaca;
-      cursor: pointer;
-      transition: 0.25s;
-    }
-
-    .logout-button:hover {
-      background: rgba(239, 68, 68, 0.35);
-      transform: translateY(-2px);
-    }
-
-    .content {
-      max-width: 1150px;
-      margin: 0 auto;
-    }
-
-    .welcome-box {
-      margin-bottom: 25px;
-      padding: 32px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      background: rgba(10, 12, 35, 0.72);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.28);
-      backdrop-filter: blur(16px);
-    }
-
-    .welcome-box h1 {
-      margin-bottom: 10px;
-      text-align: left;
-      font-size: 32px;
-    }
-
-    .welcome-box p {
-      color: #c7c9d8;
-      font-size: 15px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .card {
-      min-height: 170px;
-      padding: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 18px;
-      background: rgba(10, 12, 35, 0.68);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(14px);
-      transition: 0.25s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(139, 92, 246, 0.65);
-    }
-
-    .card-icon {
-      margin-bottom: 18px;
-      font-size: 30px;
-    }
-
-    .card h2 {
-      margin-bottom: 8px;
-      font-size: 19px;
-    }
-
-    .card p {
-      color: #bfc2d1;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    @media (max-width: 800px) {
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .welcome-box h1 {
-        font-size: 26px;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .login-box {
-        padding: 28px 22px;
-      }
-
-      .dashboard-screen {
-        padding: 18px;
-      }
-
-      .navbar {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .logout-button {
-        width: 100%;
-      }
-
-      .welcome-box {
-        padding: 25px;
-      }
     }
   </style>
 </head>
@@ -450,72 +262,23 @@
     </div>
   </section>
 
-  <section class="dashboard-screen" id="dashboardScreen">
-    <nav class="navbar">
-      <div class="brand">
-        <div class="brand-icon">⚡</div>
-        <span>Panel użytkownika</span>
-      </div>
-
-      <button class="logout-button" id="logoutButton">
-        Wyloguj się
-      </button>
-    </nav>
-
-    <main class="content">
-      <section class="welcome-box">
-        <h1>Witaj w panelu! 👋</h1>
-        <p>
-          Logowanie przebiegło pomyślnie. To jest strona wyświetlana po zalogowaniu.
-        </p>
-      </section>
-
-      <section class="cards">
-        <div class="card">
-          <div class="card-icon">👤</div>
-          <h2>Profil</h2>
-          <p>
-            Tutaj możesz później dodać informacje o zalogowanym użytkowniku.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-icon">📊</div>
-          <h2>Statystyki</h2>
-          <p>
-            Miejsce na statystyki, wyniki, poziomy lub informacje z Twojego projektu.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="card-icon">⚙️</div>
-          <h2>Ustawienia</h2>
-          <p>
-            W przyszłości możesz tutaj dodać ustawienia konta i wyglądu panelu.
-          </p>
-        </div>
-      </section>
-    </main>
-  </section>
-
   <script>
     const loginForm = document.getElementById("loginForm");
     const loginInput = document.getElementById("login");
     const passwordInput = document.getElementById("password");
     const showPasswordButton = document.getElementById("showPassword");
-    const message = document.getElementById("message");
-
     const loginScreen = document.getElementById("loginScreen");
-    const dashboardScreen = document.getElementById("dashboardScreen");
-    const logoutButton = document.getElementById("logoutButton");
+    const message = document.getElementById("message");
 
     showPasswordButton.addEventListener("click", function() {
       if (passwordInput.type === "password") {
         passwordInput.type = "text";
         showPasswordButton.textContent = "🙈";
+        showPasswordButton.setAttribute("aria-label", "Ukryj hasło");
       } else {
         passwordInput.type = "password";
         showPasswordButton.textContent = "👁";
+        showPasswordButton.setAttribute("aria-label", "Pokaż hasło");
       }
     });
 
@@ -525,34 +288,14 @@
       const login = loginInput.value.trim();
       const password = passwordInput.value.trim();
 
-      message.className = "message";
-
       if (login === "admin" && password === "1234") {
-        message.textContent = "Zalogowano pomyślnie!";
-        message.classList.add("success");
-
-        setTimeout(function() {
-          loginScreen.style.display = "none";
-          dashboardScreen.style.display = "block";
-          document.title = "Panel użytkownika";
-          window.scrollTo(0, 0);
-        }, 700);
+        document.body.classList.add("black-screen");
+        loginScreen.classList.add("hidden");
+        document.title = "Czarny ekran";
       } else {
         message.textContent = "Nieprawidłowy login lub hasło.";
-        message.classList.add("error");
+        message.className = "message error";
       }
-    });
-
-    logoutButton.addEventListener("click", function() {
-      dashboardScreen.style.display = "none";
-      loginScreen.style.display = "flex";
-
-      loginForm.reset();
-      passwordInput.type = "password";
-      showPasswordButton.textContent = "👁";
-      message.textContent = "";
-      message.className = "message";
-      document.title = "Logowanie";
     });
   </script>
 
