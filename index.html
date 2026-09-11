@@ -464,27 +464,71 @@
             }
         }
 
-        // Obsługa logowania
+        // Obsługa logowania i walidacja konta testowego
         function handleLogin(event) {
             event.preventDefault();
+            const usernameInput = document.getElementById('username').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
             const btn = document.getElementById('submitBtn');
             const toast = document.getElementById('toastMessage');
+            const toastText = document.getElementById('toastText');
             
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Autoryzacja...';
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Weryfikacja CAD...';
             btn.style.opacity = '0.8';
 
             setTimeout(() => {
-                btn.innerHTML = 'Autoryzuj Dostęp';
-                btn.style.opacity = '1';
-                
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3500);
-            }, 1200);
+                if (usernameInput === 'kadet1' && passwordInput === 'kadet1') {
+                    toastText.innerText = 'Zalogowano pomyślnie! Ładowanie MDT...';
+                    toast.classList.add('show');
+
+                    setTimeout(() => {
+                        loadMdtPanel(usernameInput);
+                    }, 1000);
+
+                } else {
+                    btn.innerHTML = 'Autoryzuj Dostęp';
+                    btn.style.opacity = '1';
+                    
+                    toastText.innerText = 'Błąd: Nieprawidłowy login lub hasło!';
+                    toast.classList.add('show');
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 3000);
+                }
+            }, 1000);
+        }
+
+        // Dynamiczne wygenerowanie głównego ekranu MDT po pomyślnym zalogowaniu
+        function loadMdtPanel(badgeId) {
+            document.body.innerHTML = `
+                <div style="width: 100vw; height: 100vh; background: #07080c; color: #fff; display: flex; flex-direction: column; font-family: 'Inter', sans-serif;">
+                    <!-- Górny pasek MDT -->
+                    <header style="height: 60px; background: rgba(18, 18, 26, 0.9); border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 30px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="fa-solid fa-shield-halved" style="color: #06b6d4; font-size: 20px;"></i>
+                            <span style="font-weight: 700; letter-spacing: 0.5px; font-size: 15px;">POLICE MDT // SYSTEM CAD</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 20px; font-size: 13px; color: #94a3b8;">
+                            <span>Funkcjonariusz: <strong style="color: #fff;">${badgeId}</strong> (Kadet)</span>
+                            <span style="color: #10b981;"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> Status: Służba</span>
+                            <button onclick="location.reload()" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600;">Wyloguj</button>
+                        </div>
+                    </header>
+                    
+                    <!-- Główna zawartość panelu -->
+                    <div style="flex: 1; padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; overflow-y: auto;">
+                        <div style="background: rgba(18, 18, 26, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 25px;">
+                            <h3 style="font-size: 16px; margin-bottom: 15px; color: #06b6d4;"><i class="fa-solid fa-triangle-exclamation"></i> Aktywne Zgłoszenia (Dispatch)</h3>
+                            <p style="color: #64748b; font-size: 14px;">Brak aktywnych zgłoszeń w rejonie.</p>
+                        </div>
+                        <div style="background: rgba(18, 18, 26, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 25px;">
+                            <h3 style="font-size: 16px; margin-bottom: 15px; color: #06b6d4;"><i class="fa-solid fa-magnifying-glass"></i> Szybka Baza Danych</h3>
+                            <input type="text" placeholder="Wyszukaj obywatela lub pojazd..." style="width: 100%; background: rgba(10, 10, 15, 0.5); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 14px; color: #fff; font-size: 13px; outline: none;">
+                        </div>
+                    </div>
+                </div>
+            `;
         }
     </script>
 </body>
 </html>
-
-```
