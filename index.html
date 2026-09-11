@@ -1,378 +1,789 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDT / Baza Danych - Panel</title>
-    <!-- FontAwesome dla ikonek -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logowanie — MTD Venus RP</title>
 
-        body {
-            background-color: #0f111a;
-            color: #e1e1e6;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .app-container {
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+  <style>
+    :root {
+      --bg: #07111d;
+      --bg-secondary: #0b1725;
+      --panel: rgba(14, 28, 44, .84);
+      --panel-light: rgba(255, 255, 255, .055);
+      --border: rgba(255, 255, 255, .12);
+      --text: #f5f8fc;
+      --muted: #8f9eaf;
+      --blue: #3d91ff;
+      --blue-dark: #1768c7;
+      --cyan: #53d6ff;
+      --danger: #ff667d;
+      --success: #59d99b;
+    }
 
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background-color: #16192b;
-            border-right: 1px solid #232742;
-            display: flex;
-            flex-direction: column;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .logo {
-            padding: 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #3b82f6;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #232742;
-        }
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at 12% 12%, rgba(36, 129, 226, .18), transparent 31%),
+        radial-gradient(circle at 88% 82%, rgba(0, 210, 255, .10), transparent 28%),
+        linear-gradient(135deg, #050d17 0%, #091827 48%, #07111d 100%);
+    }
 
-        .nav-links {
-            list-style: none;
-            padding: 20px 0;
-        }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .2;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
 
-        .nav-links li a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            color: #94a3b8;
-            text-decoration: none;
-            transition: 0.2s;
-        }
+    .ambient {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .16;
+      pointer-events: none;
+    }
 
-        .nav-links li.active a, .nav-links li a:hover {
-            background-color: #1e223f;
-            color: #ffffff;
-            border-left: 4px solid #3b82f6;
-        }
+    .ambient.one {
+      top: -180px;
+      left: -150px;
+      background: #1677e8;
+    }
 
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
+    .ambient.two {
+      right: -180px;
+      bottom: -180px;
+      background: #04c9ff;
+    }
 
-        .topbar {
-            height: 70px;
-            background-color: #16192b;
-            border-bottom: 1px solid #232742;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-        }
+    .page {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      min-height: 100vh;
+      padding: 28px;
+    }
 
-        .search-box {
-            display: flex;
-            align-items: center;
-            background-color: #0f111a;
-            border: 1px solid #232742;
-            padding: 8px 15px;
-            border-radius: 6px;
-            width: 350px;
-            gap: 10px;
-        }
+    .login-layout {
+      display: grid;
+      grid-template-columns: minmax(300px, 1fr) minmax(390px, 480px);
+      width: min(1080px, 100%);
+      min-height: 630px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: rgba(9, 20, 33, .68);
+      box-shadow:
+        0 32px 100px rgba(0, 0, 0, .46),
+        inset 0 1px rgba(255,255,255,.05);
+      backdrop-filter: blur(24px);
+    }
 
-        .search-box input {
-            background: none;
-            border: none;
-            color: #ffffff;
-            outline: none;
-            width: 100%;
-        }
+    .brand-side {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 58px 54px;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, rgba(25, 105, 187, .28), transparent 50%),
+        linear-gradient(180deg, rgba(255,255,255,.025), transparent);
+    }
 
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .brand-side::after {
+      content: "";
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      right: -220px;
+      bottom: -210px;
+      border: 1px solid rgba(83, 214, 255, .18);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 34px rgba(83, 214, 255, .035),
+        0 0 0 68px rgba(83, 214, 255, .025);
+    }
 
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #22c55e;
-        }
+    .brand {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
-        /* Content Body */
-        .content-body {
-            padding: 30px;
-        }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border: 1px solid rgba(108, 201, 255, .45);
+      border-radius: 17px;
+      color: white;
+      font-size: 23px;
+      font-weight: 800;
+      background: linear-gradient(145deg, #318de9, #1452a0);
+      box-shadow: 0 12px 28px rgba(24, 116, 217, .32);
+    }
 
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: .06em;
+    }
 
-        .btn-primary {
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
+    .brand-subtitle {
+      margin-top: 3px;
+      color: #8fb0d1;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
 
-        .btn-primary:hover {
-            background-color: #2563eb;
-        }
+    .intro {
+      position: relative;
+      z-index: 1;
+      max-width: 430px;
+    }
 
-        /* Kafelki / Cards */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: var(--cyan);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
 
-        .card {
-            background-color: #16192b;
-            border: 1px solid #232742;
-            padding: 20px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+    .eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: var(--cyan);
+      box-shadow: 0 0 9px var(--cyan);
+    }
 
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
+    .intro h1 {
+      max-width: 410px;
+      font-size: clamp(36px, 4vw, 58px);
+      line-height: 1.04;
+      letter-spacing: -.055em;
+    }
 
-        .card-icon.blue { background-color: rgba(59, 130, 246, 0.15); color: #3b82f6; }
-        .card-icon.red { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .card-icon.green { background-color: rgba(34, 197, 94, 0.15); color: #22c55e; }
+    .intro h1 span {
+      color: #62cfff;
+    }
 
-        .card-info h3 {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-bottom: 5px;
-        }
+    .intro p {
+      max-width: 380px;
+      margin-top: 23px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
 
-        .card-info p {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #ffffff;
-        }
+    .system-status {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #a9bacb;
+      font-size: 12px;
+    }
 
-        /* Tabela */
-        .table-container {
-            background-color: #16192b;
-            border: 1px solid #232742;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 5px rgba(89, 217, 155, .10), 0 0 15px var(--success);
+    }
 
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
+    .form-side {
+      display: flex;
+      align-items: center;
+      padding: 54px;
+      border-left: 1px solid var(--border);
+      background: rgba(5, 14, 24, .32);
+    }
 
-        .data-table th, .data-table td {
-            padding: 15px 20px;
-        }
+    .form-box {
+      width: 100%;
+    }
 
-        .data-table th {
-            background-color: #1e223f;
-            color: #94a3b8;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-        }
+    .form-header {
+      margin-bottom: 32px;
+    }
 
-        .data-table tr:not(:last-child) td {
-            border-bottom: 1px solid #232742;
-        }
+    .form-header h2 {
+      font-size: 28px;
+      letter-spacing: -.04em;
+    }
 
-        .badge {
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
+    .form-header p {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
 
-        .badge.red { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
-        .badge.green { background-color: rgba(34, 197, 94, 0.15); color: #22c55e; }
+    .field {
+      margin-bottom: 19px;
+    }
 
-        .btn-action {
-            background: none;
-            border: 1px solid #232742;
-            color: #94a3b8;
-            padding: 6px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+    .field label {
+      display: block;
+      margin-bottom: 9px;
+      color: #cad7e4;
+      font-size: 12px;
+      font-weight: 700;
+    }
 
-        .btn-action:hover {
-            background-color: #3b82f6;
-            color: #ffffff;
-            border-color: #3b82f6;
-        }
-    </style>
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      top: 50%;
+      left: 17px;
+      width: 17px;
+      height: 17px;
+      color: #71859a;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      height: 52px;
+      padding: 0 47px;
+      outline: none;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 13px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      background: rgba(255,255,255,.045);
+      transition: .22s ease;
+    }
+
+    .input-wrap input::placeholder {
+      color: #637589;
+    }
+
+    .input-wrap input:hover {
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--blue);
+      background: rgba(61, 145, 255, .075);
+      box-shadow: 0 0 0 4px rgba(61, 145, 255, .12);
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border: 0;
+      color: #71859a;
+      background: transparent;
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: .2s;
+    }
+
+    .toggle-password:hover {
+      color: var(--cyan);
+    }
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 3px 0 25px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #94a5b7;
+      font-size: 11px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .remember input {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #53687d;
+      border-radius: 5px;
+      background: rgba(255,255,255,.035);
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .remember input:checked {
+      border-color: var(--blue);
+      background: var(--blue);
+      box-shadow: inset 0 0 0 3px #102b4d;
+    }
+
+    .forgot {
+      border: 0;
+      color: #65b4ff;
+      font: inherit;
+      font-size: 11px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    .login-button {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      width: 100%;
+      height: 54px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 13px;
+      color: white;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .01em;
+      background: linear-gradient(110deg, #237de0, #2d9bf1);
+      box-shadow: 0 14px 26px rgba(34, 130, 225, .23);
+      cursor: pointer;
+      transition: .22s ease;
+    }
+
+    .login-button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,.25), transparent 80%);
+      transform: translateX(-100%);
+      transition: .6s;
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(34, 130, 225, .34);
+    }
+
+    .login-button:hover::before {
+      transform: translateX(100%);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    .login-button.loading {
+      pointer-events: none;
+      opacity: .8;
+    }
+
+    .login-button.loading .button-text {
+      visibility: hidden;
+    }
+
+    .login-button.loading::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,.35);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    .message {
+      display: none;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .message.show {
+      display: block;
+      animation: fadeIn .25s ease;
+    }
+
+    .message.error {
+      border: 1px solid rgba(255,102,125,.25);
+      color: #ff9bab;
+      background: rgba(255,102,125,.09);
+    }
+
+    .message.success {
+      border: 1px solid rgba(89,217,155,.25);
+      color: #8aefbd;
+      background: rgba(89,217,155,.09);
+    }
+
+    .security-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin-top: 23px;
+      color: #718398;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .security-note svg {
+      flex: 0 0 auto;
+      margin-top: 1px;
+      color: var(--success);
+    }
+
+    .footer {
+      margin-top: 35px;
+      color: #617286;
+      font-size: 10px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .footer span {
+      color: #8b9caf;
+    }
+
+    .shake {
+      animation: shake .4s ease;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    @media (max-width: 800px) {
+      body {
+        overflow: auto;
+      }
+
+      .page {
+        padding: 16px;
+      }
+
+      .login-layout {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        border-radius: 22px;
+      }
+
+      .brand-side {
+        min-height: 330px;
+        padding: 32px 28px;
+      }
+
+      .intro h1 {
+        font-size: 39px;
+      }
+
+      .form-side {
+        padding: 34px 28px 30px;
+        border-top: 1px solid var(--border);
+        border-left: 0;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .form-options {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .brand-side {
+        min-height: 310px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="ambient one"></div>
+  <div class="ambient two"></div>
 
-    <div class="app-container">
-        <!-- Pasek boczny (Sidebar) -->
-        <aside class="sidebar">
-            <div class="logo">
-                <i class="fa-solid fa-shield-halved"></i>
-                <span>SYSTEM MDT</span>
+  <main class="page">
+    <section class="login-layout">
+
+      <div class="brand-side">
+        <div class="brand">
+          <div class="brand-mark">M</div>
+          <div>
+            <div class="brand-name">MTD</div>
+            <div class="brand-subtitle">Venus RP Police Department</div>
+          </div>
+        </div>
+
+        <div class="intro">
+          <div class="eyebrow">Secure access terminal</div>
+          <h1>Twoje centrum<br><span>służby.</span></h1>
+          <p>
+            Zaloguj się do Mobilnego Terminala Danych,
+            aby uzyskać dostęp do baz obywateli, pojazdów,
+            raportów oraz wewnętrznych zasobów departamentu.
+          </p>
+        </div>
+
+        <div class="system-status">
+          <span class="status-dot"></span>
+          Wszystkie systemy działają prawidłowo
+        </div>
+      </div>
+
+      <div class="form-side">
+        <form class="form-box" id="loginForm" novalidate>
+          <div class="form-header">
+            <h2>Witaj ponownie</h2>
+            <p>Wprowadź dane funkcjonariusza, aby kontynuować.</p>
+          </div>
+
+          <div class="message" id="message" role="alert"></div>
+
+          <div class="field">
+            <label for="username">Login funkcjonariusza</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M20 21a8 8 0 0 0-16 0"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                placeholder="np. jan.kowalski"
+                spellcheck="false"
+              />
             </div>
-            <ul class="nav-links">
-                <li class="active"><a href="#"><i class="fa-solid fa-house"></i> Pulpit</a></li>
-                <li><a href="#"><i class="fa-solid fa-database"></i> Baza Danych</a></li>
-                <li><a href="#"><i class="fa-solid fa-users"></i> Obywatele</a></li>
-                <li><a href="#"><i class="fa-solid fa-file-invoice"></i> Kartoteki</a></li>
-                <li><a href="#"><i class="fa-solid fa-gear"></i> Ustawienia</a></li>
-            </ul>
-        </aside>
+          </div>
 
-        <!-- Główna zawartość -->
-        <main class="main-content">
-            <!-- Nagłówek -->
-            <header class="topbar">
-                <div class="search-box">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Szukaj w bazie (imię, numer, ID)...">
-                </div>
-                <div class="user-profile">
-                    <span class="status-dot"></span>
-                    <span class="username">Jednostka-01</span>
-                </div>
-            </header>
+          <div class="field">
+            <label for="password">Hasło dostępowe</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="4" y="10" width="16" height="11" rx="2"/>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+              </svg>
 
-            <!-- Sekcja zawartości -->
-            <div class="content-body">
-                <div class="section-header">
-                    <h2>Przegląd Bazy Danych</h2>
-                    <button class="btn-primary" id="addBtn"><i class="fa-solid fa-plus"></i> Nowy Wpis</button>
-                </div>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Wprowadź swoje hasło"
+              />
 
-                <!-- Karty / Kafelki -->
-                <div class="cards-grid">
-                    <div class="card">
-                        <div class="card-icon blue"><i class="fa-solid fa-user-shield"></i></div>
-                        <div class="card-info">
-                            <h3>Aktywne Kartoteki</h3>
-                            <p>1,248</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                        <div class="card-info">
-                            <h3>Poszukiwani</h3>
-                            <p>34</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon green"><i class="fa-solid fa-file-circle-check"></i></div>
-                        <div class="card-info">
-                            <h3>Raporty (24h)</h3>
-                            <p>128</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tabela danych -->
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Imię i Nazwisko</th>
-                                <th>Status</th>
-                                <th>Ostatnia Aktywność</th>
-                                <th>Akcje</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <tr>
-                                <td>#1024</td>
-                                <td>Jan Kowalski</td>
-                                <td><span class="badge red">Poszukiwany</span></td>
-                                <td>2026-06-12 14:22</td>
-                                <td><button class="btn-action"><i class="fa-solid fa-eye"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td>#1025</td>
-                                <td>Anna Nowak</td>
-                                <td><span class="badge green">Czysty</span></td>
-                                <td>2026-06-12 15:05</td>
-                                <td><button class="btn-action"><i class="fa-solid fa-eye"></i></button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+              <button class="toggle-password" id="togglePassword" type="button" aria-label="Pokaż hasło">
+                <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>
+                  <circle cx="12" cy="12" r="2.5"/>
+                </svg>
+              </button>
             </div>
-        </main>
-    </div>
+          </div>
 
-    <script>
-        // Obsługa wyszukiwania w tabeli na żywo
-        const searchInput = document.getElementById('searchInput');
-        const tableBody = document.getElementById('tableBody');
+          <div class="form-options">
+            <label class="remember">
+              <input id="remember" type="checkbox" />
+              Zapamiętaj mnie na tym urządzeniu
+            </label>
 
-        if (searchInput && tableBody) {
-            searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                const rows = tableBody.getElementsByTagName('tr');
+            <button class="forgot" type="button" id="forgotPassword">
+              Nie pamiętam hasła
+            </button>
+          </div>
 
-                Array.from(rows).forEach(row => {
-                    const text = row.textContent.toLowerCase();
-                    if (text.includes(query)) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            });
-        }
+          <button class="login-button" id="loginButton" type="submit">
+            <span class="button-text">Zaloguj do terminala</span>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
 
-        // Obsługa przycisku dodawania nowego wpisu
-        const addBtn = document.getElementById('addBtn');
-        if (addBtn) {
-            addBtn.addEventListener('click', () => {
-                alert('Otwieranie formularza nowego wpisu w bazie...');
-            });
-        }
-    </script>
+          <div class="security-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3 4.5 6v5.5c0 4.7 3.2 8.2 7.5 9.5 4.3-1.3 7.5-4.8 7.5-9.5V6L12 3Z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            Sesja jest szyfrowana i monitorowana zgodnie z procedurami departamentu.
+          </div>
+
+          <div class="footer">
+            MTD v2.4.0 · Venus RP<br>
+            Dostęp wyłącznie dla <span>upoważnionego personelu</span>
+          </div>
+        </form>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    const remember = document.getElementById("remember");
+    const loginButton = document.getElementById("loginButton");
+    const message = document.getElementById("message");
+    const togglePassword = document.getElementById("togglePassword");
+    const eyeIcon = document.getElementById("eyeIcon");
+    const forgotPassword = document.getElementById("forgotPassword");
+
+    const demoAccount = {
+      username: "jan.kowalski",
+      password: "MTD-2047-VENUS"
+    };
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = `message show ${type}`;
+    }
+
+    function clearMessage() {
+      message.textContent = "";
+      message.className = "message";
+    }
+
+    togglePassword.addEventListener("click", () => {
+      const isHidden = password.type === "password";
+      password.type = isHidden ? "text" : "password";
+      togglePassword.setAttribute(
+        "aria-label",
+        isHidden ? "Ukryj hasło" : "Pokaż hasło"
+      );
+
+      eyeIcon.innerHTML = isHidden
+        ? `
+          <path d="m3 3 18 18"/>
+          <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+          <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6 0 9.5 7 9.5 7a17.7 17.7 0 0 1-3 3.8"/>
+          <path d="M6.1 6.1C3.8 7.8 2.5 12 2.5 12s3.5 7 9.5 7a9.8 9.8 0 0 0 3-.5"/>
+        `
+        : `
+          <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>
+          <circle cx="12" cy="12" r="2.5"/>
+        `;
+
+      password.focus();
+    });
+
+    forgotPassword.addEventListener("click", () => {
+      showMessage(
+        "Skontaktuj się z przełożonym lub administratorem departamentu w celu zresetowania dostępu.",
+        "error"
+      );
+    });
+
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      clearMessage();
+
+      const enteredUsername = username.value.trim().toLowerCase();
+      const enteredPassword = password.value;
+
+      if (!enteredUsername || !enteredPassword) {
+        showMessage("Uzupełnij login oraz hasło, aby kontynuować.", "error");
+        loginForm.classList.remove("shake");
+        void loginForm.offsetWidth;
+        loginForm.classList.add("shake");
+        return;
+      }
+
+      if (
+        enteredUsername !== demoAccount.username ||
+        enteredPassword !== demoAccount.password
+      ) {
+        showMessage("Nieprawidłowy login lub hasło. Sprawdź dane i spróbuj ponownie.", "error");
+        password.value = "";
+        password.focus();
+
+        loginForm.classList.remove("shake");
+        void loginForm.offsetWidth;
+        loginForm.classList.add("shake");
+        return;
+      }
+
+      if (remember.checked) {
+        localStorage.setItem("mtdRememberedUser", enteredUsername);
+      }
+
+      loginButton.classList.add("loading");
+      showMessage("Dane poprawne. Nawiązywanie bezpiecznej sesji...", "success");
+
+      setTimeout(() => {
+        showMessage("Logowanie zakończone pomyślnie. Tutaj możesz otworzyć panel główny.", "success");
+        loginButton.classList.remove("loading");
+      }, 1300);
+    });
+
+    const rememberedUser = localStorage.getItem("mtdRememberedUser");
+    if (rememberedUser) {
+      username.value = rememberedUser;
+      remember.checked = true;
+    }
+  </script>
 </body>
 </html>
