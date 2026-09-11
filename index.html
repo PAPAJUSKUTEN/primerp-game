@@ -1879,8 +1879,15 @@
     </style>
 
 <style>
-.section-heading-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;}
-.icon-btn{border:0;background:transparent;color:#94a3b8;cursor:pointer;padding:7px;border-radius:8px;margin-left:4px}.icon-btn:hover{background:#243247;color:#fff}.icon-btn.danger:hover{color:#fb7185}.table-link{border:0;background:none;color:#e2e8f0;cursor:pointer;font:inherit;text-align:left}.table-link:hover{color:#60a5fa}.rank-hidden{display:none!important}
+.login-screen{overflow-y:auto;background:radial-gradient(circle at 15% 15%,rgba(59,130,246,.18),transparent 30%),radial-gradient(circle at 85% 80%,rgba(139,92,246,.14),transparent 32%),linear-gradient(135deg,#050812 0%,#0a101c 48%,#070b13 100%)}
+.login-screen::before,.login-screen::after{content:"";position:absolute;border-radius:50%;pointer-events:none;filter:blur(2px)}
+.login-screen::before{width:420px;height:420px;left:-170px;bottom:-190px;border:1px solid rgba(96,165,250,.12);box-shadow:0 0 0 35px rgba(96,165,250,.025),0 0 0 70px rgba(96,165,250,.018)}
+.login-screen::after{width:280px;height:280px;right:-130px;top:-120px;border:1px solid rgba(167,139,250,.14);box-shadow:0 0 0 28px rgba(167,139,250,.025),0 0 0 56px rgba(167,139,250,.018)}
+.login-card{position:relative;z-index:1;width:min(430px,100%);padding:38px 36px 30px;background:linear-gradient(160deg,rgba(18,29,48,.96),rgba(10,16,27,.98));border:1px solid rgba(148,163,184,.18);box-shadow:0 35px 100px rgba(0,0,0,.52),0 0 0 1px rgba(59,130,246,.04) inset;animation:loginCardIn .55s cubic-bezier(.2,.8,.2,1) both}
+.login-card::before{content:"";position:absolute;left:12%;right:12%;top:-1px;height:2px;border-radius:99px;background:linear-gradient(90deg,transparent,#60a5fa,#a78bfa,transparent);box-shadow:0 0 22px rgba(96,165,250,.55)}
+.login-brand{margin-bottom:28px}.login-brand .brand-logo{position:relative;width:70px;height:70px;margin-bottom:17px;border-radius:21px;background:linear-gradient(145deg,#2563eb,#1e40af 58%,#172554);border:1px solid rgba(147,197,253,.4);box-shadow:0 15px 35px rgba(37,99,235,.32),0 0 0 8px rgba(59,130,246,.07);font-size:28px}.login-brand .brand-logo::after{content:"";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.16);border-radius:16px}.login-brand h1{font-size:19px;letter-spacing:1.2px}.login-brand span{margin-top:8px;color:#93c5fd;letter-spacing:1.5px}
+.login-welcome{margin:-13px 0 22px;text-align:center;color:var(--text-secondary);font-size:11px;line-height:1.6}.login-field{margin-bottom:17px}.login-field label{display:flex;align-items:center;gap:7px;margin-bottom:8px;color:#cbd5e1;font-size:10px;letter-spacing:.9px}.login-field label i{color:#60a5fa;font-size:11px}.login-input-wrap{position:relative}.login-input-wrap>i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#64748b;pointer-events:none;transition:color .2s ease}.login-field input{height:47px;padding:0 43px;background:rgba(3,7,18,.58);border:1px solid rgba(148,163,184,.16);border-radius:11px;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease}.login-field input:hover{border-color:rgba(148,163,184,.3)}.login-field input:focus{background:rgba(15,27,47,.85);border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.12),0 8px 22px rgba(0,0,0,.15)}.login-input-wrap:focus-within>i{color:#60a5fa}.login-toggle{position:absolute;right:9px;top:50%;width:30px;height:30px;transform:translateY(-50%);border:0;border-radius:7px;background:transparent;color:#64748b;cursor:pointer}.login-toggle:hover{color:#fff;background:rgba(255,255,255,.06)}
+.login-options{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:3px 0 18px;color:#64748b;font-size:10px}.login-check{display:inline-flex;align-items:center;gap:7px;cursor:pointer}.login-check input{width:14px;height:14px;accent-color:#3b82f6}.login-submit{position:relative;overflow:hidden;min-height:47px;margin-top:0;border:1px solid rgba(147,197,253,.28);background:linear-gradient(135deg,#3b82f6,#2563eb 55%,#1d4ed8);box-shadow:0 12px 28px rgba(37,99,235,.25);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}.login-submit:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(37,99,235,.34);filter:brightness(1.08)}.login-submit:active{transform:translateY(0)}.login-submit .login-submit-content{position:relative;z-index:1}.login-hint{margin-top:25px;padding:16px;background:rgba(255,255,255,.025);border:1px solid rgba(148,163,184,.11);border-radius:12px}.login-hint p{display:flex;align-items:center;gap:7px;margin-bottom:10px;color:#94a3b8}.login-hint p::before{content:"\f2f6";font-family:"Font Awesome 6 Free";font-weight:900;color:#60a5fa}.login-hint-row{padding:7px 0;border-bottom:1px solid rgba(148,163,184,.08)}.login-hint-row:last-child{border-bottom:0;padding-bottom:0}.login-hint-row span{color:#94a3b8}.login-hint-row b{padding:4px 7px;border-radius:5px;color:#bfdbfe;background:rgba(59,130,246,.1);font-size:9px}.login-footer{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:22px;color:#475569;font-size:9px}.login-footer i{color:#22c55e;font-size:7px}@keyframes loginCardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}@media(max-width:480px){.login-screen{align-items:flex-start;padding:25px 15px}.login-card{padding:30px 22px 23px}.login-brand .brand-logo{width:62px;height:62px}}
 </style>
 </head>
 
@@ -1901,8 +1908,12 @@
             </div>
 
             <h1>VENUS RP POLICE</h1>
-            <span>Logowanie do MTD</span>
+            <span>Bezpieczny dostęp do MTD</span>
 
+        </div>
+
+        <div class="login-welcome">
+            Zaloguj się przy użyciu danych służbowych, aby uzyskać dostęp do terminala.
         </div>
 
         <div class="login-error" id="loginError">
@@ -1912,28 +1923,28 @@
         <form class="login-form" id="loginForm">
 
             <div class="login-field">
-                <label>Numer służbowy</label>
-                <input
-                    type="text"
-                    id="loginUsername"
-                    autocomplete="username"
-                    placeholder="np. kowalski"
-                >
+                <label><i class="fa-solid fa-id-badge"></i> Numer służbowy</label>
+                <div class="login-input-wrap">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <input type="text" id="loginUsername" autocomplete="username" placeholder="np. kowalski" spellcheck="false">
+                </div>
             </div>
 
             <div class="login-field">
-                <label>Hasło</label>
-                <input
-                    type="password"
-                    id="loginPassword"
-                    autocomplete="current-password"
-                    placeholder="••••••••"
-                >
+                <label><i class="fa-solid fa-lock"></i> Hasło</label>
+                <div class="login-input-wrap">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="password" id="loginPassword" autocomplete="current-password" placeholder="Wprowadź hasło">
+                    <button type="button" class="login-toggle" id="togglePassword" aria-label="Pokaż hasło"><i class="fa-solid fa-eye"></i></button>
+                </div>
             </div>
 
-            <button type="submit" class="login-submit">
-                Zaloguj się
-            </button>
+            <div class="login-options">
+                <label class="login-check"><input type="checkbox" id="rememberLogin"><span>Zapamiętaj numer</span></label>
+                <span><i class="fa-solid fa-shield-halved"></i> Szyfrowane połączenie</span>
+            </div>
+
+            <button type="submit" class="login-submit"><span class="login-submit-content"><i class="fa-solid fa-right-to-bracket"></i> Zaloguj się do terminala</span></button>
 
         </form>
 
@@ -1962,6 +1973,8 @@
             </div>
 
         </div>
+
+        <div class="login-footer"><i class="fa-solid fa-circle"></i> System MTD Venus RP • Dostęp autoryzowany</div>
 
     </div>
 
@@ -2365,7 +2378,7 @@
                 <div class="section-header">
 
                     <div>
-                        <div class="section-heading-actions"><h3>Osoby</h3><button class="btn btn-primary" onclick="addPerson()"><i class="fa-solid fa-user-plus"></i> Dodaj obywatela</button></div>
+                        <h3>Osoby</h3>
 
                         <p>
                             Baza danych obywateli Venus RP.
@@ -2579,7 +2592,7 @@
                 <div class="section-header">
 
                     <div>
-                        <div class="section-heading-actions"><h3>Pojazdy</h3><button class="btn btn-primary" onclick="addVehicle()"><i class="fa-solid fa-car"></i> Dodaj pojazd</button></div>
+                        <h3>Pojazdy</h3>
 
                         <p>
                             Centralna baza pojazdów zarejestrowanych w Venus RP.
@@ -3387,154 +3400,24 @@
 
     let currentOfficer = null;
 
-    /* =========================================================
-       ROLE-BASED ACCESS CONTROL + LOCAL DATA LAYER
-       Widoczność zakładek pozostaje publiczna, ale każda operacja
-       zapisu jest sprawdzana ponownie w momencie jej wykonania.
-    ========================================================== */
-
-    const PERMISSIONS = {
-        viewPeople: 1,
-        addPerson: 3,
-        editPerson: 3,
-        deletePerson: 4,
-        viewVehicles: 1,
-        addVehicle: 3,
-        editVehicle: 3,
-        deleteVehicle: 4,
-        viewOfficers: 1,
-        addOfficer: 4,
-        editOfficer: 4,
-        deleteOfficer: 4,
-        createReport: 2,
-        editReport: 3,
-        deleteReport: 4,
-        addLaw: 4,
-        editLaw: 4,
-        deleteLaw: 4
-    };
-
-    const DATA_KEY = "venus_mtd_data_v2";
-    const AUDIT_KEY = "venus_mtd_audit_v2";
-
-    const DEFAULT_DATA = {
-        people: [
-            { id: "p-1", name: "Jan Kowalski", pesel: "99010112345", license: "Aktywne", points: "6 / 24", status: "Brak poszukiwania" },
-            { id: "p-2", name: "Anna Nowak", pesel: "97052288421", license: "Aktywne", points: "2 / 24", status: "Brak poszukiwania" },
-            { id: "p-3", name: "Piotr Zieliński", pesel: "95030144512", license: "Zatrzymane", points: "18 / 24", status: "Zakaz prowadzenia" }
-        ],
-        vehicles: [
-            { id: "v-1", plate: "WX 2047K", vehicle: "BMW M5", owner: "Jan Kowalski", insurance: "Aktywne", inspection: "Ważny", status: "Brak alertów" },
-            { id: "v-2", plate: "WW 8123P", vehicle: "Audi RS6", owner: "Anna Nowak", insurance: "Aktywne", inspection: "Ważny", status: "Brak alertów" },
-            { id: "v-3", plate: "WZ 4499X", vehicle: "Mercedes-AMG C63", owner: "Piotr Zieliński", insurance: "Brak", inspection: "Wygasły", status: "ALERT" }
-        ],
-        officers: [
-            { id: "o-1", name: "Jan Kowalski", rank: "Policjant", number: "2047", unit: "P-21", status: "Na służbie" },
-            { id: "o-2", name: "Adam Wiśniewski", rank: "Sierżant", number: "2012", unit: "P-14", status: "Na służbie" },
-            { id: "o-3", name: "Marek Dąbrowski", rank: "Aspirant", number: "1988", unit: "P-07", status: "Przerwa" }
-        ],
-        reports: [],
-        laws: []
-    };
-
-    let mtdData = loadMtdData();
-
-    function cloneData(value) {
-        return JSON.parse(JSON.stringify(value));
+    const savedUsername = localStorage.getItem("venus_mtd_remembered_username");
+    if (savedUsername) {
+        document.getElementById("loginUsername").value = savedUsername;
+        document.getElementById("rememberLogin").checked = true;
     }
 
-    function loadMtdData() {
-        try {
-            const saved = JSON.parse(localStorage.getItem(DATA_KEY));
-            return saved ? { ...cloneData(DEFAULT_DATA), ...saved } : cloneData(DEFAULT_DATA);
-        } catch (error) {
-            return cloneData(DEFAULT_DATA);
-        }
-    }
+    document.getElementById("togglePassword")?.addEventListener("click", () => {
+        const input = document.getElementById("loginPassword");
+        const icon = document.querySelector("#togglePassword i");
+        const isVisible = input.type === "text";
+        input.type = isVisible ? "password" : "text";
+        icon.className = isVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash";
+    });
 
-    function saveMtdData() {
-        localStorage.setItem(DATA_KEY, JSON.stringify(mtdData));
-    }
+    document.getElementById("loginUsername")?.addEventListener("input", event => {
+        event.target.value = event.target.value.replace(/\s/g, "").toLowerCase();
+    });
 
-    function audit(action, entity, details = {}) {
-        const history = JSON.parse(localStorage.getItem(AUDIT_KEY) || "[]");
-        history.unshift({ id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()), action, entity, details, officer: currentOfficer ? currentOfficer.name : "Nieznany", at: new Date().toISOString() });
-        localStorage.setItem(AUDIT_KEY, JSON.stringify(history.slice(0, 100)));
-    }
-
-    function can(permission) {
-        return !!currentOfficer && RANKS[currentOfficer.rank].level >= (PERMISSIONS[permission] || 99);
-    }
-
-    function requirePermission(permission, message = "Brak uprawnień do wykonania tej operacji.") {
-        if (!can(permission)) {
-            showToast(message);
-            return false;
-        }
-        return true;
-    }
-
-    function escapeHtml(value) {
-        return String(value ?? "").replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[character]));
-    }
-
-    function newId(prefix) {
-        return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-    }
-
-    function fieldValue(id) {
-        return document.getElementById(id)?.value.trim() || "";
-    }
-
-    function renderDynamicRecords() {
-        const peopleTable = document.getElementById("peopleTable");
-        if (peopleTable) {
-            const body = peopleTable.querySelector("tbody") || peopleTable;
-            body.innerHTML = mtdData.people.map(person => `<tr data-search="${escapeHtml(Object.values(person).join(" ").toLowerCase())}"><td><button class="table-link" onclick="showPerson('${escapeHtml(person.name)}')">${escapeHtml(person.name)}</button></td><td>${escapeHtml(person.pesel)}</td><td>${escapeHtml(person.license)}</td><td>${escapeHtml(person.points)}</td><td><span class="badge badge-green">${escapeHtml(person.status)}</span></td><td><button class="icon-btn" title="Edytuj" onclick="editPerson('${person.id}')"><i class="fa-solid fa-pen"></i></button><button class="icon-btn danger" title="Usuń" onclick="deletePerson('${person.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join("");
-        }
-        const vehicleTable = document.getElementById("vehicleTable");
-        if (vehicleTable) {
-            const body = vehicleTable.querySelector("tbody") || vehicleTable;
-            body.innerHTML = mtdData.vehicles.map(vehicle => `<tr data-search="${escapeHtml(Object.values(vehicle).join(" ").toLowerCase())}"><td>${escapeHtml(vehicle.plate)}</td><td>${escapeHtml(vehicle.vehicle)}</td><td>${escapeHtml(vehicle.owner)}</td><td>${escapeHtml(vehicle.insurance)}</td><td>${escapeHtml(vehicle.inspection)}</td><td>${escapeHtml(vehicle.status)}</td><td><button class="icon-btn" onclick="editVehicle('${vehicle.id}')"><i class="fa-solid fa-pen"></i></button><button class="icon-btn danger" onclick="deleteVehicle('${vehicle.id}')"><i class="fa-solid fa-trash"></i></button></td></tr>`).join("");
-        }
-        saveMtdData();
-        applyPermissions();
-    }
-
-    function addPerson() {
-        if (!requirePermission("addPerson", "Osoby mogą dodawać funkcjonariusze od rangi Sierżanta.")) return;
-        openCrudModal("Dodaj obywatela", [{ id: "personName", label: "Imię i nazwisko", placeholder: "np. Karol Malinowski" }, { id: "personPesel", label: "PESEL", placeholder: "11 cyfr" }, { id: "personLicense", label: "Prawo jazdy", placeholder: "Aktywne" }, { id: "personPoints", label: "Punkty", placeholder: "0 / 24" }, { id: "personStatus", label: "Status", placeholder: "Brak poszukiwania" }], "savePerson()");
-    }
-
-    function savePerson(id = "") {
-        if (!requirePermission(id ? "editPerson" : "addPerson")) return;
-        const record = { id: id || newId("p"), name: fieldValue("personName"), pesel: fieldValue("personPesel"), license: fieldValue("personLicense"), points: fieldValue("personPoints"), status: fieldValue("personStatus") };
-        if (!record.name || !record.pesel) return showToast("Imię i nazwisko oraz PESEL są wymagane.");
-        const index = mtdData.people.findIndex(item => item.id === id);
-        index >= 0 ? mtdData.people[index] = record : mtdData.people.unshift(record);
-        saveMtdData(); audit(id ? "edit" : "create", "person", record); closeModal(); renderDynamicRecords(); showToast(id ? "Zapisano zmiany obywatela." : "Dodano obywatela.");
-    }
-
-    function editPerson(id) {
-        if (!requirePermission("editPerson")) return;
-        const item = mtdData.people.find(record => record.id === id); if (!item) return;
-        openCrudModal("Edytuj obywatela", [{ id: "personName", label: "Imię i nazwisko", value: item.name }, { id: "personPesel", label: "PESEL", value: item.pesel }, { id: "personLicense", label: "Prawo jazdy", value: item.license }, { id: "personPoints", label: "Punkty", value: item.points }, { id: "personStatus", label: "Status", value: item.status }], `savePerson('${id}')`);
-    }
-
-    function deletePerson(id) { if (!requirePermission("deletePerson", "Usuwanie obywateli jest dostępne wyłącznie dla Dowództwa.")) return; if (!confirm("Czy na pewno usunąć ten rekord?")) return; mtdData.people = mtdData.people.filter(item => item.id !== id); saveMtdData(); audit("delete", "person", { id }); renderDynamicRecords(); showToast("Usunięto rekord obywatela."); }
-
-    function addVehicle() { if (!requirePermission("addVehicle", "Pojazdy mogą dodawać funkcjonariusze od rangi Sierżanta.")) return; openCrudModal("Dodaj pojazd", [{ id: "vehiclePlate", label: "Tablica", placeholder: "WX 1234A" }, { id: "vehicleName", label: "Pojazd", placeholder: "BMW M5" }, { id: "vehicleOwner", label: "Właściciel", placeholder: "Imię i nazwisko" }, { id: "vehicleInsurance", label: "OC", placeholder: "Aktywne" }, { id: "vehicleInspection", label: "Przegląd", placeholder: "Ważny" }, { id: "vehicleStatus", label: "Status", placeholder: "Brak alertów" }], "saveVehicle()"); }
-
-    function saveVehicle(id = "") { if (!requirePermission(id ? "editVehicle" : "addVehicle")) return; const record = { id: id || newId("v"), plate: fieldValue("vehiclePlate"), vehicle: fieldValue("vehicleName"), owner: fieldValue("vehicleOwner"), insurance: fieldValue("vehicleInsurance"), inspection: fieldValue("vehicleInspection"), status: fieldValue("vehicleStatus") }; if (!record.plate || !record.vehicle) return showToast("Tablica i nazwa pojazdu są wymagane."); const index = mtdData.vehicles.findIndex(item => item.id === id); index >= 0 ? mtdData.vehicles[index] = record : mtdData.vehicles.unshift(record); saveMtdData(); audit(id ? "edit" : "create", "vehicle", record); closeModal(); renderDynamicRecords(); showToast(id ? "Zapisano zmiany pojazdu." : "Dodano pojazd."); }
-
-    function editVehicle(id) { if (!requirePermission("editVehicle")) return; const item = mtdData.vehicles.find(record => record.id === id); if (!item) return; openCrudModal("Edytuj pojazd", [{ id: "vehiclePlate", label: "Tablica", value: item.plate }, { id: "vehicleName", label: "Pojazd", value: item.vehicle }, { id: "vehicleOwner", label: "Właściciel", value: item.owner }, { id: "vehicleInsurance", label: "OC", value: item.insurance }, { id: "vehicleInspection", label: "Przegląd", value: item.inspection }, { id: "vehicleStatus", label: "Status", value: item.status }], `saveVehicle('${id}')`); }
-
-    function deleteVehicle(id) { if (!requirePermission("deleteVehicle", "Usuwanie pojazdów jest dostępne wyłącznie dla Dowództwa.")) return; if (!confirm("Czy na pewno usunąć ten pojazd?")) return; mtdData.vehicles = mtdData.vehicles.filter(item => item.id !== id); saveMtdData(); audit("delete", "vehicle", { id }); renderDynamicRecords(); showToast("Usunięto pojazd."); }
-
-    function openCrudModal(title, fields, saveAction) { document.getElementById("modalTitle").textContent = title; document.getElementById("modalBody").innerHTML = `<div class="form-grid">${fields.map(field => `<div class="form-group"><label>${escapeHtml(field.label)}</label><input id="${field.id}" value="${escapeHtml(field.value || "")}" placeholder="${escapeHtml(field.placeholder || "")}"></div>`).join("")}</div><div class="form-actions"><button class="btn" onclick="closeModal()">Anuluj</button><button class="btn btn-primary" onclick="${saveAction}"><i class="fa-solid fa-floppy-disk"></i> Zapisz</button></div>`; openModal(); }
-
-    const originalOpenPage = openPage;
-    openPage = function(page) { originalOpenPage(page); setTimeout(renderDynamicRecords, 0); };
 
 
     /* =========================================================
@@ -3569,6 +3452,11 @@
             }
 
             errorBox.classList.remove("active");
+            if (document.getElementById("rememberLogin").checked) {
+                localStorage.setItem("venus_mtd_remembered_username", username);
+            } else {
+                localStorage.removeItem("venus_mtd_remembered_username");
+            }
             logIn(account);
 
         });
@@ -3989,7 +3877,8 @@
 
     function newReport() {
 
-        if (!requirePermission("createReport", "Raporty mogą tworzyć funkcjonariusze od rangi Policjanta.")) {
+        if (!hasRank(2)) {
+            showToast("Brak uprawnień do tworzenia raportów.");
             return;
         }
 
@@ -4113,11 +4002,11 @@
 
     function createReport() {
 
-        mtdData.reports.unshift({ id: newId("r"), author: currentOfficer.name, createdAt: new Date().toISOString() });
-        saveMtdData();
-        audit("create", "report");
         closeModal();
-        showToast("Raport został utworzony pomyślnie.");
+
+        showToast(
+            "Raport został utworzony pomyślnie."
+        );
 
     }
 
@@ -4426,19 +4315,6 @@
 
     }
 
-
-    renderDynamicRecords();
-
-    ["peopleSearch", "vehicleSearch"].forEach(inputId => {
-        const input = document.getElementById(inputId);
-        if (input) input.addEventListener("input", () => {
-            const query = input.value.toLowerCase().trim();
-            const tableId = inputId === "peopleSearch" ? "peopleTable" : "vehicleTable";
-            document.querySelectorAll(`#${tableId} tr`).forEach(row => {
-                row.style.display = (row.dataset.search || row.textContent.toLowerCase()).includes(query) ? "" : "none";
-            });
-        });
-    });
 
     /* =========================================================
        NOTIFICATION
