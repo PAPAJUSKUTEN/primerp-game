@@ -307,7 +307,7 @@
     </div>
 
     <!-- Okno logowania -->
-    <div class="login-wrapper">
+    <div class="login-wrapper" id="loginContainer">
         <div class="login-card">
             <div class="terminal-badge">
                 <i class="fa-solid fa-shield-halved"></i>
@@ -471,13 +471,11 @@
 
             setTimeout(() => {
                 if (usernameInput === 'kadet1' && passwordInput === 'kadet1') {
-                    toastText.innerText = 'Zalogowano pomyślnie!';
+                    toastText.innerText = 'Zalogowano pomyślnie! Ładowanie MDT...';
                     toast.classList.add('show');
 
                     setTimeout(() => {
-                        // Zostaje wyłącznie czyste, puste okno z tłem
-                        document.body.innerHTML = '';
-                        document.body.style.background = '#050508';
+                        loadMdtPanel(usernameInput);
                     }, 1000);
 
                 } else {
@@ -491,6 +489,117 @@
                     }, 3000);
                 }
             }, 1000);
+        }
+
+        // Panel MDT z bocznym menu i pustymi sekcjami
+        function loadMdtPanel(badgeId) {
+            document.body.innerHTML = `
+                <div style="width: 100vw; height: 100vh; background: #07080c; color: #fff; display: flex; font-family: 'Inter', sans-serif; overflow: hidden; z-index: 20; position: relative;">
+                    
+                    <!-- Boczne menu nawigacyjne -->
+                    <aside style="width: 260px; background: rgba(14, 14, 20, 0.95); border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column;">
+                        <div style="height: 70px; display: flex; align-items: center; gap: 12px; padding: 0 24px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                            <i class="fa-solid fa-shield-halved" style="color: #06b6d4; font-size: 22px;"></i>
+                            <span style="font-weight: 700; letter-spacing: 0.5px; font-size: 15px;">POLICE MDT</span>
+                        </div>
+                        
+                        <nav style="flex: 1; padding: 20px 15px; display: flex; flex-direction: column; gap: 8px;">
+                            <button onclick="switchTab('baza', this)" class="nav-btn active" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); color: #06b6d4; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; text-align: left; transition: all 0.2s;">
+                                <i class="fa-solid fa-database" style="width: 20px;"></i> Baza Danych
+                            </button>
+                            <button onclick="switchTab('pojazdy', this)" class="nav-btn" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: transparent; border: 1px solid transparent; color: #94a3b8; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 500; text-align: left; transition: all 0.2s;">
+                                <i class="fa-solid fa-car" style="width: 20px;"></i> Pojazdy
+                            </button>
+                            <button onclick="switchTab('obywatele', this)" class="nav-btn" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: transparent; border: 1px solid transparent; color: #94a3b8; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 500; text-align: left; transition: all 0.2s;">
+                                <i class="fa-solid fa-users" style="width: 20px;"></i> Obywatele
+                            </button>
+                            <button onclick="switchTab('zgloszenia', this)" class="nav-btn" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: transparent; border: 1px solid transparent; color: #94a3b8; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 500; text-align: left; transition: all 0.2s;">
+                                <i class="fa-solid fa-triangle-exclamation" style="width: 20px;"></i> Zgłoszenia
+                            </button>
+                            <button onclick="switchTab('raporty', this)" class="nav-btn" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: transparent; border: 1px solid transparent; color: #94a3b8; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 500; text-align: left; transition: all 0.2s;">
+                                <i class="fa-solid fa-file-lines" style="width: 20px;"></i> Raporty
+                            </button>
+                        </nav>
+
+                        <div style="padding: 20px; border-top: 1px solid rgba(255,255,255,0.06);">
+                            <div style="font-size: 12px; color: #64748b; margin-bottom: 8px;">Zalogowany jako:</div>
+                            <div style="font-weight: 600; font-size: 13px; color: #fff; margin-bottom: 12px;"><i class="fa-solid fa-id-badge" style="color: #06b6d4; margin-right: 6px;"></i> ${badgeId}</div>
+                            <button onclick="location.reload()" style="width: 100%; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s;">Wyloguj</button>
+                        </div>
+                    </aside>
+
+                    <!-- Główny obszar zawartości -->
+                    <main style="flex: 1; display: flex; flex-direction: column; background: #050508;">
+                        <header style="height: 70px; background: rgba(14, 14, 20, 0.6); border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; padding: 0 35px;">
+                            <h2 id="tabTitle" style="font-size: 18px; font-weight: 600; color: #fff; letter-spacing: -0.3px;">Baza Danych</h2>
+                            <div style="font-size: 13px; color: #10b981; display: flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 6px 14px; border-radius: 20px;">
+                                <i class="fa-solid fa-circle" style="font-size: 7px;"></i> System operacyjny CAD: Online
+                            </div>
+                        </header>
+
+                        <!-- Puste kontenery poszczególnych zakładek -->
+                        <div style="flex: 1; padding: 30px; overflow-y: auto;">
+                            
+                            <!-- Zakładka 1: Baza Danych -->
+                            <div id="content-baza" class="tab-content" style="width: 100%; height: 100%;">
+                                <!-- Tutaj wstawiasz własne elementy dla Bazy Danych -->
+                            </div>
+
+                            <!-- Zakładka 2: Pojazdy -->
+                            <div id="content-pojazdy" class="tab-content" style="width: 100%; height: 100%; display: none;">
+                                <!-- Tutaj wstawiasz własne elementy dla Pojazdów -->
+                            </div>
+
+                            <!-- Zakładka 3: Obywatele -->
+                            <div id="content-obywatele" class="tab-content" style="width: 100%; height: 100%; display: none;">
+                                <!-- Tutaj wstawiasz własne elementy dla Obywateli -->
+                            </div>
+
+                            <!-- Zakładka 4: Zgłoszenia -->
+                            <div id="content-zgloszenia" class="tab-content" style="width: 100%; height: 100%; display: none;">
+                                <!-- Tutaj wstawiasz własne elementy dla Zgłoszeń -->
+                            </div>
+
+                            <!-- Zakładka 5: Raporty -->
+                            <div id="content-raporty" class="tab-content" style="width: 100%; height: 100%; display: none;">
+                                <!-- Tutaj wstawiasz własne elementy dla Raportów -->
+                            </div>
+
+                        </div>
+                    </main>
+                </div>
+            `;
+        }
+
+        // Skrypt przełączania pustych zakładek
+        function switchTab(tabName, btnElement) {
+            // Ukryj wszystkie treści
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            // Pokaż wybraną
+            document.getElementById('content-' + tabName).style.display = 'block';
+
+            // Zmień styl przycisków w menu
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.style.background = 'transparent';
+                btn.style.borderColor = 'transparent';
+                btn.style.color = '#94a3b8';
+                btn.style.fontWeight = '500';
+            });
+            
+            btnElement.style.background = 'rgba(6, 182, 212, 0.15)';
+            btnElement.style.borderColor = 'rgba(6, 182, 212, 0.3)';
+            btnElement.style.color = '#06b6d4';
+            btnElement.style.fontWeight = '600';
+
+            // Zmień nagłówek u góry
+            const titles = {
+                'baza': 'Baza Danych',
+                'pojazdy': 'Rejestr Pojazdów',
+                'obywatele': 'Ewidencja Obywateli',
+                'zgloszenia': 'Aktywne Zgłoszenia Dispatch',
+                'raporty': 'Raporty Służbowe'
+            };
+            document.getElementById('tabTitle').innerText = titles[tabName];
         }
     </script>
 </body>
