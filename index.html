@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MTD | Logowanie</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,14 +12,15 @@
   <style>
     :root {
       --bg: #060d16;
-      --bg-2: #0a1726;
+      --bg-two: #0a1726;
       --text: #f4f8fc;
       --muted: #8d9caf;
       --muted-light: #b5c2d0;
       --blue: #308ff1;
-      --blue-light: #64ceff;
+      --cyan: #64ceff;
       --green: #55dda0;
-      --line: rgba(255, 255, 255, .11);
+      --red: #ff7185;
+      --line: rgba(255,255,255,.11);
     }
 
     * {
@@ -39,9 +40,9 @@
       color: var(--text);
       font-family: "Inter", sans-serif;
       background:
-        radial-gradient(circle at 10% 0%, rgba(37, 135, 230, .19), transparent 30%),
-        radial-gradient(circle at 100% 100%, rgba(22, 189, 238, .12), transparent 31%),
-        linear-gradient(135deg, var(--bg), var(--bg-2));
+        radial-gradient(circle at 10% 0%, rgba(37,135,230,.2), transparent 30%),
+        radial-gradient(circle at 100% 100%, rgba(22,189,238,.13), transparent 32%),
+        linear-gradient(135deg, var(--bg), var(--bg-two));
     }
 
     body::before {
@@ -51,8 +52,8 @@
       opacity: .22;
       pointer-events: none;
       background-image:
-        linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
       background-size: 46px 46px;
       mask-image: linear-gradient(to bottom, black, transparent 90%);
     }
@@ -63,8 +64,8 @@
       height: 380px;
       border-radius: 50%;
       filter: blur(100px);
-      pointer-events: none;
       opacity: .16;
+      pointer-events: none;
       animation: floatingGlow 9s ease-in-out infinite alternate;
     }
 
@@ -97,12 +98,12 @@
       width: min(1050px, 100%);
       min-height: 610px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, .13);
+      border: 1px solid rgba(255,255,255,.13);
       border-radius: 28px;
-      background: rgba(8, 19, 32, .68);
+      background: rgba(8,19,32,.68);
       box-shadow:
-        0 36px 100px rgba(0, 0, 0, .52),
-        inset 0 1px rgba(255, 255, 255, .06);
+        0 36px 100px rgba(0,0,0,.52),
+        inset 0 1px rgba(255,255,255,.06);
       backdrop-filter: blur(25px);
       animation: cardAppear .7s ease both;
     }
@@ -114,10 +115,10 @@
       pointer-events: none;
       background: linear-gradient(
         120deg,
-        rgba(79, 178, 255, .08),
+        rgba(79,178,255,.08),
         transparent 35%,
         transparent 65%,
-        rgba(79, 178, 255, .035)
+        rgba(79,178,255,.035)
       );
     }
 
@@ -129,8 +130,8 @@
       padding: 58px 58px 48px;
       overflow: hidden;
       background:
-        linear-gradient(145deg, rgba(31, 119, 210, .25), transparent 48%),
-        linear-gradient(180deg, rgba(255, 255, 255, .035), transparent);
+        linear-gradient(145deg, rgba(31,119,210,.25), transparent 48%),
+        linear-gradient(180deg, rgba(255,255,255,.035), transparent);
     }
 
     .presentation::after {
@@ -140,12 +141,12 @@
       bottom: -220px;
       width: 490px;
       height: 490px;
-      border: 1px solid rgba(78, 204, 255, .18);
+      border: 1px solid rgba(78,204,255,.18);
       border-radius: 50%;
       box-shadow:
-        0 0 0 32px rgba(78, 204, 255, .035),
-        0 0 0 66px rgba(78, 204, 255, .025),
-        0 0 0 100px rgba(78, 204, 255, .018);
+        0 0 0 32px rgba(78,204,255,.035),
+        0 0 0 66px rgba(78,204,255,.025),
+        0 0 0 100px rgba(78,204,255,.018);
     }
 
     .brand {
@@ -161,15 +162,15 @@
       place-items: center;
       width: 56px;
       height: 56px;
-      border: 1px solid rgba(125, 210, 255, .42);
+      border: 1px solid rgba(125,210,255,.42);
       border-radius: 16px;
-      color: #fff;
+      color: white;
       font-size: 22px;
       font-weight: 800;
       background: linear-gradient(145deg, #349af5, #14549d);
       box-shadow:
-        0 13px 28px rgba(18, 111, 213, .28),
-        inset 0 1px rgba(255, 255, 255, .25);
+        0 13px 28px rgba(18,111,213,.28),
+        inset 0 1px rgba(255,255,255,.25);
     }
 
     .brand-title {
@@ -198,7 +199,7 @@
       align-items: center;
       gap: 9px;
       margin-bottom: 19px;
-      color: var(--blue-light);
+      color: var(--cyan);
       font-size: 10px;
       font-weight: 700;
       letter-spacing: .18em;
@@ -209,8 +210,8 @@
       content: "";
       width: 25px;
       height: 1px;
-      background: var(--blue-light);
-      box-shadow: 0 0 10px var(--blue-light);
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
     }
 
     .presentation h1 {
@@ -221,7 +222,7 @@
     }
 
     .presentation h1 em {
-      color: var(--blue-light);
+      color: var(--cyan);
       font-style: normal;
     }
 
@@ -249,7 +250,7 @@
       border-radius: 50%;
       background: var(--green);
       box-shadow:
-        0 0 0 5px rgba(85, 221, 160, .09),
+        0 0 0 5px rgba(85,221,160,.09),
         0 0 16px var(--green);
     }
 
@@ -258,7 +259,7 @@
       align-items: center;
       padding: 55px;
       border-left: 1px solid var(--line);
-      background: rgba(7, 16, 27, .72);
+      background: rgba(7,16,27,.72);
     }
 
     .login-form {
@@ -308,19 +309,19 @@
       color: var(--text);
       font-family: inherit;
       font-size: 13px;
-      background: rgba(255, 255, 255, .045);
+      background: rgba(255,255,255,.045);
       transition: .25s ease;
     }
 
     .input-container input:hover {
-      border-color: rgba(120, 190, 255, .35);
-      background: rgba(255, 255, 255, .06);
+      border-color: rgba(120,190,255,.35);
+      background: rgba(255,255,255,.06);
     }
 
     .input-container input:focus {
       border-color: var(--blue);
-      background: rgba(48, 143, 241, .08);
-      box-shadow: 0 0 0 4px rgba(48, 143, 241, .12);
+      background: rgba(48,143,241,.08);
+      box-shadow: 0 0 0 4px rgba(48,143,241,.12);
     }
 
     .input-container input::placeholder {
@@ -356,7 +357,7 @@
     }
 
     .password-toggle:hover {
-      color: var(--blue-light);
+      color: var(--cyan);
     }
 
     .login-button {
@@ -370,12 +371,12 @@
       overflow: hidden;
       border: 0;
       border-radius: 13px;
-      color: #fff;
+      color: white;
       font-family: inherit;
       font-size: 13px;
       font-weight: 800;
       background: linear-gradient(110deg, #237cdb, #319eef);
-      box-shadow: 0 15px 30px rgba(35, 126, 219, .25);
+      box-shadow: 0 15px 30px rgba(35,126,219,.25);
       cursor: pointer;
       transition: .25s ease;
     }
@@ -387,7 +388,7 @@
       background: linear-gradient(
         105deg,
         transparent 20%,
-        rgba(255, 255, 255, .27) 50%,
+        rgba(255,255,255,.27) 50%,
         transparent 80%
       );
       transform: translateX(-110%);
@@ -396,7 +397,7 @@
 
     .login-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 19px 34px rgba(35, 126, 219, .36);
+      box-shadow: 0 19px 34px rgba(35,126,219,.36);
     }
 
     .login-button:hover::before {
@@ -429,8 +430,8 @@
       position: absolute;
       width: 18px;
       height: 18px;
-      border: 2px solid rgba(255, 255, 255, .35);
-      border-top-color: #fff;
+      border: 2px solid rgba(255,255,255,.35);
+      border-top-color: white;
       border-radius: 50%;
       animation: spin .7s linear infinite;
     }
@@ -450,9 +451,9 @@
     }
 
     .message.error {
-      border: 1px solid rgba(255, 113, 133, .26);
+      border: 1px solid rgba(255,113,133,.26);
       color: #ff9bab;
-      background: rgba(255, 113, 133, .08);
+      background: rgba(255,113,133,.08);
     }
 
     .security {
@@ -485,6 +486,195 @@
 
     .shake {
       animation: shake .4s ease;
+    }
+
+    /* Ekran weryfikacji */
+
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      align-content: center;
+      gap: 13px;
+      color: #f4f8fc;
+      background:
+        radial-gradient(circle at center, rgba(19,62,101,.42), rgba(3,9,16,.98) 62%);
+      opacity: 0;
+    }
+
+    .auth-overlay.active {
+      display: grid;
+      animation: overlayIn .45s ease forwards;
+    }
+
+    .auth-lock-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 190px;
+      height: 190px;
+      margin-bottom: 5px;
+    }
+
+    .auth-ring {
+      position: absolute;
+      border: 1px solid rgba(83,205,255,.24);
+      border-radius: 50%;
+      animation: ringPulse 2.2s ease-out infinite;
+    }
+
+    .ring-one {
+      width: 130px;
+      height: 130px;
+    }
+
+    .ring-two {
+      width: 178px;
+      height: 178px;
+      animation-delay: .65s;
+    }
+
+    .auth-lock {
+      position: relative;
+      z-index: 3;
+      width: 70px;
+      height: 67px;
+      filter: drop-shadow(0 0 20px rgba(61,171,255,.42));
+    }
+
+    .lock-shackle {
+      position: absolute;
+      top: 0;
+      left: 18px;
+      width: 34px;
+      height: 38px;
+      border: 7px solid #69ceff;
+      border-bottom: 0;
+      border-radius: 20px 20px 0 0;
+      transform-origin: 8px 34px;
+      animation: shackleOpen 1.1s ease 6.8s forwards;
+    }
+
+    .lock-body {
+      position: absolute;
+      left: 3px;
+      bottom: 0;
+      width: 64px;
+      height: 43px;
+      border: 1px solid rgba(148,225,255,.7);
+      border-radius: 11px;
+      background: linear-gradient(145deg, #268edc, #12509c);
+      box-shadow: inset 0 1px rgba(255,255,255,.28);
+    }
+
+    .lock-keyhole {
+      position: absolute;
+      top: 12px;
+      left: 27px;
+      width: 10px;
+      height: 15px;
+      border-radius: 50% 50% 5px 5px;
+      background: #07172a;
+    }
+
+    .lock-keyhole::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 3px;
+      width: 4px;
+      height: 10px;
+      background: #07172a;
+    }
+
+    .auth-key {
+      position: absolute;
+      z-index: 4;
+      top: 80px;
+      left: 47px;
+      width: 82px;
+      height: 32px;
+      opacity: 0;
+      transform: translate(-45px, 25px) rotate(-42deg);
+      animation: keyUnlock 1.5s cubic-bezier(.2,.8,.2,1) 4.9s forwards;
+      filter: drop-shadow(0 0 13px rgba(91,213,255,.6));
+    }
+
+    .key-head {
+      position: absolute;
+      top: 3px;
+      left: 0;
+      width: 25px;
+      height: 25px;
+      border: 5px solid #7cdbff;
+      border-radius: 50%;
+    }
+
+    .key-stem {
+      position: absolute;
+      top: 12px;
+      left: 22px;
+      width: 55px;
+      height: 8px;
+      border-radius: 5px;
+      background: #7cdbff;
+    }
+
+    .key-tooth {
+      position: absolute;
+      width: 8px;
+      height: 13px;
+      border-radius: 0 0 3px 3px;
+      background: #7cdbff;
+    }
+
+    .tooth-one {
+      top: 18px;
+      left: 61px;
+    }
+
+    .tooth-two {
+      top: 18px;
+      left: 73px;
+      height: 9px;
+    }
+
+    .auth-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .auth-status {
+      min-height: 18px;
+      color: #8fa5ba;
+      font-size: 11px;
+    }
+
+    .auth-progress {
+      width: min(280px, 70vw);
+      height: 4px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(255,255,255,.1);
+    }
+
+    .auth-progress span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #278bea, #65d8ff);
+      box-shadow: 0 0 14px #3dbbff;
+      transition: width .1s linear;
+    }
+
+    .auth-percent {
+      color: #66839d;
+      font-size: 10px;
+      font-variant-numeric: tabular-nums;
     }
 
     @keyframes cardAppear {
@@ -533,11 +723,60 @@
 
     @keyframes floatingGlow {
       from {
-        transform: translate3d(0, 0, 0) scale(1);
+        transform: translate3d(0,0,0) scale(1);
       }
 
       to {
-        transform: translate3d(20px, 18px, 0) scale(1.08);
+        transform: translate3d(20px,18px,0) scale(1.08);
+      }
+    }
+
+    @keyframes overlayIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes ringPulse {
+      0% {
+        opacity: .15;
+        transform: scale(.82);
+      }
+
+      65% {
+        opacity: .65;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.12);
+      }
+    }
+
+    @keyframes keyUnlock {
+      0% {
+        opacity: 0;
+        transform: translate(-45px,25px) rotate(-42deg);
+      }
+
+      25% {
+        opacity: 1;
+      }
+
+      70% {
+        opacity: 1;
+        transform: translate(2px,0) rotate(0deg);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(8px,-3px) rotate(0deg);
+      }
+    }
+
+    @keyframes shackleOpen {
+      to {
+        transform: rotate(-35deg) translate(-3px,-3px);
       }
     }
 
@@ -721,6 +960,41 @@
     </section>
   </main>
 
+  <div class="auth-overlay" id="authOverlay" aria-hidden="true">
+    <div class="auth-lock-wrap">
+
+      <div class="auth-ring ring-one"></div>
+      <div class="auth-ring ring-two"></div>
+
+      <div class="auth-lock">
+        <div class="lock-shackle"></div>
+
+        <div class="lock-body">
+          <div class="lock-keyhole"></div>
+        </div>
+      </div>
+
+      <div class="auth-key">
+        <div class="key-head"></div>
+        <div class="key-stem"></div>
+        <div class="key-tooth tooth-one"></div>
+        <div class="key-tooth tooth-two"></div>
+      </div>
+
+    </div>
+
+    <div class="auth-title">Weryfikowanie dostępu</div>
+    <div class="auth-status" id="authStatus">
+      Sprawdzanie danych funkcjonariusza
+    </div>
+
+    <div class="auth-progress">
+      <span id="authProgress"></span>
+    </div>
+
+    <div class="auth-percent" id="authPercent">0%</div>
+  </div>
+
   <script>
     const loginForm = document.getElementById("loginForm");
     const usernameInput = document.getElementById("username");
@@ -792,13 +1066,49 @@
       }
 
       loginButton.classList.add("loading");
-
-      setTimeout(() => {
-        document.body.innerHTML = "";
-        document.body.style.background = "#ffffff";
-        document.body.style.overflow = "hidden";
-      }, 700);
+      startVerification();
     });
-  </script>
-</body>
-</html>
+
+    function startVerification() {
+      const overlay = document.getElementById("authOverlay");
+      const progress = document.getElementById("authProgress");
+      const percent = document.getElementById("authPercent");
+      const status = document.getElementById("authStatus");
+
+      const duration = 7000;
+      const startTime = performance.now();
+
+      overlay.classList.add("active");
+      overlay.setAttribute("aria-hidden", "false");
+
+      function updateVerification(currentTime) {
+        const elapsed = currentTime - startTime;
+        const value = Math.min(100, Math.floor((elapsed / duration) * 100));
+
+        progress.style.width = value + "%";
+        percent.textContent = value + "%";
+
+        if (value < 25) {
+          status.textContent = "Sprawdzanie danych funkcjonariusza";
+        } else if (value < 50) {
+          status.textContent = "Weryfikowanie uprawnień dostępu";
+        } else if (value < 75) {
+          status.textContent = "Nawiązywanie bezpiecznej sesji";
+        } else if (value < 100) {
+          status.textContent = "Otwieranie terminala";
+        } else {
+          status.textContent = "Dostęp przyznany";
+        }
+
+        if (elapsed < duration) {
+          requestAnimationFrame(updateVerification);
+        } else {
+          setTimeout(() => {
+            document.body.innerHTML = "";
+            document.body.style.background = "#ffffff";
+            document.body.style.overflow = "hidden";
+          }, 450);
+        }
+      }
+
+      requestAnimationFrame(updateVerifica
