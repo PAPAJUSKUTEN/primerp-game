@@ -287,6 +287,7 @@
       display: block;
       width: 19px;
       height: 19px;
+      margin: 0;
       border: 2px solid rgba(255,255,255,.35);
       border-top-color: #ffffff;
       border-right-color: #ffffff;
@@ -547,6 +548,7 @@
       border-radius: inherit;
       background: linear-gradient(90deg, #278bea, #65d8ff);
       box-shadow: 0 0 14px #3dbbff;
+      transition: width .1s linear;
     }
 
     .verification-screen.broken-animation .progress-bar span {
@@ -822,7 +824,6 @@
   </main>
 
   <div id="verificationScreen" class="verification-screen">
-
     <div class="lock-container">
       <div class="ring ring-1"></div>
       <div class="ring ring-2"></div>
@@ -858,7 +859,6 @@
     <div id="percentage" class="percentage">
       0%
     </div>
-
   </div>
 
   <script>
