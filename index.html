@@ -824,6 +824,128 @@
       line-height: 1.6;
     }
 
+    /* PROFIL FUNKCJONARIUSZA NA PULPICIE */
+
+    .officer-profile-card {
+      display: grid;
+      grid-template-columns: 158px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 28px;
+      margin-top: 22px;
+      padding: 25px;
+      border: 1px solid rgba(104,204,255,.14);
+      border-radius: 17px;
+      background:
+        linear-gradient(115deg, rgba(27,105,181,.14), rgba(7,20,34,.3)),
+        rgba(10,27,45,.62);
+    }
+
+    .profile-photo-placeholder {
+      display: grid;
+      place-items: center;
+      width: 158px;
+      height: 158px;
+      overflow: hidden;
+      border: 1px dashed rgba(111,208,255,.48);
+      border-radius: 14px;
+      color: #8ed7ff;
+      text-align: center;
+      background:
+        linear-gradient(145deg, rgba(48,147,230,.22), rgba(20,57,91,.18)),
+        rgba(4,16,28,.48);
+      box-shadow: inset 0 0 30px rgba(78,181,246,.08);
+    }
+
+    .profile-photo-placeholder span,
+    .profile-photo-placeholder small {
+      display: block;
+    }
+
+    .profile-photo-placeholder span {
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .profile-photo-placeholder small {
+      margin-top: 10px;
+      color: #7ba4bd;
+      font-size: 8px;
+      font-weight: bold;
+      letter-spacing: .1em;
+    }
+
+    .profile-eyebrow {
+      color: #66c9ff;
+      font-size: 9px;
+      font-weight: bold;
+      letter-spacing: .14em;
+    }
+
+    .profile-name {
+      margin-top: 9px;
+      color: #eef8ff;
+      font-size: 24px;
+      letter-spacing: -.04em;
+    }
+
+    .profile-badge-number {
+      margin-top: 6px;
+      color: #88a2b6;
+      font-size: 11px;
+    }
+
+    .profile-details {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .profile-detail {
+      padding-left: 11px;
+      border-left: 2px solid rgba(100,205,255,.35);
+    }
+
+    .profile-detail span,
+    .profile-detail strong {
+      display: block;
+    }
+
+    .profile-detail span {
+      color: #6f8da4;
+      font-size: 8px;
+      font-weight: bold;
+      letter-spacing: .08em;
+    }
+
+    .profile-detail strong {
+      margin-top: 6px;
+      color: #d3e5f2;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .profile-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      align-self: start;
+      padding: 9px 12px;
+      border-radius: 20px;
+      color: #84ebb8;
+      font-size: 9px;
+      white-space: nowrap;
+      background: rgba(85,221,160,.1);
+    }
+
+    .profile-status span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+    }
+
     .banner-emblem {
       display: grid;
       place-items: center;
@@ -1289,6 +1411,24 @@
 
       .welcome-banner {
         padding: 25px;
+      }
+
+      .officer-profile-card {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .profile-photo-placeholder {
+        width: 130px;
+        height: 130px;
+      }
+
+      .profile-details {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-status {
+        justify-self: start;
       }
 
       .banner-emblem {
@@ -1857,6 +1997,43 @@
 
               <div class="banner-emblem">M</div>
             </div>
+
+            <section class="officer-profile-card" aria-label="Profil funkcjonariusza">
+              <div class="profile-photo-placeholder" aria-label="Miejsce na zdjęcie funkcjonariusza">
+                <div>
+                  <span>♙</span>
+                  <small>MIEJSCE NA ZDJĘCIE</small>
+                </div>
+              </div>
+
+              <div>
+                <div class="profile-eyebrow">PROFIL FUNKCJONARIUSZA</div>
+                <h3 class="profile-name">Kadet 1</h3>
+                <div class="profile-badge-number">Numer odznaki: MTD-001</div>
+
+                <div class="profile-details">
+                  <div class="profile-detail">
+                    <span>STOPIEŃ</span>
+                    <strong>Kadet</strong>
+                  </div>
+
+                  <div class="profile-detail">
+                    <span>JEDNOSTKA</span>
+                    <strong>Venus RP Police Department</strong>
+                  </div>
+
+                  <div class="profile-detail">
+                    <span>STATUS SŁUŻBY</span>
+                    <strong>Aktywna służba</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="profile-status">
+                <span></span>
+                Zweryfikowano
+              </div>
+            </section>
 
           </section>
         `;
