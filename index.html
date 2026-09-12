@@ -268,7 +268,15 @@
 
     .login-button.loading {
       pointer-events: none;
+      transform: none !important;
       color: transparent;
+      cursor: wait;
+    }
+
+    .login-button.loading:hover,
+    .login-button.loading:active {
+      transform: none !important;
+      box-shadow: 0 15px 30px rgba(35,126,219,.28);
     }
 
     .login-button.loading::after {
@@ -276,13 +284,17 @@
       position: absolute;
       top: 50%;
       left: 50%;
+      display: block;
       width: 19px;
       height: 19px;
+      margin: 0;
       border: 2px solid rgba(255,255,255,.35);
-      border-top-color: white;
+      border-top-color: #ffffff;
+      border-right-color: #ffffff;
       border-radius: 50%;
       animation: spin .7s linear infinite;
       transform: translate(-50%, -50%);
+      transform-origin: center center;
     }
 
     .message {
@@ -636,18 +648,17 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @keyframes spin {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
       to {
-        transform: rotate(360deg);
+        transform: translate(-50%, -50%) rotate(360deg);
       }
     }
 
@@ -691,6 +702,33 @@
     @keyframes openLock {
       to {
         transform: rotate(-35deg) translate(-3px,-3px);
+      }
+    }
+
+    @keyframes keyBreak {
+      0% {
+        opacity: 0;
+        transform: translate(-45px,25px) rotate(-42deg);
+      }
+
+      25% {
+        opacity: 1;
+        transform: translate(2px,0) rotate(0);
+      }
+
+      55% {
+        opacity: 1;
+        transform: translate(2px,0) rotate(0) scale(1);
+      }
+
+      70% {
+        opacity: 1;
+        transform: translate(-5px,-3px) rotate(-12deg) scale(1.05);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(35px,28px) rotate(48deg) scale(.75);
       }
     }
 
@@ -822,7 +860,6 @@
 <body>
   <main class="page">
     <section class="login-card">
-
       <div class="welcome-side">
         <div class="brand">
           <div class="brand-logo">M</div>
@@ -855,7 +892,6 @@
 
       <div class="form-side">
         <form id="loginForm" class="login-form" novalidate>
-
           <div class="form-title">
             <h2>Witaj ponownie</h2>
             <p>Zaloguj się, aby uzyskać dostęp do terminala.</p>
@@ -910,15 +946,12 @@
             MTD v2.4.0 · Venus RP<br>
             <span>Venus RP Police Department</span>
           </div>
-
         </form>
       </div>
-
     </section>
   </main>
 
   <div id="verificationScreen" class="verification-screen">
-
     <div class="lock-container">
       <div class="ring ring-1"></div>
       <div class="ring ring-2"></div>
@@ -956,43 +989,6 @@
     </div>
   </div>
 
-  <div id="failedVerificationScreen" class="verification-screen failed">
-
-    <div class="lock-container">
-      <div class="ring ring-1"></div>
-      <div class="ring ring-2"></div>
-
-      <div class="lock">
-        <div class="lock-shackle"></div>
-
-        <div class="lock-body">
-          <div class="keyhole"></div>
-        </div>
-      </div>
-
-      <div class="failed-key-left">
-        <div class="key-head"></div>
-        <div class="key-stem"></div>
-        <div class="key-tooth"></div>
-      </div>
-
-      <div class="failed-key-right">
-        <div class="key-stem"></div>
-        <div class="key-tooth"></div>
-      </div>
-    </div>
-
-    <div class="verification-title failed-title">
-      Udzielanie dostępu
-    </div>
-
-    <div class="verification-status failed-status">
-      Autoryzowanie funkcjonariusza
-    </div>
-
-    <div class="failed-line"></div>
-  </div>
-
   <script>
     const loginForm = document.getElementById("loginForm");
     const usernameInput = document.getElementById("username");
@@ -1016,14 +1012,14 @@
     const correctLogin = "kadet1";
     const correctPassword = "kadet1";
 
-    passwordToggle.addEventListener("click", function () {
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        passwordToggle.setAttribute("aria-label", "Ukryj hasło");
-      } else {
-        passwordInput.type = "password";
-        passwordToggle.setAttribute("aria-label", "Pokaż hasło");
-      }
+    passwordToggle.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+
+      passwordInput.type = isPassword ? "text" : "password";
+      passwordToggle.setAttribute(
+        "aria-label",
+        isPassword ? "Ukryj hasło" : "Pokaż hasło"
+      );
     });
 
     function showError(text) {
@@ -1035,7 +1031,7 @@
       loginForm.classList.add("shake");
     }
 
-    loginForm.addEventListener("submit", function (event) {
+    loginForm.addEventListener("submit", (event) => {
       event.preventDefault();
       event.stopPropagation();
 
@@ -1044,7 +1040,7 @@
       const login = usernameInput.value.trim();
       const password = passwordInput.value;
 
-      if (login === "" || password === "") {
+      if (!login || !password) {
         showError("Wprowadź login oraz hasło.");
         return;
       }
@@ -1064,10 +1060,10 @@
       verificationScreen.classList.add("active");
 
       const totalTime = 15000;
-      const startTime = Date.now();
+      const startTime = performance.now();
 
-      function updateProgress() {
-        const elapsed = Date.now() - startTime;
+      function updateProgress(now) {
+        const elapsed = now - startTime;
         const progress = Math.min(
           100,
           Math.floor((elapsed / totalTime) * 100)
@@ -1102,7 +1098,7 @@
         }
 
         if (isCorrect) {
-          setTimeout(function () {
+          setTimeout(() => {
             document.body.innerHTML = "";
             document.body.style.background = "#ffffff";
             document.body.style.overflow = "hidden";
@@ -1111,53 +1107,24 @@
           return;
         }
 
-        setTimeout(function () {
-          const lock =
-            verificationScreen.querySelector(".lock");
+        verificationStatus.textContent = "Dostęp odrzucony";
+        verificationScreen.classList.add("broken-animation");
 
-          const lockShackle =
-            verificationScreen.querySelector(".lock-shackle");
+        setTimeout(() => {
+          verificationScreen.classList.remove("active");
+          verificationScreen.classList.remove("broken-animation");
 
-          const lockBody =
-            verificationScreen.querySelector(".lock-body");
+          loginButton.disabled = false;
+          loginButton.classList.remove("loading");
 
-          const key =
-            verificationScreen.querySelector(".key");
+          passwordInput.value = "";
+          usernameInput.focus();
 
-          verificationScreen.classList.add("broken-animation");
-
+          progressBar.style.width = "0%";
+          percentage.textContent = "0%";
           verificationStatus.textContent =
-            "Dostęp odrzucony";
-
-          lock.style.filter =
-            "drop-shadow(0 0 20px rgba(255,66,91,.65))";
-
-          lockShackle.style.borderColor = "#ff7185";
-          lockShackle.style.animation =
-            "openLock .8s ease forwards";
-
-          lockBody.style.background =
-            "linear-gradient(145deg, #df405d, #851d38)";
-
-          key.style.animation =
-            "keyBreak .9s cubic-bezier(.2,.8,.2,1) forwards";
-
-          setTimeout(function () {
-            verificationScreen.classList.remove("active");
-            verificationScreen.classList.remove("broken-animation");
-
-            loginButton.disabled = false;
-            loginButton.classList.remove("loading");
-
-            passwordInput.value = "";
-            usernameInput.focus();
-
-            lock.removeAttribute("style");
-            lockShackle.removeAttribute("style");
-            lockBody.removeAttribute("style");
-            key.removeAttribute("style");
-          }, 2800);
-        }, 250);
+            "Sprawdzanie danych funkcjonariusza";
+        }, 2800);
       }
 
       requestAnimationFrame(updateProgress);
