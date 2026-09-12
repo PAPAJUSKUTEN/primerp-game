@@ -287,7 +287,6 @@
       display: block;
       width: 19px;
       height: 19px;
-      margin: 0;
       border: 2px solid rgba(255,255,255,.35);
       border-top-color: #ffffff;
       border-right-color: #ffffff;
@@ -354,12 +353,7 @@
       animation: fadeIn .45s ease forwards;
     }
 
-    .verification-screen.failed {
-      background:
-        radial-gradient(circle at center, rgba(20,65,106,.45), rgba(2,8,15,.98) 64%);
-    }
-
-    .verification-screen.failed.broken-animation {
+    .verification-screen.broken-animation {
       background:
         radial-gradient(circle at center, rgba(117,20,38,.48), rgba(13,3,8,.98) 64%);
     }
@@ -377,6 +371,10 @@
       border: 1px solid rgba(83,205,255,.28);
       border-radius: 50%;
       animation: ringPulse 2.2s ease-out infinite;
+    }
+
+    .verification-screen.broken-animation .ring {
+      border-color: rgba(255,79,105,.34);
     }
 
     .ring-1 {
@@ -398,6 +396,11 @@
       filter: drop-shadow(0 0 20px rgba(61,171,255,.55));
     }
 
+    .verification-screen.broken-animation .lock {
+      filter: drop-shadow(0 0 20px rgba(255,66,91,.65));
+      animation: failedLockShake .55s ease both;
+    }
+
     .lock-shackle {
       position: absolute;
       top: 0;
@@ -410,6 +413,11 @@
       transform-origin: 8px 34px;
     }
 
+    .verification-screen.broken-animation .lock-shackle {
+      border-color: var(--red);
+      animation: openLock .8s ease .15s forwards;
+    }
+
     .lock-body {
       position: absolute;
       left: 3px;
@@ -419,6 +427,10 @@
       border-radius: 11px;
       background: linear-gradient(145deg, #268edc, #12509c);
       box-shadow: inset 0 1px rgba(255,255,255,.28);
+    }
+
+    .verification-screen.broken-animation .lock-body {
+      background: linear-gradient(145deg, #df405d, #851d38);
     }
 
     .keyhole {
@@ -451,6 +463,14 @@
       opacity: 0;
       transform: translate(-45px,25px) rotate(-42deg);
       filter: drop-shadow(0 0 13px rgba(91,213,255,.7));
+    }
+
+    .verification-screen.active .key {
+      animation: insertKey 2s cubic-bezier(.2,.8,.2,1) 11s forwards;
+    }
+
+    .verification-screen.broken-animation .key {
+      animation: keyBreak .9s cubic-bezier(.2,.8,.2,1) forwards;
     }
 
     .key-head {
@@ -491,129 +511,6 @@
       height: 9px;
     }
 
-    .verification-screen.active .key {
-      animation: insertKey 2s cubic-bezier(.2,.8,.2,1) 11s forwards;
-    }
-
-    .verification-screen.failed .ring {
-      border-color: rgba(83,205,255,.28);
-    }
-
-    .verification-screen.failed.broken-animation {
-      background:
-        radial-gradient(circle at center, rgba(117,20,38,.48), rgba(13,3,8,.98) 64%);
-    }
-
-    .verification-screen.failed.broken-animation .ring {
-      border-color: rgba(255,79,105,.34);
-    }
-
-    .verification-screen.failed.broken-animation .lock {
-      filter: drop-shadow(0 0 20px rgba(255,66,91,.65));
-      animation: failedLockShake .55s ease both;
-    }
-
-    .verification-screen.failed.broken-animation .lock-shackle {
-      border-color: var(--red);
-      animation: openLock .8s ease .15s forwards;
-    }
-
-    .verification-screen.failed.broken-animation .lock-body {
-      background: linear-gradient(145deg, #df405d, #851d38);
-    }
-
-    .failed-key-left,
-    .failed-key-right {
-      position: absolute;
-      z-index: 4;
-      top: 80px;
-      height: 32px;
-      opacity: 0;
-      filter: drop-shadow(0 0 13px rgba(255,82,108,.8));
-    }
-
-    .failed-key-left {
-      left: 47px;
-      width: 42px;
-      transform: translate(-50px,22px) rotate(-42deg);
-    }
-
-    .failed-key-right {
-      left: 91px;
-      width: 42px;
-      transform: translate(22px,-8px) rotate(7deg);
-    }
-
-    .verification-screen.failed.broken-animation .failed-key-left {
-      animation: brokenKeyLeft 1.1s cubic-bezier(.2,.8,.2,1) forwards;
-    }
-
-    .verification-screen.failed.broken-animation .failed-key-right {
-      animation: brokenKeyRight 1.1s cubic-bezier(.2,.8,.2,1) forwards;
-    }
-
-    .failed-key-left .key-head {
-      border-color: var(--red);
-    }
-
-    .failed-key-left .key-stem,
-    .failed-key-right .key-stem,
-    .failed-key-left .key-tooth,
-    .failed-key-right .key-tooth {
-      background: var(--red);
-    }
-
-    .failed-key-left .key-stem {
-      left: 22px;
-      width: 22px;
-    }
-
-    .failed-key-right .key-stem {
-      left: 0;
-      width: 26px;
-    }
-
-    .failed-key-left .key-tooth {
-      left: 34px;
-      height: 10px;
-    }
-
-    .failed-key-right .key-tooth {
-      left: 18px;
-      height: 10px;
-    }
-
-    .failed-title {
-      color: var(--cyan);
-    }
-
-    .failed-status {
-      color: #8fa5ba;
-    }
-
-    .verification-screen.failed.broken-animation .failed-title {
-      color: var(--red);
-      animation: failedTextAppear .4s ease both;
-    }
-
-    .verification-screen.failed.broken-animation .failed-status {
-      color: #d58b99;
-      animation: failedTextAppear .4s ease .1s both;
-    }
-
-    .failed-line {
-      width: min(280px, 75vw);
-      height: 4px;
-      border-radius: 10px;
-      background: var(--red);
-      box-shadow: 0 0 15px rgba(255,73,98,.7);
-      opacity: 0;
-    }
-
-    .verification-screen.failed.broken-animation .failed-line {
-      animation: failedLineAppear .5s ease .4s forwards;
-    }
-
     .verification-title {
       font-size: 20px;
       font-weight: bold;
@@ -623,6 +520,16 @@
       min-height: 18px;
       color: #8fa5ba;
       font-size: 11px;
+    }
+
+    .verification-screen.broken-animation .verification-title {
+      color: var(--red);
+      animation: failedTextAppear .4s ease both;
+    }
+
+    .verification-screen.broken-animation .verification-status {
+      color: #d58b99;
+      animation: failedTextAppear .4s ease .1s both;
     }
 
     .progress-bar {
@@ -642,14 +549,24 @@
       box-shadow: 0 0 14px #3dbbff;
     }
 
+    .verification-screen.broken-animation .progress-bar span {
+      background: var(--red);
+      box-shadow: 0 0 14px var(--red);
+    }
+
     .percentage {
       color: #66839d;
       font-size: 10px;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     @keyframes spin {
@@ -699,12 +616,6 @@
       }
     }
 
-    @keyframes openLock {
-      to {
-        transform: rotate(-35deg) translate(-3px,-3px);
-      }
-    }
-
     @keyframes keyBreak {
       0% {
         opacity: 0;
@@ -732,40 +643,9 @@
       }
     }
 
-    @keyframes brokenKeyLeft {
-      0% {
-        opacity: 0;
-        transform: translate(-50px,22px) rotate(-42deg);
-      }
-
-      30% {
-        opacity: 1;
-      }
-
-      65% {
-        opacity: 1;
-        transform: translate(0,0) rotate(0);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translate(-3px,0) rotate(-2deg);
-      }
-    }
-
-    @keyframes brokenKeyRight {
-      0% {
-        opacity: 0;
-        transform: translate(22px,-8px) rotate(7deg);
-      }
-
-      30% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 1;
-        transform: translate(17px,-10px) rotate(20deg);
+    @keyframes openLock {
+      to {
+        transform: rotate(-35deg) translate(-3px,-3px);
       }
     }
 
@@ -800,18 +680,6 @@
       to {
         opacity: 1;
         transform: translateY(0);
-      }
-    }
-
-    @keyframes failedLineAppear {
-      from {
-        opacity: 0;
-        transform: scaleX(.2);
-      }
-
-      to {
-        opacity: 1;
-        transform: scaleX(1);
       }
     }
 
@@ -860,6 +728,7 @@
 <body>
   <main class="page">
     <section class="login-card">
+
       <div class="welcome-side">
         <div class="brand">
           <div class="brand-logo">M</div>
@@ -948,10 +817,12 @@
           </div>
         </form>
       </div>
+
     </section>
   </main>
 
   <div id="verificationScreen" class="verification-screen">
+
     <div class="lock-container">
       <div class="ring ring-1"></div>
       <div class="ring ring-2"></div>
@@ -987,6 +858,7 @@
     <div id="percentage" class="percentage">
       0%
     </div>
+
   </div>
 
   <script>
@@ -1012,13 +884,14 @@
     const correctLogin = "kadet1";
     const correctPassword = "kadet1";
 
-    passwordToggle.addEventListener("click", () => {
-      const isPassword = passwordInput.type === "password";
+    passwordToggle.addEventListener("click", function () {
+      const isHidden = passwordInput.type === "password";
 
-      passwordInput.type = isPassword ? "text" : "password";
+      passwordInput.type = isHidden ? "text" : "password";
+
       passwordToggle.setAttribute(
         "aria-label",
-        isPassword ? "Ukryj hasło" : "Pokaż hasło"
+        isHidden ? "Ukryj hasło" : "Pokaż hasło"
       );
     });
 
@@ -1031,7 +904,18 @@
       loginForm.classList.add("shake");
     }
 
-    loginForm.addEventListener("submit", (event) => {
+    function resetVerificationScreen() {
+      verificationScreen.classList.remove("active");
+      verificationScreen.classList.remove("broken-animation");
+
+      progressBar.style.width = "0%";
+      percentage.textContent = "0%";
+
+      verificationStatus.textContent =
+        "Sprawdzanie danych funkcjonariusza";
+    }
+
+    loginForm.addEventListener("submit", function (event) {
       event.preventDefault();
       event.stopPropagation();
 
@@ -1040,7 +924,7 @@
       const login = usernameInput.value.trim();
       const password = passwordInput.value;
 
-      if (!login || !password) {
+      if (login === "" || password === "") {
         showError("Wprowadź login oraz hasło.");
         return;
       }
@@ -1056,14 +940,16 @@
     });
 
     function startVerification(isCorrect) {
-      verificationScreen.classList.remove("broken-animation");
+      resetVerificationScreen();
+
       verificationScreen.classList.add("active");
 
       const totalTime = 15000;
       const startTime = performance.now();
 
-      function updateProgress(now) {
-        const elapsed = now - startTime;
+      function updateProgress(currentTime) {
+        const elapsed = currentTime - startTime;
+
         const progress = Math.min(
           100,
           Math.floor((elapsed / totalTime) * 100)
@@ -1098,32 +984,28 @@
         }
 
         if (isCorrect) {
-          setTimeout(() => {
+          setTimeout(function () {
             document.body.innerHTML = "";
             document.body.style.background = "#ffffff";
             document.body.style.overflow = "hidden";
-          }, 500);
+          }, 600);
 
           return;
         }
 
-        verificationStatus.textContent = "Dostęp odrzucony";
+        verificationStatus.textContent =
+          "Dostęp odrzucony";
+
         verificationScreen.classList.add("broken-animation");
 
-        setTimeout(() => {
-          verificationScreen.classList.remove("active");
-          verificationScreen.classList.remove("broken-animation");
+        setTimeout(function () {
+          resetVerificationScreen();
 
           loginButton.disabled = false;
           loginButton.classList.remove("loading");
 
           passwordInput.value = "";
           usernameInput.focus();
-
-          progressBar.style.width = "0%";
-          percentage.textContent = "0%";
-          verificationStatus.textContent =
-            "Sprawdzanie danych funkcjonariusza";
         }, 2800);
       }
 
