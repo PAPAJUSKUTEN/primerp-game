@@ -16,7 +16,6 @@
       --bg: #060d16;
       --bg-two: #0a1726;
       --panel: rgba(13, 30, 48, .68);
-      --panel-light: rgba(255, 255, 255, .045);
       --line: rgba(255, 255, 255, .11);
       --text: #f5f8fc;
       --muted: #8c9bab;
@@ -346,7 +345,7 @@
       animation: shake .4s ease;
     }
 
-    /* EKRAN WERYFIKACJI */
+    /* WERYFIKACJA */
 
     .verification-screen {
       position: fixed;
@@ -776,12 +775,13 @@
       animation: dashboardPageIn .35s ease both;
     }
 
+    /* TYLKO GÓRNY PANEL PULPITU */
+
     .welcome-banner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       min-height: 165px;
-      margin-bottom: 23px;
       padding: 30px 35px;
       overflow: hidden;
       border: 1px solid rgba(83,183,255,.14);
@@ -825,205 +825,6 @@
       box-shadow:
         0 0 0 16px rgba(100,207,255,.025),
         0 0 0 32px rgba(100,207,255,.018);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-bottom: 22px;
-    }
-
-    .stat-card {
-      min-height: 148px;
-      padding: 19px;
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: 14px;
-      background: var(--panel);
-    }
-
-    .stat-icon,
-    .activity-icon,
-    .quick-icon {
-      display: grid;
-      place-items: center;
-      border-radius: 9px;
-      font-weight: bold;
-    }
-
-    .stat-icon {
-      width: 31px;
-      height: 31px;
-      margin-bottom: 19px;
-    }
-
-    .stat-card span {
-      display: block;
-      color: #8298ac;
-      font-size: 10px;
-    }
-
-    .stat-card strong {
-      display: block;
-      margin-top: 8px;
-      font-size: 26px;
-    }
-
-    .stat-card small {
-      display: block;
-      margin-top: 7px;
-      color: #5f829c;
-      font-size: 9px;
-    }
-
-    .blue {
-      color: #68c9ff;
-      background: rgba(52,153,245,.15);
-    }
-
-    .orange {
-      color: var(--orange);
-      background: rgba(255,149,68,.14);
-    }
-
-    .green {
-      color: #69e6ab;
-      background: rgba(85,221,160,.13);
-    }
-
-    .purple {
-      color: var(--purple);
-      background: rgba(171,111,255,.14);
-    }
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 22px;
-    }
-
-    .panel,
-    .table-panel,
-    .report-stat,
-    .law-details,
-    .law-card {
-      border: 1px solid rgba(255,255,255,.09);
-      background: var(--panel);
-    }
-
-    .panel {
-      padding: 24px;
-      border-radius: 15px;
-    }
-
-    .panel-heading {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 22px;
-    }
-
-    .panel-heading h3 {
-      font-size: 15px;
-    }
-
-    .panel-heading p {
-      margin-top: 6px;
-      color: #71899e;
-      font-size: 10px;
-    }
-
-    .panel-link {
-      border: 0;
-      color: #62bfff;
-      font-size: 10px;
-      background: none;
-      cursor: pointer;
-    }
-
-    .activity-list {
-      display: grid;
-      gap: 19px;
-    }
-
-    .activity-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .activity-icon {
-      width: 32px;
-      height: 32px;
-      flex-shrink: 0;
-      font-size: 13px;
-    }
-
-    .activity-item strong,
-    .activity-item span {
-      display: block;
-    }
-
-    .activity-item strong {
-      color: #d6e4ef;
-      font-size: 11px;
-    }
-
-    .activity-item span {
-      margin-top: 4px;
-      color: #71889c;
-      font-size: 9px;
-    }
-
-    .activity-item time {
-      margin-left: auto;
-      color: #70879c;
-      font-size: 10px;
-    }
-
-    .quick-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .quick-actions button {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      column-gap: 10px;
-      align-items: center;
-      padding: 13px 10px;
-      border: 1px solid rgba(255,255,255,.07);
-      border-radius: 11px;
-      color: white;
-      text-align: left;
-      background: rgba(255,255,255,.025);
-      cursor: pointer;
-      transition: .2s ease;
-    }
-
-    .quick-actions button:hover {
-      border-color: rgba(99,195,255,.3);
-      background: rgba(64,155,232,.1);
-      transform: translateY(-2px);
-    }
-
-    .quick-icon {
-      grid-row: span 2;
-      width: 31px;
-      height: 31px;
-      font-size: 13px;
-    }
-
-    .quick-actions strong {
-      font-size: 10px;
-    }
-
-    .quick-actions small {
-      margin-top: 4px;
-      color: #71889e;
-      font-size: 8px;
     }
 
     .page-heading {
@@ -1072,7 +873,9 @@
 
     .table-panel {
       overflow: auto;
+      border: 1px solid rgba(255,255,255,.09);
       border-radius: 15px;
+      background: var(--panel);
     }
 
     table {
@@ -1158,7 +961,9 @@
 
     .report-stat {
       padding: 17px;
+      border: 1px solid rgba(255,255,255,.09);
       border-radius: 13px;
+      background: var(--panel);
     }
 
     .report-stat span,
@@ -1198,9 +1003,11 @@
     .law-card {
       min-height: 108px;
       padding: 17px;
+      border: 1px solid rgba(255,255,255,.09);
       border-radius: 13px;
       color: white;
       text-align: left;
+      background: var(--panel);
       cursor: pointer;
       transition: .2s ease;
     }
@@ -1242,7 +1049,9 @@
       justify-content: space-between;
       gap: 30px;
       padding: 27px;
+      border: 1px solid rgba(255,255,255,.09);
       border-radius: 15px;
+      background: var(--panel);
     }
 
     .article-label {
@@ -1407,14 +1216,6 @@
         padding: 30px;
       }
 
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-
       .laws-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -1482,11 +1283,6 @@
         display: none;
       }
 
-      .stats-grid,
-      .laws-grid {
-        grid-template-columns: 1fr;
-      }
-
       .page-heading {
         align-items: flex-start;
         flex-direction: column;
@@ -1494,6 +1290,10 @@
 
       .search-box {
         width: 100%;
+      }
+
+      .laws-grid {
+        grid-template-columns: 1fr;
       }
 
       .report-stats {
@@ -1516,6 +1316,7 @@
 <body>
 
   <!-- LOGOWANIE -->
+
   <section id="loginPage" class="login-page">
     <div class="login-card">
 
@@ -1615,7 +1416,8 @@
     </div>
   </section>
 
-  <!-- ANIMACJA LOGOWANIA -->
+  <!-- ANIMACJA WERYFIKACJI -->
+
   <section id="verificationScreen" class="verification-screen">
 
     <div class="lock-container">
@@ -1656,7 +1458,8 @@
 
   </section>
 
-  <!-- PANEL PO ZALOGOWANIU -->
+  <!-- PANEL GŁÓWNY -->
+
   <section id="dashboardPage" class="dashboard-app hidden">
 
     <aside class="dashboard-sidebar">
@@ -1958,121 +1761,6 @@
               <div class="banner-emblem">M</div>
             </div>
 
-            <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-icon blue">♟</div>
-                <span>Funkcjonariusze na służbie</span>
-                <strong>124</strong>
-                <small>+8 od ostatniej zmiany</small>
-              </div>
-
-              <div class="stat-card">
-                <div class="stat-icon orange">!</div>
-                <span>Aktywne zgłoszenia</span>
-                <strong>7</strong>
-                <small>2 wymagają reakcji</small>
-              </div>
-
-              <div class="stat-card">
-                <div class="stat-icon green">▤</div>
-                <span>Twoje raporty</span>
-                <strong>18</strong>
-                <small>2 w trakcie weryfikacji</small>
-              </div>
-
-              <div class="stat-card">
-                <div class="stat-icon purple">◷</div>
-                <span>Czas na służbie</span>
-                <strong>04:27</strong>
-                <small>Rozpoczęto o 18:00</small>
-              </div>
-            </div>
-
-            <div class="content-grid">
-              <section class="panel">
-                <div class="panel-heading">
-                  <div>
-                    <h3>Ostatnia aktywność</h3>
-                    <p>Historia działań na terminalu</p>
-                  </div>
-
-                  <button class="panel-link">
-                    Zobacz wszystko
-                  </button>
-                </div>
-
-                <div class="activity-list">
-                  <div class="activity-item">
-                    <div class="activity-icon blue">▣</div>
-
-                    <div>
-                      <strong>Sprawdzono pojazd WX 2047K</strong>
-                      <span>Kontrola drogowa</span>
-                    </div>
-
-                    <time>22:37</time>
-                  </div>
-
-                  <div class="activity-item">
-                    <div class="activity-icon purple">♙</div>
-
-                    <div>
-                      <strong>Wyszukano Jana Nowaka</strong>
-                      <span>Baza osób</span>
-                    </div>
-
-                    <time>22:29</time>
-                  </div>
-
-                  <div class="activity-item">
-                    <div class="activity-icon green">▤</div>
-
-                    <div>
-                      <strong>Utworzono raport #10482</strong>
-                      <span>Raport służbowy</span>
-                    </div>
-
-                    <time>22:11</time>
-                  </div>
-                </div>
-              </section>
-
-              <section class="panel">
-                <div class="panel-heading">
-                  <div>
-                    <h3>Szybkie akcje</h3>
-                    <p>Najczęściej używane funkcje</p>
-                  </div>
-                </div>
-
-                <div class="quick-actions">
-                  <button data-page="people">
-                    <span class="quick-icon blue">♙</span>
-                    <strong>Wyszukaj osobę</strong>
-                    <small>Baza obywateli</small>
-                  </button>
-
-                  <button data-page="vehicles">
-                    <span class="quick-icon orange">▣</span>
-                    <strong>Sprawdź pojazd</strong>
-                    <small>Baza pojazdów</small>
-                  </button>
-
-                  <button data-page="reports">
-                    <span class="quick-icon green">▤</span>
-                    <strong>Utwórz raport</strong>
-                    <small>Nowy dokument</small>
-                  </button>
-
-                  <button data-page="laws">
-                    <span class="quick-icon purple">§</span>
-                    <strong>Znajdź ustawę</strong>
-                    <small>Baza przepisów</small>
-                  </button>
-                </div>
-              </section>
-            </div>
-
           </section>
         `;
       }
@@ -2080,6 +1768,7 @@
       if (page === "people") {
         return `
           <section class="dashboard-page">
+
             <div class="page-heading">
               <div>
                 <div class="dashboard-overline">BAZA DANYCH</div>
@@ -2132,6 +1821,7 @@
                 </tbody>
               </table>
             </div>
+
           </section>
         `;
       }
@@ -2139,6 +1829,7 @@
       if (page === "vehicles") {
         return `
           <section class="dashboard-page">
+
             <div class="page-heading">
               <div>
                 <div class="dashboard-overline">BAZA DANYCH</div>
@@ -2195,6 +1886,7 @@
                 </tbody>
               </table>
             </div>
+
           </section>
         `;
       }
@@ -2202,6 +1894,7 @@
       if (page === "officers") {
         return `
           <section class="dashboard-page">
+
             <div class="page-heading">
               <div>
                 <div class="dashboard-overline">PERSONEL</div>
@@ -2249,6 +1942,7 @@
                 </tbody>
               </table>
             </div>
+
           </section>
         `;
       }
@@ -2256,6 +1950,7 @@
       if (page === "reports") {
         return `
           <section class="dashboard-page">
+
             <div class="page-heading">
               <div>
                 <div class="dashboard-overline">DOKUMENTACJA</div>
@@ -2325,6 +2020,7 @@
                 </tbody>
               </table>
             </div>
+
           </section>
         `;
       }
@@ -2332,6 +2028,7 @@
       if (page === "laws") {
         return `
           <section class="dashboard-page">
+
             <div class="page-heading">
               <div>
                 <div class="dashboard-overline">PRAWO I PROCEDURY</div>
@@ -2399,6 +2096,7 @@
                 </div>
               </div>
             </div>
+
           </section>
         `;
       }
@@ -2407,25 +2105,27 @@
     }
 
     function activateNavigation() {
-      const navItems =
-        document.querySelectorAll(".dashboard-nav-item");
+      const navigationItems =
+        document.querySelectorAll("[data-page]");
 
-      document.querySelectorAll("[data-page]").forEach(button => {
-        button.onclick = function () {
-          const page = button.dataset.page;
+      navigationItems.forEach(item => {
+        item.onclick = function () {
+          const selectedPage = item.dataset.page;
 
           dashboardContent.innerHTML =
-            getPageContent(page);
+            getPageContent(selectedPage);
 
           dashboardTitle.textContent =
-            pageTitles[page];
+            pageTitles[selectedPage];
 
-          navItems.forEach(item => {
-            item.classList.toggle(
-              "active",
-              item.dataset.page === page
-            );
-          });
+          document
+            .querySelectorAll(".dashboard-nav-item")
+            .forEach(navItem => {
+              navItem.classList.toggle(
+                "active",
+                navItem.dataset.page === selectedPage
+              );
+            });
 
           activateNavigation();
         };
