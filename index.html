@@ -5,228 +5,131 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MTD | Logowanie</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    :root {
-      --bg: #060d16;
-      --bg-two: #0a1726;
-      --text: #f4f8fc;
-      --muted: #8d9caf;
-      --muted-light: #b5c2d0;
-      --blue: #308ff1;
-      --cyan: #64ceff;
-      --green: #55dda0;
-      --red: #ff7185;
-      --line: rgba(255,255,255,.11);
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    html,
-    body {
-      min-height: 100%;
+    :root {
+      --blue: #318ff1;
+      --cyan: #64d5ff;
+      --dark: #060d16;
+      --dark-two: #0a1726;
+      --text: #f5f8fc;
+      --muted: #8c9bab;
+      --red: #ff7185;
     }
 
     body {
       min-height: 100vh;
       overflow: hidden;
       color: var(--text);
-      font-family: "Inter", sans-serif;
+      font-family: Arial, sans-serif;
       background:
-        radial-gradient(circle at 10% 0%, rgba(37,135,230,.2), transparent 30%),
-        radial-gradient(circle at 100% 100%, rgba(22,189,238,.13), transparent 32%),
-        linear-gradient(135deg, var(--bg), var(--bg-two));
+        radial-gradient(circle at 10% 0%, rgba(34, 133, 229, .22), transparent 32%),
+        radial-gradient(circle at 100% 100%, rgba(0, 195, 255, .12), transparent 32%),
+        linear-gradient(135deg, var(--dark), var(--dark-two));
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      opacity: .22;
+      opacity: .18;
       pointer-events: none;
       background-image:
         linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-      background-size: 46px 46px;
-      mask-image: linear-gradient(to bottom, black, transparent 90%);
+      background-size: 45px 45px;
     }
 
-    .glow {
-      position: fixed;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: .16;
-      pointer-events: none;
-      animation: floatingGlow 9s ease-in-out infinite alternate;
-    }
-
-    .glow-blue {
-      top: -190px;
-      left: -130px;
-      background: #1686ed;
-    }
-
-    .glow-cyan {
-      right: -170px;
-      bottom: -180px;
-      background: #00d8ff;
-      animation-delay: -4s;
-    }
-
-    .screen {
-      position: relative;
-      z-index: 1;
+    .page {
       display: grid;
       place-items: center;
       min-height: 100vh;
-      padding: 24px;
+      padding: 20px;
     }
 
     .login-card {
-      position: relative;
       display: grid;
-      grid-template-columns: 1.08fr .92fr;
-      width: min(1050px, 100%);
-      min-height: 610px;
+      grid-template-columns: 1fr 420px;
+      width: min(1000px, 100%);
+      min-height: 590px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,.13);
-      border-radius: 28px;
-      background: rgba(8,19,32,.68);
-      box-shadow:
-        0 36px 100px rgba(0,0,0,.52),
-        inset 0 1px rgba(255,255,255,.06);
-      backdrop-filter: blur(25px);
-      animation: cardAppear .7s ease both;
+      border-radius: 27px;
+      background: rgba(7, 18, 31, .86);
+      box-shadow: 0 30px 90px rgba(0,0,0,.55);
     }
 
-    .login-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(
-        120deg,
-        rgba(79,178,255,.08),
-        transparent 35%,
-        transparent 65%,
-        rgba(79,178,255,.035)
-      );
-    }
-
-    .presentation {
-      position: relative;
+    .welcome-side {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 58px 58px 48px;
-      overflow: hidden;
+      padding: 56px;
       background:
-        linear-gradient(145deg, rgba(31,119,210,.25), transparent 48%),
-        linear-gradient(180deg, rgba(255,255,255,.035), transparent);
-    }
-
-    .presentation::after {
-      content: "";
-      position: absolute;
-      right: -210px;
-      bottom: -220px;
-      width: 490px;
-      height: 490px;
-      border: 1px solid rgba(78,204,255,.18);
-      border-radius: 50%;
-      box-shadow:
-        0 0 0 32px rgba(78,204,255,.035),
-        0 0 0 66px rgba(78,204,255,.025),
-        0 0 0 100px rgba(78,204,255,.018);
+        linear-gradient(145deg, rgba(29, 117, 210, .28), transparent 55%);
     }
 
     .brand {
-      position: relative;
-      z-index: 1;
       display: flex;
       align-items: center;
       gap: 14px;
     }
 
-    .brand-icon {
+    .brand-logo {
       display: grid;
       place-items: center;
       width: 56px;
       height: 56px;
-      border: 1px solid rgba(125,210,255,.42);
       border-radius: 16px;
       color: white;
       font-size: 22px;
-      font-weight: 800;
+      font-weight: bold;
       background: linear-gradient(145deg, #349af5, #14549d);
-      box-shadow:
-        0 13px 28px rgba(18,111,213,.28),
-        inset 0 1px rgba(255,255,255,.25);
+      box-shadow: 0 12px 28px rgba(19, 119, 225, .3);
     }
 
-    .brand-title {
+    .brand-name {
       font-size: 20px;
-      font-weight: 800;
-      letter-spacing: .08em;
+      font-weight: bold;
+      letter-spacing: .1em;
     }
 
-    .brand-description {
+    .brand-subtitle {
       margin-top: 4px;
-      color: #8daed0;
+      color: #8eafd0;
       font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .15em;
+      letter-spacing: .14em;
       text-transform: uppercase;
     }
 
-    .presentation-content {
-      position: relative;
-      z-index: 1;
-      max-width: 450px;
+    .welcome-content {
+      max-width: 430px;
     }
 
-    .label {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 19px;
+    .eyebrow {
+      margin-bottom: 18px;
       color: var(--cyan);
       font-size: 10px;
-      font-weight: 700;
+      font-weight: bold;
       letter-spacing: .18em;
       text-transform: uppercase;
     }
 
-    .label::before {
-      content: "";
-      width: 25px;
-      height: 1px;
-      background: var(--cyan);
-      box-shadow: 0 0 10px var(--cyan);
+    .welcome-content h1 {
+      font-size: clamp(40px, 5vw, 64px);
+      line-height: 1;
+      letter-spacing: -.06em;
     }
 
-    .presentation h1 {
-      max-width: 410px;
-      font-size: clamp(38px, 4.3vw, 60px);
-      line-height: 1.02;
-      letter-spacing: -.065em;
-    }
-
-    .presentation h1 em {
+    .welcome-content h1 span {
       color: var(--cyan);
-      font-style: normal;
     }
 
-    .presentation-text {
+    .welcome-content p {
       max-width: 390px;
       margin-top: 24px;
       color: var(--muted);
@@ -234,49 +137,43 @@
       line-height: 1.8;
     }
 
-    .system-info {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .system-status {
       color: #aab8c7;
       font-size: 11px;
     }
 
-    .system-dot {
+    .status-dot {
+      display: inline-block;
       width: 8px;
       height: 8px;
+      margin-right: 9px;
       border-radius: 50%;
-      background: var(--green);
-      box-shadow:
-        0 0 0 5px rgba(85,221,160,.09),
-        0 0 16px var(--green);
+      background: #55dda0;
+      box-shadow: 0 0 14px #55dda0;
     }
 
-    .form-area {
+    .form-side {
       display: flex;
       align-items: center;
-      padding: 55px;
-      border-left: 1px solid var(--line);
-      background: rgba(7,16,27,.72);
+      padding: 52px;
+      border-left: 1px solid rgba(255,255,255,.11);
+      background: rgba(5, 13, 23, .7);
     }
 
     .login-form {
       width: 100%;
     }
 
-    .form-heading {
-      margin-bottom: 31px;
+    .form-title {
+      margin-bottom: 30px;
     }
 
-    .form-heading h2 {
+    .form-title h2 {
       font-size: 29px;
-      line-height: 1.1;
-      letter-spacing: -.045em;
+      letter-spacing: -.04em;
     }
 
-    .form-heading p {
+    .form-title p {
       margin-top: 10px;
       color: var(--muted);
       font-size: 13px;
@@ -290,70 +187,53 @@
     .field label {
       display: block;
       margin-bottom: 9px;
-      color: var(--muted-light);
+      color: #b5c2d0;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: bold;
     }
 
-    .input-container {
+    .input-wrapper {
       position: relative;
     }
 
-    .input-container input {
+    .input-wrapper input {
       width: 100%;
       height: 54px;
-      padding: 0 48px;
+      padding: 0 18px;
       outline: none;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(255,255,255,.13);
       border-radius: 13px;
-      color: var(--text);
-      font-family: inherit;
+      color: white;
       font-size: 13px;
-      background: rgba(255,255,255,.045);
+      background: rgba(255,255,255,.05);
       transition: .25s ease;
     }
 
-    .input-container input:hover {
-      border-color: rgba(120,190,255,.35);
-      background: rgba(255,255,255,.06);
+    .input-wrapper input::placeholder {
+      color: #65778b;
     }
 
-    .input-container input:focus {
+    .input-wrapper input:hover {
+      border-color: rgba(120,190,255,.35);
+    }
+
+    .input-wrapper input:focus {
       border-color: var(--blue);
       background: rgba(48,143,241,.08);
       box-shadow: 0 0 0 4px rgba(48,143,241,.12);
     }
 
-    .input-container input::placeholder {
-      color: #65778b;
-    }
-
-    .input-icon {
-      position: absolute;
-      top: 50%;
-      left: 17px;
-      width: 17px;
-      height: 17px;
-      color: #72879c;
-      pointer-events: none;
-      transform: translateY(-50%);
-    }
-
     .password-toggle {
       position: absolute;
       top: 50%;
-      right: 14px;
-      display: grid;
-      place-items: center;
-      width: 27px;
-      height: 27px;
-      padding: 0;
+      right: 12px;
+      width: 30px;
+      height: 30px;
       border: 0;
-      color: #70849a;
+      color: #8fa7bc;
       background: transparent;
       cursor: pointer;
       transform: translateY(-50%);
-      transition: .2s ease;
     }
 
     .password-toggle:hover {
@@ -362,186 +242,136 @@
 
     .login-button {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       width: 100%;
       height: 55px;
-      margin-top: 28px;
+      margin-top: 12px;
       overflow: hidden;
       border: 0;
       border-radius: 13px;
       color: white;
-      font-family: inherit;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: bold;
       background: linear-gradient(110deg, #237cdb, #319eef);
-      box-shadow: 0 15px 30px rgba(35,126,219,.25);
+      box-shadow: 0 15px 30px rgba(35,126,219,.28);
       cursor: pointer;
       transition: .25s ease;
     }
 
-    .login-button::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        105deg,
-        transparent 20%,
-        rgba(255,255,255,.27) 50%,
-        transparent 80%
-      );
-      transform: translateX(-110%);
-      transition: .65s ease;
-    }
-
     .login-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 19px 34px rgba(35,126,219,.36);
-    }
-
-    .login-button:hover::before {
-      transform: translateX(110%);
+      box-shadow: 0 20px 35px rgba(35,126,219,.4);
     }
 
     .login-button:active {
       transform: translateY(0);
     }
 
-    .button-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
     .login-button.loading {
       pointer-events: none;
-      opacity: .8;
-    }
-
-    .login-button.loading .button-content {
-      visibility: hidden;
+      color: transparent;
     }
 
     .login-button.loading::after {
       content: "";
       position: absolute;
-      width: 18px;
-      height: 18px;
+      top: 50%;
+      left: 50%;
+      width: 19px;
+      height: 19px;
       border: 2px solid rgba(255,255,255,.35);
       border-top-color: white;
       border-radius: 50%;
       animation: spin .7s linear infinite;
+      transform: translate(-50%, -50%);
     }
 
     .message {
       display: none;
       margin-bottom: 18px;
       padding: 12px 14px;
+      border: 1px solid rgba(255,113,133,.3);
       border-radius: 10px;
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-    .message.visible {
-      display: block;
-      animation: messageAppear .25s ease both;
-    }
-
-    .message.error {
-      border: 1px solid rgba(255,113,133,.26);
       color: #ff9bab;
+      font-size: 11px;
       background: rgba(255,113,133,.08);
     }
 
+    .message.show {
+      display: block;
+    }
+
     .security {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
       margin-top: 23px;
       color: #708196;
       font-size: 10px;
       line-height: 1.6;
+      text-align: center;
     }
 
-    .security svg {
-      flex: 0 0 auto;
-      margin-top: 1px;
-      color: var(--green);
-    }
-
-    .form-footer {
-      margin-top: 34px;
+    .footer {
+      margin-top: 32px;
       color: #5f7083;
       font-size: 10px;
       line-height: 1.7;
       text-align: center;
     }
 
-    .form-footer span {
+    .footer span {
       color: #8d9daf;
     }
 
-    .shake {
-      animation: shake .4s ease;
-    }
+    /* Animacja weryfikacji */
 
-    /* Ekran weryfikacji */
-
-    .auth-overlay {
+    .verification-screen {
       position: fixed;
       inset: 0;
-      z-index: 50;
+      z-index: 10;
       display: none;
       place-items: center;
       align-content: center;
       gap: 13px;
-      color: #f4f8fc;
+      color: white;
       background:
-        radial-gradient(circle at center, rgba(19,62,101,.42), rgba(3,9,16,.98) 62%);
-      opacity: 0;
+        radial-gradient(circle at center, rgba(20, 65, 106, .45), rgba(2, 8, 15, .98) 64%);
     }
 
-    .auth-overlay.active {
+    .verification-screen.active {
       display: grid;
-      animation: overlayIn .45s ease forwards;
+      animation: fadeIn .45s ease forwards;
     }
 
-    .auth-lock-wrap {
+    .lock-container {
       position: relative;
       display: grid;
       place-items: center;
       width: 190px;
       height: 190px;
-      margin-bottom: 5px;
     }
 
-    .auth-ring {
+    .ring {
       position: absolute;
-      border: 1px solid rgba(83,205,255,.24);
+      border: 1px solid rgba(83,205,255,.28);
       border-radius: 50%;
       animation: ringPulse 2.2s ease-out infinite;
     }
 
-    .ring-one {
+    .ring-1 {
       width: 130px;
       height: 130px;
     }
 
-    .ring-two {
+    .ring-2 {
       width: 178px;
       height: 178px;
       animation-delay: .65s;
     }
 
-    .auth-lock {
+    .lock {
       position: relative;
       z-index: 3;
       width: 70px;
-      height: 67px;
-      filter: drop-shadow(0 0 20px rgba(61,171,255,.42));
+      height: 68px;
+      filter: drop-shadow(0 0 20px rgba(61,171,255,.55));
     }
 
     .lock-shackle {
@@ -554,7 +384,7 @@
       border-bottom: 0;
       border-radius: 20px 20px 0 0;
       transform-origin: 8px 34px;
-      animation: shackleOpen 1.1s ease 6.8s forwards;
+      animation: openLock 1s ease 6.7s forwards;
     }
 
     .lock-body {
@@ -563,13 +393,12 @@
       bottom: 0;
       width: 64px;
       height: 43px;
-      border: 1px solid rgba(148,225,255,.7);
       border-radius: 11px;
       background: linear-gradient(145deg, #268edc, #12509c);
       box-shadow: inset 0 1px rgba(255,255,255,.28);
     }
 
-    .lock-keyhole {
+    .keyhole {
       position: absolute;
       top: 12px;
       left: 27px;
@@ -579,7 +408,7 @@
       background: #07172a;
     }
 
-    .lock-keyhole::after {
+    .keyhole::after {
       content: "";
       position: absolute;
       top: 8px;
@@ -589,17 +418,17 @@
       background: #07172a;
     }
 
-    .auth-key {
+    .key {
       position: absolute;
       z-index: 4;
       top: 80px;
-      left: 47px;
+      left: 48px;
       width: 82px;
       height: 32px;
       opacity: 0;
       transform: translate(-45px, 25px) rotate(-42deg);
-      animation: keyUnlock 1.5s cubic-bezier(.2,.8,.2,1) 4.9s forwards;
-      filter: drop-shadow(0 0 13px rgba(91,213,255,.6));
+      animation: insertKey 1.5s cubic-bezier(.2,.8,.2,1) 4.8s forwards;
+      filter: drop-shadow(0 0 13px rgba(91,213,255,.7));
     }
 
     .key-head {
@@ -624,116 +453,72 @@
 
     .key-tooth {
       position: absolute;
+      top: 18px;
       width: 8px;
       height: 13px;
       border-radius: 0 0 3px 3px;
       background: #7cdbff;
     }
 
-    .tooth-one {
-      top: 18px;
+    .key-tooth.one {
       left: 61px;
     }
 
-    .tooth-two {
-      top: 18px;
+    .key-tooth.two {
       left: 73px;
       height: 9px;
     }
 
-    .auth-title {
+    .verification-title {
       font-size: 20px;
-      font-weight: 800;
-      letter-spacing: -.03em;
+      font-weight: bold;
     }
 
-    .auth-status {
+    .verification-status {
       min-height: 18px;
       color: #8fa5ba;
       font-size: 11px;
     }
 
-    .auth-progress {
-      width: min(280px, 70vw);
+    .progress-bar {
+      width: min(280px, 75vw);
       height: 4px;
       overflow: hidden;
       border-radius: 10px;
-      background: rgba(255,255,255,.1);
+      background: rgba(255,255,255,.12);
     }
 
-    .auth-progress span {
+    .progress-bar span {
       display: block;
-      width: 0%;
+      width: 0;
       height: 100%;
       border-radius: inherit;
       background: linear-gradient(90deg, #278bea, #65d8ff);
       box-shadow: 0 0 14px #3dbbff;
-      transition: width .1s linear;
     }
 
-    .auth-percent {
+    .percentage {
       color: #66839d;
       font-size: 10px;
-      font-variant-numeric: tabular-nums;
     }
 
-    @keyframes cardAppear {
+    .shake {
+      animation: shake .4s ease;
+    }
+
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(17px) scale(.985);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes messageAppear {
-      from {
-        opacity: 0;
-        transform: translateY(-5px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes shake {
-      0%, 100% {
-        transform: translateX(0);
-      }
-
-      25% {
-        transform: translateX(-6px);
-      }
-
-      75% {
-        transform: translateX(6px);
       }
     }
 
     @keyframes spin {
       to {
         transform: rotate(360deg);
-      }
-    }
-
-    @keyframes floatingGlow {
-      from {
-        transform: translate3d(0,0,0) scale(1);
-      }
-
-      to {
-        transform: translate3d(20px,18px,0) scale(1.08);
-      }
-    }
-
-    @keyframes overlayIn {
-      to {
-        opacity: 1;
       }
     }
 
@@ -753,10 +538,10 @@
       }
     }
 
-    @keyframes keyUnlock {
+    @keyframes insertKey {
       0% {
         opacity: 0;
-        transform: translate(-45px,25px) rotate(-42deg);
+        transform: translate(-45px, 25px) rotate(-42deg);
       }
 
       25% {
@@ -765,191 +550,151 @@
 
       70% {
         opacity: 1;
-        transform: translate(2px,0) rotate(0deg);
+        transform: translate(2px, 0) rotate(0deg);
       }
 
       100% {
         opacity: 0;
-        transform: translate(8px,-3px) rotate(0deg);
+        transform: translate(8px, -3px) rotate(0deg);
       }
     }
 
-    @keyframes shackleOpen {
+    @keyframes openLock {
       to {
-        transform: rotate(-35deg) translate(-3px,-3px);
+        transform: rotate(-35deg) translate(-3px, -3px);
       }
     }
 
-    @media (max-width: 800px) {
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-6px);
+      }
+
+      75% {
+        transform: translateX(6px);
+      }
+    }
+
+    @media (max-width: 760px) {
       body {
         overflow: auto;
-      }
-
-      .screen {
-        padding: 15px;
       }
 
       .login-card {
         grid-template-columns: 1fr;
         min-height: auto;
-        border-radius: 22px;
       }
 
-      .presentation {
-        min-height: 330px;
-        padding: 32px 28px;
+      .welcome-side {
+        min-height: 310px;
+        padding: 34px 28px;
       }
 
-      .presentation h1 {
-        font-size: 40px;
+      .welcome-content h1 {
+        font-size: 43px;
       }
 
-      .form-area {
-        padding: 35px 28px 30px;
-        border-top: 1px solid var(--line);
+      .form-side {
+        padding: 36px 28px 30px;
+        border-top: 1px solid rgba(255,255,255,.11);
         border-left: 0;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .presentation {
-        min-height: 300px;
-      }
-
-      .presentation-text {
-        font-size: 12px;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="glow glow-blue"></div>
-  <div class="glow glow-cyan"></div>
-
-  <main class="screen">
+  <main class="page">
     <section class="login-card">
 
-      <div class="presentation">
+      <div class="welcome-side">
         <div class="brand">
-          <div class="brand-icon">M</div>
+          <div class="brand-logo">M</div>
 
           <div>
-            <div class="brand-title">MTD</div>
-            <div class="brand-description">Venus RP Police Department</div>
+            <div class="brand-name">MTD</div>
+            <div class="brand-subtitle">Venus RP Police Department</div>
           </div>
         </div>
 
-        <div class="presentation-content">
-          <div class="label">Secure access terminal</div>
+        <div class="welcome-content">
+          <div class="eyebrow">Secure access terminal</div>
 
           <h1>
             Twoje centrum<br>
-            <em>służby.</em>
+            <span>służby.</span>
           </h1>
 
-          <p class="presentation-text">
+          <p>
             Mobilny Terminal Danych zapewnia szybki i bezpieczny
             dostęp do informacji potrzebnych podczas codziennej służby.
           </p>
         </div>
 
-        <div class="system-info">
-          <span class="system-dot"></span>
+        <div class="system-status">
+          <span class="status-dot"></span>
           Wszystkie systemy działają prawidłowo
         </div>
       </div>
 
-      <div class="form-area">
-        <form class="login-form" id="loginForm" novalidate>
+      <div class="form-side">
+        <form id="loginForm" class="login-form" novalidate>
 
-          <div class="form-heading">
+          <div class="form-title">
             <h2>Witaj ponownie</h2>
             <p>Zaloguj się, aby uzyskać dostęp do terminala.</p>
           </div>
 
-          <div class="message" id="message" role="alert"></div>
+          <div id="message" class="message"></div>
 
           <div class="field">
             <label for="username">LOGIN FUNKCJONARIUSZA</label>
 
-            <div class="input-container">
-              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <circle cx="12" cy="7" r="4"></circle>
-                <path d="M4 21a8 8 0 0 1 16 0"></path>
-              </svg>
-
+            <div class="input-wrapper">
               <input
                 id="username"
                 type="text"
-                name="username"
                 autocomplete="username"
                 placeholder="Wprowadź login"
-                spellcheck="false"
-              />
+              >
             </div>
           </div>
 
           <div class="field">
             <label for="password">HASŁO DOSTĘPOWE</label>
 
-            <div class="input-container">
-              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <rect x="4" y="10" width="16" height="11" rx="2"></rect>
-                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
-              </svg>
-
+            <div class="input-wrapper">
               <input
                 id="password"
                 type="password"
-                name="password"
                 autocomplete="current-password"
                 placeholder="Wprowadź hasło"
-              />
+              >
 
               <button
-                class="password-toggle"
                 id="passwordToggle"
+                class="password-toggle"
                 type="button"
                 aria-label="Pokaż hasło"
               >
-                <svg
-                  id="eyeIcon"
-                  width="17"
-                  height="17"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                >
-                  <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
-                  <circle cx="12" cy="12" r="2.5"></circle>
-                </svg>
+                ◉
               </button>
             </div>
           </div>
 
-          <button class="login-button" id="loginButton" type="submit">
-            <span class="button-content">
-              Zaloguj do terminala
-
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14"></path>
-                <path d="m13 6 6 6-6 6"></path>
-              </svg>
-            </span>
+          <button id="loginButton" class="login-button" type="submit">
+            Zaloguj do terminala →
           </button>
 
           <div class="security">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 3 4.5 6v5.5c0 4.7 3.2 8.2 7.5 9.5 4.3-1.3 7.5-4.8 7.5-9.5V6L12 3Z"></path>
-              <path d="m9 12 2 2 4-4"></path>
-            </svg>
-
             Połączenie chronione. Dostęp wyłącznie dla upoważnionego personelu.
           </div>
 
-          <div class="form-footer">
+          <div class="footer">
             MTD v2.4.0 · Venus RP<br>
             <span>Venus RP Police Department</span>
           </div>
@@ -960,39 +705,44 @@
     </section>
   </main>
 
-  <div class="auth-overlay" id="authOverlay" aria-hidden="true">
-    <div class="auth-lock-wrap">
+  <div id="verificationScreen" class="verification-screen">
+    <div class="lock-container">
 
-      <div class="auth-ring ring-one"></div>
-      <div class="auth-ring ring-two"></div>
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
 
-      <div class="auth-lock">
+      <div class="lock">
         <div class="lock-shackle"></div>
 
         <div class="lock-body">
-          <div class="lock-keyhole"></div>
+          <div class="keyhole"></div>
         </div>
       </div>
 
-      <div class="auth-key">
+      <div class="key">
         <div class="key-head"></div>
         <div class="key-stem"></div>
-        <div class="key-tooth tooth-one"></div>
-        <div class="key-tooth tooth-two"></div>
+        <div class="key-tooth one"></div>
+        <div class="key-tooth two"></div>
       </div>
 
     </div>
 
-    <div class="auth-title">Weryfikowanie dostępu</div>
-    <div class="auth-status" id="authStatus">
+    <div class="verification-title">
+      Weryfikowanie dostępu
+    </div>
+
+    <div id="verificationStatus" class="verification-status">
       Sprawdzanie danych funkcjonariusza
     </div>
 
-    <div class="auth-progress">
-      <span id="authProgress"></span>
+    <div class="progress-bar">
+      <span id="progressBar"></span>
     </div>
 
-    <div class="auth-percent" id="authPercent">0%</div>
+    <div id="percentage" class="percentage">
+      0%
+    </div>
   </div>
 
   <script>
@@ -1000,115 +750,110 @@
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
     const passwordToggle = document.getElementById("passwordToggle");
-    const eyeIcon = document.getElementById("eyeIcon");
     const loginButton = document.getElementById("loginButton");
     const message = document.getElementById("message");
+
+    const verificationScreen = document.getElementById("verificationScreen");
+    const verificationStatus = document.getElementById("verificationStatus");
+    const progressBar = document.getElementById("progressBar");
+    const percentage = document.getElementById("percentage");
 
     const correctLogin = "kadet1";
     const correctPassword = "kadet1";
 
-    function showMessage(text) {
-      message.textContent = text;
-      message.className = "message visible error";
-    }
+    passwordToggle.addEventListener("click", function () {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        passwordToggle.textContent = "◉";
+        passwordToggle.setAttribute("aria-label", "Ukryj hasło");
+      } else {
+        passwordInput.type = "password";
+        passwordToggle.textContent = "◉";
+        passwordToggle.setAttribute("aria-label", "Pokaż hasło");
+      }
 
-    function shakeForm() {
+      passwordInput.focus();
+    });
+
+    function showError(text) {
+      message.textContent = text;
+      message.className = "message show";
+
       loginForm.classList.remove("shake");
       void loginForm.offsetWidth;
       loginForm.classList.add("shake");
     }
 
-    passwordToggle.addEventListener("click", () => {
-      const showPassword = passwordInput.type === "password";
-
-      passwordInput.type = showPassword ? "text" : "password";
-
-      passwordToggle.setAttribute(
-        "aria-label",
-        showPassword ? "Ukryj hasło" : "Pokaż hasło"
-      );
-
-      eyeIcon.innerHTML = showPassword
-        ? `
-          <path d="m3 3 18 18"></path>
-          <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
-          <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6 0 9.5 7 9.5 7a17.7 17.7 0 0 1-3 3.8"></path>
-          <path d="M6.1 6.1C3.8 7.8 2.5 12 2.5 12s3.5 7 9.5 7a9.8 9.8 0 0 0 3-.5"></path>
-        `
-        : `
-          <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
-          <circle cx="12" cy="12" r="2.5"></circle>
-        `;
-
-      passwordInput.focus();
-    });
-
-    loginForm.addEventListener("submit", (event) => {
+    loginForm.addEventListener("submit", function (event) {
       event.preventDefault();
+      event.stopPropagation();
+
+      message.className = "message";
 
       const login = usernameInput.value.trim();
       const password = passwordInput.value;
 
-      message.className = "message";
-
-      if (!login || !password) {
-        showMessage("Wprowadź login oraz hasło.");
-        shakeForm();
+      if (login === "" || password === "") {
+        showError("Wprowadź login oraz hasło.");
         return;
       }
 
       if (login !== correctLogin || password !== correctPassword) {
-        showMessage("Nieprawidłowy login lub hasło.");
+        showError("Nieprawidłowy login lub hasło.");
         passwordInput.value = "";
         passwordInput.focus();
-        shakeForm();
         return;
       }
 
+      loginButton.disabled = true;
       loginButton.classList.add("loading");
+
       startVerification();
     });
 
     function startVerification() {
-      const overlay = document.getElementById("authOverlay");
-      const progress = document.getElementById("authProgress");
-      const percent = document.getElementById("authPercent");
-      const status = document.getElementById("authStatus");
+      verificationScreen.classList.add("active");
 
-      const duration = 7000;
-      const startTime = performance.now();
+      const totalTime = 7000;
+      const startTime = Date.now();
 
-      overlay.classList.add("active");
-      overlay.setAttribute("aria-hidden", "false");
+      function updateProgress() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(100, Math.floor((elapsed / totalTime) * 100));
 
-      function updateVerification(currentTime) {
-        const elapsed = currentTime - startTime;
-        const value = Math.min(100, Math.floor((elapsed / duration) * 100));
+        progressBar.style.width = progress + "%";
+        percentage.textContent = progress + "%";
 
-        progress.style.width = value + "%";
-        percent.textContent = value + "%";
-
-        if (value < 25) {
-          status.textContent = "Sprawdzanie danych funkcjonariusza";
-        } else if (value < 50) {
-          status.textContent = "Weryfikowanie uprawnień dostępu";
-        } else if (value < 75) {
-          status.textContent = "Nawiązywanie bezpiecznej sesji";
-        } else if (value < 100) {
-          status.textContent = "Otwieranie terminala";
+        if (progress < 25) {
+          verificationStatus.textContent =
+            "Sprawdzanie danych funkcjonariusza";
+        } else if (progress < 50) {
+          verificationStatus.textContent =
+            "Weryfikowanie uprawnień dostępu";
+        } else if (progress < 75) {
+          verificationStatus.textContent =
+            "Nawiązywanie bezpiecznej sesji";
+        } else if (progress < 100) {
+          verificationStatus.textContent =
+            "Otwieranie terminala";
         } else {
-          status.textContent = "Dostęp przyznany";
+          verificationStatus.textContent =
+            "Dostęp przyznany";
         }
 
-        if (elapsed < duration) {
-          requestAnimationFrame(updateVerification);
+        if (elapsed < totalTime) {
+          requestAnimationFrame(updateProgress);
         } else {
-          setTimeout(() => {
+          setTimeout(function () {
             document.body.innerHTML = "";
             document.body.style.background = "#ffffff";
             document.body.style.overflow = "hidden";
-          }, 450);
+          }, 500);
         }
       }
 
-      requestAnimationFrame(updateVerifica
+      requestAnimationFrame(updateProgress);
+    }
+  </script>
+</body>
+</html>
