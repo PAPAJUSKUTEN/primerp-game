@@ -20,6 +20,7 @@
       --text: #f5f8fc;
       --muted: #8c9bab;
       --red: #ff7185;
+      --green: #55dda0;
     }
 
     body {
@@ -28,8 +29,8 @@
       color: var(--text);
       font-family: Arial, sans-serif;
       background:
-        radial-gradient(circle at 10% 0%, rgba(34, 133, 229, .22), transparent 32%),
-        radial-gradient(circle at 100% 100%, rgba(0, 195, 255, .12), transparent 32%),
+        radial-gradient(circle at 10% 0%, rgba(34,133,229,.22), transparent 32%),
+        radial-gradient(circle at 100% 100%, rgba(0,195,255,.12), transparent 32%),
         linear-gradient(135deg, var(--dark), var(--dark-two));
     }
 
@@ -60,7 +61,7 @@
       overflow: hidden;
       border: 1px solid rgba(255,255,255,.13);
       border-radius: 27px;
-      background: rgba(7, 18, 31, .86);
+      background: rgba(7,18,31,.86);
       box-shadow: 0 30px 90px rgba(0,0,0,.55);
     }
 
@@ -69,8 +70,7 @@
       flex-direction: column;
       justify-content: space-between;
       padding: 56px;
-      background:
-        linear-gradient(145deg, rgba(29, 117, 210, .28), transparent 55%);
+      background: linear-gradient(145deg, rgba(29,117,210,.28), transparent 55%);
     }
 
     .brand {
@@ -89,7 +89,7 @@
       font-size: 22px;
       font-weight: bold;
       background: linear-gradient(145deg, #349af5, #14549d);
-      box-shadow: 0 12px 28px rgba(19, 119, 225, .3);
+      box-shadow: 0 12px 28px rgba(19,119,225,.3);
     }
 
     .brand-name {
@@ -148,8 +148,8 @@
       height: 8px;
       margin-right: 9px;
       border-radius: 50%;
-      background: #55dda0;
-      box-shadow: 0 0 14px #55dda0;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
     }
 
     .form-side {
@@ -157,7 +157,7 @@
       align-items: center;
       padding: 52px;
       border-left: 1px solid rgba(255,255,255,.11);
-      background: rgba(5, 13, 23, .7);
+      background: rgba(5,13,23,.7);
     }
 
     .login-form {
@@ -320,7 +320,11 @@
       color: #8d9daf;
     }
 
-    /* Animacja weryfikacji */
+    .shake {
+      animation: shake .4s ease;
+    }
+
+    /* Wspólny ekran animacji */
 
     .verification-screen {
       position: fixed;
@@ -332,12 +336,17 @@
       gap: 13px;
       color: white;
       background:
-        radial-gradient(circle at center, rgba(20, 65, 106, .45), rgba(2, 8, 15, .98) 64%);
+        radial-gradient(circle at center, rgba(20,65,106,.45), rgba(2,8,15,.98) 64%);
     }
 
     .verification-screen.active {
       display: grid;
       animation: fadeIn .45s ease forwards;
+    }
+
+    .verification-screen.failed {
+      background:
+        radial-gradient(circle at center, rgba(117,20,38,.45), rgba(13,3,8,.98) 64%);
     }
 
     .lock-container {
@@ -353,6 +362,10 @@
       border: 1px solid rgba(83,205,255,.28);
       border-radius: 50%;
       animation: ringPulse 2.2s ease-out infinite;
+    }
+
+    .failed .ring {
+      border-color: rgba(255,79,105,.34);
     }
 
     .ring-1 {
@@ -374,6 +387,11 @@
       filter: drop-shadow(0 0 20px rgba(61,171,255,.55));
     }
 
+    .failed .lock {
+      filter: drop-shadow(0 0 20px rgba(255,66,91,.65));
+      animation: failedLockShake .55s ease 2.8s both;
+    }
+
     .lock-shackle {
       position: absolute;
       top: 0;
@@ -387,6 +405,10 @@
       animation: openLock 1s ease 6.7s forwards;
     }
 
+    .failed .lock-shackle {
+      border-color: var(--red);
+    }
+
     .lock-body {
       position: absolute;
       left: 3px;
@@ -396,6 +418,10 @@
       border-radius: 11px;
       background: linear-gradient(145deg, #268edc, #12509c);
       box-shadow: inset 0 1px rgba(255,255,255,.28);
+    }
+
+    .failed .lock-body {
+      background: linear-gradient(145deg, #df405d, #851d38);
     }
 
     .keyhole {
@@ -408,6 +434,10 @@
       background: #07172a;
     }
 
+    .failed .keyhole {
+      background: #2a0813;
+    }
+
     .keyhole::after {
       content: "";
       position: absolute;
@@ -418,6 +448,10 @@
       background: #07172a;
     }
 
+    .failed .keyhole::after {
+      background: #2a0813;
+    }
+
     .key {
       position: absolute;
       z-index: 4;
@@ -426,9 +460,33 @@
       width: 82px;
       height: 32px;
       opacity: 0;
-      transform: translate(-45px, 25px) rotate(-42deg);
+      transform: translate(-45px,25px) rotate(-42deg);
       animation: insertKey 1.5s cubic-bezier(.2,.8,.2,1) 4.8s forwards;
       filter: drop-shadow(0 0 13px rgba(91,213,255,.7));
+    }
+
+    .failed-key-left,
+    .failed-key-right {
+      position: absolute;
+      z-index: 4;
+      top: 80px;
+      height: 32px;
+      opacity: 0;
+      filter: drop-shadow(0 0 13px rgba(255,82,108,.8));
+    }
+
+    .failed-key-left {
+      left: 47px;
+      width: 42px;
+      transform: translate(-50px,22px) rotate(-42deg);
+      animation: brokenKeyLeft 1.5s cubic-bezier(.2,.8,.2,1) .8s forwards;
+    }
+
+    .failed-key-right {
+      left: 91px;
+      width: 42px;
+      transform: translate(22px,-8px) rotate(7deg);
+      animation: brokenKeyRight 1.5s cubic-bezier(.2,.8,.2,1) 2.8s forwards;
     }
 
     .key-head {
@@ -441,6 +499,10 @@
       border-radius: 50%;
     }
 
+    .failed-key-left .key-head {
+      border-color: var(--red);
+    }
+
     .key-stem {
       position: absolute;
       top: 12px;
@@ -449,6 +511,21 @@
       height: 8px;
       border-radius: 5px;
       background: #7cdbff;
+    }
+
+    .failed-key-left .key-stem,
+    .failed-key-right .key-stem {
+      background: var(--red);
+    }
+
+    .failed-key-left .key-stem {
+      left: 22px;
+      width: 22px;
+    }
+
+    .failed-key-right .key-stem {
+      left: 0;
+      width: 26px;
     }
 
     .key-tooth {
@@ -460,13 +537,19 @@
       background: #7cdbff;
     }
 
-    .key-tooth.one {
-      left: 61px;
+    .failed-key-left .key-tooth,
+    .failed-key-right .key-tooth {
+      background: var(--red);
     }
 
-    .key-tooth.two {
-      left: 73px;
-      height: 9px;
+    .failed-key-left .key-tooth {
+      left: 34px;
+      height: 10px;
+    }
+
+    .failed-key-right .key-tooth {
+      left: 18px;
+      height: 10px;
     }
 
     .verification-title {
@@ -478,6 +561,14 @@
       min-height: 18px;
       color: #8fa5ba;
       font-size: 11px;
+    }
+
+    .failed-title {
+      color: var(--red);
+    }
+
+    .failed-status {
+      color: #d58b99;
     }
 
     .progress-bar {
@@ -497,13 +588,18 @@
       box-shadow: 0 0 14px #3dbbff;
     }
 
+    .failed-line {
+      width: min(280px, 75vw);
+      height: 4px;
+      border-radius: 10px;
+      background: var(--red);
+      box-shadow: 0 0 15px rgba(255,73,98,.7);
+      animation: failedLineAppear .5s ease 3.8s both;
+    }
+
     .percentage {
       color: #66839d;
       font-size: 10px;
-    }
-
-    .shake {
-      animation: shake .4s ease;
     }
 
     @keyframes fadeIn {
@@ -541,7 +637,7 @@
     @keyframes insertKey {
       0% {
         opacity: 0;
-        transform: translate(-45px, 25px) rotate(-42deg);
+        transform: translate(-45px,25px) rotate(-42deg);
       }
 
       25% {
@@ -550,23 +646,94 @@
 
       70% {
         opacity: 1;
-        transform: translate(2px, 0) rotate(0deg);
+        transform: translate(2px,0) rotate(0deg);
       }
 
       100% {
         opacity: 0;
-        transform: translate(8px, -3px) rotate(0deg);
+        transform: translate(8px,-3px) rotate(0deg);
       }
     }
 
     @keyframes openLock {
       to {
-        transform: rotate(-35deg) translate(-3px, -3px);
+        transform: rotate(-35deg) translate(-3px,-3px);
+      }
+    }
+
+    @keyframes brokenKeyLeft {
+      0% {
+        opacity: 0;
+        transform: translate(-50px,22px) rotate(-42deg);
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      65% {
+        opacity: 1;
+        transform: translate(0,0) rotate(0);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(-3px,0) rotate(-2deg);
+      }
+    }
+
+    @keyframes brokenKeyRight {
+      0% {
+        opacity: 0;
+        transform: translate(22px,-8px) rotate(7deg);
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(17px,-10px) rotate(20deg);
+      }
+    }
+
+    @keyframes failedLockShake {
+      0%,100% {
+        transform: translateX(0) rotate(0);
+      }
+
+      20% {
+        transform: translateX(-7px) rotate(-3deg);
+      }
+
+      40% {
+        transform: translateX(7px) rotate(3deg);
+      }
+
+      60% {
+        transform: translateX(-5px) rotate(-2deg);
+      }
+
+      80% {
+        transform: translateX(4px) rotate(2deg);
+      }
+    }
+
+    @keyframes failedLineAppear {
+      from {
+        opacity: 0;
+        transform: scaleX(.2);
+      }
+
+      to {
+        opacity: 1;
+        transform: scaleX(1);
       }
     }
 
     @keyframes shake {
-      0%, 100% {
+      0%,100% {
         transform: translateX(0);
       }
 
@@ -705,6 +872,7 @@
     </section>
   </main>
 
+  <!-- Poprawne logowanie -->
   <div id="verificationScreen" class="verification-screen">
     <div class="lock-container">
 
@@ -722,8 +890,8 @@
       <div class="key">
         <div class="key-head"></div>
         <div class="key-stem"></div>
-        <div class="key-tooth one"></div>
-        <div class="key-tooth two"></div>
+        <div class="key-tooth"></div>
+        <div class="key-tooth"></div>
       </div>
 
     </div>
@@ -745,6 +913,46 @@
     </div>
   </div>
 
+  <!-- Błędne logowanie -->
+  <div id="failedVerificationScreen" class="verification-screen failed">
+
+    <div class="lock-container">
+
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+
+      <div class="lock">
+        <div class="lock-shackle"></div>
+
+        <div class="lock-body">
+          <div class="keyhole"></div>
+        </div>
+      </div>
+
+      <div class="failed-key-left">
+        <div class="key-head"></div>
+        <div class="key-stem"></div>
+        <div class="key-tooth"></div>
+      </div>
+
+      <div class="failed-key-right">
+        <div class="key-stem"></div>
+        <div class="key-tooth"></div>
+      </div>
+
+    </div>
+
+    <div class="verification-title failed-title">
+      Dostęp odrzucony
+    </div>
+
+    <div class="verification-status failed-status">
+      Nieprawidłowe dane logowania
+    </div>
+
+    <div class="failed-line"></div>
+  </div>
+
   <script>
     const loginForm = document.getElementById("loginForm");
     const usernameInput = document.getElementById("username");
@@ -753,10 +961,20 @@
     const loginButton = document.getElementById("loginButton");
     const message = document.getElementById("message");
 
-    const verificationScreen = document.getElementById("verificationScreen");
-    const verificationStatus = document.getElementById("verificationStatus");
-    const progressBar = document.getElementById("progressBar");
-    const percentage = document.getElementById("percentage");
+    const verificationScreen =
+      document.getElementById("verificationScreen");
+
+    const failedVerificationScreen =
+      document.getElementById("failedVerificationScreen");
+
+    const verificationStatus =
+      document.getElementById("verificationStatus");
+
+    const progressBar =
+      document.getElementById("progressBar");
+
+    const percentage =
+      document.getElementById("percentage");
 
     const correctLogin = "kadet1";
     const correctPassword = "kadet1";
@@ -764,15 +982,11 @@
     passwordToggle.addEventListener("click", function () {
       if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        passwordToggle.textContent = "◉";
         passwordToggle.setAttribute("aria-label", "Ukryj hasło");
       } else {
         passwordInput.type = "password";
-        passwordToggle.textContent = "◉";
         passwordToggle.setAttribute("aria-label", "Pokaż hasło");
       }
-
-      passwordInput.focus();
     });
 
     function showError(text) {
@@ -799,9 +1013,8 @@
       }
 
       if (login !== correctLogin || password !== correctPassword) {
-        showError("Nieprawidłowy login lub hasło.");
         passwordInput.value = "";
-        passwordInput.focus();
+        startFailedVerification();
         return;
       }
 
@@ -819,7 +1032,10 @@
 
       function updateProgress() {
         const elapsed = Date.now() - startTime;
-        const progress = Math.min(100, Math.floor((elapsed / totalTime) * 100));
+        const progress = Math.min(
+          100,
+          Math.floor((elapsed / totalTime) * 100)
+        );
 
         progressBar.style.width = progress + "%";
         percentage.textContent = progress + "%";
@@ -853,6 +1069,22 @@
       }
 
       requestAnimationFrame(updateProgress);
+    }
+
+    function startFailedVerification() {
+      failedVerificationScreen.classList.add("active");
+
+      loginButton.disabled = true;
+      loginButton.classList.add("loading");
+
+      setTimeout(function () {
+        failedVerificationScreen.classList.remove("active");
+
+        loginButton.disabled = false;
+        loginButton.classList.remove("loading");
+
+        usernameInput.focus();
+      }, 5000);
     }
   </script>
 </body>
