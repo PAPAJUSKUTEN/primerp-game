@@ -396,7 +396,6 @@
       border-bottom: 0;
       border-radius: 20px 20px 0 0;
       transform-origin: 8px 34px;
-      animation: openLock 1s ease 6.7s forwards;
     }
 
     .lock-body {
@@ -439,7 +438,6 @@
       height: 32px;
       opacity: 0;
       transform: translate(-45px,25px) rotate(-42deg);
-      animation: insertKey 1.5s cubic-bezier(.2,.8,.2,1) 4.8s forwards;
       filter: drop-shadow(0 0 13px rgba(91,213,255,.7));
     }
 
@@ -481,25 +479,34 @@
       height: 9px;
     }
 
-    .failed .ring {
+    .verification-screen.active .key {
+      animation: insertKey 2s cubic-bezier(.2,.8,.2,1) 11s forwards;
+    }
+
+    .verification-screen.failed .ring {
       border-color: rgba(83,205,255,.28);
     }
 
-    .failed.broken-animation .ring {
+    .verification-screen.failed.broken-animation {
+      background:
+        radial-gradient(circle at center, rgba(117,20,38,.48), rgba(13,3,8,.98) 64%);
+    }
+
+    .verification-screen.failed.broken-animation .ring {
       border-color: rgba(255,79,105,.34);
     }
 
-    .failed.broken-animation .lock {
+    .verification-screen.failed.broken-animation .lock {
       filter: drop-shadow(0 0 20px rgba(255,66,91,.65));
       animation: failedLockShake .55s ease both;
     }
 
-    .failed.broken-animation .lock-shackle {
+    .verification-screen.failed.broken-animation .lock-shackle {
       border-color: var(--red);
-      animation: openLock .8s ease .35s forwards;
+      animation: openLock .8s ease .15s forwards;
     }
 
-    .failed.broken-animation .lock-body {
+    .verification-screen.failed.broken-animation .lock-body {
       background: linear-gradient(145deg, #df405d, #851d38);
     }
 
@@ -525,11 +532,11 @@
       transform: translate(22px,-8px) rotate(7deg);
     }
 
-    .broken-animation .failed-key-left {
+    .verification-screen.failed.broken-animation .failed-key-left {
       animation: brokenKeyLeft 1.1s cubic-bezier(.2,.8,.2,1) forwards;
     }
 
-    .broken-animation .failed-key-right {
+    .verification-screen.failed.broken-animation .failed-key-right {
       animation: brokenKeyRight 1.1s cubic-bezier(.2,.8,.2,1) forwards;
     }
 
@@ -572,12 +579,12 @@
       color: #8fa5ba;
     }
 
-    .broken-animation .failed-title {
+    .verification-screen.failed.broken-animation .failed-title {
       color: var(--red);
       animation: failedTextAppear .4s ease both;
     }
 
-    .broken-animation .failed-status {
+    .verification-screen.failed.broken-animation .failed-status {
       color: #d58b99;
       animation: failedTextAppear .4s ease .1s both;
     }
@@ -591,7 +598,7 @@
       opacity: 0;
     }
 
-    .broken-animation .failed-line {
+    .verification-screen.failed.broken-animation .failed-line {
       animation: failedLineAppear .5s ease .4s forwards;
     }
 
@@ -997,9 +1004,6 @@
     const verificationScreen =
       document.getElementById("verificationScreen");
 
-    const failedVerificationScreen =
-      document.getElementById("failedVerificationScreen");
-
     const verificationStatus =
       document.getElementById("verificationStatus");
 
@@ -1045,22 +1049,21 @@
         return;
       }
 
-      if (login !== correctLogin || password !== correctPassword) {
-        passwordInput.value = "";
-        startFailedVerification();
-        return;
-      }
+      const isCorrect =
+        login === correctLogin &&
+        password === correctPassword;
 
       loginButton.disabled = true;
       loginButton.classList.add("loading");
 
-      startVerification();
+      startVerification(isCorrect);
     });
 
-    function startVerification() {
+    function startVerification(isCorrect) {
+      verificationScreen.classList.remove("broken-animation");
       verificationScreen.classList.add("active");
 
-      const totalTime = 7000;
+      const totalTime = 15000;
       const startTime = Date.now();
 
       function updateProgress() {
@@ -1073,18 +1076,21 @@
         progressBar.style.width = progress + "%";
         percentage.textContent = progress + "%";
 
-        if (progress < 25) {
+        if (progress < 20) {
           verificationStatus.textContent =
             "Sprawdzanie danych funkcjonariusza";
-        } else if (progress < 50) {
+        } else if (progress < 40) {
           verificationStatus.textContent =
             "Weryfikowanie uprawnień dostępu";
-        } else if (progress < 75) {
+        } else if (progress < 60) {
           verificationStatus.textContent =
-            "Nawiązywanie bezpiecznej sesji";
+            "Analizowanie zabezpieczeń terminala";
+        } else if (progress < 80) {
+          verificationStatus.textContent =
+            "Udzielanie dostępu";
         } else if (progress < 100) {
           verificationStatus.textContent =
-            "Otwieranie terminala";
+            "Otwieranie bezpiecznej sesji";
         } else {
           verificationStatus.textContent =
             "Dostęp przyznany";
@@ -1092,59 +1098,69 @@
 
         if (elapsed < totalTime) {
           requestAnimationFrame(updateProgress);
-        } else {
+          return;
+        }
+
+        if (isCorrect) {
           setTimeout(function () {
             document.body.innerHTML = "";
             document.body.style.background = "#ffffff";
             document.body.style.overflow = "hidden";
           }, 500);
+
+          return;
         }
+
+        setTimeout(function () {
+          const lock =
+            verificationScreen.querySelector(".lock");
+
+          const lockShackle =
+            verificationScreen.querySelector(".lock-shackle");
+
+          const lockBody =
+            verificationScreen.querySelector(".lock-body");
+
+          const key =
+            verificationScreen.querySelector(".key");
+
+          verificationScreen.classList.add("broken-animation");
+
+          verificationStatus.textContent =
+            "Dostęp odrzucony";
+
+          lock.style.filter =
+            "drop-shadow(0 0 20px rgba(255,66,91,.65))";
+
+          lockShackle.style.borderColor = "#ff7185";
+          lockShackle.style.animation =
+            "openLock .8s ease forwards";
+
+          lockBody.style.background =
+            "linear-gradient(145deg, #df405d, #851d38)";
+
+          key.style.animation =
+            "keyBreak .9s cubic-bezier(.2,.8,.2,1) forwards";
+
+          setTimeout(function () {
+            verificationScreen.classList.remove("active");
+            verificationScreen.classList.remove("broken-animation");
+
+            loginButton.disabled = false;
+            loginButton.classList.remove("loading");
+
+            passwordInput.value = "";
+            usernameInput.focus();
+
+            lock.removeAttribute("style");
+            lockShackle.removeAttribute("style");
+            lockBody.removeAttribute("style");
+            key.removeAttribute("style");
+          }, 2800);
+        }, 250);
       }
 
       requestAnimationFrame(updateProgress);
-    }
-
-    function startFailedVerification() {
-      const failedTitle =
-        failedVerificationScreen.querySelector(".failed-title");
-
-      const failedStatus =
-        failedVerificationScreen.querySelector(".failed-status");
-
-      failedVerificationScreen.classList.remove("broken-animation");
-      failedVerificationScreen.classList.add("active");
-
-      loginButton.disabled = true;
-      loginButton.classList.add("loading");
-
-      failedTitle.textContent = "Udzielanie dostępu";
-      failedStatus.textContent =
-        "Autoryzowanie funkcjonariusza";
-
-      setTimeout(function () {
-        failedTitle.textContent = "Dostęp przyznany";
-        failedStatus.textContent =
-          "Otwieranie bezpiecznej sesji";
-      }, 3000);
-
-      setTimeout(function () {
-        failedVerificationScreen.classList.add("broken-animation");
-
-        failedTitle.textContent = "Dostęp odrzucony";
-        failedStatus.textContent =
-          "Weryfikacja nie powiodła się";
-      }, 4200);
-
-      setTimeout(function () {
-        failedVerificationScreen.classList.remove("active");
-        failedVerificationScreen.classList.remove("broken-animation");
-
-        loginButton.disabled = false;
-        loginButton.classList.remove("loading");
-
-        passwordInput.value = "";
-        usernameInput.focus();
-      }, 6500);
     }
   </script>
 </body>
