@@ -1229,6 +1229,239 @@
       font-size: 9px;
     }
 
+    /* ZAAWANSOWANE REJESTRY: OSOBY I POJAZDY */
+
+    .registry-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin-bottom: 18px;
+    }
+
+    .registry-stat {
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 13px;
+      background: rgba(13,30,48,.52);
+    }
+
+    .registry-stat span,
+    .registry-stat strong,
+    .registry-stat small {
+      display: block;
+    }
+
+    .registry-stat span {
+      color: #7890a4;
+      font-size: 9px;
+      font-weight: bold;
+      letter-spacing: .07em;
+    }
+
+    .registry-stat strong {
+      margin-top: 9px;
+      color: #eff8ff;
+      font-size: 22px;
+    }
+
+    .registry-stat small {
+      margin-top: 5px;
+      color: #7590a7;
+      font-size: 9px;
+    }
+
+    .registry-stat.alert strong {
+      color: #ff9aaa;
+    }
+
+    .registry-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 13px;
+    }
+
+    .registry-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .registry-filter {
+      height: 31px;
+      padding: 0 11px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      color: #829cb2;
+      font-size: 9px;
+      background: rgba(255,255,255,.025);
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .registry-filter:hover,
+    .registry-filter.active {
+      border-color: rgba(89,190,255,.35);
+      color: #dff3ff;
+      background: rgba(41,135,213,.16);
+    }
+
+    .registry-search {
+      width: min(280px, 100%);
+    }
+
+    .registry-search input {
+      min-width: 0;
+    }
+
+    .registry-row {
+      cursor: pointer;
+      transition: background .18s ease;
+    }
+
+    .registry-row:hover,
+    .registry-row.selected {
+      background: rgba(43,139,218,.09);
+    }
+
+    .registry-row td:first-child {
+      border-left: 2px solid transparent;
+    }
+
+    .registry-row.selected td:first-child {
+      border-left-color: #56c7ff;
+    }
+
+    .registry-action {
+      height: 28px;
+      padding: 0 10px;
+      border: 1px solid rgba(96,195,255,.22);
+      border-radius: 7px;
+      color: #91d9ff;
+      font-size: 9px;
+      background: rgba(39,131,207,.09);
+      cursor: pointer;
+    }
+
+    .registry-empty {
+      display: none;
+      padding: 25px;
+      color: #829bae;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .registry-detail {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 26px;
+      margin-top: 18px;
+      padding: 23px;
+      border: 1px solid rgba(89,190,255,.14);
+      border-radius: 15px;
+      background: linear-gradient(115deg, rgba(34,117,190,.13), rgba(8,23,38,.5));
+    }
+
+    .registry-detail-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .registry-detail-kicker {
+      color: #61c8ff;
+      font-size: 9px;
+      font-weight: bold;
+      letter-spacing: .12em;
+    }
+
+    .registry-detail h3 {
+      margin-top: 8px;
+      color: #edf8ff;
+      font-size: 19px;
+      letter-spacing: -.025em;
+    }
+
+    .registry-detail-id {
+      margin-top: 5px;
+      color: #7894aa;
+      font-size: 10px;
+    }
+
+    .registry-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 11px;
+      margin-top: 20px;
+    }
+
+    .registry-detail-grid div {
+      min-height: 54px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 9px;
+      background: rgba(3,14,24,.2);
+    }
+
+    .registry-detail-grid span,
+    .registry-detail-grid strong {
+      display: block;
+    }
+
+    .registry-detail-grid span {
+      color: #6e8ca3;
+      font-size: 8px;
+      font-weight: bold;
+      letter-spacing: .07em;
+    }
+
+    .registry-detail-grid strong {
+      margin-top: 7px;
+      color: #dcebf5;
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .registry-alert-box {
+      padding: 16px;
+      border: 1px solid rgba(255,140,157,.16);
+      border-radius: 11px;
+      background: rgba(255,79,104,.055);
+    }
+
+    .registry-alert-box.clear {
+      border-color: rgba(99,205,255,.15);
+      background: rgba(45,139,214,.06);
+    }
+
+    .registry-alert-box span,
+    .registry-alert-box strong,
+    .registry-alert-box p {
+      display: block;
+    }
+
+    .registry-alert-box span {
+      color: #f096a5;
+      font-size: 8px;
+      font-weight: bold;
+      letter-spacing: .1em;
+    }
+
+    .registry-alert-box strong {
+      margin-top: 8px;
+      color: #ffdce1;
+      font-size: 11px;
+    }
+
+    .registry-alert-box p {
+      margin-top: 7px;
+      color: #a78891;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -1450,6 +1683,25 @@
 
       .report-stats {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .registry-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .registry-tools,
+      .registry-detail {
+        align-items: stretch;
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+
+      .registry-search {
+        width: 100%;
+      }
+
+      .registry-detail-grid {
+        grid-template-columns: 1fr;
       }
 
       .law-details {
@@ -2024,18 +2276,52 @@
 
       if (page === "people") {
         return `
-          <section class="dashboard-page">
+          <section class="dashboard-page registry-page" data-registry="people">
 
             <div class="page-heading">
               <div>
                 <div class="dashboard-overline">BAZA DANYCH</div>
                 <h2>Osoby</h2>
-                <p>Baza danych obywateli Venus RP.</p>
+                <p>Wyszukiwanie, weryfikacja dokumentów i alertów obywateli Venus RP.</p>
+              </div>
+            </div>
+
+            <div class="registry-stats">
+              <div class="registry-stat">
+                <span>REKORDY W BAZIE</span>
+                <strong>1 248</strong>
+                <small>aktualizacja: dzisiaj</small>
               </div>
 
-              <div class="search-box">
+              <div class="registry-stat">
+                <span>AKTYWNE UPRAWNIENIA</span>
+                <strong>1 102</strong>
+                <small>prawo jazdy i dokumenty</small>
+              </div>
+
+              <div class="registry-stat alert">
+                <span>AKTYWNE ALERTY</span>
+                <strong>12</strong>
+                <small>wymagają weryfikacji</small>
+              </div>
+
+              <div class="registry-stat">
+                <span>DZISIEJSZE SPRAWDZENIA</span>
+                <strong>46</strong>
+                <small>od początku zmiany</small>
+              </div>
+            </div>
+
+            <div class="registry-tools">
+              <div class="registry-filters" data-registry-filters>
+                <button class="registry-filter active" type="button" data-filter="all">Wszystkie</button>
+                <button class="registry-filter" type="button" data-filter="active">Dokumenty aktywne</button>
+                <button class="registry-filter" type="button" data-filter="alert">Alerty i zakazy</button>
+              </div>
+
+              <div class="search-box registry-search">
                 <span>⌕</span>
-                <input placeholder="Szukaj obywatela...">
+                <input data-registry-search placeholder="Imię, nazwisko lub PESEL..." autocomplete="off">
               </div>
             </div>
 
@@ -2048,36 +2334,58 @@
                     <th>Prawo jazdy</th>
                     <th>Punkty</th>
                     <th>Status</th>
+                    <th>Ostatnia kontrola</th>
+                    <th></th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
+                  <tr class="registry-row selected" data-status="active" data-record="jan">
                     <td><strong>Jan Kowalski</strong><small>JK</small></td>
                     <td>99010112345</td>
                     <td><span class="badge success">Aktywne</span></td>
                     <td>6 / 24</td>
                     <td><span class="badge neutral">Brak poszukiwania</span></td>
+                    <td>12.09.2026, 16:42</td>
+                    <td><button class="registry-action" type="button" data-record="jan">Szczegóły</button></td>
                   </tr>
 
-                  <tr>
+                  <tr class="registry-row" data-status="active" data-record="anna">
                     <td><strong>Anna Nowak</strong><small>AN</small></td>
                     <td>97052288421</td>
                     <td><span class="badge success">Aktywne</span></td>
                     <td>2 / 24</td>
                     <td><span class="badge neutral">Brak poszukiwania</span></td>
+                    <td>11.09.2026, 21:08</td>
+                    <td><button class="registry-action" type="button" data-record="anna">Szczegóły</button></td>
                   </tr>
 
-                  <tr>
+                  <tr class="registry-row" data-status="alert" data-record="piotr">
                     <td><strong>Piotr Zieliński</strong><small>PZ</small></td>
                     <td>95030144512</td>
                     <td><span class="badge danger">Zatrzymane</span></td>
                     <td>18 / 24</td>
                     <td><span class="badge danger">Zakaz prowadzenia</span></td>
+                    <td>12.09.2026, 14:19</td>
+                    <td><button class="registry-action" type="button" data-record="piotr">Szczegóły</button></td>
+                  </tr>
+
+                  <tr class="registry-row" data-status="alert" data-record="maria">
+                    <td><strong>Maria Wójcik</strong><small>MW</small></td>
+                    <td>92081467321</td>
+                    <td><span class="badge warning">Weryfikacja</span></td>
+                    <td>0 / 24</td>
+                    <td><span class="badge warning">Do ustalenia</span></td>
+                    <td>10.09.2026, 18:35</td>
+                    <td><button class="registry-action" type="button" data-record="maria">Szczegóły</button></td>
                   </tr>
                 </tbody>
               </table>
+
+              <div class="registry-empty" data-registry-empty>Nie znaleziono rekordów spełniających wybrane kryteria.</div>
             </div>
+
+            <section class="registry-detail" data-registry-detail aria-live="polite"></section>
 
           </section>
         `;
@@ -2085,18 +2393,52 @@
 
       if (page === "vehicles") {
         return `
-          <section class="dashboard-page">
+          <section class="dashboard-page registry-page" data-registry="vehicles">
 
             <div class="page-heading">
               <div>
                 <div class="dashboard-overline">BAZA DANYCH</div>
                 <h2>Pojazdy</h2>
-                <p>Centralna baza pojazdów zarejestrowanych w Venus RP.</p>
+                <p>Centralny rejestr pojazdów, ubezpieczeń, przeglądów i alertów operacyjnych.</p>
+              </div>
+            </div>
+
+            <div class="registry-stats">
+              <div class="registry-stat">
+                <span>POJAZDY W REJESTRZE</span>
+                <strong>3 846</strong>
+                <small>zarejestrowane w Venus RP</small>
               </div>
 
-              <div class="search-box">
+              <div class="registry-stat">
+                <span>WAŻNE UBEZPIECZENIE OC</span>
+                <strong>3 511</strong>
+                <small>91,3% aktywnych polis</small>
+              </div>
+
+              <div class="registry-stat alert">
+                <span>ALERTY OPERACYJNE</span>
+                <strong>7</strong>
+                <small>pojazdy do sprawdzenia</small>
+              </div>
+
+              <div class="registry-stat">
+                <span>KONTROLE DZISIAJ</span>
+                <strong>83</strong>
+                <small>od początku zmiany</small>
+              </div>
+            </div>
+
+            <div class="registry-tools">
+              <div class="registry-filters" data-registry-filters>
+                <button class="registry-filter active" type="button" data-filter="all">Wszystkie</button>
+                <button class="registry-filter" type="button" data-filter="active">Dokumenty ważne</button>
+                <button class="registry-filter" type="button" data-filter="alert">Alerty i braki</button>
+              </div>
+
+              <div class="search-box registry-search">
                 <span>⌕</span>
-                <input placeholder="Szukaj po tablicy...">
+                <input data-registry-search placeholder="Tablica, VIN, marka lub właściciel..." autocomplete="off">
               </div>
             </div>
 
@@ -2110,39 +2452,62 @@
                     <th>OC</th>
                     <th>Przegląd</th>
                     <th>Status</th>
+                    <th>Ostatnia kontrola</th>
+                    <th></th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
+                  <tr class="registry-row selected" data-status="active" data-record="bmw">
                     <td><strong>WX 2047K</strong></td>
                     <td>BMW M5</td>
                     <td>Jan Kowalski</td>
                     <td><span class="badge success">Aktywne</span></td>
                     <td><span class="badge success">Ważny</span></td>
                     <td><span class="badge neutral">Brak alertów</span></td>
+                    <td>12.09.2026, 16:42</td>
+                    <td><button class="registry-action" type="button" data-record="bmw">Szczegóły</button></td>
                   </tr>
 
-                  <tr>
+                  <tr class="registry-row" data-status="active" data-record="audi">
                     <td><strong>WW 8123P</strong></td>
                     <td>Audi RS6</td>
                     <td>Anna Nowak</td>
                     <td><span class="badge success">Aktywne</span></td>
                     <td><span class="badge success">Ważny</span></td>
                     <td><span class="badge neutral">Brak alertów</span></td>
+                    <td>11.09.2026, 21:08</td>
+                    <td><button class="registry-action" type="button" data-record="audi">Szczegóły</button></td>
                   </tr>
 
-                  <tr>
+                  <tr class="registry-row" data-status="alert" data-record="mercedes">
                     <td><strong>WZ 4499X</strong></td>
                     <td>Mercedes-AMG C63</td>
                     <td>Piotr Zieliński</td>
                     <td><span class="badge danger">Brak</span></td>
                     <td><span class="badge danger">Wygasły</span></td>
                     <td><span class="badge danger">ALERT</span></td>
+                    <td>12.09.2026, 14:19</td>
+                    <td><button class="registry-action" type="button" data-record="mercedes">Szczegóły</button></td>
+                  </tr>
+
+                  <tr class="registry-row" data-status="alert" data-record="honda">
+                    <td><strong>WV 6610R</strong></td>
+                    <td>Honda Civic Type R</td>
+                    <td>Maria Wójcik</td>
+                    <td><span class="badge success">Aktywne</span></td>
+                    <td><span class="badge warning">Za 14 dni</span></td>
+                    <td><span class="badge warning">Do weryfikacji</span></td>
+                    <td>10.09.2026, 18:35</td>
+                    <td><button class="registry-action" type="button" data-record="honda">Szczegóły</button></td>
                   </tr>
                 </tbody>
               </table>
+
+              <div class="registry-empty" data-registry-empty>Nie znaleziono rekordów spełniających wybrane kryteria.</div>
             </div>
+
+            <section class="registry-detail" data-registry-detail aria-live="polite"></section>
 
           </section>
         `;
@@ -2361,6 +2726,227 @@
       return getPageContent("dashboard");
     }
 
+    function activateRegistryTools() {
+      const registryPage = document.querySelector(".registry-page");
+
+      if (!registryPage) {
+        return;
+      }
+
+      const registryData = {
+        people: {
+          jan: {
+            title: "Jan Kowalski",
+            identifier: "PESEL: 99010112345 · Obywatel Venus RP",
+            details: [
+              ["DATA URODZENIA", "01.01.1999"],
+              ["PRAWO JAZDY", "Kategoria B · aktywne"],
+              ["PUNKTY KARNE", "6 z 24"],
+              ["ADRES ZAMELDOWANIA", "Venus City, ul. Słoneczna 14"],
+              ["OSTATNIA KONTROLA", "12.09.2026, 16:42"],
+              ["STATUS REKORDU", "Zweryfikowany"]
+            ],
+            alert: false,
+            alertTitle: "BRAK AKTYWNYCH ALERTÓW",
+            alertText: "W rejestrze nie odnotowano poszukiwania, zakazu ani aktywnych ograniczeń."
+          },
+          anna: {
+            title: "Anna Nowak",
+            identifier: "PESEL: 97052288421 · Obywatel Venus RP",
+            details: [
+              ["DATA URODZENIA", "22.05.1997"],
+              ["PRAWO JAZDY", "Kategorie B, A · aktywne"],
+              ["PUNKTY KARNE", "2 z 24"],
+              ["ADRES ZAMELDOWANIA", "Venus City, ul. Portowa 8"],
+              ["OSTATNIA KONTROLA", "11.09.2026, 21:08"],
+              ["STATUS REKORDU", "Zweryfikowany"]
+            ],
+            alert: false,
+            alertTitle: "BRAK AKTYWNYCH ALERTÓW",
+            alertText: "Dokumenty oraz uprawnienia pozostają aktualne w centralnej bazie."
+          },
+          piotr: {
+            title: "Piotr Zieliński",
+            identifier: "PESEL: 95030144512 · Obywatel Venus RP",
+            details: [
+              ["DATA URODZENIA", "01.03.1995"],
+              ["PRAWO JAZDY", "Zatrzymane decyzją administracyjną"],
+              ["PUNKTY KARNE", "18 z 24"],
+              ["ADRES ZAMELDOWANIA", "Venus City, ul. Kolejowa 29"],
+              ["OSTATNIA KONTROLA", "12.09.2026, 14:19"],
+              ["STATUS REKORDU", "Ograniczony dostęp"]
+            ],
+            alert: true,
+            alertTitle: "AKTYWNY ZAKAZ PROWADZENIA",
+            alertText: "Podczas kontroli należy zweryfikować tożsamość i nie dopuścić do dalszego kierowania pojazdem."
+          },
+          maria: {
+            title: "Maria Wójcik",
+            identifier: "PESEL: 92081467321 · Obywatel Venus RP",
+            details: [
+              ["DATA URODZENIA", "14.08.1992"],
+              ["PRAWO JAZDY", "W toku weryfikacji"],
+              ["PUNKTY KARNE", "0 z 24"],
+              ["ADRES ZAMELDOWANIA", "Venus City, ul. Ogrodowa 4"],
+              ["OSTATNIA KONTROLA", "10.09.2026, 18:35"],
+              ["STATUS REKORDU", "Wymaga aktualizacji"]
+            ],
+            alert: true,
+            alertTitle: "WERYFIKACJA DOKUMENTÓW",
+            alertText: "Rekord przekazano do uzupełnienia. Przed czynnością sprawdź aktualny status dokumentu."
+          }
+        },
+        vehicles: {
+          bmw: {
+            title: "BMW M5 · WX 2047K",
+            identifier: "VIN: WBSFV9C58EDX2047 · Właściciel: Jan Kowalski",
+            details: [
+              ["ROK PRODUKCJI", "2022"],
+              ["KOLOR", "Czarny metalik"],
+              ["UBEZPIECZENIE OC", "Aktywne do 18.04.2027"],
+              ["PRZEGLĄD TECHNICZNY", "Ważny do 04.03.2027"],
+              ["OSTATNIA KONTROLA", "12.09.2026, 16:42"],
+              ["STATUS REJESTRACJI", "Aktywna"]
+            ],
+            alert: false,
+            alertTitle: "BRAK ALERTÓW OPERACYJNYCH",
+            alertText: "Pojazd nie jest oznaczony jako poszukiwany ani nie posiada aktywnych ograniczeń."
+          },
+          audi: {
+            title: "Audi RS6 · WW 8123P",
+            identifier: "VIN: WUAZZZ4G9PNX8123 · Właściciel: Anna Nowak",
+            details: [
+              ["ROK PRODUKCJI", "2023"],
+              ["KOLOR", "Szary"],
+              ["UBEZPIECZENIE OC", "Aktywne do 30.08.2027"],
+              ["PRZEGLĄD TECHNICZNY", "Ważny do 21.08.2027"],
+              ["OSTATNIA KONTROLA", "11.09.2026, 21:08"],
+              ["STATUS REJESTRACJI", "Aktywna"]
+            ],
+            alert: false,
+            alertTitle: "BRAK ALERTÓW OPERACYJNYCH",
+            alertText: "Wszystkie dane rejestracyjne i obowiązkowe dokumenty są aktualne."
+          },
+          mercedes: {
+            title: "Mercedes-AMG C63 · WZ 4499X",
+            identifier: "VIN: WDD2050871FZ4499 · Właściciel: Piotr Zieliński",
+            details: [
+              ["ROK PRODUKCJI", "2020"],
+              ["KOLOR", "Biały"],
+              ["UBEZPIECZENIE OC", "Brak aktywnej polisy"],
+              ["PRZEGLĄD TECHNICZNY", "Wygasł: 02.09.2026"],
+              ["OSTATNIA KONTROLA", "12.09.2026, 14:19"],
+              ["STATUS REJESTRACJI", "Aktywna"]
+            ],
+            alert: true,
+            alertTitle: "ALERT: BRAK OC I PRZEGLĄDU",
+            alertText: "Pojazd wymaga czynności zgodnych z procedurą kontroli drogowej i aktualnym taryfikatorem."
+          },
+          honda: {
+            title: "Honda Civic Type R · WV 6610R",
+            identifier: "VIN: SHHFK8790PU6610R · Właściciel: Maria Wójcik",
+            details: [
+              ["ROK PRODUKCJI", "2021"],
+              ["KOLOR", "Czerwony"],
+              ["UBEZPIECZENIE OC", "Aktywne do 09.02.2027"],
+              ["PRZEGLĄD TECHNICZNY", "Ważny jeszcze 14 dni"],
+              ["OSTATNIA KONTROLA", "10.09.2026, 18:35"],
+              ["STATUS REJESTRACJI", "Aktywna"]
+            ],
+            alert: true,
+            alertTitle: "PRZEGLĄD WYMAGA ODNOWIENIA",
+            alertText: "Pojazd nie ma zakazu użytkowania, ale termin badania technicznego zbliża się do końca."
+          }
+        }
+      };
+
+      const registryType = registryPage.dataset.registry;
+      const records = registryData[registryType];
+      const detail = registryPage.querySelector("[data-registry-detail]");
+      const rows = Array.from(registryPage.querySelectorAll(".registry-row"));
+      const searchInput = registryPage.querySelector("[data-registry-search]");
+      const filters = Array.from(registryPage.querySelectorAll("[data-filter]"));
+      const emptyState = registryPage.querySelector("[data-registry-empty]");
+      let activeFilter = "all";
+
+      function showDetails(recordKey) {
+        const record = records[recordKey];
+
+        if (!record) {
+          return;
+        }
+
+        detail.innerHTML = `
+          <div>
+            <div class="registry-detail-title">
+              <div>
+                <div class="registry-detail-kicker">KARTA WERYFIKACYJNA</div>
+                <h3>${record.title}</h3>
+                <div class="registry-detail-id">${record.identifier}</div>
+              </div>
+              <span class="badge ${record.alert ? "warning" : "success"}">${record.alert ? "Wymaga uwagi" : "Zweryfikowano"}</span>
+            </div>
+
+            <div class="registry-detail-grid">
+              ${record.details.map(function (item) {
+                return `<div><span>${item[0]}</span><strong>${item[1]}</strong></div>`;
+              }).join("")}
+            </div>
+          </div>
+
+          <aside class="registry-alert-box ${record.alert ? "" : "clear"}">
+            <span>STATUS OPERACYJNY</span>
+            <strong>${record.alertTitle}</strong>
+            <p>${record.alertText}</p>
+          </aside>
+        `;
+
+        rows.forEach(function (row) {
+          row.classList.toggle("selected", row.dataset.record === recordKey);
+        });
+      }
+
+      function applyFilters() {
+        const phrase = searchInput.value.trim().toLowerCase();
+        let visibleRecords = 0;
+
+        rows.forEach(function (row) {
+          const matchesFilter = activeFilter === "all" || row.dataset.status === activeFilter;
+          const matchesSearch = row.textContent.toLowerCase().includes(phrase);
+          const isVisible = matchesFilter && matchesSearch;
+
+          row.style.display = isVisible ? "" : "none";
+
+          if (isVisible) {
+            visibleRecords += 1;
+          }
+        });
+
+        emptyState.style.display = visibleRecords ? "none" : "block";
+      }
+
+      rows.forEach(function (row) {
+        row.addEventListener("click", function () {
+          showDetails(row.dataset.record);
+        });
+      });
+
+      filters.forEach(function (filter) {
+        filter.addEventListener("click", function () {
+          activeFilter = filter.dataset.filter;
+
+          filters.forEach(function (item) {
+            item.classList.toggle("active", item === filter);
+          });
+
+          applyFilters();
+        });
+      });
+
+      searchInput.addEventListener("input", applyFilters);
+      showDetails(rows[0].dataset.record);
+    }
+
     function activateNavigation() {
       const navigationItems =
         document.querySelectorAll("[data-page]");
@@ -2371,6 +2957,8 @@
 
           dashboardContent.innerHTML =
             getPageContent(selectedPage);
+
+          activateRegistryTools();
 
           dashboardTitle.textContent =
             pageTitles[selectedPage];
