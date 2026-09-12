@@ -29,8 +29,8 @@
       color: var(--text);
       font-family: Arial, sans-serif;
       background:
-        radial-gradient(circle at 10% 0%, rgba(34, 133, 229, .22), transparent 32%),
-        radial-gradient(circle at 100% 100%, rgba(0, 195, 255, .12), transparent 32%),
+        radial-gradient(circle at 10% 0%, rgba(34,133,229,.22), transparent 32%),
+        radial-gradient(circle at 100% 100%, rgba(0,195,255,.12), transparent 32%),
         linear-gradient(135deg, var(--dark), var(--dark-two));
     }
 
@@ -565,16 +565,21 @@
     }
 
     .failed-title {
-      color: var(--red);
+      color: var(--cyan);
     }
 
     .failed-status {
-      color: #d58b99;
+      color: #8fa5ba;
     }
 
-    .broken-animation .failed-title,
-    .broken-animation .failed-status {
+    .broken-animation .failed-title {
+      color: var(--red);
       animation: failedTextAppear .4s ease both;
+    }
+
+    .broken-animation .failed-status {
+      color: #d58b99;
+      animation: failedTextAppear .4s ease .1s both;
     }
 
     .failed-line {
@@ -624,12 +629,19 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes ringPulse {
@@ -759,9 +771,17 @@
     }
 
     @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
+      0%,100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-6px);
+      }
+
+      75% {
+        transform: translateX(6px);
+      }
     }
 
     @media (max-width: 760px) {
@@ -890,7 +910,6 @@
     </section>
   </main>
 
-  <!-- Animacja poprawnych danych -->
   <div id="verificationScreen" class="verification-screen">
 
     <div class="lock-container">
@@ -930,7 +949,6 @@
     </div>
   </div>
 
-  <!-- Animacja błędnych danych -->
   <div id="failedVerificationScreen" class="verification-screen failed">
 
     <div class="lock-container">
@@ -958,11 +976,11 @@
     </div>
 
     <div class="verification-title failed-title">
-      Weryfikowanie dostępu
+      Udzielanie dostępu
     </div>
 
     <div class="verification-status failed-status">
-      Sprawdzanie danych funkcjonariusza
+      Autoryzowanie funkcjonariusza
     </div>
 
     <div class="failed-line"></div>
@@ -1099,21 +1117,23 @@
       loginButton.disabled = true;
       loginButton.classList.add("loading");
 
-      failedTitle.textContent = "Weryfikowanie dostępu";
+      failedTitle.textContent = "Udzielanie dostępu";
       failedStatus.textContent =
-        "Sprawdzanie danych funkcjonariusza";
+        "Autoryzowanie funkcjonariusza";
 
-      /*
-        Najpierw animacja wygląda jak poprawne logowanie.
-        Kluczyk pęka dopiero po kilku sekundach.
-      */
+      setTimeout(function () {
+        failedTitle.textContent = "Dostęp przyznany";
+        failedStatus.textContent =
+          "Otwieranie bezpiecznej sesji";
+      }, 3000);
+
       setTimeout(function () {
         failedVerificationScreen.classList.add("broken-animation");
 
-        failedTitle.textContent = "Błąd autoryzacji";
+        failedTitle.textContent = "Dostęp odrzucony";
         failedStatus.textContent =
-          "Klucz dostępu został odrzucony";
-      }, 3000);
+          "Weryfikacja nie powiodła się";
+      }, 4200);
 
       setTimeout(function () {
         failedVerificationScreen.classList.remove("active");
@@ -1124,7 +1144,7 @@
 
         passwordInput.value = "";
         usernameInput.focus();
-      }, 5500);
+      }, 6500);
     }
   </script>
 </body>
