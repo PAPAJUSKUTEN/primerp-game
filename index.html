@@ -1807,73 +1807,35 @@
     function getPageContent(page) {
       if (page === "dashboard") {
         return `
-          <section class="dashboard-page officer-dashboard">
-
-            <div class="welcome-banner">
-              <div>
-                <div class="welcome-banner-label">SOBOTA, 12 WRZEŚNIA 2026</div>
-                <h2>Witaj na służbie, Kadet 1.</h2>
-                <p>Centrum dowodzenia funkcjonariusza. Monitoruj swoją służbę i korzystaj z najważniejszych narzędzi.</p>
+          <section class="dashboard-page officer-profile-page">
+            <div class="officer-profile-card">
+              <div class="officer-photo-box">
+                <img src="officer.jpg" alt="Zdjęcie funkcjonariusza"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder">
+                  <span>👤</span>
+                  <small>ZDJĘCIE<br>FUNKCJONARIUSZA</small>
+                </div>
               </div>
-              <div class="banner-emblem">M</div>
+
+              <div class="officer-profile-info">
+                <div class="profile-label">PROFIL FUNKCJONARIUSZA</div>
+                <h2>Kadet 1</h2>
+
+                <div class="profile-line">
+                  <span>STOPIEŃ</span>
+                  <strong>Kadet Policji</strong>
+                </div>
+                <div class="profile-line">
+                  <span>NUMER ODZNAKI</span>
+                  <strong>#RP-0001</strong>
+                </div>
+                <div class="profile-line">
+                  <span>WYDZIAŁ</span>
+                  <strong>Wydział Ruchu Drogowego</strong>
+                </div>
+              </div>
             </div>
-
-            <section class="officer-profile">
-              <div class="officer-photo photo-placeholder">
-                <img src="officer.jpg" alt="Zdjęcie funkcjonariusza" onload="this.parentElement.classList.remove('photo-placeholder')" onerror="this.style.display='none'; this.parentElement.classList.add('photo-placeholder')">
-                <div class="photo-placeholder-content"><span>👤</span><small>BRAK ZDJĘCIA</small></div>
-              </div>
-
-              <div class="officer-info">
-                <div class="officer-status"><span class="status-dot"></span> NA SŁUŻBIE</div>
-                <h1>Kadet 1</h1>
-                <p class="officer-rank">Kadet Policji</p>
-                <div class="officer-details">
-                  <div><span>NUMER ODZNAKI</span><strong>#RP-0001</strong></div>
-                  <div><span>JEDNOSTKA</span><strong>MTD / Patrol</strong></div>
-                  <div><span>STATUS</span><strong>Aktywny</strong></div>
-                  <div><span>STAŻ SŁUŻBY</span><strong>12 dni</strong></div>
-                </div>
-              </div>
-
-              <div class="service-panel">
-                <span>CZAS SŁUŻBY</span>
-                <strong id="serviceTime">02:41:18</strong>
-                <small>Rozpoczęto o 08:00</small>
-                <button class="service-button" type="button">ZAKOŃCZ SŁUŻBĘ</button>
-              </div>
-            </section>
-
-            <section class="dashboard-stats">
-              <div class="dashboard-stat"><div class="stat-icon">🚔</div><div><span>INTERWENCJE</span><strong>24</strong><small>+4 dzisiaj</small></div></div>
-              <div class="dashboard-stat"><div class="stat-icon">📋</div><div><span>RAPORTY</span><strong>8</strong><small>+2 w tym tygodniu</small></div></div>
-              <div class="dashboard-stat"><div class="stat-icon">🚨</div><div><span>ZATRZYMANIA</span><strong>6</strong><small>+1 dzisiaj</small></div></div>
-              <div class="dashboard-stat"><div class="stat-icon">💳</div><div><span>MANDATY</span><strong>31</strong><small>Łącznie</small></div></div>
-            </section>
-
-            <div class="dashboard-grid">
-              <section class="dashboard-panel">
-                <div class="panel-header"><div><span class="panel-label">AKTYWNOŚĆ</span><h2>Ostatnie działania</h2></div><button class="panel-action" type="button" data-page="reports">ZOBACZ RAPORTY</button></div>
-                <div class="activity-list">
-                  <div class="activity-item"><div class="activity-icon">🚔</div><div><strong>Kontrola drogowa</strong><small>BMW M5 · WX 2047K · Jan Kowalski</small></div><span class="activity-time">10:42</span></div>
-                  <div class="activity-item"><div class="activity-icon">📋</div><div><strong>Utworzono raport służbowy</strong><small>Raport #10482 został zapisany w bazie</small></div><span class="activity-time">10:15</span></div>
-                  <div class="activity-item"><div class="activity-icon">🚨</div><div><strong>Zatrzymanie pojazdu</strong><small>Mercedes-AMG C63 · WZ 4499X · ALERT</small></div><span class="activity-time">09:48</span></div>
-                  <div class="activity-item"><div class="activity-icon">👤</div><div><strong>Weryfikacja osoby</strong><small>Piotr Zieliński · status: zakaz prowadzenia</small></div><span class="activity-time">09:21</span></div>
-                </div>
-              </section>
-
-              <section class="dashboard-panel">
-                <div class="panel-header"><div><span class="panel-label">SKRÓTY</span><h2>Szybkie akcje</h2></div></div>
-                <div class="quick-actions">
-                  <button class="quick-action" type="button" data-page="people"><b>👤</b><span>WYSZUKAJ OSOBĘ</span></button>
-                  <button class="quick-action" type="button" data-page="vehicles"><b>🚘</b><span>SPRAWDŹ POJAZD</span></button>
-                  <button class="quick-action" type="button" data-page="reports"><b>📝</b><span>NOWY RAPORT</span></button>
-                  <button class="quick-action" type="button" data-page="laws"><b>⚖️</b><span>BAZA USTAW</span></button>
-                </div>
-                <div class="alert-box"><strong>⚠ WAŻNY KOMUNIKAT</strong><p>Przed rozpoczęciem interwencji sprawdź status osoby oraz pojazdu w bazie MTD.</p></div>
-              </section>
-            </div>
-
           </section>
         `;
       }
@@ -2263,3 +2225,56 @@
   </script>
 </body>
 </html>
+
+
+/* PROFIL FUNKCJONARIUSZA - PULPIT */
+.officer-profile-page {
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:32px;
+}
+.officer-profile-card {
+  width:min(920px,100%);
+  min-height:390px;
+  display:flex;
+  align-items:center;
+  gap:46px;
+  padding:42px;
+  box-sizing:border-box;
+  background:linear-gradient(145deg,rgba(20,25,35,.98),rgba(10,14,22,.98));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.03);
+}
+.officer-photo-box {
+  width:250px;
+  height:310px;
+  flex:0 0 250px;
+  position:relative;
+  overflow:hidden;
+  border-radius:14px;
+  background:#111720;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 15px 35px rgba(0,0,0,.35);
+}
+.officer-photo-box img {width:100%;height:100%;display:block;object-fit:cover;}
+.photo-placeholder {
+  position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;color:rgba(255,255,255,.35);text-align:center;
+}
+.photo-placeholder span {font-size:68px;}
+.photo-placeholder small {font-size:10px;letter-spacing:2px;line-height:1.6;}
+.officer-profile-info {flex:1;min-width:0;}
+.profile-label {margin-bottom:10px;font-size:10px;font-weight:700;letter-spacing:2px;color:#7d8796;}
+.officer-profile-info h2 {margin:0 0 28px;font-size:38px;font-weight:700;color:#fff;}
+.profile-line {display:flex;flex-direction:column;gap:7px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.07);}
+.profile-line:first-of-type {border-top:1px solid rgba(255,255,255,.07);}
+.profile-line span {font-size:10px;font-weight:700;letter-spacing:1.5px;color:#737d8c;}
+.profile-line strong {font-size:17px;font-weight:600;color:#f2f4f7;}
+@media (max-width:720px) {
+  .officer-profile-page {padding:20px;}
+  .officer-profile-card {flex-direction:column;align-items:stretch;padding:25px;gap:28px;}
+  .officer-photo-box {width:100%;height:340px;flex-basis:340px;}
+  .officer-profile-info h2 {font-size:30px;}
+}
