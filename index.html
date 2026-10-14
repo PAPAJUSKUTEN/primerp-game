@@ -3,1631 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KaiRox — Oglądaj, twórz, odkrywaj</title>
+<title>KaiRox — Strona w budowie</title>
 
 <style>
-/* =========================================
-   KAIROX — NOWOCZESNY INTERFEJS
-   ========================================= */
-
-:root {
-  --bg: #08080c;
-  --bg-soft: #101018;
-  --card: rgba(255, 255, 255, 0.05);
-  --card-hover: rgba(255, 255, 255, 0.09);
-  --border: rgba(255, 255, 255, 0.08);
-  --text: #f5f5f7;
-  --muted: #9b9ba7;
-  --accent: #ff2d55;
-  --accent-2: #7c5cff;
-  --accent-3: #00d4ff;
-  --radius: 18px;
-  --radius-sm: 12px;
-  --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-  --transition: 0.25s ease;
-}
-
-body.light {
-  --bg: #f4f5fa;
-  --bg-soft: #ffffff;
-  --card: rgba(0, 0, 0, 0.04);
-  --card-hover: rgba(0, 0, 0, 0.08);
-  --border: rgba(0, 0, 0, 0.08);
-  --text: #111116;
-  --muted: #5c5c68;
-  --shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-  transition: background var(--transition), color var(--transition);
-}
-
-/* TŁO Z EFEKTEM ŚWIATŁA */
-.background-glow {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(circle at 15% 15%, rgba(255, 45, 85, 0.18), transparent 35%),
-    radial-gradient(circle at 85% 20%, rgba(124, 92, 255, 0.18), transparent 38%),
-    radial-gradient(circle at 50% 90%, rgba(0, 212, 255, 0.12), transparent 40%);
-  filter: blur(20px);
-}
-
-/* =========================================
-   GÓRNY PASEK
-   ========================================= */
-
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 68px;
-  padding: 0 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  background: color-mix(in srgb, var(--bg) 75%, transparent);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
-  z-index: 1000;
-}
-
-.header-left,
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.icon-button {
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  border-radius: 50%;
-  font-size: 17px;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: var(--transition);
-}
-
-.icon-button:hover {
-  background: var(--card-hover);
-  transform: translateY(-2px);
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.logo-mark {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: 18px;
-  color: white;
-  box-shadow: 0 8px 24px rgba(255, 45, 85, 0.35);
-}
-
-.logo-text {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.6px;
-}
-
-.logo-text span {
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* WYSZUKIWARKA */
-.search-wrapper {
-  flex: 1;
-  max-width: 620px;
-  position: relative;
-}
-
-.search-input {
-  width: 100%;
-  height: 46px;
-  padding: 0 52px 0 20px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  outline: none;
-  font-size: 14px;
-  transition: var(--transition);
-}
-
-.search-input::placeholder {
-  color: var(--muted);
-}
-
-.search-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(255, 45, 85, 0.15);
-}
-
-.search-button {
-  position: absolute;
-  right: 6px;
-  top: 6px;
-  width: 34px;
-  height: 34px;
-  border: none;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: white;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.search-button:hover {
-  transform: scale(1.08);
-}
-
-.profile-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  cursor: pointer;
-  border: 2px solid var(--border);
-}
-
-/* =========================================
-   LAYOUT
-   ========================================= */
-
-.layout {
-  display: flex;
-  padding-top: 68px;
-}
-
-/* =========================================
-   SIDEBAR
-   ========================================= */
-
-.sidebar {
-  width: 250px;
-  height: calc(100vh - 68px);
-  position: fixed;
-  top: 68px;
-  left: 0;
-  padding: 18px 14px;
-  overflow-y: auto;
-  border-right: 1px solid var(--border);
-  background: color-mix(in srgb, var(--bg) 80%, transparent);
-  backdrop-filter: blur(14px);
-}
-
-.sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 10px;
-}
-
-.nav-section {
-  margin-bottom: 22px;
-}
-
-.nav-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: var(--muted);
-  padding: 0 14px 10px;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 11px 14px;
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  font-size: 14px;
-  cursor: pointer;
-  transition: var(--transition);
-  border: 1px solid transparent;
-}
-
-.nav-link:hover {
-  background: var(--card-hover);
-  transform: translateX(3px);
-}
-
-.nav-link.active {
-  background: linear-gradient(90deg, rgba(255, 45, 85, 0.18), rgba(124, 92, 255, 0.14));
-  border-color: rgba(255, 45, 85, 0.25);
-  font-weight: 600;
-}
-
-.nav-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  background: var(--card);
-  display: grid;
-  place-items: center;
-  font-size: 15px;
-}
-
-.sidebar-divider {
-  height: 1px;
-  background: var(--border);
-  margin: 18px 0;
-}
-
-/* =========================================
-   MAIN
-   ========================================= */
-
-main {
-  margin-left: 250px;
-  width: 100%;
-  padding: 28px 32px 60px;
-}
-
-/* HERO */
-.hero {
-  position: relative;
-  border-radius: 26px;
-  padding: 52px 44px;
-  margin-bottom: 34px;
-  overflow: hidden;
-  background: linear-gradient(120deg, rgba(255, 45, 85, 0.22), rgba(124, 92, 255, 0.2), rgba(0, 212, 255, 0.14));
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  right: -80px;
-  top: -100px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.16), transparent 65%);
-  filter: blur(20px);
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  font-size: 12px;
-  margin-bottom: 18px;
-}
-
-.hero h1 {
-  font-size: clamp(30px, 5vw, 52px);
-  font-weight: 900;
-  line-height: 1.08;
-  letter-spacing: -1.5px;
-  margin-bottom: 14px;
-}
-
-.hero h1 span {
-  background: linear-gradient(90deg, #fff, #ffd6e2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.hero p {
-  max-width: 560px;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 16px;
-  margin-bottom: 26px;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.primary-button {
-  padding: 13px 24px;
-  border: none;
-  border-radius: 999px;
-  background: white;
-  color: #111;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.primary-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-}
-
-.ghost-button {
-  padding: 13px 24px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.ghost-button:hover {
-  background: rgba(255, 255, 255, 0.16);
-  transform: translateY(-3px);
-}
-
-/* STATYSTYKI */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  margin-bottom: 36px;
-}
-
-.stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
-  backdrop-filter: blur(12px);
-  transition: var(--transition);
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  background: var(--card-hover);
-}
-
-.stat-value {
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 4px;
-}
-
-.stat-label {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* SEKCJE */
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 34px 0 18px;
-}
-
-.section-title {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.4px;
-}
-
-.section-link {
-  color: var(--accent);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-/* FILTRY */
-.filters {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 6px;
-  margin-bottom: 24px;
-}
-
-.filters::-webkit-scrollbar {
-  height: 6px;
-}
-
-.filters::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 10px;
-}
-
-.filter-chip {
-  flex-shrink: 0;
-  padding: 9px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  font-size: 13px;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.filter-chip:hover {
-  background: var(--card-hover);
-  transform: translateY(-2px);
-}
-
-.filter-chip.active {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  border-color: transparent;
-  color: white;
-  font-weight: 700;
-}
-
-/* =========================================
-   SIATKA FILMÓW
-   ========================================= */
-
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-}
-
-.video-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  cursor: pointer;
-  transition: var(--transition);
-  backdrop-filter: blur(12px);
-  animation: fadeIn 0.5s ease both;
-}
-
-.video-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 45, 85, 0.35);
-  box-shadow: var(--shadow);
-}
-
-.thumbnail {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  display: grid;
-  place-items: center;
-  font-size: 52px;
-  background: linear-gradient(135deg, #191926, #24243a);
-}
-
-.thumbnail::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.55));
-}
-
-.thumbnail-icon {
-  position: relative;
-  z-index: 1;
-}
-
-.duration {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.75);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 7px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.live-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 2;
-  background: var(--accent);
-  color: white;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 9px;
-  border-radius: 6px;
-}
-
-.video-body {
-  padding: 16px;
-}
-
-.video-top {
-  display: flex;
-  gap: 12px;
-}
-
-.channel-avatar {
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  font-size: 14px;
-}
-
-.video-title {
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.35;
-  margin-bottom: 7px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.video-meta {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.video-tags {
-  display: flex;
-  gap: 7px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-
-.tag {
-  font-size: 11px;
-  padding: 4px 9px;
-  border-radius: 999px;
-  background: var(--card-hover);
-  color: var(--muted);
-}
-
-/* =========================================
-   STRONA ODTWARZACZA
-   ========================================= */
-
-.player-page {
-  display: none;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.player-page.visible {
-  display: block;
-  animation: fadeIn 0.4s ease;
-}
-
-.back-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 10px 18px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-bottom: 20px;
-  transition: var(--transition);
-}
-
-.back-button:hover {
-  background: var(--card-hover);
-  transform: translateX(-3px);
-}
-
-.player {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  border-radius: 24px;
-  overflow: hidden;
-  background: #000;
-  display: grid;
-  place-items: center;
-  font-size: 70px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  margin-bottom: 22px;
-}
-
-.player-overlay {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: 22px;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.progress {
-  flex: 1;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  width: 35%;
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-}
-
-.player-controls {
-  color: white;
-  font-size: 18px;
-  display: flex;
-  gap: 16px;
-}
-
-.player-title {
-  font-size: clamp(20px, 3vw, 28px);
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  margin-bottom: 10px;
-}
-
-.player-meta {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.channel-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px;
-  margin: 22px 0;
-}
-
-.channel-info {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.channel-name {
-  font-weight: 700;
-}
-
-.channel-subscribers {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.subscribe-button {
-  padding: 11px 22px;
-  border: none;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.subscribe-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(255, 45, 85, 0.3);
-}
-
-.subscribe-button.subscribed {
-  background: var(--card);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-.action-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 34px;
-}
-
-.action-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  cursor: pointer;
-  font-size: 14px;
-  transition: var(--transition);
-}
-
-.action-pill:hover {
-  background: var(--card-hover);
-  transform: translateY(-2px);
-}
-
-/* KOMENTARZE */
-.comments {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 22px;
-}
-
-.comment-input-row {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 22px;
-}
-
-.comment-input {
-  flex: 1;
-  height: 46px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--bg-soft);
-  color: var(--text);
-  padding: 0 18px;
-  outline: none;
-  transition: var(--transition);
-}
-
-.comment-input:focus {
-  border-color: var(--accent);
-}
-
-.comment {
-  display: flex;
-  gap: 14px;
-  padding: 16px 0;
-  border-top: 1px solid var(--border);
-}
-
-.comment-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  flex-shrink: 0;
-}
-
-.comment-author {
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.comment-time {
-  font-size: 12px;
-  color: var(--muted);
-  margin-left: 8px;
-}
-
-.comment-text {
-  font-size: 14px;
-  color: var(--text);
-  margin-top: 5px;
-  line-height: 1.5;
-}
-
-/* =========================================
-   ANIMACJE
-   ========================================= */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* =========================================
-   RESPONSYWNOŚĆ
-   ========================================= */
-
-@media (max-width: 1100px) {
-  .sidebar {
-    width: 78px;
+  :root {
+    --bg: #07070c;
+    --text: #f4f4f7;
+    --muted: #9d9daa;
+    --accent: #ff2d55;
+    --accent-2: #7c5cff;
+    --accent-3: #00d4ff;
+    --card: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.1);
   }
 
-  .nav-text,
-  .nav-label {
-    display: none;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
   }
 
-  .nav-link {
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    padding: 24px;
   }
 
-  main {
-    margin-left: 78px;
-    padding: 24px 18px 50px;
-  }
-}
-
-@media (max-width: 760px) {
-  .sidebar {
-    display: none;
-  }
-
-  main {
-    margin-left: 0;
+  /* Animowane światło w tle */
+  .glow {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 20% 25%, rgba(255, 45, 85, 0.22), transparent 35%),
+      radial-gradient(circle at 80% 20%, rgba(124, 92, 255, 0.22), transparent 38%),
+      radial-gradient(circle at 50% 85%, rgba(0, 212, 255, 0.16), transparent 42%);
+    animation: moveGlow 12s ease-in-out infinite alternate;
   }
 
-  .search-wrapper {
-    display: none;
+  @keyframes moveGlow {
+    0% {
+      transform: scale(1) translateY(0);
+    }
+    100% {
+      transform: scale(1.15) translateY(-20px);
+    }
   }
 
-  .hero {
-    padding: 34px 24px;
+  /* Główny kontener */
+  .container {
+    width: 100%;
+    max-width: 760px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 32px;
+    padding: 60px 40px;
+    backdrop-filter: blur(22px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+    animation: appear 0.8s ease both;
   }
 
-  .video-grid {
-    grid-template-columns: 1fr;
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(35px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
-}
+
+  /* Logo */
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+
+  .logo-mark {
+    width: 62px;
+    height: 62px;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 15px 40px rgba(255, 45, 85, 0.4);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 15px 40px rgba(255, 45, 85, 0.35);
+    }
+    50% {
+      transform: scale(1.06);
+      box-shadow: 0 20px 55px rgba(124, 92, 255, 0.45);
+    }
+  }
+
+  .logo-text {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+  }
+
+  .logo-text span {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Tekst */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    margin-bottom: 24px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 1.2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.25;
+    }
+  }
+
+  h1 {
+    font-size: clamp(34px, 6vw, 58px);
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 18px;
+  }
+
+  h1 span {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto 36px;
+  }
+
+  /* Pasek postępu */
+  .progress-box {
+    max-width: 460px;
+    margin: 0 auto 34px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .progress {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+    animation: load 3.5s ease forwards;
+  }
+
+  @keyframes load {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 78%;
+    }
+  }
+
+  /* Funkcje */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 38px;
+  }
+
+  .feature {
+    padding: 18px 14px;
+    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: 0.3s ease;
+  }
+
+  .feature:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 45, 85, 0.35);
+  }
+
+  .feature-icon {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .feature-name {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* Przycisk */
+  .notify-button {
+    padding: 15px 32px;
+    border: none;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 16px 40px rgba(255, 45, 85, 0.35);
+    transition: 0.25s ease;
+  }
+
+  .notify-button:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 22px 55px rgba(124, 92, 255, 0.45);
+  }
+
+  .notify-button:active {
+    transform: scale(0.97);
+  }
+
+  /* Stopka */
+  footer {
+    margin-top: 34px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 44px 22px;
+      border-radius: 24px;
+    }
+
+    .logo-text {
+      font-size: 30px;
+    }
+
+    .logo-mark {
+      width: 52px;
+      height: 52px;
+      font-size: 23px;
+    }
+  }
 </style>
 </head>
 
 <body>
 
-<div class="background-glow"></div>
+<div class="glow"></div>
 
-<!-- ================= GÓRNY PASEK ================= -->
-<header>
-  <div class="header-left">
-    <button class="icon-button" title="Menu">☰</button>
+<main class="container">
 
-    <div class="logo" onclick="goHome()">
-      <div class="logo-mark">K</div>
-      <div class="logo-text">Kai<span>Rox</span></div>
+  <div class="logo">
+    <div class="logo-mark">K</div>
+    <div class="logo-text">Kai<span>Rox</span></div>
+  </div>
+
+  <div class="badge">
+    <span class="dot"></span>
+    Strona w budowie
+  </div>
+
+  <h1>
+    Wkrótce zobaczysz<br>
+    <span>nową platformę KaiRox</span>
+  </h1>
+
+  <p>
+    Pracujemy nad nowoczesną platformą wideo z filmami, kanałami,
+    subskrypcjami i społecznością. Już niedługo będziesz mógł oglądać,
+    tworzyć i odkrywać treści na KaiRox.
+  </p>
+
+  <div class="progress-box">
+    <div class="progress-label">
+      <span>Postęp prac</span>
+      <span>78%</span>
+    </div>
+
+    <div class="progress">
+      <div class="progress-fill"></div>
     </div>
   </div>
 
-  <div class="search-wrapper">
-    <input
-      class="search-input"
-      id="searchInput"
-      type="text"
-      placeholder="Szukaj filmów, kanałów i twórców..."
-    >
-    <button class="search-button" onclick="searchVideos()">🔍</button>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🎬</div>
+      <div class="feature-name">Filmy</div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">📺</div>
+      <div class="feature-name">Kanały</div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🔔</div>
+      <div class="feature-name">Subskrypcje</div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">💬</div>
+      <div class="feature-name">Społeczność</div>
+    </div>
   </div>
 
-  <div class="header-right">
-    <button class="icon-button" title="Powiadomienia">🔔</button>
-    <button class="icon-button" id="themeButton" onclick="toggleTheme()" title="Zmień motyw">🌙</button>
-    <div class="profile-avatar" title="Profil">N</div>
-  </div>
-</header>
+  <button class="notify-button" onclick="notifyMe()">
+    🔔 Powiadom mnie o starcie
+  </button>
 
-<div class="layout">
+  <footer>
+    © 2026 KaiRox — Wszystkie prawa zastrzeżone.
+  </footer>
 
-  <!-- ================= SIDEBAR ================= -->
-  <aside class="sidebar">
-    <div class="nav-section">
-      <div class="nav-label">Menu</div>
-
-      <div class="nav-link active" onclick="goHome()">
-        <div class="nav-icon">🏠</div>
-        <div class="nav-text">Start</div>
-      </div>
-
-      <div class="nav-link">
-        <div class="nav-icon">⚡</div>
-        <div class="nav-text">Shorts</div>
-      </div>
-
-      <div class="nav-link">
-        <div class="nav-icon">📺</div>
-        <div class="nav-text">Subskrypcje</div>
-      </div>
-
-      <div class="nav-link">
-        <div class="nav-icon">🔴</div>
-        <div class="nav-text">Na żywo</div>
-      </div>
-    </div>
-
-    <div class="sidebar-divider"></div>
-
-    <div class="nav-section">
-      <div class="nav-label">Twoja biblioteka</div>
-
-      <div class="nav-link">
-        <div class="nav-icon">🕘</div>
-        <div class="nav-text">Historia</div>
-      </div>
-
-      <div class="nav-link">
-        <div class="nav-icon">👍</div>
-        <div class="nav-text">Polubione</div>
-      </div>
-
-      <div class="nav-link">
-        <div class="nav-icon">💾</div>
-        <div class="nav-text">Do obejrzenia</div>
-      </div>
-
-      <div class="nav-link">
-        <div class="nav-icon">⬇️</div>
-        <div class="nav-text">Pobrane</div>
-      </div>
-    </div>
-
-    <div class="sidebar-divider"></div>
-
-    <div class="nav-section">
-      <div class="nav-label">Odkrywaj</div>
-
-      <div class="nav-link" onclick="filterByCategory('Gaming')">
-        <div class="nav-icon">🎮</div>
-        <div class="nav-text">Gaming</div>
-      </div>
-
-      <div class="nav-link" onclick="filterByCategory('Programowanie')">
-        <div class="nav-icon">💻</div>
-        <div class="nav-text">Programowanie</div>
-      </div>
-
-      <div class="nav-link" onclick="filterByCategory('Roblox')">
-        <div class="nav-icon">🧱</div>
-        <div class="nav-text">Roblox</div>
-      </div>
-
-      <div class="nav-link" onclick="filterByCategory('Muzyka')">
-        <div class="nav-icon">🎵</div>
-        <div class="nav-text">Muzyka</div>
-      </div>
-
-      <div class="nav-link" onclick="filterByCategory('Design')">
-        <div class="nav-icon">🎨</div>
-        <div class="nav-text">Design</div>
-      </div>
-    </div>
-
-    <div class="sidebar-divider"></div>
-
-    <div class="nav-section">
-      <div class="nav-label">Konto</div>
-
-      <div class="nav-link">
-        <div class="nav-icon">⚙️</div>
-        <div class="nav-text">Ustawienia</div>
-      </div>
-
-      <div class="nav-link">
-        <div class="nav-icon">❓</div>
-        <div class="nav-text">Pomoc</div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ================= GŁÓWNA TREŚĆ ================= -->
-  <main>
-
-    <!-- STRONA GŁÓWNA -->
-    <section id="homePage">
-
-      <section class="hero">
-        <div class="hero-badge">✨ Nowa generacja wideo</div>
-
-        <h1>
-          Oglądaj, twórz i odkrywaj<br>
-          <span>z KaiRox</span>
-        </h1>
-
-        <p>
-          KaiRox to nowoczesna platforma wideo dla twórców, graczy i programistów.
-          Publikuj filmy, buduj społeczność i odkrywaj treści dopasowane do Ciebie.
-        </p>
-
-        <div class="hero-buttons">
-          <button class="primary-button" onclick="filterByCategory('Gaming')">
-            🎮 Odkryj Gaming
-          </button>
-
-          <button class="ghost-button" onclick="filterByCategory('Programowanie')">
-            💻 Naucz się kodować
-          </button>
-        </div>
-      </section>
-
-      <section class="stats">
-        <div class="stat-card">
-          <div class="stat-value">2,4M+</div>
-          <div class="stat-label">Aktywnych użytkowników</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-value">180K+</div>
-          <div class="stat-label">Opublikowanych filmów</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-value">12K+</div>
-          <div class="stat-label">Twórców</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-value">24/7</div>
-          <div class="stat-label">Nowe treści</div>
-        </div>
-      </section>
-
-      <div class="section-header">
-        <h2 class="section-title">Polecane dla Ciebie</h2>
-        <a class="section-link" onclick="resetFilters()">Pokaż wszystko →</a>
-      </div>
-
-      <div class="filters" id="filters">
-        <button class="filter-chip active" onclick="setFilter(this, 'all')">Wszystko</button>
-        <button class="filter-chip" onclick="setFilter(this, 'Gaming')">Gaming</button>
-        <button class="filter-chip" onclick="setFilter(this, 'Programowanie')">Programowanie</button>
-        <button class="filter-chip" onclick="setFilter(this, 'Roblox')">Roblox</button>
-        <button class="filter-chip" onclick="setFilter(this, 'Muzyka')">Muzyka</button>
-        <button class="filter-chip" onclick="setFilter(this, 'Design')">Design</button>
-        <button class="filter-chip" onclick="setFilter(this, 'Live')">Na żywo</button>
-      </div>
-
-      <div class="video-grid" id="videoGrid"></div>
-    </section>
-
-    <!-- STRONA FILMU -->
-    <section id="playerPage" class="player-page">
-      <button class="back-button" onclick="goHome()">
-        ← Wróć do KaiRox
-      </button>
-
-      <div class="player" id="playerThumbnail">
-        ▶
-
-        <div class="player-overlay">
-          <div class="player-controls">
-            <span>▶</span>
-            <span>🔊</span>
-          </div>
-
-          <div class="progress">
-            <div class="progress-fill"></div>
-          </div>
-
-          <div class="player-controls">
-            <span>⚙️</span>
-            <span>⛶</span>
-          </div>
-        </div>
-      </div>
-
-      <h1 class="player-title" id="playerTitle"></h1>
-      <div class="player-meta" id="playerMeta"></div>
-
-      <div class="channel-row">
-        <div class="channel-info">
-          <div class="channel-avatar">K</div>
-
-          <div>
-            <div class="channel-name" id="playerChannel"></div>
-            <div class="channel-subscribers">120 tys. subskrypcji</div>
-          </div>
-        </div>
-
-        <button class="subscribe-button" id="subscribeButton" onclick="toggleSubscribe()">
-          Subskrybuj
-        </button>
-      </div>
-
-      <div class="action-row">
-        <button class="action-pill">👍 12 tys.</button>
-        <button class="action-pill">👎</button>
-        <button class="action-pill">↗ Udostępnij</button>
-        <button class="action-pill">💾 Zapisz</button>
-        <button class="action-pill">⬇️ Pobierz</button>
-      </div>
-
-      <div class="comments">
-        <h3 style="margin-bottom: 18px;">Komentarze</h3>
-
-        <div class="comment-input-row">
-          <input
-            class="comment-input"
-            id="commentInput"
-            type="text"
-            placeholder="Dodaj komentarz..."
-          >
-
-          <button class="primary-button" onclick="addComment()">
-            Wyślij
-          </button>
-        </div>
-
-        <div id="commentsList"></div>
-      </div>
-    </section>
-
-  </main>
-</div>
+</main>
 
 <script>
-/* =========================================
-   DANE FILMÓW
-   ========================================= */
+  function notifyMe() {
+    const button = document.querySelector(".notify-button");
 
-const videos = [
-  {
-    title: "Jak stworzyć własną grę w Roblox Studio — pełny poradnik",
-    channel: "KaiRox Dev",
-    category: "Roblox",
-    views: "128 tys. wyświetleń",
-    time: "2 dni temu",
-    duration: "14:22",
-    icon: "🎮",
-    live: false,
-    comments: [
-      {
-        author: "Marek",
-        time: "2 godziny temu",
-        text: "Świetny poradnik! W końcu zrozumiałem scripting w Roblox."
-      },
-      {
-        author: "Nina",
-        time: "5 godzin temu",
-        text: "Czy będzie część o GUI i sklepach w grze?"
-      }
-    ]
-  },
-  {
-    title: "HTML, CSS i JavaScript — zbuduj nowoczesną stronę od zera",
-    channel: "KaiRox Code",
-    category: "Programowanie",
-    views: "76 tys. wyświetleń",
-    time: "5 dni temu",
-    duration: "28:41",
-    icon: "💻",
-    live: false,
-    comments: [
-      {
-        author: "Kuba",
-        time: "1 dzień temu",
-        text: "Najlepsze wyjaśnienie flexboxa, jakie widziałem."
-      }
-    ]
-  },
-  {
-    title: "NA ŻYWO: Roblox z widzami — budujemy nową mapę",
-    channel: "KaiRox Gaming",
-    category: "Live",
-    views: "3,2 tys. oglądających",
-    time: "Teraz",
-    duration: "LIVE",
-    icon: "🔴",
-    live: true,
-    comments: [
-      {
-        author: "Ola",
-        time: "teraz",
-        text: "Ta mapa wygląda już super!"
-      }
-    ]
-  },
-  {
-    title: "Python GUI — aplikacja z przyciskami i oknami krok po kroku",
-    channel: "KaiRox Code",
-    category: "Programowanie",
-    views: "54 tys. wyświetleń",
-    time: "3 dni temu",
-    duration: "19:37",
-    icon: "🐍",
-    live: false,
-    comments: []
-  },
-  {
-    title: "Efekty pogodowe w Roblox — deszcz, mgła i burza",
-    channel: "KaiRox Dev",
-    category: "Roblox",
-    views: "89 tys. wyświetleń",
-    time: "4 dni temu",
-    duration: "11:48",
-    icon: "🌧️",
-    live: false,
-    comments: []
-  },
-  {
-    title: "Lo-fi do kodowania — 1 godzina skupienia",
-    channel: "KaiRox Music",
-    category: "Muzyka",
-    views: "1,2 mln wyświetleń",
-    time: "1 miesiąc temu",
-    duration: "1:02:14",
-    icon: "🎧",
-    live: false,
-    comments: []
-  },
-  {
-    title: "Nowoczesny UI strony internetowej — zasady dobrego designu",
-    channel: "KaiRox Design",
-    category: "Design",
-    views: "33 tys. wyświetleń",
-    time: "6 dni temu",
-    duration: "16:29",
-    icon: "🎨",
-    live: false,
-    comments: []
-  },
-  {
-    title: "10 błędów początkujących programistów i jak ich unikać",
-    channel: "KaiRox Code",
-    category: "Programowanie",
-    views: "210 tys. wyświetleń",
-    time: "2 tygodnie temu",
-    duration: "12:53",
-    icon: "🧠",
-    live: false,
-    comments: []
-  },
-  {
-    title: "Najlepsze gry Roblox w tym miesiącu",
-    channel: "KaiRox Gaming",
-    category: "Gaming",
-    views: "412 tys. wyświetleń",
-    time: "1 tydzień temu",
-    duration: "9:05",
-    icon: "🕹️",
-    live: false,
-    comments: []
+    button.textContent = "✓ Dodano do powiadomień";
+    button.style.background = "linear-gradient(135deg, #00c896, #00d4ff)";
+    button.style.boxShadow = "0 16px 40px rgba(0, 200, 150, 0.35)";
   }
-];
-
-/* =========================================
-   ELEMENTY STRONY
-   ========================================= */
-
-const videoGrid = document.getElementById("videoGrid");
-const homePage = document.getElementById("homePage");
-const playerPage = document.getElementById("playerPage");
-const commentsList = document.getElementById("commentsList");
-const commentInput = document.getElementById("commentInput");
-const subscribeButton = document.getElementById("subscribeButton");
-
-let currentVideo = null;
-let currentFilter = "all";
-
-/* =========================================
-   WYŚWIETLANIE FILMÓW
-   ========================================= */
-
-function renderVideos(list) {
-  videoGrid.innerHTML = "";
-
-  if (list.length === 0) {
-    videoGrid.innerHTML = `
-      <div style="
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--muted);
-      ">
-        <div style="font-size: 50px; margin-bottom: 14px;">🔍</div>
-        <h3>Nie znaleziono filmów</h3>
-        <p>Spróbuj innego zapytania lub kategorii.</p>
-      </div>
-    `;
-    return;
-  }
-
-  list.forEach((video, index) => {
-    const card = document.createElement("article");
-    card.className = "video-card";
-    card.style.animationDelay = `${index * 0.05}s`;
-
-    card.innerHTML = `
-      <div class="thumbnail">
-        ${video.live ? `<div class="live-badge">● LIVE</div>` : ""}
-        <div class="thumbnail-icon">${video.icon}</div>
-        <div class="duration">${video.duration}</div>
-      </div>
-
-      <div class="video-body">
-        <div class="video-top">
-          <div class="channel-avatar">K</div>
-
-          <div>
-            <div class="video-title">${video.title}</div>
-            <div class="video-meta">${video.channel}</div>
-            <div class="video-meta">${video.views} • ${video.time}</div>
-          </div>
-        </div>
-
-        <div class="video-tags">
-          <span class="tag">#${video.category}</span>
-          <span class="tag">#KaiRox</span>
-          ${video.live ? `<span class="tag">#NaŻywo</span>` : ""}
-        </div>
-      </div>
-    `;
-
-    card.onclick = () => openVideo(video);
-    videoGrid.appendChild(card);
-  });
-}
-
-/* =========================================
-   OTWIERANIE FILMU
-   ========================================= */
-
-function openVideo(video) {
-  currentVideo = video;
-
-  homePage.style.display = "none";
-  playerPage.classList.add("visible");
-
-  document.getElementById("playerTitle").textContent = video.title;
-  document.getElementById("playerChannel").textContent = video.channel;
-  document.getElementById("playerMeta").textContent =
-    `${video.views} • ${video.time} • Kategoria: ${video.category}`;
-
-  document.getElementById("playerThumbnail").firstChild.textContent = video.icon;
-
-  subscribeButton.textContent = "Subskrybuj";
-  subscribeButton.classList.remove("subscribed");
-
-  renderComments(video.comments);
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-/* =========================================
-   POWRÓT NA STRONĘ GŁÓWNĄ
-   ========================================= */
-
-function goHome() {
-  playerPage.classList.remove("visible");
-  homePage.style.display = "block";
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-/* =========================================
-   WYSZUKIWARKA
-   ========================================= */
-
-function searchVideos() {
-  const query = document.getElementById("searchInput").value.toLowerCase().trim();
-
-  if (query === "") {
-    applyFilter(currentFilter);
-    return;
-  }
-
-  const results = videos.filter(video =>
-    video.title.toLowerCase().includes(query) ||
-    video.channel.toLowerCase().includes(query) ||
-    video.category.toLowerCase().includes(query)
-  );
-
-  renderVideos(results);
-}
-
-document.getElementById("searchInput").addEventListener("keydown", event => {
-  if (event.key === "Enter") {
-    searchVideos();
-  }
-});
-
-/* =========================================
-   FILTRY I KATEGORIE
-   ========================================= */
-
-function setFilter(button, category) {
-  document.querySelectorAll(".filter-chip").forEach(chip => {
-    chip.classList.remove("active");
-  });
-
-  button.classList.add("active");
-  currentFilter = category;
-
-  applyFilter(category);
-}
-
-function filterByCategory(category) {
-  const chips = document.querySelectorAll(".filter-chip");
-
-  chips.forEach(chip => {
-    chip.classList.remove("active");
-
-    if (chip.textContent.toLowerCase() === category.toLowerCase()) {
-      chip.classList.add("active");
-    }
-  });
-
-  currentFilter = category;
-  applyFilter(category);
-
-  homePage.style.display = "block";
-  playerPage.classList.remove("visible");
-}
-
-function applyFilter(category) {
-  if (category === "all") {
-    renderVideos(videos);
-    return;
-  }
-
-  const filtered = videos.filter(video =>
-    video.category.toLowerCase() === category.toLowerCase()
-  );
-
-  renderVideos(filtered);
-}
-
-function resetFilters() {
-  currentFilter = "all";
-
-  document.querySelectorAll(".filter-chip").forEach(chip => {
-    chip.classList.remove("active");
-  });
-
-  document.querySelector(".filter-chip").classList.add("active");
-
-  renderVideos(videos);
-}
-
-/* =========================================
-   KOMENTARZE
-   ========================================= */
-
-function renderComments(comments) {
-  commentsList.innerHTML = "";
-
-  if (!comments || comments.length === 0) {
-    commentsList.innerHTML = `
-      <p style="
-        color: var(--muted);
-        font-size: 14px;
-        padding: 10px 0;
-      ">
-        Brak komentarzy. Bądź pierwszą osobą, która skomentuje!
-      </p>
-    `;
-    return;
-  }
-
-  comments.forEach(comment => {
-    const commentElement = document.createElement("div");
-    commentElement.className = "comment";
-
-    commentElement.innerHTML = `
-      <div class="comment-avatar">
-        ${comment.author.charAt(0).toUpperCase()}
-      </div>
-
-      <div>
-        <div>
-          <span class="comment-author">${comment.author}</span>
-          <span class="comment-time">${comment.time}</span>
-        </div>
-
-        <div class="comment-text">${comment.text}</div>
-      </div>
-    `;
-
-    commentsList.appendChild(commentElement);
-  });
-}
-
-function addComment() {
-  const text = commentInput.value.trim();
-
-  if (!currentVideo || text === "") {
-    return;
-  }
-
-  const newComment = {
-    author: "Nine",
-    time: "teraz",
-    text: text
-  };
-
-  currentVideo.comments.unshift(newComment);
-
-  commentInput.value = "";
-  renderComments(currentVideo.comments);
-}
-
-/* =========================================
-   SUBSKRYPCJA
-   ========================================= */
-
-function toggleSubscribe() {
-  const isSubscribed = subscribeButton.classList.contains("subscribed");
-
-  if (isSubscribed) {
-    subscribeButton.textContent = "Subskrybuj";
-    subscribeButton.classList.remove("subscribed");
-  } else {
-    subscribeButton.textContent = "✓ Subskrybujesz";
-    subscribeButton.classList.add("subscribed");
-  }
-}
-
-/* =========================================
-   MOTYW JASNY / CIEMNY
-   ========================================= */
-
-function toggleTheme() {
-  document.body.classList.toggle("light");
-
-  const button = document.getElementById("themeButton");
-  button.textContent = document.body.classList.contains("light") ? "☀️" : "🌙";
-}
-
-/* =========================================
-   START
-   ========================================= */
-
-renderVideos(videos);
 </script>
 
 </body>
