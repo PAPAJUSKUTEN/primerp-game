@@ -1,329 +1,593 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VideoTube</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KaiRox — Twoje filmy</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --bg-2: #181818;
+    --bg-3: #212121;
+    --text: #f1f1f1;
+    --muted: #aaaaaa;
+    --red: #ff2d55;
+    --hover: #2a2a2a;
+  }
 
-    body {
-      background: #0f0f0f;
-      color: #f1f1f1;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  }
 
-    /* Górny pasek */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 10px 20px;
-      background: #0f0f0f;
-      border-bottom: 1px solid #272727;
-    }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: bold;
-      font-size: 20px;
-      cursor: pointer;
-    }
+  /* GÓRNY PASEK */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #222;
+    z-index: 100;
+  }
 
-    .logo span {
-      color: #ff0000;
-    }
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
 
-    .search {
-      flex: 1;
-      max-width: 600px;
-      display: flex;
-    }
+  .menu-btn {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 22px;
+    cursor: pointer;
+  }
 
-    .search input {
-      flex: 1;
-      padding: 10px 16px;
-      border: 1px solid #303030;
-      border-right: none;
-      border-radius: 20px 0 0 20px;
-      background: #121212;
-      color: white;
-      outline: none;
-    }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    cursor: pointer;
+  }
 
-    .search button {
-      padding: 10px 20px;
-      border: 1px solid #303030;
-      border-radius: 0 20px 20px 0;
-      background: #222;
-      color: white;
-      cursor: pointer;
-    }
+  .logo span {
+    color: var(--red);
+  }
 
-    .user-actions {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+  .logo-badge {
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
 
-    .avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ff416c, #ff4b2b);
-      display: grid;
-      place-items: center;
-      font-weight: bold;
-      cursor: pointer;
-    }
+  .search-box {
+    display: flex;
+    flex: 1;
+    max-width: 600px;
+    margin: 0 30px;
+  }
 
-    /* Layout */
-    .layout {
-      display: flex;
-      min-height: calc(100vh - 57px);
-    }
+  .search-box input {
+    flex: 1;
+    background: #121212;
+    border: 1px solid #303030;
+    border-right: none;
+    color: var(--text);
+    padding: 10px 16px;
+    border-radius: 20px 0 0 20px;
+    outline: none;
+  }
 
-    /* Sidebar */
+  .search-box button {
+    background: #222;
+    border: 1px solid #303030;
+    color: var(--text);
+    padding: 0 20px;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+  }
+
+  .search-box button:hover {
+    background: #303030;
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .icon-btn {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), #ff7eb3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* LAYOUT */
+  .layout {
+    display: flex;
+    padding-top: 60px;
+  }
+
+  /* SIDEBAR */
+  aside {
+    width: 220px;
+    background: var(--bg);
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    padding: 12px;
+    overflow-y: auto;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  .nav-item:hover {
+    background: var(--hover);
+  }
+
+  .nav-item.active {
+    background: var(--bg-3);
+    font-weight: 600;
+  }
+
+  .divider {
+    height: 1px;
+    background: #272727;
+    margin: 12px 0;
+  }
+
+  .sidebar-title {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  /* MAIN */
+  main {
+    margin-left: 220px;
+    padding: 20px;
+    width: 100%;
+  }
+
+  /* FILTRY */
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .filter {
+    background: var(--bg-2);
+    border: 1px solid #303030;
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .filter.active {
+    background: var(--text);
+    color: #000;
+    border-color: var(--text);
+  }
+
+  /* SIATKA FILMÓW */
+  .videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .video-card {
+    cursor: pointer;
+  }
+
+  .thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1f1f1f, #333);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+  }
+
+  .duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  .video-info {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .channel-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .video-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 5px;
+  }
+
+  .video-meta {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ODTWARZACZ */
+  .player-section {
+    display: none;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .player-section.visible {
+    display: block;
+  }
+
+  .video-player {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    margin-bottom: 16px;
+  }
+
+  .player-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .player-actions {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    background: var(--bg-2);
+    border: none;
+    color: var(--text);
+    padding: 9px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .action-btn:hover {
+    background: var(--hover);
+  }
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 14px;
+  }
+
+  /* RESPONSYWNOŚĆ */
+  @media (max-width: 900px) {
     aside {
-      width: 220px;
-      padding: 12px;
-      border-right: 1px solid #272727;
+      display: none;
     }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      color: #e5e5e5;
-    }
-
-    .menu-item:hover,
-    .menu-item.active {
-      background: #272727;
-    }
-
-    .menu-item.active {
-      font-weight: bold;
-    }
-
-    /* Main */
     main {
-      flex: 1;
-      padding: 20px;
+      margin-left: 0;
     }
-
-    .categories {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 16px;
+    .search-box {
+      display: none;
     }
-
-    .category {
-      padding: 8px 14px;
-      background: #272727;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .category.active {
-      background: white;
-      color: #0f0f0f;
-      font-weight: bold;
-    }
-
-    .videos {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    .video-card {
-      cursor: pointer;
-    }
-
-    .thumbnail {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .thumbnail iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .duration {
-      position: absolute;
-      right: 8px;
-      bottom: 8px;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 12px;
-    }
-
-    .video-info {
-      display: flex;
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .channel-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #444;
-      display: grid;
-      place-items: center;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-
-    .video-title {
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-
-    .video-meta {
-      color: #aaaaaa;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      aside {
-        display: none;
-      }
-
-      header {
-        flex-wrap: wrap;
-      }
-
-      .search {
-        order: 3;
-        width: 100%;
-        max-width: none;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">▶ Video<span>Tube</span></div>
-
-    <div class="search">
-      <input type="text" placeholder="Szukaj filmów..." />
-      <button>🔍</button>
+<header>
+  <div class="left">
+    <button class="menu-btn">☰</button>
+    <div class="logo" onclick="goHome()">
+      Kai<span>Rox</span>
+      <div class="logo-badge">PL</div>
     </div>
+  </div>
 
-    <div class="user-actions">
-      <div>🔔</div>
-      <div class="avatar">U</div>
-    </div>
-  </header>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Szukaj filmów na KaiRox">
+    <button onclick="searchVideos()">🔍</button>
+  </div>
 
-  <div class="layout">
-    <aside>
-      <div class="menu-item active">🏠 Start</div>
-      <div class="menu-item">🔥 Na czasie</div>
-      <div class="menu-item"> subscriptions️ Subskrypcje</div>
-      <div class="menu-item">📚 Biblioteka</div>
-      <div class="menu-item">🕘 Historia</div>
-      <div class="menu-item">👍 Polubione</div>
-    </aside>
+  <div class="right">
+    <button class="icon-btn">🔔</button>
+    <button class="icon-btn">＋</button>
+    <div class="avatar">N</div>
+  </div>
+</header>
 
-    <main>
-      <div class="categories">
-        <button class="category active">Wszystko</button>
-        <button class="category">Muzyka</button>
-        <button class="category">Gaming</button>
-        <button class="category">Programowanie</button>
-        <button class="category">Sport</button>
-        <button class="category">Filmy</button>
+<div class="layout">
+  <aside>
+    <div class="nav-item active" onclick="goHome()">🏠 Start</div>
+    <div class="nav-item">⚡ Shorts</div>
+    <div class="nav-item">📺 Subskrypcje</div>
+
+    <div class="divider"></div>
+
+    <div class="sidebar-title">Ty</div>
+    <div class="nav-item">🕘 Historia</div>
+    <div class="nav-item">👍 Polubione</div>
+    <div class="nav-item">💾 Do obejrzenia</div>
+
+    <div class="divider"></div>
+
+    <div class="sidebar-title">Kategorie</div>
+    <div class="nav-item">🎮 Gaming</div>
+    <div class="nav-item">💻 Programowanie</div>
+    <div class="nav-item">🎵 Muzyka</div>
+    <div class="nav-item">⚽ Sport</div>
+    <div class="nav-item">📚 Nauka</div>
+  </aside>
+
+  <main>
+    <!-- STRONA GŁÓWNA -->
+    <section id="homePage">
+      <div class="filters">
+        <button class="filter active">Wszystko</button>
+        <button class="filter">Gaming</button>
+        <button class="filter">Programowanie</button>
+        <button class="filter">Muzyka</button>
+        <button class="filter">Roblox</button>
+        <button class="filter">Live</button>
       </div>
 
-      <section class="videos">
-        <article class="video-card">
-          <div class="thumbnail">
-            <iframe
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              title="Film 1"
-              allowfullscreen>
-            </iframe>
-            <span class="duration">3:33</span>
-          </div>
-          <div class="video-info">
-            <div class="channel-avatar">V</div>
-            <div>
-              <h3 class="video-title">Przykładowy film — kliknij, aby odtworzyć</h3>
-              <p class="video-meta">Kanał Przykładowy<br>1,2 mln wyświetleń • 2 lata temu</p>
-            </div>
-          </div>
-        </article>
+      <div class="videos" id="videoGrid"></div>
+    </section>
 
-        <article class="video-card">
-          <div class="thumbnail">
-            <iframe
-              src="https://www.youtube.com/embed/ysz5S6PUM-U"
-              title="Film 2"
-              allowfullscreen>
-            </iframe>
-            <span class="duration">10:24</span>
-          </div>
-          <div class="video-info">
-            <div class="channel-avatar">T</div>
-            <div>
-              <h3 class="video-title">Jak stworzyć stronę internetową w HTML i CSS</h3>
-              <p class="video-meta">Tech Academy<br>456 tys. wyświetleń • 5 miesięcy temu</p>
-            </div>
-          </div>
-        </article>
+    <!-- STRONA FILMU -->
+    <section id="playerPage" class="player-section">
+      <button class="back-btn" onclick="goHome()">← Wróć</button>
 
-        <article class="video-card">
-          <div class="thumbnail">
-            <iframe
-              src="https://www.youtube.com/embed/1-La4FVSd6E"
-              title="Film 3"
-              allowfullscreen>
-            </iframe>
-            <span class="duration">8:15</span>
+      <div class="video-player" id="playerThumbnail">▶</div>
+
+      <h1 class="player-title" id="playerTitle"></h1>
+      <div class="video-meta" id="playerMeta"></div>
+
+      <div class="player-actions">
+        <button class="action-btn">👍 12 tys.</button>
+        <button class="action-btn">👎</button>
+        <button class="action-btn">↗ Udostępnij</button>
+        <button class="action-btn">💾 Zapisz</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  const videos = [
+    {
+      title: "Jak zrobić grę w Roblox Studio — poradnik dla początkujących",
+      channel: "KaiRox Dev",
+      views: "128 tys. wyświetleń",
+      time: "2 dni temu",
+      duration: "14:22",
+      icon: "🎮"
+    },
+    {
+      title: "HTML, CSS i JavaScript — zbuduj stronę internetową od zera",
+      channel: "KaiRox Code",
+      views: "76 tys. wyświetleń",
+      time: "5 dni temu",
+      duration: "28:41",
+      icon: "💻"
+    },
+    {
+      title: "Najlepsze ustawienia graficzne do gier w 2026",
+      channel: "KaiRox Gaming",
+      views: "412 tys. wyświetleń",
+      time: "1 tydzień temu",
+      duration: "9:05",
+      icon: "🖥️"
+    },
+    {
+      title: "Python GUI — aplikacja z przyciskami krok po kroku",
+      channel: "KaiRox Code",
+      views: "54 tys. wyświetleń",
+      time: "3 dni temu",
+      duration: "19:37",
+      icon: "🐍"
+    },
+    {
+      title: "Roblox: efekty pogodowe i atmosfera w swojej grze",
+      channel: "KaiRox Dev",
+      views: "89 tys. wyświetleń",
+      time: "4 dni temu",
+      duration: "11:48",
+      icon: "🌧️"
+    },
+    {
+      title: "Lo-fi music do kodowania — 1 godzina skupienia",
+      channel: "KaiRox Music",
+      views: "1,2 mln wyświetleń",
+      time: "1 miesiąc temu",
+      duration: "1:02:14",
+      icon: "🎧"
+    },
+    {
+      title: "Jak zaprojektować nowoczesny UI strony internetowej",
+      channel: "KaiRox Design",
+      views: "33 tys. wyświetleń",
+      time: "6 dni temu",
+      duration: "16:29",
+      icon: "🎨"
+    },
+    {
+      title: "Największe błędy początkujących programistów",
+      channel: "KaiRox Code",
+      views: "210 tys. wyświetleń",
+      time: "2 tygodnie temu",
+      duration: "12:53",
+      icon: "🧠"
+    }
+  ];
+
+  const grid = document.getElementById("videoGrid");
+  const homePage = document.getElementById("homePage");
+  const playerPage = document.getElementById("playerPage");
+
+  function renderVideos(list) {
+    grid.innerHTML = "";
+
+    list.forEach(video => {
+      const card = document.createElement("div");
+      card.className = "video-card";
+
+      card.innerHTML = `
+        <div class="thumbnail">
+          ${video.icon}
+          <div class="duration">${video.duration}</div>
+        </div>
+        <div class="video-info">
+          <div class="channel-avatar">K</div>
+          <div>
+            <div class="video-title">${video.title}</div>
+            <div class="video-meta">${video.channel}</div>
+            <div class="video-meta">${video.views} • ${video.time}</div>
           </div>
-          <div class="video-info">
-            <div class="channel-avatar">M</div>
-            <div>
-              <h3 class="video-title">Muzyka do nauki i pracy — relaksująca playlista</h3>
-              <p class="video-meta">Music Lab<br>3,8 mln wyświetleń • 1 rok temu</p>
-            </div>
-          </div>
-        </article>
-      </section>
-    </main>
-  </div>
+        </div>
+      `;
+
+      card.onclick = () => openVideo(video);
+      grid.appendChild(card);
+    });
+  }
+
+  function openVideo(video) {
+    homePage.style.display = "none";
+    playerPage.classList.add("visible");
+
+    document.getElementById("playerTitle").textContent = video.title;
+    document.getElementById("playerMeta").textContent =
+      `${video.channel} • ${video.views} • ${video.time}`;
+    document.getElementById("playerThumbnail").textContent = video.icon;
+
+    window.scrollTo(0, 0);
+  }
+
+  function goHome() {
+    playerPage.classList.remove("visible");
+    homePage.style.display = "block";
+    window.scrollTo(0, 0);
+  }
+
+  function searchVideos() {
+    const query = document.getElementById("searchInput").value.toLowerCase();
+
+    const results = videos.filter(video =>
+      video.title.toLowerCase().includes(query) ||
+      video.channel.toLowerCase().includes(query)
+    );
+
+    renderVideos(results);
+  }
+
+  document.getElementById("searchInput").addEventListener("keydown", event => {
+    if (event.key === "Enter") searchVideos();
+  });
+
+  document.querySelectorAll(".filter").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".filter").forEach(b => b.classList.remove("active"));
+      button.classList.add("active");
+
+      const category = button.textContent.toLowerCase();
+
+      if (category === "wszystko") {
+        renderVideos(videos);
+      } else {
+        const filtered = videos.filter(video =>
+          video.title.toLowerCase().includes(category)
+        );
+        renderVideos(filtered);
+      }
+    });
+  });
+
+  renderVideos(videos);
+</script>
 
 </body>
 </html>
